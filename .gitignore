@@ -9,9 +9,6 @@ web-app/WEB-INF/tld/**/*
 *.iws
 *.ipr
 *.iml
-.settings/org.eclipse.jdt.core.prefs
-SendFailures.txt
-*.iml
 .idea
 .idea/**/*
 out/
