@@ -24,6 +24,7 @@ modules = {
     'bannerCSRUI' {
         dependsOn "csr-angular, bannerSelfServiceCommonLTR, extensibilityCommon, extensibilityAngular, angularApp, common-components"
         resource url:[plugin: 'banner-csr-ui', file: 'css/xe-ui-components.css']
+        resource url:[plugin: 'banner-csr-ui', file: 'css/csr-main.css']
         resource url:[plugin: 'banner-csr-ui', file: 'csrApp/app.js']
         resource url:[plugin: 'banner-csr-ui', file: 'csrApp/admin/adminLandingCtrl.js']
         resource url:[plugin: 'banner-csr-ui', file: 'csrApp/admin/listActionItem/adminListItemCtrl.js']
