@@ -16,6 +16,8 @@ grails.project.fork = [
     // configure settings for the Console UI JVM
     console: [maxMemory: 768, minMemory: 64, debug: false, maxPerm: 256]
 ]
+grails.plugin.location.'banner-ui-ss'="../banner_ui_ss.git"
+grails.plugin.location.'web-app-extensibility' = "../web-app-extensibility.git"
 
 grails.project.dependency.resolver = "maven" // or ivy
 grails.project.dependency.resolution = {
@@ -35,15 +37,16 @@ grails.project.dependency.resolution = {
         //mavenRepo "http://download.java.net/maven/2/"
         //mavenRepo "http://repository.jboss.com/maven2/"
     }
+    plugins {
+        runtime "org.grails.plugins:resources:1.2.14"
+        compile ':restful-api:1.0.0'
+        build(":release:3.1.0",
+                ":rest-client-builder:2.1.0") {
+            export = false
+        }
+    }
     dependencies {
         // specify dependencies here under either 'build', 'compile', 'runtime', 'test' or 'provided' scopes eg.
         // runtime 'mysql:mysql-connector-java:5.1.27'
-    }
-
-    plugins {
-        build(":release:3.1.0",
-              ":rest-client-builder:2.1.0") {
-            export = false
-        }
     }
 }
