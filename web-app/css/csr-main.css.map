@@ -1,0 +1,7 @@
+{
+"version": 3,
+"mappings": "AAEA,cAAc;EACZ,OAAO,EAAE,GAAG;EACZ,WAAW,EAAE,CAAC;EAKV,mEAAqB;IACnB,UAAU,EAAE,UAAU",
+"sources": ["csr-main.sass"],
+"names": [],
+"file": "csr-main.css"
+}
