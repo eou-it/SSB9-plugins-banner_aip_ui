@@ -30,5 +30,6 @@ modules = {
         resource url:[plugin: 'banner-csr-ui', file: 'csrApp/admin/listActionItem/adminListItemCtrl.js']
         resource url:[plugin: 'banner-csr-ui', file: 'csrApp/common/services/adminItemListViewService.js']
         resource url:[plugin: 'banner-csr-ui', file: 'csrApp/common/services/csrBreadcrumbService.js']
+        resource url:[plugin: 'banner-csr-ui', file: 'csrApp/common/directives/csr-landing-item/csrLandingItem.js']
     }
 }

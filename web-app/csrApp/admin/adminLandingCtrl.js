@@ -1,22 +1,20 @@
 ///<reference path="../../typings/tsd.d.ts"/>
-///<reference path="../common/services/csrBreadcrumbService.ts"/>
 var CSR;
 (function (CSR) {
     var AdminLandingCtrl = (function () {
-        function AdminLandingCtrl($scope, CsrBreadcrumbService) {
-            this.$inject = ["$scope", "CsrBreadcrumbService"];
+        function AdminLandingCtrl($scope) {
+            this.$inject = ["$scope"];
             $scope.vm = this;
-            this.breadcrumbService = CsrBreadcrumbService;
             this.init();
         }
         AdminLandingCtrl.prototype.init = function () {
-            this.updateBreadcrumb();
-        };
-        AdminLandingCtrl.prototype.updateBreadcrumb = function () {
-            var breadItem = {
-                "Admin Landing": "/landing"
-            };
-            this.breadcrumbService.updateBreadcrumb(breadItem);
+            this.landingItem = [
+                {
+                    title: "List",
+                    status: "admin-list",
+                    description: "Test"
+                }
+            ];
         };
         return AdminLandingCtrl;
     })();

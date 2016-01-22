@@ -1,6 +1,5 @@
 ///<reference path="../../../typings/tsd.d.ts"/>
 ///<reference path="../../common/services/adminItemListViewService.ts"/>
-///<reference path="../../common/services/csrBreadcrumbService.ts"/>
 
 module CSR {
 
@@ -13,9 +12,7 @@ module CSR {
         codeTypes: string[];
         disableDelete: boolean;
         disableUpdate: boolean;
-        dialogService;
         adminItemListViewService: CSR.AdminItemListViewService;
-        updateBreadcrumb(): void;
         chkboxCallback(filteredItems:IListItem[]): IListItem[];
         removeItemCallback(filteredItems:IListItem[]): void
         addNewItem(evt): void;
@@ -24,20 +21,15 @@ module CSR {
     }
 
     export class AdminListItemCtrl implements IAdminListItem {
-        static $inject=["$scope", "AdminItemListViewService", "CsrBreadcrumbService"];
+        static $inject=["$scope", "AdminItemListViewService"];
         public gridData: IGridData;
         public codeTypes: string[];
         public disableDelete:boolean;
         public disableUpdate:boolean;
-        toastService: angular.material.IToastService;
-        dialogService;
-        mdMedia: angular.material.IMedia;
         listEndPoint:string;
         adminItemListViewService: CSR.AdminItemListViewService;
-        breadcrumbService: CSR.CsrBreadcrumbService;
-        constructor($scope:IAdminItemListViewScope, AdminItemListViewService:CSR.AdminItemListViewService, CsrBreadcrumbService) {
+        constructor($scope:IAdminItemListViewScope, AdminItemListViewService:CSR.AdminItemListViewService) {
             this.adminItemListViewService = AdminItemListViewService;
-            this.breadcrumbService = CsrBreadcrumbService;
             this.init();
             $scope.vm = this;
             $scope.$watch(()=>{
@@ -55,13 +47,6 @@ module CSR {
             this.gridData = this.adminItemListViewService.gridData;
             this.disableDelete = true;
             this.disableUpdate = true;
-            this.updateBreadcrumb();
-        }
-        updateBreadcrumb() {
-            var breadItem = {
-                "Admin List": "/list"
-            };
-            this.breadcrumbService.updateBreadcrumb(breadItem);
         }
         chkboxCallback(filteredItems) {
             var selected = filteredItems.filter((item)=>{return item.selected;});

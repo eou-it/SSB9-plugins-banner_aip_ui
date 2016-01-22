@@ -15,26 +15,26 @@ module CSR {
             this.breadcrumbs = {};
         }
         updateBreadcrumb(item) {
-            var existPageTitle = Object.keys(this.breadcrumbs);
-            var pageTitle = Object.keys(item)[0];
+            var existItemTitle = Object.keys(this.breadcrumbs);
+            var itemTitle = Object.keys(item)[0];
 
-            if(existPageTitle.indexOf(pageTitle)===-1) {
-                item[pageTitle] = item[pageTitle].indexOf("/csr#/admin")===-1 ? "/csr#/admin".concat(item[pageTitle]) : item[pageTitle];
-                this.breadcrumbs[pageTitle] = item[pageTitle];
+            if(existItemTitle.indexOf(itemTitle)===-1) {
+                item[itemTitle] = item[itemTitle].indexOf("/csr#/admin")===-1 ? "/csr#/admin".concat(item[itemTitle]) : item[itemTitle];
+                this.breadcrumbs[itemTitle] = item[itemTitle];
             } else {
                 var temp = {};
-                existPageTitle = existPageTitle.slice(0, existPageTitle.indexOf(pageTitle) + 1);
-                angular.forEach(existPageTitle, (item) => {
+                existItemTitle = existItemTitle.slice(0, existItemTitle.indexOf(itemTitle) + 1);
+                angular.forEach(existItemTitle, (item) => {
                     temp[item] = this.breadcrumbs[item];
                 });
                 this.breadcrumbs = temp;
             }
-            this.draw();
+            this.draw(item.title);
         }
-        draw() {
+        draw(title) {
             var allPageTitle = Object.keys(this.breadcrumbs);
             var updatedHeaderAttributes = {
-                "pageTitle": allPageTitle[allPageTitle.length - 1],
+                "pageTitle": title,
                 "breadcrumb":this.breadcrumbs
             };
             BreadCrumbAndPageTitle.draw(updatedHeaderAttributes);

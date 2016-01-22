@@ -12,26 +12,26 @@ var CSR;
         };
         CsrBreadcrumbService.prototype.updateBreadcrumb = function (item) {
             var _this = this;
-            var existPageTitle = Object.keys(this.breadcrumbs);
-            var pageTitle = Object.keys(item)[0];
-            if (existPageTitle.indexOf(pageTitle) === -1) {
-                item[pageTitle] = item[pageTitle].indexOf("/csr#/admin") === -1 ? "/csr#/admin".concat(item[pageTitle]) : item[pageTitle];
-                this.breadcrumbs[pageTitle] = item[pageTitle];
+            var existItemTitle = Object.keys(this.breadcrumbs);
+            var itemTitle = Object.keys(item)[0];
+            if (existItemTitle.indexOf(itemTitle) === -1) {
+                item[itemTitle] = item[itemTitle].indexOf("/csr#/admin") === -1 ? "/csr#/admin".concat(item[itemTitle]) : item[itemTitle];
+                this.breadcrumbs[itemTitle] = item[itemTitle];
             }
             else {
                 var temp = {};
-                existPageTitle = existPageTitle.slice(0, existPageTitle.indexOf(pageTitle) + 1);
-                angular.forEach(existPageTitle, function (item) {
+                existItemTitle = existItemTitle.slice(0, existItemTitle.indexOf(itemTitle) + 1);
+                angular.forEach(existItemTitle, function (item) {
                     temp[item] = _this.breadcrumbs[item];
                 });
                 this.breadcrumbs = temp;
             }
-            this.draw();
+            this.draw(item.title);
         };
-        CsrBreadcrumbService.prototype.draw = function () {
+        CsrBreadcrumbService.prototype.draw = function (title) {
             var allPageTitle = Object.keys(this.breadcrumbs);
             var updatedHeaderAttributes = {
-                "pageTitle": allPageTitle[allPageTitle.length - 1],
+                "pageTitle": title,
                 "breadcrumb": this.breadcrumbs
             };
             BreadCrumbAndPageTitle.draw(updatedHeaderAttributes);

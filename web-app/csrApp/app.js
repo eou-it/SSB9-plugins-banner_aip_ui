@@ -11,29 +11,68 @@ var bannerCSRApp = angular.module("bannercsr", [
     "ui.bootstrap",
     "ngAria",
     "ngAnimate",
-    "xe-ui-components",
-    "bannerCSRDirectives"
-]);
+    "xe-ui-components"
+    ])
 
-//provider-injector
-bannerCSRApp.config(["$stateProvider", "$urlRouterProvider", "$locationProvider", function($stateProvider, $urlRouteProvider, $locationProvider) {
-    $urlRouteProvider.otherwise("/admin/landing");
-    $stateProvider
-        .state("adminLanding", {
+//constants for page information
+    .constant("PAGES", {
+        "admin-landing": {
             url: "/admin/landing",
             templateUrl: "../plugins/banner-csr-ui-1.0/csrApp/admin/landing.html",
-            controller: "AdminLandingCtrl"
-        })
-        .state("adminList", {
+            controller: "AdminLandingCtrl",
+            breadcrumb: {
+                label: "Confirmation Management",
+                url: "/landing"
+            }
+        },
+        "admin-list": {
             url: "/admin/list",
             templateUrl: "../plugins/banner-csr-ui-1.0/csrApp/admin/listActionItem/adminListItem.html",
-            controller: "AdminListItemCtrl"
-        });
-}]);
+            controller: "AdminListItemCtrl",
+            breadcrumb: {
+                label: "Confirmation Maintenance",
+                url: "/list"
+            }
+        }
+    })
+
+
+//set application root url
+//    .constant('CONTEXT_ROOT', {url: "/" + document.location.pathname.slice(Application.getApplicationPath().length+1) + "#"})
+
+//provider-injector
+    .config(["$stateProvider", "$urlRouterProvider", "$locationProvider", "PAGES",
+        function($stateProvider, $urlRouteProvider, $locationProvider, PAGES) {
+            $urlRouteProvider.otherwise("/admin/landing");
+
+            angular.forEach(PAGES, function(item, state) {
+                $stateProvider.state(state, {
+                    url: item.url,
+                    templateUrl: item.templateUrl,
+                    controller: item.controller,
+                    onEnter: function($stateParams, $filter) {
+                        this.data.breadcrumbs[item.breadcrumb.label] = item.breadcrumb.url;
+                        this.data.breadcrumbs.title = item.breadcrumb.label;
+                    },
+                    data: {
+                        breadcrumbs: {}
+                    }
+                })
+            });
+        }
+    ])
 
 //instance-injector
-bannerCSRApp.run(function() {
+    .run(["$rootScope", "$state", "$stateParams", "$filter", "CsrBreadcrumbService",
+        function($rootScope, $state, $stateParams, $filter, CsrBreadcrumService) {
+            $rootScope.$state = $state;
+            $rootScope.$stateParams = $stateParams;
+            //when state successfully changed, update breadcrumbs
+            $rootScope.$on("$stateChangeSuccess", function(event, toState, toParams, fromState, fromParams) {
+                $state.previous = fromState;
+                $state.previousParams = fromParams;
+                CsrBreadcrumService.updateBreadcrumb(toState.data.breadcrumbs);
+            })
 
-});
-
-var bannerCSRDirectives = angular.module("bannerCSRDirectives", []);
+    }]
+);

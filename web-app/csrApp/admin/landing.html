@@ -1,6 +1,8 @@
-<!-- landing page goes here -->
 
 <div>
-    <h1>Landing page</h1>
-    <p>Landing page components goes here</p>
+    <ul class="CSR-landing-container">
+        <li ng-repeat = "item in vm.landingItem">
+            <csr-landing-item model="item"></csr-landing-item>
+        </li>
+    </ul>
 </div>
