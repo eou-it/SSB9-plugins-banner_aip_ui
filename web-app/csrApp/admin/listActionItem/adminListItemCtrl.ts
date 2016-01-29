@@ -1,6 +1,8 @@
 ///<reference path="../../../typings/tsd.d.ts"/>
 ///<reference path="../../common/services/adminItemListViewService.ts"/>
 
+declare var register;
+
 module CSR {
 
     interface IAdminItemListViewScope extends ng.IScope {
@@ -42,7 +44,7 @@ module CSR {
             });
         }
         init() {
-            this.listEndPoint = "/StudentSSB/ssb/csr/actionItems";
+            this.listEndPoint = "/StudentSSB/ssb/csr/adminActionItems";
             this.codeTypes = this.adminItemListViewService.codeTypes;
             this.gridData = this.adminItemListViewService.gridData;
             this.disableDelete = true;
@@ -76,4 +78,4 @@ module CSR {
         }
     }
 }
-angular.module("bannercsr").controller("AdminListItemCtrl", CSR.AdminListItemCtrl);
+register("bannercsr").controller("AdminListItemCtrl", CSR.AdminListItemCtrl);

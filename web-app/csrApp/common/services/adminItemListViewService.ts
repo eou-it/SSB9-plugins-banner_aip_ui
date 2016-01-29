@@ -1,5 +1,7 @@
 ///<reference path="../../../typings/tsd.d.ts"/>
 
+declare var register;
+
 module CSR {
     export interface IListItem {
         id: number;
@@ -68,9 +70,8 @@ module CSR {
         getGridData() {
             var request = this.$http({
                 method:"POST",
-                url: "csr/actionItems"
+                url: "csr/adminActionItems"
             });
-            request
             return request;
         }
         getLastItemId() {
@@ -92,4 +93,4 @@ module CSR {
     }
 }
 
-angular.module("bannercsr").service("AdminItemListViewService", CSR.AdminItemListViewService);
+register("bannercsr").service("AdminItemListViewService", CSR.AdminItemListViewService);

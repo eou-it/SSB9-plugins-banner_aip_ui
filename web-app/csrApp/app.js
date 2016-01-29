@@ -4,6 +4,8 @@
 // angular module init and configuration
 "use strict";
 
+var bannerCSRUi = angular.module("bannercsrui", []);
+
 var bannerCSRApp = angular.module("bannercsr", [
     "ngResource",
     "ngSanitize",
@@ -11,7 +13,8 @@ var bannerCSRApp = angular.module("bannercsr", [
     "ui.bootstrap",
     "ngAria",
     "ngAnimate",
-    "xe-ui-components"
+    "xe-ui-components",
+    "bannercsrui"
     ])
 
 //constants for page information
@@ -31,6 +34,15 @@ var bannerCSRApp = angular.module("bannercsr", [
             controller: "AdminListItemCtrl",
             breadcrumb: {
                 label: "Confirmation Maintenance",
+                url: "/list"
+            }
+        },
+        "list": {
+            url: "/list",
+            templateUrl: "../plugins/banner-csr-ui-1.0/csrApp/listActionItem/listItem.html",
+            //controller: "ListItemCtrl",
+            breadcrumb: {
+                label: "Confirmation List",
                 url: "/list"
             }
         }

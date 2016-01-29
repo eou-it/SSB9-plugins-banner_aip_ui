@@ -1,0 +1,19 @@
+@import '../csrApp/common/directives/csr-list/css/csrList';
+@import '../csrApp/common/directives/csr-landing-item/css/csrLandingItem';
+
+.viewContainer {
+  padding: 8px;
+  .row {
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  //override common-component angular-grid
+  xe-table-grid {
+    .table-container {
+      .pagination-container {
+        box-sizing: border-box;
+      }
+    }
+  }
+}

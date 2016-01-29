@@ -1,0 +1,54 @@
+$badge-color: #FFCDAA;
+$banner-color: #557287;
+
+csr-list {
+  .csr-list-container {
+    .csr-list-title {
+      display: table-row;
+      .title-text {
+        white-space: nowrap;
+        h2 {
+          font-size: 1.5em;
+          color: lighten($banner-color, 20%);
+        }
+      }
+      .title-badge {
+        padding-left: 20px;
+        padding-right: 20px;
+        .badge {
+          color: black;
+          min-width:30px;
+          border-radius: 50%;
+          background-color: $badge-color;
+          box-shadow: 5px 5px 10px rgba(0,0,0,.5);
+        }
+      }
+      .description {
+
+      }
+    }
+    .csr-list-items {
+      display: table;
+      .csr-list-item {
+        display: table-row;
+        .title {
+          white-space: nowrap;
+        }
+        .status {
+          .pending {
+            border-radius: 4px;
+          }
+          .completed {
+
+          }
+        }
+        .description {
+
+        }
+      }
+    }
+  }
+  .cell {
+    display: table-cell;
+  }
+}

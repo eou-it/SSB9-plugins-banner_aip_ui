@@ -18,18 +18,23 @@ modules = {
         resource url:[plugin: 'banner-csr-ui', file: 'node_modules/angular-resource/angular-resource.js']
         resource url:[plugin: 'banner-csr-ui', file: 'node_modules/angular-ui-bootstrap/dist/ui-bootstrap-tpls.js']
         resource url:[plugin: 'banner-csr-ui', file: 'node_modules/moment/moment.js']
+        resource url:[plugin: 'banner-csr-ui', file: 'csrApp/utils/register.js']
 //        resource url:[plugin: 'banner-csr', file: 'bower_components/angular-common/build/angular-common.js']
     }
 
     'bannerCSRUI' {
-        dependsOn "csr-angular, bannerSelfServiceCommonLTR, extensibilityCommon, extensibilityAngular, angularApp, common-components"
+        dependsOn "csr-angular, bannerSelfServiceCommonLTR, extensibilityCommon, extensibilityAngular, angularApp, common-components, bootstrap"
         resource url:[plugin: 'banner-csr-ui', file: 'css/xe-ui-components.css']
         resource url:[plugin: 'banner-csr-ui', file: 'css/csr-main.css']
         resource url:[plugin: 'banner-csr-ui', file: 'csrApp/app.js']
         resource url:[plugin: 'banner-csr-ui', file: 'csrApp/admin/adminLandingCtrl.js']
         resource url:[plugin: 'banner-csr-ui', file: 'csrApp/admin/listActionItem/adminListItemCtrl.js']
+        resource url:[plugin: 'banner-csr-ui', file: 'csrApp/listActionItem/listActionItemCtrl.js']
+        resource url:[plugin: 'banner-csr-ui', file: 'csrApp/common/services/itemListViewService.js']
         resource url:[plugin: 'banner-csr-ui', file: 'csrApp/common/services/adminItemListViewService.js']
         resource url:[plugin: 'banner-csr-ui', file: 'csrApp/common/services/csrBreadcrumbService.js']
-        resource url:[plugin: 'banner-csr-ui', file: 'csrApp/common/directives/csr-landing-item/csrLandingItem.js']
+        resource url:[plugin: 'banner-csr-ui', file: 'csrApp/common/directives/csr-landing-item/js/csrLandingItem.js']
+        resource url:[plugin: 'banner-csr-ui', file: 'csrApp/common/directives/csr-list/js/csrList.js']
+
     }
 }

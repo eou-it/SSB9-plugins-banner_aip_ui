@@ -35,9 +35,8 @@ var CSR;
         AdminItemListViewService.prototype.getGridData = function () {
             var request = this.$http({
                 method: "POST",
-                url: "csr/actionItems"
+                url: "csr/adminActionItems"
             });
-            request;
             return request;
         };
         AdminItemListViewService.prototype.getLastItemId = function () {
@@ -62,5 +61,5 @@ var CSR;
     })();
     CSR.AdminItemListViewService = AdminItemListViewService;
 })(CSR || (CSR = {}));
-angular.module("bannercsr").service("AdminItemListViewService", CSR.AdminItemListViewService);
+register("bannercsr").service("AdminItemListViewService", CSR.AdminItemListViewService);
 //# sourceMappingURL=adminItemListViewService.js.map

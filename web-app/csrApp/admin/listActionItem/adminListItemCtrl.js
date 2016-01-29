@@ -20,7 +20,7 @@ var CSR;
             });
         }
         AdminListItemCtrl.prototype.init = function () {
-            this.listEndPoint = "/StudentSSB/ssb/csr/actionItems";
+            this.listEndPoint = "/StudentSSB/ssb/csr/adminActionItems";
             this.codeTypes = this.adminItemListViewService.codeTypes;
             this.gridData = this.adminItemListViewService.gridData;
             this.disableDelete = true;
@@ -57,5 +57,5 @@ var CSR;
     })();
     CSR.AdminListItemCtrl = AdminListItemCtrl;
 })(CSR || (CSR = {}));
-angular.module("bannercsr").controller("AdminListItemCtrl", CSR.AdminListItemCtrl);
+register("bannercsr").controller("AdminListItemCtrl", CSR.AdminListItemCtrl);
 //# sourceMappingURL=adminListItemCtrl.js.map

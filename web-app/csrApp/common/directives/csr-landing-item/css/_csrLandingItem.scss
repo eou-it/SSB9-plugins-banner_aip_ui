@@ -1,0 +1,27 @@
+.CSR-landing-container {
+  padding: 16px;
+  csr-landing-item {
+    .ladingItem-container {
+      background-color: lightgray;
+      font-size: 1.5em;
+      border-radius: 4px;
+      padding: 8px;
+      cursor: pointer;
+      &:hover {
+        background-color: #ECECEC;
+      }
+      .landing-icon {
+
+      }
+      .landing-context {
+        .landing-title {
+          font-weight: bold;
+          padding-bottom: 16px;
+        }
+        .landing-description {
+
+        }
+      }
+    }
+  }
+}

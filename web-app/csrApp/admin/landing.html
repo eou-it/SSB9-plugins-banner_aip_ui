@@ -1,8 +1,5 @@
-
-<div>
-    <ul class="CSR-landing-container">
-        <li ng-repeat = "item in vm.landingItem">
-            <csr-landing-item model="item"></csr-landing-item>
-        </li>
-    </ul>
+<div class="row CSR-landing-container">
+    <div class="col-xs-12 col-sm-6" ng-repeat = "item in vm.landingItem">
+        <csr-landing-item model="item" ></csr-landing-item>
+    </div>
 </div>
