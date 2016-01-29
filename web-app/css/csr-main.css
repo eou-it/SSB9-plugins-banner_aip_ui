@@ -1,0 +1,50 @@
+csr-list .csr-list-container .csr-list-title {
+  display: table-row; }
+  csr-list .csr-list-container .csr-list-title .title-text {
+    white-space: nowrap; }
+    csr-list .csr-list-container .csr-list-title .title-text h2 {
+      font-size: 1.5em;
+      color: #8ca4b6; }
+  csr-list .csr-list-container .csr-list-title .title-badge {
+    padding-left: 20px;
+    padding-right: 20px; }
+    csr-list .csr-list-container .csr-list-title .title-badge .badge {
+      color: black;
+      min-width: 30px;
+      border-radius: 50%;
+      background-color: #FFCDAA;
+      box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5); }
+csr-list .csr-list-container .csr-list-items {
+  display: table; }
+  csr-list .csr-list-container .csr-list-items .csr-list-item {
+    display: table-row; }
+    csr-list .csr-list-container .csr-list-items .csr-list-item .title {
+      white-space: nowrap; }
+    csr-list .csr-list-container .csr-list-items .csr-list-item .status .pending {
+      border-radius: 4px; }
+csr-list .cell {
+  display: table-cell; }
+
+.CSR-landing-container {
+  padding: 16px; }
+  .CSR-landing-container csr-landing-item .ladingItem-container {
+    background-color: lightgray;
+    font-size: 1.5em;
+    border-radius: 4px;
+    padding: 8px;
+    cursor: pointer; }
+    .CSR-landing-container csr-landing-item .ladingItem-container:hover {
+      background-color: #ECECEC; }
+    .CSR-landing-container csr-landing-item .ladingItem-container .landing-context .landing-title {
+      font-weight: bold;
+      padding-bottom: 16px; }
+
+.viewContainer {
+  padding: 8px; }
+  .viewContainer .row {
+    margin-left: 0;
+    margin-right: 0; }
+  .viewContainer xe-table-grid .table-container .pagination-container {
+    box-sizing: border-box; }
+
+/*# sourceMappingURL=csr-main.css.map */
