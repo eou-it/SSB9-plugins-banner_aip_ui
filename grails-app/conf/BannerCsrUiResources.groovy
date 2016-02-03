@@ -8,24 +8,35 @@
 
 modules = {
     'csr-angular' { // Temp resources
-        resource url:[plugin: 'banner-csr-ui', file: 'node_modules/angular/angular.js']
-        resource url:[plugin: 'banner-csr-ui', file: 'node_modules/angular-route/angular-route.js']
+//        resource url:[plugin: 'banner-csr-ui', file: 'node_modules/angular/angular.js']
+//        resource url:[plugin: 'banner-csr-ui', file: 'node_modules/angular-route/angular-route.js']
         resource url:[plugin: 'banner-csr-ui', file: 'node_modules/angular-aria/angular-aria.js']
-        resource url:[plugin: 'banner-csr-ui', file: 'node_modules/angular-animate/angular-animate.js']
-        resource url:[plugin: 'banner-csr-ui', file: 'node_modules/angular-ui-router/release/angular-ui-router.js']
-        resource url:[plugin: 'banner-csr-ui', file: 'node_modules/angular-sanitize/angular-sanitize.js']
-        resource url:[plugin: 'banner-csr-ui', file: 'node_modules/angular-messages/angular-messages.js']
-        resource url:[plugin: 'banner-csr-ui', file: 'node_modules/angular-resource/angular-resource.js']
-        resource url:[plugin: 'banner-csr-ui', file: 'node_modules/angular-ui-bootstrap/dist/ui-bootstrap-tpls.js']
+//        resource url:[plugin: 'banner-csr-ui', file: 'node_modules/angular-animate/angular-animate.js']
+//        resource url:[plugin: 'banner-csr-ui', file: 'node_modules/angular-ui-router/release/angular-ui-router.js']
+//        resource url:[plugin: 'banner-csr-ui', file: 'node_modules/angular-sanitize/angular-sanitize.js']
+//        resource url:[plugin: 'banner-csr-ui', file: 'node_modules/angular-messages/angular-messages.js']
+//        resource url:[plugin: 'banner-csr-ui', file: 'node_modules/angular-resource/angular-resource.js']
+//        resource url:[plugin: 'banner-csr-ui', file: 'node_modules/angular-ui-bootstrap/dist/ui-bootstrap-tpls.js']
         resource url:[plugin: 'banner-csr-ui', file: 'node_modules/moment/moment.js']
+        resource url:[plugin: 'banner-csr-ui', file: 'csrApp/common/filters/i18n-filter.js']
         resource url:[plugin: 'banner-csr-ui', file: 'csrApp/utils/register.js']
+
 //        resource url:[plugin: 'banner-csr', file: 'bower_components/angular-common/build/angular-common.js']
+    }
+    'bannerCSRUIRTL' {
+        dependsOn 'bannerCSRApp, bannerSelfServiceTRL'
+        resource url:[plugin: 'banner-csr-ui', file: 'css/xe-ui-components.css']
+        resource url:[plugin: 'banner-csr-ui', file: 'css/csr-main.css']
     }
 
     'bannerCSRUI' {
-        dependsOn "csr-angular, bannerSelfServiceCommonLTR, extensibilityCommon, extensibilityAngular, angularApp, common-components, bootstrap"
-        resource url:[plugin: 'banner-csr-ui', file: 'css/xe-ui-components.css']
-        resource url:[plugin: 'banner-csr-ui', file: 'css/csr-main.css']
+        dependsOn 'bannerWebLTR, bootstrap'
+        dependsOn 'bannerCSRApp'
+        resource url:[plugin: 'banner-csr-ui', file: 'css/xe-ui-components-rtl.css']
+        resource url:[plugin: 'banner-csr-ui', file: 'css/csr-main-rtl.css']
+    }
+    'bannerCSRApp' {
+        dependsOn 'csr-angular'
         resource url:[plugin: 'banner-csr-ui', file: 'csrApp/app.js']
         resource url:[plugin: 'banner-csr-ui', file: 'csrApp/admin/adminLandingCtrl.js']
         resource url:[plugin: 'banner-csr-ui', file: 'csrApp/admin/listActionItem/adminListItemCtrl.js']
@@ -35,6 +46,6 @@ modules = {
         resource url:[plugin: 'banner-csr-ui', file: 'csrApp/common/services/csrBreadcrumbService.js']
         resource url:[plugin: 'banner-csr-ui', file: 'csrApp/common/directives/csr-landing-item/js/csrLandingItem.js']
         resource url:[plugin: 'banner-csr-ui', file: 'csrApp/common/directives/csr-list/js/csrList.js']
-
     }
+
 }

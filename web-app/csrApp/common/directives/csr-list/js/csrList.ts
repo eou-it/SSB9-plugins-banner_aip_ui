@@ -23,7 +23,24 @@ module CSRUI {
 
         }
         link(scope, element, attrs) {
-
+            scope.styleFunction = function(key) {
+                var returnClass = "";
+                switch(key) {
+                    case "title":
+                        returnClass = "col-xs-9 col-sm-4";
+                        break;
+                    case "state":
+                        returnClass = "col-xs-3 col-sm-2";
+                        break;
+                    case "description":
+                        returnClass = "col-xs-12 col-sm-6";
+                        break;
+                }
+                return  returnClass + " cell " + key;
+            }
+            scope.confirm = function(row) {
+                console.log(row);
+            }
         }
 
 

@@ -1,19 +1,23 @@
 <div class="csr-list-container">
-    <div class="csr-list-title" ng-if="title">
-        <div class="title-text cell">
-            <span><h2>{{title}}: </h2></span>
-        </div>
-        <div class="title-badge">
-            <span class="badge">{{data.length}}</span>
-        </div>
-        <div class="description cell">
-            <span>{{description}}</span>
+    <div class="header" ng-if="title">
+        <div class="row list-item">
+            <div class="col-xs-12 col-sm-4 cell title">
+                <span>{{title|i18n}}: </span>
+                <span class="badge">{{data.length}}</span>
+            </div>
+            <div class="col-sm-8 cell description">
+                <span>{{description|i18n:["'parameter'"]}}</span>
+            </div>
         </div>
     </div>
-    <div class="csr-list-items">
-        <div class="csr-list-item"  ng-repeat="row in data">
-            <div class="cell {{key}}" ng-repeat="key in header">
-                <span class="ng-class:{{key}}==='status':{{row[key]}}">{{row[key]}}</span>
+    <hr/>
+    <div class="list-body">
+        <div class="row list-item" ng-repeat="row in data" ng-click="confirm(row)">
+            <div ng-repeat="key in header" class="{{styleFunction(key)}}" >
+                <span ng-class="{'badge pending':key==='state'&&row[key]==='csr.user.list.item.state.pending',
+                    'badge complete':key==='state'&&row[key]==='csr.user.list.item.state.complete'}">
+                    {{row[key]|i18n}}
+                </span>
             </div>
         </div>
     </div>

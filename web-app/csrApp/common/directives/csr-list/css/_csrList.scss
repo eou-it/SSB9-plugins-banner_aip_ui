@@ -1,54 +1,98 @@
 $badge-color: #FFCDAA;
+$badge-border-color: #FD9F5E;
 $banner-color: #557287;
+$border-color: #A4C6E4;
 
 csr-list {
   .csr-list-container {
-    .csr-list-title {
-      display: table-row;
-      .title-text {
-        white-space: nowrap;
-        h2 {
-          font-size: 1.5em;
-          color: lighten($banner-color, 20%);
-        }
-      }
-      .title-badge {
-        padding-left: 20px;
-        padding-right: 20px;
-        .badge {
-          color: black;
-          min-width:30px;
-          border-radius: 50%;
-          background-color: $badge-color;
-          box-shadow: 5px 5px 10px rgba(0,0,0,.5);
-        }
-      }
-      .description {
-
-      }
+    border: 1px solid $border-color;
+    .row {
+      margin: 0;
     }
-    .csr-list-items {
-      display: table;
-      .csr-list-item {
-        display: table-row;
+    hr {
+      margin-top: 0;
+      margin-bottom: 0;
+      background-color: $border-color;
+      height: 1px;
+      border: 0;
+    }
+    .header {
+      background-color: aliceblue;
+      .row.list-item {
+        vertical-align: middle;
+        padding: 16px 0;
         .title {
+          font-size: 1.8em;
           white-space: nowrap;
-        }
-        .status {
-          .pending {
-            border-radius: 4px;
-          }
-          .completed {
-
+          .badge {
+            background-color: $badge-color;
+            border: 1px solid $badge-border-color;
+            color: #3a3737;
+            padding: 3px 10px;
+            border-radius: 50%;
+            box-shadow: 4px 4px 4px;
+            margin-left: 16px;
           }
         }
         .description {
-
+          line-height: 1.5;
+          padding-left: 0;
+          font-size: 1.3em;
         }
       }
     }
-  }
-  .cell {
-    display: table-cell;
+    .list-body {
+      .list-item {
+        padding: 16px 0;
+        border-bottom: 1px solid $border-color;
+        &:hover {
+          cursor: pointer;
+          background-color: lighten($banner-color, 50%);
+        }
+        .cell.title {
+          font-weight: bold;
+          font-size: 1.3em;
+        }
+        .cell.state {
+          padding: 0;
+          span:first-letter {
+            text-transform: uppercase;
+          }
+        }
+        .badge {
+          border-radius: 4px;
+          color: #3a3737;
+          margin-right: 20px;
+          padding: 7px 10px;
+        }
+        .cell.description {
+          font-size: 1.3em;
+        }
+      }
+    }
+    @media screen and (max-width: 768px) {
+      .header {
+        .list-item {
+          .title {
+            .badge {
+              float: right;
+            }
+          }
+          .description {
+            display: none;
+          }
+        }
+      }
+      .list-body {
+        .list-item {
+          .badge {
+            float: right;
+          }
+          .description {
+            margin-top: 25px;
+          }
+        }
+      }
+    }
   }
 }

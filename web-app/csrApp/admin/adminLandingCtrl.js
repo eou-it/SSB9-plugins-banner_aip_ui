@@ -11,12 +11,10 @@ var CSR;
         AdminLandingCtrl.prototype.init = function () {
             this.landingItem = [
                 {
-                    title: "Confirmation Maintenance",
+                    title: "csr.admin.landing.list.title",
                     icon: "info",
                     state: "admin-list",
-                    description: "Create and maintain action item to require confirmations and submissions.\n" +
-                        "Create Action Item overview (Name, Description, Folder, Status, From and To Dates)\n" +
-                        "Define Action Item Web Pages, Fields, Text, Links, Buttons, Navigation (Page Builder)"
+                    description: "csr.admin.landing.list.description"
                 }
             ];
         };

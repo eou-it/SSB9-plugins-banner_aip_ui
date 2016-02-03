@@ -1,6 +1,6 @@
 
 declare var angular;
-
+declare var _;
 
 angular.module('I18n', []).
     filter('i18n', function () {
