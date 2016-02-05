@@ -23,15 +23,15 @@ modules = {
 
 //        resource url:[plugin: 'banner-csr', file: 'bower_components/angular-common/build/angular-common.js']
     }
-    'bannerCSRUIRTL' {
-        dependsOn 'bannerCSRApp, bannerSelfServiceTRL'
-        resource url:[plugin: 'banner-csr-ui', file: 'css/xe-ui-components.css']
-        resource url:[plugin: 'banner-csr-ui', file: 'css/csr-main.css']
-    }
-
     'bannerCSRUI' {
         dependsOn 'bannerWebLTR, bootstrap'
         dependsOn 'bannerCSRApp'
+        resource url:[plugin: 'banner-csr-ui', file: 'css/xe-ui-components.css']
+        resource url:[plugin: 'banner-csr-ui', file: 'css/csr-main.css']
+    }
+    'bannerCSRUIRTL' {
+        dependsOn 'bannerCSRUI'
+        dependsOn 'bannerWebRTL'
         resource url:[plugin: 'banner-csr-ui', file: 'css/xe-ui-components-rtl.css']
         resource url:[plugin: 'banner-csr-ui', file: 'css/csr-main-rtl.css']
     }
