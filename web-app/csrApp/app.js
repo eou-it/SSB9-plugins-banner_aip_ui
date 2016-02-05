@@ -22,8 +22,8 @@ var bannerCSRApp = angular.module("bannercsr", [
     .constant("PAGES", {
         "admin-landing": {
             url: "/admin/landing",
-            templateUrl: "../plugins/banner-csr-ui-1.0/csrApp/admin/landing.html",
-            controller: "AdminLandingCtrl",
+            templateUrl: "../plugins/banner-csr-ui-1.0/csrApp/admin/adminLandingPage.html",
+            controller: "AdminLandingPageCtrl",
             breadcrumb: {
                 label: "Confirmation Management",
                 url: "/landing"
@@ -31,8 +31,8 @@ var bannerCSRApp = angular.module("bannercsr", [
         },
         "admin-list": {
             url: "/admin/list",
-            templateUrl: "../plugins/banner-csr-ui-1.0/csrApp/admin/listActionItem/adminListItem.html",
-            controller: "AdminListItemCtrl",
+            templateUrl: "../plugins/banner-csr-ui-1.0/csrApp/admin/listActionItem/adminListItemPage.html",
+            controller: "AdminListItemPageCtrl",
             breadcrumb: {
                 label: "Confirmation Maintenance",
                 url: "/list"
@@ -40,11 +40,20 @@ var bannerCSRApp = angular.module("bannercsr", [
         },
         "list": {
             url: "/list",
-            templateUrl: "../plugins/banner-csr-ui-1.0/csrApp/listActionItem/listItem.html",
-            //controller: "ListItemCtrl",
+            templateUrl: "../plugins/banner-csr-ui-1.0/csrApp/listItem/listItemPage.html",
+            controller: "ListItemPageCtrl",
             breadcrumb: {
                 label: "Confirmation List",
                 url: "/list"
+            }
+        },
+        "listConfirm": {
+            url: "/list/confirm/:itemId",
+            templateUrl: "../plugins/banner-csr-ui-1.0/csrApp/listItem/itemConfirm/itemConfirmPage.html",
+            controller: "ItemConfirmCtrl",
+            breadcrumb: {
+                label: "Confirmation",
+                url: "/list/confirm"
             }
         }
     })

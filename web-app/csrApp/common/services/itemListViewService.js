@@ -5,13 +5,35 @@ var CSR;
         function ItemListViewService($http, $q) {
             this.$http = $http;
             this.$q = $q;
+            this.userItems = {};
+            this.init();
         }
+        ItemListViewService.prototype.init = function () {
+            this.getActionItems();
+        };
         ItemListViewService.prototype.getActionItems = function () {
-            var request = this.$http({
+            var _this = this;
+            this.$http({
                 method: "POST",
                 url: "csr/actionItems"
+            })
+                .then(function (response) {
+                _this.userItems = response.data;
+            }, function (errorResponse) {
+                console.log(errorResponse);
             });
-            return request;
+            ;
+            return this.userItems;
+        };
+        ItemListViewService.prototype.confirmItem = function (id) {
+            //TODO: update datbase
+            angular.forEach(this.userItems, function (item) {
+                angular.forEach(item.items, function (_item) {
+                    if (_item.id == id) {
+                        _item.state = "csr.user.list.item.state.complete";
+                    }
+                });
+            });
         };
         ItemListViewService.$inject = ["$http", "$q"];
         return ItemListViewService;

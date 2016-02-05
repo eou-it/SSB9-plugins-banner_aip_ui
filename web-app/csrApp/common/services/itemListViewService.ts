@@ -8,17 +8,38 @@ module CSR {
         static $inject=["$http", "$q"];
         $http: ng.IHttpService;
         $q:ng.IQService;
+        userItems;
         constructor($http:ng.IHttpService, $q:ng.IQService) {
             this.$http = $http;
             this.$q = $q;
+            this.userItems = {};
+            this.init();
+        }
+        init() {
+            this.getActionItems();
         }
 
         getActionItems() {
-            var request = this.$http({
+            this.$http({
                 method:"POST",
                 url: "csr/actionItems"
+            })
+            .then((response) => {
+                this.userItems = response.data;
+            }, (errorResponse) => {
+                console.log(errorResponse);
+            });;
+            return this.userItems;
+        }
+        confirmItem(id) {
+            //TODO: update datbase
+            angular.forEach(this.userItems, (item) => {
+                angular.forEach(item.items, (_item) => {
+                    if(_item.id == id) {
+                        _item.state = "csr.user.list.item.state.complete";
+                    }
+                });
             });
-            return request;
         }
     }
 }

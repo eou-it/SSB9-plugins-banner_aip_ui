@@ -16,7 +16,8 @@ module CSRUI {
                 data: "=",
                 title: "=?",
                 description: "=?",
-                header: "="
+                header: "=",
+                click:"&"
             }
         }
         compile() {
@@ -38,8 +39,8 @@ module CSRUI {
                 }
                 return  returnClass + " cell " + key;
             }
-            scope.confirm = function(row) {
-                console.log(row);
+            scope.openConfirm = function(row) {
+                scope.$parent.$parent.vm.openConfirm(row);
             }
         }
 

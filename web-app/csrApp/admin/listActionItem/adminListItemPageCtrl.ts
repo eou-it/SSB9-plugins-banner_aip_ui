@@ -6,7 +6,7 @@ declare var register;
 module CSR {
 
     interface IAdminItemListViewScope extends ng.IScope {
-        vm:AdminListItemCtrl;
+        vm:AdminListItemPageCtrl;
     }
 
     interface IAdminListItem {
@@ -22,7 +22,7 @@ module CSR {
         selectAll(filteredItems:IListItem[], chkAll:boolean): void;
     }
 
-    export class AdminListItemCtrl implements IAdminListItem {
+    export class AdminListItemPageCtrl implements IAdminListItem {
         static $inject=["$scope", "AdminItemListViewService"];
         public gridData: IGridData;
         public codeTypes: string[];
@@ -78,4 +78,4 @@ module CSR {
         }
     }
 }
-register("bannercsr").controller("AdminListItemCtrl", CSR.AdminListItemCtrl);
+register("bannercsr").controller("AdminListItemPageCtrl", CSR.AdminListItemPageCtrl);

@@ -1,7 +1,7 @@
 /**
  * Created by jshin on 1/21/16.
  */
-angular.module('bannercsr')
+angular.module('bannercsrui')
     .directive('csrLandingItem', [function() {
         return {
             restrict: 'EA',

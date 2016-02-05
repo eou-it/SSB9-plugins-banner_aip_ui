@@ -1,16 +1,16 @@
 ///<reference path="../../typings/tsd.d.ts"/>
 declare var register;
 
-interface IAdminLandingCtrlScope extends ng.IScope {
-    vm:CSR.AdminLandingCtrl;
+interface IAdminLandingPageCtrlScope extends ng.IScope {
+    vm:CSR.AdminLandingPageCtrl;
 }
 
 module CSR {
-    export class AdminLandingCtrl {
+    export class AdminLandingPageCtrl {
         $inject = ["$scope", "$state"];
         $state;
         landingItem;
-        constructor($scope:IAdminLandingCtrlScope, $state) {
+        constructor($scope:IAdminLandingPageCtrlScope, $state) {
             $scope.vm = this;
             this.$state = $state;
             this.init();
@@ -28,4 +28,4 @@ module CSR {
     }
 }
 
-register("bannercsr").controller("AdminLandingCtrl", CSR.AdminLandingCtrl);
+register("bannercsr").controller("AdminLandingPageCtrl", CSR.AdminLandingPageCtrl);

@@ -38,9 +38,10 @@ modules = {
     'bannerCSRApp' {
         dependsOn 'csr-angular'
         resource url:[plugin: 'banner-csr-ui', file: 'csrApp/app.js']
-        resource url:[plugin: 'banner-csr-ui', file: 'csrApp/admin/adminLandingCtrl.js']
-        resource url:[plugin: 'banner-csr-ui', file: 'csrApp/admin/listActionItem/adminListItemCtrl.js']
-        resource url:[plugin: 'banner-csr-ui', file: 'csrApp/listActionItem/listActionItemCtrl.js']
+        resource url:[plugin: 'banner-csr-ui', file: 'csrApp/admin/adminLandingPageCtrl.js']
+        resource url:[plugin: 'banner-csr-ui', file: 'csrApp/admin/listActionItem/adminListItemPageCtrl.js']
+        resource url:[plugin: 'banner-csr-ui', file: 'csrApp/listItem/listItemPageCtrl.js']
+        resource url:[plugin: 'banner-csr-ui', file: 'csrApp/listItem/itemConfirm/itemConfirmCtrl.js']
         resource url:[plugin: 'banner-csr-ui', file: 'csrApp/common/services/itemListViewService.js']
         resource url:[plugin: 'banner-csr-ui', file: 'csrApp/common/services/adminItemListViewService.js']
         resource url:[plugin: 'banner-csr-ui', file: 'csrApp/common/services/csrBreadcrumbService.js']

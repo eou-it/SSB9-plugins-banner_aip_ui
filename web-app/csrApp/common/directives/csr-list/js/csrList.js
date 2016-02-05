@@ -10,7 +10,8 @@ var CSRUI;
                 data: "=",
                 title: "=?",
                 description: "=?",
-                header: "="
+                header: "=",
+                click: "&"
             };
         }
         CSRListDirective.prototype.compile = function () {
@@ -31,8 +32,8 @@ var CSRUI;
                 }
                 return returnClass + " cell " + key;
             };
-            scope.confirm = function (row) {
-                console.log(row);
+            scope.openConfirm = function (row) {
+                scope.$parent.$parent.vm.openConfirm(row);
             };
         };
         return CSRListDirective;

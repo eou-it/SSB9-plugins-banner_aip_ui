@@ -1,6 +1,6 @@
-<div class="listActionItem-container" ng-controller="ListActionItemCtrl">
+<div class="listActionItem-container">
     <csr-list ng-repeat="actionItemList in vm.actionItems" title="actionItemList.info.title"
               description="actionItemList.info.description" data="actionItemList.items"
-              header="actionItemList.header">
+              header="actionItemList.header" click="vm.openConfirm">
     </csr-list>
 </div>

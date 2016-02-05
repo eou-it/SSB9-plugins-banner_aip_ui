@@ -1,14 +1,14 @@
 ///<reference path="../../typings/tsd.d.ts"/>
 var CSR;
 (function (CSR) {
-    var AdminLandingCtrl = (function () {
-        function AdminLandingCtrl($scope, $state) {
+    var AdminLandingPageCtrl = (function () {
+        function AdminLandingPageCtrl($scope, $state) {
             this.$inject = ["$scope", "$state"];
             $scope.vm = this;
             this.$state = $state;
             this.init();
         }
-        AdminLandingCtrl.prototype.init = function () {
+        AdminLandingPageCtrl.prototype.init = function () {
             this.landingItem = [
                 {
                     title: "csr.admin.landing.list.title",
@@ -18,9 +18,9 @@ var CSR;
                 }
             ];
         };
-        return AdminLandingCtrl;
+        return AdminLandingPageCtrl;
     })();
-    CSR.AdminLandingCtrl = AdminLandingCtrl;
+    CSR.AdminLandingPageCtrl = AdminLandingPageCtrl;
 })(CSR || (CSR = {}));
-register("bannercsr").controller("AdminLandingCtrl", CSR.AdminLandingCtrl);
-//# sourceMappingURL=adminLandingCtrl.js.map
+register("bannercsr").controller("AdminLandingPageCtrl", CSR.AdminLandingPageCtrl);
+//# sourceMappingURL=adminLandingPageCtrl.js.map
