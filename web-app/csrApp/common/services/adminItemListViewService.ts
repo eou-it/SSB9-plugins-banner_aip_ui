@@ -63,14 +63,14 @@ module CSR {
         getCodeTypes() {
             var request = this.$http({
                 method: "POST",
-                url: "csr/codeTypes"
+                url: "csrTest/codeTypes"
             });
             return request;
         }
         getGridData() {
             var request = this.$http({
                 method:"POST",
-                url: "csr/adminActionItems"
+                url: "csrTest/adminActionItems"
             });
             return request;
         }

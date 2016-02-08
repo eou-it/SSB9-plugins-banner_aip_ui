@@ -26,7 +26,7 @@ var bannerCSRApp = angular.module("bannercsr", [
             controller: "AdminLandingPageCtrl",
             breadcrumb: {
                 label: "Confirmation Management",
-                url: "/landing"
+                url: "/admin/landing"
             }
         },
         "admin-list": {
@@ -35,7 +35,7 @@ var bannerCSRApp = angular.module("bannercsr", [
             controller: "AdminListItemPageCtrl",
             breadcrumb: {
                 label: "Confirmation Maintenance",
-                url: "/list"
+                url: "/admin/list"
             }
         },
         "list": {
@@ -65,7 +65,7 @@ var bannerCSRApp = angular.module("bannercsr", [
 //provider-injector
     .config(["$stateProvider", "$urlRouterProvider", "$locationProvider", "PAGES",
         function($stateProvider, $urlRouteProvider, $locationProvider, PAGES) {
-            $urlRouteProvider.otherwise("/admin/landing");
+            $urlRouteProvider.otherwise("/list");
 
             angular.forEach(PAGES, function(item, state) {
                 $stateProvider.state(state, {

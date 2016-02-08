@@ -15,7 +15,7 @@ var CSR;
             var existItemTitle = Object.keys(this.breadcrumbs);
             var itemTitle = Object.keys(item)[0];
             if (existItemTitle.indexOf(itemTitle) === -1) {
-                item[itemTitle] = item[itemTitle].indexOf("/csr#/admin") === -1 ? "/csr#/admin".concat(item[itemTitle]) : item[itemTitle];
+                item[itemTitle] = Application.getApplicationPath().indexOf("csr#") === -1 ? "/csr#/".concat(item[itemTitle]) : item[itemTitle];
                 this.breadcrumbs[itemTitle] = item[itemTitle];
             }
             else {

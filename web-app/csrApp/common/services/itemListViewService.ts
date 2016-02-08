@@ -22,7 +22,7 @@ module CSR {
         getActionItems() {
             this.$http({
                 method:"POST",
-                url: "csr/actionItems"
+                url: "csrTest/actionItems"
             })
             .then((response) => {
                 this.userItems = response.data;

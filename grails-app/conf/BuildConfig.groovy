@@ -18,6 +18,8 @@ grails.project.fork = [
 ]
 grails.plugin.location.'banner-ui-ss'="../banner_ui_ss.git"
 grails.plugin.location.'web-app-extensibility' = "../web-app-extensibility.git"
+grails.plugin.location.'banner-csr' = "../banner_csr.git"
+
 
 grails.project.dependency.resolver = "maven" // or ivy
 grails.project.dependency.resolution = {

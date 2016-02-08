@@ -15,7 +15,7 @@ var CSR;
             var _this = this;
             this.$http({
                 method: "POST",
-                url: "csr/actionItems"
+                url: "csrTest/actionItems"
             })
                 .then(function (response) {
                 _this.userItems = response.data;

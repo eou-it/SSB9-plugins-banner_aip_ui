@@ -23,6 +23,9 @@ modules = {
 
 //        resource url:[plugin: 'banner-csr', file: 'bower_components/angular-common/build/angular-common.js']
     }
+    'csrCheck' {
+        resource url:[plugin: 'banner-csr-ui', file: 'csrApp/csrCheck.js']
+    }
     'bannerCSRUI' {
         dependsOn 'bannerWebLTR, bootstrap'
         dependsOn 'bannerCSRApp'
