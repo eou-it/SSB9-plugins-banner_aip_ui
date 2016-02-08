@@ -4,7 +4,14 @@
 declare var register;
 
 module CSR {
-    export class ItemConfirmCtrl {
+
+    interface IItemConfirmCtrl {
+        actionItems: {group: string[], item: {}};
+        getItems(id: string|number): {group: string[], item: {}};
+        confirmItem(id: string|number): void;
+    }
+
+    export class ItemConfirmCtrl implements IItemConfirmCtrl{
         $inject = ["$scope", "$stateParams", "$state", "ItemListViewService"];
         itemListViewService;
         actionItems;
@@ -13,26 +20,32 @@ module CSR {
             $scope.vm = this;
             this.itemListViewService = ItemListViewService;
             this.$state = $state;
+            this.init($stateParams.itemId);
+        }
+        init(itemId) {
             this.actionItems = {
                 group: [],
                 item: {}
             };
-            this.getItem($stateParams.itemId);
+            this.actionItems = this.getItems(itemId);
         }
-        init() {
-        }
-        getItem(id) {
+        getItems(id: string|number) {
+            var actionItems = {
+                group: [],
+                item: {}
+            };
             angular.forEach(this.itemListViewService.userItems, (item) => {
                 var items = item.items.filter((_item) => {
                     return _item.id == id;
                 });
                 if (items.length!==0) {
-                    this.actionItems.group.push(item.info.title);
-                    this.actionItems.item = items[0];
+                    actionItems.group.push(item.info.title);
+                    actionItems.item = items[0];
                 }
-            })
+            });
+            return actionItems;
         }
-        confirmItem(id) {
+        confirmItem(id: string|number) {
             this.itemListViewService.confirmItem(id);
             this.$state.go("list");
         }

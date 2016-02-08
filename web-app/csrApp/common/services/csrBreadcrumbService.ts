@@ -4,7 +4,17 @@ declare var BreadCrumbAndPageTitle;
 declare var Application;
 
 module CSR {
-    export class CsrBreadcrumbService {
+    interface IBreadcrumbItem {
+        url: string;
+        title: string;
+    }
+    interface ICsrBreadcrumbService {
+        breadcrumbs: {};
+        updateBreadcrumb(item:IBreadcrumbItem): void;
+        draw(title: string): void
+    }
+
+    export class CsrBreadcrumbService implements ICsrBreadcrumbService{
         $inject = ["$location"];
         breadcrumbs: {};
         $location;
@@ -15,13 +25,12 @@ module CSR {
         init() {
             this.breadcrumbs = {};
         }
-        updateBreadcrumb(item) {
+        updateBreadcrumb(item: IBreadcrumbItem) {
             var existItemTitle = Object.keys(this.breadcrumbs);
-            var itemTitle = Object.keys(item)[0];
-
+            var itemTitle = item.title;
             if(existItemTitle.indexOf(itemTitle)===-1) {
-                item[itemTitle] = Application.getApplicationPath().indexOf("csr#")===-1 ? "/csr#/".concat(item[itemTitle]) : item[itemTitle];
-                this.breadcrumbs[itemTitle] = item[itemTitle];
+                item.url = Application.getApplicationPath().indexOf("csr#")===-1 ? "/csr#".concat(item.url) : item.url;
+                this.breadcrumbs[itemTitle] = item.url
             } else {
                 var temp = {};
                 existItemTitle = existItemTitle.slice(0, existItemTitle.indexOf(itemTitle) + 1);
@@ -32,8 +41,7 @@ module CSR {
             }
             this.draw(item.title);
         }
-        draw(title) {
-            var allPageTitle = Object.keys(this.breadcrumbs);
+        draw(title: string) {
             var updatedHeaderAttributes = {
                 "pageTitle": title,
                 "breadcrumb":this.breadcrumbs

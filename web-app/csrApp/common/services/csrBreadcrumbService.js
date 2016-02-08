@@ -13,10 +13,10 @@ var CSR;
         CsrBreadcrumbService.prototype.updateBreadcrumb = function (item) {
             var _this = this;
             var existItemTitle = Object.keys(this.breadcrumbs);
-            var itemTitle = Object.keys(item)[0];
+            var itemTitle = item.title;
             if (existItemTitle.indexOf(itemTitle) === -1) {
-                item[itemTitle] = Application.getApplicationPath().indexOf("csr#") === -1 ? "/csr#/".concat(item[itemTitle]) : item[itemTitle];
-                this.breadcrumbs[itemTitle] = item[itemTitle];
+                item.url = Application.getApplicationPath().indexOf("csr#") === -1 ? "/csr#".concat(item.url) : item.url;
+                this.breadcrumbs[itemTitle] = item.url;
             }
             else {
                 var temp = {};
@@ -29,7 +29,6 @@ var CSR;
             this.draw(item.title);
         };
         CsrBreadcrumbService.prototype.draw = function (title) {
-            var allPageTitle = Object.keys(this.breadcrumbs);
             var updatedHeaderAttributes = {
                 "pageTitle": title,
                 "breadcrumb": this.breadcrumbs

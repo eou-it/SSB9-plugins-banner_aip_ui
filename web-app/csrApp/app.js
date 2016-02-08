@@ -73,7 +73,7 @@ var bannerCSRApp = angular.module("bannercsr", [
                     templateUrl: item.templateUrl,
                     controller: item.controller,
                     onEnter: function($stateParams, $filter) {
-                        this.data.breadcrumbs[item.breadcrumb.label] = item.breadcrumb.url;
+                        this.data.breadcrumbs.url = item.breadcrumb.url;
                         this.data.breadcrumbs.title = item.breadcrumb.label;
                     },
                     data: {

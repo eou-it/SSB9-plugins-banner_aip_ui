@@ -10,6 +10,7 @@ var CSR;
             this.$state = $state;
             this.itemListViewService = ItemListViewService;
             this.actionItems = [];
+            //sync with service's userItems
             $scope.$watch(function () {
                 return _this.itemListViewService.userItems;
             }, function (newVal) {

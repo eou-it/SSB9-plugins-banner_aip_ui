@@ -7,25 +7,30 @@ var CSR;
             $scope.vm = this;
             this.itemListViewService = ItemListViewService;
             this.$state = $state;
+            this.init($stateParams.itemId);
+        }
+        ItemConfirmCtrl.prototype.init = function (itemId) {
             this.actionItems = {
                 group: [],
                 item: {}
             };
-            this.getItem($stateParams.itemId);
-        }
-        ItemConfirmCtrl.prototype.init = function () {
+            this.actionItems = this.getItems(itemId);
         };
-        ItemConfirmCtrl.prototype.getItem = function (id) {
-            var _this = this;
+        ItemConfirmCtrl.prototype.getItems = function (id) {
+            var actionItems = {
+                group: [],
+                item: {}
+            };
             angular.forEach(this.itemListViewService.userItems, function (item) {
                 var items = item.items.filter(function (_item) {
                     return _item.id == id;
                 });
                 if (items.length !== 0) {
-                    _this.actionItems.group.push(item.info.title);
-                    _this.actionItems.item = items[0];
+                    actionItems.group.push(item.info.title);
+                    actionItems.item = items[0];
                 }
             });
+            return actionItems;
         };
         ItemConfirmCtrl.prototype.confirmItem = function (id) {
             this.itemListViewService.confirmItem(id);
