@@ -15,7 +15,7 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
-        'bower_components/jquery/dist/jquery.js',
+        'bower_components/jquery/jquery.js',
         'node_modules/angular/angular.js',
         'node.modules/angular-animate/angular-animate.js',
         'node_modules/angular-aria/angular-aria.js',
