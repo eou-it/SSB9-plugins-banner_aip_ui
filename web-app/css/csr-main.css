@@ -23,7 +23,7 @@ csr-list .csr-list-container {
           padding: 3px 10px;
           border-radius: 50%;
           box-shadow: 4px 4px 4px;
-          margin-left: 10 px; }
+          margin-left: 10px; }
       csr-list .csr-list-container .header .row.list-item .description {
         line-height: 1.5;
         padding-left: 0;
