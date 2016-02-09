@@ -17,6 +17,7 @@ module CSRUI {
                 title: "=?",
                 description: "=?",
                 header: "=",
+                dscparams:"=",
                 click:"&"
             }
         }
@@ -28,10 +29,10 @@ module CSRUI {
                 var returnClass = "";
                 switch(key) {
                     case "title":
-                        returnClass = "col-xs-9 col-sm-4";
+                        returnClass = "col-xs-8 col-sm-4";
                         break;
                     case "state":
-                        returnClass = "col-xs-3 col-sm-2";
+                        returnClass = "col-xs-4 col-sm-2";
                         break;
                     case "description":
                         returnClass = "col-xs-12 col-sm-6";

@@ -2,11 +2,11 @@
     <div class="header" ng-if="title">
         <div class="row list-item">
             <div class="col-xs-12 col-sm-5 cell title">
-                <span>{{title}}: </span>
+                <span>{{title|i18n}}: </span>
                 <span class="badge">{{data.length}}</span>
             </div>
             <div class="col-sm-7 cell description">
-                <span>{{description}}</span>
+                <span>{{description|i18n:dscparams}}</span>
             </div>
         </div>
     </div>

@@ -3,27 +3,21 @@ var CSR;
 (function (CSR) {
     var ItemListViewService = (function () {
         function ItemListViewService($http, $q) {
+            var _this = this;
             this.$http = $http;
             this.$q = $q;
-            this.userItems = {};
-            this.init();
-        }
-        ItemListViewService.prototype.init = function () {
-            this.getActionItems();
-        };
-        ItemListViewService.prototype.getActionItems = function () {
-            var _this = this;
-            this.$http({
-                method: "POST",
-                url: "csrTest/actionItems"
-            })
-                .then(function (response) {
+            this.getActionItems().then(function (response) {
                 _this.userItems = response.data;
             }, function (errorResponse) {
                 console.log(errorResponse);
             });
-            ;
-            return this.userItems;
+        }
+        ItemListViewService.prototype.getActionItems = function () {
+            var request = this.$http({
+                method: "POST",
+                url: "csrTest/actionItems"
+            });
+            return request;
         };
         ItemListViewService.prototype.confirmItem = function (id) {
             //TODO: update datbase

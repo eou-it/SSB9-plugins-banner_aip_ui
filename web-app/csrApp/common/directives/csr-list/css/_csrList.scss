@@ -52,6 +52,10 @@ csr-list {
         .cell.title {
           font-weight: bold;
           font-size: 1.3em;
+          white-space: nowrap;
+          -ms-text-overflow: ellipsis;
+          text-overflow: ellipsis;
+          overflow: hidden;
         }
         .cell.state {
           padding: 0;
@@ -62,7 +66,7 @@ csr-list {
         .badge {
           border-radius: 4px;
           color: #3a3737;
-          margin-right: 20px;
+          margin-right: 8px;
           padding: 7px 10px;
         }
         .cell.description {
@@ -70,6 +74,7 @@ csr-list {
         }
       }
     }
+    //small size (tablet)
     @media screen and (max-width: 768px) {
       .header {
         .list-item {
@@ -88,9 +93,14 @@ csr-list {
           .badge {
             float: right;
           }
-          .description {
-            margin-top: 25px;
-          }
+        }
+      }
+    }
+    //extra small size (phone)
+    @media screen and (max-width: 480px) {
+      .list-body {
+        .description {
+          margin-top: 35px;
         }
       }
     }

@@ -4,32 +4,53 @@ declare var register;
 
 module CSR {
 
-    export class ItemListViewService  {
+    interface IActionItem {
+        description: string;
+        id: number|string;
+        name: string;
+        state: string;
+        title: string;
+    }
+    export interface IUserItem {
+        header:string[];
+        name: string;
+        dscParams?:string[];
+        items: IActionItem[];
+        info: {
+            description: string;
+            title: string;
+        }
+    }
+    interface IActionItemResponse {
+        data: IUserItem[];
+    }
+
+    interface IItemListViewService {
+        userItems: IUserItem[];
+        getActionItems():ng.IHttpPromise<IActionItem>
+        confirmItem(id:string|number):void;
+    }
+
+    export class ItemListViewService implements IItemListViewService{
         static $inject=["$http", "$q"];
         $http: ng.IHttpService;
         $q:ng.IQService;
-        userItems;
+        userItems: IUserItem[];
         constructor($http:ng.IHttpService, $q:ng.IQService) {
             this.$http = $http;
             this.$q = $q;
-            this.userItems = {};
-            this.init();
-        }
-        init() {
-            this.getActionItems();
-        }
-
-        getActionItems() {
-            this.$http({
-                method:"POST",
-                url: "csrTest/actionItems"
-            })
-            .then((response) => {
+            this.getActionItems().then((response:IActionItemResponse) => {
                 this.userItems = response.data;
             }, (errorResponse) => {
                 console.log(errorResponse);
-            });;
-            return this.userItems;
+            });
+        }
+        getActionItems() {
+           var request = this.$http({
+                method:"POST",
+                url: "csrTest/actionItems"
+            });
+            return request;
         }
         confirmItem(id) {
             //TODO: update datbase

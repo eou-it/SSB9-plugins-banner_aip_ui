@@ -15,15 +15,18 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
-        'bower_components/jquery/jquery.js',
+        'node_modules/jquery/dist/jquery.js',
         'node_modules/angular/angular.js',
-        'node.modules/angular-animate/angular-animate.js',
+        'node_modules/angular-mocks/angular-mocks.js',
+        'node_modules/angular-animate/angular-animate.js',
         'node_modules/angular-aria/angular-aria.js',
         'node_modules/angular-messages/angular-messages.js',
         'node_modules/angular-resource/angular-resource.js',
+        'node_modules/angular-ui-router/build/angular-ui-router.js',
         'node_modules/angular-route/angular-route.js',
         'node_modules/angular-sanitize/angular-sanitize.js',
-        'node_modules/angular-ui-route/build/angular-ui-route.js',
+        'node_modules/angular-ui-bootstrap/dist/ui-bootstrap-tpls.js',
+        '../../banner_ui_ss.git/web-app/angular-components/js/xe-ui-components.js',
         'csrApp/utils/register.js',
         'csrApp/app.js',
         'csrApp/**/*.js',
