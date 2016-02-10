@@ -32,6 +32,7 @@ modules = {
     'bannerCSRUIRTL' {
         dependsOn 'bannerCSRUI'
         dependsOn 'bannerWebRTL'
+        resource url:[plugin: 'banner-ui-ss', file: 'bootstrap/css/bootstrap-rtl.css']
         resource url:[plugin: 'banner-csr-ui', file: 'css/xe-ui-components-rtl.css']
         resource url:[plugin: 'banner-csr-ui', file: 'css/csr-main-rtl.css']
     }

@@ -27,18 +27,19 @@ module CSR {
 
     interface IItemListViewService {
         userItems: IUserItem[];
-        getActionItems():ng.IHttpPromise<IActionItem>
+        getActionItems():ng.IHttpPromise<IUserItem[]>;
         confirmItem(id:string|number):void;
     }
 
     export class ItemListViewService implements IItemListViewService{
-        static $inject=["$http", "$q"];
+        static $inject=["$http"];
         $http: ng.IHttpService;
-        $q:ng.IQService;
         userItems: IUserItem[];
-        constructor($http:ng.IHttpService, $q:ng.IQService) {
+        constructor($http:ng.IHttpService) {
             this.$http = $http;
-            this.$q = $q;
+            this.init();
+        }
+        init() {
             this.getActionItems().then((response:IActionItemResponse) => {
                 this.userItems = response.data;
             }, (errorResponse) => {

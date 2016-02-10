@@ -2,16 +2,18 @@
 var CSR;
 (function (CSR) {
     var ItemListViewService = (function () {
-        function ItemListViewService($http, $q) {
-            var _this = this;
+        function ItemListViewService($http) {
             this.$http = $http;
-            this.$q = $q;
+            this.init();
+        }
+        ItemListViewService.prototype.init = function () {
+            var _this = this;
             this.getActionItems().then(function (response) {
                 _this.userItems = response.data;
             }, function (errorResponse) {
                 console.log(errorResponse);
             });
-        }
+        };
         ItemListViewService.prototype.getActionItems = function () {
             var request = this.$http({
                 method: "POST",
@@ -29,7 +31,7 @@ var CSR;
                 });
             });
         };
-        ItemListViewService.$inject = ["$http", "$q"];
+        ItemListViewService.$inject = ["$http"];
         return ItemListViewService;
     })();
     CSR.ItemListViewService = ItemListViewService;
