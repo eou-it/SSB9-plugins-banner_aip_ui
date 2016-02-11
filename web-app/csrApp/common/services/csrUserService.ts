@@ -34,7 +34,7 @@ module CSR {
         getUserInfo() {
             var request = this.$http({
                 method: "POST",
-                url: "csrTest/userInfo"
+                url: "csr/userInfo"
             });
             return request;
         }

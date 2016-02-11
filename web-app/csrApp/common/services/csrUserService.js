@@ -14,7 +14,7 @@ var CSR;
         UserService.prototype.getUserInfo = function () {
             var request = this.$http({
                 method: "POST",
-                url: "csrTest/userInfo"
+                url: "csr/userInfo"
             });
             return request;
         };

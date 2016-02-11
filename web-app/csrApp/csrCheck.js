@@ -5,7 +5,7 @@
 (function() {
     $(document).ready(function(){
         $.ajax({
-            url:"csrTest/checkActionItem"
+            url:"csr/checkActionItem"
         })
             .done(function(response) {
                 if (response.isActionItem) {
