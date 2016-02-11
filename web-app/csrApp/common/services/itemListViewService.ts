@@ -49,7 +49,7 @@ module CSR {
         getActionItems() {
            var request = this.$http({
                 method:"POST",
-                url: "csrTest/actionItems"
+                url: "csr/actionItems"
             });
             return request;
         }

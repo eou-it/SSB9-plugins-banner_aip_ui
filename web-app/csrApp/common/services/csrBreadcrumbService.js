@@ -5,17 +5,16 @@ var CSR;
         function CsrBreadcrumbService($location) {
             this.$inject = ["$location"];
             this.$location = $location;
-            this.init();
-        }
-        CsrBreadcrumbService.prototype.init = function () {
             this.breadcrumbs = {};
-        };
+        }
         CsrBreadcrumbService.prototype.updateBreadcrumb = function (item) {
             var _this = this;
             var existItemTitle = Object.keys(this.breadcrumbs);
             var itemTitle = item.title;
             if (existItemTitle.indexOf(itemTitle) === -1) {
-                item.url = Application.getApplicationPath().indexOf("csr#") === -1 ? "/csr#".concat(item.url) : item.url;
+                //var applicationPath = window.location.href.split("#")[0];
+                item.url = window.location.href.indexOf("csr#") !== -1 ? "/csr#".concat(item.url) : item.url;
+                //item.url = Application.getApplicationPath().indexOf("csr#")===-1 ? "/csr#".concat(item.url) : item.url;
                 this.breadcrumbs[itemTitle] = item.url;
             }
             else {

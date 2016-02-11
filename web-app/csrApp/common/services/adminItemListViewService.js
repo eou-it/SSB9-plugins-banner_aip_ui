@@ -28,14 +28,14 @@ var CSR;
         AdminItemListViewService.prototype.getCodeTypes = function () {
             var request = this.$http({
                 method: "POST",
-                url: "csrTest/codeTypes"
+                url: "csr/codeTypes"
             });
             return request;
         };
         AdminItemListViewService.prototype.getGridData = function () {
             var request = this.$http({
                 method: "POST",
-                url: "csrTest/adminActionItems"
+                url: "csr/adminActionItems"
             });
             return request;
         };
