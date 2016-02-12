@@ -22,6 +22,7 @@ module CSR {
     export class UserService implements IUserService{
         static $inject=["$http", "$q"];
         $http:ng.IHttpService;
+        $q:ng.IQService;
         userInfo: IuserInfo;
         constructor($http:ng.IHttpService) {
             this.$http = $http;

@@ -1,4 +1,4 @@
-<div class="csr-list-container">
+<div class="csr-list-container" role="group">
     <div class="header" ng-if="title">
         <div class="row list-item">
             <div class="col-xs-12 col-sm-5 cell title">
@@ -11,8 +11,8 @@
         </div>
     </div>
     <hr/>
-    <div class="list-body">
-        <div class="row list-item" ng-repeat="row in data" ng-click="openConfirm(row)">
+    <div class="list-body" role="list" aria-label="{{title|i18n}}">
+        <div class="row list-item" ng-repeat="row in data" ng-click="openConfirm(row)" role="listitem">
             <div ng-repeat="key in header" class="{{styleFunction(key)}}" >
                 <span ng-class="{'badge pending':key==='state'&&row[key]==='csr.user.list.item.state.pending',
                     'badge approved':key==='state'&&row[key]==='csr.user.list.item.state.complete'}">
