@@ -4,14 +4,16 @@
 package net.hedtech.banner.csr
 
 import grails.converters.JSON
-
+import net.hedtech.banner.csr.ActionItemList
 import java.security.InvalidParameterException
 import org.springframework.context.i18n.LocaleContextHolder
+import javax.persistence.*
 
 class CsrController {
 
     static defaultAction = "listItems"
     def model=[:]
+    def actionItemListService
 
     // Entry point. Load front-end resources & layout template
     def listItems() {
@@ -84,6 +86,19 @@ class CsrController {
         ]
         render actionItems as JSON
     }
+
+
+    def actionItemsNew() {
+
+        List<ActionItemList> itemList = actionItemListService.listActionItems(  )
+
+        Map myItemsList = itemList.actionItems
+
+        //render myItemsList as JSON
+        return myItemsList
+
+    }
+
 
 
     // Return login user's information
