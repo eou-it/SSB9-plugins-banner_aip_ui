@@ -89,13 +89,16 @@ class CsrController {
 
 
     def actionItemsNew() {
+        
+        def getItems = ActionItemList.fetchActionItems()
+        def itemsList = []
+        getItems?.each {
+            itemsList.add(it.title)
+        }
 
-        List<ActionItemList> itemList = actionItemListService.listActionItems(  )
+        def model = [title: itemsList]
 
-        Map myItemsList = itemList.actionItems
-
-        //render myItemsList as JSON
-        return myItemsList
+        return model
 
     }
 
