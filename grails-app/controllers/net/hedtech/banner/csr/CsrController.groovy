@@ -4,6 +4,7 @@
 package net.hedtech.banner.csr
 
 import grails.converters.JSON
+import net.hedtech.banner.exceptions.ApplicationException
 import net.hedtech.banner.csr.ActionItemList
 import java.security.InvalidParameterException
 import org.springframework.context.i18n.LocaleContextHolder
@@ -59,6 +60,7 @@ class CsrController {
     }
 
     // Return user's action items
+    /*
     def actionItems() {
         //TODO: get user's assigned action item group  (service call)
         //TODO: get all action items in group (service call)
@@ -86,22 +88,13 @@ class CsrController {
         ]
         render actionItems as JSON
     }
+    */
 
-
-    def actionItemsNew() {
-        
-        def getItems = ActionItemList.fetchActionItems()
-        def itemsList = []
-        getItems?.each {
-            itemsList.add(it.title)
-        }
-
-        def model = [title: itemsList]
-
-        return model
+    def actionItems( ) {
+        def actionItems = actionItemListService.listActionItems( )
+        render actionItems as JSON
 
     }
-
 
 
     // Return login user's information

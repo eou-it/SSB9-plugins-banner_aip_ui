@@ -26,8 +26,7 @@ hibernate {
 //   	naming_strategy = "org.hibernate.cfg.ImprovedNamingStrategy"
    	dialect = "org.hibernate.dialect.Oracle10gDialect"
     config.location = [
-            "classpath:hibernate-banner-csr-ui.cfg.xml",
-
+            "classpath:hibernate-banner-csr.cfg.xml",
             "classpath:hibernate-banner-core.cfg.xml",
             "classpath:hibernate-banner-general-common.cfg.xml",
             "classpath:hibernate-banner-general-person.cfg.xml",

@@ -16,7 +16,6 @@ import net.hedtech.banner.general.person.PersonUtility
 import net.hedtech.banner.security.BannerUser
 import net.hedtech.banner.csr.ActionItemList
 import net.hedtech.banner.testing.BaseIntegrationTestCase
-//import net.hedtech.banner.student.session.StudentApplicationSessionManager
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
@@ -31,8 +30,7 @@ import org.springframework.security.core.context.SecurityContextHolder
  */
 class CsrControllerIntegrationTests extends BaseIntegrationTestCase {
     def selfServiceBannerAuthenticationProvider
-    //def controller = new CsrController()
-    //def actionItemListService
+    def actionItemListService
 
 
     @Before
@@ -52,21 +50,11 @@ class CsrControllerIntegrationTests extends BaseIntegrationTestCase {
 
     @Test
     void testFetchActionItems() {
-        //println controller.listItems()
-        //controller = new CsrController()
         def person = PersonUtility.getPerson( "ADVA00006" )
         assertNotNull person
         def auth = selfServiceBannerAuthenticationProvider.authenticate(
                 new UsernamePasswordAuthenticationToken( person.bannerId, '111111' ) )
         SecurityContextHolder.getContext().setAuthentication( auth )
-        /*
-        Long myNoteId = StudentNote.findBySummary( "And it’s likely they’d have killed him had not Casey raised his hand." ).id
-        def result = controller.viewNote( myNoteId )
-        assertEquals( 200, controller.response.status )
-        */
-       // def List<ActionItemList> getActionItems = actionItemListService.listActionItems()
-        //assertFalse actionItemsList.isEmpty(  )
-
-        println controller.actionItemsNew()
+        println controller.actionItems( )
     }
 }
