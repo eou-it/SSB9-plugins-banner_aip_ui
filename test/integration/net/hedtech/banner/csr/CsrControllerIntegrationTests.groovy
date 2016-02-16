@@ -21,6 +21,7 @@ import org.junit.Before
 import org.junit.Test
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.context.SecurityContextHolder
+import org.springframework.security.core.context.SecurityContextHolder as SCH
 
 /**
  * CsrControllerIntegrationTests.
@@ -55,6 +56,9 @@ class CsrControllerIntegrationTests extends BaseIntegrationTestCase {
         def auth = selfServiceBannerAuthenticationProvider.authenticate(
                 new UsernamePasswordAuthenticationToken( person.bannerId, '111111' ) )
         SecurityContextHolder.getContext().setAuthentication( auth )
-        println controller.actionItems( )
+        controller.actionItems()
+        assertEquals 200, controller.response.status
+        def answer = JSON.parse( controller.response.contentAsString )
+        println answer
     }
 }

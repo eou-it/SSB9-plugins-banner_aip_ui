@@ -90,12 +90,18 @@ class CsrController {
     }
     */
 
-    def actionItems( ) {
-        def actionItems = actionItemListService.listActionItems( )
-        render actionItems as JSON
 
+    public def actionItems( ) {
+        def actionItems = actionItemListService.listActionItems()
+
+        Map model = [name: "registration",
+                     info: getActionGroupDescription("registration"),
+                     header: ["title", "state", "description"],
+                     items: actionItems
+        ]
+
+        render model as JSON
     }
-
 
     // Return login user's information
     def userInfo() {
