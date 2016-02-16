@@ -92,15 +92,24 @@ class CsrController {
 
 
     public def actionItems( ) {
+        def itemsList = []
         def actionItems = actionItemListService.listActionItems()
 
-        Map model = [name: "registration",
-                     info: getActionGroupDescription("registration"),
-                     header: ["title", "state", "description"],
-                     items: actionItems
-        ]
+        actionItems?.each { id ->
+            def myItems = [
+                    name: "registration",
+                    info: getActionGroupDescription("registration"),
+                    header: ["title", "state", "description"],
+                    items: [id: id.id,
+                            name: id.title,
+                            state: "csr.user.list.item.state.pending",
+                            title: id.title,
+                            description: id.description]
+            ]
+            itemsList << myItems
+        }
 
-        render model as JSON
+        render itemsList as JSON
     }
 
     // Return login user's information
