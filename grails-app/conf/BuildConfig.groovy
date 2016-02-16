@@ -16,7 +16,7 @@ grails.war.resources = { stagingDir ->
 }
 */
 
-grails.plugin.location.'banner-student-common'="../banner_csr.git"
+grails.plugin.location.'banner-car'="../banner_csr.git"
 
 grails.project.dependency.resolver = "maven" // or maven
 
