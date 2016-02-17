@@ -88,6 +88,8 @@ csr-list .csr-list-container {
 
 #content {
   overflow: hidden; }
+  #content #title-panel h1 {
+    line-height: normal; }
 
 #breadcrumbHeader .breadcrumbButton {
   font-size: 0.8em; }

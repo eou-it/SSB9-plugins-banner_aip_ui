@@ -1,8 +1,8 @@
 <div class="csr-list-container" role="group">
-    <div class="header" ng-if="title">
+    <div class="header" ng-if="itemtitle">
         <div class="row list-item">
             <div class="col-xs-12 col-sm-5 cell title">
-                <h2>{{title|i18n}}: </h2>
+                <h2>{{itemtitle|i18n}}: </h2>
                 <span class="badge">{{data.length}}</span>
             </div>
             <div class="col-sm-7 cell description">
@@ -11,7 +11,7 @@
         </div>
     </div>
     <hr/>
-    <div class="list-body" role="list" aria-label="{{title|i18n}}">
+    <div class="list-body" role="list" aria-label="{{itemtitle|i18n}}">
         <div class="row list-item" ng-repeat="row in data" ng-click="openConfirm(row)" role="listitem">
             <div ng-repeat="key in header" class="{{styleFunction(key)}}" >
                 <h3 ng-if="key==='title'">{{row[key]|i18n}}</h3>

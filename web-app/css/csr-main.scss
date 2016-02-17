@@ -5,6 +5,11 @@
 }
 #content {
   overflow:hidden;
+  #title-panel {
+    h1 {
+      line-height: normal;
+    }
+  }
 }
 #breadcrumbHeader {
 

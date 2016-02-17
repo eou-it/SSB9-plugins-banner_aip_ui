@@ -14,7 +14,7 @@ module CSRUI {
             this.restrict = "AE";
             this.scope = {
                 data: "=",
-                title: "=?",
+                itemtitle: "=?",
                 description: "=?",
                 header: "=",
                 dscparams:"=",
