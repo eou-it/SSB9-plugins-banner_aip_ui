@@ -22,8 +22,14 @@ csr-list {
         vertical-align: middle;
         padding: 16px 0;
         .title {
-          font-size: 1.8em;
-          white-space: nowrap;
+          h2 {
+            font-size: 1.8em;
+            white-space: nowrap;
+            display: inline;
+            margin: 0;
+            font-weight: bold;
+            line-height: normal;
+          }
           .badge {
             background-color: $badge-color;
             border: 1px solid $badge-border-color;
@@ -50,12 +56,16 @@ csr-list {
           background-color: lighten($banner-color, 50%);
         }
         .cell.title {
-          font-weight: bold;
-          font-size: 1.3em;
-          white-space: nowrap;
-          -ms-text-overflow: ellipsis;
-          text-overflow: ellipsis;
-          overflow: hidden;
+          h3 {
+            font-weight: bold;
+            font-size: 1.3em;
+            white-space: nowrap;
+            -ms-text-overflow: ellipsis;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            margin:0;
+            line-height: normal;
+          }
         }
         .cell.state {
           padding: 0;

@@ -2,7 +2,7 @@
     <div class="header" ng-if="title">
         <div class="row list-item">
             <div class="col-xs-12 col-sm-5 cell title">
-                <span>{{title|i18n}}: </span>
+                <h2>{{title|i18n}}: </h2>
                 <span class="badge">{{data.length}}</span>
             </div>
             <div class="col-sm-7 cell description">
@@ -14,7 +14,8 @@
     <div class="list-body" role="list" aria-label="{{title|i18n}}">
         <div class="row list-item" ng-repeat="row in data" ng-click="openConfirm(row)" role="listitem">
             <div ng-repeat="key in header" class="{{styleFunction(key)}}" >
-                <span ng-class="{'badge pending':key==='state'&&row[key]==='csr.user.list.item.state.pending',
+                <h3 ng-if="key==='title'">{{row[key]|i18n}}</h3>
+                <span ng-if="key!=='title'" ng-class="{'badge pending':key==='state'&&row[key]==='csr.user.list.item.state.pending',
                     'badge approved':key==='state'&&row[key]==='csr.user.list.item.state.complete'}">
                     {{row[key]|i18n}}
                 </span>
