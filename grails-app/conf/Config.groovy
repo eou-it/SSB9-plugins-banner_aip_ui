@@ -58,6 +58,15 @@ grails.converters.domain.include.version = true
 grails.converters.json.date = "javascript"
 grails.converters.json.pretty.print = true
 
+banner {
+    sso {
+        authenticationProvider = 'default'
+        authenticationAssertionAttribute = 'udcId'
+    }
+}
+
+ssbEnabled = true
+
 // enabled native2ascii conversion of i18n properties files
 grails.enable.native2ascii = false
 
