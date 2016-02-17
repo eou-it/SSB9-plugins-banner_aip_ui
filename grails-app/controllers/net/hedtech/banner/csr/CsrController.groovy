@@ -93,23 +93,29 @@ class CsrController {
 
     public def actionItems( ) {
         def itemsList = []
-        def actionItems = actionItemListService.listActionItems()
 
-        actionItems?.each { id ->
-            def myItems = [
-                    name: "registration",
-                    info: getActionGroupDescription("registration"),
-                    header: ["title", "state", "description"],
-                    items: [id: id.id,
-                            name: id.title,
-                            state: "csr.user.list.item.state.pending",
-                            title: id.title,
-                            description: id.description]
-            ]
-            itemsList << myItems
+        try {
+            def actionItems = actionItemListService.listActionItems()
+
+            actionItems?.each { id ->
+                def myItems = [
+                        name  : "registration",
+                        info  : getActionGroupDescription("registration"),
+                        header: ["title", "state", "description"],
+                        items : [id         : id.id,
+                                 name       : id.title,
+                                 state      : "csr.user.list.item.state.pending",
+                                 title      : id.title,
+                                 description: id.description]
+                ]
+                itemsList << myItems
+            }
+
+            render itemsList as JSON
+        } catch(Exception e) {
+            println e
+            println e.stackTrace
         }
-
-        render itemsList as JSON
     }
 
     // Return login user's information

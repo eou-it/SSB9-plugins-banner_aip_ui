@@ -15,6 +15,8 @@
     <g:if test="${message(code: 'default.language.direction')  == 'rtl'}">
         <r:require modules="bannerCSRUIRTL"/>
     </g:if>
+    <meta name="menuEndPoint" content="${g.createLink(controller: 'selfServiceMenu', action: 'data')}"/>
+    <meta name="menuBaseURL" content="${createLink(uri: '/ssb')}" />
     <script type="text/javascript">
         console.log("run i18n setup");
         <g:i18n_setup/>
