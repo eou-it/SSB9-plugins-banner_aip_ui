@@ -96,25 +96,27 @@ class CsrController {
 
         try {
             def actionItems = actionItemListService.listActionItems()
-
+            def myItems = [
+                    name  : "registration",
+                    info  : getActionGroupDescription("registration"),
+                    header: ["title", "state", "description"]
+                    ]
+            def items = []
             actionItems?.each { id ->
-                def myItems = [
-                        name  : "registration",
-                        info  : getActionGroupDescription("registration"),
-                        header: ["title", "state", "description"],
-                        items : [id         : id.id,
-                                 name       : id.title,
-                                 state      : "csr.user.list.item.state.pending",
-                                 title      : id.title,
-                                 description: id.description]
-                ]
-                itemsList << myItems
+                def item = [
+                        id        : id.id,
+                        name       : id.title,
+                        state      : "csr.user.list.item.state.pending",
+                        title      : id.title,
+                        description: id.description
+                        ]
+                items << item
             }
-
+            myItems.items = items
+            itemsList << myItems
             render itemsList as JSON
         } catch(Exception e) {
-            println e
-            println e.stackTrace
+            org.codehaus.groovy.runtime.StackTraceUtils.sanitize(e).printStackTrace()
         }
     }
 
