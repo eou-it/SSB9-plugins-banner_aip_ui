@@ -102,15 +102,15 @@ class CsrController {
                     header: ["title", "state", "description"]
                     ]
             def items = []
-            actionItems?.each { id ->
-                def item = [
-                        id        : id.id,
-                        name       : id.title,
+            actionItems?.each { item ->
+                def actionItem = [
+                        id        : item.id,
+                        name       : item.title,
                         state      : "csr.user.list.item.state.pending",
-                        title      : id.title,
-                        description: id.description
+                        title      : item.title,
+                        description: item.description
                         ]
-                items << item
+                items << actionItem
             }
             myItems.items = items
             itemsList << myItems
