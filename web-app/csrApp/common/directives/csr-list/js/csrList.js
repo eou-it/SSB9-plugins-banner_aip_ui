@@ -17,7 +17,7 @@ var CSRUI;
         }
         CSRListDirective.prototype.compile = function () {
         };
-        CSRListDirective.prototype.link = function (scope, element, attrs) {
+        CSRListDirective.prototype.link = function (scope) {
             scope.styleFunction = function (key) {
                 var returnClass = "";
                 switch (key) {
@@ -28,7 +28,7 @@ var CSRUI;
                         returnClass = "col-xs-4 col-sm-2";
                         break;
                     case "description":
-                        returnClass = "col-xs-12 col-sm-6";
+                        returnClass = "col-xs-12 clearfix col-sm-6 ";
                         break;
                 }
                 return returnClass + " cell " + key;

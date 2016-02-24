@@ -2,6 +2,11 @@ csr-list .csr-list-container {
   border: 1px solid #A4C6E4; }
   csr-list .csr-list-container .row {
     margin: 0; }
+  csr-list .csr-list-container .clearfix {
+    content: " ";
+    display: table; }
+    csr-list .csr-list-container .clearfix:after {
+      clear: both; }
   csr-list .csr-list-container hr {
     margin-top: 0;
     margin-bottom: 0;
@@ -41,10 +46,6 @@ csr-list .csr-list-container {
     csr-list .csr-list-container .list-body .list-item .cell.title h3 {
       font-weight: bold;
       font-size: 1.3em;
-      white-space: nowrap;
-      -ms-text-overflow: ellipsis;
-      text-overflow: ellipsis;
-      overflow: hidden;
       margin: 0;
       line-height: normal; }
     csr-list .csr-list-container .list-body .list-item .cell.state {
@@ -61,13 +62,11 @@ csr-list .csr-list-container {
   @media screen and (max-width: 768px) {
     csr-list .csr-list-container .header .list-item .title .badge {
       float: right; }
-    csr-list .csr-list-container .header .list-item .description {
-      display: none; }
     csr-list .csr-list-container .list-body .list-item .badge {
       float: right; } }
   @media screen and (max-width: 480px) {
     csr-list .csr-list-container .list-body .description {
-      margin-top: 35px; } }
+      padding-top: 8px; } }
 
 .CSR-landing-container {
   padding: 16px; }
