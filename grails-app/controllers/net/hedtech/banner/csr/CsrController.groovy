@@ -7,6 +7,9 @@ import grails.converters.JSON
 import net.hedtech.banner.exceptions.ApplicationException
 import net.hedtech.banner.csr.ActionItem
 import java.security.InvalidParameterException
+import net.hedtech.banner.general.person.PersonUtility
+import net.hedtech.banner.security.BannerUser
+import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.context.i18n.LocaleContextHolder
 import javax.persistence.*
 
@@ -92,16 +95,12 @@ class CsrController {
 
     // Return login user's information
     def userInfo() {
-        //TODO: get login user's info(whatever id) from session
-        //TODO: get necessary user info from DB (service call)
-        //TODO: create return json structure as needed
-        def userInfo = [
-                firstName: "First",
-                lastName: "Last",
-                preferredName: "Test User",
-                graduateCredit: 121
-        ]
-        render userInfo as JSON
+        if(!userPidm) {
+            response.sendError(403)
+            return
+        }
+        def personForCSR = CsrControllerUtils.getPersonForCSR(params, userPidm)
+        render personForCSR as JSON
     }
 
     // It might be better in service in banner_csr.git, not in controller since this shouldn't be able to access from front-end
@@ -156,6 +155,14 @@ class CsrController {
                 item.put("description", "")
         }
         return item
+    }
+
+    private def getUserPidm( ) {
+        def user = SecurityContextHolder?.context?.authentication?.principal
+        if (user instanceof BannerUser) {
+            return user.pidm
+        }
+        return null
     }
 
 }

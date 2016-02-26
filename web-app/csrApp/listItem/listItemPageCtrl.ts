@@ -11,7 +11,8 @@ module CSR {
         userService: CSR.UserService;
         actionItems: IUserItem[];
         openConfirm(row):void;
-        getParams(title:string):string[];
+        getParams(title:string, userInfo:CSR.IUserInfo):string[];
+        styleFunction(key:string):string;
     }
 
     export class ListItemPageCtrl implements IListItemPageCtrl{
@@ -31,22 +32,41 @@ module CSR {
             $scope.$watch (  ( )=> {
                 return this.itemListViewService.userItems;}, (newVal) => {
                 this.actionItems = newVal;
-                angular.forEach(this.actionItems, (item) => {
-                    item.dscParams = this.getParams(item.info.title);
+                this.userService.getUserInfo().then((data) => {
+                    angular.forEach(this.actionItems, (item) => {
+                        item.dscParams = this.getParams(item.info.title, data);
+                    })
                 })
             });
         }
         openConfirm(row) {
-            this.$state.go("listConfirm", {itemId:row.id});
+            var elem = angular.element(document.querySelector('[ng-app]'));
+            var $rootScope = elem.injector().get("$rootScope");
+            $rootScope.$state.go("listConfirm", {itemId:row.id});
         }
-        getParams(title) {
+        styleFunction(key) {
+            var returnClass = "";
+            switch (key) {
+                case "title":
+                    returnClass = "col-xs-8 col-sm-4";
+                    break;
+                case "state":
+                    returnClass = "col-xs-4 col-sm-2";
+                    break;
+                case "description":
+                    returnClass = "col-xs-12 clearfix col-sm-6 ";
+                    break;
+            }
+            return returnClass + " cell " + key;
+        }
+        getParams(title, userInfo) {
             var param = [];
             switch (title) {
                 case "csr.user.list.header.title.registration":
-                    param.push(this.userService.userInfo.preferredName||this.userService.userInfo.firstName);
+                    param.push(userInfo.fullName||userInfo.firstName);
                     break;
                 case "csr.user.list.header.title.graduation":
-                    param.push(this.userService.userInfo.graduateCredit);
+                    param.push(userInfo.graduateCredit||"121");
                     break;
                 default:
                     break;
