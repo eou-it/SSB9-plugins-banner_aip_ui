@@ -20,20 +20,22 @@ var CSRUI;
         CSRReadmoreDirective.prototype.compile = function () {
         };
         CSRReadmoreDirective.prototype.link = function (scope, elem, attr, ctrl, transclude) {
-            var _this = this;
-            var more = "<a class='read-more'>" + scope.more + "</a>";
-            var less = "<a class='read-less'>" + scope.less + "</a>";
-            var limit = scope.limit ? scope.limit : 200;
-            attr.$observe("text", function (str) {
-                _this.readmore(str);
-            });
-            transclude(scope.$parent, function (copy) {
-                _this.readmore(copy.text().trim());
+            transclude(scope, function (clone) {
             });
         };
         CSRReadmoreDirective.prototype.controller = function () {
         };
         CSRReadmoreDirective.prototype.readmore = function (str) {
+            var original = this.scope.text;
+            var moreText = "";
+            //TODO:: add "less" with clickable link
+            return moreText;
+        };
+        CSRReadmoreDirective.prototype.readless = function (strr) {
+            var original = this.scope.text;
+            var lessText = "";
+            //TODO:: add "more" with clickable link
+            return lessText;
         };
         return CSRReadmoreDirective;
     })();

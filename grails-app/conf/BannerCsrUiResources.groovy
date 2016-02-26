@@ -54,6 +54,7 @@ modules = {
         resource url:[plugin: 'banner-csr-ui', file: 'csrApp/common/services/csrUserService.js']
         resource url:[plugin: 'banner-csr-ui', file: 'csrApp/common/directives/csr-landing-item/js/csrLandingItem.js']
         resource url:[plugin: 'banner-csr-ui', file: 'csrApp/common/directives/csr-list/js/csrList.js']
+        resource url:[plugin: 'banner-csr-ui', file: 'csrApp/common/directives/csr-readmore/js/csrReadmore.js']
     }
 
 }

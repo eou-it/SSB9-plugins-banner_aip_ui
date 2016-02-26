@@ -12,29 +12,20 @@ var CSRUI;
                 description: "=?",
                 header: "=",
                 dscparams: "=",
-                click: "&"
+                click: "&",
+                stylefunction: "&"
             };
         }
         CSRListDirective.prototype.compile = function () {
         };
-        CSRListDirective.prototype.link = function (scope) {
-            scope.styleFunction = function (key) {
-                var returnClass = "";
-                switch (key) {
-                    case "title":
-                        returnClass = "col-xs-8 col-sm-4";
-                        break;
-                    case "state":
-                        returnClass = "col-xs-4 col-sm-2";
-                        break;
-                    case "description":
-                        returnClass = "col-xs-12 clearfix col-sm-6 ";
-                        break;
-                }
-                return returnClass + " cell " + key;
+        CSRListDirective.prototype.link = function () {
+        };
+        CSRListDirective.prototype.controller = function ($scope) {
+            $scope.getStyle = function (key) {
+                return $scope.stylefunction()(key);
             };
-            scope.openConfirm = function (row) {
-                scope.$parent.$parent.vm.openConfirm(row);
+            $scope.openConfirm = function (row) {
+                $scope.click()(row);
             };
         };
         return CSRListDirective;

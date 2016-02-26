@@ -64,7 +64,7 @@ var bannerCSRApp = angular.module("bannercsr", [
 
 //provider-injector
     .config(["$stateProvider", "$urlRouterProvider", "$locationProvider", "PAGES",
-        function($stateProvider, $urlRouteProvider, $locationProvider, PAGES) {
+        function($stateProvider, $urlRouteProvider, $locationProvider, PAGES, $state) {
             $urlRouteProvider.otherwise("/list");
 
             angular.forEach(PAGES, function(item, state) {

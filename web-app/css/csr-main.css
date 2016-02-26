@@ -46,6 +46,7 @@ csr-list .csr-list-container {
     csr-list .csr-list-container .list-body .list-item .cell.title h3 {
       font-weight: bold;
       font-size: 1.3em;
+      word-wrap: break-word;
       margin: 0;
       line-height: normal; }
     csr-list .csr-list-container .list-body .list-item .cell.state {
@@ -95,6 +96,11 @@ csr-list .csr-list-container {
 #breadcrumbHeader a.breadcrumbButton.leaf-breadcrumb {
   text-decoration: none;
   cursor: default; }
+
+a:focus, div:focus, input:focus, span:focus, .breadcrumbButton:focus {
+  outline: 0;
+  box-shadow: 0 0 2px 3px #78aeda, 0 0 2px #78aeda inset;
+  border-radius: 2px; }
 
 .viewContainer {
   padding: 8px 16px;

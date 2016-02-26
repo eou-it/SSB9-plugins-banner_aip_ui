@@ -28,23 +28,26 @@ module CSRUI {
 
         }
         link(scope, elem, attr, ctrl, transclude) {
-            var more = "<a class='read-more'>"+scope.more+"</a>";
-            var less = "<a class='read-less'>"+scope.less+"</a>";
-            var limit = scope.limit?scope.limit:200;
 
-            attr.$observe("text", (str) => {
-                this.readmore(str);
-            });
-            transclude(scope.$parent, (copy) => {
-                this.readmore(copy.text().trim());
+            transclude(scope, (clone) => {
+
             });
         }
         controller() {
 
         }
 
-        readmore(str: string) {
-
+        readmore(str:string) {
+            var original = this.scope.text;
+            var moreText = "";
+            //TODO:: add "less" with clickable link
+            return moreText;
+        }
+        readless(strr:string) {
+            var original = this.scope.text;
+            var lessText = "";
+            //TODO:: add "more" with clickable link
+            return lessText;
         }
 
     }

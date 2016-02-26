@@ -22,6 +22,12 @@
   }
 }
 
+//focus indicator override for windows
+a:focus, div:focus, input:focus, span:focus, .breadcrumbButton:focus {
+  outline:0;
+  box-shadow: 0 0 2px 3px #78aeda, 0 0 2px #78aeda inset; border-radius: 2px;
+}
+
 .viewContainer {
   padding: 8px 16px;
   height: 100%;

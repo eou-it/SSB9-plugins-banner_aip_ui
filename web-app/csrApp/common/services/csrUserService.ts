@@ -3,41 +3,38 @@
 declare var register;
 
 module CSR {
-    interface IuserInfo {
+    export interface IUserInfo {
         firstName: string;
         lastName: string;
-        preferredName?: string;
+        fullName: string;
         graduateCredit?: number;
-        major: string[];
+        major?: string[];
         minor?: string[];
     }
-    interface IgetUserResponse {
-        data: IuserInfo;
+    interface IGetUserResponse {
+        data: IUserInfo;
     }
     interface IUserService {
-        userInfo: IuserInfo;
-        getUserInfo():ng.IHttpPromise<IuserInfo>;
+        //getUserInfo():ng.IHttpPromise<IUserInfo>;
     }
 
     export class UserService implements IUserService{
         static $inject=["$http", "$q"];
         $http:ng.IHttpService;
         $q:ng.IQService;
-        userInfo: IuserInfo;
         constructor($http:ng.IHttpService) {
             this.$http = $http;
-            this.getUserInfo().then((response:IgetUserResponse)=> {
-                this.userInfo = response.data;
-            }, ((err)=> {
-                throw new Error(err);
-            }));
         }
         getUserInfo() {
-            var request = this.$http({
+            var userRequest =  this.$http({
                 method: "POST",
                 url: "csr/userInfo"
+            }).then((response:IGetUserResponse) => {
+                return response.data;
+            }, (err) => {
+                throw new Error(err);
             });
-            return request;
+            return userRequest;
         }
     }
 }
