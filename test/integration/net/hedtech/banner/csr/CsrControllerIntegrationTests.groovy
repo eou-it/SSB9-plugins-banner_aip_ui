@@ -14,7 +14,7 @@ import grails.converters.JSON
 import grails.util.Holders
 import net.hedtech.banner.general.person.PersonUtility
 import net.hedtech.banner.security.BannerUser
-import net.hedtech.banner.csr.ActionItemList
+import net.hedtech.banner.csr.ActionItem
 import net.hedtech.banner.testing.BaseIntegrationTestCase
 import org.junit.After
 import org.junit.Before
@@ -31,7 +31,7 @@ import org.springframework.security.core.context.SecurityContextHolder as SCH
  */
 class CsrControllerIntegrationTests extends BaseIntegrationTestCase {
     def selfServiceBannerAuthenticationProvider
-    def actionItemListService
+    def actionItemService
 
 
     @Before
