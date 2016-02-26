@@ -5,7 +5,7 @@ package net.hedtech.banner.csr
 
 import grails.converters.JSON
 import net.hedtech.banner.exceptions.ApplicationException
-import net.hedtech.banner.csr.ActionItemList
+import net.hedtech.banner.csr.ActionItem
 import java.security.InvalidParameterException
 import org.springframework.context.i18n.LocaleContextHolder
 import javax.persistence.*
@@ -14,7 +14,7 @@ class CsrController {
 
     static defaultAction = "listItems"
     def model=[:]
-    def actionItemListService
+    def actionItemService
 
     // Entry point. Load front-end resources & layout template
     def listItems() {
@@ -60,42 +60,12 @@ class CsrController {
     }
 
     // Return user's action items
-    /*
-    def actionItems() {
-        //TODO: get user's assigned action item group  (service call)
-        //TODO: get all action items in group (service call)
-        //TODO: create return json structure
-        def actionItems = [
-                [
-                        name: "registration",
-                        info: getActionGroupDescription("registration"),
-                        header: ["title", "state", "description"],
-                        items: [
-                                [id: 1, name: "drugAndAlcohol", state: "csr.user.list.item.state.pending", title: getItemInfo("drugAndAlcohol").title, description: getItemInfo("drugAndAlcohol").description],
-                                [id: 2, name: "registrationTraining", state: "csr.user.list.item.state.pending", title: getItemInfo("registrationTraining").title, description: getItemInfo("registrationTraining").description],
-                                [id: 3, name: "personalInfo", state: "csr.user.list.item.state.pending", title: getItemInfo("personalInfo").title, description: getItemInfo("personalInfo").description],
-                                [id: 4, name: "meetAdvisor", state: "csr.user.list.item.state.pending", title: getItemInfo("meetAdvisor").title, description: getItemInfo("meetAdvisor").description],
-                                [id: 5, name: "residenceProof", state: "csr.user.list.item.state.pending", title: getItemInfo("residenceProof").title, description: getItemInfo("residenceProof").description]
-                        ]
-                ], [
-                        name: "graduation",
-                        info: getActionGroupDescription("graduation"),
-                        header: ["title", "state", "description"],
-                        items: [
-                                [id: 4, name: "meetAdvisor", state: "csr.user.list.item.state.pending", title: getItemInfo("meetAdvisor").title, description: getItemInfo("meetAdvisor").description],
-                        ]
-                ]
-        ]
-        render actionItems as JSON
-    }
-    */
-
 
     public def actionItems( ) {
         def itemsList = []
 
         try {
-            def actionItems = actionItemListService.listActionItems()
+            def actionItems = actionItemService.listActionItems()
             def myItems = [
                     name  : "registration",
                     info  : getActionGroupDescription("registration"),
