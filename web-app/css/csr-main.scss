@@ -28,6 +28,25 @@ a:focus, div:focus, input:focus, span:focus, .breadcrumbButton:focus {
   box-shadow: 0 0 2px 3px #78aeda, 0 0 2px #78aeda inset; border-radius: 2px;
 }
 
+.progressbar-container {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(211, 211, 211, 0.7);
+  z-index: 9999;
+  &.ng-hide-add {
+    transition: all linear 300ms;
+  }
+  .progress {
+    position: absolute;
+    width: 200px;
+    margin:auto;
+    left:0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+  }
+}
 .viewContainer {
   padding: 8px 16px;
   height: 100%;

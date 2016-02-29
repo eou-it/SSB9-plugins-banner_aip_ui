@@ -26,42 +26,38 @@ module CSR {
     }
 
     interface IItemListViewService {
-        userItems: IUserItem[];
-        getActionItems():ng.IHttpPromise<IUserItem[]>;
+        getActionItems(userInfo):void;
         confirmItem(id:string|number):void;
     }
 
     export class ItemListViewService implements IItemListViewService{
         static $inject=["$http"];
         $http: ng.IHttpService;
-        userItems: IUserItem[];
         constructor($http:ng.IHttpService) {
             this.$http = $http;
-            this.init();
         }
-        init() {
-            this.getActionItems().then((response:IActionItemResponse) => {
-                this.userItems = response.data;
-            }, (errorResponse) => {
-                console.log(errorResponse);
-            });
-        }
-        getActionItems() {
-           var request = this.$http({
+        getActionItems(userInfo) {
+            var request = this.$http({
                 method:"POST",
-                url: "csr/actionItems"
-            });
+                url: "csr/actionItems",
+                data: userInfo
+               })
+               .then((response:IActionItemResponse) => {
+                   return response.data;
+               }, (err) => {
+                   throw new Error(err);
+               });
             return request;
         }
         confirmItem(id) {
             //TODO: update datbase
-            angular.forEach(this.userItems, (item) => {
-                angular.forEach(item.items, (_item) => {
-                    if(_item.id == id) {
-                        _item.state = "csr.user.list.item.state.complete";
-                    }
-                });
-            });
+            //angular.forEach(this.userItems, (item) => {
+            //    angular.forEach(item.items, (_item) => {
+            //        if(_item.id == id) {
+            //            _item.state = "csr.user.list.item.state.complete";
+            //        }
+            //    });
+            //});
         }
     }
 }

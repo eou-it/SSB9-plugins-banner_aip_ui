@@ -16,27 +16,34 @@ module CSR {
     }
 
     export class ListItemPageCtrl implements IListItemPageCtrl{
-        $inject = ["$scope", "$state", "ItemListViewService", "CSRUserService"];
+        $inject = ["$scope", "$state", "ItemListViewService", "CSRUserService", "SpinnerService", "$timeout"];
         itemListViewService:CSR.ItemListViewService;
         userService:CSR.UserService;
         actionItems:IUserItem[];
+        spinnerService;
+        $timeout;
         $state;
 
-        constructor($scope, $state, ItemListViewService, CSRUserService) {
+        constructor($scope, $state, ItemListViewService, CSRUserService, SpinnerService, $timeout) {
             $scope.vm = this;
             this.$state = $state;
             this.itemListViewService = ItemListViewService;
             this.userService = CSRUserService;
-            this.actionItems = this.itemListViewService.userItems;
-            //sync with service's userItems
-            $scope.$watch (  ( )=> {
-                return this.itemListViewService.userItems;}, (newVal) => {
-                this.actionItems = newVal;
-                this.userService.getUserInfo().then((data) => {
+            this.spinnerService = SpinnerService;
+            this.$timeout = $timeout;
+            this.init();
+        }
+        init() {
+            this.spinnerService.showSpinner(true);
+            this.userService.getUserInfo().then((userData) => {
+                var userInfo = userData;
+                this.itemListViewService.getActionItems(userInfo).then((actionItems) => {
+                    this.actionItems = actionItems;
                     angular.forEach(this.actionItems, (item) => {
-                        item.dscParams = this.getParams(item.info.title, data);
-                    })
-                })
+                        item.dscParams = this.getParams(item.info.title, userInfo);
+                    });
+                });
+                this.spinnerService.showSpinner(false)
             });
         }
         openConfirm(row) {

@@ -27,9 +27,12 @@
 </head>
 
 <body>
-<div id="content" role="main">
+<div id="content" role="main" ng-app="bannercsr">
+    <div class="progressbar-container ng-cloak" ng-controller="SpinnerCtrl" ng-show="vm.showing">
+        <uib-progressbar class="progress-striped active" value="100" type="info">Loading</uib-progressbar>
+    </div>
     <div id="title-panel" class="aurora-theme"></div>
-    <div class="viewContainer container-fluid" ng-app="bannercsr">
+    <div class="viewContainer container-fluid">
         <div ui-view></div>
     </div>
 </div>

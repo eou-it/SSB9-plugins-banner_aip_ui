@@ -4,26 +4,30 @@
 var CSR;
 (function (CSR) {
     var ListItemPageCtrl = (function () {
-        function ListItemPageCtrl($scope, $state, ItemListViewService, CSRUserService) {
-            var _this = this;
-            this.$inject = ["$scope", "$state", "ItemListViewService", "CSRUserService"];
+        function ListItemPageCtrl($scope, $state, ItemListViewService, CSRUserService, SpinnerService, $timeout) {
+            this.$inject = ["$scope", "$state", "ItemListViewService", "CSRUserService", "SpinnerService", "$timeout"];
             $scope.vm = this;
             this.$state = $state;
             this.itemListViewService = ItemListViewService;
             this.userService = CSRUserService;
-            this.actionItems = this.itemListViewService.userItems;
-            //sync with service's userItems
-            $scope.$watch(function () {
-                return _this.itemListViewService.userItems;
-            }, function (newVal) {
-                _this.actionItems = newVal;
-                _this.userService.getUserInfo().then(function (data) {
+            this.spinnerService = SpinnerService;
+            this.$timeout = $timeout;
+            this.init();
+        }
+        ListItemPageCtrl.prototype.init = function () {
+            var _this = this;
+            this.spinnerService.showSpinner(true);
+            this.userService.getUserInfo().then(function (userData) {
+                var userInfo = userData;
+                _this.itemListViewService.getActionItems(userInfo).then(function (actionItems) {
+                    _this.actionItems = actionItems;
                     angular.forEach(_this.actionItems, function (item) {
-                        item.dscParams = _this.getParams(item.info.title, data);
+                        item.dscParams = _this.getParams(item.info.title, userInfo);
                     });
                 });
+                _this.spinnerService.showSpinner(false);
             });
-        }
+        };
         ListItemPageCtrl.prototype.openConfirm = function (row) {
             var elem = angular.element(document.querySelector('[ng-app]'));
             var $rootScope = elem.injector().get("$rootScope");
