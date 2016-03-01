@@ -18,6 +18,7 @@ class CsrController {
     static defaultAction = "listItems"
     def model=[:]
     def actionItemService
+    def userActionItemReadOnlyService
 
     // Entry point. Load front-end resources & layout template
     def listItems() {
@@ -63,17 +64,20 @@ class CsrController {
     }
 
     // Return user's action items
-
     public def actionItems( ) {
         def itemsList = []
-
+        if(!userPidm) {
+            response.sendError(403)
+            return
+        }
         try {
-            def actionItems = actionItemService.listActionItems()
+//            def actionItems = actionItemService.listActionItems()
+            def actionItems = userActionItemReadOnlyService.listActionItemByPidm(userPidm)
             def myItems = [
                     name  : "registration",
                     info  : getActionGroupDescription("registration"),
                     header: ["title", "state", "description"]
-                    ]
+            ]
             def items = []
             actionItems?.each { item ->
                 def actionItem = [
@@ -82,7 +86,7 @@ class CsrController {
                         state      : "csr.user.list.item.state.pending",
                         title      : item.title,
                         description: item.description
-                        ]
+                ]
                 items << actionItem
             }
             myItems.items = items
@@ -135,6 +139,10 @@ class CsrController {
         }
         return item
     }
+
+
+
+
 
     // It might be better in service banner_csr.git, not in controller since this shouldn't be able to access from front-end
     // It might not be needed depends on query style on user items

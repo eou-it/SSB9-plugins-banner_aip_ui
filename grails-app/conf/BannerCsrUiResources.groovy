@@ -27,6 +27,7 @@ modules = {
         dependsOn 'csr-angular'
         dependsOn 'bannerSelfServiceCommonLTR, extensibilityCommon, extensibilityAngular, common-components, angularApp, bootstrap'
         dependsOn 'bannerCSRApp'
+        dependsOn "bannerSelfService, i18n-core"
         resource url:[plugin: 'banner-csr-ui', file: 'css/xe-ui-components.css']
         resource url:[plugin: 'banner-csr-ui', file: 'css/csr-main.css']
     }
@@ -43,6 +44,7 @@ modules = {
     }
     'bannerCSRApp' {
         dependsOn 'bannerCSRUtils'
+        dependsOn "bannerSelfService, i18n-core"
         resource url:[plugin: 'banner-csr-ui', file: 'csrApp/app.js']
         resource url:[plugin: 'banner-csr-ui', file: 'csrApp/admin/adminLandingPageCtrl.js']
         resource url:[plugin: 'banner-csr-ui', file: 'csrApp/admin/listActionItem/adminListItemPageCtrl.js']
