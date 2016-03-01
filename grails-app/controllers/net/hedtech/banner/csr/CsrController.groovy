@@ -79,18 +79,20 @@ class CsrController {
                     header: ["title", "state", "description"]
             ]
             def items = []
-            actionItems?.each { item ->
-                def actionItem = [
-                        id        : item.id,
-                        name       : item.title,
-                        state      : "csr.user.list.item.state.pending",
-                        title      : item.title,
-                        description: item.description
-                ]
-                items << actionItem
+            if (actionItems.size() > 0) {
+                actionItems?.each { item ->
+                    def actionItem = [
+                            id         : item.id,
+                            name       : item.title,
+                            state      : "csr.user.list.item.state.pending",
+                            title      : item.title,
+                            description: item.description
+                    ]
+                    items << actionItem
+                }
+                myItems.items = items
+                itemsList << myItems
             }
-            myItems.items = items
-            itemsList << myItems
             render itemsList as JSON
         } catch(Exception e) {
             org.codehaus.groovy.runtime.StackTraceUtils.sanitize(e).printStackTrace()
