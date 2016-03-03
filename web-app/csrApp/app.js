@@ -21,11 +21,14 @@ var bannerCSRApp = angular.module("bannercsr", [
     "bannercsrui"
     ])
 
+//set application root url
+    .constant('APP_ROOT', currentRoot)
+
 //constants for page information
     .constant("PAGES", {
         "admin-landing": {
             url: "/admin/landing",
-            templateUrl: currentRoot + "admin/adminLandingPage.html",
+            templateUrl:"admin/adminLandingPage.html",
             controller: "AdminLandingPageCtrl",
             breadcrumb: {
                 label: "Confirmation Management",
@@ -34,7 +37,7 @@ var bannerCSRApp = angular.module("bannercsr", [
         },
         "admin-list": {
             url: "/admin/list",
-            templateUrl: currentRoot + "admin/listActionItem/adminListItemPage.html",
+            templateUrl:"admin/listActionItem/adminListItemPage.html",
             controller: "AdminListItemPageCtrl",
             breadcrumb: {
                 label: "Confirmation Maintenance",
@@ -43,7 +46,7 @@ var bannerCSRApp = angular.module("bannercsr", [
         },
         "list": {
             url: "/list",
-            templateUrl: currentRoot + "listItem/listItemPage.html",
+            templateUrl:"listItem/listItemPage.html",
             controller: "ListItemPageCtrl",
             breadcrumb: {
                 label: "Confirmation List",
@@ -52,7 +55,7 @@ var bannerCSRApp = angular.module("bannercsr", [
         },
         "listConfirm": {
             url: "/list/confirm/:itemId",
-            templateUrl: currentRoot + "listItem/itemConfirm/itemConfirmPage.html",
+            templateUrl:"listItem/itemConfirm/itemConfirmPage.html",
             controller: "ItemConfirmCtrl",
             breadcrumb: {
                 label: "Confirmation",
@@ -61,19 +64,15 @@ var bannerCSRApp = angular.module("bannercsr", [
         }
     })
 
-
-//set application root url
-//    .constant('CONTEXT_ROOT', {url: "/" + document.location.pathname.slice(Application.getApplicationPath().length+1) + "#"})
-
 //provider-injector
-    .config(["$stateProvider", "$urlRouterProvider", "$locationProvider", "PAGES",
-        function($stateProvider, $urlRouteProvider, $locationProvider, PAGES, $state) {
+    .config(["$stateProvider", "$urlRouterProvider", "$locationProvider", "PAGES", "APP_ROOT",
+        function($stateProvider, $urlRouteProvider, $locationProvider, PAGES, APP_ROOT, $state) {
             $urlRouteProvider.otherwise("/list");
 
             angular.forEach(PAGES, function(item, state) {
                 $stateProvider.state(state, {
                     url: item.url,
-                    templateUrl: item.templateUrl,
+                    templateUrl: APP_ROOT + item.templateUrl,
                     controller: item.controller,
                     onEnter: function($stateParams, $filter) {
                         this.data.breadcrumbs.url = item.breadcrumb.url;
