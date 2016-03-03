@@ -58,6 +58,18 @@ grails.converters.domain.include.version = true
 grails.converters.json.date = "javascript"
 grails.converters.json.pretty.print = true
 
+environments {
+    development {
+        grails.resources.debug = true
+    }
+    production {
+
+    }
+    test {
+
+    }
+}
+
 banner {
     sso {
         authenticationProvider = 'default'

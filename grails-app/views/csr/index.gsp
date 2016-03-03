@@ -18,11 +18,10 @@
     <meta name="menuEndPoint" content="${g.createLink(controller: 'selfServiceMenu', action: 'data')}"/>
     <meta name="menuBaseURL" content="${createLink(uri: '/ssb')}" />
     <script type="text/javascript">
-        console.log("run i18n setup");
         <g:i18n_setup/>
-        console.log("setup done");
-        console.log(window.i18n["csr.default"]);
-        console.log(window.i18n["csr-ui.default"]);
+        <g:if env="development">
+            window.csr?window.csr.dev="development":window.csr={dev:"development"};
+        </g:if>
     </script>
 </head>
 

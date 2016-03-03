@@ -5,7 +5,12 @@
 "use strict";
 var scripts = document.getElementsByTagName("script")
 var currentPath = scripts[scripts.length-1].src;
-var currentRoot = currentPath.substring(0, currentPath.indexOf('app.js'))
+var currentRoot = "";
+if(window.csr.dev = "development") {
+    currentRoot = currentPath.substring(0, currentPath.indexOf('app.js'));
+} else {
+    currentRoot = window.location.host + window.location.pathname + "/static/";
+}
 
 var bannerCSRUi = angular.module("bannercsrui", []);
 
