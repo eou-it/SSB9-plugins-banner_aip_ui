@@ -3,6 +3,9 @@
  */
 // angular module init and configuration
 "use strict";
+var scripts = document.getElementsByTagName("script")
+var currentPath = scripts[scripts.length-1].src;
+var currentRoot = currentPath.substring(0, currentPath.indexOf('app.js'))
 
 var bannerCSRUi = angular.module("bannercsrui", []);
 
@@ -22,7 +25,7 @@ var bannerCSRApp = angular.module("bannercsr", [
     .constant("PAGES", {
         "admin-landing": {
             url: "/admin/landing",
-            templateUrl: "../plugins/banner-csr-ui-1.0/csrApp/admin/adminLandingPage.html",
+            templateUrl: currentRoot + "admin/adminLandingPage.html",
             controller: "AdminLandingPageCtrl",
             breadcrumb: {
                 label: "Confirmation Management",
@@ -31,7 +34,7 @@ var bannerCSRApp = angular.module("bannercsr", [
         },
         "admin-list": {
             url: "/admin/list",
-            templateUrl: "../plugins/banner-csr-ui-1.0/csrApp/admin/listActionItem/adminListItemPage.html",
+            templateUrl: currentRoot + "admin/listActionItem/adminListItemPage.html",
             controller: "AdminListItemPageCtrl",
             breadcrumb: {
                 label: "Confirmation Maintenance",
@@ -40,7 +43,7 @@ var bannerCSRApp = angular.module("bannercsr", [
         },
         "list": {
             url: "/list",
-            templateUrl: "../plugins/banner-csr-ui-1.0/csrApp/listItem/listItemPage.html",
+            templateUrl: currentRoot + "listItem/listItemPage.html",
             controller: "ListItemPageCtrl",
             breadcrumb: {
                 label: "Confirmation List",
@@ -49,7 +52,7 @@ var bannerCSRApp = angular.module("bannercsr", [
         },
         "listConfirm": {
             url: "/list/confirm/:itemId",
-            templateUrl: "../plugins/banner-csr-ui-1.0/csrApp/listItem/itemConfirm/itemConfirmPage.html",
+            templateUrl: currentRoot + "listItem/itemConfirm/itemConfirmPage.html",
             controller: "ItemConfirmCtrl",
             breadcrumb: {
                 label: "Confirmation",
