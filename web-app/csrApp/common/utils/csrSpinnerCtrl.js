@@ -6,7 +6,7 @@ var CSR;
             var _this = this;
             $scope.vm = this;
             this.spinnerService = SpinnerService;
-            this.showing = SpinnerService.showing;
+            this.showing = this.spinnerService.showing;
             $rootScope.$watch(function () {
                 return _this.spinnerService.showing;
             }, function (newVal) {

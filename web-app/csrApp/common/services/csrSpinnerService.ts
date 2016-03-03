@@ -7,7 +7,7 @@ module CSR {
         showing:boolean;
 
         constructor() {
-            this.showing = true;
+            this.showing = false;
         }
         showSpinner(show) {
             if(angular.isUndefined(show)) {

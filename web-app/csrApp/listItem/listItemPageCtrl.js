@@ -24,8 +24,9 @@ var CSR;
                     angular.forEach(_this.actionItems, function (item) {
                         item.dscParams = _this.getParams(item.info.title, userInfo);
                     });
+                }).finally(function () {
+                    _this.spinnerService.showSpinner(false);
                 });
-                _this.spinnerService.showSpinner(false);
             });
         };
         ListItemPageCtrl.prototype.openConfirm = function (row) {

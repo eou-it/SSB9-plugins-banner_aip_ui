@@ -11,7 +11,7 @@ module CSR {
         constructor($scope, SpinnerService, $rootScope) {
             $scope.vm = this;
             this.spinnerService = SpinnerService;
-            this.showing = SpinnerService.showing;
+            this.showing = this.spinnerService.showing;
             $rootScope.$watch( () => {
                 return this.spinnerService.showing;
             }, (newVal) => {

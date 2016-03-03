@@ -42,8 +42,9 @@ module CSR {
                     angular.forEach(this.actionItems, (item) => {
                         item.dscParams = this.getParams(item.info.title, userInfo);
                     });
+                }).finally(() => {
+                    this.spinnerService.showSpinner(false);
                 });
-                this.spinnerService.showSpinner(false)
             });
         }
         openConfirm(row) {

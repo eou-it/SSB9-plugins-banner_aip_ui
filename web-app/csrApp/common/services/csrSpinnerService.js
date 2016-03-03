@@ -3,7 +3,7 @@ var CSR;
 (function (CSR) {
     var SpinnerService = (function () {
         function SpinnerService() {
-            this.showing = true;
+            this.showing = false;
         }
         SpinnerService.prototype.showSpinner = function (show) {
             if (angular.isUndefined(show)) {
