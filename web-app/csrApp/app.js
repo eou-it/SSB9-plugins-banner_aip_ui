@@ -3,13 +3,14 @@
  */
 // angular module init and configuration
 "use strict";
+var resourceUrl = window.csr.resourceUrl.split("/").splice(0,window.csr.resourceUrl.split("/").indexOf("csrApp")+1).join("/");
 var scripts = document.getElementsByTagName("script")
 var currentPath = scripts[scripts.length-1].src;
 var currentRoot = "";
 if(window.csr && window.csr.dev === "development") {
     currentRoot = currentPath.substring(0, currentPath.indexOf('app.js'));
 } else {
-    currentRoot = window.location.host + window.location.pathname + "/static/csrApp/";
+    currentRoot = resourceUrl+"/";
 }
 
 var bannerCSRUi = angular.module("bannercsrui", []);
