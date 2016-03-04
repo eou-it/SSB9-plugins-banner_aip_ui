@@ -6,7 +6,7 @@
 var scripts = document.getElementsByTagName("script")
 var currentPath = scripts[scripts.length-1].src;
 var currentRoot = "";
-if(window.csr.dev = "development") {
+if(window.csr && window.csr.dev === "development") {
     currentRoot = currentPath.substring(0, currentPath.indexOf('app.js'));
 } else {
     currentRoot = window.location.host + window.location.pathname + "/static/";
