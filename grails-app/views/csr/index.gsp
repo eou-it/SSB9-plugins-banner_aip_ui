@@ -19,7 +19,7 @@
     <meta name="menuBaseURL" content="${createLink(uri: '/ssb')}" />
     <script type="text/javascript">
         <g:i18n_setup/>
-        window.csr?window.csr.resourceUrl="${g.resource(file:'csrApp/listItem/listItemPage.html')}":window.csr={resourceUrl:"${g.resource(file:'csrApp/listItem/listItemPage.html')}"};
+        <g:csrVersion/>
         <g:if env="development">
             window.csr?window.csr.dev="development":window.csr={dev:"development"};
         </g:if>

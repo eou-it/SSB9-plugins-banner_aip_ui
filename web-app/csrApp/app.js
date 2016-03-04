@@ -3,15 +3,14 @@
  */
 // angular module init and configuration
 "use strict";
-var resourceUrl = window.csr.resourceUrl.split("/").splice(0,window.csr.resourceUrl.split("/").indexOf("csrApp")+1).join("/");
-var scripts = document.getElementsByTagName("script")
-var currentPath = scripts[scripts.length-1].src;
-var currentRoot = "";
-if(window.csr && window.csr.dev === "development") {
-    currentRoot = currentPath.substring(0, currentPath.indexOf('app.js'));
-} else {
-    currentRoot = resourceUrl+"/";
-}
+//var appHostUrl = window.location.host +
+//    window.location.pathname.split("/")
+//        .splice(0, window.location.pathname
+//            .split("/").indexOf("csr"))
+//        .join("/") + "/";
+var csrAppRoot = "/" + extensibilityInfo.application + "/plugins/" +
+    window.csrApp.name.replace(/\W+/g, '-').replace(/([a-z\d])([A-Z])/g, '$1-$2').toLowerCase() + "-" +
+    window.csrApp.version + "/csrApp/";
 
 var bannerCSRUi = angular.module("bannercsrui", []);
 
@@ -28,7 +27,7 @@ var bannerCSRApp = angular.module("bannercsr", [
     ])
 
 //set application root url
-    .constant('APP_ROOT', currentRoot)
+    .constant('APP_ROOT', csrAppRoot)
 
 //constants for page information
     .constant("PAGES", {

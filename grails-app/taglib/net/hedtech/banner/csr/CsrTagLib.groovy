@@ -11,4 +11,14 @@ class CsrTagLib {
         }
         out << "window.i18n = ${map as JSON};\n"
     }
+    def csrVersion = { attrs ->
+        def plugin = applicationContext.getBean('pluginManager').allPlugins.find {
+            it -> it.name == "bannerCsrUi"
+        }
+        def map = [
+                name: plugin.name,
+                version: plugin.version
+        ]
+        out << "window.csrApp = ${map as JSON};\n"
+    }
 }
