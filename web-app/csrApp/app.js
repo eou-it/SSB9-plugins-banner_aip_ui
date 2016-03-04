@@ -9,7 +9,7 @@ var currentRoot = "";
 if(window.csr && window.csr.dev === "development") {
     currentRoot = currentPath.substring(0, currentPath.indexOf('app.js'));
 } else {
-    currentRoot = window.location.host + window.location.pathname + "/static/";
+    currentRoot = window.location.host + window.location.pathname + "/static/csrApp/";
 }
 
 var bannerCSRUi = angular.module("bannercsrui", []);
