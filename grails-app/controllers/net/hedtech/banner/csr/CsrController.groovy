@@ -71,7 +71,6 @@ class CsrController {
             return
         }
         try {
-//            def actionItems = actionItemService.listActionItems()
             def actionItems = userActionItemReadOnlyService.listActionItemByPidm(userPidm)
             def myItems = [
                     name  : "registration",
@@ -93,9 +92,11 @@ class CsrController {
                 myItems.items = items
                 itemsList << myItems
             }
-            render itemsList as JSON
         } catch(Exception e) {
             org.codehaus.groovy.runtime.StackTraceUtils.sanitize(e).printStackTrace()
+            throw e
+        } finally {
+            render itemsList as JSON
         }
     }
 
