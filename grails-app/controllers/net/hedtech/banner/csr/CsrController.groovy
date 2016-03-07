@@ -64,7 +64,7 @@ class CsrController {
     }
 
     // Return user's action items
-    public def actionItems( ) {
+    def actionItems( ) {
         def itemsList = []
         if(!userPidm) {
             response.sendError(403)
