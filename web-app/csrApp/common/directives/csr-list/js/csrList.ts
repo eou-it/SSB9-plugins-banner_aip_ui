@@ -19,14 +19,20 @@ module CSRUI {
                 header: "=",
                 dscparams:"=",
                 click:"&",
-                stylefunction:"&"
+                stylefunction:"&",
+                idx: "="
+
             }
         }
         compile() {
 
         }
-        link() {
-
+        link(scope) {
+            if (scope.idx === 0) {
+                scope.isOpen = true;
+            } else {
+                scope.isOpen = false;
+            }
         }
         controller($scope) {
             $scope.getStyle = function(key) {

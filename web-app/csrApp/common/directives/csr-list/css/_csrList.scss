@@ -5,7 +5,7 @@ $border-color: #A4C6E4;
 
 csr-list {
   .csr-list-container {
-    border: 1px solid $border-color;
+    border: none;
     .row {
       margin: 0;
     }
@@ -15,6 +15,12 @@ csr-list {
       &:after {
         clear: both;
       }
+    }
+    .panel-body {
+      padding: 0;
+    }
+    .panel-heading {
+      padding: 0;
     }
     hr {
       margin-top: 0;
@@ -50,14 +56,17 @@ csr-list {
         .description {
           line-height: 1.5;
           padding-left: 0;
-          font-size: 1.3em;
+          padding-top: 16px;
+          //font-size: 1.3em;
         }
       }
     }
     .list-body {
+      border: 1px solid #A4C6E4;
+      padding-bottom:8px;
       .list-item {
-        padding: 16px 0;
-        border-bottom: 1px solid $border-color;
+        padding: 16px 8px 0 8px;
+        //border-bottom: 1px solid $border-color;
         &:hover {
           cursor: pointer;
           background-color: lighten($banner-color, 50%);
@@ -68,7 +77,11 @@ csr-list {
             font-size: 1.3em;
             word-wrap: break-word;
             margin:0;
-            line-height: normal;
+            line-height: 1.8em;
+            display: inline;
+            border-bottom:solid 1px #000000;
+            padding-bottom: 3px;
+            padding-right: 10px;
           }
         }
         .cell.state {
@@ -81,10 +94,14 @@ csr-list {
           border-radius: 4px;
           color: #3a3737;
           margin-right: 8px;
-          padding: 7px 10px;
+          //padding: 7px 10px;
+          float: right;
+          width: 120px;
         }
         .cell.description {
           font-size: 1.3em;
+          border-bottom:1px solid #A4C6E4;
+          padding: 24px 8px 16px 8px;
         }
       }
     }

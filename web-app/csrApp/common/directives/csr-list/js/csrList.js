@@ -13,12 +13,19 @@ var CSRUI;
                 header: "=",
                 dscparams: "=",
                 click: "&",
-                stylefunction: "&"
+                stylefunction: "&",
+                idx: "="
             };
         }
         CSRListDirective.prototype.compile = function () {
         };
-        CSRListDirective.prototype.link = function () {
+        CSRListDirective.prototype.link = function (scope) {
+            if (scope.idx === 0) {
+                scope.isOpen = true;
+            }
+            else {
+                scope.isOpen = false;
+            }
         };
         CSRListDirective.prototype.controller = function ($scope) {
             $scope.getStyle = function (key) {

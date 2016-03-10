@@ -1,13 +1,32 @@
-<div class="listActionItem-container">
-    <div class="no-item-available" ng-if="vm.actionItems.length === 0">
-
-        <p>There is no pending items for this user. This is placeholder.</p>
-        </br>
-        <p>For test, use STUADV425 for login</p>
+<div class="listActionItem">
+    <div class="row">
+        <div class="welcome col-xs-12 col-sm-5">
+            <div class="username">
+                Welcome {{vm.userName}}
+            </div>
+            <hr/>
+            <div class="welcometext">
+                You have the following items that require your attention.
+            </div>
+        </div>
     </div>
-    <csr-list ng-repeat="actionItemList in vm.actionItems" itemtitle="actionItemList.info.title"
-              description="actionItemList.info.description" data="actionItemList.items"
-              header="actionItemList.header" dscparams="actionItemList.dscParams" click="vm.openConfirm"
-              stylefunction="vm.styleFunction">
-    </csr-list>
+    <div class="row">
+    <div class="no-item-available" ng-if="vm.actionItems.length === 0">
+        <p>There is no pending items for this user. This is placeholder.</p>
+    </div>
+    <div ng-class="{'col-xs-hidden':vm.selected, 'col-xs-12':vm.selected!==undefined}" class="listActionItem-container col-sm-5" ng-if="vm.actionItems.length > 0">
+        <div class="itemList">
+            <uib-accordion close-others="oneAtATime">
+                <csr-list ng-repeat="actionItemList in vm.actionItems" itemtitle="actionItemList.info.title"
+                          description="actionItemList.info.description" data="actionItemList.items"
+                          header="actionItemList.header" dscparams="actionItemList.dscParams" click="vm.openConfirm"
+                          stylefunction="vm.styleFunction" idx="$index">
+                </csr-list>
+            </uib-accordion>
+        </div>
+        <div class="detailInfo">
+            action list item derails
+        </div>
+    </div>
+    </div>
 </div>

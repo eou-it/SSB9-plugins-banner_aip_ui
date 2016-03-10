@@ -1,5 +1,12 @@
 @import '../csrApp/common/directives/csr-list/css/csrList';
 @import '../csrApp/common/directives/csr-landing-item/css/csrLandingItem';
+
+#breadcrumb-panel {
+  display: none;
+}
+#title-panel {
+  display: none;
+}
 #username {
   padding-right: 0.5em;
 }

@@ -1,16 +1,17 @@
-<div class="csr-list-container" role="group">
-    <div class="header" ng-if="itemtitle">
-        <div class="row list-item">
-            <div class="col-xs-12 col-sm-5 cell title">
-                <h2>{{itemtitle|i18n}}: </h2>
-                <span class="badge">{{data.length}}</span>
+<uib-accordion-group class="csr-list-container" role="group" is-open="isOpen">
+    <uib-accordion-heading>
+        <div class="item-group" ng-if="itemtitle">
+            <div class="title">
+                <div class="title-text">
+                    {{itemtitle|i18n}}
+                </div>
+                <div class="title-icon"></div>
             </div>
-            <div class="col-sm-7 hidden-xs cell description">
-                <span>{{description|i18n:dscparams}}</span>
+            <div class="group-progress">
+                <uib-progressbar max="data.length" value="3"><span style="color:white; white-space:nowrap;">3 / {{data.length}}</span></uib-progressbar>
             </div>
         </div>
-    </div>
-    <hr/>
+    </uib-accordion-heading>
     <div class="list-body" role="list" aria-label="{{itemtitle|i18n}}">
         <div class="row list-item" ng-repeat="row in data" ng-click="openConfirm(row)" role="listitem">
             <div ng-repeat="key in header" class="{{getStyle(key)}}" >
@@ -23,5 +24,4 @@
             </div>
         </div>
     </div>
-</div>
-<hr>
+</uib-accordion-group>
