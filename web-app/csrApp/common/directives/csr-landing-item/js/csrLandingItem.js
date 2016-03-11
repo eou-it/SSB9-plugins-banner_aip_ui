@@ -10,7 +10,6 @@ angular.module('bannercsrui')
                 model: "=",
                 method: "&"
             },
-            templateUrl: "../plugins/banner-csr-ui-1.0/csrApp/common/directives/csr-landing-item/template/csrLandingItem.html",
             controller: ['$scope', '$attrs', "$state", function($scope, $attrs, $state) {
                 if (!$scope.model) {
                     devErorrMessages += "model attribute is required\n";

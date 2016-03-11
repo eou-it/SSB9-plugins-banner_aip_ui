@@ -1,26 +1,31 @@
 <uib-accordion-group class="csr-list-container" role="group" is-open="isOpen">
     <uib-accordion-heading>
         <div class="item-group" ng-if="itemtitle">
-            <div class="title">
-                <div class="title-text">
-                    {{itemtitle|i18n}}
-                </div>
-                <div class="title-icon"></div>
+            <div class="group-title">
+                <span class="group-title-text">{{itemtitle|i18n}}</span>
+                <div class="panel-title-icon"></div>
             </div>
             <div class="group-progress">
                 <uib-progressbar max="data.length" value="3"><span style="color:white; white-space:nowrap;">3 / {{data.length}}</span></uib-progressbar>
             </div>
         </div>
     </uib-accordion-heading>
-    <div class="list-body" role="list" aria-label="{{itemtitle|i18n}}">
-        <div class="row list-item" ng-repeat="row in data" ng-click="openConfirm(row)" role="listitem">
-            <div ng-repeat="key in header" class="{{getStyle(key)}}" >
-                <h3 ng-if="key==='title'">{{row[key]|i18n}}</h3>
-                <span ng-if="key==='state'" ng-class="{'badge pending':key==='state'&&row[key]==='csr.user.list.item.state.pending',
-                    'badge approved':key==='state'&&row[key]==='csr.user.list.item.state.complete'}">
-                    {{row[key]|i18n}}
-                </span>
-                <csr-readmore ng-if="key==='description'">{{row[key]|i18n}}</csr-readmore>
+    <div class="row">
+        <div class="list-body col-sm-5 box" role="list" aria-label="{{itemtitle|i18n}}">
+            <div class="row list-item" ng-repeat="row in data" ng-click="openConfirm(row)" role="listitem">
+                <div ng-repeat="key in header" class="{{getStyle(key)}}" >
+                    <h3 ng-if="key==='title'">{{row[key]|i18n}}</h3>
+                    <span ng-if="key==='state'" ng-class="{'badge pending':key==='state'&&row[key]==='csr.user.list.item.state.pending',
+                        'badge approved':key==='state'&&row[key]==='csr.user.list.item.state.complete'}">
+                        {{row[key]|i18n}}
+                    </span>
+                    <csr-readmore ng-if="key==='description'">{{row[key]|i18n}}</csr-readmore>
+                </div>
+            </div>
+        </div>
+        <div class="detail-body col-sm-7 box">
+            <div class="row detail-item">
+                {{description|i18n:dscparams}}
             </div>
         </div>
     </div>

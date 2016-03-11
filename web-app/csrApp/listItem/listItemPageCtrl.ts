@@ -17,7 +17,8 @@ module CSR {
     }
 
     export class ListItemPageCtrl implements IListItemPageCtrl{
-        $inject = ["$scope", "$state", "ItemListViewService", "CSRUserService", "SpinnerService", "$timeout"];
+        $inject = ["$scope", "$state", "ItemListViewService", "CSRUserService", "SpinnerService", "$timeout",
+        "APP_ROOT"];
         itemListViewService:CSR.ItemListViewService;
         userService:CSR.UserService;
         actionItems:IUserItem[];
@@ -27,7 +28,7 @@ module CSR {
         $timeout;
         $state;
 
-        constructor($scope, $state, ItemListViewService, CSRUserService, SpinnerService, $timeout) {
+        constructor($scope, $state, ItemListViewService, CSRUserService, SpinnerService, $timeout, APP_ROOT) {
             $scope.vm = this;
             this.$state = $state;
             this.itemListViewService = ItemListViewService;

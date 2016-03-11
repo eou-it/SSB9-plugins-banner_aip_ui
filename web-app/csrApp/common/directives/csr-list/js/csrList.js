@@ -3,8 +3,6 @@ var CSRUI;
 (function (CSRUI) {
     var CSRListDirective = (function () {
         function CSRListDirective() {
-            this.$inject = [];
-            this.templateUrl = "../plugins/banner-csr-ui-1.0/csrApp/common/directives/csr-list/template/csrList.html";
             this.restrict = "AE";
             this.scope = {
                 data: "=",

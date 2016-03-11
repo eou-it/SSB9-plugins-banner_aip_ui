@@ -10,7 +10,6 @@ module CSRUI {
         replace: boolean;
         transclude: boolean;
         constructor() {
-            this.templateUrl = "../plugins/banner-csr-ui-1.0/csrApp/common/directives/csr-readmore/template/csrReadmore.html";
             this.restrict = "A";
             this.replace = true;
             this.transclude = true;

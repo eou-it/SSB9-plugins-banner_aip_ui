@@ -12,8 +12,6 @@ var csrAppRoot = "/" + extensibilityInfo.application + "/plugins/" +
     window.csrApp.name.replace(/\W+/g, '-').replace(/([a-z\d])([A-Z])/g, '$1-$2').toLowerCase() + "-" +
     window.csrApp.version + "/csrApp/";
 
-var bannerCSRUi = angular.module("bannercsrui", []);
-
 var bannerCSRApp = angular.module("bannercsr", [
     "ngResource",
     "ngSanitize",
@@ -103,5 +101,32 @@ var bannerCSRApp = angular.module("bannercsr", [
                 CsrBreadcrumService.updateBreadcrumb(toState.data.breadcrumbs);
             })
 
+    }]
+);
+
+var bannerCSRUi = angular.module("bannercsrui", [])
+    //supply directives' template url so that we don't have any hardcoded url in other code
+    .config(['$provide', function($provide) {
+        //override angular-ui's default accordion-group directive template; h4 -> h2 for title
+        $provide.decorator('uibAccordionGroupDirective', function($delegate) {
+            var directive = $delegate[0];
+            directive.templateUrl = csrAppRoot + "common/directives/csr-list/template/csrListAccordionHeader.html";
+            return $delegate;
+        });
+        $provide.decorator("csrListDirective", function($delegate) {
+            var directive = $delegate[0];
+            directive.templateUrl = csrAppRoot + "common/directives/csr-list/template/csrList.html";
+            return $delegate;
+        });
+        $provide.decorator("csrReadmoreDirective", function($delegate) {
+            var directive = $delegate[0];
+            directive.templateUrl = csrAppRoot + "common/directives/csr-readmore/template/csrReadmore.html";
+            return $delegate;
+        })
+        $provide.decorator("csrLandingItemDirective", function($delegate) {
+            var directive = $delegate[0];
+            directive.templateUrl = csrAppRoot + "common/directives/csr-landing-item/template/csrLandingItem.html";
+            return $delegate;
+        })
     }]
 );

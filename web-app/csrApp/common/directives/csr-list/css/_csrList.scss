@@ -6,9 +6,7 @@ $border-color: #A4C6E4;
 csr-list {
   .csr-list-container {
     border: none;
-    .row {
-      margin: 0;
-    }
+    box-shadow: none;
     .clearfix {
         content: " ";
         display: table;
@@ -19,9 +17,6 @@ csr-list {
     .panel-body {
       padding: 0;
     }
-    .panel-heading {
-      padding: 0;
-    }
     hr {
       margin-top: 0;
       margin-bottom: 0;
@@ -29,41 +24,35 @@ csr-list {
       height: 1px;
       border: 0;
     }
-    .header {
-      background-color: aliceblue;
-      .row.list-item {
-        vertical-align: middle;
-        padding: 16px 0;
-        .title {
-          h2 {
-            font-size: 1.8em;
-            white-space: nowrap;
-            display: inline;
-            margin: 0;
-            font-weight: bold;
-            line-height: normal;
+    .panel-title {
+      .item-group {
+        padding: 0;
+        .group-title {
+          padding-bottom: 8px;
+          .group-title-text {
+            font-size: 1em;
           }
-          .badge {
-            background-color: $badge-color;
-            border: 1px solid $badge-border-color;
-            color: #3a3737;
-            padding: 3px 10px;
-            border-radius: 50%;
-            box-shadow: 4px 4px 4px;
-            margin-left: 10px;
+          .group-title-icon {
+            float: right;
           }
         }
-        .description {
-          line-height: 1.5;
-          padding-left: 0;
-          padding-top: 16px;
-          //font-size: 1.3em;
+        .group-progress {
+          padding: 0 8px;
+          .progress {
+            border-radius: 16px;
+            .progress-bar {
+              border-radius: 16px;
+              span {
+                text-align: center;
+              }
+            }
+          }
         }
       }
     }
     .list-body {
       border: 1px solid #A4C6E4;
-      padding-bottom:8px;
+      padding: 0 0 8px 0;
       .list-item {
         padding: 16px 8px 0 8px;
         //border-bottom: 1px solid $border-color;
@@ -104,6 +93,9 @@ csr-list {
           padding: 24px 8px 16px 8px;
         }
       }
+    }
+    .detail-body {
+      border: 1px solid #A4C6E4;
     }
     //small size (tablet)
     @media screen and (max-width: 768px) {

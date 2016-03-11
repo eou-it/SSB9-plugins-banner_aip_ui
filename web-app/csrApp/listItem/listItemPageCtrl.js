@@ -4,8 +4,9 @@
 var CSR;
 (function (CSR) {
     var ListItemPageCtrl = (function () {
-        function ListItemPageCtrl($scope, $state, ItemListViewService, CSRUserService, SpinnerService, $timeout) {
-            this.$inject = ["$scope", "$state", "ItemListViewService", "CSRUserService", "SpinnerService", "$timeout"];
+        function ListItemPageCtrl($scope, $state, ItemListViewService, CSRUserService, SpinnerService, $timeout, APP_ROOT) {
+            this.$inject = ["$scope", "$state", "ItemListViewService", "CSRUserService", "SpinnerService", "$timeout",
+                "APP_ROOT"];
             $scope.vm = this;
             this.$state = $state;
             this.itemListViewService = ItemListViewService;

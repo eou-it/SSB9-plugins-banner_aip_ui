@@ -1,16 +1,15 @@
 ///<reference path="../../../../../typings/tsd.d.ts"/>
 
 declare var register;
+declare var csrAppRoot;
 
 module CSRUI {
     export class CSRListDirective {
 
-        $inject=[];
         templateUrl: string;
         restrict: string;
         scope:any;
         constructor() {
-            this.templateUrl = "../plugins/banner-csr-ui-1.0/csrApp/common/directives/csr-list/template/csrList.html";
             this.restrict = "AE";
             this.scope = {
                 data: "=",
@@ -21,7 +20,6 @@ module CSRUI {
                 click:"&",
                 stylefunction:"&",
                 idx: "="
-
             }
         }
         compile() {
