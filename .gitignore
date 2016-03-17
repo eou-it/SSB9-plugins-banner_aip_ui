@@ -3,6 +3,7 @@
 .DS_Store
 target
 target/**/*
+web-app/selenium/**/*
 web-app/WEB-INF/classes
 web-app/WEB-INF/classes/**/*
 web-app/WEB-INF/tld/*.tld
