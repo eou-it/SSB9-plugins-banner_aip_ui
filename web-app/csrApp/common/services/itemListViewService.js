@@ -1,6 +1,11 @@
 ///<reference path="../../../typings/tsd.d.ts"/>
 var CSR;
 (function (CSR) {
+    var SelectionType;
+    (function (SelectionType) {
+        SelectionType[SelectionType["Group"] = 0] = "Group";
+        SelectionType[SelectionType["ActionItem"] = 1] = "ActionItem";
+    })(SelectionType || (SelectionType = {}));
     var ItemListViewService = (function () {
         function ItemListViewService($http) {
             this.$http = $http;
@@ -17,6 +22,36 @@ var CSR;
                 throw new Error(err);
             });
             return request;
+        };
+        ItemListViewService.prototype.getDetailInformation = function (id, selectType) {
+            var detailInfo = {};
+            //TODO:: get information for group/actionitem from grails controller
+            switch (selectType) {
+                case "group":
+                    detailInfo = {
+                        type: SelectionType.Group,
+                        id: id,
+                        info: {
+                            title: "same as group title",
+                            content: "Detail instruction/info of group " + id,
+                            type: "doc"
+                        }
+                    };
+                    break;
+                case "actionItem":
+                    detailInfo = {
+                        type: SelectionType.ActionItem,
+                        id: id,
+                        info: {
+                            title: "same as action item name",
+                            content: "Detail information of action item " + id,
+                            type: "doc"
+                        }
+                    };
+                default:
+                    break;
+            }
+            return detailInfo;
         };
         ItemListViewService.prototype.confirmItem = function (id) {
             //TODO: update datbase

@@ -28,6 +28,7 @@ modules = {
         dependsOn 'bannerSelfServiceCommonLTR, extensibilityCommon, extensibilityAngular, common-components, angularApp, bootstrap'
         dependsOn 'bannerCSRApp'
         dependsOn "bannerSelfService, i18n-core"
+        dependsOn 'font-awesome'
         resource url:[plugin: 'banner-csr-ui', file: 'css/xe-ui-components.css']
         resource url:[plugin: 'banner-csr-ui', file: 'css/csr-main.css']
     }
@@ -58,6 +59,7 @@ modules = {
         resource url:[plugin: 'banner-csr-ui', file: 'csrApp/common/directives/csr-landing-item/js/csrLandingItem.js']
         resource url:[plugin: 'banner-csr-ui', file: 'csrApp/common/directives/csr-list/js/csrList.js']
         resource url:[plugin: 'banner-csr-ui', file: 'csrApp/common/directives/csr-readmore/js/csrReadmore.js']
+        resource url:[plugin: 'banner-csr-ui', file: 'csrApp/common/directives/csr-item-detail/js/csrItemDetail.js']
         resource url:[plugin: 'banner-csr-ui', file: 'csrApp/common/utils/csrSpinnerCtrl.js']
     }
 

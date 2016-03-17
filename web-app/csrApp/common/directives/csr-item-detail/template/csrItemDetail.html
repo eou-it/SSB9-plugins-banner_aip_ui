@@ -1,0 +1,47 @@
+<div class="csr-item-detail-container">
+    <div class="detail-content">
+        <div class="detail">
+            <!--TODO:: text goes here-->
+            <!--<ng-transclude></ng-transclude>-->
+            {{data.info.content}}
+        </div>
+
+        <div class="control">
+            <!--group-->
+            <div class="groupButton" ng-if="data.type===0">
+                <!--TODO::add 'proceed' button with description-->
+                <button type="button" class="btn btn-primary" ng-click="proceed()">
+                    Proceed to {{data.info.title}}
+                </button>
+            </div>
+            <!--action item-->
+            <div class="row actionItemTwoButton" ng-if="data.type!==0">
+                <!--TODO::add 'Agree' and 'Deny' buttons with detail information-->
+                <div class="col-sm-8 col-sm-offset-2 col-xs-8 col-xs-offset-2 buttonDiv">
+                    <button type="button" class="btn btn-primary" ng-click="agree(data.id)">
+                        I confirm that I have reviewed {{data.info.title}} policy
+                    </button>
+                </div>
+                <div class="col-sm-8 col-sm-offset-2 col-xs-8 col-xs-offset-2 buttonDiv">
+                    <button type="button" class="btn btn-default" ng-click="notAgree(data.id)">
+                        I do not agree with the university {{data.info.title}} policy
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="detail-nav" ng-if="data.type!==0">
+            <div class="btn-group">
+                <label class="btn btn-primary">
+                    <i class="fa fa-list"></i>
+                    <span>Return to the list</span>
+                </label>
+                <label class="btn btn-primary">
+                    <span>Proceed to the next item</span>
+                    <i class="fa fa-caret-right"></i>
+                </label>
+            </div>
+        </div>
+    </div>
+
+
+</div>

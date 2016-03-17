@@ -105,28 +105,36 @@ var bannerCSRApp = angular.module("bannercsr", [
 );
 
 var bannerCSRUi = angular.module("bannercsrui", [])
+    //set application root url
+    .constant('APP_ROOT', csrAppRoot)
+
     //supply directives' template url so that we don't have any hardcoded url in other code
-    .config(['$provide', function($provide) {
+    .config(['$provide', 'APP_ROOT', function($provide, APP_ROOT) {
         //override angular-ui's default accordion-group directive template; h4 -> h2 for title
         $provide.decorator('uibAccordionGroupDirective', function($delegate) {
             var directive = $delegate[0];
-            directive.templateUrl = csrAppRoot + "common/directives/csr-list/template/csrListAccordionHeader.html";
+            directive.templateUrl = APP_ROOT + "common/directives/csr-list/template/csrListAccordionHeader.html";
             return $delegate;
         });
         $provide.decorator("csrListDirective", function($delegate) {
             var directive = $delegate[0];
-            directive.templateUrl = csrAppRoot + "common/directives/csr-list/template/csrList.html";
+            directive.templateUrl = APP_ROOT + "common/directives/csr-list/template/csrList.html";
             return $delegate;
         });
         $provide.decorator("csrReadmoreDirective", function($delegate) {
             var directive = $delegate[0];
-            directive.templateUrl = csrAppRoot + "common/directives/csr-readmore/template/csrReadmore.html";
+            directive.templateUrl = APP_ROOT + "common/directives/csr-readmore/template/csrReadmore.html";
             return $delegate;
-        })
+        });
         $provide.decorator("csrLandingItemDirective", function($delegate) {
             var directive = $delegate[0];
-            directive.templateUrl = csrAppRoot + "common/directives/csr-landing-item/template/csrLandingItem.html";
+            directive.templateUrl = APP_ROOT + "common/directives/csr-landing-item/template/csrLandingItem.html";
             return $delegate;
-        })
+        });
+        $provide.decorator("csrItemDetailDirective", function($delegate) {
+            var directive = $delegate[0];
+            directive.templateUrl = APP_ROOT + "common/directives/csr-item-detail/template/csrItemDetail.html";
+            return $delegate;
+        });
     }]
 );

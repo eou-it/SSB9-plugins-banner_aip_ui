@@ -1,31 +1,39 @@
 <uib-accordion-group class="csr-list-container" role="group" is-open="isOpen">
     <uib-accordion-heading>
-        <div class="item-group" ng-if="itemtitle">
-            <div class="group-title">
-                <span class="group-title-text">{{itemtitle|i18n}}</span>
-                <div class="panel-title-icon"></div>
+        <div class="item-group row">
+            <div class="row">
+                <div class="group-title col-sm-10">
+                    <span class="group-title-text" ng-click="openGroup(idx)">{{itemtitle|i18n}}</span>
+                    <div class="badge" ng-if="!isOpen">
+                        {{completedItem().length + "/" + data.length}}
+                    </div>
+                </div>
+                <div class="group-title-icon col-sm-1">
+                    <i role="button" tabindex="0" class="group-info fa fa-file-text" href="#" ng-click="displayGroupInfo(idx, $event)"></i>
+                </div>
             </div>
-            <div class="group-progress">
-                <uib-progressbar max="data.length" value="3"><span style="color:white; white-space:nowrap;">3 / {{data.length}}</span></uib-progressbar>
+            <div class="row">
+                <div class="group-progress col-sm-12" ng-if="isOpen">
+                    <uib-progressbar ng-class="{'normal':completedItem().length+1>data.length/2}" max="data.length" value="completedItem().length">
+                        <span>{{completedItem().length}} / {{data.length}}</span>
+                    </uib-progressbar>
+                </div>
             </div>
         </div>
     </uib-accordion-heading>
     <div class="row">
-        <div class="list-body col-sm-5 box" role="list" aria-label="{{itemtitle|i18n}}">
-            <div class="row list-item" ng-repeat="row in data" ng-click="openConfirm(row)" role="listitem">
-                <div ng-repeat="key in header" class="{{getStyle(key)}}" >
-                    <h3 ng-if="key==='title'">{{row[key]|i18n}}</h3>
-                    <span ng-if="key==='state'" ng-class="{'badge pending':key==='state'&&row[key]==='csr.user.list.item.state.pending',
-                        'badge approved':key==='state'&&row[key]==='csr.user.list.item.state.complete'}">
-                        {{row[key]|i18n}}
-                    </span>
-                    <csr-readmore ng-if="key==='description'">{{row[key]|i18n}}</csr-readmore>
+        <div class="list-body-container box">
+            <div class="list-body" role="list" aria-label="{{itemtitle|i18n}}">
+                <div class="row list-item" ng-repeat="row in data" ng-click="openConfirm(row, $event)" role="listitem">
+                    <div ng-repeat="key in header" class="{{getStyle(key)}}" >
+                        <h3 ng-if="key==='title'">{{row[key]|i18n}}</h3>
+                        <span ng-if="key==='state'" ng-class="{'badge pending':key==='state'&&row[key]==='csr.user.list.item.state.pending',
+                            'badge approved':key==='state'&&row[key]==='csr.user.list.item.state.complete'}">
+                            {{row[key]|i18n}}
+                        </span>
+                        <csr-readmore ng-if="key==='description'">{{row[key]|i18n}}</csr-readmore>
+                    </div>
                 </div>
-            </div>
-        </div>
-        <div class="detail-body col-sm-7 box">
-            <div class="row detail-item">
-                {{description|i18n:dscparams}}
             </div>
         </div>
     </div>

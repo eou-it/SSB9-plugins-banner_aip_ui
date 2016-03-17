@@ -4,7 +4,22 @@ declare var register;
 
 module CSR {
 
-    interface IActionItem {
+    enum SelectionType {
+        Group,
+        ActionItem
+    }
+
+    export interface ISelectedData {
+        type: SelectionType;
+        id: number|string;
+        info: {
+            title: string;
+            content: string;
+            type: string;
+        }
+    }
+
+    export interface IActionItem {
         description: string;
         id: number|string;
         name: string;
@@ -12,6 +27,7 @@ module CSR {
         title: string;
     }
     export interface IUserItem {
+        id?: number|string;
         header:string[];
         name: string;
         dscParams?:string[];
@@ -28,6 +44,7 @@ module CSR {
     interface IItemListViewService {
         getActionItems(userInfo):void;
         confirmItem(id:string|number):void;
+        getDetailInformation(id:number|string, type:string):CSR.ISelectedData;
     }
 
     export class ItemListViewService implements IItemListViewService{
@@ -48,6 +65,36 @@ module CSR {
                    throw new Error(err);
                });
             return request;
+        }
+        getDetailInformation(id, selectType) {
+            var detailInfo = <CSR.ISelectedData>{};
+            //TODO:: get information for group/actionitem from grails controller
+            switch (selectType) {
+                case "group":
+                    detailInfo = {
+                        type: SelectionType.Group,
+                        id: id,
+                        info: {
+                            title: "same as group title",
+                            content: "Detail instruction/info of group " + id,
+                            type: "doc"
+                        }
+                    };
+                    break;
+                case "actionItem":
+                    detailInfo = {
+                        type: SelectionType.ActionItem,
+                        id: id,
+                        info: {
+                            title: "same as action item name",
+                            content: "Detail information of action item " + id,
+                            type: "doc"
+                        }
+                    };
+                default:
+                    break;
+            }
+            return detailInfo;
         }
         confirmItem(id) {
             //TODO: update datbase
