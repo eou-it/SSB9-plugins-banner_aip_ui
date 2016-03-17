@@ -110,6 +110,8 @@ csr-list .csr-list-container {
     height: inherit;
     border: 1px solid #A4C6E4;
     padding: 16px; }
+    .csr-item-detail-container .detail-content hr {
+      border-color: #A4C6E4 !important; }
     .csr-item-detail-container .detail-content .detail {
       padding-bottom: 24px; }
     .csr-item-detail-container .detail-content .control {

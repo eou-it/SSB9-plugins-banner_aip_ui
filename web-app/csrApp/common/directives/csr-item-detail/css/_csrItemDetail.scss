@@ -10,6 +10,9 @@ $border-color: #A4C6E4;
     height: inherit;;
     border: 1px solid $border-color;
     padding: 16px;
+    hr {
+      border-color: #A4C6E4 !important;
+    }
     .detail {
       padding-bottom: 24px;
     }
