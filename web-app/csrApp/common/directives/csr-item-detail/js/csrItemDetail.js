@@ -8,7 +8,8 @@ var CSRUI;
             this.replace = true;
             this.scope = {
                 data: "=",
-                next: "&"
+                next: "&",
+                tolist: "&"
             };
         }
         CSRItemDetailDirective.prototype.compile = function () {
@@ -23,6 +24,11 @@ var CSRUI;
             };
             $scope.getState = function (id) {
                 //$scope.itemstate(id)
+            };
+            $scope.returnlist = function () {
+                $scope.tolist();
+            };
+            $scope.nextitem = function () {
             };
         };
         return CSRItemDetailDirective;

@@ -94,11 +94,15 @@ a:focus, div:focus, input:focus, span:focus, .breadcrumbButton:focus {
       .itemList {
         .groupList {
           overflow-y: auto;
+          padding-right: 0;
+          padding-left: 0;
           //header~55px, footer:30px, page header:80px = ~170px
           //height: calc(100vh - 170px);
         }
         .groupDetail {
           overfloat-y: auto;
+          padding-right: 0;
+          padding-left: 0;
           //height: calc(100vh - 60px);
           .detail-body-container {
             height: inherit;

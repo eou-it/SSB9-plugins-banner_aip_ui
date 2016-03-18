@@ -16,7 +16,8 @@ csr-list .csr-list-container {
     border: 0; }
   csr-list .csr-list-container .panel-heading {
     background-color: transparent;
-    border: none; }
+    border: none;
+    padding: 0; }
     csr-list .csr-list-container .panel-heading .panel-title .accordion-toggle {
       color: black; }
     csr-list .csr-list-container .panel-heading .panel-title .group-toggle-indicator {
@@ -76,7 +77,7 @@ csr-list .csr-list-container {
         color: #3a3737;
         margin-right: 8px;
         float: right;
-        width: 120px; }
+        width: 100%; }
       csr-list .csr-list-container .list-body-container .list-body .list-item .cell.description {
         font-size: 1.3em;
         border-bottom: 1px solid #A4C6E4;
@@ -119,15 +120,16 @@ csr-list .csr-list-container {
       .csr-item-detail-container .detail-content .control .actionItemTwoButton .buttonDiv {
         padding-bottom: 24px; }
         .csr-item-detail-container .detail-content .control .actionItemTwoButton .buttonDiv button {
-          width: 100%; }
+          width: 100%;
+          white-space: normal; }
     .csr-item-detail-container .detail-content .detail-nav {
-      display: none; }
-  @media screen and (max-width: 768px) {
-    .csr-item-detail-container .detail-nav {
-      display: block; } }
-  @media screen and (max-width: 480px) {
-    .csr-item-detail-container .detail-nav {
-      display: block; } }
+      display: none;
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0; }
+      .csr-item-detail-container .detail-content .detail-nav .btn-group {
+        width: 100%; }
 
 #breadcrumb-panel {
   display: none; }
@@ -191,9 +193,13 @@ a:focus, div:focus, input:focus, span:focus, .breadcrumbButton:focus {
   .viewContainer .listActionItem .row {
     margin: 0; }
   .viewContainer .listActionItem .listActionItem-container .itemList .groupList {
-    overflow-y: auto; }
+    overflow-y: auto;
+    padding-right: 0;
+    padding-left: 0; }
   .viewContainer .listActionItem .listActionItem-container .itemList .groupDetail {
-    overfloat-y: auto; }
+    overfloat-y: auto;
+    padding-right: 0;
+    padding-left: 0; }
     .viewContainer .listActionItem .listActionItem-container .itemList .groupDetail .detail-body-container {
       height: inherit;
       padding: 0;

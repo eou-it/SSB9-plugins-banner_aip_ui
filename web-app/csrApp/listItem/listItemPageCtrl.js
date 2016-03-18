@@ -139,7 +139,8 @@ var CSR;
                 this.selectedData = undefined;
             }
         };
-        ListItemPageCtrl.prototype.selectNext = function (groupIdx, itemId) {
+        ListItemPageCtrl.prototype.resetSelection = function () {
+            this.selectedData = undefined;
         };
         return ListItemPageCtrl;
     })();

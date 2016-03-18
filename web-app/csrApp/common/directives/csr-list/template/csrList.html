@@ -2,13 +2,13 @@
     <uib-accordion-heading>
         <div class="item-group row">
             <div class="row">
-                <div class="group-title col-sm-10">
+                <div class="group-title col-sm-10 col-xs-10">
                     <span class="group-title-text" ng-click="openGroup(idx)">{{itemtitle|i18n}}</span>
                     <div class="badge" ng-if="!isOpen">
                         {{completedItem().length + "/" + data.length}}
                     </div>
                 </div>
-                <div class="group-title-icon col-sm-1">
+                <div class="group-title-icon col-sm-1 col-xs-1">
                     <i role="button" tabindex="0" class="group-info fa fa-file-text" href="#" ng-click="displayGroupInfo(idx, $event)"></i>
                 </div>
             </div>

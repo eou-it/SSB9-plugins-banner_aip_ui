@@ -26,22 +26,30 @@ $border-color: #A4C6E4;
           padding-bottom: 24px;
           button {
             width: 100%;
+            white-space:normal;
           }
         }
       }
     }
     .detail-nav {
       display: none;
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      .btn-group {
+        width: 100%;
+      }
     }
   }
-  @media screen and (max-width:768px) {
-    .detail-nav {
-      display: block;
-    }
-  }
-  @media screen and (max-width:480px) {
-    .detail-nav {
-      display: block;
-    }
-  }
+  //@media screen and (max-width:768px) {
+  //  .detail-nav {
+  //    display: block;
+  //  }
+  //}
+  //@media screen and (max-width:480px) {
+  //  .detail-nav {
+  //    display: block;
+  //  }
+  //}
 }

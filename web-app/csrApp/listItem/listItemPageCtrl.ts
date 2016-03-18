@@ -22,6 +22,7 @@ module CSR {
         nextItem(): void;
         selectFirstItem(idx:number|string): ISelectedData;
         toggleDetail(state:{idx:number|string, open:boolean}):void;
+        resetSelection():void;
     }
 
     export class ListItemPageCtrl implements IListItemPageCtrl{
@@ -171,8 +172,8 @@ module CSR {
                 this.selectedData = undefined;
             }
         }
-        selectNext(groupIdx, itemId) {
-
+        resetSelection() {
+            this.selectedData = undefined;
         }
 
     }

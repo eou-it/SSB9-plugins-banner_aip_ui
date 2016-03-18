@@ -16,7 +16,7 @@
         </div>
         <div class="listActionItem-container" ng-if="vm.actionItems.length > 0">
             <div class="itemList">
-                <div class="groupList col-sm-5" ng-style="vm.getHeight()">
+                <div class="groupList col-sm-5" ng-class="{'hidden-xs':vm.selectedData}" ng-style="vm.getHeight()">
                     <uib-accordion close-others="oneAtATime">
                         <csr-list ng-repeat="actionItemList in vm.actionItems" itemtitle="actionItemList.info.title"
                                   description="actionItemList.info.description" data="actionItemList.items"
@@ -29,7 +29,7 @@
                 <div class="groupDetail col-sm-7" ng-style="vm.getHeight()">
                     <div class="detail-body-container" ng-if="vm.selectedData">
                         <div class="detail-body">
-                            <csr-item-detail data="vm.selectedData" next="vm.nextItem()">
+                            <csr-item-detail data="vm.selectedData" next="vm.nextItem()" tolist="vm.resetSelection()">
                             </csr-item-detail>
 
                         </div>

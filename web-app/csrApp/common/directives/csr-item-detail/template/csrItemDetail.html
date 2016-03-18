@@ -17,25 +17,25 @@
             <!--action item-->
             <div class="row actionItemTwoButton" ng-if="data.type!==0">
                 <!--TODO::add 'Agree' and 'Deny' buttons with detail information-->
-                <div class="col-sm-8 col-sm-offset-2 col-xs-8 col-xs-offset-2 buttonDiv">
+                <div class="col-sm-8 col-sm-offset-2 col-xs-12 buttonDiv">
                     <button type="button" class="btn btn-primary" ng-click="agree(data.id)">
                         I confirm that I have reviewed {{data.info.title}} policy
                     </button>
                 </div>
-                <div class="col-sm-8 col-sm-offset-2 col-xs-8 col-xs-offset-2 buttonDiv">
+                <div class="col-sm-8 col-sm-offset-2 col-xs-12 buttonDiv">
                     <button type="button" class="btn btn-default" ng-click="notAgree(data.id)">
                         I do not agree with the university {{data.info.title}} policy
                     </button>
                 </div>
             </div>
         </div>
-        <div class="detail-nav" ng-if="data.type!==0">
-            <div class="btn-group">
-                <label class="btn btn-primary">
+        <div class="detail-nav hidden-sm hidden-md hidden-lg visible-xs-12" ng-if="data.type!==0">
+            <div class="row btn-group">
+                <label class="btn btn-primary col-xs-6" ng-click="returnlist()">
                     <i class="fa fa-list"></i>
                     <span>Return to the list</span>
                 </label>
-                <label class="btn btn-primary">
+                <label class="btn btn-primary col-xs-6" ng-click="nextitem()">
                     <span>Proceed to the next item</span>
                     <i class="fa fa-caret-right"></i>
                 </label>

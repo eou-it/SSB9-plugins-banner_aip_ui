@@ -27,6 +27,7 @@ csr-list {
     .panel-heading {
       background-color:transparent;
       border: none;
+      padding: 0;
       .panel-title {
         .accordion-toggle {
           color: black;
@@ -118,7 +119,7 @@ csr-list {
             margin-right: 8px;
             //padding: 7px 10px;
             float: right;
-            width: 120px;
+            width: 100%;
           }
           .cell.description {
             font-size: 1.3em;
