@@ -115,14 +115,14 @@ class CsrController {
         def jsonObj = request.JSON; //type, groupId, actionItemId
         def model = [:]
         if(jsonObj.type == "group") {
-            model.title = "Group information"
-            model.content = "Group detail information for group " + jsonObj.groupId.toString() + " goes here"
-            model.type = "doc"
+            model.title = "Group information"   //remove or not
+            model.content = "Group detail information for group " + jsonObj.groupId.toString() + " goes here"   //require
+            model.type = "doc"  //probably require,  checking for type of template
         } else if(jsonObj.type == "actionItem") {
             model.title = "Action item information"
             model.content = "Action item information for item " + jsonObj.actionItemId.toString() + " goes here"
             model.type = "doc"
-            model.id = jsonObj.actionItemId
+            model.id = jsonObj.actionItemId //remove or not
         }
         render model as JSON
     }
