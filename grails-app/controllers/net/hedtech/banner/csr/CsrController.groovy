@@ -84,7 +84,7 @@ class CsrController {
                     def actionItem = [
                             id         : item.id,
                             name       : item.title,
-                            state      : "csr.user.list.item.state.pending",
+                            state      : item.status,
                             title      : item.title,
                             description: item.description
                     ]
