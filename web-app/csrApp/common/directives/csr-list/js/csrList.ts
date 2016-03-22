@@ -58,7 +58,7 @@ module CSRUI {
             }
             $scope.completedItem = function() {
                 var items = $scope.data.filter((_item) => {
-                    return _item.state === "csr.user.list.item.state.complete";
+                    return _item.state === "Completed";
                 });
                 return items;
             }
