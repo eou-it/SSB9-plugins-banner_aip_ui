@@ -8,35 +8,35 @@
         <hr/>
         <div class="control">
             <!--group-->
-            <div class="groupButton" ng-if="data.type===0">
+            <div class="groupButton" ng-if="data.type==='group'">
                 <!--TODO::add 'proceed' button with description-->
                 <button type="button" class="btn btn-primary" ng-click="proceed()">
                     Proceed to {{data.info.title}}
                 </button>
             </div>
             <!--action item-->
-            <div class="row actionItemTwoButton" ng-if="data.type!==0">
+            <div class="row actionItemTwoButton" ng-if="data.type!=='group'">
                 <!--TODO::add 'Agree' and 'Deny' buttons with detail information-->
                 <div class="col-sm-8 col-sm-offset-2 col-xs-12 buttonDiv">
-                    <button type="button" class="btn btn-primary" ng-click="agree(data.id)">
+                    <button type="button" class="btn btn-primary" ng-click="agree(data.info.id)">
                         I confirm that I have reviewed {{data.info.title}} policy
                     </button>
                 </div>
                 <div class="col-sm-8 col-sm-offset-2 col-xs-12 buttonDiv">
-                    <button type="button" class="btn btn-default" ng-click="notAgree(data.id)">
+                    <button type="button" class="btn btn-default" ng-click="notAgree(data.info.id)">
                         I do not agree with the university {{data.info.title}} policy
                     </button>
                 </div>
             </div>
         </div>
-        <div class="detail-nav hidden-sm hidden-md hidden-lg visible-xs-12" ng-if="data.type!==0">
+        <div class="detail-nav hidden-sm hidden-md hidden-lg visible-xs-12" ng-if="data.type!=='group'">
             <div class="row btn-group">
                 <label class="btn btn-primary col-xs-6" ng-click="returnlist()">
                     <i class="fa fa-list"></i>
                     <span>Return to the list</span>
                 </label>
-                <label class="btn btn-primary col-xs-6" ng-click="nextitem()">
-                    <span>Proceed to the next item</span>
+                <label class="btn btn-primary col-xs-6" ng-click="nextitem(groupId, itemId)">
+                    <span>Placeholder for next</span>
                     <i class="fa fa-caret-right"></i>
                 </label>
             </div>

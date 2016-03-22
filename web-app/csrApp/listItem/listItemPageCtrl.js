@@ -42,7 +42,10 @@ var CSR;
                     _this.initialOpenGroup = _this.getInitialSelection();
                     //this.selectedData = {type: SelectionType.Group};
                     if (_this.initialOpenGroup !== -1) {
-                        _this.selectedData = _this.itemListViewService.getDetailInformation(_this.initialOpenGroup, "group");
+                        _this.itemListViewService.getDetailInformation(_this.initialOpenGroup, "group", null)
+                            .then(function (response) {
+                            _this.selectedData = response;
+                        });
                     }
                 });
             });
@@ -50,13 +53,12 @@ var CSR;
         ListItemPageCtrl.prototype.getInitialSelection = function () {
             var defaultSelection = 0;
             if (this.actionItems.length > 1) {
-                this.initialOpenGroup = -1;
+                defaultSelection = -1;
             }
             return defaultSelection;
             //TODO:: when multiple group available, first available group could be opened
         };
-        ListItemPageCtrl.prototype.openConfirm = function (row) {
-            this.selectedData = this.itemListViewService.getDetailInformation(row.id, "actionItem");
+        ListItemPageCtrl.prototype.openConfirm = function (groupId, row) {
             //TODO:: get selected row action item detail information
             //TODO:: display action item detail information
         };
@@ -90,9 +92,8 @@ var CSR;
             }
             return param;
         };
-        ListItemPageCtrl.prototype.showGroupInfo = function (idx) {
-            //TODO:: open selected group info's group accordion
-            this.selectedData = this.itemListViewService.getDetailInformation(idx, "group");
+        ListItemPageCtrl.prototype.showGroupInfo = function (groupId) {
+            this.selectItem(groupId, null);
         };
         ListItemPageCtrl.prototype.getHeight = function () {
             var containerHeight = $(document).height() -
@@ -102,38 +103,54 @@ var CSR;
                 35;
             return { height: containerHeight };
         };
-        ListItemPageCtrl.prototype.nextItem = function () {
-            console.log(this.selectedData);
-            var selected;
-            switch (this.selectedData.type) {
-                case 0:
-                    selected = this.selectFirstItem(this.selectedData.id);
-                    break;
-                case 1:
-                    break;
-                default:
-                    break;
+        ListItemPageCtrl.prototype.nextItem = function (groupId, itemId) {
+            var index = this.getIndex(groupId, itemId);
+            if (index.group === -1) {
+                throw new Error("Group does not exist with ID ");
             }
-            this.selectedData = selected;
-        };
-        ListItemPageCtrl.prototype.selectFirstItem = function (idx) {
-            var selected;
-            var firstItem = this.actionItems[idx].items.filter(function (item) {
-                return item.state === "csr.user.list.item.state.pending";
-            });
-            if (firstItem.length === 0) {
-                if (this.actionItems[idx + 1]) {
-                    selected = this.selectFirstItem(idx + 1);
-                }
+            if (this.actionItems[index.group].items.length - 1 <= index.item) {
+                var firstItemId = this.actionItems[groupId].items[0].id;
+                this.selectItem(groupId, firstItemId);
             }
             else {
-                selected = this.itemListViewService.getDetailInformation(firstItem[0].id, "actionItem");
+                var nextItemId = this.actionItems[groupId].items[index.item + 1].id;
+                this.selectItem(groupId, nextItemId);
             }
-            return selected;
+        };
+        ListItemPageCtrl.prototype.selectItem = function (groupId, itemId) {
+            var _this = this;
+            var index = this.getIndex(groupId, itemId);
+            if (index.group === -1) {
+                throw new Error("Group does not exist with ID ");
+            }
+            var selectionType = itemId === null ? "group" : "actionItem";
+            this.itemListViewService.getDetailInformation(groupId, selectionType, index.item === null ? null : itemId).then(function (response) {
+                _this.selectedData = response;
+            });
+        };
+        ListItemPageCtrl.prototype.getIndex = function (groupId, itemId) {
+            var index = { group: -1, item: null };
+            var selectedGroup = this.actionItems.filter(function (group) {
+                return group.groupId === groupId;
+            });
+            if (selectedGroup.length !== -1) {
+                index.group = this.actionItems.indexOf(selectedGroup[0]);
+                var selectedItem = this.actionItems[groupId].items.filter(function (item) {
+                    return item.id === itemId;
+                });
+                if (selectedItem.length !== -1) {
+                    index.item = this.actionItems[groupId].items.indexOf(selectedItem[0]);
+                }
+            }
+            return index;
         };
         ListItemPageCtrl.prototype.toggleDetail = function (state) {
+            var _this = this;
             if (state.open) {
-                this.selectedData = this.itemListViewService.getDetailInformation(state.idx, "group");
+                this.itemListViewService.getDetailInformation(state.groupId, "group", null)
+                    .then(function (response) {
+                    _this.selectedData = response;
+                });
             }
             else {
                 this.selectedData = undefined;

@@ -11,8 +11,9 @@ module CSR {
 
     export interface ISelectedData {
         type: SelectionType;
-        id: number|string;
+        groupId: number|string;
         info: {
+            id?: number|string;
             title: string;
             content: string;
             type: string;
@@ -27,7 +28,7 @@ module CSR {
         title: string;
     }
     export interface IUserItem {
-        id?: number|string;
+        groupId: number|string;
         header:string[];
         name: string;
         dscParams?:string[];
@@ -44,7 +45,7 @@ module CSR {
     interface IItemListViewService {
         getActionItems(userInfo):void;
         confirmItem(id:string|number):void;
-        getDetailInformation(id:number|string, type:string):CSR.ISelectedData;
+        getDetailInformation(groupId: number|string, type:string, id:number|string);
     }
 
     export class ItemListViewService implements IItemListViewService{
@@ -66,35 +67,22 @@ module CSR {
                });
             return request;
         }
-        getDetailInformation(id, selectType) {
-            var detailInfo = <CSR.ISelectedData>{};
-            //TODO:: get information for group/actionitem from grails controller
-            switch (selectType) {
-                case "group":
-                    detailInfo = {
-                        type: SelectionType.Group,
-                        id: id,
-                        info: {
-                            title: "same as group title",
-                            content: "Detail instruction/info of group " + id,
-                            type: "doc"
-                        }
+        getDetailInformation(groupId, selectType, actionItemId) {
+            var request = this.$http({
+                method: "POST",
+                url: "csr/detailInfo",
+                data: {type:selectType, groupId: groupId, actionItemId:actionItemId}
+            })
+                .then((response) => {
+                    return {
+                        type: selectType,
+                        groupId: groupId,
+                        info: response.data
                     };
-                    break;
-                case "actionItem":
-                    detailInfo = {
-                        type: SelectionType.ActionItem,
-                        id: id,
-                        info: {
-                            title: "same as action item name",
-                            content: "Detail information of action item " + id,
-                            type: "doc"
-                        }
-                    };
-                default:
-                    break;
-            }
-            return detailInfo;
+                }, (err) => {
+                    throw new Error(err);
+                })
+            return request;
         }
         confirmItem(id) {
             //TODO: update datbase

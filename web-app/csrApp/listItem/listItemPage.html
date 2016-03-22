@@ -18,18 +18,16 @@
             <div class="itemList">
                 <div class="groupList col-sm-5" ng-class="{'hidden-xs':vm.selectedData}" ng-style="vm.getHeight()">
                     <uib-accordion close-others="oneAtATime">
-                        <csr-list ng-repeat="actionItemList in vm.actionItems" itemtitle="actionItemList.info.title"
-                                  description="actionItemList.info.description" data="actionItemList.items"
-                                  header="actionItemList.header" dscparams="actionItemList.dscParams" click="vm.openConfirm(row)"
+                        <csr-list ng-repeat="actionItemList in vm.actionItems" itemgroup="actionItemList" click="vm.selectItem(groupId, itemId)"
                                   stylefunction="vm.styleFunction(key)" idx="$index", opengroup="vm.initialOpenGroup"
-                                  showgroupinfo="vm.showGroupInfo(idx)" togglegroup="vm.toggleDetail(state)">
+                                  showgroupinfo="vm.showGroupInfo(groupId)" togglegroup="vm.toggleDetail(state)">
                         </csr-list>
                     </uib-accordion>
                 </div>
                 <div class="groupDetail col-sm-7" ng-style="vm.getHeight()">
                     <div class="detail-body-container" ng-if="vm.selectedData">
                         <div class="detail-body">
-                            <csr-item-detail data="vm.selectedData" next="vm.nextItem()" tolist="vm.resetSelection()">
+                            <csr-item-detail data="vm.selectedData" next="vm.nextItem(groupId, itemId)" tolist="vm.resetSelection()">
                             </csr-item-detail>
 
                         </div>

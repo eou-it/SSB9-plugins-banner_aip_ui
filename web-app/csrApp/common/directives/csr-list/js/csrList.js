@@ -5,11 +5,7 @@ var CSRUI;
         function CSRListDirective() {
             this.restrict = "AE";
             this.scope = {
-                data: "=",
-                itemtitle: "=?",
-                description: "=?",
-                header: "=",
-                dscparams: "=",
+                itemgroup: "=",
                 click: "&",
                 stylefunction: "&",
                 idx: "=",
@@ -32,26 +28,26 @@ var CSRUI;
             $scope.getStyle = function (key) {
                 return $scope.stylefunction({ key: key });
             };
-            $scope.openConfirm = function (row, evt) {
+            $scope.selectItem = function (group, row, evt) {
                 this.resetSelection();
                 this.addSelection(evt.currentTarget);
-                $scope.click({ row: row });
+                $scope.click({ groupId: group.groupId, itemId: row.id });
             };
-            $scope.openGroup = function (idx) {
+            $scope.openGroup = function (group) {
                 //TODO::Expand/Collapse group event
                 this.resetSelection();
-                $scope.togglegroup({ state: { idx: idx, open: !this.isOpen } });
+                $scope.togglegroup({ state: { groupId: group.groupId, open: !this.isOpen } });
             };
-            $scope.displayGroupInfo = function (idx, evt) {
+            $scope.displayGroupInfo = function (groupId, evt) {
                 evt.preventDefault();
                 evt.stopPropagation();
                 this.resetSelection();
-                $scope.togglegroup({ state: { idx: idx, open: true } });
+                $scope.togglegroup({ state: { groupId: groupId, open: true } });
                 $scope.isOpen = true;
-                $scope.showgroupinfo({ idx: idx });
+                $scope.showgroupinfo({ groupId: groupId });
             };
             $scope.completedItem = function () {
-                var items = $scope.data.filter(function (_item) {
+                var items = $scope.itemgroup.items.filter(function (_item) {
                     return _item.state === "csr.user.list.item.state.complete";
                 });
                 return items;

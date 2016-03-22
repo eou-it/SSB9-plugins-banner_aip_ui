@@ -23,35 +23,22 @@ var CSR;
             });
             return request;
         };
-        ItemListViewService.prototype.getDetailInformation = function (id, selectType) {
-            var detailInfo = {};
-            //TODO:: get information for group/actionitem from grails controller
-            switch (selectType) {
-                case "group":
-                    detailInfo = {
-                        type: SelectionType.Group,
-                        id: id,
-                        info: {
-                            title: "same as group title",
-                            content: "Detail instruction/info of group " + id,
-                            type: "doc"
-                        }
-                    };
-                    break;
-                case "actionItem":
-                    detailInfo = {
-                        type: SelectionType.ActionItem,
-                        id: id,
-                        info: {
-                            title: "same as action item name",
-                            content: "Detail information of action item " + id,
-                            type: "doc"
-                        }
-                    };
-                default:
-                    break;
-            }
-            return detailInfo;
+        ItemListViewService.prototype.getDetailInformation = function (groupId, selectType, actionItemId) {
+            var request = this.$http({
+                method: "POST",
+                url: "csr/detailInfo",
+                data: { type: selectType, groupId: groupId, actionItemId: actionItemId }
+            })
+                .then(function (response) {
+                return {
+                    type: selectType,
+                    groupId: groupId,
+                    info: response.data
+                };
+            }, function (err) {
+                throw new Error(err);
+            });
+            return request;
         };
         ItemListViewService.prototype.confirmItem = function (id) {
             //TODO: update datbase

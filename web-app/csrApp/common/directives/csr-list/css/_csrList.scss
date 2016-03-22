@@ -32,23 +32,25 @@ csr-list {
         .accordion-toggle {
           color: black;
         }
-        .group-toggle-indicator {
-          float: left;
-        }
         .item-group {
           padding: 0;
+          .group-toggle-indicator {
+            padding-right: 8px;
+          }
           .group-title {
-            padding-bottom: 8px;
+            white-space: nowrap;
+            padding: 0 0 8px 0;
             .group-title-text {
               font-size: 1em;
               padding-right: 8px;
+              white-space: normal;
             }
           }
           .group-title-icon {
             padding-right: 0;
             padding-left: 0;
             .group-info {
-              float: right;
+              //float: right;
             }
           }
           .badge {

@@ -74,6 +74,7 @@ class CsrController {
             def actionItems = userActionItemReadOnlyService.listActionItemByPidm(userPidm)
             def myItems = [
                     name  : "registration",
+                    groupId: 0,
                     info  : getActionGroupDescription("registration"),
                     header: ["title", "state", "description"]
             ]
@@ -108,6 +109,22 @@ class CsrController {
         }
         def personForCSR = CsrControllerUtils.getPersonForCSR(params, userPidm)
         render personForCSR as JSON
+    }
+
+    def detailInfo() {
+        def jsonObj = request.JSON; //type, groupId, actionItemId
+        def model = [:]
+        if(jsonObj.type == "group") {
+            model.title = "Group information"
+            model.content = "Group detail information for group " + jsonObj.groupId.toString() + " goes here"
+            model.type = "doc"
+        } else if(jsonObj.type == "actionItem") {
+            model.title = "Action item information"
+            model.content = "Action item information for item " + jsonObj.actionItemId.toString() + " goes here"
+            model.type = "doc"
+            model.id = jsonObj.actionItemId
+        }
+        render model as JSON
     }
 
     // It might be better in service in banner_csr.git, not in controller since this shouldn't be able to access from front-end
