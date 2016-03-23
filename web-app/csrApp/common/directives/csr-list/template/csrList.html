@@ -15,7 +15,7 @@
             </div>
             <div class="row">
                 <div class="group-progress col-sm-12" ng-if="isOpen">
-                    <uib-progressbar ng-class="{'normal':completedItem().length+1>data.length/2}" max="data.length" value="completedItem().length">
+                    <uib-progressbar ng-class="{'normal':completedItem().length+1>data.length/2}" max="itemgroup.items.length" value="completedItem().length">
                         <span>{{completedItem().length}} / {{itemgroup.items.length}}</span>
                     </uib-progressbar>
                 </div>

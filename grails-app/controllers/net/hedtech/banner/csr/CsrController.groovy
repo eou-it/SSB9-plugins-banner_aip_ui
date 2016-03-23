@@ -113,18 +113,32 @@ class CsrController {
 
     def detailInfo() {
         def jsonObj = request.JSON; //type, groupId, actionItemId
-        def model = [:]
-        if(jsonObj.type == "group") {
-            model.title = "Group information"   //remove or not
-            model.content = "Group detail information for group " + jsonObj.groupId.toString() + " goes here"   //require
-            model.type = "doc"  //probably require,  checking for type of template
-        } else if(jsonObj.type == "actionItem") {
-            model.title = "Action item information"
-            model.content = "Action item information for item " + jsonObj.actionItemId.toString() + " goes here"
-            model.type = "doc"
-            model.id = jsonObj.actionItemId //remove or not
+        def itemDetailInfo
+        //TODO:: create service for retrieving detail information for group or actionItem from DB
+        try {
+            if(jsonObj.type == "group") {
+//                itemDetailInfo = actionItemDetailService.getGroupDetailById(jsonObj.groupId)
+                itemDetailInfo = [
+                        content: "Group detail information for group " + jsonObj.groupId.toString() + " goes here",   //require
+                        type: "doc",
+                        id: jsonObj.groupId,
+                        title: "Group information"
+                ]
+            } else if(jsonObj.type == "actionItem") {
+//                itemDetailInfo = actionItemDetailService.getActionItemDetailById(jsonObj.actionItemId)
+                itemDetailInfo = [
+                        content: "Action item information for item " + jsonObj.actionItemId.toString() + " goes here",
+                        type: "doc",
+                        id: jsonObj.actionItemId, //remove or not
+                        title: "Action item information"
+                ]
+            }
+        }catch(Exception e) {
+            org.codehaus.groovy.runtime.StackTraceUtils.sanitize(e).printStackTrace()
+            throw e
+        } finally {
+            render itemDetailInfo as JSON
         }
-        render model as JSON
     }
 
     // It might be better in service in banner_csr.git, not in controller since this shouldn't be able to access from front-end
@@ -188,6 +202,7 @@ class CsrController {
     private def getUserPidm( ) {
         def user = SecurityContextHolder?.context?.authentication?.principal
         if (user instanceof BannerUser) {
+            //TODO:: extract necessary user information and return. (ex: remove pidm, etc)
             return user.pidm
         }
         return null
