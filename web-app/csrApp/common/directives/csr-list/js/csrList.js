@@ -33,10 +33,10 @@ var CSRUI;
                 this.addSelection(evt.currentTarget);
                 $scope.click({ groupId: group.groupId, itemId: row.id });
             };
-            $scope.openGroup = function (group) {
+            $scope.openGroup = function (groupId) {
                 //TODO::Expand/Collapse group event
                 this.resetSelection();
-                $scope.togglegroup({ state: { groupId: group.groupId, open: !this.isOpen } });
+                $scope.togglegroup({ state: { groupId: groupId, open: !this.isOpen } });
             };
             $scope.displayGroupInfo = function (groupId, evt) {
                 evt.preventDefault();
@@ -48,7 +48,7 @@ var CSRUI;
             };
             $scope.completedItem = function () {
                 var items = $scope.itemgroup.items.filter(function (_item) {
-                    return _item.state === "Completed";
+                    return _item.state === "csr.user.list.item.state.complete";
                 });
                 return items;
             };
