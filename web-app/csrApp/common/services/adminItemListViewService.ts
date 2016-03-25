@@ -33,14 +33,16 @@ module CSR {
         data: string[];
     }
     export class AdminItemListViewService implements IAdminItemListViewService{
-        static $inject=["$http", "$q"];
+        static $inject=["$http", "$q", "ENDPOINT"];
         $http: ng.IHttpService;
         $q:ng.IQService;
         gridData:IGridData;
         codeTypes: string[];
-        constructor($http:ng.IHttpService, $q:ng.IQService) {
+        ENDPOINT;
+        constructor($http:ng.IHttpService, $q:ng.IQService, ENDPOINT) {
             this.$http = $http;
             this.$q = $q;
+            this.ENDPOINT = ENDPOINT;
             this.init();
         }
         init() {
@@ -70,7 +72,7 @@ module CSR {
         getGridData() {
             var request = this.$http({
                 method:"POST",
-                url: "csr/adminActionItems"
+                url: this.ENDPOINT.admin.actionItem
             });
             return request;
         }

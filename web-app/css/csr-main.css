@@ -110,11 +110,16 @@ csr-list .csr-list-container {
   .csr-item-detail-container .detail-content {
     height: inherit;
     border: 1px solid #A4C6E4;
-    padding: 16px; }
+    padding: 16px;
+    overflow-y: scroll; }
     .csr-item-detail-container .detail-content hr {
       border-color: #A4C6E4 !important; }
     .csr-item-detail-container .detail-content .detail {
       padding-bottom: 24px; }
+      .csr-item-detail-container .detail-content .detail pre {
+        border: none;
+        background-color: transparent;
+        padding: 0; }
     .csr-item-detail-container .detail-content .control {
       text-align: center; }
       .csr-item-detail-container .detail-content .control .actionItemTwoButton .buttonDiv {
@@ -131,18 +136,12 @@ csr-list .csr-list-container {
       .csr-item-detail-container .detail-content .detail-nav .btn-group {
         width: 100%; }
 
-#breadcrumb-panel {
-  display: none; }
-
-#title-panel {
-  display: none; }
-
 #username {
   padding-right: 0.5em; }
 
 #content {
   overflow: hidden;
-  top: 55px !important; }
+  top: 90px !important; }
   #content #title-panel h1 {
     line-height: normal; }
 
@@ -180,7 +179,7 @@ a:focus, div:focus, input:focus, span:focus, .breadcrumbButton:focus {
   .viewContainer xe-table-grid .table-container .pagination-container {
     box-sizing: border-box; }
   .viewContainer .listActionItem .welcome {
-    padding: 0 0 24px 0; }
+    padding: 0 0 16px 0; }
     .viewContainer .listActionItem .welcome .username {
       font-size: 2em;
       font-weight: bold; }

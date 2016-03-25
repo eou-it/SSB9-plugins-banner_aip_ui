@@ -2,9 +2,10 @@
 var CSR;
 (function (CSR) {
     var AdminItemListViewService = (function () {
-        function AdminItemListViewService($http, $q) {
+        function AdminItemListViewService($http, $q, ENDPOINT) {
             this.$http = $http;
             this.$q = $q;
+            this.ENDPOINT = ENDPOINT;
             this.init();
         }
         AdminItemListViewService.prototype.init = function () {
@@ -35,7 +36,7 @@ var CSR;
         AdminItemListViewService.prototype.getGridData = function () {
             var request = this.$http({
                 method: "POST",
-                url: "csr/adminActionItems"
+                url: this.ENDPOINT.admin.actionItem
             });
             return request;
         };
@@ -56,7 +57,7 @@ var CSR;
         AdminItemListViewService.prototype.addNewItems = function (items) {
             this.gridData.result = items.concat(this.gridData.result);
         };
-        AdminItemListViewService.$inject = ["$http", "$q"];
+        AdminItemListViewService.$inject = ["$http", "$q", "ENDPOINT"];
         return AdminItemListViewService;
     })();
     CSR.AdminItemListViewService = AdminItemListViewService;

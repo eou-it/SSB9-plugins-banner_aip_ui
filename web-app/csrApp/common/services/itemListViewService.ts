@@ -73,11 +73,22 @@ module CSR {
                 url: "csr/detailInfo",
                 data: {type:selectType, groupId: groupId, actionItemId:actionItemId}
             })
-                .then((response) => {
+                .then((response:any) => {
+                    var data = response.data[0];
                     return {
                         type: selectType,
                         groupId: groupId,
-                        info: response.data
+                        info: {
+                            content: data.text,
+                            type: "doc",
+                            id: data.actionItemId||data.groupId,
+                            title: "TEST",
+                            detailId: data.id,
+                            //detailVersion: data.version,
+                            //userId: data.userId,
+                            //origin: data.dataOrigin,
+                            //activityDate: data.activityDate
+                        }
                     };
                 }, (err) => {
                     throw new Error(err);

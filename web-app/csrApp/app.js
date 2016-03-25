@@ -34,7 +34,7 @@ var bannerCSRApp = angular.module("bannercsr", [
             templateUrl:"admin/adminLandingPage.html",
             controller: "AdminLandingPageCtrl",
             breadcrumb: {
-                label: "Confirmation Management",
+                label: "Action Item Processing",
                 url: "/admin/landing"
             }
         },
@@ -43,7 +43,7 @@ var bannerCSRApp = angular.module("bannercsr", [
             templateUrl:"admin/listActionItem/adminListItemPage.html",
             controller: "AdminListItemPageCtrl",
             breadcrumb: {
-                label: "Confirmation Maintenance",
+                label: "Groups",
                 url: "/admin/list"
             }
         },
@@ -64,6 +64,13 @@ var bannerCSRApp = angular.module("bannercsr", [
                 label: "Confirmation",
                 url: "/list/confirm"
             }
+        }
+    })
+//constant for endpoint
+    .constant("ENDPOINT", {
+        admin: {
+            actionItem: "csr/adminActionItems",
+            groupList: "csr/adminActionItems"
         }
     })
 

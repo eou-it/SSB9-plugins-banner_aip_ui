@@ -136,7 +136,7 @@ module CSR {
                     $("#header-main-section").height() -
                     $("#outerFooter").height() -
                     $(".listActionItem .welcome").height() -
-                    35;
+                    110;
             return {height: containerHeight};
         }
         nextItem(groupId, itemId) {

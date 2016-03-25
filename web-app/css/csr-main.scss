@@ -4,17 +4,17 @@
 @import '../csrApp/common/directives/csr-item-detail/css/csrItemDetail';
 
 #breadcrumb-panel {
-  display: none;
+  //display: none;
 }
 #title-panel {
-  display: none;
+  //display: none;
 }
 #username {
   padding-right: 0.5em;
 }
 #content {
   overflow:hidden;
-  top: 55px !important;
+  top: 90px !important;
   #title-panel {
     h1 {
       line-height: normal;
@@ -22,7 +22,6 @@
   }
 }
 #breadcrumbHeader {
-
   .breadcrumbButton {
     font-size: 0.8em;
   }
@@ -73,7 +72,7 @@ a:focus, div:focus, input:focus, span:focus, .breadcrumbButton:focus {
 
   .listActionItem {
     .welcome {
-      padding: 0 0 24px 0;
+      padding: 0 0 16px 0;
       .username {
         font-size: 2em;
         font-weight: bold;

@@ -30,10 +30,17 @@ var CSR;
                 data: { type: selectType, groupId: groupId, actionItemId: actionItemId }
             })
                 .then(function (response) {
+                var data = response.data[0];
                 return {
                     type: selectType,
                     groupId: groupId,
-                    info: response.data
+                    info: {
+                        content: data.text,
+                        type: "doc",
+                        id: data.actionItemId || data.groupId,
+                        title: "TEST",
+                        detailId: data.id
+                    }
                 };
             }, function (err) {
                 throw new Error(err);

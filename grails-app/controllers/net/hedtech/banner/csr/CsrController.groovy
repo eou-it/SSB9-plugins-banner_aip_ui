@@ -4,21 +4,21 @@
 package net.hedtech.banner.csr
 
 import grails.converters.JSON
-import net.hedtech.banner.exceptions.ApplicationException
-import net.hedtech.banner.csr.ActionItem
+//import net.hedtech.banner.exceptions.ApplicationException
+//import net.hedtech.banner.csr.ActionItem
 import java.security.InvalidParameterException
-import net.hedtech.banner.general.person.PersonUtility
+//import net.hedtech.banner.general.person.PersonUtility
 import net.hedtech.banner.security.BannerUser
 import org.springframework.security.core.context.SecurityContextHolder
-import org.springframework.context.i18n.LocaleContextHolder
-import javax.persistence.*
+//import org.springframework.context.i18n.LocaleContextHolder
+//import javax.persistence.*
 
 class CsrController {
 
     static defaultAction = "listItems"
     def model=[:]
-    def actionItemService
     def userActionItemReadOnlyService
+    def actionItemDetailService
 
     // Entry point. Load front-end resources & layout template
     def listItems() {
@@ -118,20 +118,23 @@ class CsrController {
         try {
             if(jsonObj.type == "group") {
 //                itemDetailInfo = actionItemDetailService.getGroupDetailById(jsonObj.groupId)
-                itemDetailInfo = [
-                        content: "Group detail information for group " + jsonObj.groupId.toString() + " goes here",   //require
-                        type: "doc",
+                itemDetailInfo = [[
+                        text: "Group detail information for group " + jsonObj.groupId.toString() + " goes here",   //require
                         id: jsonObj.groupId,
-                        title: "Group information"
-                ]
+                        title: "Group",
+                        groupId: jsonObj.groupId,
+                        version: 0,
+                        userId: "GRAIL",
+                        dataOrigin: "GRAIL"
+                ]]
             } else if(jsonObj.type == "actionItem") {
-//                itemDetailInfo = actionItemDetailService.getActionItemDetailById(jsonObj.actionItemId)
-                itemDetailInfo = [
-                        content: "Action item information for item " + jsonObj.actionItemId.toString() + " goes here",
-                        type: "doc",
-                        id: jsonObj.actionItemId, //remove or not
-                        title: "Action item information"
-                ]
+                itemDetailInfo = actionItemDetailService.listActionItemDetailById(jsonObj.actionItemId)
+//                itemDetailInfo = [
+//                        content: "Action item information for item " + jsonObj.actionItemId.toString() + " goes here",
+//                        type: "doc",
+//                        id: jsonObj.actionItemId, //remove or not
+//                        title: "Action item information"
+//                ]
             }
         }catch(Exception e) {
             org.codehaus.groovy.runtime.StackTraceUtils.sanitize(e).printStackTrace()
