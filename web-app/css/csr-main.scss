@@ -21,6 +21,17 @@
     }
   }
 }
+@media screen and (max-width:768px) {
+
+}
+@media screen and (max-width:480px) {
+  #content {
+    top: 105px !important;
+    .viewContainer {
+      padding: 0 8px;
+    }
+  }
+}
 #breadcrumbHeader {
   .breadcrumbButton {
     font-size: 0.8em;

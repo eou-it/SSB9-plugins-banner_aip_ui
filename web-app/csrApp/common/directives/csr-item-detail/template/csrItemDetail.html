@@ -9,9 +9,8 @@
         <div class="control">
             <!--group-->
             <div class="groupButton" ng-if="data.type==='group'">
-                <!--TODO::add 'proceed' button with description-->
                 <button type="button" class="btn btn-primary" ng-click="proceed()">
-                    Proceed to {{data.info.title}}
+                    Proceed
                 </button>
             </div>
             <!--action item-->
@@ -19,12 +18,12 @@
                 <!--TODO::add 'Agree' and 'Deny' buttons with detail information-->
                 <div class="col-sm-8 col-sm-offset-2 col-xs-12 buttonDiv">
                     <button type="button" class="btn btn-primary" ng-click="agree(data.info.id)">
-                        I confirm that I have reviewed {{data.info.title}} policy
+                        I confirm that I have reviewed the policy
                     </button>
                 </div>
                 <div class="col-sm-8 col-sm-offset-2 col-xs-12 buttonDiv">
                     <button type="button" class="btn btn-default" ng-click="notAgree(data.info.id)">
-                        I do not agree with the university {{data.info.title}} policy
+                        I do not agree with the university the policy
                     </button>
                 </div>
             </div>

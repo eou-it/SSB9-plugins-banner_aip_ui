@@ -14,7 +14,7 @@ module CSR {
         groupId: number|string;
         info: {
             id?: number|string;
-            title: string;
+            title?: string;
             content: string;
             type: string;
         }
@@ -82,12 +82,7 @@ module CSR {
                             content: data.text,
                             type: "doc",
                             id: data.actionItemId||data.groupId,
-                            title: "TEST",
-                            detailId: data.id,
-                            //detailVersion: data.version,
-                            //userId: data.userId,
-                            //origin: data.dataOrigin,
-                            //activityDate: data.activityDate
+                            detailId: data.id
                         }
                     };
                 }, (err) => {

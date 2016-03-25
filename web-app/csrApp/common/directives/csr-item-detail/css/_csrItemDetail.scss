@@ -12,7 +12,7 @@ $border-color: #A4C6E4;
     padding: 16px;
     overflow-y: scroll;
     hr {
-      border-color: #A4C6E4 !important;
+      border-color: $border-color !important;
     }
     .detail {
       padding-bottom: 24px;

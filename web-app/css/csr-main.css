@@ -145,6 +145,11 @@ csr-list .csr-list-container {
   #content #title-panel h1 {
     line-height: normal; }
 
+@media screen and (max-width: 480px) {
+  #content {
+    top: 105px !important; }
+    #content .viewContainer {
+      padding: 0 8px; } }
 #breadcrumbHeader .breadcrumbButton {
   font-size: 0.8em; }
 #breadcrumbHeader a.breadcrumbButton.leaf-breadcrumb {

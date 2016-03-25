@@ -38,7 +38,6 @@ var CSR;
                         content: data.text,
                         type: "doc",
                         id: data.actionItemId || data.groupId,
-                        title: "TEST",
                         detailId: data.id
                     }
                 };

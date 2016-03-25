@@ -97,10 +97,12 @@ var CSR;
         };
         ListItemPageCtrl.prototype.getHeight = function () {
             var containerHeight = $(document).height() -
+                $("#breadcrumb-panel").height() -
+                $("#title-panel").height() -
                 $("#header-main-section").height() -
                 $("#outerFooter").height() -
                 $(".listActionItem .welcome").height() -
-                110;
+                30;
             return { height: containerHeight };
         };
         ListItemPageCtrl.prototype.nextItem = function (groupId, itemId) {
