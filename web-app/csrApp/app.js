@@ -135,7 +135,7 @@ var bannerCSRUi = angular.module("bannercsrui", [])
         });
         $provide.decorator("csrLandingItemDirective", function($delegate) {
             var directive = $delegate[0];
-            directive.templateUrl = APP_ROOT + "common/directives/csr-landing-item/template/csrLandingItem.html";
+            directive.templateUrl = APP_ROOT + "common/directives/admin/csr-landing-item/template/csrLandingItem.html";
             return $delegate;
         });
         $provide.decorator("csrItemDetailDirective", function($delegate) {

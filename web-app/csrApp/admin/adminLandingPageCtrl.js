@@ -13,7 +13,7 @@ var CSR;
                 {
                     title: "csr.admin.landing.list.title",
                     icon: "info",
-                    state: "admin-list",
+                    state: "admin.list",
                     description: "csr.admin.landing.list.description"
                 }
             ];
