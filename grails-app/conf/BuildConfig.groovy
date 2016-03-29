@@ -37,6 +37,8 @@ grails.project.dependency.resolution = {
 //        runtime ':font-awesome-resources:5.0.0.0'
         runtime "org.grails.plugins:font-awesome-resources:4.4.0"
         compile ":resources:1.2.8"
+        compile ':zipped-resources:1.0'
+        compile ':cached-resources:1.0'
     }
 
 }
