@@ -34,11 +34,13 @@ grails.project.dependency.resolution = {
     }
 
     plugins {
+// TODO: evaluate if these are really needed
 //        runtime ':font-awesome-resources:5.0.0.0'
         runtime "org.grails.plugins:font-awesome-resources:4.4.0"
         compile ":resources:1.2.8"
-        compile ':zipped-resources:1.0'
-        compile ':cached-resources:1.0'
+//        compile ':zipped-resources:1.0'
+//        compile ':cached-resources:1.0'
+//        compile ':cache-headers:1.1.5'
     }
 
 }
