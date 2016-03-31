@@ -14,11 +14,13 @@ module CSR {
     }
 
     export class CsrBreadcrumbService implements ICsrBreadcrumbService{
-        $inject = ["$location"];
+        $inject = ["$location", "$filter"];
         breadcrumbs: {};
         $location;
-        constructor($location) {
+        $filter
+        constructor($location, $filter) {
             this.$location = $location;
+            this.$filter = $filter;
             this.breadcrumbs = {};
         }
         updateBreadcrumb(item: IBreadcrumbItem) {
@@ -41,7 +43,7 @@ module CSR {
         }
         draw(title: string) {
             var updatedHeaderAttributes = {
-                "pageTitle": title,
+                "pageTitle": this.$filter('i18n')(title),
                 "breadcrumb":this.breadcrumbs
             };
             BreadCrumbAndPageTitle.draw(updatedHeaderAttributes);

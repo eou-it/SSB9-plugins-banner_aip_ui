@@ -34,7 +34,7 @@ var bannerCSRApp = angular.module("bannercsr", [
             templateUrl:"admin/adminLandingPage.html",
             controller: "AdminLandingPageCtrl",
             breadcrumb: {
-                label: "Action Item Processing",
+                label: "csr.admin.landing.group.title",
                 url: "/admin/landing"
             }
         },
@@ -43,7 +43,7 @@ var bannerCSRApp = angular.module("bannercsr", [
             templateUrl:"admin/listActionItem/adminListItemPage.html",
             controller: "AdminListItemPageCtrl",
             breadcrumb: {
-                label: "Groups",
+                label: "csr.admin.landing.list.title",
                 url: "/admin/list"
             }
         },

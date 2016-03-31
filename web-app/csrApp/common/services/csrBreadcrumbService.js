@@ -2,9 +2,10 @@
 var CSR;
 (function (CSR) {
     var CsrBreadcrumbService = (function () {
-        function CsrBreadcrumbService($location) {
-            this.$inject = ["$location"];
+        function CsrBreadcrumbService($location, $filter) {
+            this.$inject = ["$location", "$filter"];
             this.$location = $location;
+            this.$filter = $filter;
             this.breadcrumbs = {};
         }
         CsrBreadcrumbService.prototype.updateBreadcrumb = function (item) {
@@ -29,7 +30,7 @@ var CSR;
         };
         CsrBreadcrumbService.prototype.draw = function (title) {
             var updatedHeaderAttributes = {
-                "pageTitle": title,
+                "pageTitle": this.$filter('i18n')(title),
                 "breadcrumb": this.breadcrumbs
             };
             BreadCrumbAndPageTitle.draw(updatedHeaderAttributes);
