@@ -94,16 +94,29 @@ csr-list .csr-list-container {
 .CSR-landing-container {
   padding: 16px; }
   .CSR-landing-container csr-landing-item .ladingItem-container {
-    background-color: lightgray;
+    background-color: #ECECEC;
     font-size: 1.5em;
     border-radius: 4px;
     padding: 8px;
+    margin: 24px;
     cursor: pointer; }
     .CSR-landing-container csr-landing-item .ladingItem-container:hover {
-      background-color: #ECECEC; }
-    .CSR-landing-container csr-landing-item .ladingItem-container .landing-context .landing-title {
-      font-weight: bold;
-      padding-bottom: 16px; }
+      background-color: lightgray; }
+    .CSR-landing-container csr-landing-item .ladingItem-container .landing-icon {
+      padding: 0; }
+      .CSR-landing-container csr-landing-item .ladingItem-container .landing-icon .well {
+        background-color: transparent;
+        border: none;
+        box-shadow: none; }
+    .CSR-landing-container csr-landing-item .ladingItem-container .landing-context {
+      padding: 8px; }
+      .CSR-landing-container csr-landing-item .ladingItem-container .landing-context .landing-title {
+        font-weight: bold;
+        padding-bottom: 16px; }
+  @media screen and (max-width: 480px) {
+    .CSR-landing-container csr-landing-item .ladingItem-container {
+      margin-left: 8px;
+      margin-right: 8px; } }
 
 .csr-item-detail-container {
   height: inherit; }

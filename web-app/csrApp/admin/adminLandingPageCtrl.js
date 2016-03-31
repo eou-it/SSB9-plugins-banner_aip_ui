@@ -11,10 +11,16 @@ var CSR;
         AdminLandingPageCtrl.prototype.init = function () {
             this.landingItem = [
                 {
-                    title: "csr.admin.landing.list.title",
+                    title: "csr.admin.landing.group.title",
                     icon: "info",
-                    state: "admin.list",
-                    description: "csr.admin.landing.list.description"
+                    click: "admin-list",
+                    description: "csr.admin.landing.group.description"
+                },
+                {
+                    title: "Title",
+                    icon: "info",
+                    click: "admin-list",
+                    description: "Placeholder for item (to check layout)"
                 }
             ];
         };
