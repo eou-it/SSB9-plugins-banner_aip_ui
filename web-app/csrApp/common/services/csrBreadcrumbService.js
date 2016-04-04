@@ -30,7 +30,7 @@ var CSR;
         };
         CsrBreadcrumbService.prototype.draw = function (title) {
             var updatedHeaderAttributes = {
-                "pageTitle": this.$filter('i18n')(title),
+                "pageTitle": this.$filter('i18n_csr')(title),
                 "breadcrumb": this.breadcrumbs
             };
             BreadCrumbAndPageTitle.draw(updatedHeaderAttributes);

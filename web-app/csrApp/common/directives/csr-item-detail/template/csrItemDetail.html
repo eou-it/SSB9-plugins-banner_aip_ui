@@ -10,7 +10,7 @@
             <!--group-->
             <div class="groupButton" ng-if="data.type==='group'">
                 <button type="button" class="btn btn-primary" ng-click="proceed()">
-                    {{"Proceed"|i18n}}
+                    {{"csr.user.detail.button.proceed"|i18n_csr}}
                 </button>
             </div>
             <!--action item-->
@@ -18,12 +18,12 @@
                 <!--TODO::add 'Agree' and 'Deny' buttons with detail information-->
                 <div class="col-sm-8 col-sm-offset-2 col-xs-12 buttonDiv">
                     <button type="button" class="btn btn-primary" ng-click="agree(data.info.id)">
-                        {{"csr.user.detail.button.confirm"|i18n}}
+                        {{"csr.user.detail.button.confirm"|i18n_csr}}
                     </button>
                 </div>
                 <div class="col-sm-8 col-sm-offset-2 col-xs-12 buttonDiv">
                     <button type="button" class="btn btn-default" ng-click="notAgree(data.info.id)">
-                        {{"csr.user.detail.button.deny"|i18n}}
+                        {{"csr.user.detail.button.deny"|i18n_csr}}
                     </button>
                 </div>
             </div>
@@ -32,10 +32,10 @@
             <div class="row btn-group">
                 <label class="btn btn-primary col-xs-6" ng-click="returnlist()">
                     <i class="fa fa-list"></i>
-                    <span>{{"csr.user.detail.button.return"|i18n}}</span>
+                    <span>{{"csr.user.detail.button.return"|i18n_csr}}</span>
                 </label>
                 <label class="btn btn-primary col-xs-6" ng-click="nextitem(groupId, itemId)">
-                    <span>{{"csr.user.detail.button.next"|i18n}}</span>
+                    <span>{{"csr.user.detail.button.next"|i18n_csr}}</span>
                     <i class="fa fa-caret-right"></i>
                 </label>
             </div>

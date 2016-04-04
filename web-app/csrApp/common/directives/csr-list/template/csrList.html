@@ -4,7 +4,7 @@
             <div class="row">
                 <div class="group-title col-sm-11 col-xs-11">
                     <i class="group-toggle-indicator fa" ng-class="{'fa-caret-up':isOpen, 'fa-caret-down':!isOpen}"> </i>
-                    <span class="group-title-text" ng-click="openGroup(itemgroup.groupId)">{{itemgroup.info.title|i18n}}</span>
+                    <span class="group-title-text" ng-click="openGroup(itemgroup.groupId)">{{itemgroup.info.title|i18n_csr}}</span>
                     <div class="badge" ng-if="!isOpen">
                         {{completedItem().length + "/" + itemgroup.items.length}}
                     </div>
@@ -24,13 +24,13 @@
     </uib-accordion-heading>
     <div class="row">
         <div class="list-body-container box">
-            <div class="list-body" role="list" aria-label="{{itemgroup.itemtitle|i18n}}">
+            <div class="list-body" role="list" aria-label="{{itemgroup.itemtitle|i18n_csr}}">
                 <div class="row list-item" ng-repeat="row in itemgroup.items" ng-click="selectItem(itemgroup, row, $event)" role="listitem">
                     <div ng-repeat="key in itemgroup.header" class="{{getStyle(key)}}" >
-                        <h3 ng-if="key==='title'">{{row[key]|i18n}}</h3>
+                        <h3 ng-if="key==='title'">{{row[key]|i18n_csr}}</h3>
                         <span ng-if="key==='state'" ng-class="{'badge pending':key==='state'&&row[key]==='csr.user.list.item.state.pending',
                             'badge approved':key==='state'&&row[key]==='csr.user.list.item.state.complete'}">
-                            {{row[key]|i18n}}
+                            {{row[key]|i18n_csr}}
                         </span>
                         <csr-readmore ng-if="key==='description'">{{row[key]}}</csr-readmore>
                     </div>

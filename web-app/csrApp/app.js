@@ -18,7 +18,7 @@ var bannerCSRApp = angular.module("bannercsr", [
     "ui.router",
     "ui.bootstrap",
     "ngAria",
-    "I18n",
+    "I18nCSR",
     "ngAnimate",
     "xe-ui-components",
     "bannercsrui"
