@@ -11,7 +11,7 @@ var CSR;
         CsrBreadcrumbService.prototype.updateBreadcrumb = function (item) {
             var _this = this;
             var existItemTitle = Object.keys(this.breadcrumbs);
-            var itemTitle = item.title;
+            var itemTitle = this.$filter('i18n_csr')(item.title);
             if (existItemTitle.indexOf(itemTitle) === -1) {
                 //var applicationPath = window.location.href.split("#")[0];
                 item.url = window.location.href.indexOf("csr#") !== -1 ? "/csr#".concat(item.url) : item.url;
