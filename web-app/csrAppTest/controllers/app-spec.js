@@ -28,8 +28,8 @@ describe("Config routing", function() {
             $httpBackend.when("GET", "csr/checkActionItem")
                 .respond({isActionItem: true});
             // bypass common-components' defect code
-            $httpBackend.when("GET", "/dest/i18n/messages-en-us.json")
-                .respond({});
+            //$httpBackend.when("GET", "/dest/i18n/messages-en-us.json")
+            //    .respond({});
         });
     });
     describe ("Routing test", function() {
