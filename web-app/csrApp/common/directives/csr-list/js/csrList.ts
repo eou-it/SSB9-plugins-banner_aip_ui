@@ -2,6 +2,10 @@
 
 declare var register;
 
+interface JQueryStatic {
+    i18n: any;
+}
+
 module CSRUI {
     export class CSRListDirective {
 
@@ -54,7 +58,7 @@ module CSRUI {
             }
             $scope.completedItem = function() {
                 var items = $scope.itemgroup.items.filter((_item) => {
-                    return _item.state === "csr.user.list.item.state.complete";
+                    return _item.state === $.i18n.prop("csr.user.list.item.state.complete");
                 });
                 return items;
             }

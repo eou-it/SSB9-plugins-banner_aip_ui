@@ -96,13 +96,11 @@ class CsrTagLib {
                     }
                 }
             }
-        } else {
-            keys = ["default.calendar", "default.calendar1", "default.calendar2", "default.calendar.gregorian.ulocale", "default.calendar.islamic.ulocale", "default.date.format", "default.gregorian.dayNames", "default.gregorian.dayNamesMin", "default.gregorian.dayNamesShort", "default.gregorian.monthNames", "default.gregorian.monthNamesShort", "default.gregorian.amPm", "default.islamic.dayNames", "default.islamic.dayNamesMin", "default.islamic.dayNamesShort", "default.islamic.monthNames", "default.islamic.monthNamesShort", "default.islamic.amPm", "default.language.direction", "js.datepicker.dateFormat", "default.century.pivot", "default.century.above.pivot", "default.century.below.pivot", "default.dateEntry.format", "js.datepicker.selectText", "js.datepicker.prevStatus", "js.datepicker.nextStatus", "js.datepicker.yearStatus", "js.datepicker.monthStatus", "default.calendar.islamic.translation", "default.calendar.gregorian.translation", "default.firstDayOfTheWeek", "js.datepicker.datetimeFormat", "js.input.datepicker.dateformatinfo", "js.input.datepicker.info", "js.datepicker.info"]
-            keys.addAll( addTimeKeys() )
         }
 
         out << 'window.i18n_csr = {'
         if (keys) {
+            println "crr: " + keys
             def javaScriptProperties = []
             keys.sort().each {
                 String msg = "${g.message( code: it )}"
@@ -112,6 +110,7 @@ class CsrTagLib {
                     def value = DateAndDecimalUtils.properties( RequestContextUtils.getLocale( request ) )[it]
 
                     if (value) {
+                        println "crr: " + msg + ":" + value 
                         msg = value
                     }
                 }
@@ -120,11 +119,14 @@ class CsrTagLib {
                     javaScriptProperties << "\"$it\": \"$msg\""
                 }
             }
-
+            println "crr: " + javaScriptProperties
             out << javaScriptProperties.join( "," )
         }
         out << '};'
+        println "crr: done"
     }
+
+
     def csrVersion = { attrs ->
         def plugin = applicationContext.getBean('pluginManager').allPlugins.find {
             it -> it.name == "bannerCsrUi"

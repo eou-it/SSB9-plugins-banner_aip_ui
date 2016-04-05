@@ -70,7 +70,7 @@ module CSR {
                 this.itemListViewService.getActionItems(userInfo).then((actionItems) => {
                     angular.forEach(actionItems, (group) => {
                         angular.forEach(group.items, (item) => {
-                            item.state = item.state==="Completed"?"csr.user.list.item.state.complete":"csr.user.list.item.state.pending";
+                            item.state = item.state==="Completed"?$.i18n.prop("csr.user.list.item.state.complete"):$.i18n.prop("csr.user.list.item.state.pending");
                         });
                     });
                     this.actionItems = actionItems;
