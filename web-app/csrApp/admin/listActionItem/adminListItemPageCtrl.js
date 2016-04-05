@@ -1,5 +1,5 @@
 ///<reference path="../../../typings/tsd.d.ts"/>
-///<reference path="../../common/services/adminItemListViewService.ts"/>
+///<reference path="../../common/services/admin/adminItemListViewService.ts"/>
 var CSR;
 (function (CSR) {
     var AdminListItemPageCtrl = (function () {
