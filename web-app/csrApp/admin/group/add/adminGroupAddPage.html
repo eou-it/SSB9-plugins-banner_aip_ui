@@ -2,19 +2,21 @@
 
 <div class="groupAddContainer">
     <div class="groupInfo">
-        <div class="row">
-            <div class="col-xs-12 col-sm-2 input-group">
+        <div class="row groupInfoRow">
+            <div class="groupElement col-xs-12 col-sm-2 input-group">
                 <span class="titleValue" id="groupAdd-Title">Title: </span>
             </div>
-            <div class="col-xs-12 col-sm-5">
-                <input type="text" class="form-control" placeholder="Group title" aria-describedby="grupAdd-Title">
+            <div class="groupElement col-xs-12 col-sm-5">
+                <div class="row">
+                    <input type="text" class="form-control" placeholder="Group title" aria-describedby="grupAdd-Title">
+                </div>
             </div>
         </div>
-        <div class="row">
-            <div class="col-xs-12 col-sm-2 input-group">
+        <div class="row groupInfoRow">
+            <div class="groupElement col-xs-12 col-sm-2 input-group">
                 <span class="titleValue" id="groupAdd-status">Status: </span>
             </div>
-            <div class="col-xs-12 col-sm-5">
+            <div class="groupElement col-xs-12 col-sm-5">
                 <div class="row">
                     <div class="btn-group" uib-dropdown>
                         <button id="buttonForStatus" type="button" class="btn btn-default">{{vm.groupInfo.status.value}}</button>
@@ -22,17 +24,17 @@
                             <span class="caret"></span>
                         </button>
                         <ul uib-dropdown-menu role="menu" aria-labelledby="buttonForStatus">
-                            <li role="menuitem" ng-repeat="item in vm.status"><a href="#" ng-click="vm.selectStatus(item)">{{item.value}}</a></li>
+                            <li role="menuitem" ng-repeat="item in vm.status"><a ng-click="vm.selectStatus(item)">{{item.value}}</a></li>
                         </ul>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="row">
-            <div class="col-xs-12 col-sm-2 input-group">
+        <div class="row groupInfoRow">
+            <div class="groupElement col-xs-12 col-sm-2 input-group">
                 <span class="titleValue" id="groupAdd-folder">Folder: </span>
             </div>
-            <div class="col-xs-12 col-sm-5">
+            <div class="groupElement col-xs-12 col-sm-5">
                 <div class="row">
                     <div class="btn-group" uib-dropdown>
                         <button id="buttonForFolder" type="button" class="btn btn-default">{{vm.groupInfo.folder.value}}</button>
@@ -40,10 +42,20 @@
                             <span class="caret"></span>
                         </button>
                         <ul uib-dropdown-menu role="menu" aria-labelledby="buttonForFolder">
-                            <li role="menuitem" ng-repeat="item in vm.folders"><a href="#" ng-click="vm.selectStatus(item)">{{item.value}}</a></li>
+                            <li role="menuitem" ng-repeat="item in vm.folders"><a ng-click="vm.selectFolder(item)">{{item.value}}</a></li>
                         </ul>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+    <div class="groupControl">
+        <div class="row">
+            <div class="col-sm-offset-2 col-sm-2 col-xs-6 groupButton">
+                <button type="button" class="btn btn-default">Save</button>
+            </div>
+            <div class="col-sm-2 col-xs-6 groupButton">
+                <button type="button" class="btn btn-default">Cancel</button>
             </div>
         </div>
     </div>
