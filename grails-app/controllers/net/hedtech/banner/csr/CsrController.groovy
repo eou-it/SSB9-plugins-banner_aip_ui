@@ -144,6 +144,36 @@ class CsrController {
         }
     }
 
+    def adminGroupStatus() {
+        //TODO:: get group status from DB through service
+        def model = [
+                [
+                    "id":1,
+                    "value": "csr.group.status.pending"
+                ], [
+                    "id":2,
+                    "value":"csr.group.status.active"
+                ], [
+                    "id":3,
+                    "value": "csr.group.status.inactive"
+                ]
+            ]
+        render model as JSON
+    }
+
+    def adminGroupFolder() {
+        //TODO:: get group folders from DB through service
+        def model = [
+                [
+                    "id":1,
+                    "value":"International"
+                ], [
+                    "id":2,
+                    "value":"All Student"
+                ]
+        ]
+        render model as JSON
+    }
     // It might be better in service in banner_csr.git, not in controller since this shouldn't be able to access from front-end
     // It might not be needed depends on query style on user items
     def getItemInfo(type) {

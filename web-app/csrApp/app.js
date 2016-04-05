@@ -47,6 +47,15 @@ var bannerCSRApp = angular.module("bannercsr", [
                 url: "/admin/list"
             }
         },
+        "admin-group-add": {
+            url: "/admin/group/add",
+            templateUrl:"admin/group/add/adminGroupAddPage.html",
+            controller:"AdminGroupAddPageCtrl",
+            breadcrumb: {
+                label: "csr.admin.group.add",
+                url: "/admin/group/add"
+            }
+        },
         "list": {
             url: "/list",
             templateUrl:"listItem/listItemPage.html",
