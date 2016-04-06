@@ -34,7 +34,7 @@ var bannerCSRApp = angular.module("bannercsr", [
             templateUrl:"admin/adminLandingPage.html",
             controller: "AdminLandingPageCtrl",
             breadcrumb: {
-                label: "csr.admin.landing.group.title",
+                label: "csr.admin.landing",
                 url: "/admin/landing"
             }
         },
@@ -43,7 +43,7 @@ var bannerCSRApp = angular.module("bannercsr", [
             templateUrl:"admin/listActionItem/adminListItemPage.html",
             controller: "AdminListItemPageCtrl",
             breadcrumb: {
-                label: "csr.admin.landing.list.title",
+                label: "csr.admin.group",
                 url: "/admin/list"
             }
         },
@@ -61,19 +61,19 @@ var bannerCSRApp = angular.module("bannercsr", [
             templateUrl:"listItem/listItemPage.html",
             controller: "ListItemPageCtrl",
             breadcrumb: {
-                label: "Confirmation List",
+                label: "csr.user.actionItem.list",
                 url: "/list"
             }
-        },
-        "listConfirm": {
-            url: "/list/confirm/:itemId",
-            templateUrl:"listItem/itemConfirm/itemConfirmPage.html",
-            controller: "ItemConfirmCtrl",
-            breadcrumb: {
-                label: "Confirmation",
-                url: "/list/confirm"
-            }
-        }
+        }//,
+        //"listConfirm": {
+        //    url: "/list/confirm/:itemId",
+        //    templateUrl:"listItem/itemConfirm/itemConfirmPage.html",
+        //    controller: "ItemConfirmCtrl",
+        //    breadcrumb: {
+        //        label: "Confirmation",
+        //        url: "/list/confirm"
+        //    }
+        //}
     })
 //constant for endpoint
     .constant("ENDPOINT", {
