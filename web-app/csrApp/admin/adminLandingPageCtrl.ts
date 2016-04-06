@@ -18,10 +18,10 @@ module CSR {
         init() {
             this.landingItem = [
                 {
-                    title:"csr.admin.landing.group.title",
+                    title:"csr.admin.group",
                     icon: "info",
                     click:"admin-list",
-                    description:"csr.admin.landing.group.description"
+                    description:"csr.admin.group.description"
                 },
                 {
                     title:"Title",
