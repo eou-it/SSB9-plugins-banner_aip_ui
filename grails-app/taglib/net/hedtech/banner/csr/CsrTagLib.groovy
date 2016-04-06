@@ -22,7 +22,6 @@ class CsrTagLib {
         if (request.resourceDependencyTracker != null) {
             // resources plugin <= 1.0.2
             request.resourceDependencyTracker.each {
-                println "crr23 " + it + ": " + names
                 addDependendNames( it, names )
             }
         } else if (request.resourceModuleTracker != null) {
@@ -43,10 +42,8 @@ class CsrTagLib {
         // We are explicitly adding all the dependend modules to the list so that all the properties defined in the
         // JS file gets picked.
         list << name
-        "crr44 " + resourceService.getModule( name )
         if (resourceService.getModule( name )?.dependsOn) {
             resourceService.getModule( name )?.dependsOn.each {
-                "crr48 " + it + ": " + list
                 addDependendNames( it, list )
             }
         }
@@ -68,14 +65,12 @@ class CsrTagLib {
                             it.attributes[LOCALE_KEYS_ATTRIBUTE] = new HashSet()
 
                             if (it.processedFile) {
-                                println "crr:70: " + it.processedFile
                                 def fileText
 
                                 // Check to see if the file has been zipped.  This only occurs in the Environment.DEVELOPMENT
                                 // If it occurs, we'll create a reference to the original file and parse it instead.
                                 if (it.processedFile.path.endsWith( ".gz" )) {
                                     def originalFile = new File( "${it.workDir}${it.sourceUrl}" )
-                                    println "crr:77: " + originalFile
                                     if (originalFile.exists()) {
                                         fileText = originalFile.text
                                     } else {
@@ -88,7 +83,6 @@ class CsrTagLib {
                                 while (matcher.find()) {
                                     it.attributes[LOCALE_KEYS_ATTRIBUTE] << matcher.group( 1 )
                                 }
-                                println "crr:91: " + it.attributes[LOCALE_KEYS_ATTRIBUTE]
                             }
                         }
 
@@ -100,7 +94,6 @@ class CsrTagLib {
 
         out << 'window.i18n_csr = {'
         if (keys) {
-            println "crr: " + keys
             def javaScriptProperties = []
             keys.sort().each {
                 String msg = "${g.message( code: it )}"
@@ -110,7 +103,6 @@ class CsrTagLib {
                     def value = DateAndDecimalUtils.properties( RequestContextUtils.getLocale( request ) )[it]
 
                     if (value) {
-                        println "crr: " + msg + ":" + value 
                         msg = value
                     }
                 }
@@ -119,11 +111,9 @@ class CsrTagLib {
                     javaScriptProperties << "\"$it\": \"$msg\""
                 }
             }
-            println "crr: " + javaScriptProperties
             out << javaScriptProperties.join( "," )
         }
         out << '};'
-        println "crr: done"
     }
 
 
