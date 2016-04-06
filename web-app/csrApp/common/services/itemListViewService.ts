@@ -2,10 +2,6 @@
 
 declare var register;
 
-interface JQueryStatic {
-    i18n: any;
-}
-
 module CSR {
 
     enum SelectionType {

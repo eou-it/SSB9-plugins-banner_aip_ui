@@ -7,8 +7,13 @@
                 <span class="titleValue" id="groupAdd-Title">{{"csr.common.title"|i18n_csr}}: </span>
             </div>
             <div class="groupElement col-xs-12 col-sm-5">
-                <div class="row">
-                    <input type="text" class="form-control" placeholder="Group title" aria-describedby="groupAdd-Title">
+                <div class="row" ng-class="{'has-error':vm.groupInfo.title.length>60}">
+                    <input type="text" class="form-control" ng-model="vm.groupInfo.title" placeholder="Group title" aria-describedby="groupAdd-Title">
+                </div>
+                <div class="alert alert-danger" role="alert" ng-if="vm.groupInfo.title.length>60">
+                    <i class="fa fa-exclamation-circle" aria-hidden="true"></i>
+                    <span class="sr-only">Error:</span>
+                        Exceed maximum length (60)
                 </div>
             </div>
         </div>

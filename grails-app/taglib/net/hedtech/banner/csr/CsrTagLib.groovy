@@ -3,7 +3,6 @@ package net.hedtech.banner.csr
 import grails.converters.JSON
 import net.hedtech.banner.i18n.DateAndDecimalUtils
 import org.springframework.web.servlet.support.RequestContextUtils
-import org.springframework.context.i18n.LocaleContextHolder
 
 class CsrTagLib {
     static LOCALE_KEYS_ATTRIBUTE = "localeKeys"
@@ -50,12 +49,10 @@ class CsrTagLib {
     }
 
     def i18n_setup = { attrs ->
-
         def names = resourceModuleNames( request )
         Set keys = []
 
         if (names.size() > 0) {
-
             // Search for any place where we are referencing message codes
             def regex = ~/\(*\.i18n.prop\(.*?[\'\"](.*?)[\'\"].*?\)/
             names.each { name ->
@@ -63,10 +60,8 @@ class CsrTagLib {
                     resourceService.getModule( name )?.resources?.findAll { it.sourceUrlExtension == "js" }?.each {
                         if (!it.attributes.containsKey( LOCALE_KEYS_ATTRIBUTE )) {
                             it.attributes[LOCALE_KEYS_ATTRIBUTE] = new HashSet()
-
                             if (it.processedFile) {
                                 def fileText
-
                                 // Check to see if the file has been zipped.  This only occurs in the Environment.DEVELOPMENT
                                 // If it occurs, we'll create a reference to the original file and parse it instead.
                                 if (it.processedFile.path.endsWith( ".gz" )) {
@@ -85,7 +80,6 @@ class CsrTagLib {
                                 }
                             }
                         }
-
                         keys.addAll( it.attributes[LOCALE_KEYS_ATTRIBUTE] )
                     }
                 }
@@ -99,36 +93,6 @@ class CsrTagLib {
                 // Assume the key was not found.  Look to see if it exists in the bundle
                 if (msg == it) {
                     def value = DateAndDecimalUtils.properties( RequestContextUtils.getLocale( request ) )[it]
-
-                    if (value) {
-                        msg = value
-                    }
-                }
-                if (msg && it != msg) {
-                    msg = encodeHTML( msg )
-                    javaScriptProperties << "\"$it\": \"$msg\""
-                }
-            }
-            out << javaScriptProperties.join( "," )
-        }
-        out << '};'
-
-        Set keys_temp = []
-        def locale = LocaleContextHolder.getLocale()
-        grailsApplication.mainContext.getBean('messageSource').getMergedProperties(locale).properties.each { key ->
-            if (key.key.startsWith("csr.")) {
-                keys_temp.add(key.key)
-            }
-        }
-        out << 'window.i18n_csr_temp = {'
-        if (keys_temp) {
-            def javaScriptProperties = []
-            keys_temp.sort().each {
-                String msg = "${g.message( code: it )}"
-                // Assume the key was not found.  Look to see if it exists in the bundle
-                if (msg == it) {
-                    def value = DateAndDecimalUtils.properties( RequestContextUtils.getLocale( request ) )[it]
-
                     if (value) {
                         msg = value
                     }

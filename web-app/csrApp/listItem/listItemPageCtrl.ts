@@ -63,7 +63,6 @@ module CSR {
         }
         init() {
             this.spinnerService.showSpinner(true);
-
             this.userService.getUserInfo().then((userData) => {
                 var userInfo = userData;
                 this.userName = userData.fullName;
@@ -71,8 +70,8 @@ module CSR {
                     angular.forEach(actionItems, (group) => {
                         angular.forEach(group.items, (item) => {
                             item.state = item.state==="Completed"?
-                                $.i18n.prop("csr.user.list.item.state.complete"):
-                                $.i18n.prop("csr.user.list.item.state.pending");
+                                "csr.status.complete":
+                                "csr.status.pending";
                         });
                     });
                     this.actionItems = actionItems;

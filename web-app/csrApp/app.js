@@ -117,6 +117,40 @@ var bannerCSRApp = angular.module("bannercsr", [
                 CsrBreadcrumService.updateBreadcrumb(toState.data.breadcrumbs);
             })
 
+            //expose message.properties values for taglib
+            //TODO:: find better way to handle this.
+            //TODO:: use array and parse array in taglib
+            $.i18n.prop("csr.welcome");
+            $.i18n.prop("csr.welcome.text");
+            $.i18n.prop("csr.common.title");
+            $.i18n.prop("csr.common.status");
+            $.i18n.prop("csr.common.folder");
+            $.i18n.prop("csr.common.save");
+            $.i18n.prop("csr.common.cancel");
+            $.i18n.prop("csr.common.next");
+
+            $.i18n.prop("csr.placeholder.noitems");
+
+            $.i18n.prop("csr.admin.landing");
+
+            $.i18n.prop("csr.admin.group");
+            $.i18n.prop("csr.admin.group.description");
+            $.i18n.prop("csr.admin.group.add");
+            $.i18n.prop("csr.status.active");
+            $.i18n.prop("csr.status.inactive");
+            $.i18n.prop("csr.status.pending");
+            $.i18n.prop("csr.status.complete");
+
+            $.i18n.prop("csr.user.actionItem.list");
+            $.i18n.prop("csr.user.list.header.title.registration");
+            $.i18n.prop("csr.user.list.header.description.registration");
+            $.i18n.prop("csr.user.list.header.title.graduation");
+            $.i18n.prop("csr.user.list.header.description.graduation");
+
+            $.i18n.prop("csr.user.detail.button.proceed");
+            $.i18n.prop("csr.user.detail.button.confirm");
+            $.i18n.prop("csr.user.detail.button.deny");
+            $.i18n.prop("csr.user.detail.button.return");
     }]
 );
 

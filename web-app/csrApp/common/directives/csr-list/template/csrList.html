@@ -29,8 +29,8 @@
                      class="row list-item" ng-repeat="row in itemgroup.items" ng-click="selectItem(itemgroup, row, $event)" role="listitem">
                     <div ng-repeat="key in itemgroup.header" class="{{getStyle(key)}}">
                         <h3 ng-if="key==='title'">{{row[key]|i18n_csr}}</h3>
-                        <span ng-if="key==='state'" ng-class="{'badge pending':key==='state'&&row[key]==='csr.user.list.item.state.pending',
-                            'badge approved':key==='state'&&row[key]==='csr.user.list.item.state.complete'}">
+                        <span ng-if="key==='state'" ng-class="{'badge pending':key==='state'&&row[key]==='csr.status.pending',
+                            'badge approved':key==='state'&&row[key]==='csr.status.complete'}">
                             {{row[key]|i18n_csr}}
                         </span>
                         <csr-readmore ng-if="key==='description'">{{row[key]}}</csr-readmore>

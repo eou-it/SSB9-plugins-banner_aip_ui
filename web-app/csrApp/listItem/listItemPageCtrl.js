@@ -36,8 +36,8 @@ var CSR;
                     angular.forEach(actionItems, function (group) {
                         angular.forEach(group.items, function (item) {
                             item.state = item.state === "Completed" ?
-                                $.i18n.prop("csr.user.list.item.state.complete") :
-                                $.i18n.prop("csr.user.list.item.state.pending");
+                                "csr.status.complete" :
+                                "csr.status.pending";
                         });
                     });
                     _this.actionItems = actionItems;
