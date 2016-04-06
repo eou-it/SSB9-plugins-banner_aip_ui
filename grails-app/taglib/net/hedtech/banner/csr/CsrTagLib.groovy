@@ -3,7 +3,7 @@ package net.hedtech.banner.csr
 import grails.converters.JSON
 import net.hedtech.banner.i18n.DateAndDecimalUtils
 import org.springframework.web.servlet.support.RequestContextUtils
-
+import org.springframework.context.i18n.LocaleContextHolder
 
 class CsrTagLib {
     static LOCALE_KEYS_ATTRIBUTE = "localeKeys"
@@ -91,13 +91,40 @@ class CsrTagLib {
                 }
             }
         }
-
         out << 'window.i18n_csr = {'
         if (keys) {
             def javaScriptProperties = []
             keys.sort().each {
                 String msg = "${g.message( code: it )}"
+                // Assume the key was not found.  Look to see if it exists in the bundle
+                if (msg == it) {
+                    def value = DateAndDecimalUtils.properties( RequestContextUtils.getLocale( request ) )[it]
 
+                    if (value) {
+                        msg = value
+                    }
+                }
+                if (msg && it != msg) {
+                    msg = encodeHTML( msg )
+                    javaScriptProperties << "\"$it\": \"$msg\""
+                }
+            }
+            out << javaScriptProperties.join( "," )
+        }
+        out << '};'
+
+        Set keys_temp = []
+        def locale = LocaleContextHolder.getLocale()
+        grailsApplication.mainContext.getBean('messageSource').getMergedProperties(locale).properties.each { key ->
+            if (key.key.startsWith("csr.")) {
+                keys_temp.add(key.key)
+            }
+        }
+        out << 'window.i18n_csr_temp = {'
+        if (keys_temp) {
+            def javaScriptProperties = []
+            keys_temp.sort().each {
+                String msg = "${g.message( code: it )}"
                 // Assume the key was not found.  Look to see if it exists in the bundle
                 if (msg == it) {
                     def value = DateAndDecimalUtils.properties( RequestContextUtils.getLocale( request ) )[it]
@@ -115,7 +142,6 @@ class CsrTagLib {
         }
         out << '};'
     }
-
 
     def csrVersion = { attrs ->
         def plugin = applicationContext.getBean('pluginManager').allPlugins.find {
