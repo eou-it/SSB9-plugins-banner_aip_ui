@@ -48,7 +48,7 @@ var CSRUI;
             };
             $scope.completedItem = function () {
                 var items = $scope.itemgroup.items.filter(function (_item) {
-                    return _item.state === "csr.user.list.item.state.complete";
+                    return _item.state === "csr.status.complete";
                 });
                 return items;
             };
