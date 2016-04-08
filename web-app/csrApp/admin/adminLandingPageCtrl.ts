@@ -20,7 +20,7 @@ module CSR {
                 {
                     title:"csr.admin.group",
                     icon: "info",
-                    click:"admin-list",
+                    click:"admin-group-list",
                     description:"csr.admin.group.description"
                 },
                 {
