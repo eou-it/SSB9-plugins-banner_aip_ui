@@ -9,8 +9,7 @@
 //            .split("/").indexOf("csr"))
 //        .join("/") + "/";
 var csrAppRoot = "/" + extensibilityInfo.application + "/plugins/" +
-    window.csrApp.name.replace(/\W+/g, '-').replace(/([a-z\d])([A-Z])/g, '$1-$2').toLowerCase() + "-" +
-    window.csrApp.version + "/csrApp/";
+    window.csrApp.fileSystemName + "/csrApp/";
 
 var bannerCSRApp = angular.module("bannercsr", [
     "ngResource",

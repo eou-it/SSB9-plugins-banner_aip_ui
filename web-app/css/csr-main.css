@@ -18,10 +18,15 @@ csr-list .csr-list-container {
     background-color: transparent;
     border: none;
     padding: 0; }
+    csr-list .csr-list-container .panel-heading .panel-title a:focus .item-group {
+      outline: 0;
+      box-shadow: 0 0 2px 3px #78aeda, 0 0 2px #78aeda inset;
+      border-radius: 2px; }
     csr-list .csr-list-container .panel-heading .panel-title .accordion-toggle {
       color: black; }
     csr-list .csr-list-container .panel-heading .panel-title .item-group {
-      padding: 0; }
+      padding: 0;
+      margin: 2px; }
       csr-list .csr-list-container .panel-heading .panel-title .item-group .group-toggle-indicator {
         padding-right: 8px; }
       csr-list .csr-list-container .panel-heading .panel-title .item-group .group-title {

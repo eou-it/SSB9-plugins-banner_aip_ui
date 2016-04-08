@@ -3,6 +3,7 @@ package net.hedtech.banner.csr
 import grails.converters.JSON
 import net.hedtech.banner.i18n.DateAndDecimalUtils
 import org.springframework.web.servlet.support.RequestContextUtils
+import org.springframework.context.i18n.LocaleContextHolder
 
 class CsrTagLib {
     static LOCALE_KEYS_ATTRIBUTE = "localeKeys"
@@ -104,20 +105,39 @@ class CsrTagLib {
             }
             out << javaScriptProperties.join( "," )
         }
-        out << '};'
-        out << 'window.i18n_csr_temp = "'
-        out << grailsApplication.mainContext.getBean('messageSource').getPluginBundles(grailsApplication.mainContext.pluginManager.getGrailsPlugin("banner-csr-ui")).toString()
-        out << '"'
+        out << '};\n'
+
+        ///////////////////
+        //TODO:: delete below test code
+
+        def source = grailsApplication.mainContext.getBean('messageSource')
+        def plugin = grailsApplication.mainContext.pluginManager.getGrailsPlugin("banner-csr-ui")
+        def locale = LocaleContextHolder.getLocale()
+        def map = [:]
+
+        out << 'window.i18n_csr_bundle = "'
+        out << source.getPluginBundles(plugin).toString()
+        out << '"\n'
+        out << 'window.i18n_csr_bundle_plugins = "'
+        out << source.getPluginBaseNames().toString()
+        out << '"\n'
+
+        source.getMergedProperties(locale).properties.each { key ->
+            if (key.key.startsWith("csr.")) {
+                map.put key.key, key.value
+            }
+        }
+        out << "window.i18n_temp = ${map as JSON};\n"
+        //////////////
     }
 
     def csrVersion = { attrs ->
-        def plugin = applicationContext.getBean('pluginManager').allPlugins.find {
-            it -> it.name == "bannerCsrUi"
-        }
+        def plugin = grailsApplication.mainContext.pluginManager.getGrailsPlugin("banner-csr-ui")
         def map = [
-                name: plugin.name,
-                version: plugin.version
-        ]
+                name: plugin.getName(),
+                version: plugin.getVersion(),
+                fileSystemName: plugin.getFileSystemName()
+                ]
         out << "window.csrApp = ${map as JSON};\n"
     }
 }

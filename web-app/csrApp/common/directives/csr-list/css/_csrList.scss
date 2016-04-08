@@ -29,11 +29,18 @@ csr-list {
       border: none;
       padding: 0;
       .panel-title {
+        a:focus {
+          .item-group {
+            outline:0;
+            box-shadow: 0 0 2px 3px #78aeda, 0 0 2px #78aeda inset; border-radius: 2px;
+          }
+        }
         .accordion-toggle {
           color: black;
         }
         .item-group {
           padding: 0;
+          margin: 2px;
           .group-toggle-indicator {
             padding-right: 8px;
           }
