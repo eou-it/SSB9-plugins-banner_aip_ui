@@ -127,6 +127,11 @@ csr-list .csr-list-container {
     overflow-y: scroll; }
     .csr-item-detail-container .detail-content hr {
       border-color: #A4C6E4 !important; }
+    .csr-item-detail-container .detail-content .detail-title {
+      padding-bottom: 16px; }
+      .csr-item-detail-container .detail-content .detail-title span {
+        font-size: 1.5em;
+        border-bottom: 1px solid black; }
     .csr-item-detail-container .detail-content .detail {
       padding-bottom: 24px; }
       .csr-item-detail-container .detail-content .detail pre {

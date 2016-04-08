@@ -1,5 +1,6 @@
 ///<reference path="../../../../typings/tsd.d.ts"/>
 ///<reference path="../../../common/services/admin/adminGroupService.ts"/>
+///<reference path="../../../common/services/csrSpinnerService.ts"/>
 
 declare var register;
 
@@ -18,18 +19,19 @@ module CSR {
         folder: CSR.IFolder;
     }
     export class AdminGroupAddPageCtrl implements IAdminGroupAddPageCtrl{
-        $inject = ["$scope", "AdminGroupService", "$q"];
+        $inject = ["$scope", "AdminGroupService", "$q", "SpinnerService"];
         status: CSR.IStatus[];
         folders: CSR.IFolder[];
         groupInfo: IGroupInfo;
         adminGroupService: CSR.AdminGroupService;
+        spinnerService: CSR.SpinnerService;
         $q: ng.IQService;
         constructor($scope, AdminGroupService:CSR.AdminGroupService,
-            $q:ng.IQService) {
+            $q:ng.IQService, SpinnerService) {
             $scope.vm = this;
             this.$q = $q;
             this.adminGroupService = AdminGroupService;
-
+            this.spinnerService = SpinnerService;
             $scope.$watch(
                 "[vm.status, vm.folders]", function(newVal, oldVal) {
                     if(!$scope.$$phase) {
@@ -40,12 +42,15 @@ module CSR {
         }
 
         init() {
-            //TODO::trun on the spinner
+            this.spinnerService.showSpinner(true);
             var promises = [];
             this.groupInfo = <any>{};
             promises.push(
                 this.adminGroupService.getStatus().then((status) => {
-                    this.status = status;
+                    this.status = status.map((item) => {
+                        item.value = "csr.status." + item.value;
+                        return item;
+                    });
                 })
             );
             promises.push(
@@ -55,6 +60,7 @@ module CSR {
             );
             this.$q.all(promises).then(() => {
                 //TODO:: turn off the spinner
+                this.spinnerService.showSpinner(false);
                 this.groupInfo.status = this.status[0];
                 this.groupInfo.folder = this.folders[0];
             });
