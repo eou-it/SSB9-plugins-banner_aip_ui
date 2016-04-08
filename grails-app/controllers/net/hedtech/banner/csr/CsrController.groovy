@@ -1,7 +1,7 @@
-/**
- * TODO: copyrights
- * Created by jshin on 12/22/15.
- */
+/*********************************************************************************
+ Copyright 2016 Ellucian Company L.P. and its affiliates.
+ **********************************************************************************/
+
 package net.hedtech.banner.csr
 
 import grails.converters.JSON
