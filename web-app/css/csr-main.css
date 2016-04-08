@@ -142,7 +142,8 @@ csr-list .csr-list-container {
       .csr-item-detail-container .detail-content .detail pre {
         border: none;
         background-color: transparent;
-        padding: 0; }
+        padding: 0;
+        word-break: normal; }
     .csr-item-detail-container .detail-content .control {
       text-align: center; }
       .csr-item-detail-container .detail-content .control .actionItemTwoButton .buttonDiv {
