@@ -38,13 +38,22 @@ var bannerCSRApp = angular.module("bannercsr", [
                 url: "/admin/landing"
             }
         },
-        "admin-list": {
-            url: "/admin/list",
-            templateUrl:"admin/listActionItem/adminListItemPage.html",
-            controller: "AdminListItemPageCtrl",
+        //"admin-list": {
+        //    url: "/admin/list",
+        //    templateUrl:"admin/listActionItem/adminListItemPage.html",
+        //    controller: "AdminListItemPageCtrl",
+        //    breadcrumb: {
+        //        label: "csr.admin.group",
+        //        url: "/admin/list"
+        //    }
+        //},
+        "admin-group-list": {
+            url: "/admin/group",
+            templateUrl: "admin/group/list/adminGroupListPage.html",
+            controller: "AdminGroupListPageCtrl",
             breadcrumb: {
                 label: "csr.admin.group",
-                url: "/admin/list"
+                url: "/admin/group"
             }
         },
         "admin-group-add": {

@@ -1,5 +1,8 @@
 <div class="csr-item-detail-container">
     <div class="detail-content">
+        <div class="detail-title">
+            <span>{{data.info.title||"Action item detail title placeholder"}}</span>
+        </div>
         <div class="detail">
             <!--TODO:: text goes here-->
             <!--<ng-transclude></ng-transclude>-->
@@ -20,7 +23,7 @@
                     <button type="button" class="btn btn-default" ng-click="agree(data.info.id)">
                         {{"csr.user.detail.button.confirm"|i18n_csr}}
                     </button>
-                </div>
+                </div> 
                 <div class="col-sm-8 col-sm-offset-2 col-xs-12 buttonDiv">
                     <button type="button" class="btn btn-default" ng-click="notAgree(data.info.id)">
                         {{"csr.user.detail.button.deny"|i18n_csr}}

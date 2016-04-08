@@ -149,13 +149,13 @@ class CsrController {
         def model = [
                 [
                     "id":1,
-                    "value": "csr.status.pending"
+                    "value": "pending"
                 ], [
                     "id":2,
-                    "value":"csr.status.active"
+                    "value":"active"
                 ], [
                     "id":3,
-                    "value": "csr.status.inactive"
+                    "value": "inactive"
                 ]
             ]
         render model as JSON
