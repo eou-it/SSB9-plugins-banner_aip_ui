@@ -105,6 +105,9 @@ class CsrTagLib {
             out << javaScriptProperties.join( "," )
         }
         out << '};'
+        out << 'window.i18n_csr_temp = "'
+        out << grailsApplication.mainContext.getBean('messageSource').getPluginBundles(grailsApplication.mainContext.pluginManager.getGrailsPlugin("banner-csr-ui")).toString()
+        out << '"'
     }
 
     def csrVersion = { attrs ->
