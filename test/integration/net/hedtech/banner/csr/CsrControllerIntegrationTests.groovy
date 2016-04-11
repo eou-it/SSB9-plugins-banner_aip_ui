@@ -55,6 +55,6 @@ class CsrControllerIntegrationTests extends BaseIntegrationTestCase {
         controller.actionItems()
         assertEquals 200, controller.response.status
         def answer = JSON.parse( controller.response.contentAsString )
-        assertEquals( "Dallas", answer.firstName )
+        assertEquals( 1, answer.items.size() )
     }
 }
