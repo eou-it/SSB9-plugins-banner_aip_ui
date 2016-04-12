@@ -5,13 +5,14 @@ declare var register;
 
 module CSR {
     export class AdminGroupListPageCtrl {
-        $inject = ["$scope", "AdminGroupService"];
+        $inject = ["$scope", "AdminGroupService", "$state"];
         gridData: IGridData;
+        $state;
         adminGroupService: CSR.AdminGroupService;
-        constructor($scope, AdminGroupService) {
+        constructor($scope, AdminGroupService, $state) {
             $scope.vm = this;
             this.adminGroupService = AdminGroupService
-
+            this.$state = $state;
             this.init();
             $scope.$watch("vm.gridData", (newVal, oldVal) => {
                 if(!$scope.$$phase) {
@@ -25,6 +26,9 @@ module CSR {
             }, (err) => {
                 console.log(err);
             });
+        }
+        add() {
+            this.$state.go("admin-group-add");
         }
     }
 }

@@ -38,6 +38,27 @@ class CsrController {
         render model as JSON;
     }
 
+    def adminGroupList() {
+        //TODO: get data from db
+        def testDataHeader = [
+                [name: "id", title: "id", options: [visible: false, isSortable: true]],
+                [name: "title", title: "Title", options: [visible: true, isSortable: true]],
+                [name: "status", title: "Status", options: [visible: true, isSortable: true]],
+                [name: "folder", title: "Folder", options: [visible: true, isSortable: true]],
+                [name: "activity", title: "Activity", options: [visible: true, isSortable: true]],
+                [name: "user", title: "User", options: [visible: true, isSortable: true]]
+            ]
+        def testDataItemData = [
+                [id: 0, title: "Test1", status: "pending", activity:"03/08/2015", user:"admin1"],
+                [id: 1, title: "Test2", status: "active", activity:"03/28/2015", user:"admin2"]
+        ]
+        def model = [
+                header: testDataHeader,
+                data: testDataItemData
+        ]
+        render model as JSON
+    }
+
     // Return all action items for admin
     // this is totally wrong. this method created only for demo purpose. wrong column name, data, structure
     def adminActionItems() {

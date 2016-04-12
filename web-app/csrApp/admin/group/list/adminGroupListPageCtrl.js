@@ -3,10 +3,11 @@
 var CSR;
 (function (CSR) {
     var AdminGroupListPageCtrl = (function () {
-        function AdminGroupListPageCtrl($scope, AdminGroupService) {
-            this.$inject = ["$scope", "AdminGroupService"];
+        function AdminGroupListPageCtrl($scope, AdminGroupService, $state) {
+            this.$inject = ["$scope", "AdminGroupService", "$state"];
             $scope.vm = this;
             this.adminGroupService = AdminGroupService;
+            this.$state = $state;
             this.init();
             $scope.$watch("vm.gridData", function (newVal, oldVal) {
                 if (!$scope.$$phase) {
@@ -21,6 +22,9 @@ var CSR;
             }, function (err) {
                 console.log(err);
             });
+        };
+        AdminGroupListPageCtrl.prototype.add = function () {
+            this.$state.go("admin-group-add");
         };
         return AdminGroupListPageCtrl;
     })();

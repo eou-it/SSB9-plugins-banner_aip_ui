@@ -48,6 +48,9 @@ module CSR {
             };
             BreadCrumbAndPageTitle.draw(updatedHeaderAttributes);
         }
+        removeLastUrl() {
+
+        }
     }
 }
 

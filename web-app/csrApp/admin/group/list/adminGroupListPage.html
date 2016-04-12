@@ -2,11 +2,16 @@
     <div class="temp" >
         <h2>Placeholder for group list page</h2>
     </div>
+    <div class="control">
+        <button type="button" class="btn btn-default" ng-click="vm.add()">
+            Add
+        </button>
+    </div>
     <xe-table-grid
             header="vm.gridData.header"
             content="vm.gridData.result"
             paginate="true"
             toolbar="true"
-            end-point="vm.ENDPOINT.admin.actionItem">
+            end-point="vm.ENDPOINT.admin.groupList">
     </xe-table-grid>
 </div>

@@ -35,6 +35,8 @@ var CSR;
             };
             BreadCrumbAndPageTitle.draw(updatedHeaderAttributes);
         };
+        CsrBreadcrumbService.prototype.removeLastUrl = function () {
+        };
         return CsrBreadcrumbService;
     })();
     CSR.CsrBreadcrumbService = CsrBreadcrumbService;

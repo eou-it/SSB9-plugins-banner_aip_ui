@@ -11,6 +11,9 @@
 var csrAppRoot = "/" + extensibilityInfo.application + "/plugins/" +
     window.csrApp.fileSystemName + "/csrApp/";
 
+//override logout endpoint
+ApplicationConfig.logoutEndpoint = Application.getApplicationPath()+"/logout";
+
 var bannerCSRApp = angular.module("bannercsr", [
     "ngResource",
     "ngSanitize",
@@ -88,8 +91,9 @@ var bannerCSRApp = angular.module("bannercsr", [
 //constant for endpoint
     .constant("ENDPOINT", {
         admin: {
-            actionItem: "csr/adminActionItems",
-            groupList: "csr/adminActionItems"
+            groupList: "adminGroupList",
+            groupFolder: "adminGroupFolder",
+            groupStatus: "adminGroupStatus"
         }
     })
 
@@ -134,10 +138,10 @@ var bannerCSRApp = angular.module("bannercsr", [
                 CsrBreadcrumService.updateBreadcrumb(toState.data.breadcrumbs);
             });
             $rootScope.$on("$stateChangeStart", function(event, toState, toParams, fromState, fromParams) {
-                console.log("TEST");
+
             });
             $rootScope.$on("$stateNotFound", function(err) {
-                console.log(err);
+
             });
 
 

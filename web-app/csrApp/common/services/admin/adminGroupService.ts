@@ -29,15 +29,17 @@ module CSR {
         getGroupList();
     }
     export class AdminGroupService implements IAdminGroupService{
-        static $inject=["$http"];
+        static $inject=["$http", "ENDPOINT"];
         $http: ng.IHttpService;
-        constructor($http:ng.IHttpService) {
+        ENDPOINT;
+        constructor($http:ng.IHttpService, ENDPOINT) {
             this.$http = $http;
+            this.ENDPOINT = ENDPOINT;
         }
         getStatus() {
             var request = this.$http({
                 method: "POST",
-                url: "csr/adminGroupStatus"
+                url: this.ENDPOINT.admin.groupStatus
             })
                 .then((response) => {
                    return <IStatus[]>response.data;
@@ -49,7 +51,7 @@ module CSR {
         getFolder() {
             var request = this.$http({
                 method: "POST",
-                url: "csr/adminGroupFolder"
+                url: this.ENDPOINT.admin.groupFolder
             })
                 .then((response) => {
                     return <IFolder[]>response.data;
@@ -61,7 +63,7 @@ module CSR {
         getGroupList() {
             var request = this.$http({
                 method: "POST",
-                url: "csr/adminGroupList"
+                url: this.ENDPOINT.admin.groupList
             })
                 .then((response) => {
                     return <IGridData>response.data;

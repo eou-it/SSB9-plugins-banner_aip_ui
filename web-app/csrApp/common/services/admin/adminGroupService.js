@@ -2,13 +2,14 @@
 var CSR;
 (function (CSR) {
     var AdminGroupService = (function () {
-        function AdminGroupService($http) {
+        function AdminGroupService($http, ENDPOINT) {
             this.$http = $http;
+            this.ENDPOINT = ENDPOINT;
         }
         AdminGroupService.prototype.getStatus = function () {
             var request = this.$http({
                 method: "POST",
-                url: "csr/adminGroupStatus"
+                url: this.ENDPOINT.admin.groupStatus
             })
                 .then(function (response) {
                 return response.data;
@@ -20,7 +21,7 @@ var CSR;
         AdminGroupService.prototype.getFolder = function () {
             var request = this.$http({
                 method: "POST",
-                url: "csr/adminGroupFolder"
+                url: this.ENDPOINT.admin.groupFolder
             })
                 .then(function (response) {
                 return response.data;
@@ -32,7 +33,7 @@ var CSR;
         AdminGroupService.prototype.getGroupList = function () {
             var request = this.$http({
                 method: "POST",
-                url: "csr/adminGroupList"
+                url: this.ENDPOINT.admin.groupList
             })
                 .then(function (response) {
                 return response.data;
@@ -41,7 +42,7 @@ var CSR;
             });
             return request;
         };
-        AdminGroupService.$inject = ["$http"];
+        AdminGroupService.$inject = ["$http", "ENDPOINT"];
         return AdminGroupService;
     })();
     CSR.AdminGroupService = AdminGroupService;
