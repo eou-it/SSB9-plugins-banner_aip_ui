@@ -4,15 +4,16 @@
 var CSR;
 (function (CSR) {
     var ListItemPageCtrl = (function () {
-        function ListItemPageCtrl($scope, $state, ItemListViewService, CSRUserService, SpinnerService, $timeout, $window) {
+        function ListItemPageCtrl($scope, $state, ItemListViewService, CSRUserService, SpinnerService, $timeout, $window, $q) {
             this.$inject = ["$scope", "$state", "ItemListViewService", "CSRUserService", "SpinnerService", "$timeout",
-                "$window"];
+                "$window", "$q"];
             $scope.vm = this;
             this.$state = $state;
             this.itemListViewService = ItemListViewService;
             this.userService = CSRUserService;
             this.spinnerService = SpinnerService;
             this.$timeout = $timeout;
+            this.$q = $q;
             this.initialOpenGroup = -1;
             $scope.$watch("vm.detailView", function (newVal, oldVal) {
                 if (!$scope.$$phase) {
@@ -128,6 +129,7 @@ var CSR;
         };
         ListItemPageCtrl.prototype.selectItem = function (groupId, itemId) {
             var _this = this;
+            var defer = this.$q.defer();
             var index = this.getIndex(groupId, itemId);
             if (index.group === -1) {
                 throw new Error("Group does not exist with ID ");
@@ -135,7 +137,9 @@ var CSR;
             var selectionType = itemId === null ? "group" : "actionItem";
             this.itemListViewService.getDetailInformation(groupId, selectionType, index.item === null ? null : itemId).then(function (response) {
                 _this.selectedData = response;
+                defer.resolve();
             });
+            return defer.promise;
         };
         ListItemPageCtrl.prototype.getIndex = function (groupId, itemId) {
             var index = { group: -1, item: null };
@@ -169,7 +173,7 @@ var CSR;
             this.selectedData = undefined;
         };
         return ListItemPageCtrl;
-    })();
+    }());
     CSR.ListItemPageCtrl = ListItemPageCtrl;
 })(CSR || (CSR = {}));
 register("bannercsr").controller("ListItemPageCtrl", CSR.ListItemPageCtrl);

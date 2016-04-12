@@ -31,7 +31,12 @@ var CSRUI;
             $scope.selectItem = function (group, row, evt) {
                 this.resetSelection();
                 this.addSelection(evt.currentTarget);
-                $scope.click({ groupId: group.groupId, itemId: row.id });
+                $scope.click({ groupId: group.groupId, itemId: row.id }).then(function () {
+                    setTimeout(function () {
+                        $scope.changeFocus(".detail")
+                            , 100;
+                    });
+                });
             };
             $scope.openGroup = function (groupId) {
                 //TODO::Expand/Collapse group event
@@ -58,9 +63,12 @@ var CSRUI;
             $scope.addSelection = function (element) {
                 $(element).addClass("selected");
             };
+            $scope.changeFocus = function (element) {
+                $(element).focus();
+            };
         };
         return CSRListDirective;
-    })();
+    }());
     CSRUI.CSRListDirective = CSRListDirective;
 })(CSRUI || (CSRUI = {}));
 register("bannercsrui").directive("csrList", CSRUI.CSRListDirective);

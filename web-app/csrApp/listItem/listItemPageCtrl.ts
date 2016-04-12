@@ -27,7 +27,7 @@ module CSR {
 
     export class ListItemPageCtrl implements IListItemPageCtrl{
         $inject = ["$scope", "$state", "ItemListViewService", "CSRUserService", "SpinnerService", "$timeout",
-            "$window"];
+            "$window", "$q"];
         itemListViewService:CSR.ItemListViewService;
         userService:CSR.UserService;
         actionItems:IUserItem[];
@@ -37,14 +37,16 @@ module CSR {
         selectedData: ISelectedData;
         $timeout;
         $state;
+        $q;
 
-        constructor($scope, $state, ItemListViewService, CSRUserService, SpinnerService, $timeout, $window) {
+        constructor($scope, $state, ItemListViewService, CSRUserService, SpinnerService, $timeout, $window, $q) {
             $scope.vm = this;
             this.$state = $state;
             this.itemListViewService = ItemListViewService;
             this.userService = CSRUserService;
             this.spinnerService = SpinnerService;
             this.$timeout = $timeout;
+            this.$q = $q;
             this.initialOpenGroup = -1;
             $scope.$watch(
                 "vm.detailView", function(newVal, oldVal) {
@@ -161,6 +163,7 @@ module CSR {
             }
         }
         selectItem(groupId, itemId) {
+            var defer = this.$q.defer();
             var index = this.getIndex(groupId, itemId);
             if(index.group === -1) {
                 throw new Error("Group does not exist with ID ");
@@ -168,7 +171,9 @@ module CSR {
             var selectionType = itemId===null ? "group":"actionItem";
             this.itemListViewService.getDetailInformation(groupId, selectionType, index.item===null?null:itemId).then((response:ISelectedData) => {
                 this.selectedData = response;
+                defer.resolve();
             });
+            return defer.promise;
         }
         getIndex(groupId, itemId) {
             var index = {group:-1, item:null};
@@ -193,6 +198,7 @@ module CSR {
                     .then((response:ISelectedData) => {
                         this.selectedData = response;
                     })
+
             } else {
                 this.selectedData = undefined;
             }
