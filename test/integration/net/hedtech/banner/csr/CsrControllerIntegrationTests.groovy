@@ -57,4 +57,27 @@ class CsrControllerIntegrationTests extends BaseIntegrationTestCase {
         def answer = JSON.parse( controller.response.contentAsString )
         assertEquals( 1, answer.items.size() )
     }
+
+
+    @Test
+    void testFetchActionItemsUserHasNone() {
+        def person = PersonUtility.getPerson( "CSRSTU022" )
+        assertNotNull person
+        def auth = selfServiceBannerAuthenticationProvider.authenticate(
+                new UsernamePasswordAuthenticationToken( person.bannerId, '111111' ) )
+        SecurityContextHolder.getContext().setAuthentication( auth )
+        controller.actionItems()
+        assertEquals 200, controller.response.status
+        def answer = JSON.parse( controller.response.contentAsString )
+        assertEquals( 0, answer.items.size() )
+    }
+
+
+    @Test
+    void testFetchActionItemsNotLoggedIn() {
+        def person = PersonUtility.getPerson( "CSRSTU002" )
+        assertNotNull person
+        controller.actionItems()
+        assertEquals 403, controller.response.status
+    }
 }
