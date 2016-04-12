@@ -169,10 +169,14 @@ module CSR {
                 throw new Error("Group does not exist with ID ");
             }
             var selectionType = itemId===null ? "group":"actionItem";
+            var titleNode = this.actionItems[groupId].items.filter((item) => {
+                return item.id === itemId;
+            });
             this.itemListViewService.getDetailInformation(groupId, selectionType, index.item===null?null:itemId).then((response:ISelectedData) => {
                 this.selectedData = response;
+                this.selectedData.info.title= titleNode[0].name;
                 defer.resolve();
-            });
+            })
             return defer.promise;
         }
         getIndex(groupId, itemId) {
