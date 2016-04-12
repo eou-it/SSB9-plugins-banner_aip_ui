@@ -23,7 +23,12 @@
   }
 }
 @media screen and (max-width:768px) {
-
+  #content {
+    top: 105px !important;
+    .viewContainer {
+      padding: 0 8px;
+    }
+  }
 }
 @media screen and (max-width:480px) {
   #content {

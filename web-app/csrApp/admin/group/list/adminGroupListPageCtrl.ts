@@ -5,9 +5,9 @@ declare var register;
 
 module CSR {
     export class AdminGroupListPageCtrl {
-        $inject = [];
-        constructor() {
-
+        $inject = ["$scope"];
+        constructor($scope) {
+            $scope.vm = this;
         }
     }
 }

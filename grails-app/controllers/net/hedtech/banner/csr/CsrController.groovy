@@ -16,17 +16,20 @@ import org.springframework.security.core.context.SecurityContextHolder
 
 class CsrController {
 
-    static defaultAction = "listItems"
+    static defaultAction = "list"
     def model=[:]
     def userActionItemReadOnlyService
     def actionItemDetailService
 
     // Entry point. Load front-end resources & layout template
-    def listItems() {
-        render(model: model, view: "index")
+    def admin() {
+        def model = [state: "admin-landing"]
+        render (model: model, view: "index")
     }
-
-
+    def list() {
+        def model = [state: "list"]
+        render (model:model, view: "index")
+    }
     // Check if user has pending action items or not.
     def checkActionItem() {
         def model=[:]
