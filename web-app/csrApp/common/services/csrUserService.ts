@@ -19,16 +19,18 @@ module CSR {
     }
 
     export class UserService implements IUserService{
-        static $inject=["$http", "$q"];
+        static $inject=["$http", "$q", "APP_PATH"];
         $http:ng.IHttpService;
         $q:ng.IQService;
-        constructor($http:ng.IHttpService) {
+        APP_PATH;
+        constructor($http:ng.IHttpService, $q, APP_PATH) {
             this.$http = $http;
+            this.APP_PATH = APP_PATH;
         }
         getUserInfo() {
             var userRequest =  this.$http({
                 method: "POST",
-                url: "csr/userInfo"
+                url: this.APP_PATH + "/csr/userInfo"
             }).then((response:IGetUserResponse) => {
                 return response.data;
             }, (err) => {

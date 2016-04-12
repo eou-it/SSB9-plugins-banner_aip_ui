@@ -9,6 +9,7 @@
 <html>
 <head>
     <meta name="headerAttributes" content=""/>
+    <base href="/StudentSSB/ssb/csr/" />
     <title></title>
     <meta name="layout" content="bannerSelfServicePage"/>
     <r:require modules="bannerCSRUI"/>
@@ -33,7 +34,7 @@
     </div>
     <div id="title-panel" class="aurora-theme"></div>
     <div class="viewContainer container-fluid">
-        <div ui-view></div>
+        <div ui-view ui-state="{'${name}'}"></div>
     </div>
 </div>
 </body>

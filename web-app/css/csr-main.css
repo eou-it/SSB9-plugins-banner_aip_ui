@@ -98,12 +98,17 @@ csr-list .csr-list-container {
 
 .CSR-landing-container {
   padding: 16px; }
+  .CSR-landing-container .clearfix:before, .CSR-landing-container .clearfix:after {
+    content: " ";
+    display: table; }
+  .CSR-landing-container .clearfix:after {
+    clear: both; }
   .CSR-landing-container csr-landing-item .ladingItem-container {
     background-color: #ECECEC;
     font-size: 1.5em;
     border-radius: 4px;
     padding: 8px;
-    margin: 24px;
+    margin: 8px;
     cursor: pointer; }
     .CSR-landing-container csr-landing-item .ladingItem-container:hover {
       background-color: lightgray; }
@@ -208,6 +213,11 @@ csr-list .csr-list-container {
   #content #title-panel h1 {
     line-height: normal; }
 
+@media screen and (max-width: 768px) {
+  #content {
+    top: 105px !important; }
+    #content .viewContainer {
+      padding: 0 8px; } }
 @media screen and (max-width: 480px) {
   #content {
     top: 105px !important; }

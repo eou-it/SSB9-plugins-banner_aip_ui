@@ -7,13 +7,14 @@ var CSR;
         SelectionType[SelectionType["ActionItem"] = 1] = "ActionItem";
     })(SelectionType || (SelectionType = {}));
     var ItemListViewService = (function () {
-        function ItemListViewService($http) {
+        function ItemListViewService($http, APP_PATH) {
             this.$http = $http;
+            this.APP_PATH = APP_PATH;
         }
         ItemListViewService.prototype.getActionItems = function (userInfo) {
             var request = this.$http({
                 method: "POST",
-                url: "csr/actionItems",
+                url: this.APP_PATH + "/csr/actionItems",
                 data: userInfo
             })
                 .then(function (response) {
@@ -26,7 +27,7 @@ var CSR;
         ItemListViewService.prototype.getDetailInformation = function (groupId, selectType, actionItemId) {
             var request = this.$http({
                 method: "POST",
-                url: "csr/detailInfo",
+                url: this.APP_PATH + "/csr/detailInfo",
                 data: { type: selectType, groupId: groupId, actionItemId: actionItemId }
             })
                 .then(function (response) {
@@ -56,7 +57,7 @@ var CSR;
             //    });
             //});
         };
-        ItemListViewService.$inject = ["$http"];
+        ItemListViewService.$inject = ["$http", "APP_PATH"];
         return ItemListViewService;
     })();
     CSR.ItemListViewService = ItemListViewService;

@@ -49,15 +49,17 @@ module CSR {
     }
 
     export class ItemListViewService implements IItemListViewService{
-        static $inject=["$http"];
+        static $inject=["$http", "APP_PATH"];
         $http: ng.IHttpService;
-        constructor($http:ng.IHttpService) {
+        APP_PATH;
+        constructor($http:ng.IHttpService, APP_PATH) {
             this.$http = $http;
+            this.APP_PATH = APP_PATH;
         }
         getActionItems(userInfo) {
             var request = this.$http({
                 method:"POST",
-                url: "csr/actionItems",
+                url: this.APP_PATH + "/csr/actionItems",
                 data: userInfo
                })
                .then((response:IActionItemResponse) => {
@@ -70,7 +72,7 @@ module CSR {
         getDetailInformation(groupId, selectType, actionItemId) {
             var request = this.$http({
                 method: "POST",
-                url: "csr/detailInfo",
+                url: this.APP_PATH + "/csr/detailInfo",
                 data: {type:selectType, groupId: groupId, actionItemId:actionItemId}
             })
                 .then((response:any) => {

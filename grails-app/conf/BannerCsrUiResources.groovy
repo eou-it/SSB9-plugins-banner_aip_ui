@@ -51,6 +51,7 @@ modules = {
         resource url:[plugin: 'banner-csr-ui', file: 'csrApp/admin/adminLandingPageCtrl.js']
         resource url:[plugin: 'banner-csr-ui', file: 'csrApp/admin/listActionItem/adminListItemPageCtrl.js']
         resource url:[plugin: 'banner-csr-ui', file: 'csrApp/admin/group/add/adminGroupAddPageCtrl.js']
+        resource url:[plugin: 'banner-csr-ui', file: 'csrApp/admin/group/list/adminGroupListPageCtrl.js']
         resource url:[plugin: 'banner-csr-ui', file: 'csrApp/listItem/listItemPageCtrl.js']
         resource url:[plugin: 'banner-csr-ui', file: 'csrApp/listItem/itemConfirm/itemConfirmCtrl.js']
         resource url:[plugin: 'banner-csr-ui', file: 'csrApp/common/services/admin/adminItemListViewService.js']

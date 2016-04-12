@@ -2,13 +2,14 @@
 var CSR;
 (function (CSR) {
     var UserService = (function () {
-        function UserService($http) {
+        function UserService($http, $q, APP_PATH) {
             this.$http = $http;
+            this.APP_PATH = APP_PATH;
         }
         UserService.prototype.getUserInfo = function () {
             var userRequest = this.$http({
                 method: "POST",
-                url: "csr/userInfo"
+                url: this.APP_PATH + "/csr/userInfo"
             }).then(function (response) {
                 return response.data;
             }, function (err) {
@@ -16,7 +17,7 @@ var CSR;
             });
             return userRequest;
         };
-        UserService.$inject = ["$http", "$q"];
+        UserService.$inject = ["$http", "$q", "APP_PATH"];
         return UserService;
     })();
     CSR.UserService = UserService;

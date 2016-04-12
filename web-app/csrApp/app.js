@@ -26,15 +26,17 @@ var bannerCSRApp = angular.module("bannercsr", [
 //set application root url
     .constant('APP_ROOT', csrAppRoot)
 
+    .constant('APP_PATH', Application.getApplicationPath())
+
 //constants for page information
     .constant("PAGES", {
         "admin-landing": {
-            url: "/admin/landing",
+            url: "/admin",
             templateUrl:"admin/adminLandingPage.html",
             controller: "AdminLandingPageCtrl",
             breadcrumb: {
                 label: "csr.admin.landing",
-                url: "/admin/landing"
+                url: "/admin"
             }
         },
         //"admin-list": {
@@ -95,7 +97,13 @@ var bannerCSRApp = angular.module("bannercsr", [
     .config(["$stateProvider", "$urlRouterProvider", "$locationProvider", "PAGES", "APP_ROOT",
         function($stateProvider, $urlRouteProvider, $locationProvider, PAGES, APP_ROOT, $state) {
             $urlRouteProvider.otherwise("/list");
-
+            //$urlRouteProvider.rule(function($injector, $location) {
+            //    var path = $location.path();
+            //    if(path.indexOf("/csr/")!==-1) {
+            //        $location.replace("/csr/", "/csr#/");
+            //    }
+            //});
+            //$urlRouteProvider.when("/admin/landing", "/csr#/admin");
             angular.forEach(PAGES, function(item, state) {
                 $stateProvider.state(state, {
                     url: item.url,
@@ -110,6 +118,7 @@ var bannerCSRApp = angular.module("bannercsr", [
                     }
                 })
             });
+            $locationProvider.html5Mode(true);
         }
     ])
 
@@ -123,7 +132,14 @@ var bannerCSRApp = angular.module("bannercsr", [
                 $state.previous = fromState;
                 $state.previousParams = fromParams;
                 CsrBreadcrumService.updateBreadcrumb(toState.data.breadcrumbs);
-            })
+            });
+            $rootScope.$on("$stateChangeStart", function(event, toState, toParams, fromState, fromParams) {
+                console.log("TEST");
+            });
+            $rootScope.$on("$stateNotFound", function(err) {
+                console.log(err);
+            });
+
 
             //expose message.properties values for taglib
             //TODO:: find better way to handle this.

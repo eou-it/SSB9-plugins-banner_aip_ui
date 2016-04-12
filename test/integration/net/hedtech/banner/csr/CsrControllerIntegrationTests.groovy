@@ -11,10 +11,7 @@
 package net.hedtech.banner.csr
 
 import grails.converters.JSON
-import grails.util.Holders
 import net.hedtech.banner.general.person.PersonUtility
-import net.hedtech.banner.security.BannerUser
-import net.hedtech.banner.csr.ActionItem
 import net.hedtech.banner.testing.BaseIntegrationTestCase
 import org.junit.After
 import org.junit.Before
@@ -50,7 +47,7 @@ class CsrControllerIntegrationTests extends BaseIntegrationTestCase {
 
     @Test
     void testFetchActionItems() {
-        def person = PersonUtility.getPerson( "CSRSTU001" )
+        def person = PersonUtility.getPerson( "CSRSTU002" )
         assertNotNull person
         def auth = selfServiceBannerAuthenticationProvider.authenticate(
                 new UsernamePasswordAuthenticationToken( person.bannerId, '111111' ) )
@@ -58,7 +55,6 @@ class CsrControllerIntegrationTests extends BaseIntegrationTestCase {
         controller.actionItems()
         assertEquals 200, controller.response.status
         def answer = JSON.parse( controller.response.contentAsString )
-        println "crr"
-        println answer
+        assertEquals( 1, answer.items.size() )
     }
 }
