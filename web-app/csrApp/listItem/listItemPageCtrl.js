@@ -135,8 +135,12 @@ var CSR;
                 throw new Error("Group does not exist with ID ");
             }
             var selectionType = itemId === null ? "group" : "actionItem";
+            var titleNode = this.actionItems[groupId].items.filter(function (item) {
+                return item.id === itemId;
+            });
             this.itemListViewService.getDetailInformation(groupId, selectionType, index.item === null ? null : itemId).then(function (response) {
                 _this.selectedData = response;
+                _this.selectedData.info.title = titleNode[0].name;
                 defer.resolve();
             });
             return defer.promise;
