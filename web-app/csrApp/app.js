@@ -11,9 +11,6 @@
 var csrAppRoot = "/" + extensibilityInfo.application + "/plugins/" +
     window.csrApp.fileSystemName + "/csrApp/";
 
-//override logout endpoint
-ApplicationConfig.logoutEndpoint = Application.getApplicationPath()+"/logout";
-
 var bannerCSRApp = angular.module("bannercsr", [
     "ngResource",
     "ngSanitize",

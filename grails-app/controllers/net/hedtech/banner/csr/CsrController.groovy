@@ -30,6 +30,9 @@ class CsrController {
         def model = [state: "list"]
         render (model:model, view: "index")
     }
+    def logout() {
+        redirect (url: "/logout")
+    }
     // Check if user has pending action items or not.
     def checkActionItem() {
         def model=[:]
