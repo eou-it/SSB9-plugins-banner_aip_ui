@@ -173,7 +173,7 @@ var CSR;
             this.selectedData = undefined;
         };
         return ListItemPageCtrl;
-    }());
+    })();
     CSR.ListItemPageCtrl = ListItemPageCtrl;
 })(CSR || (CSR = {}));
 register("bannercsr").controller("ListItemPageCtrl", CSR.ListItemPageCtrl);

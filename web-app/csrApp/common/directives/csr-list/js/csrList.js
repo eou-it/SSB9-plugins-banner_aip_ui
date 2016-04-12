@@ -68,7 +68,7 @@ var CSRUI;
             };
         };
         return CSRListDirective;
-    }());
+    })();
     CSRUI.CSRListDirective = CSRListDirective;
 })(CSRUI || (CSRUI = {}));
 register("bannercsrui").directive("csrList", CSRUI.CSRListDirective);
