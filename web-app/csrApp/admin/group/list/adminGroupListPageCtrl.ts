@@ -5,9 +5,26 @@ declare var register;
 
 module CSR {
     export class AdminGroupListPageCtrl {
-        $inject = ["$scope"];
-        constructor($scope) {
+        $inject = ["$scope", "AdminGroupService"];
+        gridData: IGridData;
+        adminGroupService: CSR.AdminGroupService;
+        constructor($scope, AdminGroupService) {
             $scope.vm = this;
+            this.adminGroupService = AdminGroupService
+
+            this.init();
+            $scope.$watch("vm.gridData", (newVal, oldVal) => {
+                if(!$scope.$$phase) {
+                    $scope.apply();
+                }
+            });
+        }
+        init() {
+            this.adminGroupService.getGroupList().then((response:IGridData) => {
+                this.gridData = response;
+            }, (err) => {
+                console.log(err);
+            });
         }
     }
 }

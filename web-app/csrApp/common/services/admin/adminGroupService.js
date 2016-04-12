@@ -29,6 +29,18 @@ var CSR;
             });
             return request;
         };
+        AdminGroupService.prototype.getGroupList = function () {
+            var request = this.$http({
+                method: "POST",
+                url: "csr/adminGroupList"
+            })
+                .then(function (response) {
+                return response.data;
+            }, function (err) {
+                throw new Error(err);
+            });
+            return request;
+        };
         AdminGroupService.$inject = ["$http"];
         return AdminGroupService;
     })();

@@ -3,6 +3,18 @@
 declare var register;
 
 module CSR {
+    export interface IListItem {
+        id: number;
+        title: string;
+        status: string|number;
+        folder: string|number;
+        date: Date;
+        user: string|number;
+    }
+    export interface IGridData {
+        header: {position: number, name: string, title: string, options?: {visible:boolean, isSortable: boolean}}[];
+        result: IListItem[];
+    }
     export interface IFolder {
         value: string;
         id: string|number;
@@ -14,6 +26,7 @@ module CSR {
     interface IAdminGroupService {
         getStatus();
         getFolder();
+        getGroupList();
     }
     export class AdminGroupService implements IAdminGroupService{
         static $inject=["$http"];
@@ -40,6 +53,18 @@ module CSR {
             })
                 .then((response) => {
                     return <IFolder[]>response.data;
+                }, (err) => {
+                    throw new Error(err);
+            });
+            return request;
+        }
+        getGroupList() {
+            var request = this.$http({
+                method: "POST",
+                url: "csr/adminGroupList"
+            })
+                .then((response) => {
+                    return <IGridData>response.data;
                 }, (err) => {
                     throw new Error(err);
             });
