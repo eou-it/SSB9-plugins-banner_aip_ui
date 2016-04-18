@@ -45,6 +45,36 @@ class CsrControllerIntegrationTests extends BaseIntegrationTestCase {
     }
 
 
+    // using student. Fail on security?
+    @Test
+    void testAdminEntryPoint() {
+        def person = PersonUtility.getPerson( "CSRSTU002" )
+        assertNotNull person
+        def auth = selfServiceBannerAuthenticationProvider.authenticate(
+                new UsernamePasswordAuthenticationToken( person.bannerId, '111111' ) )
+        SecurityContextHolder.getContext().setAuthentication( auth )
+        def result = controller.admin()
+        assertEquals 200, controller.response.status
+
+        assertEquals( "admin-landing", result.model.state)
+        assertEquals( "index", result.view)
+    }
+
+
+    @Test
+    void testListEntryPoint() {
+        def person = PersonUtility.getPerson( "CSRSTU002" )
+        assertNotNull person
+        def auth = selfServiceBannerAuthenticationProvider.authenticate(
+                new UsernamePasswordAuthenticationToken( person.bannerId, '111111' ) )
+        SecurityContextHolder.getContext().setAuthentication( auth )
+        def result = controller.list()
+        assertEquals 200, controller.response.status
+        assertEquals( "list", result.model.state )
+        assertEquals( "index", result.view )
+    }
+
+
     @Test
     void testFetchActionItems() {
         def person = PersonUtility.getPerson( "CSRSTU002" )
