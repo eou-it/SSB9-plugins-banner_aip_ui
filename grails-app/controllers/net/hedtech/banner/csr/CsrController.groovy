@@ -5,12 +5,14 @@
 package net.hedtech.banner.csr
 
 import grails.converters.JSON
-//import net.hedtech.banner.exceptions.ApplicationException
-//import net.hedtech.banner.csr.ActionItem
-import java.security.InvalidParameterException
-//import net.hedtech.banner.general.person.PersonUtility
 import net.hedtech.banner.security.BannerUser
 import org.springframework.security.core.context.SecurityContextHolder
+
+import java.security.InvalidParameterException
+
+//import net.hedtech.banner.exceptions.ApplicationException
+//import net.hedtech.banner.csr.ActionItem
+//import net.hedtech.banner.general.person.PersonUtility
 //import org.springframework.context.i18n.LocaleContextHolder
 //import javax.persistence.*
 
@@ -92,41 +94,35 @@ class CsrController {
     }
 
     // Return user's action items
-    def actionItems( ) {
+    def actionItems() {
         def itemsList = []
-        if(!userPidm) {
-            response.sendError(403)
+        if (!userPidm) {
+            response.sendError( 403 )
             return
         }
-        try {
-            def actionItems = userActionItemReadOnlyService.listActionItemByPidm(userPidm)
-            def myItems = [
-                    name  : "registration",
-                    groupId: 0,
-                    info  : getActionGroupDescription("registration"),
-                    header: ["title", "state", "description"]
-            ]
-            def items = []
-            if (actionItems.size() > 0) {
-                actionItems?.each { item ->
-                    def actionItem = [
-                            id         : item.id,
-                            name       : item.title,
-                            state      : item.status,
-                            title      : item.title,
-                            description: item.description
-                    ]
-                    items << actionItem
-                }
-                myItems.items = items
-                itemsList << myItems
+        def actionItems = userActionItemReadOnlyService.listActionItemByPidm( userPidm )
+        def myItems = [
+                name   : "registration",
+                groupId: 0,
+                info   : getActionGroupDescription( "registration" ),
+                header : ["title", "state", "description"]
+        ]
+        def items = []
+        if (actionItems.size() > 0) {
+            actionItems?.each { item ->
+                def actionItem = [
+                        id         : item.id,
+                        name       : item.title,
+                        state      : item.status,
+                        title      : item.title,
+                        description: item.description
+                ]
+                items << actionItem
             }
-        } catch(Exception e) {
-            org.codehaus.groovy.runtime.StackTraceUtils.sanitize(e).printStackTrace()
-            throw e
-        } finally {
-            render itemsList as JSON
+            myItems.items = items
+            itemsList << myItems
         }
+        render itemsList as JSON
     }
 
     // Return login user's information
@@ -139,38 +135,34 @@ class CsrController {
         render personForCSR as JSON
     }
 
+
     def detailInfo() {
         def jsonObj = request.JSON; //type, groupId, actionItemId
         def itemDetailInfo
         //TODO:: create service for retrieving detail information for group or actionItem from DB
-        try {
-            if(jsonObj.type == "group") {
+        if (jsonObj.type == "group") {
 //                itemDetailInfo = actionItemDetailService.getGroupDetailById(jsonObj.groupId)
-                itemDetailInfo = [[
-                        text: "Group detail information for group " + jsonObj.groupId.toString() + " goes here",   //require
-                        id: jsonObj.groupId,
-                        title: "Group",
-                        groupId: jsonObj.groupId,
-                        version: 0,
-                        userId: "GRAIL",
-                        dataOrigin: "GRAIL"
-                ]]
-            } else if(jsonObj.type == "actionItem") {
-                itemDetailInfo = actionItemDetailService.listActionItemDetailById(jsonObj.actionItemId)
+            itemDetailInfo = [[
+                                      text      : "Group detail information for group " + jsonObj.groupId.toString() + " goes here",   //require
+                                      id        : jsonObj.groupId,
+                                      title     : "Group",
+                                      groupId   : jsonObj.groupId,
+                                      version   : 0,
+                                      userId    : "GRAIL",
+                                      dataOrigin: "GRAIL"
+                              ]]
+        } else if (jsonObj.type == "actionItem") {
+            itemDetailInfo = actionItemDetailService.listActionItemDetailById( jsonObj.actionItemId )
 //                itemDetailInfo = [
 //                        content: "Action item information for item " + jsonObj.actionItemId.toString() + " goes here",
 //                        type: "doc",
 //                        id: jsonObj.actionItemId, //remove or not
 //                        title: "Action item information"
 //                ]
-            }
-        }catch(Exception e) {
-            org.codehaus.groovy.runtime.StackTraceUtils.sanitize(e).printStackTrace()
-            throw e
-        } finally {
-            render itemDetailInfo as JSON
         }
+        render itemDetailInfo as JSON
     }
+
 
     def adminGroupStatus() {
         //TODO:: get group status from DB through service
