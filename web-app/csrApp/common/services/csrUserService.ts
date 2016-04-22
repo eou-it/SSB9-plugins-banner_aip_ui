@@ -30,7 +30,7 @@ module CSR {
         getUserInfo() {
             var userRequest =  this.$http({
                 method: "POST",
-                url: this.APP_PATH + "/csr/userInfo"
+                url: this.APP_PATH + "/aip/userInfo"
             }).then((response:IGetUserResponse) => {
                 return response.data;
             }, (err) => {

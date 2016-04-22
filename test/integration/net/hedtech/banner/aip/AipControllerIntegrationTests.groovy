@@ -8,9 +8,10 @@
  NOR USED FOR ANY PURPOSE OTHER THAN THAT WHICH IT IS SPECIFICALLY PROVIDED
  WITHOUT THE WRITTEN PERMISSION OF THE SAID COMPANY
  ****************************************************************************** */
-package net.hedtech.banner.csr
+package net.hedtech.banner.aip
 
 import grails.converters.JSON
+import net.hedtech.banner.aip.AipController
 import net.hedtech.banner.general.person.PersonUtility
 import net.hedtech.banner.testing.BaseIntegrationTestCase
 import org.junit.After
@@ -25,7 +26,7 @@ import org.springframework.security.core.context.SecurityContextHolder
  * Date: 2/11/2016
  * Time: 9:18 AM
  */
-class CsrControllerIntegrationTests extends BaseIntegrationTestCase {
+class AipControllerIntegrationTests extends BaseIntegrationTestCase {
     def selfServiceBannerAuthenticationProvider
     def actionItemService
 
@@ -33,7 +34,7 @@ class CsrControllerIntegrationTests extends BaseIntegrationTestCase {
     @Before
     public void setUp() {
         formContext = ['GUAGMNU']
-        controller = new CsrController()
+        controller = new AipController()
         super.setUp()
     }
 
@@ -42,6 +43,36 @@ class CsrControllerIntegrationTests extends BaseIntegrationTestCase {
     public void tearDown() {
         super.tearDown()
         logout()
+    }
+
+
+    // using student. Fail on security?
+    @Test
+    void testAdminEntryPoint() {
+        def person = PersonUtility.getPerson( "CSRSTU002" )
+        assertNotNull person
+        def auth = selfServiceBannerAuthenticationProvider.authenticate(
+                new UsernamePasswordAuthenticationToken( person.bannerId, '111111' ) )
+        SecurityContextHolder.getContext().setAuthentication( auth )
+        def result = controller.admin()
+        assertEquals 200, controller.response.status
+
+        assertEquals( "admin-landing", result.model.state)
+        assertEquals( "index", result.view)
+    }
+
+
+    @Test
+    void testListEntryPoint() {
+        def person = PersonUtility.getPerson( "CSRSTU002" )
+        assertNotNull person
+        def auth = selfServiceBannerAuthenticationProvider.authenticate(
+                new UsernamePasswordAuthenticationToken( person.bannerId, '111111' ) )
+        SecurityContextHolder.getContext().setAuthentication( auth )
+        def result = controller.list()
+        assertEquals 200, controller.response.status
+        assertEquals( "list", result.model.state )
+        assertEquals( "index", result.view )
     }
 
 
@@ -79,5 +110,20 @@ class CsrControllerIntegrationTests extends BaseIntegrationTestCase {
         assertNotNull person
         controller.actionItems()
         assertEquals 403, controller.response.status
+    }
+
+    @Test
+    void testFetchAdminGroups() {
+        def person = PersonUtility.getPerson( "CSRSTU001" )
+        assertNotNull person
+
+        def auth = selfServiceBannerAuthenticationProvider.authenticate(
+                new UsernamePasswordAuthenticationToken( person.bannerId, '111111' ) )
+        SecurityContextHolder.getContext().setAuthentication( auth )
+        controller.adminGroupList()
+        assertEquals 200, controller.response.status
+        def answer = JSON.parse( controller.response.contentAsString )
+        assert 1 < answer.data.size()
+        println answer
     }
 }

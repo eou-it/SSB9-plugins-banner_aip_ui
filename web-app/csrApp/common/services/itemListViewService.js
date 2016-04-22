@@ -14,7 +14,7 @@ var CSR;
         ItemListViewService.prototype.getActionItems = function (userInfo) {
             var request = this.$http({
                 method: "POST",
-                url: this.APP_PATH + "/csr/actionItems",
+                url: this.APP_PATH + "/aip/actionItems",
                 data: userInfo
             })
                 .then(function (response) {
@@ -27,7 +27,7 @@ var CSR;
         ItemListViewService.prototype.getDetailInformation = function (groupId, selectType, actionItemId) {
             var request = this.$http({
                 method: "POST",
-                url: this.APP_PATH + "/csr/detailInfo",
+                url: this.APP_PATH + "/aip/detailInfo",
                 data: { type: selectType, groupId: groupId, actionItemId: actionItemId }
             })
                 .then(function (response) {

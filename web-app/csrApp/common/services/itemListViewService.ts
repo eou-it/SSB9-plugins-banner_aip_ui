@@ -59,7 +59,7 @@ module CSR {
         getActionItems(userInfo) {
             var request = this.$http({
                 method:"POST",
-                url: this.APP_PATH + "/csr/actionItems",
+                url: this.APP_PATH + "/aip/actionItems",
                 data: userInfo
                })
                .then((response:IActionItemResponse) => {
@@ -72,7 +72,7 @@ module CSR {
         getDetailInformation(groupId, selectType, actionItemId) {
             var request = this.$http({
                 method: "POST",
-                url: this.APP_PATH + "/csr/detailInfo",
+                url: this.APP_PATH + "/aip/detailInfo",
                 data: {type:selectType, groupId: groupId, actionItemId:actionItemId}
             })
                 .then((response:any) => {

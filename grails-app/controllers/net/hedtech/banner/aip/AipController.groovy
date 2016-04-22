@@ -2,20 +2,27 @@
  Copyright 2016 Ellucian Company L.P. and its affiliates.
  **********************************************************************************/
 
-package net.hedtech.banner.csr
+package net.hedtech.banner.aip
 
 import grails.converters.JSON
 import org.springframework.security.access.annotation.Secured
 import net.hedtech.banner.security.BannerUser
 import org.springframework.security.core.context.SecurityContextHolder
 
+import java.security.InvalidParameterException
 
-class CsrController {
+//import net.hedtech.banner.exceptions.ApplicationException
+//import ActionItem
+//import net.hedtech.banner.general.person.PersonUtility
+//import org.springframework.context.i18n.LocaleContextHolder
+//import javax.persistence.*
+
+class AipController {
 
     static defaultAction = "list"
     def userActionItemReadOnlyService
     def actionItemDetailService
-    def actionItemGroupService
+    def groupFolderReadOnlyService
 
     @Secured (['ROLE_SELFSERVICE-FACULTY_BAN_DEFAULT_M', 'ROLE_SELFSERVICE-STUDENT_BAN_DEFAULT_M'])
     def list() {
@@ -42,19 +49,37 @@ class CsrController {
 
     @Secured (['ROLE_SELFSERVICE-FACULTY_BAN_DEFAULT_M', 'ROLE_SELFSERVICE-STUDENT_BAN_DEFAULT_M'])
     def adminGroupList() {
-        //TODO: get data from db
+        def actionItemGroups = groupFolderReadOnlyService.listActionItemGroups()
+
+        def groupList = []
+        if (actionItemGroups.size() > 0) {
+            actionItemGroups?.each { group ->
+                def groupItem = [
+                        id          : group.groupId,
+                        title       : group.groupTitle,
+                        status      : group.groupStatus,
+                        user        : group.groupUserId,
+                        description : group.groupDesc,
+                        activity    : group.groupActivityDate,
+                        folder      : group.folderName,
+                        vpdiCode    : group.groupVpdiCode
+                ]
+                groupList << groupItem
+            }
+        }
+
+        //TODO: header configuration should probably come from a config file - TBD
         def testDataHeader = [
                 [name: "id", title: "id", options: [visible: false, isSortable: true]],
                 [name: "title", title: "Title", options: [visible: true, isSortable: true]],
                 [name: "status", title: "Status", options: [visible: true, isSortable: true]],
-                [name: "folderId", title: "Folder", options: [visible: true, isSortable: true]],
-                [name: "activityDate", title: "Activity Date", options: [visible: true, isSortable: true]],
-                [name: "userId", title: "User", options: [visible: true, isSortable: true]]
+                [name: "folder", title: "Folder", options: [visible: true, isSortable: true]],
+                [name: "activity", title: "Activity", options: [visible: true, isSortable: true]],
+                [name: "user", title: "User", options: [visible: true, isSortable: true]]
             ]
-        List<ActionItemGroup> actionItemGroups = actionItemGroupService.listActionItemGroups()
         def model = [
                 header: testDataHeader,
-                data: actionItemGroups
+                data: groupList
         ]
         render model as JSON
     }
@@ -63,39 +88,34 @@ class CsrController {
     @Secured (['ROLE_SELFSERVICE-FACULTY_BAN_DEFAULT_M', 'ROLE_SELFSERVICE-STUDENT_BAN_DEFAULT_M'])
     def actionItems( ) {
         def itemsList = []
-        if(!userPidm) {
-            response.sendError(403)
+        if (!userPidm) {
+            response.sendError( 403 )
             return
         }
-        try {
-            def actionItems = userActionItemReadOnlyService.listActionItemByPidm(userPidm)
-            def myItems = [
-                    name  : "registration",
-                    groupId: 0,
-                    info  : getActionGroupDescription("registration"),
-                    header: ["title", "state", "description"]
-            ]
-            def items = []
-            if (actionItems.size() > 0) {
-                actionItems?.each { item ->
-                    def actionItem = [
-                            id         : item.id,
-                            name       : item.title,
-                            state      : item.status,
-                            title      : item.title,
-                            description: item.description
-                    ]
-                    items << actionItem
-                }
-                myItems.items = items
-                itemsList << myItems
+        def actionItems = userActionItemReadOnlyService.listActionItemByPidm( userPidm )
+        //TODO: group is hardcoded. to be pulled from db in future US
+        def myItems = [
+                name   : "registration",
+                groupId: 0,
+                info   : getActionGroupDescription( "registration" ),
+                header : ["title", "state", "description"]
+        ]
+        def items = []
+        if (actionItems.size() > 0) {
+            actionItems?.each { item ->
+                def actionItem = [
+                        id         : item.id,
+                        name       : item.title,
+                        state      : item.status,
+                        title      : item.title,
+                        description: item.description
+                ]
+                items << actionItem
             }
-        } catch(Exception e) {
-            org.codehaus.groovy.runtime.StackTraceUtils.sanitize(e).printStackTrace()
-            throw e
-        } finally {
-            render itemsList as JSON
+            myItems.items = items
+            itemsList << myItems
         }
+        render itemsList as JSON
     }
 
     // Return login user's information
@@ -105,36 +125,32 @@ class CsrController {
             response.sendError(403)
             return
         }
-        def personForCSR = CsrControllerUtils.getPersonForCSR(params, userPidm)
-        render personForCSR as JSON
+        def personForAIP = AipControllerUtils.getPersonForAip(params, userPidm)
+        render personForAIP as JSON
     }
+
 
     @Secured (['ROLE_SELFSERVICE-FACULTY_BAN_DEFAULT_M', 'ROLE_SELFSERVICE-STUDENT_BAN_DEFAULT_M'])
     def detailInfo() {
         def jsonObj = request.JSON; //type, groupId, actionItemId
         def itemDetailInfo
         //TODO:: create service for retrieving detail information for group or actionItem from DB
-        try {
-            if(jsonObj.type == "group") {
-                itemDetailInfo = [[
-                        text: "Group detail information for group " + jsonObj.groupId.toString() + " goes here",   //require
-                        id: jsonObj.groupId,
-                        title: "Group",
-                        groupId: jsonObj.groupId,
-                        version: 0,
-                        userId: "GRAIL",
-                        dataOrigin: "GRAIL"
-                ]]
-            } else if(jsonObj.type == "actionItem") {
-                itemDetailInfo = actionItemDetailService.listActionItemDetailById(jsonObj.actionItemId)
-            }
-        }catch(Exception e) {
-            org.codehaus.groovy.runtime.StackTraceUtils.sanitize(e).printStackTrace()
-            throw e
-        } finally {
-            render itemDetailInfo as JSON
+        if (jsonObj.type == "group") {
+            itemDetailInfo = [[
+                                      text      : "Group detail information for group " + jsonObj.groupId.toString() + " goes here",   //require
+                                      id        : jsonObj.groupId,
+                                      title     : "Group",
+                                      groupId   : jsonObj.groupId,
+                                      version   : 0,
+                                      userId    : "GRAIL",
+                                      dataOrigin: "GRAIL"
+                              ]]
+        } else if (jsonObj.type == "actionItem") {
+            itemDetailInfo = actionItemDetailService.listActionItemDetailById( jsonObj.actionItemId )
         }
+        render itemDetailInfo as JSON
     }
+
 
     def adminGroupStatus() {
         //TODO:: get group status from DB through service
