@@ -57,7 +57,7 @@ class AipControllerIntegrationTests extends BaseIntegrationTestCase {
         def result = controller.admin()
         assertEquals 200, controller.response.status
 
-        assertEquals( "admin-landing", result.model.state)
+        assertEquals( "/landing", result.model.fragment)
         assertEquals( "index", result.view)
     }
 
@@ -71,7 +71,7 @@ class AipControllerIntegrationTests extends BaseIntegrationTestCase {
         SecurityContextHolder.getContext().setAuthentication( auth )
         def result = controller.list()
         assertEquals 200, controller.response.status
-        assertEquals( "list", result.model.state )
+        assertEquals( "/list", result.model.fragment )
         assertEquals( "index", result.view )
     }
 
