@@ -3,11 +3,7 @@
  */
 // angular module init and configuration
 "use strict";
-//var appHostUrl = window.location.host +
-//    window.location.pathname.split("/")
-//        .splice(0, window.location.pathname
-//            .split("/").indexOf("csr"))
-//        .join("/") + "/";
+
 var csrAppRoot = "/" + extensibilityInfo.application + "/plugins/" +
     window.csrApp.fileSystemName + "/csrApp/";
 
@@ -36,25 +32,16 @@ var bannerCSRApp = angular.module("bannercsr", [
             controller: "AdminLandingPageCtrl",
             breadcrumb: {
                 label: "csr.admin.landing",
-                url: "/csr/admin#/landing"
+                url: "/aip/admin#/landing"
             }
         },
-        //"admin-list": {
-        //    url: "/admin/list",
-        //    templateUrl:"admin/listActionItem/adminListItemPage.html",
-        //    controller: "AdminListItemPageCtrl",
-        //    breadcrumb: {
-        //        label: "csr.admin.group",
-        //        url: "/admin/list"
-        //    }
-        //},
         "admin-group-list": {
             url: "/group",
             templateUrl: "admin/group/list/adminGroupListPage.html",
             controller: "AdminGroupListPageCtrl",
             breadcrumb: {
                 label: "csr.admin.group",
-                url: "/csr/admin#/group"
+                url: "/aip/admin#/group"
             }
         },
         "admin-group-add": {
@@ -63,7 +50,7 @@ var bannerCSRApp = angular.module("bannercsr", [
             controller:"AdminGroupAddPageCtrl",
             breadcrumb: {
                 label: "csr.admin.group.add",
-                url: "/csr/admin#/group/add"
+                url: "/aip/admin#/group/add"
             }
         },
         "list": {
@@ -72,18 +59,9 @@ var bannerCSRApp = angular.module("bannercsr", [
             controller: "ListItemPageCtrl",
             breadcrumb: {
                 label: "csr.user.actionItem.list",
-                url: "/csr/list#/list"
+                url: "/aip/list#/list"
             }
-        }//,
-        //"listConfirm": {
-        //    url: "/list/confirm/:itemId",
-        //    templateUrl:"listItem/itemConfirm/itemConfirmPage.html",
-        //    controller: "ItemConfirmCtrl",
-        //    breadcrumb: {
-        //        label: "Confirmation",
-        //        url: "/list/confirm"
-        //    }
-        //}
+        }
     })
 //constant for endpoint
     .constant("ENDPOINT", {
@@ -98,13 +76,6 @@ var bannerCSRApp = angular.module("bannercsr", [
     .config(["$stateProvider", "$urlRouterProvider", "$locationProvider", "PAGES", "APP_ROOT",
         function($stateProvider, $urlRouteProvider, $locationProvider, PAGES, APP_ROOT, $state) {
             $urlRouteProvider.otherwise("/list");
-            //$urlRouteProvider.rule(function($injector, $location) {
-            //    var path = $location.path();
-            //    if(path.indexOf("/csr/")!==-1) {
-            //        $location.replace("/csr/", "/csr#/");
-            //    }
-            //});
-            //$urlRouteProvider.when("/admin/landing", "/csr#/admin");
             angular.forEach(PAGES, function(item, state) {
                 $stateProvider.state(state, {
                     url: item.url,

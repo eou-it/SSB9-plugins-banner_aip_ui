@@ -129,28 +129,39 @@ class AipController {
         render personForAIP as JSON
     }
 
-
     @Secured (['ROLE_SELFSERVICE-FACULTY_BAN_DEFAULT_M', 'ROLE_SELFSERVICE-STUDENT_BAN_DEFAULT_M'])
     def detailInfo() {
         def jsonObj = request.JSON; //type, groupId, actionItemId
         def itemDetailInfo
         //TODO:: create service for retrieving detail information for group or actionItem from DB
-        if (jsonObj.type == "group") {
-            itemDetailInfo = [[
-                                      text      : "Group detail information for group " + jsonObj.groupId.toString() + " goes here",   //require
-                                      id        : jsonObj.groupId,
-                                      title     : "Group",
-                                      groupId   : jsonObj.groupId,
-                                      version   : 0,
-                                      userId    : "GRAIL",
-                                      dataOrigin: "GRAIL"
-                              ]]
-        } else if (jsonObj.type == "actionItem") {
-            itemDetailInfo = actionItemDetailService.listActionItemDetailById( jsonObj.actionItemId )
+        try {
+            if(jsonObj.type == "group") {
+//                itemDetailInfo = actionItemDetailService.getGroupDetailById(jsonObj.groupId)
+                itemDetailInfo = [[
+                        text: "Group detail information for group " + jsonObj.groupId.toString() + " goes here",   //require
+                        id: jsonObj.groupId,
+                        title: "Group",
+                        groupId: jsonObj.groupId,
+                        version: 0,
+                        userId: "GRAIL",
+                        dataOrigin: "GRAIL"
+                ]]
+            } else if(jsonObj.type == "actionItem") {
+                itemDetailInfo = actionItemDetailService.listActionItemDetailById(jsonObj.actionItemId)
+//                itemDetailInfo = [
+//                        content: "Action item information for item " + jsonObj.actionItemId.toString() + " goes here",
+//                        type: "doc",
+//                        id: jsonObj.actionItemId, //remove or not
+//                        title: "Action item information"
+//                ]
+            }
+        }catch(Exception e) {
+            org.codehaus.groovy.runtime.StackTraceUtils.sanitize(e).printStackTrace()
+            throw e
+        } finally {
+            render itemDetailInfo as JSON
         }
-        render itemDetailInfo as JSON
     }
-
 
     def adminGroupStatus() {
         //TODO:: get group status from DB through service
@@ -182,6 +193,40 @@ class AipController {
         ]
         render model as JSON
     }
+    // It might be better in service in banner_csr.git, not in controller since this shouldn't be able to access from front-end
+    // It might not be needed depends on query style on user items
+    def getItemInfo(type) {
+        //TODO: change whatever it needed
+        Map item = [:]
+        switch(type) {
+            case "drugAndAlcohol":
+                item.put("description", "You must review and confirm the Ellucian University Campus Drug and Alcohol Policy prior to registering for classes.")
+                item.put("title", "Drug and Alcohol Policy")
+                break
+            case "registrationTraining":
+                item.put("description", "It is takes 10 minutes, review the training video provided to help expedite your registration experience.")
+                item.put("title", "Registration Process Training")
+                break;
+            case "personalInfo":
+                item.put("description", "It is important that we have you current information such as your name, and contact information therefore it is required that you review, update and confirm your personal information.")
+                item.put("title", "Personal Information")
+                break;
+            case "meetAdvisor":
+                item.put("description", "You must meet with you Advisor or ensure you are on target to meet your educational goals for graduation.")
+                item.put("title", "Meet with Advisor")
+                break;
+            case "residenceProof":
+                item.put("description", "")
+                item.put("title", "Proof of Residence")
+                break;
+            default:
+                throw new InvalidParameterException("Invalid action item type")
+                break;
+        }
+        return item
+    }
+
+
 
 
 
