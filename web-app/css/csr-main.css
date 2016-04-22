@@ -204,6 +204,17 @@ csr-list .csr-list-container {
         width: 100%;
         max-width: 200px; }
 
+.groupListContainer .row {
+  margin-right: 0;
+  margin-left: 0; }
+.groupListContainer .control {
+  float: right;
+  padding-top: 8px; }
+.groupListContainer .groupListTable {
+  overflow: auto; }
+  .groupListContainer .groupListTable .table-container {
+    margin-top: 8px; }
+
 #username {
   padding-right: 0.5em; }
 

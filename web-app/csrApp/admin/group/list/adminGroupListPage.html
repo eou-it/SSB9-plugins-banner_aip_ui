@@ -1,17 +1,19 @@
 <div class="groupListContainer">
-    <div class="temp" >
-        <h2>Placeholder for group list page</h2>
+    <div class="row controls">
+        <div class="control">
+            <button type="button" class="btn btn-default" ng-click="vm.add()">
+                <i class="fa fa-plus" aria-hidden="true"></i>
+                <span>Add</span>
+            </button>
+        </div>
     </div>
-    <div class="control">
-        <button type="button" class="btn btn-default" ng-click="vm.add()">
-            Add
-        </button>
+    <div class="groupListTable" ng-style="vm.getHeight()">
+        <xe-table-grid
+                header="vm.gridData.header"
+                content="vm.gridData.data"
+                paginate="false"
+                toolbar="false"
+                end-point="vm.ENDPOINT.admin.grouplist"">
+        </xe-table-grid>
     </div>
-    <xe-table-grid
-            header="vm.gridData.header"
-            content="vm.gridData.result"
-            paginate="true"
-            toolbar="true"
-            end-point="vm.ENDPOINT.admin.groupList">
-    </xe-table-grid>
 </div>

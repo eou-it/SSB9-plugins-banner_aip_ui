@@ -5,19 +5,25 @@ declare var register;
 
 module CSR {
     export class AdminGroupListPageCtrl {
-        $inject = ["$scope", "AdminGroupService", "$state"];
+        $inject = ["$scope", "AdminGroupService", "$state", "$window", "ENDPOINT"];
         gridData: IGridData;
         $state;
+        ENDPOINT;
         adminGroupService: CSR.AdminGroupService;
-        constructor($scope, AdminGroupService, $state) {
+        constructor($scope, AdminGroupService, $state, $window, ENDPOINT) {
             $scope.vm = this;
             this.adminGroupService = AdminGroupService
             this.$state = $state;
+            this.ENDPOINT = ENDPOINT;
             this.init();
             $scope.$watch("vm.gridData", (newVal, oldVal) => {
                 if(!$scope.$$phase) {
                     $scope.apply();
                 }
+            });
+            angular.element($window).bind('resize', function() {
+                //$scope.onResize();
+                $scope.$apply();
             });
         }
         init() {
@@ -29,6 +35,16 @@ module CSR {
         }
         add() {
             this.$state.go("admin-group-add");
+        }
+        getHeight() {
+            var containerHeight = $(document).height() -
+                $("#breadcrumb-panel").height() -
+                $("#title-panel").height() -
+                $("#header-main-section").height() -
+                $("#outerFooter").height() -
+                $(".groupListContainer .control").height() -
+                30;
+            return {height: containerHeight};
         }
     }
 }

@@ -45,3 +45,4 @@ grails.project.dependency.resolution = {
     }
 
 }
+grails.reload.enabled = true;

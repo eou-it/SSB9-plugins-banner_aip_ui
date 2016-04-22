@@ -5,31 +5,30 @@
 package net.hedtech.banner.csr
 
 import grails.converters.JSON
-//import net.hedtech.banner.exceptions.ApplicationException
-//import net.hedtech.banner.csr.ActionItem
-import java.security.InvalidParameterException
-//import net.hedtech.banner.general.person.PersonUtility
+import org.springframework.security.access.annotation.Secured
 import net.hedtech.banner.security.BannerUser
 import org.springframework.security.core.context.SecurityContextHolder
-//import org.springframework.context.i18n.LocaleContextHolder
-//import javax.persistence.*
+
 
 class CsrController {
 
     static defaultAction = "list"
-    def model=[:]
     def userActionItemReadOnlyService
     def actionItemDetailService
+    def actionItemGroupService
 
-    // Entry point. Load front-end resources & layout template
-    def admin() {
-        def model = [state: "admin-landing"]
-        render (model: model, view: "index")
-    }
+    @Secured (['ROLE_SELFSERVICE-FACULTY_BAN_DEFAULT_M', 'ROLE_SELFSERVICE-STUDENT_BAN_DEFAULT_M'])
     def list() {
-        def model = [state: "list"]
+        def model = [fragment: "/list"]
         render (model:model, view: "index")
     }
+
+    @Secured (['ROLE_SELFSERVICE-FACULTY_BAN_DEFAULT_M', 'ROLE_SELFSERVICE-STUDENT_BAN_DEFAULT_M'])
+    def admin() {
+        def model = [fragment:"/landing"]
+        render (model:model, view:"index")
+    }
+
     def logout() {
         redirect (url: "/logout")
     }
@@ -41,57 +40,27 @@ class CsrController {
         render model as JSON;
     }
 
+    @Secured (['ROLE_SELFSERVICE-FACULTY_BAN_DEFAULT_M', 'ROLE_SELFSERVICE-STUDENT_BAN_DEFAULT_M'])
     def adminGroupList() {
         //TODO: get data from db
         def testDataHeader = [
                 [name: "id", title: "id", options: [visible: false, isSortable: true]],
                 [name: "title", title: "Title", options: [visible: true, isSortable: true]],
                 [name: "status", title: "Status", options: [visible: true, isSortable: true]],
-                [name: "folder", title: "Folder", options: [visible: true, isSortable: true]],
-                [name: "activity", title: "Activity", options: [visible: true, isSortable: true]],
-                [name: "user", title: "User", options: [visible: true, isSortable: true]]
+                [name: "folderId", title: "Folder", options: [visible: true, isSortable: true]],
+                [name: "activityDate", title: "Activity Date", options: [visible: true, isSortable: true]],
+                [name: "userId", title: "User", options: [visible: true, isSortable: true]]
             ]
-        def testDataItemData = [
-                [id: 0, title: "Test1", status: "pending", activity:"03/08/2015", user:"admin1"],
-                [id: 1, title: "Test2", status: "active", activity:"03/28/2015", user:"admin2"]
-        ]
+        List<ActionItemGroup> actionItemGroups = actionItemGroupService.listActionItemGroups()
         def model = [
                 header: testDataHeader,
-                data: testDataItemData
+                data: actionItemGroups
         ]
-        render model as JSON
-    }
-
-    // Return all action items for admin
-    // this is totally wrong. this method created only for demo purpose. wrong column name, data, structure
-    def adminActionItems() {
-        def jsonTestHeaderData = '[' +
-                '{name: "id", title: "ID", options:{visible:false, isSortable: false}},' +
-                '{name: "name", title: "Name", options:{visible:true, isSortable: false}},' +
-                '{name: "type", title: "Type", options:{visible:true, isSortable: false}},' +
-                '{name: "description", title: "Description", options:{visible:true, isSortable: false}},' +
-                '{name: "lastModifiedDate", title: "Last Modified Date", options:{visible:true, isSortable: false}},' +
-                '{name: "lastModifiedBy", title: "Last Modified By", options:{visible:true, isSortable: false}}' +
-                ']'
-
-        def jsonTestItemData = '[' +
-                '{id: 0, name: "Visa_status", type:0, description:"Visa documents upload", lastModifiedDate: new Date(1452207955638), lastModifiedBy: "userId"},' +
-                '{id: 1, name: "Medical_Record", type:0, description: "Medical record documents upload", lastModifiedDate: new Date(1452207955638), lastModifiedBy: "another userId"},' +
-                '{id: 2, name: "Permanent_Address", type:3, description: "Permanent residential address", lastModifiedDate: new Date(1452207955638), lastModifiedBy: "same user Id"}' +
-                ']'
-        def model = [:]
-        model.header = JSON.parse(jsonTestHeaderData)
-        model.result = JSON.parse(jsonTestItemData)
-
-        render model as JSON
-    }
-
-    def codeTypes() {
-        def model = ["Student", "Person", "General", "All"]
         render model as JSON
     }
 
     // Return user's action items
+    @Secured (['ROLE_SELFSERVICE-FACULTY_BAN_DEFAULT_M', 'ROLE_SELFSERVICE-STUDENT_BAN_DEFAULT_M'])
     def actionItems( ) {
         def itemsList = []
         if(!userPidm) {
@@ -130,6 +99,7 @@ class CsrController {
     }
 
     // Return login user's information
+    @Secured (['ROLE_SELFSERVICE-FACULTY_BAN_DEFAULT_M', 'ROLE_SELFSERVICE-STUDENT_BAN_DEFAULT_M'])
     def userInfo() {
         if(!userPidm) {
             response.sendError(403)
@@ -139,13 +109,13 @@ class CsrController {
         render personForCSR as JSON
     }
 
+    @Secured (['ROLE_SELFSERVICE-FACULTY_BAN_DEFAULT_M', 'ROLE_SELFSERVICE-STUDENT_BAN_DEFAULT_M'])
     def detailInfo() {
         def jsonObj = request.JSON; //type, groupId, actionItemId
         def itemDetailInfo
         //TODO:: create service for retrieving detail information for group or actionItem from DB
         try {
             if(jsonObj.type == "group") {
-//                itemDetailInfo = actionItemDetailService.getGroupDetailById(jsonObj.groupId)
                 itemDetailInfo = [[
                         text: "Group detail information for group " + jsonObj.groupId.toString() + " goes here",   //require
                         id: jsonObj.groupId,
@@ -157,12 +127,6 @@ class CsrController {
                 ]]
             } else if(jsonObj.type == "actionItem") {
                 itemDetailInfo = actionItemDetailService.listActionItemDetailById(jsonObj.actionItemId)
-//                itemDetailInfo = [
-//                        content: "Action item information for item " + jsonObj.actionItemId.toString() + " goes here",
-//                        type: "doc",
-//                        id: jsonObj.actionItemId, //remove or not
-//                        title: "Action item information"
-//                ]
             }
         }catch(Exception e) {
             org.codehaus.groovy.runtime.StackTraceUtils.sanitize(e).printStackTrace()
@@ -202,40 +166,6 @@ class CsrController {
         ]
         render model as JSON
     }
-    // It might be better in service in banner_csr.git, not in controller since this shouldn't be able to access from front-end
-    // It might not be needed depends on query style on user items
-    def getItemInfo(type) {
-        //TODO: change whatever it needed
-        Map item = [:]
-        switch(type) {
-            case "drugAndAlcohol":
-                item.put("description", "You must review and confirm the Ellucian University Campus Drug and Alcohol Policy prior to registering for classes.")
-                item.put("title", "Drug and Alcohol Policy")
-                break
-            case "registrationTraining":
-                item.put("description", "It is takes 10 minutes, review the training video provided to help expedite your registration experience.")
-                item.put("title", "Registration Process Training")
-                break;
-            case "personalInfo":
-                item.put("description", "It is important that we have you current information such as your name, and contact information therefore it is required that you review, update and confirm your personal information.")
-                item.put("title", "Personal Information")
-                break;
-            case "meetAdvisor":
-                item.put("description", "You must meet with you Advisor or ensure you are on target to meet your educational goals for graduation.")
-                item.put("title", "Meet with Advisor")
-                break;
-            case "residenceProof":
-                item.put("description", "")
-                item.put("title", "Proof of Residence")
-                break;
-            default:
-                throw new InvalidParameterException("Invalid action item type")
-                break;
-        }
-        return item
-    }
-
-
 
 
 

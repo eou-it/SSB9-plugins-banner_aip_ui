@@ -28,7 +28,7 @@ module CSR {
             var itemTitle = this.$filter('i18n_csr')(item.title);
             if(existItemTitle.indexOf(itemTitle)===-1) {
                 //var applicationPath = window.location.href.split("#")[0];
-                item.url = window.location.href.indexOf("csr") !==-1 ? "/csr".concat(item.url) : item.url;
+                //item.url = window.location.href.indexOf("csr") !==-1 ? "/csr".concat(item.url) : item.url;
                 //item.url = Application.getApplicationPath().indexOf("csr#")===-1 ? "/csr#".concat(item.url) : item.url;
                 this.breadcrumbs[itemTitle] = item.url
             } else {

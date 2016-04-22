@@ -9,7 +9,6 @@
 <html>
 <head>
     <meta name="headerAttributes" content=""/>
-    <base href="/StudentSSB/ssb/csr/" />
     <title></title>
     <meta name="layout" content="bannerSelfServicePage"/>
     <r:require modules="bannerCSRUI"/>
@@ -24,6 +23,11 @@
         <g:if env="development">
             window.csr?window.csr.dev="development":window.csr={dev:"development"};
         </g:if>
+        <g:javascript>
+        if ("${fragment}") {
+            window.location.href = "#${fragment}";
+        }
+        </g:javascript>
     </script>
 </head>
 
@@ -34,7 +38,7 @@
     </div>
     <div id="title-panel" class="aurora-theme"></div>
     <div class="viewContainer container-fluid">
-        <div ui-view ui-state="{'${name}'}"></div>
+        <div ui-view></div>
     </div>
 </div>
 </body>

@@ -31,12 +31,12 @@ var bannerCSRApp = angular.module("bannercsr", [
 //constants for page information
     .constant("PAGES", {
         "admin-landing": {
-            url: "/admin",
+            url: "/landing",
             templateUrl:"admin/adminLandingPage.html",
             controller: "AdminLandingPageCtrl",
             breadcrumb: {
                 label: "csr.admin.landing",
-                url: "/admin"
+                url: "/csr/admin#/landing"
             }
         },
         //"admin-list": {
@@ -49,21 +49,21 @@ var bannerCSRApp = angular.module("bannercsr", [
         //    }
         //},
         "admin-group-list": {
-            url: "/admin/group",
+            url: "/group",
             templateUrl: "admin/group/list/adminGroupListPage.html",
             controller: "AdminGroupListPageCtrl",
             breadcrumb: {
                 label: "csr.admin.group",
-                url: "/admin/group"
+                url: "/csr/admin#/group"
             }
         },
         "admin-group-add": {
-            url: "/admin/group/add",
+            url: "/group/add",
             templateUrl:"admin/group/add/adminGroupAddPage.html",
             controller:"AdminGroupAddPageCtrl",
             breadcrumb: {
                 label: "csr.admin.group.add",
-                url: "/admin/group/add"
+                url: "/csr/admin#/group/add"
             }
         },
         "list": {
@@ -72,7 +72,7 @@ var bannerCSRApp = angular.module("bannercsr", [
             controller: "ListItemPageCtrl",
             breadcrumb: {
                 label: "csr.user.actionItem.list",
-                url: "/list"
+                url: "/csr/list#/list"
             }
         }//,
         //"listConfirm": {
@@ -119,7 +119,7 @@ var bannerCSRApp = angular.module("bannercsr", [
                     }
                 })
             });
-            $locationProvider.html5Mode(true);
+            //$locationProvider.html5Mode(true);
         }
     ])
 
