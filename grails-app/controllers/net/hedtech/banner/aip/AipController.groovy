@@ -2,7 +2,7 @@
  Copyright 2016 Ellucian Company L.P. and its affiliates.
  **********************************************************************************/
 
-package net.hedtech.banner.csr
+package net.hedtech.banner.aip
 
 import grails.converters.JSON
 import net.hedtech.banner.security.BannerUser
@@ -11,12 +11,12 @@ import org.springframework.security.core.context.SecurityContextHolder
 import java.security.InvalidParameterException
 
 //import net.hedtech.banner.exceptions.ApplicationException
-//import net.hedtech.banner.csr.ActionItem
+//import ActionItem
 //import net.hedtech.banner.general.person.PersonUtility
 //import org.springframework.context.i18n.LocaleContextHolder
 //import javax.persistence.*
 
-class CsrController {
+class AipController {
 
     static defaultAction = "list"
     def model=[:]
@@ -159,8 +159,8 @@ class CsrController {
             response.sendError(403)
             return
         }
-        def personForCSR = CsrControllerUtils.getPersonForCSR(params, userPidm)
-        render personForCSR as JSON
+        def personForAIP = AipControllerUtils.getPersonForAip(params, userPidm)
+        render personForAIP as JSON
     }
 
 

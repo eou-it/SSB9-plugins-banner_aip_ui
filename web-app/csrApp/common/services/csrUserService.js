@@ -9,7 +9,7 @@ var CSR;
         UserService.prototype.getUserInfo = function () {
             var userRequest = this.$http({
                 method: "POST",
-                url: this.APP_PATH + "/csr/userInfo"
+                url: this.APP_PATH + "/aip/userInfo"
             }).then(function (response) {
                 return response.data;
             }, function (err) {

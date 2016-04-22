@@ -25,7 +25,7 @@ describe("Config routing", function() {
             $templateCache.put("../plugins/banner-csr-ui-1.0/csrApp/listItem/listItemPage.html", "");
 
             // Mock http request
-            $httpBackend.when("GET", "csr/checkActionItem")
+            $httpBackend.when("GET", "aip/checkActionItem")
                 .respond({isActionItem: true});
             // bypass common-components' defect code
             //$httpBackend.when("GET", "/dest/i18n/messages-en-us.json")

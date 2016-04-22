@@ -9,7 +9,7 @@
 <html>
 <head>
     <meta name="headerAttributes" content=""/>
-    <base href="/StudentSSB/ssb/csr/" />
+    <base href="/StudentSSB/ssb/aip/" />
     <title></title>
     <meta name="layout" content="bannerSelfServicePage"/>
     <r:require modules="bannerCSRUI"/>
