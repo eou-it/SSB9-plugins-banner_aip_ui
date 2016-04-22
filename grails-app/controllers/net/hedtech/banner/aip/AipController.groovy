@@ -11,12 +11,6 @@ import org.springframework.security.core.context.SecurityContextHolder
 
 import java.security.InvalidParameterException
 
-//import net.hedtech.banner.exceptions.ApplicationException
-//import ActionItem
-//import net.hedtech.banner.general.person.PersonUtility
-//import org.springframework.context.i18n.LocaleContextHolder
-//import javax.persistence.*
-
 class AipController {
 
     static defaultAction = "list"
