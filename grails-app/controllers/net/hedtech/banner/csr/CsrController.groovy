@@ -22,6 +22,7 @@ class CsrController {
     def model=[:]
     def userActionItemReadOnlyService
     def actionItemDetailService
+    def groupFolderReadOnlyService
 
     // Entry point. Load front-end resources & layout template
     def admin() {
@@ -44,7 +45,26 @@ class CsrController {
     }
 
     def adminGroupList() {
-        //TODO: get data from db
+        def actionItemGroups = groupFolderReadOnlyService.listActionItemGroups()
+
+        def groupList = []
+        if (actionItemGroups.size() > 0) {
+            actionItemGroups?.each { group ->
+                def groupItem = [
+                        id          : group.groupId,
+                        title       : group.groupTitle,
+                        status      : group.groupStatus,
+                        user        : group.groupUserId,
+                        description : group.groupDesc,
+                        activity    : group.groupActivityDate,
+                        folder      : group.folderName,
+                        vpdiCode    : group.groupVpdiCode
+                ]
+                groupList << groupItem
+            }
+        }
+
+        //TODO: header configuration should probably come from a config file - TBD
         def testDataHeader = [
                 [name: "id", title: "id", options: [visible: false, isSortable: true]],
                 [name: "title", title: "Title", options: [visible: true, isSortable: true]],
@@ -53,19 +73,25 @@ class CsrController {
                 [name: "activity", title: "Activity", options: [visible: true, isSortable: true]],
                 [name: "user", title: "User", options: [visible: true, isSortable: true]]
             ]
+
+        /*
         def testDataItemData = [
                 [id: 0, title: "Test1", status: "pending", activity:"03/08/2015", user:"admin1"],
                 [id: 1, title: "Test2", status: "active", activity:"03/28/2015", user:"admin2"]
         ]
+        */
+
+
         def model = [
                 header: testDataHeader,
-                data: testDataItemData
+                data: groupList
+                //data: testDataItemData
         ]
         render model as JSON
     }
 
     // Return all action items for admin
-    // this is totally wrong. this method created only for demo purpose. wrong column name, data, structure
+    // TODO: admin action items as of now are for demo purpose. wrong column name, data, structure
     def adminActionItems() {
         def jsonTestHeaderData = '[' +
                 '{name: "id", title: "ID", options:{visible:false, isSortable: false}},' +
@@ -88,6 +114,7 @@ class CsrController {
         render model as JSON
     }
 
+    //TODO: code types are hardcoded. will come from db or config file.
     def codeTypes() {
         def model = ["Student", "Person", "General", "All"]
         render model as JSON
@@ -101,6 +128,7 @@ class CsrController {
             return
         }
         def actionItems = userActionItemReadOnlyService.listActionItemByPidm( userPidm )
+        //TODO: group is hardcoded. to be pulled from db in future US
         def myItems = [
                 name   : "registration",
                 groupId: 0,

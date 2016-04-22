@@ -110,4 +110,19 @@ class CsrControllerIntegrationTests extends BaseIntegrationTestCase {
         controller.actionItems()
         assertEquals 403, controller.response.status
     }
+
+    @Test
+    void testFetchAdminGroups() {
+        def person = PersonUtility.getPerson( "CSRSTU001" )
+        assertNotNull person
+
+        def auth = selfServiceBannerAuthenticationProvider.authenticate(
+                new UsernamePasswordAuthenticationToken( person.bannerId, '111111' ) )
+        SecurityContextHolder.getContext().setAuthentication( auth )
+        controller.adminGroupList()
+        assertEquals 200, controller.response.status
+        def answer = JSON.parse( controller.response.contentAsString )
+        assert 1 < answer.data.size()
+        println answer
+    }
 }
