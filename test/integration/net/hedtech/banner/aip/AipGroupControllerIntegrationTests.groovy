@@ -10,6 +10,9 @@
  ****************************************************************************** */
 package net.hedtech.banner.aip
 
+
+import grails.converters.JSON
+import net.hedtech.banner.exceptions.ApplicationException
 import net.hedtech.banner.general.person.PersonUtility
 import net.hedtech.banner.testing.BaseIntegrationTestCase
 import org.junit.After
@@ -17,6 +20,7 @@ import org.junit.Before
 import org.junit.Test
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.context.SecurityContextHolder
+import net.hedtech.banner.general.communication.folder.CommunicationFolder
 
 /**
  * AipGroupControllerIntegrationTests.
@@ -37,10 +41,10 @@ class AipGroupControllerIntegrationTests extends BaseIntegrationTestCase {
     @Before
     public void setUp() {
         formContext = ['GUAGMNU']
-        controller = new AipGroupController()
+        //formContext = ['SELFSERVICE']
         super.setUp()
+        controller = new AipGroupController()
     }
-
 
     @After
     public void tearDown() {
@@ -48,7 +52,7 @@ class AipGroupControllerIntegrationTests extends BaseIntegrationTestCase {
         logout()
     }
 
-    // using student. Fail on security?
+    //TODO: using student. Fail on security?
     @Test
     void testFoldersEntryPointAsStudent() {
         def person = PersonUtility.getPerson( "CSRSTU002" )
@@ -56,9 +60,10 @@ class AipGroupControllerIntegrationTests extends BaseIntegrationTestCase {
         def auth = selfServiceBannerAuthenticationProvider.authenticate(
                 new UsernamePasswordAuthenticationToken( person.bannerId, '111111' ) )
         SecurityContextHolder.getContext().setAuthentication( auth )
-        def result = controller.folders()
-        //assertEquals 200, controller.response.status
-        println result
+
+        controller.folders()
+        def folder =  JSON.parse(controller.response.contentAsString)
+        println folder
     }
 
     @Test
@@ -68,9 +73,10 @@ class AipGroupControllerIntegrationTests extends BaseIntegrationTestCase {
         def auth = selfServiceBannerAuthenticationProvider.authenticate(
                 new UsernamePasswordAuthenticationToken( person.bannerId, '111111' ) )
         SecurityContextHolder.getContext().setAuthentication( auth )
-        def result = controller.folders()
-        //assertEquals 200, controller.response.status
-        println result
+
+        controller.folders()
+        def folder =  JSON.parse(controller.response.contentAsString)
+        println folder
     }
 
     // using student. Fail on security?
@@ -81,11 +87,21 @@ class AipGroupControllerIntegrationTests extends BaseIntegrationTestCase {
         def auth = selfServiceBannerAuthenticationProvider.authenticate(
                 new UsernamePasswordAuthenticationToken( person.bannerId, '111111' ) )
         SecurityContextHolder.getContext().setAuthentication( auth )
-        def result = controller.addFolder(VALID_FOLDER_NAME, VALID_FOLDER_DESCRIPTION)
-        //assertEquals 200, controller.response.status
-        println result
-    }
 
+        String errorMessage = ""
+
+        try {
+            controller.addFolder(VALID_FOLDER_NAME, VALID_FOLDER_DESCRIPTION)
+            def answer =  JSON.parse(controller.response.contentAsString)
+            assertTrue(e.getMessage().toString().contains("@@r1:operation.not.authorized@@"))
+            println answer
+        }
+        catch (ApplicationException e) {
+            assertTrue(e.getMessage().toString().contains("@@r1:operation.not.authorized@@"))
+            errorMessage = e.getMessage().toString()
+        }
+        println errorMessage
+    }
 
     @Test
     void testAddFolderEntryPointAsAdmin() {
@@ -94,8 +110,35 @@ class AipGroupControllerIntegrationTests extends BaseIntegrationTestCase {
         def auth = selfServiceBannerAuthenticationProvider.authenticate(
                 new UsernamePasswordAuthenticationToken( person.bannerId, '111111' ) )
         SecurityContextHolder.getContext().setAuthentication( auth )
-        def result = controller.addFolder(VALID_FOLDER_NAME, VALID_FOLDER_DESCRIPTION)
-        //assertEquals 200, controller.response.status
-        println result
+        controller.addFolder(VALID_FOLDER_NAME, VALID_FOLDER_DESCRIPTION)
+        def answer =  JSON.parse(controller.response.contentAsString)
+        println answer
     }
+
+
+    @Test
+    void testCreateActionItemGroup() {
+
+        def admin = PersonUtility.getPerson( "BCMADMIN" ) // role: advisor
+
+        assertNotNull admin
+
+        def auth = selfServiceBannerAuthenticationProvider.authenticate(
+                new UsernamePasswordAuthenticationToken( admin.bannerId, '111111' ) )
+        SecurityContextHolder.getContext().setAuthentication( auth )
+
+        def folderId = CommunicationFolder.fetchByName('AIPGeneral').id
+        //println folder
+
+        controller.params.groupTitle = "test group"
+        controller.params.folderId = folderId
+        controller.params.groupStatus = "folderId"
+        controller.params.userId = "CSRADM001"
+
+        controller.createGroup()
+        def answer = JSON.parse( controller.response.contentAsString )
+        println answer
+
+    }
+
 }
