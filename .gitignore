@@ -2,9 +2,7 @@
 target
 target/**/*
 web-app/css/csr-main-rtl.css
-web-app/node_modules/angular-ui-router/bower_components/angular/angular-csp-rtl.css
-web-app/node_modules/angular-ui-router/site/css/prettify-rtl.css
-web-app/node_modules/angular-ui-router/site/css/uirouter-docs-rtl.css
+/web-app/node_modules/**
 web-app/selenium/**/*
 web-app/WEB-INF/classes
 web-app/WEB-INF/classes/**/*
