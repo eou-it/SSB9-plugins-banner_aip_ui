@@ -123,6 +123,7 @@ var bannerAIPApp = angular.module("bannerAIP", [
             $.i18n.prop("aip.common.save");
             $.i18n.prop("aip.common.cancel");
             $.i18n.prop("aip.common.next");
+            $.i18n.prop("aip.common.add");
 
             $.i18n.prop("aip.placeholder.noitems");
 

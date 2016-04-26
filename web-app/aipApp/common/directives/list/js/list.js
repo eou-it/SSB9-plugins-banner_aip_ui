@@ -71,5 +71,5 @@ var AIPUI;
     })();
     AIPUI.AIPListDirective = AIPListDirective;
 })(AIPUI || (AIPUI = {}));
-register("bannerAIPUI").directive("csrList", AIPUI.AIPListDirective);
+register("bannerAIPUI").directive("aipList", AIPUI.AIPListDirective);
 //# sourceMappingURL=list.js.map

@@ -1,67 +1,67 @@
-csr-list .csr-list-container  {
+aip-list .aip-list-container  {
     border:none;
     box-shadow:none;
 }
-  csr-list .csr-list-container .clearfix  {
+  aip-list .aip-list-container .clearfix  {
     content:" ";
     display:table;
 }
-    csr-list .csr-list-container .clearfix:after  {
+    aip-list .aip-list-container .clearfix:after  {
     clear:both;
 }
-  csr-list .csr-list-container .panel-body  {
+  aip-list .aip-list-container .panel-body  {
     padding:0;
 }
-  csr-list .csr-list-container hr  {
+  aip-list .aip-list-container hr  {
     margin-top:0;
     margin-bottom:0;
     background-color:#A4C6E4;
     height:1px;
     border:0;
 }
-  csr-list .csr-list-container .panel-heading  {
+  aip-list .aip-list-container .panel-heading  {
     background-color:transparent;
     border:none;
     padding:0;
 }
-    csr-list .csr-list-container .panel-heading .panel-title a:focus .item-group  {
+    aip-list .aip-list-container .panel-heading .panel-title a:focus .item-group  {
     outline:0;
     box-shadow:0 0 2px 3px #78aeda, 0 0 2px #78aeda inset;
     border-radius:2px;
 }
-    csr-list .csr-list-container .panel-heading .panel-title .accordion-toggle  {
+    aip-list .aip-list-container .panel-heading .panel-title .accordion-toggle  {
     color:black;
 }
-    csr-list .csr-list-container .panel-heading .panel-title .item-group  {
+    aip-list .aip-list-container .panel-heading .panel-title .item-group  {
     padding:0;
     margin:2px;
 }
-      csr-list .csr-list-container .panel-heading .panel-title .item-group .group-toggle-indicator  {
+      aip-list .aip-list-container .panel-heading .panel-title .item-group .group-toggle-indicator  {
     padding-left:8px;
 }
-      csr-list .csr-list-container .panel-heading .panel-title .item-group .group-title  {
+      aip-list .aip-list-container .panel-heading .panel-title .item-group .group-title  {
     white-space:nowrap;
     padding:0 0 8px 0;
 }
-        csr-list .csr-list-container .panel-heading .panel-title .item-group .group-title .group-title-text  {
+        aip-list .aip-list-container .panel-heading .panel-title .item-group .group-title .group-title-text  {
     font-size:1em;
     padding-left:8px;
     white-space:normal;
 }
-      csr-list .csr-list-container .panel-heading .panel-title .item-group .group-title-icon  {
+      aip-list .aip-list-container .panel-heading .panel-title .item-group .group-title-icon  {
     padding-left:0;
     padding-right:0;
 }
-      csr-list .csr-list-container .panel-heading .panel-title .item-group .group-progress  {
+      aip-list .aip-list-container .panel-heading .panel-title .item-group .group-progress  {
     padding:0 8px;
 }
-        csr-list .csr-list-container .panel-heading .panel-title .item-group .group-progress .progress  {
+        aip-list .aip-list-container .panel-heading .panel-title .item-group .group-progress .progress  {
     border-radius:16px;
 }
-          csr-list .csr-list-container .panel-heading .panel-title .item-group .group-progress .progress .progress-bar  {
+          aip-list .aip-list-container .panel-heading .panel-title .item-group .group-progress .progress .progress-bar  {
     border-radius:16px;
 }
-            csr-list .csr-list-container .panel-heading .panel-title .item-group .group-progress .progress .progress-bar span  {
+            aip-list .aip-list-container .panel-heading .panel-title .item-group .group-progress .progress .progress-bar span  {
     text-align:center;
     position:absolute;
     right:0;
@@ -70,21 +70,24 @@ csr-list .csr-list-container  {
     color:#272727;
     white-space:nowrap;
 }
-          csr-list .csr-list-container .panel-heading .panel-title .item-group .group-progress .progress.normal .progress-bar span  {
+          aip-list .aip-list-container .panel-heading .panel-title .item-group .group-progress .progress.normal .progress-bar span  {
     color:white;
 }
-  csr-list .csr-list-container .list-body-container .list-body  {
+  aip-list .aip-list-container .list-body-container .list-body  {
     border:1px solid #A4C6E4;
     padding:0 0 8px 0;
 }
-    csr-list .csr-list-container .list-body-container .list-body .list-item  {
+    aip-list .aip-list-container .list-body-container .list-body .list-item  {
     padding:16px 8px 0 8px;
 }
-      csr-list .csr-list-container .list-body-container .list-body .list-item:hover  {
+      aip-list .aip-list-container .list-body-container .list-body .list-item:hover  {
     cursor:pointer;
     background-color:#eaeef1;
 }
-      csr-list .csr-list-container .list-body-container .list-body .list-item .cell.title h3  {
+      aip-list .aip-list-container .list-body-container .list-body .list-item .aipReadmore  {
+    word-break:normal;
+}
+      aip-list .aip-list-container .list-body-container .list-body .list-item .cell.title h3  {
     font-weight:bold;
     font-size:1.3em;
     word-wrap:break-word;
@@ -95,20 +98,20 @@ csr-list .csr-list-container  {
     padding-bottom:3px;
     padding-left:10px;
 }
-      csr-list .csr-list-container .list-body-container .list-body .list-item .cell.state  {
+      aip-list .aip-list-container .list-body-container .list-body .list-item .cell.state  {
     padding:0;
 }
-        csr-list .csr-list-container .list-body-container .list-body .list-item .cell.state span:first-letter  {
+        aip-list .aip-list-container .list-body-container .list-body .list-item .cell.state span:first-letter  {
     text-transform:uppercase;
 }
-      csr-list .csr-list-container .list-body-container .list-body .list-item .badge  {
+      aip-list .aip-list-container .list-body-container .list-body .list-item .badge  {
     border-radius:4px;
     color:#3a3737;
     margin-left:8px;
     float:left;
     width:100%;
 }
-      csr-list .csr-list-container .list-body-container .list-body .list-item .cell.description  {
+      aip-list .aip-list-container .list-body-container .list-body .list-item .cell.description  {
     font-size:1.3em;
     border-bottom:1px solid #A4C6E4;
     padding:24px 8px 16px 8px;
@@ -154,53 +157,53 @@ csr-list .csr-list-container  {
 }
   
 
-.csr-item-detail-container  {
+.aip-item-detail-container  {
     height:inherit;
 }
-  .csr-item-detail-container .detail-content  {
+  .aip-item-detail-container .detail-content  {
     height:inherit;
     border:1px solid #A4C6E4;
     padding:16px;
     overflow-y:scroll;
 }
-    .csr-item-detail-container .detail-content hr  {
+    .aip-item-detail-container .detail-content hr  {
     border-color:#A4C6E4 !important;
 }
-    .csr-item-detail-container .detail-content .detail-title  {
+    .aip-item-detail-container .detail-content .detail-title  {
     padding-bottom:16px;
 }
-      .csr-item-detail-container .detail-content .detail-title span  {
+      .aip-item-detail-container .detail-content .detail-title span  {
     font-size:1.5em;
     border-bottom:1px solid black;
 }
-    .csr-item-detail-container .detail-content .detail  {
+    .aip-item-detail-container .detail-content .detail  {
     padding-bottom:24px;
 }
-      .csr-item-detail-container .detail-content .detail pre  {
+      .aip-item-detail-container .detail-content .detail pre  {
     border:none;
     background-color:transparent;
     padding:0;
     word-break:normal;
     word-wrap:normal;
 }
-    .csr-item-detail-container .detail-content .control  {
+    .aip-item-detail-container .detail-content .control  {
     text-align:center;
 }
-      .csr-item-detail-container .detail-content .control .actionItemTwoButton .buttonDiv  {
+      .aip-item-detail-container .detail-content .control .actionItemTwoButton .buttonDiv  {
     padding-bottom:24px;
 }
-        .csr-item-detail-container .detail-content .control .actionItemTwoButton .buttonDiv button  {
+        .aip-item-detail-container .detail-content .control .actionItemTwoButton .buttonDiv button  {
     width:100%;
     white-space:normal;
 }
-    .csr-item-detail-container .detail-content .detail-nav  {
+    .aip-item-detail-container .detail-content .detail-nav  {
     display:none;
     position:absolute;
     bottom:0;
     right:0;
     left:0;
 }
-      .csr-item-detail-container .detail-content .detail-nav .btn-group  {
+      .aip-item-detail-container .detail-content .detail-nav .btn-group  {
     width:100%;
 }
 
@@ -365,15 +368,15 @@ a:focus, div:focus, input:focus, span:focus, .breadcrumbButton:focus  {
 }
 /*** Media Query Section ***/
 @media screen and (max-width: 768px) {
-    csr-list .csr-list-container .header .list-item .title .badge  {
+    aip-list .aip-list-container .header .list-item .title .badge  {
     float:left;
 }
-    csr-list .csr-list-container .list-body .list-item .badge  {
+    aip-list .aip-list-container .list-body .list-item .badge  {
     float:left;
 }
 }
 @media screen and (max-width: 480px) {
-    csr-list .csr-list-container .list-body .description  {
+    aip-list .aip-list-container .list-body .description  {
     padding-top:8px;
 }
 }

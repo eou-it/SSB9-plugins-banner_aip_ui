@@ -51,4 +51,4 @@ module AIP {
     }
 }
 
-angular.module("bannerAIP").service("AIPBreadcrumbService", AIP.AIPBreadcrumbService);
+angular.module("bannerAIP").service("BreadcrumbService", AIP.AIPBreadcrumbService);

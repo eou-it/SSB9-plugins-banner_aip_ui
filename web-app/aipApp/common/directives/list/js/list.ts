@@ -76,4 +76,4 @@ module AIPUI {
     }
 }
 
-register("bannerAIPUI").directive("csrList", AIPUI.AIPListDirective);
+register("bannerAIPUI").directive("aipList", AIPUI.AIPListDirective);

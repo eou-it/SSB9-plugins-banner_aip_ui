@@ -34,7 +34,7 @@
                             'badge approved':key==='state'&&row[key]==='aip.status.complete'}">
                             {{row[key]|i18n_aip}}
                         </span>
-                        <aip-readmore ng-if="key==='description'">{{row[key]}}</aip-readmore>
+                        <aip-readmore class="aipReadmore" ng-if="key==='description'">{{row[key]}}</aip-readmore>
                     </div>
                 </div>
             </div>

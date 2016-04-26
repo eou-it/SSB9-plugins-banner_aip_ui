@@ -38,5 +38,5 @@ var AIP;
     })();
     AIP.AIPBreadcrumbService = AIPBreadcrumbService;
 })(AIP || (AIP = {}));
-angular.module("bannerAIP").service("AIPBreadcrumbService", AIP.AIPBreadcrumbService);
+angular.module("bannerAIP").service("BreadcrumbService", AIP.AIPBreadcrumbService);
 //# sourceMappingURL=breadcrumbService.js.map

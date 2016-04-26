@@ -231,12 +231,12 @@ class AipController {
         Map item = [:]
         switch (type) {
             case "registration":
-                item.put("title", "csr.user.list.header.title.registration")
-                item.put("description", "csr.user.list.header.description.registration")
+                item.put("title", "aip.user.list.header.title.registration")
+                item.put("description", "aip.user.list.header.description.registration")
                 break;
             case "graduation":
-                item.put("title", "csr.user.list.header.title.graduation")
-                item.put("description", "csr.user.list.header.description.graduation")
+                item.put("title", "aip.user.list.header.title.graduation")
+                item.put("description", "aip.user.list.header.description.graduation")
                 break;
             default:
                 item.put("title", "")

@@ -52,4 +52,4 @@ module AIPUI {
     }
 }
 
-register("bannerAIPUI").directive("csrReadmore", AIPUI.AIPReadmoreDirective);
+register("bannerAIPUI").directive("aipReadmore", AIPUI.AIPReadmoreDirective);

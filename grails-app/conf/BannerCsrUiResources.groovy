@@ -22,30 +22,30 @@ modules = {
 //        resource url:[plugin: 'banner-csr', file: 'bower_components/angular-common/build/angular-common.js']
     }
 
-    'csrCheck' {
-        resource url:[plugin: 'banner-csr-ui', file: 'aipApp/csrCheck.js']
+    'aipCheck' {
+        resource url:[plugin: 'banner-csr-ui', file: 'aipApp/aipCheck.js']
     }
-    'bannerCSRUI' {
+    'bannerAIPUI' {
         dependsOn 'csr-angular'
         dependsOn 'bannerSelfServiceCommonLTR, extensibilityCommon, extensibilityAngular, common-components, angularApp, bootstrap'
-        dependsOn 'bannerCSRApp'
+        dependsOn 'bannerAIPApp'
         dependsOn 'font-awesome'
         resource url:[plugin: 'banner-csr-ui', file: 'css/xe-ui-components.css']
         resource url:[plugin: 'banner-csr-ui', file: 'css/aip-main.css']
     }
-    'bannerCSRUIRTL' {
+    'bannerAIPUIRTL' {
         dependsOn 'bannerCSRUI'
         dependsOn 'bannerSelfServiceCommonRTL, extensibilityAngularRTL'
         resource url:[plugin: 'banner-ui-ss', file: 'bootstrap/css/bootstrap-rtl.css']
         resource url:[plugin: 'banner-csr-ui', file: 'css/xe-ui-components-rtl.css']
         resource url:[plugin: 'banner-csr-ui', file: 'css/aip-main-rtl.css']
     }
-    'bannerCSRUtils' {
+    'bannerAIPUtils' {
         resource url:[plugin: 'banner-csr-ui', file: 'aipApp/common/filters/i18n-filter.js']
         resource url:[plugin: 'banner-csr-ui', file: 'aipApp/utils/register.js']
     }
-    'bannerCSRApp' {
-        dependsOn 'bannerCSRUtils'
+    'bannerAIPApp' {
+        dependsOn 'bannerAIPUtils'
         dependsOn "bannerSelfService, i18n-core"
         resource url:[plugin: 'banner-csr-ui', file: 'aipApp/app.js']
         resource url:[plugin: 'banner-csr-ui', file: 'aipApp/admin/adminLandingPageCtrl.js']

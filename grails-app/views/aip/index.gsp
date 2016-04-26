@@ -4,9 +4,9 @@
     <meta name="headerAttributes" content=""/>
     <title></title>
     <meta name="layout" content="bannerSelfServicePage"/>
-    <r:require modules="bannerCSRUI"/>
+    <r:require modules="bannerAIPUI"/>
     <g:if test="${message(code: 'default.language.direction')  == 'rtl'}">
-        <r:require modules="bannerCSRUIRTL"/>
+        <r:require modules="bannerAIPUIRTL"/>
     </g:if>
     <meta name="menuEndPoint" content="${g.createLink(controller: 'selfServiceMenu', action: 'data')}"/>
     <meta name="menuBaseURL" content="${createLink(uri: '/ssb')}" />

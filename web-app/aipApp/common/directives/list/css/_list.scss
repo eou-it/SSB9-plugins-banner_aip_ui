@@ -3,8 +3,8 @@ $badge-border-color: #FD9F5E;
 $banner-color: #557287;
 $border-color: #A4C6E4;
 
-csr-list {
-  .csr-list-container {
+aip-list {
+  .aip-list-container {
     border: none;
     box-shadow: none;
     .clearfix {
@@ -102,6 +102,15 @@ csr-list {
           &:hover {
             cursor: pointer;
             background-color: lighten($banner-color, 50%);
+          }
+          .aipReadmore {
+            word-break: normal;
+            //hyphenate-character: auto;
+            //hyphens: auto;
+            //-moz-hyphens: auto;
+            //-ms-hyphens: auto;
+            //-webkit-hyphens: auto;
+            //mso-hyphenate: auto;
           }
           .cell.title {
             h3 {
