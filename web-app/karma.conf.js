@@ -27,10 +27,10 @@ module.exports = function(config) {
         'node_modules/angular-sanitize/angular-sanitize.js',
         'node_modules/angular-ui-bootstrap/dist/ui-bootstrap-tpls.js',
         '../../banner_ui_ss.git/web-app/angular-components/js/xe-ui-components.js',
-        'csrApp/utils/register.js',
-        'csrApp/app.js',
-        'csrApp/**/*.js',
-        'csrAppTest/**/*.js'
+        'aipApp/utils/register.js',
+        'aipApp/app.js',
+        'aipApp/**/*.js',
+        'aipAppTest/**/*.js'
     ],
 
 
