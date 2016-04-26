@@ -1,0 +1,43 @@
+<uib-accordion-group class="aip-list-container" role="group" is-open="isOpen">
+    <uib-accordion-heading>
+        <div class="item-group row">
+            <div class="row">
+                <div class="group-title col-sm-11 col-xs-11">
+                    <i class="group-toggle-indicator fa" ng-class="{'fa-caret-up':isOpen, 'fa-caret-down':!isOpen}"> </i>
+                    <span class="group-title-text" tabindex="-1" ng-click="openGroup(itemgroup.groupId)">{{itemgroup.info.title|i18n_aip}}</span>
+                    <div class="badge" ng-if="!isOpen">
+                        {{completedItem().length + "/" + itemgroup.items.length}}
+                    </div>
+                </div>
+                <div class="group-title-icon col-sm-1 col-xs-1">
+                    <i role="button" aria-label="progress bar button" tabindex="0" class="group-info fa fa-info-circle" href="#" ng-click="displayGroupInfo(itemgroup.groupId, $event)"
+                        title="Show group description"></i>
+                </div>
+            </div>
+            <div class="row">
+                <div class="group-progress col-sm-12" ng-if="isOpen">
+                    <uib-progressbar aria-labelledby="progressbar" ng-class="{'normal':completedItem().length+1>data.length/2}" max="itemgroup.items.length" value="completedItem().length">
+                        <span id="progressbar">{{completedItem().length}} / {{itemgroup.items.length}}</span>
+                    </uib-progressbar>
+                </div>
+            </div>
+        </div>
+    </uib-accordion-heading>
+    <div class="row">
+        <div class="list-body-container box">
+            <div id="group-{{itemgroup.groupId}}" class="list-body" role="list">
+                <div id="item-{{itemgroup.groupId}}-{{row.id}}" aria-labelledby="group-{{itemgroup.groupId}}"
+                     class="row list-item" ng-repeat="row in itemgroup.items" ng-click="selectItem(itemgroup, row, $event)" role="listitem">
+                    <div ng-repeat="key in itemgroup.header" class="{{getStyle(key)}}">
+                        <h3 ng-if="key==='title'">{{row[key]|i18n_aip}}</h3>
+                        <span ng-if="key==='state'" ng-class="{'badge pending':key==='state'&&row[key]==='aip.status.pending',
+                            'badge approved':key==='state'&&row[key]==='aip.status.complete'}">
+                            {{row[key]|i18n_aip}}
+                        </span>
+                        <aip-readmore ng-if="key==='description'">{{row[key]}}</aip-readmore>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</uib-accordion-group>

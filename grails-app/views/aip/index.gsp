@@ -1,10 +1,3 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: jshin
-  Date: 1/13/16
-  Time: 4:31 PM
---%>
-
 <%@ page contentType="text/html;charset=UTF-8" %>
 <html>
 <head>
@@ -19,9 +12,9 @@
     <meta name="menuBaseURL" content="${createLink(uri: '/ssb')}" />
     <script type="text/javascript">
         <g:i18n_setup/>
-        <g:csrVersion/>
+        <g:aipVersion/>
         <g:if env="development">
-            window.csr?window.csr.dev="development":window.csr={dev:"development"};
+            window.aip?window.aip.dev="development":window.aip={dev:"development"};
         </g:if>
         <g:javascript>
         if ("${fragment}") {
@@ -32,7 +25,7 @@
 </head>
 
 <body>
-<div id="content" role="main" ng-app="bannercsr">
+<div id="content" role="main" ng-app="bannerAIP">
     <div class="progressbar-container ng-cloak" ng-controller="SpinnerCtrl" ng-show="vm.showing">
         <uib-progressbar class="progress-striped active" value="100" type="info">Loading</uib-progressbar>
     </div>

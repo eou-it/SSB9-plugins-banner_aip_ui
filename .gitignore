@@ -1,4 +1,4 @@
-/web-app/node_modules
+#/web-app/node_modules
 /web-app/bower_components
 .DS_Store
 target
@@ -21,5 +21,5 @@ out/
 test/**/release_info.groovy
 test/**/release_info.groovy.old
 plugin.xml
-*-rtl.css
-messages_ar_SA.properties
+#*-rtl.css
+#messages_ar_SA.properties

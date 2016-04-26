@@ -57,7 +57,7 @@ class CsrTagLib {
             // Search for any place where we are referencing message codes
             def regex = ~/\(*\.i18n.prop\(.*?[\'\"](.*?)[\'\"].*?\)/
             names.each { name ->
-                if (name.equals( "bannerCSRApp" )) {
+                if (name.equals( "bannerAIPApp" )) {
                     resourceService.getModule( name )?.resources?.findAll { it.sourceUrlExtension == "js" }?.each {
                         if (!it.attributes.containsKey( LOCALE_KEYS_ATTRIBUTE )) {
                             it.attributes[LOCALE_KEYS_ATTRIBUTE] = new HashSet()
@@ -86,7 +86,7 @@ class CsrTagLib {
                 }
             }
         }
-        out << 'window.i18n_csr = {'
+        out << 'window.i18n_aip = {'
         if (keys) {
             def javaScriptProperties = []
             keys.sort().each {
@@ -115,15 +115,15 @@ class CsrTagLib {
         def locale = LocaleContextHolder.getLocale()
         def map = [:]
 
-        out << 'window.i18n_csr_bundle = "'
+        out << 'window.i18n_aip_bundle = "'
         out << source.getPluginBundles(plugin).toString()
         out << '"\n'
-        out << 'window.i18n_csr_bundle_plugins = "'
+        out << 'window.i18n_aip_bundle_plugins = "'
         out << source.getPluginBaseNames().toString()
         out << '"\n'
 
         source.getMergedProperties(locale).properties.each { key ->
-            if (key.key.startsWith("csr.")) {
+            if (key.key.startsWith("aip.")) {
                 map.put key.key, key.value
             }
         }
@@ -131,13 +131,13 @@ class CsrTagLib {
         //////////////
     }
 
-    def csrVersion = { attrs ->
+    def aipVersion = { attrs ->
         def plugin = grailsApplication.mainContext.pluginManager.getGrailsPlugin("banner-csr-ui")
         def map = [
                 name: plugin.getName(),
                 version: plugin.getVersion(),
                 fileSystemName: plugin.getFileSystemName()
                 ]
-        out << "window.csrApp = ${map as JSON};\n"
+        out << "window.aipApp = ${map as JSON};\n"
     }
 }
