@@ -10,8 +10,6 @@
  ****************************************************************************** */
 package net.hedtech.banner.aip
 
-import grails.converters.JSON
-import net.hedtech.banner.general.communication.folder.CommunicationFolder
 import net.hedtech.banner.general.person.PersonUtility
 import net.hedtech.banner.testing.BaseIntegrationTestCase
 import org.junit.After
@@ -21,20 +19,25 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.context.SecurityContextHolder
 
 /**
- * CsrControllerIntegrationTests.
+ * AipGroupControllerIntegrationTests.
  *
- * Date: 2/11/2016
- * Time: 9:18 AM
+ * Date: 4/25/2016
+ * Time: 11:10 AM
  */
-class AipControllerIntegrationTests extends BaseIntegrationTestCase {
+class AipGroupControllerIntegrationTests extends BaseIntegrationTestCase {
     def selfServiceBannerAuthenticationProvider
-    def actionItemService
+
+    def VALID_FOLDER_NAME = "My Folder"
+    def VALID_FOLDER_DESCRIPTION = "My Folder"
+
+    def INVALID_FOLDER_NAME = "My Folder".padLeft( 1021 )
+    def INVALID_FOLDER_DESCRIPTION = "My Folder".padLeft( 4001 )
 
 
     @Before
     public void setUp() {
         formContext = ['GUAGMNU']
-        controller = new AipController()
+        controller = new AipGroupController()
         super.setUp()
     }
 
@@ -45,87 +48,54 @@ class AipControllerIntegrationTests extends BaseIntegrationTestCase {
         logout()
     }
 
+    // using student. Fail on security?
+    @Test
+    void testFoldersEntryPointAsStudent() {
+        def person = PersonUtility.getPerson( "CSRSTU002" )
+        assertNotNull person
+        def auth = selfServiceBannerAuthenticationProvider.authenticate(
+                new UsernamePasswordAuthenticationToken( person.bannerId, '111111' ) )
+        SecurityContextHolder.getContext().setAuthentication( auth )
+        def result = controller.folders()
+        //assertEquals 200, controller.response.status
+        println result
+    }
+
+    @Test
+    void testFoldersEntryPointAsAdmin() {
+        def person = PersonUtility.getPerson( "BCMADMIN" )
+        assertNotNull person
+        def auth = selfServiceBannerAuthenticationProvider.authenticate(
+                new UsernamePasswordAuthenticationToken( person.bannerId, '111111' ) )
+        SecurityContextHolder.getContext().setAuthentication( auth )
+        def result = controller.folders()
+        //assertEquals 200, controller.response.status
+        println result
+    }
 
     // using student. Fail on security?
     @Test
-    void testAdminEntryPoint() {
+    void testAddFolderEntryPointAsStudent() {
         def person = PersonUtility.getPerson( "CSRSTU002" )
         assertNotNull person
         def auth = selfServiceBannerAuthenticationProvider.authenticate(
                 new UsernamePasswordAuthenticationToken( person.bannerId, '111111' ) )
         SecurityContextHolder.getContext().setAuthentication( auth )
-        def result = controller.admin()
-        assertEquals 200, controller.response.status
-
-        assertEquals( "/landing", result.model.fragment)
-        assertEquals( "index", result.view)
+        def result = controller.addFolder(VALID_FOLDER_NAME, VALID_FOLDER_DESCRIPTION)
+        //assertEquals 200, controller.response.status
+        println result
     }
 
 
     @Test
-    void testListEntryPoint() {
-        def person = PersonUtility.getPerson( "CSRSTU002" )
+    void testAddFolderEntryPointAsAdmin() {
+        def person = PersonUtility.getPerson( "BCMADMIN" )
         assertNotNull person
         def auth = selfServiceBannerAuthenticationProvider.authenticate(
                 new UsernamePasswordAuthenticationToken( person.bannerId, '111111' ) )
         SecurityContextHolder.getContext().setAuthentication( auth )
-        def result = controller.list()
-        assertEquals 200, controller.response.status
-        assertEquals( "/list", result.model.fragment )
-        assertEquals( "index", result.view )
+        def result = controller.addFolder(VALID_FOLDER_NAME, VALID_FOLDER_DESCRIPTION)
+        //assertEquals 200, controller.response.status
+        println result
     }
-
-
-    @Test
-    void testFetchActionItems() {
-        def person = PersonUtility.getPerson( "CSRSTU002" )
-        assertNotNull person
-        def auth = selfServiceBannerAuthenticationProvider.authenticate(
-                new UsernamePasswordAuthenticationToken( person.bannerId, '111111' ) )
-        SecurityContextHolder.getContext().setAuthentication( auth )
-        controller.actionItems()
-        assertEquals 200, controller.response.status
-        def answer = JSON.parse( controller.response.contentAsString )
-        assertEquals( 1, answer.items.size() )
-    }
-
-
-    @Test
-    void testFetchActionItemsUserHasNone() {
-        def person = PersonUtility.getPerson( "CSRSTU022" )
-        assertNotNull person
-        def auth = selfServiceBannerAuthenticationProvider.authenticate(
-                new UsernamePasswordAuthenticationToken( person.bannerId, '111111' ) )
-        SecurityContextHolder.getContext().setAuthentication( auth )
-        controller.actionItems()
-        assertEquals 200, controller.response.status
-        def answer = JSON.parse( controller.response.contentAsString )
-        assertEquals( 0, answer.items.size() )
-    }
-
-
-    @Test
-    void testFetchActionItemsNotLoggedIn() {
-        def person = PersonUtility.getPerson( "CSRSTU002" )
-        assertNotNull person
-        controller.actionItems()
-        assertEquals 403, controller.response.status
-    }
-
-    @Test
-    void testFetchAdminGroups() {
-        def person = PersonUtility.getPerson( "CSRSTU001" )
-        assertNotNull person
-
-        def auth = selfServiceBannerAuthenticationProvider.authenticate(
-                new UsernamePasswordAuthenticationToken( person.bannerId, '111111' ) )
-        SecurityContextHolder.getContext().setAuthentication( auth )
-        controller.adminGroupList()
-        assertEquals 200, controller.response.status
-        def answer = JSON.parse( controller.response.contentAsString )
-        assert 1 < answer.data.size()
-        println answer
-    }
-
-
 }
