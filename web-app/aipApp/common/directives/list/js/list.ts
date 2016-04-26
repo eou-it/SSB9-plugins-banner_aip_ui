@@ -17,7 +17,8 @@ module AIPUI {
                 idx: "=",
                 showgroupinfo: "&",
                 opengroup: "=",
-                togglegroup: "&"
+                togglegroup: "&",
+                selectedFocus: "="
             }
         }
         compile() {
@@ -71,6 +72,22 @@ module AIPUI {
             }
             $scope.changeFocus = function(element) {
                 $(element).focus();
+            }
+            $scope.focusing = function(evt) {
+                var target = evt.target;
+                if(target.className === "accordion-toggle") {
+                    $scope.selectedFocus = "header";
+                    //$(".aip-list-container .item-group .group-title-text").attr("aria-hidden", "false");
+                    //$(".aip-list-container .item-group uib-progressbar").attr("aria-hidden", "false");
+                    //$(".aip-list-container .item-group i").attr("aria-hidden", "true");
+                } else if(target.className === "group-info fa fa-info-circle") {
+                    $scope.selectedFocus = "description";
+                //    $(".aip-list-container .item-group .group-title-text").attr("aria-hidden", "true");
+                //    $(".aip-list-container .item-group uib-progressbar").attr("aria-hidden", "true");
+                //    $(".aip-list-container .item-group i").attr("aria-hidden", "false");
+                //} else {
+                    $scope.selectedFocus = undefined;
+                }
             }
         }
     }

@@ -2,7 +2,7 @@
     <div aria-selected="{{isOpen}}" class="panel-heading" ng-keypress="toggleOpen($event)">
         <h2 class="panel-title">
             <div class="row">
-                <a role="button" data-toggle="collapse" href aria-expanded="{{isOpen}}"  tabindex="0" class="accordion-toggle" ng-click="toggleOpen()" uib-accordion-transclude="heading">
+                <a role="button" data-toggle="collapse" href aria-expanded="{{isOpen}}"  tabindex="0" ng-focus="$parent.focusing($event)" class="accordion-toggle" ng-click="toggleOpen()" uib-accordion-transclude="heading">
                     <span uib-accordion-header ng-class="{'text-muted': isDisabled}">{{heading}}</span>
                 </a>
             </div>
