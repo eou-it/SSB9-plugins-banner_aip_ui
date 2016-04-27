@@ -21,7 +21,7 @@ var AIP;
         AdminGroupService.prototype.getFolder = function () {
             var request = this.$http({
                 method: "POST",
-                url: this.ENDPOINT.admin.groupFolder
+                url: this.ENDPOINT.admin.folders
             })
                 .then(function (response) {
                 return response.data;

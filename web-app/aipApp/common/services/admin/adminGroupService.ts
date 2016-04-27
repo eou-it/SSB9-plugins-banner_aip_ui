@@ -51,7 +51,7 @@ module AIP {
         getFolder() {
             var request = this.$http({
                 method: "POST",
-                url: this.ENDPOINT.admin.groupFolder
+                url: this.ENDPOINT.admin.folders
             })
                 .then((response) => {
                     return <IFolder[]>response.data;

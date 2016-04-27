@@ -1,11 +1,9 @@
-/**
- * Created by jshin on 12/8/15.
- */
 // angular module init and configuration
 "use strict";
 
 var aipAppRoot = "/" + extensibilityInfo.application + "/plugins/" +
     window.aipApp.fileSystemName + "/aipApp/";
+var aipAppAbsPath = window.location.protocol + "//" + window.location.host + Application.getApplicationPath() + "/";
 
 var bannerAIPApp = angular.module("bannerAIP", [
     "ngResource",
@@ -23,6 +21,8 @@ var bannerAIPApp = angular.module("bannerAIP", [
     .constant('APP_ROOT', aipAppRoot)
 
     .constant('APP_PATH', Application.getApplicationPath())
+
+    .constant("APP_ABS_PATH", aipAppAbsPath)
 
 //constants for page information
     .constant("PAGES", {
@@ -66,15 +66,19 @@ var bannerAIPApp = angular.module("bannerAIP", [
 //constant for endpoint
     .constant("ENDPOINT", {
         admin: {
-            groupList: "adminGroupList",
-            groupFolder: "adminGroupFolder",
-            groupStatus: "adminGroupStatus"
+            groupList: aipAppAbsPath + "aip/adminGroupList",
+            groupStatus: aipAppAbsPath + "aip/adminGroupStatus",
+            folders: aipAppAbsPath + "aipGroup/folders",
+            addFolder: aipAppAbsPath + "aipGroup/addFolder",
+            createGroup: aipAppAbsPath + "aipGroup/createGroup"
         }
     })
 
 //provider-injector
-    .config(["$stateProvider", "$urlRouterProvider", "$locationProvider", "PAGES", "APP_ROOT",
-        function($stateProvider, $urlRouteProvider, $locationProvider, PAGES, APP_ROOT, $state) {
+    .config(["$stateProvider", "$urlRouterProvider", "$locationProvider",  "$httpProvider",
+        "PAGES", "APP_ROOT", "APP_ABS_PATH",
+        function($stateProvider, $urlRouteProvider, $locationProvider, $httpProvider,
+                 PAGES, APP_ROOT, APP_ABS_PATH) {
             $urlRouteProvider.otherwise("/list");
             angular.forEach(PAGES, function(item, state) {
                 $stateProvider.state(state, {
@@ -90,6 +94,15 @@ var bannerAIPApp = angular.module("bannerAIP", [
                     }
                 })
             });
+            //TODO:: add ajax interceptor function as needed
+            //$httpProvider.interceptors.push(function($q) {
+            //    return {
+            //        "request": function(config) {
+            //            config.url = APP_ABS_PATH + config.url;
+            //            return config || $q.when(config);
+            //        }
+            //    }
+            //});
         }
     ])
 
