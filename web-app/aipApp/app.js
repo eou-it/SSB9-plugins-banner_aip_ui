@@ -160,6 +160,8 @@ var bannerAIPApp = angular.module("bannerAIP", [
             $.i18n.prop("aip.user.detail.button.confirm");
             $.i18n.prop("aip.user.detail.button.deny");
             $.i18n.prop("aip.user.detail.button.return");
+
+            $.i18n.prop("aip.operation.not.permitted");
     }]
 );
 
