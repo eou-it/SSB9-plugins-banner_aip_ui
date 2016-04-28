@@ -229,6 +229,10 @@ aip-list .aip-list-container  {
     padding-top:8px;
     padding-bottom:8px;
 }
+        .groupAddContainer .groupInfo .groupInfoRow .groupElement .open > .dropdown-menu  {
+    max-height:200px;
+    overflow-y:scroll;
+}
       .groupAddContainer .groupInfo .groupInfoRow .input-group .titleValue  {
     font-size:1.5em;
     font-weight:bold;

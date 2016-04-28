@@ -78,6 +78,7 @@ class AipController {
         render model as JSON
     }
 
+
     // Return user's action items
     @Secured (['ROLE_SELFSERVICE-FACULTY_BAN_DEFAULT_M', 'ROLE_SELFSERVICE-STUDENT_BAN_DEFAULT_M'])
     def actionItems( ) {
@@ -174,19 +175,7 @@ class AipController {
         render model as JSON
     }
 
-//    def adminGroupFolder() {
-//        //TODO:: get group folders from DB through service
-//        def model = [
-//                [
-//                    "id":1,
-//                    "value":"Folder 1"
-//                ], [
-//                    "id":2,
-//                    "value":"Folder 2"
-//                ]
-//        ]
-//        render model as JSON
-//    }
+
     // It might be better in service in banner_csr.git, not in controller since this shouldn't be able to access from front-end
     // It might not be needed depends on query style on user items
     def getItemInfo(type) {

@@ -10,6 +10,7 @@ module AIP {
         folders: AIP.IFolder[];
         adminGroupService: AIP.AdminGroupService;
         groupInfo: IGroupInfo;
+        errorMessage;
         save(): void;
         cancel(): void;
     }
@@ -23,6 +24,7 @@ module AIP {
         status: AIP.IStatus[];
         folders: AIP.IFolder[];
         groupInfo: IGroupInfo;
+        errorMessage;
         adminGroupService: AIP.AdminGroupService;
         spinnerService: AIP.SpinnerService;
         $q: ng.IQService;
@@ -32,6 +34,7 @@ module AIP {
             this.$q = $q;
             this.adminGroupService = AdminGroupService;
             this.spinnerService = SpinnerService;
+            this.errorMessage = {};
             $scope.$watch(
                 "[vm.status, vm.folders]", function(newVal, oldVal) {
                     if(!$scope.$$phase) {
@@ -55,6 +58,11 @@ module AIP {
             );
             promises.push(
                 this.adminGroupService.getFolder().then((folders) => {
+                    var defaultFolder = {
+                        id: false,
+                        name: "Please select the folder"
+                    };
+                    folders.unshift(defaultFolder);
                     this.folders = folders;
                 })
             );
@@ -77,6 +85,24 @@ module AIP {
         selectFolder(item:IFolder) {
             this.groupInfo.folder = item;
         }
+        validateInput() {
+            if(!this.groupInfo.title || this.groupInfo.title === null || this.groupInfo.title === "" || this.groupInfo.title.length > 60) {
+                this.errorMessage.title = "invalid title";
+            } else {
+                delete this.errorMessage.title;
+            }
+            if(!this.groupInfo.folder || this.groupInfo.folder.id===false) {
+                this.errorMessage.folder = "invalid folder";
+            } else {
+                delete this.errorMessage.folder;
+            }
+            if(Object.keys(this.errorMessage).length>0) {
+                return false;
+            } else {
+                return true;
+            }
+        }
+
 
     }
 }

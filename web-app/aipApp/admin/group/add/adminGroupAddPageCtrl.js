@@ -10,6 +10,7 @@ var AIP;
             this.$q = $q;
             this.adminGroupService = AdminGroupService;
             this.spinnerService = SpinnerService;
+            this.errorMessage = {};
             $scope.$watch("[vm.status, vm.folders]", function (newVal, oldVal) {
                 if (!$scope.$$phase) {
                     $scope.apply();
@@ -29,6 +30,11 @@ var AIP;
                 });
             }));
             promises.push(this.adminGroupService.getFolder().then(function (folders) {
+                var defaultFolder = {
+                    id: false,
+                    name: "Please select the folder"
+                };
+                folders.unshift(defaultFolder);
                 _this.folders = folders;
             }));
             this.$q.all(promises).then(function () {
@@ -47,6 +53,26 @@ var AIP;
         };
         AdminGroupAddPageCtrl.prototype.selectFolder = function (item) {
             this.groupInfo.folder = item;
+        };
+        AdminGroupAddPageCtrl.prototype.validateInput = function () {
+            if (!this.groupInfo.title || this.groupInfo.title === null || this.groupInfo.title === "" || this.groupInfo.title.length > 60) {
+                this.errorMessage.title = "invalid title";
+            }
+            else {
+                delete this.errorMessage.title;
+            }
+            if (!this.groupInfo.folder || this.groupInfo.folder.id === false) {
+                this.errorMessage.folder = "invalid folder";
+            }
+            else {
+                delete this.errorMessage.folder;
+            }
+            if (Object.keys(this.errorMessage).length > 0) {
+                return false;
+            }
+            else {
+                return true;
+            }
         };
         return AdminGroupAddPageCtrl;
     })();

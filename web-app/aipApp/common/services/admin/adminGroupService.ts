@@ -16,8 +16,12 @@ module AIP {
         result: IListItem[];
     }
     export interface IFolder {
-        value: string;
-        id: string|number;
+        id: string|number|boolean;
+        name: string;
+        description?: string;
+        lastModified?: Date|string;
+        lastModifiedBy?: string;
+        version?:number|string;
     }
     export interface IStatus {
         id: string|number;

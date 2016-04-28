@@ -40,12 +40,12 @@
             <div class="groupElement col-xs-12 col-sm-5">
                 <div class="row">
                     <div class="btn-group" uib-dropdown>
-                        <button id="buttonForFolder" type="button" class="btn btn-default">{{vm.groupInfo.folder.value}}</button>
+                        <button id="buttonForFolder" type="button" class="btn btn-default">{{vm.groupInfo.folder.name}}</button>
                         <button type="button" class="btn btn-default" uib-dropdown-toggle>
                             <span class="caret"></span>
                         </button>
                         <ul uib-dropdown-menu role="menu" aria-labelledby="buttonForFolder">
-                            <li role="menuitem" ng-repeat="item in vm.folders"><a ng-click="vm.selectFolder(item)">{{item.value}}</a></li>
+                            <li role="menuitem" ng-repeat="item in vm.folders"><a ng-click="vm.selectFolder(item)">{{item.name}}</a></li>
                         </ul>
                     </div>
                 </div>
@@ -55,10 +55,10 @@
     <div class="groupControl">
         <div class="row">
             <div class="col-sm-offset-2 col-sm-2 col-xs-6 groupButton">
-                <button type="button" class="btn btn-default">{{"aip.common.save"|i18n_aip}}</button>
+                <button type="button" class="btn btn-primary" ng-disabled="!vm.validateInput()">{{"aip.common.save"|i18n_aip}}</button>
             </div>
             <div class="col-sm-2 col-xs-6 groupButton">
-                <button type="button" class="btn btn-default">{{"aip.common.cancel"|i18n_aip}}</button>
+                <button type="button" class="btn btn-primary">{{"aip.common.cancel"|i18n_aip}}</button>
             </div>
         </div>
     </div>

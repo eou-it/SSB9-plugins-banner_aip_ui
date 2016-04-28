@@ -17,6 +17,10 @@
           padding-top: 8px;
           padding-bottom: 8px;
         }
+        .open > .dropdown-menu {
+          max-height: 200px;
+          overflow-y: scroll;
+        }
       }
       .input-group {
 
