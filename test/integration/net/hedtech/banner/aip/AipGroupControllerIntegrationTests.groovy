@@ -10,9 +10,8 @@
  ****************************************************************************** */
 package net.hedtech.banner.aip
 
-
 import grails.converters.JSON
-import net.hedtech.banner.exceptions.ApplicationException
+import net.hedtech.banner.general.communication.folder.CommunicationFolder
 import net.hedtech.banner.general.person.PersonUtility
 import net.hedtech.banner.testing.BaseIntegrationTestCase
 import org.junit.After
@@ -20,7 +19,6 @@ import org.junit.Before
 import org.junit.Test
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.context.SecurityContextHolder
-import net.hedtech.banner.general.communication.folder.CommunicationFolder
 
 /**
  * AipGroupControllerIntegrationTests.
@@ -62,8 +60,9 @@ class AipGroupControllerIntegrationTests extends BaseIntegrationTestCase {
         SecurityContextHolder.getContext().setAuthentication( auth )
 
         controller.folders()
-        def folder =  JSON.parse(controller.response.contentAsString)
-        println folder
+        def folder =  JSON.parse( controller.response.contentAsString )
+        assertNotNull( folder )
+        assertEquals( 18, folder.size())
     }
 
     @Test
@@ -75,8 +74,9 @@ class AipGroupControllerIntegrationTests extends BaseIntegrationTestCase {
         SecurityContextHolder.getContext().setAuthentication( auth )
 
         controller.folders()
-        def folder =  JSON.parse(controller.response.contentAsString)
-        println folder
+        def folder =  JSON.parse(controller.response.contentAsString )
+        assertNotNull( folder )
+        assertEquals( 18, folder.size())
     }
 
     // using student. Fail on security?
@@ -88,19 +88,12 @@ class AipGroupControllerIntegrationTests extends BaseIntegrationTestCase {
                 new UsernamePasswordAuthenticationToken( person.bannerId, '111111' ) )
         SecurityContextHolder.getContext().setAuthentication( auth )
 
-        String errorMessage = ""
+        controller.addFolder( VALID_FOLDER_NAME, VALID_FOLDER_DESCRIPTION )
+        def answer = JSON.parse( controller.response.contentAsString )
 
-        try {
-            controller.addFolder(VALID_FOLDER_NAME, VALID_FOLDER_DESCRIPTION)
-            def answer =  JSON.parse(controller.response.contentAsString)
-            assertTrue(e.getMessage().toString().contains("@@r1:operation.not.authorized@@"))
-            println answer
-        }
-        catch (ApplicationException e) {
-            assertTrue(e.getMessage().toString().contains("@@r1:operation.not.authorized@@"))
-            errorMessage = e.getMessage().toString()
-        }
-        println errorMessage
+        assertFalse( answer.success )
+        assertTrue( answer.newFolder.equals(null) )
+        assertEquals( "Operation Not Permitted", answer.message )
     }
 
     @Test
@@ -111,8 +104,10 @@ class AipGroupControllerIntegrationTests extends BaseIntegrationTestCase {
                 new UsernamePasswordAuthenticationToken( person.bannerId, '111111' ) )
         SecurityContextHolder.getContext().setAuthentication( auth )
         controller.addFolder(VALID_FOLDER_NAME, VALID_FOLDER_DESCRIPTION)
-        def answer =  JSON.parse(controller.response.contentAsString)
-        println answer
+        def answer = JSON.parse( controller.response.contentAsString )
+        assertTrue( answer.success )
+        assertNotNull( answer.newFolder )
+        assertTrue( answer.message.equals(null) )
     }
 
 
@@ -120,7 +115,6 @@ class AipGroupControllerIntegrationTests extends BaseIntegrationTestCase {
     void testCreateActionItemGroup() {
 
         def admin = PersonUtility.getPerson( "BCMADMIN" ) // role: advisor
-
         assertNotNull admin
 
         def auth = selfServiceBannerAuthenticationProvider.authenticate(
@@ -128,7 +122,6 @@ class AipGroupControllerIntegrationTests extends BaseIntegrationTestCase {
         SecurityContextHolder.getContext().setAuthentication( auth )
 
         def folderId = CommunicationFolder.fetchByName('AIPGeneral').id
-        //println folder
 
         controller.params.groupTitle = "test group"
         controller.params.folderId = folderId
@@ -137,8 +130,9 @@ class AipGroupControllerIntegrationTests extends BaseIntegrationTestCase {
 
         controller.createGroup()
         def answer = JSON.parse( controller.response.contentAsString )
-        println answer
-
+        assertTrue( answer.success )
+        assertNotNull( answer.newGroup )
+        assertTrue( answer.message.equals( null ) )
     }
 
 }
