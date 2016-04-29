@@ -4,6 +4,7 @@ import grails.converters.JSON
 import net.hedtech.banner.MessageUtility
 import net.hedtech.banner.exceptions.ApplicationException
 import net.hedtech.banner.general.communication.folder.CommunicationFolder
+import org.springframework.security.core.context.SecurityContextHolder
 
 class AipGroupController {
 
@@ -58,20 +59,23 @@ class AipGroupController {
             return
         }
         */
+        def user = SecurityContextHolder?.context?.authentication?.principal
+        def aipUser = AipControllerUtils.getPersonForAip(params, user.pidm)
+        def jsonObj = request.JSON
 
-        if (! params.groupTitle || ! params.folderId || ! params.groupStatus || ! params.userId )
+        if (! jsonObj.groupTitle || ! jsonObj.folderId || ! jsonObj.groupStatus || ! aipUser.bannerId )
         {
             response.sendError( 403 )
             return
         }
 
         def group = new ActionItemGroup(
-                title: params.groupTitle,
-                folderId: params.folderId,
-                description: params.groupDesc,
-                status: params.groupStatus,
-                version: params.version,
-                userId: params.userId,
+                title: jsonObj.groupTitle,
+                folderId: jsonObj.folderId,
+                description: jsonObj.groupDesc,
+                status: jsonObj.groupStatus,
+                version: jsonObj.version,
+                userId: aipUser.bannerId,
                 activityDate: new Date(),
                 dataOrigin: "GRAILS"
         )

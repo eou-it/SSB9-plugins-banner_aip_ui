@@ -4,10 +4,11 @@
 var AIP;
 (function (AIP) {
     var AdminGroupAddPageCtrl = (function () {
-        function AdminGroupAddPageCtrl($scope, AdminGroupService, $q, SpinnerService) {
-            this.$inject = ["$scope", "AdminGroupService", "$q", "SpinnerService"];
+        function AdminGroupAddPageCtrl($scope, AdminGroupService, $q, SpinnerService, $state) {
+            this.$inject = ["$scope", "AdminGroupService", "$q", "SpinnerService", "$state"];
             $scope.vm = this;
             this.$q = $q;
+            this.$state = $state;
             this.adminGroupService = AdminGroupService;
             this.spinnerService = SpinnerService;
             this.errorMessage = {};
@@ -45,6 +46,16 @@ var AIP;
             });
         };
         AdminGroupAddPageCtrl.prototype.save = function () {
+            var _this = this;
+            this.adminGroupService.saveGroup(this.groupInfo)
+                .then(function (response) {
+                //TODO:: handle success call
+                console.log(response);
+                _this.$state.go("admin-group-list");
+            }, function (err) {
+                //TODO:: handle error call
+                console.log(err);
+            });
         };
         AdminGroupAddPageCtrl.prototype.cancel = function () {
         };

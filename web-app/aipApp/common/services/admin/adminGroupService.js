@@ -42,6 +42,45 @@ var AIP;
             });
             return request;
         };
+        AdminGroupService.prototype.saveGroup = function (groupInfo) {
+            var params = {
+                groupTitle: groupInfo.title,
+                folderId: groupInfo.folder.id,
+                groupStatus: this.convertStatusValue(groupInfo.status.value),
+                groupDesc: "",
+                version: 0
+            };
+            var request = this.$http({
+                method: "POST",
+                data: params,
+                url: this.ENDPOINT.admin.createGroup
+            })
+                .then(function (response) {
+                console.log(response);
+                return response.data;
+            }, function (err) {
+                throw new Error(err);
+            });
+            return request;
+        };
+        AdminGroupService.prototype.convertStatusValue = function (value) {
+            var val = "";
+            switch (value) {
+                case "aip.status.pending":
+                    val = "Pending";
+                    break;
+                case "aip.status.active":
+                    val = "Active";
+                    break;
+                case "aip.status.inactive":
+                    val = "Inactive";
+                    break;
+                default:
+                    val = "Pending";
+                    break;
+            }
+            return val;
+        };
         AdminGroupService.$inject = ["$http", "ENDPOINT"];
         return AdminGroupService;
     })();

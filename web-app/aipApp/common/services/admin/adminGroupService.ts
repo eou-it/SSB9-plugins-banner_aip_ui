@@ -27,10 +27,16 @@ module AIP {
         id: string|number;
         value: string;
     }
+    export interface IGroupInfo {
+        title: string;
+        status: AIP.IStatus;
+        folder: AIP.IFolder;
+    }
     interface IAdminGroupService {
         getStatus();
         getFolder();
         getGroupList();
+        saveGroup(groupInfo:IGroupInfo);
     }
     export class AdminGroupService implements IAdminGroupService{
         static $inject=["$http", "ENDPOINT"];
@@ -75,6 +81,45 @@ module AIP {
                     throw new Error(err);
             });
             return request;
+        }
+        saveGroup(groupInfo:IGroupInfo) {
+            var params = {
+                groupTitle: groupInfo.title,
+                folderId: groupInfo.folder.id,
+                groupStatus: this.convertStatusValue(groupInfo.status.value),
+                groupDesc: "",
+                version: 0
+            };
+            var request = this.$http({
+                method: "POST",
+                data: params,
+                url: this.ENDPOINT.admin.createGroup
+            })
+                .then((response) => {
+                    console.log(response);
+                    return response.data;
+                }, (err) => {
+                    throw new Error(err);
+            });
+            return request;
+        }
+        convertStatusValue(value:string) {
+            var val = ""
+            switch(value) {
+                case "aip.status.pending":
+                    val = "Pending"
+                    break
+                case "aip.status.active":
+                    val = "Active"
+                    break
+                case "aip.status.inactive":
+                    val = "Inactive"
+                    break;
+                default:
+                    val = "Pending"
+                    break;
+            }
+            return val;
         }
     }
 }

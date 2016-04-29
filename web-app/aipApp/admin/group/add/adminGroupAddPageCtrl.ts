@@ -14,13 +14,8 @@ module AIP {
         save(): void;
         cancel(): void;
     }
-    interface IGroupInfo {
-        title: string;
-        status: AIP.IStatus;
-        folder: AIP.IFolder;
-    }
     export class AdminGroupAddPageCtrl implements IAdminGroupAddPageCtrl{
-        $inject = ["$scope", "AdminGroupService", "$q", "SpinnerService"];
+        $inject = ["$scope", "AdminGroupService", "$q", "SpinnerService", "$state"];
         status: AIP.IStatus[];
         folders: AIP.IFolder[];
         groupInfo: IGroupInfo;
@@ -28,10 +23,12 @@ module AIP {
         adminGroupService: AIP.AdminGroupService;
         spinnerService: AIP.SpinnerService;
         $q: ng.IQService;
+        $state;
         constructor($scope, AdminGroupService:AIP.AdminGroupService,
-            $q:ng.IQService, SpinnerService) {
+            $q:ng.IQService, SpinnerService, $state) {
             $scope.vm = this;
             this.$q = $q;
+            this.$state = $state;
             this.adminGroupService = AdminGroupService;
             this.spinnerService = SpinnerService;
             this.errorMessage = {};
@@ -74,7 +71,15 @@ module AIP {
             });
         }
         save() {
-
+            this.adminGroupService.saveGroup(this.groupInfo)
+                .then((response) => {
+                    //TODO:: handle success call
+                    console.log(response);
+                    this.$state.go("admin-group-list");
+                }, (err) => {
+                    //TODO:: handle error call
+                    console.log(err);
+                });
         }
         cancel() {
 
