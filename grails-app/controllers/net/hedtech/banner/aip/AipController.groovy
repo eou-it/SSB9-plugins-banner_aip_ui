@@ -5,10 +5,9 @@
 package net.hedtech.banner.aip
 
 import grails.converters.JSON
-import org.springframework.security.access.annotation.Secured
 import net.hedtech.banner.security.BannerUser
 import org.springframework.security.core.context.SecurityContextHolder
-
+import grails.plugin.springsecurity.annotation.Secured
 import java.security.InvalidParameterException
 
 class AipController {
