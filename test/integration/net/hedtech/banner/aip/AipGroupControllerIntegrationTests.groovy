@@ -123,10 +123,13 @@ class AipGroupControllerIntegrationTests extends BaseIntegrationTestCase {
 
         def folderId = CommunicationFolder.fetchByName('AIPGeneral').id
 
-        controller.params.groupTitle = "test group"
-        controller.params.folderId = folderId
-        controller.params.groupStatus = "folderId"
-        controller.params.userId = "CSRADM001"
+        def requestObj = [:]
+        requestObj.groupTitle = "test group"
+        requestObj.folderId = folderId
+        requestObj.groupStatus = "pending"
+        requestObj.userId = "CSRADM001"
+        controller.request.method = "POST"
+        controller.request.json = requestObj
 
         controller.createGroup()
         def answer = JSON.parse( controller.response.contentAsString )
