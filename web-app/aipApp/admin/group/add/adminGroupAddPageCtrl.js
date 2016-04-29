@@ -51,7 +51,11 @@ var AIP;
                 .then(function (response) {
                 //TODO:: handle success call
                 console.log(response);
-                _this.$state.go("admin-group-list");
+                var notiParams = {
+                    notiType: "saveSuccess",
+                    data: response
+                };
+                _this.$state.go("admin-group-list", { noti: notiParams });
             }, function (err) {
                 //TODO:: handle error call
                 console.log(err);

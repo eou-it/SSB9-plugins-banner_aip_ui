@@ -75,7 +75,11 @@ module AIP {
                 .then((response) => {
                     //TODO:: handle success call
                     console.log(response);
-                    this.$state.go("admin-group-list");
+                    var notiParams = {
+                        notiType: "saveSuccess",
+                        data: response
+                    };
+                    this.$state.go("admin-group-list", {noti:notiParams});
                 }, (err) => {
                     //TODO:: handle error call
                     console.log(err);
