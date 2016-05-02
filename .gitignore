@@ -1,7 +1,6 @@
 .DS_Store
 target
 target/**/*
-web-app/css/csr-main-rtl.css
 /web-app/node_modules/**
 web-app/selenium/**/*
 web-app/WEB-INF/classes
