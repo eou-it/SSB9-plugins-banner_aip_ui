@@ -65,7 +65,28 @@ class AipGroupController {
 
         if (! jsonObj.groupTitle || ! jsonObj.folderId || ! jsonObj.groupStatus || ! aipUser.bannerId )
         {
+            String invalidField
+
+            if (! jsonObj.groupStatus ) {
+                invalidField = "group status"
+            }
+            if (! jsonObj.folderId ) {
+                invalidField = "folder"
+            }
+            if (! jsonObj.groupTitle) {
+                invalidField = "group title"
+            }
+
+            def model = [
+                    success: false,
+                    errorCode: 403,
+                    invalidField: invalidField,
+                    message: MessageUtility.message( "aip.admin.group.add.error.blank" )
+            ]
+
+            render model as JSON
             response.sendError( 403 )
+            response.status = 403
             return
         }
 

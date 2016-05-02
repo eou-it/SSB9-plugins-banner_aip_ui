@@ -138,4 +138,30 @@ class AipGroupControllerIntegrationTests extends BaseIntegrationTestCase {
         assertTrue( answer.message.equals( null ) )
     }
 
+    @Test
+    void testCreateActionItemGroupError() {
+
+        def admin = PersonUtility.getPerson( "CSRSTU001" ) // role: advisor
+        assertNotNull admin
+
+        def auth = selfServiceBannerAuthenticationProvider.authenticate(
+                new UsernamePasswordAuthenticationToken( admin.bannerId, '111111' ) )
+        SecurityContextHolder.getContext().setAuthentication( auth )
+
+        def folderId = CommunicationFolder.fetchByName('AIPGeneral').id
+
+        def requestObj = [:]
+        requestObj.groupTitle = null
+        requestObj.folderId = folderId
+        requestObj.groupStatus = "pending"
+        requestObj.userId = "CSRADM001"
+        controller.request.method = "POST"
+        controller.request.json = requestObj
+
+        controller.createGroup()
+        assertTrue(controller.response.status.equals( 403 ) )
+    }
+
+
+
 }
