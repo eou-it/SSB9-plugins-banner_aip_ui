@@ -42,16 +42,17 @@ module AIP {
             if(noti.notiType === "saveSuccess") {
                 var data = noti.data.newGroup[0];
                 var n = new Notification({
-                    message: "Group successfully added." +
-                        "</br>Title: " + data.groupTitle +
-                        "</br>Status: " + data.groupStatus +
-                        "</br>Folder: " + data.folderName,
+                    message: "Group successfully added.", //+
+                        //"</br>Title: " + data.groupTitle +
+                        //"</br>Status: " + data.groupStatus +
+                        //"</br>Folder: " + data.folderName,
                     type: "success",
                     flash: true
                 });
                 setTimeout(() => {
                     notifications.addNotification(n);
                     this.$state.params.noti = undefined;
+                    $(".groupListContainer .controls .control button").focus();
                 }, 500);
             }
         }
