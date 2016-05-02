@@ -42,7 +42,10 @@ module AIP {
             if(noti.notiType === "saveSuccess") {
                 var data = noti.data.newGroup[0];
                 var n = new Notification({
-                    message: "Group '"+data.groupTitle+"' added successfully</br>Placeholder for detail info",
+                    message: "Group successfully added." +
+                        "</br>Title: " + data.groupTitle +
+                        "</br>Status: " + data.groupStatus +
+                        "</br>Folder: " + data.folderName,
                     type: "success",
                     flash: true
                 });

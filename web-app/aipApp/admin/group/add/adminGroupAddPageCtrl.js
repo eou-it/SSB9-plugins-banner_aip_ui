@@ -49,8 +49,6 @@ var AIP;
             var _this = this;
             this.adminGroupService.saveGroup(this.groupInfo)
                 .then(function (response) {
-                //TODO:: handle success call
-                console.log(response);
                 var notiParams = {
                     notiType: "saveSuccess",
                     data: response
