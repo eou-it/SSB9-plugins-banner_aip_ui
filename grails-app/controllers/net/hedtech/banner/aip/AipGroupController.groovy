@@ -62,19 +62,24 @@ class AipGroupController {
         def user = SecurityContextHolder?.context?.authentication?.principal
         def aipUser = AipControllerUtils.getPersonForAip(params, user.pidm)
         def jsonObj = request.JSON
+        def errorFlag  = false
+        def invalidField = []
 
-        if (! jsonObj.groupTitle || ! jsonObj.folderId || ! jsonObj.groupStatus || ! aipUser.bannerId )
+        if (! jsonObj.groupTitle || ! jsonObj.folderId || ! jsonObj.groupStatus || ! aipUser.bannerId ) {
+            errorFlag = true
+        }
+
+        if ( errorFlag )
+
         {
-            String invalidField
-
             if (! jsonObj.groupStatus ) {
-                invalidField = "group status"
+                invalidField.add("group status")
             }
             if (! jsonObj.folderId ) {
-                invalidField = "folder"
+                invalidField.add("folder")
             }
             if (! jsonObj.groupTitle) {
-                invalidField = "group title"
+                invalidField.add("group title")
             }
 
             def model = [
@@ -84,10 +89,14 @@ class AipGroupController {
                     message: MessageUtility.message( "aip.admin.group.add.error.blank" )
             ]
 
-            render model as JSON
-            response.sendError( 403 )
+
             response.status = 403
+            response.sendError( 403 )
+            render model as JSON
+
             return
+
+            //TODO: add handling for 500 error response here or elsewhere?
         }
 
         def group = new ActionItemGroup(
