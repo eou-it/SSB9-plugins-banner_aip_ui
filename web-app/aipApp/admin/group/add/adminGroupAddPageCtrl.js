@@ -4,11 +4,12 @@
 var AIP;
 (function (AIP) {
     var AdminGroupAddPageCtrl = (function () {
-        function AdminGroupAddPageCtrl($scope, AdminGroupService, $q, SpinnerService, $state) {
-            this.$inject = ["$scope", "AdminGroupService", "$q", "SpinnerService", "$state"];
+        function AdminGroupAddPageCtrl($scope, AdminGroupService, $q, SpinnerService, $state, $filter) {
+            this.$inject = ["$scope", "AdminGroupService", "$q", "SpinnerService", "$state", "$filter"];
             $scope.vm = this;
             this.$q = $q;
             this.$state = $state;
+            this.$filter = $filter;
             this.adminGroupService = AdminGroupService;
             this.spinnerService = SpinnerService;
             this.errorMessage = {};
@@ -33,7 +34,7 @@ var AIP;
             promises.push(this.adminGroupService.getFolder().then(function (folders) {
                 var defaultFolder = {
                     id: false,
-                    name: "Please select the folder"
+                    name: _this.$filter("i18n_aip")("aip.admin.group.add.defaultFolder")
                 };
                 folders.unshift(defaultFolder);
                 _this.folders = folders;
@@ -49,11 +50,17 @@ var AIP;
             var _this = this;
             this.adminGroupService.saveGroup(this.groupInfo)
                 .then(function (response) {
-                var notiParams = {
-                    notiType: "saveSuccess",
-                    data: response
-                };
-                _this.$state.go("admin-group-list", { noti: notiParams });
+                var notiParams = {};
+                if (response.success) {
+                    notiParams = {
+                        notiType: "saveSuccess",
+                        data: response
+                    };
+                    _this.$state.go("admin-group-list", { noti: notiParams });
+                }
+                else {
+                    _this.saveErrorCallback(response.invalidField);
+                }
             }, function (err) {
                 //TODO:: handle error call
                 console.log(err);
@@ -86,6 +93,27 @@ var AIP;
             else {
                 return true;
             }
+        };
+        AdminGroupAddPageCtrl.prototype.saveErrorCallback = function (invalidFields) {
+            var _this = this;
+            var message = this.$filter("i18n_aip")("aip.admin.group.add.error.blank");
+            angular.forEach(invalidFields, function (field) {
+                if (field === "group status") {
+                    message += "</br>" + _this.$filter("i18n_aip")("admin.group.add.error.noStatus");
+                }
+                if (field === "folder") {
+                    message += "</br>" + _this.$filter("i18n_aip")("aip.admin.group.add.error.noFolder");
+                }
+                if (field === "group title") {
+                    message += "</br>" + _this.$filter("i18n_aip")("aip.admin.group.add.error.noTitle");
+                }
+            });
+            var n = new Notification({
+                message: message,
+                type: "error",
+                flash: true
+            });
+            notifications.addNotification(n);
         };
         return AdminGroupAddPageCtrl;
     })();

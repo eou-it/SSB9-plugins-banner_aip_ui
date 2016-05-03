@@ -3,6 +3,8 @@
 ///<reference path="../../../common/services/spinnerService.ts"/>
 
 declare var register;
+declare var Notification: any;
+declare var notifications: any;
 
 module AIP {
     interface IAdminGroupAddPageCtrl {
@@ -15,7 +17,7 @@ module AIP {
         cancel(): void;
     }
     export class AdminGroupAddPageCtrl implements IAdminGroupAddPageCtrl{
-        $inject = ["$scope", "AdminGroupService", "$q", "SpinnerService", "$state"];
+        $inject = ["$scope", "AdminGroupService", "$q", "SpinnerService", "$state", "$filter"];
         status: AIP.IStatus[];
         folders: AIP.IFolder[];
         groupInfo: IGroupInfo;
@@ -24,11 +26,13 @@ module AIP {
         spinnerService: AIP.SpinnerService;
         $q: ng.IQService;
         $state;
+        $filter;
         constructor($scope, AdminGroupService:AIP.AdminGroupService,
-            $q:ng.IQService, SpinnerService, $state) {
+            $q:ng.IQService, SpinnerService, $state, $filter) {
             $scope.vm = this;
             this.$q = $q;
             this.$state = $state;
+            this.$filter = $filter;
             this.adminGroupService = AdminGroupService;
             this.spinnerService = SpinnerService;
             this.errorMessage = {};
@@ -57,7 +61,7 @@ module AIP {
                 this.adminGroupService.getFolder().then((folders) => {
                     var defaultFolder = {
                         id: false,
-                        name: "Please select the folder"
+                        name: this.$filter("i18n_aip")("aip.admin.group.add.defaultFolder")
                     };
                     folders.unshift(defaultFolder);
                     this.folders = folders;
@@ -72,12 +76,17 @@ module AIP {
         }
         save() {
             this.adminGroupService.saveGroup(this.groupInfo)
-                .then((response) => {
-                    var notiParams = {
-                        notiType: "saveSuccess",
-                        data: response
-                    };
-                    this.$state.go("admin-group-list", {noti:notiParams});
+                .then((response:IAddGroupResponse) => {
+                    var notiParams = {};
+                    if(response.success) {
+                        notiParams = {
+                            notiType: "saveSuccess",
+                            data: response
+                        };
+                        this.$state.go("admin-group-list", {noti: notiParams});
+                    } else {
+                        this.saveErrorCallback(response.invalidField);
+                    }
                 }, (err) => {
                     //TODO:: handle error call
                     console.log(err);
@@ -108,6 +117,26 @@ module AIP {
             } else {
                 return true;
             }
+        }
+        saveErrorCallback(invalidFields) {
+            var message = this.$filter("i18n_aip")("aip.admin.group.add.error.blank")
+            angular.forEach(invalidFields, (field) => {
+                if(field === "group status") {
+                    message += "</br>" + this.$filter("i18n_aip")("admin.group.add.error.noStatus");
+                }
+                if(field === "folder") {
+                    message += "</br>" + this.$filter("i18n_aip")("aip.admin.group.add.error.noFolder");
+                }
+                if(field === "group title") {
+                    message += "</br>" + this.$filter("i18n_aip")("aip.admin.group.add.error.noTitle");
+                }
+            });
+            var n = new Notification({
+                message: message,
+                type: "error",
+                flash: true
+            });
+            notifications.addNotification(n);
         }
 
 
