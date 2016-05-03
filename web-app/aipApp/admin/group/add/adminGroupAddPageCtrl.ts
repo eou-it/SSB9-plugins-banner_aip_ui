@@ -84,7 +84,7 @@ module AIP {
                 });
         }
         cancel() {
-
+            this.$state.go("admin-group-list");
         }
         selectStatus(item:IStatus) {
             this.groupInfo.status = item;

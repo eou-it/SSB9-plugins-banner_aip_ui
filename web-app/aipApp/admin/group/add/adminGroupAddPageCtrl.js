@@ -60,6 +60,7 @@ var AIP;
             });
         };
         AdminGroupAddPageCtrl.prototype.cancel = function () {
+            this.$state.go("admin-group-list");
         };
         AdminGroupAddPageCtrl.prototype.selectStatus = function (item) {
             this.groupInfo.status = item;
