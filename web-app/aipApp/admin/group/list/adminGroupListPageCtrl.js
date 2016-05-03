@@ -24,9 +24,31 @@ var AIP;
             var _this = this;
             this.adminGroupService.getGroupList().then(function (response) {
                 _this.gridData = response;
+                if (_this.$state.params.noti) {
+                    _this.handleNotification(_this.$state.params.noti);
+                }
             }, function (err) {
                 console.log(err);
             });
+        };
+        AdminGroupListPageCtrl.prototype.handleNotification = function (noti) {
+            var _this = this;
+            if (noti.notiType === "saveSuccess") {
+                var data = noti.data.newGroup[0];
+                var n = new Notification({
+                    message: "Group successfully added.",
+                    //"</br>Title: " + data.groupTitle +
+                    //"</br>Status: " + data.groupStatus +
+                    //"</br>Folder: " + data.folderName,
+                    type: "success",
+                    flash: true
+                });
+                setTimeout(function () {
+                    notifications.addNotification(n);
+                    _this.$state.params.noti = undefined;
+                    $(".groupListContainer .controls .control button").focus();
+                }, 500);
+            }
         };
         AdminGroupListPageCtrl.prototype.add = function () {
             this.$state.go("admin-group-add");

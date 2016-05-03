@@ -1,7 +1,9 @@
 //<reference path="../../../../typings/tsd.d.ts"/>
 ///<reference path="../../../common/services/admin/adminGroupService.ts"/>
 
-declare var register;
+declare var register: any;
+declare var Notification: any;
+declare var notifications: any;
 
 module AIP {
     export class AdminGroupListPageCtrl {
@@ -29,9 +31,30 @@ module AIP {
         init() {
             this.adminGroupService.getGroupList().then((response:IGridData) => {
                 this.gridData = response;
+                if(this.$state.params.noti) {
+                    this.handleNotification(this.$state.params.noti);
+                }
             }, (err) => {
                 console.log(err);
             });
+        }
+        handleNotification(noti) {
+            if(noti.notiType === "saveSuccess") {
+                var data = noti.data.newGroup[0];
+                var n = new Notification({
+                    message: "Group successfully added.", //+
+                        //"</br>Title: " + data.groupTitle +
+                        //"</br>Status: " + data.groupStatus +
+                        //"</br>Folder: " + data.folderName,
+                    type: "success",
+                    flash: true
+                });
+                setTimeout(() => {
+                    notifications.addNotification(n);
+                    this.$state.params.noti = undefined;
+                    $(".groupListContainer .controls .control button").focus();
+                }, 500);
+            }
         }
         add() {
             this.$state.go("admin-group-add");
