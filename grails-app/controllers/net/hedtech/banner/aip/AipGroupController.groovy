@@ -84,19 +84,10 @@ class AipGroupController {
 
             def model = [
                     success: false,
-                    errorCode: 403,
                     invalidField: invalidField,
                     message: MessageUtility.message( "aip.admin.group.add.error.blank" )
             ]
-
-
-            response.status = 403
-            response.sendError( 403 )
             render model as JSON
-
-            return
-
-            //TODO: add handling for 500 error response here or elsewhere?
         }
 
         def group = new ActionItemGroup(
@@ -109,7 +100,7 @@ class AipGroupController {
                 activityDate: new Date(),
                 dataOrigin: "GRAILS"
         )
-
+        //TODO: add handling for 500 error response here with try/catch for service call
         def map = actionItemGroupService.create([domainModel: group])
         // def groupId = actionItemGroupService.create( map ).id
 

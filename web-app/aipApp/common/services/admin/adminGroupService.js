@@ -14,6 +14,7 @@ var AIP;
                 .then(function (response) {
                 return response.data;
             }, function (err) {
+                //TODO: handle ajax fail in global
                 throw new Error(err);
             });
             return request;
@@ -26,6 +27,7 @@ var AIP;
                 .then(function (response) {
                 return response.data;
             }, function (err) {
+                //TODO: handle ajax fail in global
                 throw new Error(err);
             });
             return request;
@@ -38,6 +40,7 @@ var AIP;
                 .then(function (response) {
                 return response.data;
             }, function (err) {
+                //TODO: handle ajax fail in global
                 throw new Error(err);
             });
             return request;
@@ -56,9 +59,9 @@ var AIP;
                 url: this.ENDPOINT.admin.createGroup
             })
                 .then(function (response) {
-                console.log(response);
                 return response.data;
             }, function (err) {
+                //TODO: handle ajax fail in global
                 throw new Error(err);
             });
             return request;

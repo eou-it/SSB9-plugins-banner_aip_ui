@@ -49,9 +49,11 @@ var AIP;
             var _this = this;
             this.adminGroupService.saveGroup(this.groupInfo)
                 .then(function (response) {
-                //TODO:: handle success call
-                console.log(response);
-                _this.$state.go("admin-group-list");
+                if (response.success) {
+                    _this.$state.go("admin-group-list");
+                }
+                else {
+                }
             }, function (err) {
                 //TODO:: handle error call
                 console.log(err);
@@ -66,6 +68,7 @@ var AIP;
             this.groupInfo.folder = item;
         };
         AdminGroupAddPageCtrl.prototype.validateInput = function () {
+            return true;
             if (!this.groupInfo.title || this.groupInfo.title === null || this.groupInfo.title === "" || this.groupInfo.title.length > 60) {
                 this.errorMessage.title = "invalid title";
             }

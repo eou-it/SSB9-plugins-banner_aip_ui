@@ -72,10 +72,12 @@ module AIP {
         }
         save() {
             this.adminGroupService.saveGroup(this.groupInfo)
-                .then((response) => {
-                    //TODO:: handle success call
-                    console.log(response);
-                    this.$state.go("admin-group-list");
+                .then((response:IAddGroupResponse) => {
+                    if(response.success) {
+                        this.$state.go("admin-group-list");
+                    } else {
+
+                    }
                 }, (err) => {
                     //TODO:: handle error call
                     console.log(err);
@@ -91,6 +93,7 @@ module AIP {
             this.groupInfo.folder = item;
         }
         validateInput() {
+            return true;
             if(!this.groupInfo.title || this.groupInfo.title === null || this.groupInfo.title === "" || this.groupInfo.title.length > 60) {
                 this.errorMessage.title = "invalid title";
             } else {
