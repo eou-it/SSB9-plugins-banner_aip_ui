@@ -2,11 +2,11 @@
     <div class="groupInfo">
         <div class="row groupInfoRow">
             <div class="groupElement row input-group">
-                <span class="titleValue" id="groupAdd-Title">{{"aip.common.title"|i18n_aip}}: </span>
+                <label for="groupTitle" class="titleValue" id="groupAdd-Title">{{"aip.common.title"|i18n_aip}}: </label>
             </div>
             <div class="groupElement col-xs-12 col-sm-5">
                 <div class="row" ng-class="{'has-error':vm.groupInfo.title.length>60}">
-                    <input type="text" class="form-control" ng-model="vm.groupInfo.title" placeholder="Group title" aria-describedby="groupAdd-Title">
+                    <input id="groupTitle" maxlength="60" aria-valuemax="60" type="text" class="form-control" ng-model="vm.groupInfo.title" placeholder="Group title" aria-describedby="groupAdd-Title" required="required" aria-required="true">
                 </div>
                 <div class="alert alert-danger" role="alert" ng-if="vm.groupInfo.title.length>60">
                     <i class="fa fa-exclamation-circle" aria-hidden="true"></i>
@@ -17,11 +17,21 @@
         </div>
         <div class="row groupInfoRow">
             <div class="groupElement row input-group">
-                <span class="titleValue" id="groupAdd-status">{{"aip.common.status"|i18n_aip}}: </span>
+                <label for="groupStatus" class="titleValue" id="groupAdd-status">{{"aip.common.status"|i18n_aip}}: </label>
             </div>
             <div class="groupElement col-xs-12 col-sm-5">
                 <div class="row">
-                    <div class="btn-group" uib-dropdown>
+                   <!-- <div class="btn-group" uib-dropdown> -->
+
+                    <select id="groupStatus" class="titleValue" xe-data="" aria-labelledby="htmlSelectLabel">
+                        <option ng-repeat="item in vm.status" value="{{item.value|i18n_aip}}">{{item.value|i18n_aip}}</option>
+                    </select>
+                    <!--
+                    <select name="groupStatus" id="buttonForStatus"
+                            ng-options="option.name for option in vm.status track by option.id"
+                            ng-model="item.selectedOption"></select>
+                    -->
+                    <!--
                         <button id="buttonForStatus" type="button" class="btn btn-default">{{vm.groupInfo.status.value|i18n_aip}}</button>
                         <button type="button" class="btn btn-default" uib-dropdown-toggle>
                             <span class="caret"></span>
@@ -29,7 +39,8 @@
                         <ul uib-dropdown-menu role="menu" aria-labelledby="buttonForStatus">
                             <li role="menuitem" ng-repeat="item in vm.status"><a ng-click="vm.selectStatus(item)">{{item.value|i18n_aip}}</a></li>
                         </ul>
-                    </div>
+
+                    </div>-->
                 </div>
             </div>
         </div>

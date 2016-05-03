@@ -29,6 +29,7 @@ var AIP;
                     item.value = "aip.status." + item.value;
                     return item;
                 });
+                $("#groupStatus").select2();
             }));
             promises.push(this.adminGroupService.getFolder().then(function (folders) {
                 var defaultFolder = {
