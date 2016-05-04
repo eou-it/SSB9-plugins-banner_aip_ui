@@ -1,7 +1,7 @@
 <div class="groupListContainer">
     <div class="row controls">
         <div class="control">
-            <button type="button" class="btn btn-default" ng-click="vm.add()">
+            <button type="button" class="btn btn-default" ng-click="vm.add()" aria-label="{{'aip.common.add.group.jaws'|i18n_aip}}">
                 <i class="fa fa-plus" aria-hidden="true"></i>
                 <span>{{"aip.common.add"|i18n_aip}}</span>
             </button>
@@ -13,7 +13,7 @@
                 content="vm.gridData.data"
                 paginate="false"
                 toolbar="false"
-                end-point="vm.ENDPOINT.admin.grouplist"">
+                end-point="vm.ENDPOINT.admin.grouplist">
         </xe-table-grid>
     </div>
 </div>
