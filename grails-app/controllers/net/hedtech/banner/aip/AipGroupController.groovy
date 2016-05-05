@@ -6,6 +6,7 @@ import net.hedtech.banner.exceptions.ApplicationException
 import net.hedtech.banner.general.communication.folder.CommunicationFolder
 import org.springframework.security.core.context.SecurityContextHolder
 
+
 class AipGroupController {
 
     static defaultAction = "folders"
@@ -52,7 +53,8 @@ class AipGroupController {
 
 
     def createGroup() {
-
+        def success = false
+        def errors = []
         /* //TODO: determine access in later US
         if (!hasAccess( 'save' )) {
             response.sendError( 403 )
@@ -62,55 +64,38 @@ class AipGroupController {
         def user = SecurityContextHolder?.context?.authentication?.principal
         def aipUser = AipControllerUtils.getPersonForAip(params, user.pidm)
         def jsonObj = request.JSON
-        def errorFlag  = false
-        def invalidField = []
-
-        if (! jsonObj.groupTitle || ! jsonObj.folderId || ! jsonObj.groupStatus || ! aipUser.bannerId ) {
-            errorFlag = true
-        }
-
-        if ( errorFlag )
-
-        {
-            if (! jsonObj.groupStatus ) {
-                invalidField.add("group status")
-            }
-            if (! jsonObj.folderId ) {
-                invalidField.add("folder")
-            }
-            if (! jsonObj.groupTitle) {
-                invalidField.add("group title")
-            }
-
-            def model = [
-                    success: false,
-                    invalidField: invalidField,
-                    message: MessageUtility.message( "aip.admin.group.add.error.blank" )
-            ]
-            render model as JSON
-        }
 
         def group = new ActionItemGroup(
-                title: jsonObj.groupTitle,
-                folderId: jsonObj.folderId,
-                description: jsonObj.groupDesc,
-                status: jsonObj.groupStatus,
-                version: jsonObj.version,
-                userId: aipUser.bannerId,
+                title: jsonObj.groupTitle ? jsonObj.groupTitle : null,
+                folderId: jsonObj.folderId ? jsonObj.folderId : null,
+                description: jsonObj.groupDesc ? jsonObj.groupDesc: null,
+                status: jsonObj.groupStatus ? jsonObj.groupStatus : null,
+                version: jsonObj.version ? jsonObj.version : null,
+                userId: aipUser.bannerId ? aipUser.bannerId : null,
                 activityDate: new Date(),
                 dataOrigin: "GRAILS"
         )
-        //TODO: add handling for 500 error response here with try/catch for service call
-        def map = actionItemGroupService.create([domainModel: group])
+
+        def map
+        def readOnlyGroup
+        try {
+            map = actionItemGroupService.create( [domainModel: group] )
+            readOnlyGroup = groupFolderReadOnlyService.listActionItemGroupById( map.id )
+            success = true
+        } catch (ApplicationException ae) {
+            // hasErrors()
+            if (!group.validate()) {
+                group.errors.allErrors.each {
+                    errors.add( message( error: it ) )
+                }
+            }
+        }
         // def groupId = actionItemGroupService.create( map ).id
-
-        // FIXME: tests for properly handling failed saves
-
-        def readOnlyGroup = groupFolderReadOnlyService.listActionItemGroupById( map.id )
 
         response.status = 200
         def model = [
-                success: true,
+                success : success,
+                errors : errors,
                 newGroup: readOnlyGroup
         ]
 

@@ -138,30 +138,86 @@ class AipGroupControllerIntegrationTests extends BaseIntegrationTestCase {
         assertTrue( answer.message.equals( null ) )
     }
 
-    @Test
-    void testCreateActionItemGroupError() {
 
-        def admin = PersonUtility.getPerson( "CSRSTU001" ) // role: advisor
+    @Test
+    void testCreateActionItemGroupConstraintNull() {
+
+        def admin = PersonUtility.getPerson( "BCMADMIN" ) // role: advisor
         assertNotNull admin
 
         def auth = selfServiceBannerAuthenticationProvider.authenticate(
                 new UsernamePasswordAuthenticationToken( admin.bannerId, '111111' ) )
         SecurityContextHolder.getContext().setAuthentication( auth )
 
-        def folderId = CommunicationFolder.fetchByName('AIPGeneral').id
+        def folderId = CommunicationFolder.fetchByName( 'AIPGeneral' ).id
 
         def requestObj = [:]
-        requestObj.groupTitle = null
+        requestObj.groupTitle = ""
+        requestObj.folderId = folderId
+        requestObj.groupStatus = null
+        requestObj.userId = ""
+        controller.request.method = "POST"
+        controller.request.json = requestObj
+
+        controller.createGroup()
+        def answer = JSON.parse( controller.response.contentAsString )
+        assertEquals( "title cannot be null", answer.errors[0])
+        assertEquals( "status cannot be null", answer.errors[1])
+        assertEquals( false, answer.success)
+    }
+
+
+    @Test
+    void testCreateActionItemGroupConstraintEmpty() {
+
+        def admin = PersonUtility.getPerson( "BCMADMIN" ) // role: advisor
+        assertNotNull admin
+
+        def auth = selfServiceBannerAuthenticationProvider.authenticate(
+                new UsernamePasswordAuthenticationToken( admin.bannerId, '111111' ) )
+        SecurityContextHolder.getContext().setAuthentication( auth )
+
+        def folderId = CommunicationFolder.fetchByName( 'AIPGeneral' ).id
+
+        def requestObj = [:]
+        requestObj.groupTitle = ""
         requestObj.folderId = folderId
         requestObj.groupStatus = "pending"
+        requestObj.userId = ""
+        controller.request.method = "POST"
+        controller.request.json = requestObj
+
+        controller.createGroup()
+        def answer = JSON.parse( controller.response.contentAsString )
+        assertEquals( "title cannot be null", answer.errors[0])
+        assertEquals( false, answer.success)
+    }
+
+
+    @Test
+    void testCreateActionItemGroupConstraintMaxSize() {
+
+        def admin = PersonUtility.getPerson( "BCMADMIN" ) // role: advisor
+        assertNotNull admin
+
+        def auth = selfServiceBannerAuthenticationProvider.authenticate(
+                new UsernamePasswordAuthenticationToken( admin.bannerId, '111111' ) )
+        SecurityContextHolder.getContext().setAuthentication( auth )
+
+        def folderId = CommunicationFolder.fetchByName( 'AIPGeneral' ).id
+
+        def requestObj = [:]
+        requestObj.groupTitle = "myTitle"
+        requestObj.folderId = folderId
+        requestObj.groupStatus = "pendingstatusoverthe30characterlimit"
         requestObj.userId = "CSRADM001"
         controller.request.method = "POST"
         controller.request.json = requestObj
 
         controller.createGroup()
-        assertTrue(controller.response.status.equals( 403 ) )
+        def answer = JSON.parse( controller.response.contentAsString )
+        assertEquals( "status exceeded max size", answer.errors[0] )
+        assertEquals( false, answer.success )
     }
-
-
 
 }
