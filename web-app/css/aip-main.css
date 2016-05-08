@@ -187,9 +187,23 @@ aip-list .aip-list-container {
         .groupAddContainer .groupInfo .groupInfoRow .groupElement .open > .dropdown-menu {
           max-height: 200px;
           overflow-y: scroll; }
-      .groupAddContainer .groupInfo .groupInfoRow .input-group .titleValue {
-        font-size: 1.5em;
-        font-weight: bold; }
+        .groupAddContainer .groupInfo .groupInfoRow .groupElement .titleValue {
+          font-size: 1.5em;
+          font-weight: bold; }
+        .groupAddContainer .groupInfo .groupInfoRow .groupElement .titleValue.supplement {
+          font-size: 1.0em;
+          position: absolute;
+          bottom: 0;
+          left: auto;
+          right: 8px; }
+        .groupAddContainer .groupInfo .groupInfoRow .groupElement [lang='ar'] .titleValue.supplement {
+          left: 8px;
+          right: auto; }
+      .groupAddContainer .groupInfo .groupInfoRow .groupElement.input-group {
+        width: 100%; }
+        .groupAddContainer .groupInfo .groupInfoRow .groupElement.input-group .groupTitle {
+          padding-right: 0;
+          padding-left: 0; }
       .groupAddContainer .groupInfo .groupInfoRow .dropdown {
         border: none;
         box-shadow: none;

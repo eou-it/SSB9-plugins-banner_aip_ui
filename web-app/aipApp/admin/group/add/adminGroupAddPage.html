@@ -2,7 +2,10 @@
     <div class="groupInfo">
         <div class="row groupInfoRow">
             <div class="groupElement row input-group">
-                <span class="titleValue" id="groupAdd-Title">{{"aip.common.title"|i18n_aip}}: </span>
+                <div class="groupTitle col-xs-12 col-sm-5">
+                    <span class="titleValue" id="groupAdd-Title">{{"aip.common.title"|i18n_aip}}: </span>
+                    <span class="titleValue supplement">{{"aip.admin.group.add.maxLength"|i18n_aip}}</span>
+                </div>
             </div>
             <div class="groupElement col-xs-12 col-sm-5">
                 <div class="row" ng-class="{'has-error':vm.groupInfo.title.length>60}">
@@ -11,7 +14,7 @@
                 <div class="alert alert-danger" role="alert" ng-if="vm.groupInfo.title.length>60">
                     <i class="fa fa-exclamation-circle" aria-hidden="true"></i>
                     <span class="sr-only">Error:</span>
-                        Exceed maximum length (60)
+                        {{"aip.admin.group.error.exceedMax"|i18n_aip}}"}}
                 </div>
             </div>
         </div>

@@ -233,9 +233,27 @@ aip-list .aip-list-container  {
     max-height:200px;
     overflow-y:scroll;
 }
-      .groupAddContainer .groupInfo .groupInfoRow .input-group .titleValue  {
+        .groupAddContainer .groupInfo .groupInfoRow .groupElement .titleValue  {
     font-size:1.5em;
     font-weight:bold;
+}
+        .groupAddContainer .groupInfo .groupInfoRow .groupElement .titleValue.supplement  {
+    font-size:1.0em;
+    position:absolute;
+    bottom:0;
+    right:auto;
+    left:8px;
+}
+        .groupAddContainer .groupInfo .groupInfoRow .groupElement [lang='ar'] .titleValue.supplement  {
+    right:8px;
+    left:auto;
+}
+      .groupAddContainer .groupInfo .groupInfoRow .groupElement.input-group  {
+    width:100%;
+}
+        .groupAddContainer .groupInfo .groupInfoRow .groupElement.input-group .groupTitle  {
+    padding-left:0;
+    padding-right:0;
 }
       .groupAddContainer .groupInfo .groupInfoRow .dropdown  {
     border:none;

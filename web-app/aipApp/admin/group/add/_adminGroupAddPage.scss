@@ -21,15 +21,29 @@
           max-height: 200px;
           overflow-y: scroll;
         }
-      }
-      .input-group {
-
         .titleValue {
           font-size: 1.5em;
           font-weight:bold;
         }
+        .titleValue.supplement {
+          font-size: 1.0em;
+          position: absolute;
+          bottom: 0;
+          left: auto;
+          right: 8px;
+        }
+        [lang='ar'] .titleValue.supplement {
+          left: 8px;
+          right: auto;
+        }
       }
-
+      .groupElement.input-group {
+        width: 100%;
+        .groupTitle{
+          padding-right: 0;
+          padding-left: 0;
+        }
+      }
       .dropdown {
         border: none;
         box-shadow: none;
