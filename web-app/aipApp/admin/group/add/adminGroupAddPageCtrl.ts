@@ -52,7 +52,9 @@ module AIP {
                         item.value = "aip.status." + item.value;
                         return item;
                     });
-                    $("#groupStatus").select2({
+                    var groupStatus:any = $("#groupStatus");
+                    groupStatus
+                        .select2({
                         width: "25em",
                         minimumResultsForSearch: Infinity
                     });
@@ -67,11 +69,11 @@ module AIP {
                     };
                     //folders.unshift(defaultFolder);
                     this.folders = folders;
-                    $("#groupFolder").select2( {
+                    var groupFolder:any = $("#groupFolder");
+                    groupFolder.select2( {
                         width: "25em",
                         minimumResultsForSearch: Infinity
-                    }
-                    );
+                    });
                 })
             );
             this.$q.all(promises).then(() => {

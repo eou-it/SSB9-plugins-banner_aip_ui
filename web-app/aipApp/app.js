@@ -134,10 +134,13 @@ var bannerAIPApp = angular.module("bannerAIP", [
             $.i18n.prop("aip.common.title");
             $.i18n.prop("aip.common.status");
             $.i18n.prop("aip.common.folder");
+            $.i18n.prop("aip.common.activity.date");
+            $.i18n.prop("aip.common.last.updated.by");
             $.i18n.prop("aip.common.save");
             $.i18n.prop("aip.common.cancel");
             $.i18n.prop("aip.common.next");
             $.i18n.prop("aip.common.add");
+            $.i18n.prop("aip.common.add.group.jaws");
 
             $.i18n.prop("aip.placeholder.noitems");
 
@@ -148,6 +151,9 @@ var bannerAIPApp = angular.module("bannerAIP", [
             $.i18n.prop("aip.admin.group.add");
             $.i18n.prop("aip.admin.group.add.maxLength");
             $.i18n.prop("aip.admin.group.error.exceedMax");
+
+            $.i18n.prop("aip.admin.group.add.folder.default");
+
             $.i18n.prop("aip.status.active");
             $.i18n.prop("aip.status.inactive");
             $.i18n.prop("aip.status.pending");

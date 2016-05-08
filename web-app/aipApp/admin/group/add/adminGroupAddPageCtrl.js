@@ -29,7 +29,9 @@ var AIP;
                     item.value = "aip.status." + item.value;
                     return item;
                 });
-                $("#groupStatus").select2({
+                var groupStatus = $("#groupStatus");
+                groupStatus
+                    .select2({
                     width: "25em",
                     minimumResultsForSearch: Infinity
                 });
@@ -41,7 +43,8 @@ var AIP;
                 };
                 //folders.unshift(defaultFolder);
                 _this.folders = folders;
-                $("#groupFolder").select2({
+                var groupFolder = $("#groupFolder");
+                groupFolder.select2({
                     width: "25em",
                     minimumResultsForSearch: Infinity
                 });
