@@ -5,6 +5,7 @@
 package net.hedtech.banner.aip
 
 import grails.converters.JSON
+import net.hedtech.banner.MessageUtility
 import net.hedtech.banner.security.BannerUser
 import org.springframework.security.core.context.SecurityContextHolder
 import grails.plugin.springsecurity.annotation.Secured
@@ -64,11 +65,11 @@ class AipController {
         //TODO: header configuration should probably come from a config file - TBD
         def testDataHeader = [
                 [name: "id", title: "id", options: [visible: false, isSortable: true]],
-                [name: "title", title: "Title", options: [visible: true, isSortable: true]],
-                [name: "status", title: "Status", options: [visible: true, isSortable: true]],
-                [name: "folder", title: "Folder", options: [visible: true, isSortable: true]],
-                [name: "activity", title: "Activity", options: [visible: true, isSortable: true]],
-                [name: "user", title: "User", options: [visible: true, isSortable: true]]
+                [name: "title", title: MessageUtility.message( "aip.common.title" ), options: [visible: true, isSortable: true]],
+                [name: "status", title: MessageUtility.message( "aip.common.status" ), options: [visible: true, isSortable: true]],
+                [name: "folder", title: MessageUtility.message( "aip.common.folder" ), options: [visible: true, isSortable: true]],
+                [name: "activity", title: MessageUtility.message( "aip.common.activity.date" ), options: [visible: true, isSortable: true]],
+                [name: "user", title: MessageUtility.message( "aip.common.last.updated.by" ), options: [visible: true, isSortable: true]]
             ]
         def model = [
                 header: testDataHeader,

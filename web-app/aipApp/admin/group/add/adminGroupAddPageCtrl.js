@@ -30,20 +30,31 @@ var AIP;
                     item.value = "aip.status." + item.value;
                     return item;
                 });
+                var groupStatus = $("#groupStatus");
+                groupStatus
+                    .select2({
+                    width: "25em",
+                    minimumResultsForSearch: Infinity
+                });
             }));
             promises.push(this.adminGroupService.getFolder().then(function (folders) {
                 var defaultFolder = {
                     id: false,
                     name: _this.$filter("i18n_aip")("aip.admin.group.add.defaultFolder")
                 };
-                folders.unshift(defaultFolder);
+                //folders.unshift(defaultFolder);
                 _this.folders = folders;
+                var groupFolder = $("#groupFolder");
+                groupFolder.select2({
+                    width: "25em",
+                    minimumResultsForSearch: Infinity
+                });
             }));
             this.$q.all(promises).then(function () {
                 //TODO:: turn off the spinner
                 _this.spinnerService.showSpinner(false);
-                _this.groupInfo.status = _this.status[0];
-                _this.groupInfo.folder = _this.folders[0];
+                //this.groupInfo.status = this.status[0];
+                //this.groupInfo.folder = this.folders[0];
             });
         };
         AdminGroupAddPageCtrl.prototype.save = function () {
@@ -67,6 +78,7 @@ var AIP;
             });
         };
         AdminGroupAddPageCtrl.prototype.cancel = function () {
+            this.$state.go("admin-group-list");
         };
         AdminGroupAddPageCtrl.prototype.selectStatus = function (item) {
             this.groupInfo.status = item;

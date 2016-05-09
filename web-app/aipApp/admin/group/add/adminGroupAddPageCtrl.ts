@@ -43,6 +43,7 @@ module AIP {
                     }
                 }, true);
             this.init();
+
         }
 
         init() {
@@ -55,6 +56,13 @@ module AIP {
                         item.value = "aip.status." + item.value;
                         return item;
                     });
+                    var groupStatus:any = $("#groupStatus");
+                    groupStatus
+                        .select2({
+                        width: "25em",
+                        minimumResultsForSearch: Infinity
+                    });
+
                 })
             );
             promises.push(
@@ -63,15 +71,21 @@ module AIP {
                         id: false,
                         name: this.$filter("i18n_aip")("aip.admin.group.add.defaultFolder")
                     };
-                    folders.unshift(defaultFolder);
+                    //folders.unshift(defaultFolder);
                     this.folders = folders;
+                    var groupFolder:any = $("#groupFolder");
+                    groupFolder.select2( {
+                        width: "25em",
+                        minimumResultsForSearch: Infinity
+                    });
                 })
             );
             this.$q.all(promises).then(() => {
                 //TODO:: turn off the spinner
                 this.spinnerService.showSpinner(false);
-                this.groupInfo.status = this.status[0];
-                this.groupInfo.folder = this.folders[0];
+
+                //this.groupInfo.status = this.status[0];
+                //this.groupInfo.folder = this.folders[0];
             });
         }
         save() {
@@ -93,7 +107,7 @@ module AIP {
                 });
         }
         cancel() {
-
+            this.$state.go("admin-group-list");
         }
         selectStatus(item:IStatus) {
             this.groupInfo.status = item;

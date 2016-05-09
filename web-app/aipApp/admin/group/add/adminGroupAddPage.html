@@ -2,52 +2,46 @@
     <div class="groupInfo">
         <div class="row groupInfoRow">
             <div class="groupElement row input-group">
-                <span class="titleValue" id="groupAdd-Title">{{"aip.common.title"|i18n_aip}}: </span>
+                <div class="groupTitle col-xs-12 col-sm-5">
+                    <span class="titleValue" id="groupAdd-Title">{{"aip.common.title"|i18n_aip}}: </span>
+                    <span class="titleValue supplement">{{"aip.admin.group.add.maxLength"|i18n_aip}}</span>
+                </div>
             </div>
             <div class="groupElement col-xs-12 col-sm-5">
                 <div class="row" ng-class="{'has-error':vm.groupInfo.title.length>60}">
-                    <input type="text" class="form-control" ng-model="vm.groupInfo.title" placeholder="Group title" aria-describedby="groupAdd-Title">
+                    <input id="groupTitle" maxlength="60" aria-valuemax="60" type="text" class="form-control" ng-model="vm.groupInfo.title" placeholder="Group title" aria-describedby="groupAdd-Title" required="required" aria-required="true">
                 </div>
                 <div class="alert alert-danger" role="alert" ng-if="vm.groupInfo.title.length>60">
                     <i class="fa fa-exclamation-circle" aria-hidden="true"></i>
                     <span class="sr-only">Error:</span>
-                        Exceed maximum length (60)
+                        {{"aip.admin.group.error.exceedMax"|i18n_aip}}"}}
                 </div>
             </div>
         </div>
         <div class="row groupInfoRow">
             <div class="groupElement row input-group">
-                <span class="titleValue" id="groupAdd-status">{{"aip.common.status"|i18n_aip}}: </span>
+                <label for="groupStatus" class="titleValue" id="groupAdd-status">{{"aip.common.status"|i18n_aip}}: </label>
             </div>
             <div class="groupElement col-xs-12 col-sm-5">
                 <div class="row">
-                    <div class="btn-group" uib-dropdown>
-                        <button id="buttonForStatus" type="button" class="btn btn-default">{{vm.groupInfo.status.value|i18n_aip}}</button>
-                        <button type="button" class="btn btn-default" uib-dropdown-toggle>
-                            <span class="caret"></span>
-                        </button>
-                        <ul uib-dropdown-menu role="menu" aria-labelledby="buttonForStatus">
-                            <li role="menuitem" ng-repeat="item in vm.status"><a ng-click="vm.selectStatus(item)">{{item.value|i18n_aip}}</a></li>
-                        </ul>
-                    </div>
+                    <select id="groupStatus" class="groupSelect" xe-data="" aria-labelledby="groupAdd-status" required aria-required="true">
+                        <option selected="selected" value="{{'aip.status.pending'|i18n_aip}}">{{"aip.status.pending"|i18n_aip}}</option>
+                        <option ng-repeat="item in vm.status" value="{{item.value|i18n_aip}}" ng-if="!$first">{{item.value|i18n_aip}}</option>
+
+                    </select>
                 </div>
             </div>
         </div>
         <div class="row groupInfoRow">
             <div class="groupElement row input-group">
-                <span class="titleValue" id="groupAdd-folder">{{"aip.common.folder"|i18n_aip}}: </span>
+                <label class="titleValue" id="groupAdd-folder">{{"aip.common.folder"|i18n_aip}}: </label>
             </div>
             <div class="groupElement col-xs-12 col-sm-5">
                 <div class="row">
-                    <div class="btn-group" uib-dropdown>
-                        <button id="buttonForFolder" type="button" class="btn btn-default">{{vm.groupInfo.folder.name}}</button>
-                        <button type="button" class="btn btn-default" uib-dropdown-toggle>
-                            <span class="caret"></span>
-                        </button>
-                        <ul uib-dropdown-menu role="menu" aria-labelledby="buttonForFolder">
-                            <li role="menuitem" ng-repeat="item in vm.folders"><a ng-click="vm.selectFolder(item)">{{item.name}}</a></li>
-                        </ul>
-                    </div>
+                    <select id="groupFolder" class="groupSelect" xe-data="" aria-labelledby="groupAdd-folder" ng-required="true" aria-required="true">
+                        <option selected="selected" value="false">{{"aip.admin.group.add.folder.default"|i18n_aip}}</option>
+                        <option ng-repeat="item in vm.folders" value="{{item.id}}">{{item.name}}</option>
+                    </select>
                 </div>
             </div>
         </div>
@@ -58,7 +52,7 @@
                 <button type="button" class="btn btn-primary" ng-disabled="!vm.validateInput()" ng-click="vm.save()">{{"aip.common.saveandreturn"|i18n_aip}}</button>
             </div>
             <div class="col-sm-2 col-xs-6 groupButton">
-                <button type="button" class="btn btn-primary">{{"aip.common.cancel"|i18n_aip}}</button>
+                <button type="button" class="btn btn-primary" ng-click="vm.cancel()">{{"aip.common.cancel"|i18n_aip}}</button>
             </div>
         </div>
     </div>
