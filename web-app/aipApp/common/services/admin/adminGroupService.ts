@@ -30,7 +30,7 @@ module AIP {
     export interface IGroupInfo {
         title: string;
         status: AIP.IStatus;
-        folder: AIP.IFolder;
+        folder: number|string;
     }
     interface IAdminGroupService {
         getStatus();
@@ -85,7 +85,7 @@ module AIP {
         saveGroup(groupInfo:IGroupInfo) {
             var params = {
                 groupTitle: groupInfo.title,
-                folderId: groupInfo.folder.id,
+                folderId: groupInfo.folder,
                 groupStatus: this.convertStatusValue(groupInfo.status.value),
                 groupDesc: "",
                 version: 0

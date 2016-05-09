@@ -25,7 +25,7 @@ var AIP;
             ];
         };
         return AdminLandingPageCtrl;
-    })();
+    }());
     AIP.AdminLandingPageCtrl = AdminLandingPageCtrl;
 })(AIP || (AIP = {}));
 register("bannerAIP").controller("AdminLandingPageCtrl", AIP.AdminLandingPageCtrl);

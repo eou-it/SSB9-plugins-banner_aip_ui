@@ -24,11 +24,15 @@
             </div>
             <div class="groupElement col-xs-12 col-sm-5">
                 <div class="row">
-                    <select id="groupStatus" class="groupSelect" xe-data="" aria-labelledby="groupAdd-status" required aria-required="true">
+                    <select id="groupStatus" class="groupSelect" xe-data="" aria-labelledby="groupAdd-status" required aria-required="true" ng-model="vm.groupInfo.status">
                         <option selected="selected" value="{{'aip.status.pending'|i18n_aip}}">{{"aip.status.pending"|i18n_aip}}</option>
                         <option ng-repeat="item in vm.status" value="{{item.value|i18n_aip}}" ng-if="!$first">{{item.value|i18n_aip}}</option>
 
                     </select>
+                    <!--<select id="groupStatus" class="groupSelect" xe-data="" aria-labelledby="groupAdd-status" required aria-required="true"-->
+                            <!--ng-options="item as item.value|i18n_aip for item in vm.status track by item.value" ng-model="vm.groupInfo.status">-->
+                        <!--&lt;!&ndash;<option value="pending">{{"aip.status.pending"|i18n_aip}}</option>&ndash;&gt;-->
+                    <!--</select>-->
                 </div>
             </div>
         </div>
@@ -38,10 +42,14 @@
             </div>
             <div class="groupElement col-xs-12 col-sm-5">
                 <div class="row">
-                    <select id="groupFolder" class="groupSelect" xe-data="" aria-labelledby="groupAdd-folder" ng-required="true" aria-required="true">
-                        <option selected="selected" value="false">{{"aip.admin.group.add.folder.default"|i18n_aip}}</option>
+                    <select id="groupFolder" class="groupSelect" xe-data="" aria-labelledby="groupAdd-folder" ng-required="true" aria-required="true" ng-model="vm.groupInfo.folder">
+                        <option selected="selected" value="">{{"aip.admin.group.add.folder.default"|i18n_aip}}</option>
                         <option ng-repeat="item in vm.folders" value="{{item.id}}">{{item.name}}</option>
                     </select>
+                    <!--<select id="groupFolder" class="groupSelect" xe-data="" aria-labelledby="groupAdd-folder" required aria-required="true"-->
+                            <!--ng-model="vm.groupInfo.folder" ng-options="item.name for item in vm.folders">-->
+                        <!--<option value="">{{"aip.admin.group.add.folder.default"|i18n_aip}}</option>-->
+                    <!--</select>-->
                 </div>
             </div>
         </div>

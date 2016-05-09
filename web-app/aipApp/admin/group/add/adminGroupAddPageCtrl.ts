@@ -33,7 +33,7 @@ module AIP {
             this.spinnerService = SpinnerService;
             this.errorMessage = {};
             $scope.$watch(
-                "[vm.status, vm.folders]", function(newVal, oldVal) {
+                "[vm.status, vm.folders, vm.groupInfo.folder, vm.groupInfo.status]", function(newVal, oldVal) {
                     if(!$scope.$$phase) {
                         $scope.apply();
                     }
@@ -63,11 +63,6 @@ module AIP {
             );
             promises.push(
                 this.adminGroupService.getFolder().then((folders) => {
-                    var defaultFolder = {
-                        id: false,
-                        name: "Please select the folder"
-                    };
-                    //folders.unshift(defaultFolder);
                     this.folders = folders;
                     var groupFolder:any = $("#groupFolder");
                     groupFolder.select2( {
@@ -80,8 +75,7 @@ module AIP {
                 //TODO:: turn off the spinner
                 this.spinnerService.showSpinner(false);
 
-                //this.groupInfo.status = this.status[0];
-                //this.groupInfo.folder = this.folders[0];
+                this.groupInfo.status = this.status[0];
             });
         }
         save() {
@@ -100,19 +94,13 @@ module AIP {
         cancel() {
             this.$state.go("admin-group-list");
         }
-        selectStatus(item:IStatus) {
-            this.groupInfo.status = item;
-        }
-        selectFolder(item:IFolder) {
-            this.groupInfo.folder = item;
-        }
         validateInput() {
             if(!this.groupInfo.title || this.groupInfo.title === null || this.groupInfo.title === "" || this.groupInfo.title.length > 60) {
                 this.errorMessage.title = "invalid title";
             } else {
                 delete this.errorMessage.title;
             }
-            if(!this.groupInfo.folder || this.groupInfo.folder.id===false) {
+            if(!this.groupInfo.folder) {
                 this.errorMessage.folder = "invalid folder";
             } else {
                 delete this.errorMessage.folder;

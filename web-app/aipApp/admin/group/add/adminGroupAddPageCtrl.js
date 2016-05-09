@@ -12,7 +12,7 @@ var AIP;
             this.adminGroupService = AdminGroupService;
             this.spinnerService = SpinnerService;
             this.errorMessage = {};
-            $scope.$watch("[vm.status, vm.folders]", function (newVal, oldVal) {
+            $scope.$watch("[vm.status, vm.folders, vm.groupInfo.folder, vm.groupInfo.status]", function (newVal, oldVal) {
                 if (!$scope.$$phase) {
                     $scope.apply();
                 }
@@ -37,11 +37,6 @@ var AIP;
                 });
             }));
             promises.push(this.adminGroupService.getFolder().then(function (folders) {
-                var defaultFolder = {
-                    id: false,
-                    name: "Please select the folder"
-                };
-                //folders.unshift(defaultFolder);
                 _this.folders = folders;
                 var groupFolder = $("#groupFolder");
                 groupFolder.select2({
@@ -52,8 +47,7 @@ var AIP;
             this.$q.all(promises).then(function () {
                 //TODO:: turn off the spinner
                 _this.spinnerService.showSpinner(false);
-                //this.groupInfo.status = this.status[0];
-                //this.groupInfo.folder = this.folders[0];
+                _this.groupInfo.status = _this.status[0];
             });
         };
         AdminGroupAddPageCtrl.prototype.save = function () {
@@ -73,12 +67,6 @@ var AIP;
         AdminGroupAddPageCtrl.prototype.cancel = function () {
             this.$state.go("admin-group-list");
         };
-        AdminGroupAddPageCtrl.prototype.selectStatus = function (item) {
-            this.groupInfo.status = item;
-        };
-        AdminGroupAddPageCtrl.prototype.selectFolder = function (item) {
-            this.groupInfo.folder = item;
-        };
         AdminGroupAddPageCtrl.prototype.validateInput = function () {
             if (!this.groupInfo.title || this.groupInfo.title === null || this.groupInfo.title === "" || this.groupInfo.title.length > 60) {
                 this.errorMessage.title = "invalid title";
@@ -86,7 +74,7 @@ var AIP;
             else {
                 delete this.errorMessage.title;
             }
-            if (!this.groupInfo.folder || this.groupInfo.folder.id === false) {
+            if (!this.groupInfo.folder) {
                 this.errorMessage.folder = "invalid folder";
             }
             else {
@@ -100,7 +88,7 @@ var AIP;
             }
         };
         return AdminGroupAddPageCtrl;
-    })();
+    }());
     AIP.AdminGroupAddPageCtrl = AdminGroupAddPageCtrl;
 })(AIP || (AIP = {}));
 register("bannerAIP").controller("AdminGroupAddPageCtrl", AIP.AdminGroupAddPageCtrl);
