@@ -7,16 +7,18 @@ declare var notifications: any;
 
 module AIP {
     export class AdminGroupListPageCtrl {
-        $inject = ["$scope", "AdminGroupService", "$state", "$window", "ENDPOINT"];
+        $inject = ["$scope", "AdminGroupService", "$state", "$window", "$filter", "ENDPOINT"];
         gridData: IGridData;
         $state;
+        $filter;
         ENDPOINT;
         adminGroupService: AIP.AdminGroupService;
-        constructor($scope, AdminGroupService, $state, $window, ENDPOINT) {
+        constructor($scope, AdminGroupService, $state, $window, $filter, ENDPOINT) {
             $scope.vm = this;
             this.adminGroupService = AdminGroupService
             this.$state = $state;
             this.ENDPOINT = ENDPOINT;
+            this.$filter = $filter;
             this.init();
             $scope.$watch("vm.gridData", (newVal, oldVal) => {
                 if(!$scope.$$phase) {
@@ -42,7 +44,7 @@ module AIP {
             if(noti.notiType === "saveSuccess") {
                 var data = noti.data.newGroup[0];
                 var n = new Notification({
-                    message: "Group successfully added.", //+
+                    message: this.$filter("i18n_aip")("aip.admin.group.add.success"), //+
                         //"</br>Title: " + data.groupTitle +
                         //"</br>Status: " + data.groupStatus +
                         //"</br>Folder: " + data.folderName,

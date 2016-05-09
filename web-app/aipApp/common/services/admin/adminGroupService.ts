@@ -32,6 +32,12 @@ module AIP {
         status: AIP.IStatus;
         folder: number|string;
     }
+    export interface IAddGroupResponse {
+        success: boolean;
+        invalidField?: string[];
+        message?: string;
+        newGroup?: any;
+    }
     interface IAdminGroupService {
         getStatus();
         getFolder();
@@ -54,6 +60,7 @@ module AIP {
                 .then((response) => {
                    return <IStatus[]>response.data;
                 }, (err) => {
+                    //TODO: handle ajax fail in global
                     throw new Error(err);
             });
             return request;
@@ -66,6 +73,7 @@ module AIP {
                 .then((response) => {
                     return <IFolder[]>response.data;
                 }, (err) => {
+                    //TODO: handle ajax fail in global
                     throw new Error(err);
             });
             return request;
@@ -78,6 +86,7 @@ module AIP {
                 .then((response) => {
                     return <IGridData>response.data;
                 }, (err) => {
+                    //TODO: handle ajax fail in global
                     throw new Error(err);
             });
             return request;
@@ -96,9 +105,9 @@ module AIP {
                 url: this.ENDPOINT.admin.createGroup
             })
                 .then((response) => {
-                    console.log(response);
                     return response.data;
                 }, (err) => {
+                    //TODO: handle ajax fail in global
                     throw new Error(err);
             });
             return request;
