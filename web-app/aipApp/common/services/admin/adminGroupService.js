@@ -48,7 +48,7 @@ var AIP;
         AdminGroupService.prototype.saveGroup = function (groupInfo) {
             var params = {
                 groupTitle: groupInfo.title,
-                folderId: groupInfo.folder.id,
+                folderId: groupInfo.folder,
                 groupStatus: this.convertStatusValue(groupInfo.status.value),
                 groupDesc: "",
                 version: 0
@@ -86,7 +86,7 @@ var AIP;
         };
         AdminGroupService.$inject = ["$http", "ENDPOINT"];
         return AdminGroupService;
-    })();
+    }());
     AIP.AdminGroupService = AdminGroupService;
 })(AIP || (AIP = {}));
 register("bannerAIP").service("AdminGroupService", AIP.AdminGroupService);

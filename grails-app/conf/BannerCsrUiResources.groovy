@@ -34,7 +34,7 @@ modules = {
         resource url:[plugin: 'banner-csr-ui', file: 'css/aip-main.css']
     }
     'bannerAIPUIRTL' {
-        dependsOn 'bannerAIPUI'
+//        dependsOn 'bannerAIPUI'
         dependsOn 'bannerSelfServiceCommonRTL, extensibilityAngularRTL'
         resource url:[plugin: 'banner-ui-ss', file: 'bootstrap/css/bootstrap-rtl.css']
         resource url:[plugin: 'banner-csr-ui', file: 'css/xe-ui-components-rtl.css']

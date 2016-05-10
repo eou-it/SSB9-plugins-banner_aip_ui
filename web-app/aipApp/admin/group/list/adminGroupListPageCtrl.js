@@ -65,7 +65,7 @@ var AIP;
             return { height: containerHeight };
         };
         return AdminGroupListPageCtrl;
-    })();
+    }());
     AIP.AdminGroupListPageCtrl = AdminGroupListPageCtrl;
 })(AIP || (AIP = {}));
 register("bannerAIP").controller("AdminGroupListPageCtrl", AIP.AdminGroupListPageCtrl);

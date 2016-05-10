@@ -35,7 +35,7 @@ var AIP;
         AIPBreadcrumbService.prototype.removeLastUrl = function () {
         };
         return AIPBreadcrumbService;
-    })();
+    }());
     AIP.AIPBreadcrumbService = AIPBreadcrumbService;
 })(AIP || (AIP = {}));
 angular.module("bannerAIP").service("BreadcrumbService", AIP.AIPBreadcrumbService);
