@@ -32,6 +32,7 @@ class CsrTagLibIntegrationTests extends BaseIntegrationTestCase {
         controller = new AipGroupController()
     }
 
+
     @After
     public void tearDown() {
         super.tearDown()
@@ -40,21 +41,44 @@ class CsrTagLibIntegrationTests extends BaseIntegrationTestCase {
 
     def lib = new CsrTagLib()
 
-
+    // private or utility?
     @Test
     void testEncodeHtml() {
-        assertEquals( "&lt;br&gt;", lib.encodeHTML( "<br>" ))
-        assertEquals( "&quot;", lib.encodeHTML( "\"" ))
+        assertEquals( "&lt;br&gt;", lib.encodeHTML( "<br>" ) )
+        assertEquals( "&quot;", lib.encodeHTML( "\"" ) )
     }
 
-
+    //FIXME: need to parse and validate
     @Test
     void testi18nEntry() {
+        def answer = lib.i18n_setup().toString()
+        assertTrue answer.contains( 'window.i18n_aip' )
+        assertTrue answer.contains( 'window.i18n_aip_bundle_plugins' )
+        assertTrue answer.contains( 'window.i18n_aip_bundle' )
+        assertTrue answer.contains( 'window.i18n_temp' )  // TODO: temp? code says to remove. why? Are we using it?
+        assertTrue answer.contains( 'aip.user.detail.button.deny' ) // a string name
+        assertTrue answer.contains( 'I do not agree with the university policy' ) // a value
+    }
+
+    //FIXME: need to parse and validate
+    @Test
+    void testAipVersion() {
+        def answer = lib.aipVersion().toString()
+        assertTrue answer.contains( 'window.aipApp' )
+        assertTrue answer.contains( 'fileSystemName' )
+        assertTrue answer.contains( 'bannerCsrUi' )
+        // TODO: add version and name
     }
 
 
-    @Test
-    void testiAipVersion() {
+    private Map parseTagLib( String raw ) {
+        def map = [:]
+        raw.splitEachLine( "," ) {
+            it.each { x ->
+                def object = x.split( "=" )
+                map.put( object[0], object[1] )
+            }
+        }
+        return map
     }
 }
-
