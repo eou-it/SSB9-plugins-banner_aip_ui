@@ -78,6 +78,7 @@ a:focus, div:focus, input:focus, span:focus, i:focus, button:focus, .breadcrumbB
 .viewContainer {
   padding: 8px 16px;
   height: 100%;
+  overflow-x: auto;
   //overflow-y: scroll;
   //margin-top: 5px;
   //override common-component angular-grid
