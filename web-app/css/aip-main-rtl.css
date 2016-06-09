@@ -266,9 +266,9 @@ aip-list .aip-list-container  {
     border:1px solid rgba(0, 0, 0, 0.15);
 }
   .groupAddContainer .groupControl  {
-    position:absolute;
+    position:relative;
     width:100%;
-    bottom:8px;
+    bottom:px;
 }
     .groupAddContainer .groupControl .groupButton  {
     text-align:center;
@@ -414,6 +414,7 @@ a:focus, div:focus, input:focus, span:focus, i:focus, button:focus, .breadcrumbB
 }
     #content .viewContainer  {
     padding:0 8px;
+    overflow:auto;
 }
 }
 @media screen and (max-width: 480px) {
@@ -422,5 +423,6 @@ a:focus, div:focus, input:focus, span:focus, i:focus, button:focus, .breadcrumbB
 }
     #content .viewContainer  {
     padding:0 8px;
+    overflow:auto;
 }
 }

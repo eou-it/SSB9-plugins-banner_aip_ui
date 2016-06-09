@@ -5,7 +5,7 @@
     margin-right: 0;
   }
   .groupInfo {
-    margin-bottom:50px;
+    margin-bottom:20px;
     .groupInfoRow {
       margin-bottom: 16px;
       .groupElement {
@@ -60,7 +60,9 @@
   .groupControl {
     position: relative;
     width: 100%;
-    bottom: 8px;
+    bottom: 10px;
+    margin-bottom: 10px;
+    height: 5em;
     .groupButton {
       text-align: center;
       padding-left: 0;
