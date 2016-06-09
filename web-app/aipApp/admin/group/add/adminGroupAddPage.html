@@ -14,7 +14,7 @@
                 <div class="alert alert-danger" role="alert" ng-if="vm.groupInfo.title.length>60">
                     <i class="fa fa-exclamation-circle" aria-hidden="true"></i>
                     <span class="sr-only">Error:</span>
-                        {{"aip.admin.group.error.exceedMax"|i18n_aip}}"}}
+                    {{"aip.admin.group.error.exceedMax"|i18n_aip}}"}}
                 </div>
             </div>
         </div>
@@ -30,8 +30,8 @@
 
                     </select>
                     <!--<select id="groupStatus" class="groupSelect" xe-data="" aria-labelledby="groupAdd-status" required aria-required="true"-->
-                            <!--ng-options="item as item.value|i18n_aip for item in vm.status track by item.value" ng-model="vm.groupInfo.status">-->
-                        <!--&lt;!&ndash;<option value="pending">{{"aip.status.pending"|i18n_aip}}</option>&ndash;&gt;-->
+                    <!--ng-options="item as item.value|i18n_aip for item in vm.status track by item.value" ng-model="vm.groupInfo.status">-->
+                    <!--&lt;!&ndash;<option value="pending">{{"aip.status.pending"|i18n_aip}}</option>&ndash;&gt;-->
                     <!--</select>-->
                 </div>
             </div>
@@ -47,9 +47,20 @@
                         <option ng-repeat="item in vm.folders" value="{{item.id}}">{{item.name}}</option>
                     </select>
                     <!--<select id="groupFolder" class="groupSelect" xe-data="" aria-labelledby="groupAdd-folder" required aria-required="true"-->
-                            <!--ng-model="vm.groupInfo.folder" ng-options="item.name for item in vm.folders">-->
-                        <!--<option value="">{{"aip.admin.group.add.folder.default"|i18n_aip}}</option>-->
+                    <!--ng-model="vm.groupInfo.folder" ng-options="item.name for item in vm.folders">-->
+                    <!--<option value="">{{"aip.admin.group.add.folder.default"|i18n_aip}}</option>-->
                     <!--</select>-->
+                </div>
+            </div>
+        </div>
+
+        <div class="row groupInfoRow">
+            <div class="groupElement row input-group">
+                <label for="groupFolder" class="titleValue" id="groupAdd-description">{{"aip.common.group.description"|i18n_aip}}: </label>
+            </div>
+            <div class="groupElement col-xs-12 col-sm-8">
+                <div class="row">
+                    <textarea id="groupDescription" name="groupDescription"></textarea>
                 </div>
             </div>
         </div>
@@ -65,3 +76,4 @@
         </div>
     </div>
 </div>
+<script src="/StudentSSB/plugins/banner-csr-ui-1.0/aipApp/common/directives/ckeditor/js/ckEditor.js" type="application/javascript" />
