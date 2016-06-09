@@ -1,0 +1,25 @@
+if (CKEDITOR) {
+    CKEDITOR.replace("groupDescription", {
+        fullPage: true,
+        allowedContent: true,
+        //removePlugins: removePlugins,
+        height: 400,
+        //readOnly: false,
+        pasteFromWordRemoveFontStyles: true,
+        pasteFromWordRemoveStyles: true,
+        toolbar: [
+            { name: 'document', items: [ 'Source', '-', 'NewPage', 'Preview', '-', 'Templates' ] },
+            { name: 'clipboard', items: [ 'Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo' ] },
+            { name: 'editing', items: [ 'Find', 'Replace', '-', 'SelectAll', '-', 'SpellChecker', 'Scayt' ] },
+            { name: 'styles', items: [ 'Format', 'Font', 'FontSize' ] },
+            { name: 'colors', items: [ 'TextColor', 'BGColor' ] },
+            { name: 'basicstyles', items: [ 'Bold', 'Italic', 'Underline', 'Strike', '-', 'RemoveFormat' ] },
+            { name: 'paragraph', items: [ 'NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'CreateDiv', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-' ] },
+            { name: 'links', items: [ 'Link', 'Unlink', 'Anchor' ] },
+            { name: 'insert', items: [ 'Image', 'Table', 'HorizontalRule', 'SpecialChar', 'PageBreak' ] },
+            { name: 'tools', items: [ 'Maximize', 'ShowBlocks', '-', 'About' ] }
+        ],
+        toolbarCanCollapse: true,
+        toolbarStartupExpanded: true
+    })
+}

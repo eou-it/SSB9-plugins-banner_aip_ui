@@ -213,7 +213,7 @@ aip-list .aip-list-container {
           width: auto;
           border: 1px solid rgba(0, 0, 0, 0.15); }
   .groupAddContainer .groupControl {
-    position: absolute;
+    position: relative;
     width: 100%;
     bottom: 8px; }
     .groupAddContainer .groupControl .groupButton {
@@ -247,12 +247,14 @@ aip-list .aip-list-container {
   #content {
     top: 105px !important; }
     #content .viewContainer {
-      padding: 0 8px; } }
+      padding: 0 8px;
+      overflow-x: auto } }
 @media screen and (max-width: 480px) {
   #content {
     top: 105px !important; }
     #content .viewContainer {
-      padding: 0 8px; } }
+      padding: 0 8px;
+      overflow: auto  } }
 #breadcrumbHeader .breadcrumbButton {
   font-size: 0.8em; }
 #breadcrumbHeader a.breadcrumbButton.leaf-breadcrumb {
