@@ -3,7 +3,7 @@
         <div class="row groupInfoRow">
             <div class="groupElement row input-group">
                 <div class="groupTitle col-xs-12 col-sm-5">
-                    <label for="groupTitle" class="titleValue" id="groupAdd-Title">{{"aip.common.title"|i18n_aip}}: </label>
+                    <label for="groupTitle" class="titleValue required" id="groupAdd-Title">{{"aip.common.title"|i18n_aip}} </label>
                     <span class="titleValue supplement">{{"aip.admin.group.add.maxLength"|i18n_aip}}</span>
                 </div>
             </div>
@@ -20,7 +20,7 @@
         </div>
         <div class="row groupInfoRow">
             <div class="groupElement row input-group">
-                <label for="groupStatus" class="titleValue" id="groupAdd-status">{{"aip.common.status"|i18n_aip}}: </label>
+                <label for="groupStatus" class="titleValue required" id="groupAdd-status">{{"aip.common.status"|i18n_aip}} </label>
             </div>
             <div class="groupElement col-xs-12 col-sm-5">
                 <div class="row">
@@ -38,7 +38,7 @@
         </div>
         <div class="row groupInfoRow">
             <div class="groupElement row input-group">
-                <label for="groupFolder" class="titleValue" id="groupAdd-folder">{{"aip.common.folder"|i18n_aip}}: </label>
+                <label for="groupFolder" class="titleValue required" id="groupAdd-folder">{{"aip.common.folder"|i18n_aip}} </label>
             </div>
             <div class="groupElement col-xs-12 col-sm-5">
                 <div class="row">
@@ -56,7 +56,7 @@
 
         <div class="row groupInfoRow">
             <div class="groupElement row input-group">
-                <label for="groupFolder" class="titleValue" id="groupAdd-description">{{"aip.common.group.description"|i18n_aip}}: </label>
+                <label for="groupFolder" class="titleValue" id="groupAdd-description">{{"aip.common.group.description"|i18n_aip}} </label>
             </div>
             <div class="groupElement col-xs-12 col-sm-8">
                 <div class="row">
@@ -67,11 +67,11 @@
     </div>
     <div class="groupControl">
         <div class="row">
-            <div class="col-sm-offset-2 col-sm-2 col-xs-6 groupButton">
-                <button type="button" class="btn btn-primary" ng-disabled="!vm.validateInput()" ng-click="vm.save()">{{"aip.common.saveandreturn"|i18n_aip}}</button>
+            <div class="col-sm-offset-4 col-sm-2 col-xs-6 groupButton">
+                <button type="button" class="btn btn-default" ng-click="vm.cancel()">{{"aip.common.cancel"|i18n_aip}}</button>
             </div>
             <div class="col-sm-2 col-xs-6 groupButton">
-                <button type="button" class="btn btn-primary" ng-click="vm.cancel()">{{"aip.common.cancel"|i18n_aip}}</button>
+                <button type="button" class="btn btn-primary" ng-disabled="!vm.validateInput()" ng-click="vm.save()">{{"aip.common.saveandreturn"|i18n_aip}}</button>
             </div>
         </div>
     </div>

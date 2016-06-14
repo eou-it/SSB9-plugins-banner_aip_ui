@@ -199,6 +199,10 @@ aip-list .aip-list-container {
         .groupAddContainer .groupInfo .groupInfoRow .groupElement [lang='ar'] .titleValue.supplement {
           left: 8px;
           right: auto; }
+        .groupAddContainer .groupInfo .groupInfoRow .groupElement .required::after {
+          content: ' *'; }
+        .groupAddContainer .groupInfo .groupInfoRow .groupElement [lang='ar'] .required::before {
+          content: '* '; }
       .groupAddContainer .groupInfo .groupInfoRow .groupElement.input-group {
         width: 100%; }
         .groupAddContainer .groupInfo .groupInfoRow .groupElement.input-group .groupTitle {

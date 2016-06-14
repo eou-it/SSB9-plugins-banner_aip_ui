@@ -248,6 +248,12 @@ aip-list .aip-list-container  {
     right:8px;
     left:auto;
 }
+        .groupAddContainer .groupInfo .groupInfoRow .groupElement .required::after  {
+    content:' *';
+}
+        .groupAddContainer .groupInfo .groupInfoRow .groupElement [lang='ar'] .required::before  {
+    content:'* ';
+}
       .groupAddContainer .groupInfo .groupInfoRow .groupElement.input-group  {
     width:100%;
 }

@@ -36,6 +36,12 @@
           left: 8px;
           right: auto;
         }
+        .required::after {
+          content: ' *';
+        }
+        [lang='ar'] .required::before {
+          content: '* ';
+        }
       }
       .groupElement.input-group {
         width: 100%;
