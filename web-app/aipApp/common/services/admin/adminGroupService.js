@@ -49,7 +49,7 @@ var AIP;
             var params = {
                 groupTitle: groupInfo.title,
                 folderId: groupInfo.folder,
-                groupStatus: this.convertStatusValue(groupInfo.status.value),
+                groupStatus: groupInfo.status,
                 groupDesc: groupInfo.description,
                 version: 0
             };
