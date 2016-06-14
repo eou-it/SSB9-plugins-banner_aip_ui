@@ -143,6 +143,8 @@ var bannerAIPApp = angular.module("bannerAIP", [
             $.i18n.prop("aip.common.add");
             $.i18n.prop("aip.common.saveandreturn");
             $.i18n.prop("aip.common.add.group.jaws");
+            $.i18n.prop("aip.placeholder.nogroups");
+
 
             $.i18n.prop("aip.placeholder.noitems");
             $.i18n.prop("aip.admin.landing");

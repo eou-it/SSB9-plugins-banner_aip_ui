@@ -50,7 +50,7 @@ var AIP;
                 groupTitle: groupInfo.title,
                 folderId: groupInfo.folder,
                 groupStatus: this.convertStatusValue(groupInfo.status.value),
-                groupDesc: "",
+                groupDesc: groupInfo.description,
                 version: 0
             };
             var request = this.$http({
@@ -86,7 +86,7 @@ var AIP;
         };
         AdminGroupService.$inject = ["$http", "ENDPOINT"];
         return AdminGroupService;
-    }());
+    })();
     AIP.AdminGroupService = AdminGroupService;
 })(AIP || (AIP = {}));
 register("bannerAIP").service("AdminGroupService", AIP.AdminGroupService);

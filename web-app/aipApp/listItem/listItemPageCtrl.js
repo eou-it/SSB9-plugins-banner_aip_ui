@@ -177,7 +177,7 @@ var AIP;
             this.selectedData = undefined;
         };
         return ListItemPageCtrl;
-    }());
+    })();
     AIP.ListItemPageCtrl = ListItemPageCtrl;
 })(AIP || (AIP = {}));
 register("bannerAIP").controller("ListItemPageCtrl", AIP.ListItemPageCtrl);

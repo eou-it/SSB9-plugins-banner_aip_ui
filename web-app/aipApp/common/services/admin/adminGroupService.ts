@@ -31,6 +31,7 @@ module AIP {
         title: string;
         status: AIP.IStatus;
         folder: number|string;
+        description: string;
     }
     export interface IAddGroupResponse {
         success: boolean;
@@ -96,7 +97,7 @@ module AIP {
                 groupTitle: groupInfo.title,
                 folderId: groupInfo.folder,
                 groupStatus: this.convertStatusValue(groupInfo.status.value),
-                groupDesc: "",
+                groupDesc: groupInfo.description,
                 version: 0
             };
             var request = this.$http({

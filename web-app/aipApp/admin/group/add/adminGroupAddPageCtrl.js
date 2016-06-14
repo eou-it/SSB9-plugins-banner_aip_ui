@@ -116,7 +116,7 @@ var AIP;
             notifications.addNotification(n);
         };
         return AdminGroupAddPageCtrl;
-    }());
+    })();
     AIP.AdminGroupAddPageCtrl = AdminGroupAddPageCtrl;
 })(AIP || (AIP = {}));
 register("bannerAIP").controller("AdminGroupAddPageCtrl", AIP.AdminGroupAddPageCtrl);
