@@ -28,6 +28,7 @@ import org.springframework.security.core.context.SecurityContextHolder
  */
 class AipControllerIntegrationTests extends BaseIntegrationTestCase {
     def selfServiceBannerAuthenticationProvider
+
     def actionItemService
 
 
@@ -45,7 +46,6 @@ class AipControllerIntegrationTests extends BaseIntegrationTestCase {
         logout()
     }
 
-
     // using student. Fail on security?
     @Test
     void testAdminEntryPoint() {
@@ -57,8 +57,8 @@ class AipControllerIntegrationTests extends BaseIntegrationTestCase {
         def result = controller.admin()
         assertEquals 200, controller.response.status
 
-        assertEquals( "/landing", result.model.fragment)
-        assertEquals( "index", result.view)
+        assertEquals( "/landing", result.model.fragment )
+        assertEquals( "index", result.view )
     }
 
 
@@ -91,6 +91,38 @@ class AipControllerIntegrationTests extends BaseIntegrationTestCase {
 
 
     @Test
+    void testCheckActionItems() {
+        def person = PersonUtility.getPerson( "CSRSTU002" )
+        assertNotNull person
+        def auth = selfServiceBannerAuthenticationProvider.authenticate(
+                new UsernamePasswordAuthenticationToken( person.bannerId, '111111' ) )
+        SecurityContextHolder.getContext().setAuthentication( auth )
+        controller.checkActionItem()
+        assertEquals 200, controller.response.status
+
+        def answer = JSON.parse( controller.response.contentAsString )
+        println answer
+        //assertEquals( 1, answer.items.size() )
+    }
+
+
+    @Test
+    void testCheckUserInfo() {
+        def person = PersonUtility.getPerson( "CSRSTU002" )
+        assertNotNull person
+        def auth = selfServiceBannerAuthenticationProvider.authenticate(
+                new UsernamePasswordAuthenticationToken( person.bannerId, '111111' ) )
+        SecurityContextHolder.getContext().setAuthentication( auth )
+        controller.userInfo()
+        assertEquals 200, controller.response.status
+
+        def answer = JSON.parse( controller.response.contentAsString )
+        println answer
+        //assertEquals( 1, answer.items.size() )
+    }
+
+
+    @Test
     void testFetchActionItemsUserHasNone() {
         def person = PersonUtility.getPerson( "CSRSTU022" )
         assertNotNull person
@@ -112,6 +144,7 @@ class AipControllerIntegrationTests extends BaseIntegrationTestCase {
         assertEquals 403, controller.response.status
     }
 
+
     @Test
     void testFetchAdminGroups() {
         def person = PersonUtility.getPerson( "CSRSTU001" )
@@ -125,6 +158,50 @@ class AipControllerIntegrationTests extends BaseIntegrationTestCase {
         def answer = JSON.parse( controller.response.contentAsString )
         assert 1 < answer.data.size()
         println answer
+    }
+
+
+    @Test
+    void testLogout() {
+        def person = PersonUtility.getPerson( "CSRSTU002" )
+        assertNotNull person
+        def auth = selfServiceBannerAuthenticationProvider.authenticate(
+                new UsernamePasswordAuthenticationToken( person.bannerId, '111111' ) )
+        SecurityContextHolder.getContext().setAuthentication( auth )
+        controller.logout()
+        assertEquals 200, controller.response.status
+    }
+
+
+    @Test
+    void testGetItemInfo() {
+        def person = PersonUtility.getPerson( "CSRSTU002" )
+        assertNotNull person
+        def auth = selfServiceBannerAuthenticationProvider.authenticate(
+                new UsernamePasswordAuthenticationToken( person.bannerId, '111111' ) )
+        SecurityContextHolder.getContext().setAuthentication( auth )
+        controller.getItemInfo( "drugAndAlcohol" )
+        controller.getItemInfo( "registrationTraining" )
+        controller.getItemInfo( "personalInfo" )
+        controller.getItemInfo( "meetAdvisor" )
+        controller.getItemInfo( "residenceProof" )
+        assertEquals 200, controller.response.status
+    }
+
+
+    @Test
+    void testDetailInfo() {
+        def person = PersonUtility.getPerson( "CSRSTU002" )
+        assertNotNull person
+        def auth = selfServiceBannerAuthenticationProvider.authenticate(
+                new UsernamePasswordAuthenticationToken( person.bannerId, '111111' ) )
+        SecurityContextHolder.getContext().setAuthentication( auth )
+        def jsonObj = [:]
+        jsonObj.type = "group"
+        controller.request.method = "POST"
+        controller.request.json = jsonObj
+        controller.detailInfo()
+        assertEquals 200, controller.response.status
     }
 
 
