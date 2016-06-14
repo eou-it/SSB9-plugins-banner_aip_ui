@@ -32,6 +32,7 @@ modules = {
         dependsOn 'font-awesome'
         resource url:[plugin: 'banner-csr-ui', file: 'css/xe-ui-components.css']
         resource url:[plugin: 'banner-csr-ui', file: 'css/aip-main.css']
+        resource url:[plugin: 'banner-csr-ui', file: 'aipApp/common/directives/ckeditor/css/ckEditor.css']
     }
     'bannerAIPUIRTL' {
 //        dependsOn 'bannerAIPUI'

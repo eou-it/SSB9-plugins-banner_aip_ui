@@ -129,6 +129,7 @@ class AipGroupControllerIntegrationTests extends BaseIntegrationTestCase {
         requestObj.groupTitle = "test group"
         requestObj.folderId = folderId
         requestObj.groupStatus = "pending"
+        requestObj.groupDesc = "<p><strong>This is a group description</p></strong>"
         requestObj.userId = "CSRADM001"
         controller.request.method = "POST"
         controller.request.json = requestObj
@@ -157,6 +158,7 @@ class AipGroupControllerIntegrationTests extends BaseIntegrationTestCase {
         requestObj.groupTitle = ""
         requestObj.folderId = folderId
         requestObj.groupStatus = null
+        requestObj.groupDesc = "<p><strong>This is a group description</p></strong>"
         requestObj.userId = ""
         controller.request.method = "POST"
         controller.request.json = requestObj
@@ -185,6 +187,7 @@ class AipGroupControllerIntegrationTests extends BaseIntegrationTestCase {
         requestObj.groupTitle = ""
         requestObj.folderId = folderId
         requestObj.groupStatus = "pending"
+        requestObj.groupDesc = "<p><strong>This is a group description</p></strong>"
         requestObj.userId = ""
         controller.request.method = "POST"
         controller.request.json = requestObj
@@ -212,6 +215,7 @@ class AipGroupControllerIntegrationTests extends BaseIntegrationTestCase {
         requestObj.groupTitle = "myTitle"
         requestObj.folderId = folderId
         requestObj.groupStatus = "pendingstatusoverthe30characterlimit"
+        requestObj.groupDesc = "<p><strong>This is a group description</p></strong>"
         requestObj.userId = "CSRADM001"
         controller.request.method = "POST"
         controller.request.json = requestObj

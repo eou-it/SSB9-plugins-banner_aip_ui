@@ -14,6 +14,10 @@ angular.module('bannerAIPUI')
             ngModel.$render = function (value) {
                 ck.setData(ngModel.$viewValue);
             };
+            ck.ui.addButton('A11YBtn', {
+                label: 'Alt+0',
+                command: 'a11yHelp'
+            });
         },
         fullPage: true,
         allowedContent: true,
