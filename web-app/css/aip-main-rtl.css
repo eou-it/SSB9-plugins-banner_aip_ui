@@ -215,7 +215,7 @@ aip-list .aip-list-container  {
     margin-left:0;
 }
   .groupAddContainer .groupInfo  {
-    margin-bottom:50px;
+    margin-bottom:20px;
 }
     .groupAddContainer .groupInfo .groupInfoRow  {
     margin-bottom:16px;
@@ -268,7 +268,9 @@ aip-list .aip-list-container  {
   .groupAddContainer .groupControl  {
     position:relative;
     width:100%;
-    bottom:px;
+    bottom:10px;
+    margin-bottom:15px;
+    height:5em;
 }
     .groupAddContainer .groupControl .groupButton  {
     text-align:center;
@@ -345,6 +347,7 @@ a:focus, div:focus, input:focus, span:focus, i:focus, button:focus, .breadcrumbB
 .viewContainer  {
     padding:8px 16px;
     height:100%;
+    overflow-x:auto;
 }
   .viewContainer xe-table-grid .table-container .pagination-container  {
     box-sizing:border-box;

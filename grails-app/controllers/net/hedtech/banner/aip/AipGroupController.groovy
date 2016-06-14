@@ -90,6 +90,7 @@ class AipGroupController {
                 }
             }
         }
+
         // def groupId = actionItemGroupService.create( map ).id
 
         response.status = 200
