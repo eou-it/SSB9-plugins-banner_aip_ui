@@ -37,7 +37,7 @@ module AIP {
             this.spinnerService = SpinnerService;
             this.errorMessage = {};
             $scope.$watch(
-                "[vm.status, vm.folders, vm.groupInfo.folder, vm.groupInfo.status]", function(newVal, oldVal) {
+                "[vm.status, vm.folders, vm.groupInfo.folder, vm.groupInfo.status, vm.groupInfo.description]", function(newVal, oldVal) {
                     if(!$scope.$$phase) {
                         $scope.apply();
                     }
@@ -114,6 +114,11 @@ module AIP {
             } else {
                 delete this.errorMessage.folder;
             }
+            if(!this.groupInfo.description || this.groupInfo.description === null || this.groupInfo.description === "" ) {
+                this.errorMessage.description = "invalid description";
+            } else {
+                delete this.errorMessage.description;
+            }
             if(Object.keys(this.errorMessage).length>0) {
                 return false;
             } else {
@@ -131,6 +136,9 @@ module AIP {
                 }
                 if(field === "group title") {
                     message += "</br>" + this.$filter("i18n_aip")("aip.admin.group.add.error.noTitle");
+                }
+                if(field === "group description") {
+                    message += "</br>" + this.$filter("i18n_aip")("aip.admin.group.add.error.noDesc");
                 }
             });
             var n = new Notification({

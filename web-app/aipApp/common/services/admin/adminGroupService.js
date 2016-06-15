@@ -66,27 +66,9 @@ var AIP;
             });
             return request;
         };
-        AdminGroupService.prototype.convertStatusValue = function (value) {
-            var val = "";
-            switch (value) {
-                case "aip.status.pending":
-                    val = "Pending";
-                    break;
-                case "aip.status.active":
-                    val = "Active";
-                    break;
-                case "aip.status.inactive":
-                    val = "Inactive";
-                    break;
-                default:
-                    val = "Pending";
-                    break;
-            }
-            return val;
-        };
         AdminGroupService.$inject = ["$http", "ENDPOINT"];
         return AdminGroupService;
-    })();
+    }());
     AIP.AdminGroupService = AdminGroupService;
 })(AIP || (AIP = {}));
 register("bannerAIP").service("AdminGroupService", AIP.AdminGroupService);
