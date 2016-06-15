@@ -248,12 +248,6 @@ aip-list .aip-list-container  {
     right:8px;
     left:auto;
 }
-        .groupAddContainer .groupInfo .groupInfoRow .groupElement .required::after  {
-    content:' *';
-}
-        .groupAddContainer .groupInfo .groupInfoRow .groupElement [lang='ar'] .required::before  {
-    content:'* ';
-}
       .groupAddContainer .groupInfo .groupInfoRow .groupElement.input-group  {
     width:100%;
 }
@@ -281,11 +275,13 @@ aip-list .aip-list-container  {
     .groupAddContainer .groupControl .groupButton  {
     text-align:center;
     padding-right:0;
+    margin-right:0px;
 }
       .groupAddContainer .groupControl .groupButton button  {
     width:100%;
     max-width:200px;
 }
+  
 
 .groupListContainer .row  {
     margin-left:0;
@@ -415,6 +411,14 @@ a:focus, div:focus, input:focus, span:focus, i:focus, button:focus, .breadcrumbB
     .AIP-landing-container aip-landing-item .ladingItem-container  {
     margin-right:8px;
     margin-left:8px;
+}
+}
+@media (min-width: 769px) {
+    .groupAddContainer .groupControl  {
+    margin-right:33.33%;
+}
+    .groupAddContainer .groupButton  {
+    margin-right:10px;
 }
 }
 @media screen and (max-width: 768px) {

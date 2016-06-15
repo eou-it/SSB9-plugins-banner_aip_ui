@@ -3,13 +3,15 @@
         <div class="row groupInfoRow">
             <div class="groupElement row input-group">
                 <div class="groupTitle col-xs-12 col-sm-5">
-                    <label for="groupTitle" class="titleValue required" id="groupAdd-Title">{{"aip.common.title"|i18n_aip}} </label>
+                    <label for="groupTitle" class="titleValue" id="groupAdd-Title">{{"aip.common.title"|i18n_aip}}
+                        {{"aip.character.astrick"|i18n_aip}}</label>
                     <span class="titleValue supplement">{{"aip.admin.group.add.maxLength"|i18n_aip}}</span>
                 </div>
             </div>
             <div class="groupElement col-xs-12 col-sm-5">
                 <div class="row" ng-class="{'has-error':vm.groupInfo.title.length>60}">
-                    <input id="groupTitle" maxlength="60" aria-valuemax="60" type="text" class="form-control" ng-model="vm.groupInfo.title" placeholder="Group title" aria-describedby="groupAdd-Title" required="required" aria-required="true">
+                    <input id="groupTitle" maxlength="60" aria-valuemax="60" type="text" class="form-control" ng-model="vm.groupInfo.title"
+                           placeholder="Group title" aria-describedby="groupAdd-Title" required="required" aria-required="true">
                 </div>
                 <div class="alert alert-danger" role="alert" ng-if="vm.groupInfo.title.length>60">
                     <i class="fa fa-exclamation-circle" aria-hidden="true"></i>
@@ -20,11 +22,13 @@
         </div>
         <div class="row groupInfoRow">
             <div class="groupElement row input-group">
-                <label for="groupStatus" class="titleValue required" id="groupAdd-status">{{"aip.common.status"|i18n_aip}} </label>
+                <label for="groupStatus" class="titleValue" id="groupAdd-status">{{"aip.common.status"|i18n_aip}}
+                    {{"aip.character.astrick"|i18n_aip}}</label>
             </div>
             <div class="groupElement col-xs-12 col-sm-5">
                 <div class="row">
-                    <select id="groupStatus" class="groupSelect" xe-data="" aria-labelledby="groupAdd-status" required aria-required="true" ng-model="vm.groupInfo.status">
+                    <select id="groupStatus" class="groupSelect" xe-data="" aria-labelledby="groupAdd-status" required aria-required="true"
+                            ng-model="vm.groupInfo.status">
                         <option selected="selected" value="{{'aip.status.pending'|i18n_aip}}">{{"aip.status.pending"|i18n_aip}}</option>
                         <option ng-repeat="item in vm.status" value="{{item.value|i18n_aip}}" ng-if="!$first">{{item.value|i18n_aip}}</option>
 
@@ -38,11 +42,13 @@
         </div>
         <div class="row groupInfoRow">
             <div class="groupElement row input-group">
-                <label for="groupFolder" class="titleValue required" id="groupAdd-folder">{{"aip.common.folder"|i18n_aip}} </label>
+                <label for="groupFolder" class="titleValue" id="groupAdd-folder">{{"aip.common.folder"|i18n_aip}}
+                    {{"aip.character.astrick"|i18n_aip}}</label>
             </div>
             <div class="groupElement col-xs-12 col-sm-5">
                 <div class="row">
-                    <select id="groupFolder" class="groupSelect" xe-data="" aria-labelledby="groupAdd-folder" ng-required="true" aria-required="true" ng-model="vm.groupInfo.folder">
+                    <select id="groupFolder" class="groupSelect" xe-data="" aria-labelledby="groupAdd-folder" ng-required="true" aria-required="true"
+                            ng-model="vm.groupInfo.folder">
                         <option selected="selected" value="">{{"aip.admin.group.add.folder.default"|i18n_aip}}</option>
                         <option ng-repeat="item in vm.folders" value="{{item.id}}">{{item.name}}</option>
                     </select>
@@ -56,22 +62,26 @@
 
         <div class="row groupInfoRow">
             <div class="groupElement row input-group">
-                <label for="groupFolder" class="titleValue" id="groupAdd-description">{{"aip.common.group.description"|i18n_aip}} </label>
+                <label for="groupFolder" class="titleValue" id="groupAdd-description">{{"aip.common.group.description"|i18n_aip}}
+                    {{"aip.character.astrick"|i18n_aip}}</label>
             </div>
             <div class="groupElement col-xs-12 col-sm-8">
                 <div class="row">
-                    <textarea ck-editor id="groupDesc" name="groupDesc" ng-model="vm.groupInfo.description"></textarea>
+                    <textarea ck-editor id="groupDesc" ng-required="true" aria-required="true" name="groupDesc"
+                              ng-model="vm.groupInfo.description"></textarea>
                 </div>
             </div>
         </div>
     </div>
     <div class="groupControl">
         <div class="row">
-            <div class="col-sm-offset-4 col-sm-2 col-xs-6 groupButton">
+            <div class="col-sm-2 col-xs-6 groupButton">
                 <button type="button" class="btn btn-default" ng-click="vm.cancel()">{{"aip.common.cancel"|i18n_aip}}</button>
             </div>
             <div class="col-sm-2 col-xs-6 groupButton">
-                <button type="button" class="btn btn-primary" ng-disabled="!vm.validateInput()" ng-click="vm.save()">{{"aip.common.saveandreturn"|i18n_aip}}</button>
+                <button type="button" class="btn btn-primary" ng-disabled="!vm.validateInput()" ng-click="vm.save()">
+                    {{"aip.common.saveandreturn"|i18n_aip}}
+                </button>
             </div>
         </div>
     </div>

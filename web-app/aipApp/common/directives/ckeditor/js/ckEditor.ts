@@ -4,6 +4,7 @@ angular.module('bannerAIPUI')
         require: '?ngModel',
         link: function(scope, elm, attr, ngModel) {
             var ck = CKEDITOR.replace(elm[0]);
+            var helpLabel = $.i18n.prop("aip.ckeditor.keyhelp");
 
             if (!ngModel) return;
 
@@ -18,11 +19,9 @@ angular.module('bannerAIPUI')
             };
 
             ck.ui.addButton( 'A11YBtn', {
-                label: 'Alt+0',
+                label: helpLabel,
                 command: 'a11yHelp',
             } );
-
-
         },
         fullPage: true,
         allowedContent: true,

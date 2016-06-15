@@ -171,6 +171,9 @@ var bannerAIPApp = angular.module("bannerAIP", [
             $.i18n.prop("aip.status.pending");
             $.i18n.prop("aip.status.complete");
 
+            $.i18n.prop("aip.character.astrick");
+            $.i18n.prop("aip.ckeditor.keyhelp");
+
             $.i18n.prop("aip.user.actionItem.list");
             $.i18n.prop("aip.user.list.header.title.registration");
             $.i18n.prop("aip.user.list.header.description.registration");

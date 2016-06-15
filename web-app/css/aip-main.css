@@ -199,10 +199,6 @@ aip-list .aip-list-container {
         .groupAddContainer .groupInfo .groupInfoRow .groupElement [lang='ar'] .titleValue.supplement {
           left: 8px;
           right: auto; }
-        .groupAddContainer .groupInfo .groupInfoRow .groupElement .required::after {
-          content: ' *'; }
-        .groupAddContainer .groupInfo .groupInfoRow .groupElement [lang='ar'] .required::before {
-          content: '* '; }
       .groupAddContainer .groupInfo .groupInfoRow .groupElement.input-group {
         width: 100%; }
         .groupAddContainer .groupInfo .groupInfoRow .groupElement.input-group .groupTitle {
@@ -224,10 +220,16 @@ aip-list .aip-list-container {
     height: 5em; }
     .groupAddContainer .groupControl .groupButton {
       text-align: center;
-      padding-left: 0; }
+      padding-left: 0;
+      margin-left: 0px; }
       .groupAddContainer .groupControl .groupButton button {
         width: 100%;
         max-width: 200px; }
+  @media (min-width: 769px) {
+    .groupAddContainer .groupControl {
+      margin-left: 33.33%; }
+    .groupAddContainer .groupButton {
+      margin-left: 10px; } }
 
 .groupListContainer .row {
   margin-right: 0;

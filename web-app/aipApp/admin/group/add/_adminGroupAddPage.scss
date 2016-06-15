@@ -36,12 +36,6 @@
           left: 8px;
           right: auto;
         }
-        .required::after {
-          content: ' *';
-        }
-        [lang='ar'] .required::before {
-          content: '* ';
-        }
       }
       .groupElement.input-group {
         width: 100%;
@@ -72,10 +66,20 @@
     .groupButton {
       text-align: center;
       padding-left: 0;
+      margin-left: 0px;
       button {
         width: 100%;
         max-width: 200px;
       }
     }
+  }
+  @media (min-width:769px) {
+    .groupControl {
+      margin-left: 33.33%
+    }
+    .groupButton {
+      margin-left: 10px;
+    }
+
   }
 }
