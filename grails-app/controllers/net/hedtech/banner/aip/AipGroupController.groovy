@@ -80,7 +80,7 @@ class AipGroupController {
         def readOnlyGroup
         try {
             map = actionItemGroupService.create( [domainModel: group] )
-            readOnlyGroup = groupFolderReadOnlyService.listActionItemGroupById( map.id )
+            readOnlyGroup = groupFolderReadOnlyService.getActionItemGroupById( map.id )
             success = true
         } catch (ApplicationException ae) {
             // hasErrors()

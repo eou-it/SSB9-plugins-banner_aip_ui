@@ -101,7 +101,6 @@ class AipControllerIntegrationTests extends BaseIntegrationTestCase {
         assertEquals 200, controller.response.status
 
         def answer = JSON.parse( controller.response.contentAsString )
-        println answer
         //assertEquals( 1, answer.items.size() )
     }
 
@@ -117,7 +116,6 @@ class AipControllerIntegrationTests extends BaseIntegrationTestCase {
         assertEquals 200, controller.response.status
 
         def answer = JSON.parse( controller.response.contentAsString )
-        println answer
         //assertEquals( 1, answer.items.size() )
     }
 
@@ -157,7 +155,6 @@ class AipControllerIntegrationTests extends BaseIntegrationTestCase {
         assertEquals 200, controller.response.status
         def answer = JSON.parse( controller.response.contentAsString )
         assert 1 < answer.data.size()
-        println answer
     }
 
 
