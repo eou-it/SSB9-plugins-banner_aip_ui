@@ -52,6 +52,39 @@ class AipGroupController {
     }
 
 
+    def aipGroup( groupId ) {
+        /* //TODO: determine access in later US
+        if (!hasAccess( 'read' )) {
+            response.sendError( 403 )
+            return
+        }
+        */
+
+        if (!groupId) {
+            response.sendError( 403 )
+            return
+        }
+
+        def success = false
+        def errors = []
+
+        def group = actionItemGroupService.getActionItemGroupById( groupId )
+
+        if (group) {
+            response.status = 200
+            success = true
+        }
+
+        def model = [
+                success: success,
+                errors : errors,
+                group  : group
+        ]
+
+        render model as JSON
+    }
+
+
     def createGroup() {
         def success = false
         def errors = []

@@ -28,6 +28,7 @@ import org.springframework.security.core.context.SecurityContextHolder
  */
 class AipGroupControllerIntegrationTests extends BaseIntegrationTestCase {
     def selfServiceBannerAuthenticationProvider
+    def actionItemGroupService
 
     def VALID_FOLDER_NAME = "My Folder"
     def VALID_FOLDER_DESCRIPTION = "My Folder"
@@ -224,6 +225,97 @@ class AipGroupControllerIntegrationTests extends BaseIntegrationTestCase {
         def answer = JSON.parse( controller.response.contentAsString )
         assertEquals( "status exceeded max size", answer.errors[0] )
         assertEquals( false, answer.success )
+    }
+
+    @Test
+        void testAipGroupAsAdmin() {
+        def admin = PersonUtility.getPerson( "BCMADMIN" ) // role: advisor
+        assertNotNull admin
+
+        List<ActionItemGroup> actionItemGroups = actionItemGroupService.listActionItemGroups()
+        def actionItemGroupId = actionItemGroups[0].id
+        def actionItemGroupTitle = actionItemGroups[0].title
+
+        def auth = selfServiceBannerAuthenticationProvider.authenticate(
+                new UsernamePasswordAuthenticationToken( admin.bannerId, '111111' ) )
+        SecurityContextHolder.getContext().setAuthentication( auth )
+
+        controller.aipGroup( actionItemGroupId )
+        assertEquals 200, controller.response.status
+        def answer = JSON.parse( controller.response.contentAsString )
+        assertEquals( true, answer.success )
+        assertEquals( actionItemGroupTitle, answer.group?.title )
+    }
+
+
+    // FIXME: security. Is student Authorized?
+    @Test
+    void testAipGroupAsStudent() {
+        def admin = PersonUtility.getPerson( "CSRSTU002" ) // role: student
+        assertNotNull admin
+
+        List<ActionItemGroup> actionItemGroups = actionItemGroupService.listActionItemGroups()
+        def actionItemGroupId = actionItemGroups[0].id
+        def actionItemGroupTitle = actionItemGroups[0].title
+
+        def auth = selfServiceBannerAuthenticationProvider.authenticate(
+                new UsernamePasswordAuthenticationToken( admin.bannerId, '111111' ) )
+        SecurityContextHolder.getContext().setAuthentication( auth )
+
+        controller.aipGroup( actionItemGroupId )
+        assertEquals 200, controller.response.status
+        def answer = JSON.parse( controller.response.contentAsString )
+        assertEquals( true, answer.success )
+        assertEquals( actionItemGroupTitle, answer.group?.title )
+    }
+
+    // FIXME: security. should fail
+    @Test
+    void testAipGroupAsNobody() {
+        List<ActionItemGroup> actionItemGroups = actionItemGroupService.listActionItemGroups()
+        def actionItemGroupId = actionItemGroups[0].id
+        def actionItemGroupTitle = actionItemGroups[0].title
+
+        controller.aipGroup( actionItemGroupId )
+        assertEquals 200, controller.response.status
+        def answer = JSON.parse( controller.response.contentAsString )
+        assertEquals( true, answer.success )
+        assertEquals( actionItemGroupTitle, answer.group?.title )
+    }
+
+
+    @Test
+    void testAipGroupBadParam() {
+        def admin = PersonUtility.getPerson( "BCMADMIN" ) // role: advisor
+        assertNotNull admin
+
+        def auth = selfServiceBannerAuthenticationProvider.authenticate(
+                new UsernamePasswordAuthenticationToken( admin.bannerId, '111111' ) )
+        SecurityContextHolder.getContext().setAuthentication( auth )
+
+        controller.aipGroup(1234567895)
+        assertEquals 200, controller.response.status
+        def answer = JSON.parse( controller.response.contentAsString )
+        assertEquals( false, answer.success )
+        assertTrue( answer.group.equals( null ) )
+    }
+
+
+    @Test
+    void testAipGroupNoParam() {
+        def admin = PersonUtility.getPerson( "BCMADMIN" ) // role: advisor
+        assertNotNull admin
+
+        List<ActionItemGroup> actionItemGroups = actionItemGroupService.listActionItemGroups()
+        def actionItemGroupId = actionItemGroups[0].id
+        def actionItemGroupTitle = actionItemGroups[0].title
+
+        def auth = selfServiceBannerAuthenticationProvider.authenticate(
+                new UsernamePasswordAuthenticationToken( admin.bannerId, '111111' ) )
+        SecurityContextHolder.getContext().setAuthentication( auth )
+
+        controller.aipGroup( "" )
+        assertEquals 403, controller.response.status
     }
 
 }
