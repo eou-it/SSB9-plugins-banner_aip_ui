@@ -38,6 +38,7 @@ module AIP {
         invalidField?: string[];
         message?: string;
         newGroup?: any;
+        errors?: string[];
     }
     interface IAdminGroupService {
         getStatus();
