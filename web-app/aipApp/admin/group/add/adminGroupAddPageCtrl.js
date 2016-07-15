@@ -64,7 +64,7 @@ var AIP;
                     _this.$state.go("admin-group-list", { noti: notiParams });
                 }
                 else {
-                    _this.saveErrorCallback(response.invalidField);
+                    _this.saveErrorCallback(response.invalidField, response.errors);
                 }
             }, function (err) {
                 //TODO:: handle error call
@@ -100,9 +100,16 @@ var AIP;
                 return true;
             }
         };
-        AdminGroupAddPageCtrl.prototype.saveErrorCallback = function (invalidFields) {
+        AdminGroupAddPageCtrl.prototype.saveErrorCallback = function (invalidFields, errors) {
             var _this = this;
+            //todo: iterate through errors given back through contraints
+            /*
+            errors.forEach( function(e, i) {
+                message += (e[i]);
+            });
+            */
             var message = this.$filter("i18n_aip")("aip.admin.group.add.error.blank");
+            message = errors[0];
             angular.forEach(invalidFields, function (field) {
                 if (field === "group status") {
                     message += "</br>" + _this.$filter("i18n_aip")("admin.group.add.error.noStatus");
@@ -125,7 +132,7 @@ var AIP;
             notifications.addNotification(n);
         };
         return AdminGroupAddPageCtrl;
-    }());
+    })();
     AIP.AdminGroupAddPageCtrl = AdminGroupAddPageCtrl;
 })(AIP || (AIP = {}));
 register("bannerAIP").controller("AdminGroupAddPageCtrl", AIP.AdminGroupAddPageCtrl);

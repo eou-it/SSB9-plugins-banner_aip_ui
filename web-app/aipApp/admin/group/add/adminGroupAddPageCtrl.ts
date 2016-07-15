@@ -62,7 +62,6 @@ module AIP {
                         width: "25em",
                         minimumResultsForSearch: Infinity
                     });
-
                 })
             );
             promises.push(
@@ -78,7 +77,6 @@ module AIP {
             this.$q.all(promises).then(() => {
                 //TODO:: turn off the spinner
                 this.spinnerService.showSpinner(false);
-
                 this.groupInfo.status = this.status[0];
             });
         }
@@ -93,7 +91,7 @@ module AIP {
                         };
                         this.$state.go("admin-group-list", {noti: notiParams});
                     } else {
-                        this.saveErrorCallback(response.invalidField);
+                        this.saveErrorCallback(response.invalidField, response.errors);
                     }
                 }, (err) => {
                     //TODO:: handle error call
@@ -125,8 +123,16 @@ module AIP {
                 return true;
             }
         }
-        saveErrorCallback(invalidFields) {
+        saveErrorCallback(invalidFields, errors) {
+           //todo: iterate through errors given back through contraints
+            /*
+            errors.forEach( function(e, i) {
+                message += (e[i]);
+            });
+            */
             var message = this.$filter("i18n_aip")("aip.admin.group.add.error.blank")
+            message = errors[0]
+
             angular.forEach(invalidFields, (field) => {
                 if(field === "group status") {
                     message += "</br>" + this.$filter("i18n_aip")("admin.group.add.error.noStatus");
