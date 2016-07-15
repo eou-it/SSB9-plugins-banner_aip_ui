@@ -109,7 +109,9 @@ var AIP;
             });
             */
             var message = this.$filter("i18n_aip")("aip.admin.group.add.error.blank");
-            message = errors[0];
+            if (errors != null) {
+                message = errors[0];
+            }
             angular.forEach(invalidFields, function (field) {
                 if (field === "group status") {
                     message += "</br>" + _this.$filter("i18n_aip")("admin.group.add.error.noStatus");
