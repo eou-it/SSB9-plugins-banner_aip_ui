@@ -187,6 +187,12 @@ var bannerAIPApp = angular.module("bannerAIP", [
             $.i18n.prop("aip.user.detail.button.return");
 
             $.i18n.prop("aip.operation.not.permitted");
+
+            $.i18n.prop("nullable");
+            $.i18n.prop("maxSize.exceeded");
+            $.i18n.prop("unique");
+            $.i18n.prop("actionItemGroup.title.unique");
+            $.i18n.prop("actionItemGroup.status.null");
     }]
 );
 
