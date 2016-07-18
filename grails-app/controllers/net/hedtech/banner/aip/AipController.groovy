@@ -5,10 +5,11 @@
 package net.hedtech.banner.aip
 
 import grails.converters.JSON
+import grails.plugin.springsecurity.annotation.Secured
 import net.hedtech.banner.MessageUtility
 import net.hedtech.banner.security.BannerUser
 import org.springframework.security.core.context.SecurityContextHolder
-import grails.plugin.springsecurity.annotation.Secured
+
 import java.security.InvalidParameterException
 
 
@@ -103,7 +104,7 @@ class AipController {
 
         if (actionItemGroups.size() > 0) {
             actionItemGroups[0]?.each { group ->
-                if (group.groupDesc == null || group.groupDesc.length == 0) {
+                if (!group.groupDesc) {
                     groupDesc = MessageUtility.message( "aip.placeholder.nogroups" )
                 } else {
                     groupDesc = group.groupDesc
@@ -170,7 +171,7 @@ class AipController {
                 itemDetailInfo = []
                 if (actionItemGroups.size() > 0) {
                     actionItemGroups[0]?.each { group ->
-                        if (group.groupDesc == null || group.groupDesc.length == 0) {
+                        if (!group.groupDesc) {
                             groupDesc = MessageUtility.message( "aip.placeholder.nogroups" )
                         } else {
                             groupDesc = group.groupDesc
