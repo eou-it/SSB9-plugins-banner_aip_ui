@@ -127,7 +127,7 @@ class AipGroupControllerIntegrationTests extends BaseIntegrationTestCase {
         def folderId = CommunicationFolder.fetchByName('AIPGeneral').id
 
         def requestObj = [:]
-        requestObj.groupTitle = "test group"
+        requestObj.groupTitle = "test unique group 1a2b" // Make sure title and folder create unique pair
         requestObj.folderId = folderId
         requestObj.groupStatus = "pending"
         requestObj.groupDesc = "<p><strong>This is a group description</p></strong>"
