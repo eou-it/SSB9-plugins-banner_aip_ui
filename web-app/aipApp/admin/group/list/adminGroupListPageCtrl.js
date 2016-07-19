@@ -54,6 +54,30 @@ var AIP;
         AdminGroupListPageCtrl.prototype.add = function () {
             this.$state.go("admin-group-add");
         };
+        AdminGroupListPageCtrl.prototype.select = function (data, index) {
+            this.selectedGroup = data.id;
+            this.enableOpen();
+        };
+        AdminGroupListPageCtrl.prototype.enableOpen = function () {
+            $("#openGroupBtn").removeAttr("disabled");
+        };
+        AdminGroupListPageCtrl.prototype.open = function () {
+            var _this = this;
+            this.adminGroupService.getGroupDetail(this.selectedGroup)
+                .then(function (response) {
+                //this.$state.go("admin-group-open");
+                //var groupParams = {};
+                if (response.group) {
+                    _this.$state.go("admin-group-open", { grp: response.group });
+                }
+                else {
+                    console.log("fail");
+                }
+            }, function (err) {
+                //TODO:: handle error call
+                console.log(err);
+            });
+        };
         AdminGroupListPageCtrl.prototype.getHeight = function () {
             var containerHeight = $(document).height() -
                 $("#breadcrumb-panel").height() -

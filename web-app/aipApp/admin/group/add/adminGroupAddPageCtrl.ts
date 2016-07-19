@@ -156,8 +156,6 @@ module AIP {
             });
             notifications.addNotification(n);
         }
-
-
     }
 }
 

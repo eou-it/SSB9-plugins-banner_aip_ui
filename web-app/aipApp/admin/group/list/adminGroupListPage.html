@@ -5,6 +5,10 @@
                 <i class="fa fa-plus" aria-hidden="true"></i>
                 <span>{{"aip.common.add"|i18n_aip}}</span>
             </button>
+            <button id="openGroupBtn" type="button" class="btn btn-default" ng-click="vm.open()" aria-label="{{'aip.common.open.group.jaws'|i18n_aip}}" disabled="disabled">
+                <i class="fa fa-sign-out" aria-hidden="true"></i>
+                <span>{{"aip.common.open"|i18n_aip}}</span>
+            </button>
         </div>
     </div>
     <div class="groupListTable" ng-style="vm.getHeight()">
@@ -13,6 +17,7 @@
                 content="vm.gridData.data"
                 paginate="false"
                 toolbar="false"
+                on-row-click="vm.select(data,index)"
                 end-point="vm.ENDPOINT.admin.grouplist">
         </xe-table-grid>
     </div>

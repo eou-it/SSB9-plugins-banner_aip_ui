@@ -51,6 +51,7 @@ modules = {
         resource url:[plugin: 'banner-csr-ui', file: 'aipApp/app.js']
         resource url:[plugin: 'banner-csr-ui', file: 'aipApp/admin/adminLandingPageCtrl.js']
         resource url:[plugin: 'banner-csr-ui', file: 'aipApp/admin/group/add/adminGroupAddPageCtrl.js']
+        resource url:[plugin: 'banner-csr-ui', file: 'aipApp/admin/group/open/adminGroupOpenPageCtrl.js']
         resource url:[plugin: 'banner-csr-ui', file: 'aipApp/admin/group/list/adminGroupListPageCtrl.js']
         resource url:[plugin: 'banner-csr-ui', file: 'aipApp/listItem/listItemPageCtrl.js']
         resource url:[plugin: 'banner-csr-ui', file: 'aipApp/listItem/itemConfirm/itemConfirmCtrl.js']
