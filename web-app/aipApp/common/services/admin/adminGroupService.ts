@@ -28,10 +28,16 @@ module AIP {
         value: string;
     }
     export interface IGroupInfo {
+        id: string|number;
         title: string;
         status: AIP.IStatus;
         folder: number|string;
         description: string;
+    }
+    export interface IGroupDetailResponse {
+        success: string;
+        errors? : string[];
+        group?  : string[];
     }
     export interface IAddGroupResponse {
         success: boolean;
@@ -45,6 +51,7 @@ module AIP {
         getFolder();
         getGroupList();
         saveGroup(groupInfo:IGroupInfo);
+        getGroupDetail(groupId: number|string);
     }
     export class AdminGroupService implements IAdminGroupService{
         static $inject=["$http", "ENDPOINT"];
@@ -112,6 +119,19 @@ module AIP {
                     //TODO: handle ajax fail in global
                     throw new Error(err);
             });
+            return request;
+        }
+        getGroupDetail(groupId) {
+            var request = this.$http({
+                    method: "POST",
+                    url: this.ENDPOINT.admin.openGroup,
+                    data: {groupId: groupId}
+                })
+                .then((response:any) => {
+                    return <IGroupDetailResponse>response.data;
+                }, (err) => {
+                    throw new Error(err);
+                })
             return request;
         }
     }

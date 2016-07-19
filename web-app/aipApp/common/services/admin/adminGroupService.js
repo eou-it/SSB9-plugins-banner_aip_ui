@@ -66,9 +66,22 @@ var AIP;
             });
             return request;
         };
+        AdminGroupService.prototype.getGroupDetail = function (groupId) {
+            var request = this.$http({
+                method: "POST",
+                url: this.ENDPOINT.admin.openGroup,
+                data: { groupId: groupId }
+            })
+                .then(function (response) {
+                return response.data;
+            }, function (err) {
+                throw new Error(err);
+            });
+            return request;
+        };
         AdminGroupService.$inject = ["$http", "ENDPOINT"];
         return AdminGroupService;
-    })();
+    }());
     AIP.AdminGroupService = AdminGroupService;
 })(AIP || (AIP = {}));
 register("bannerAIP").service("AdminGroupService", AIP.AdminGroupService);

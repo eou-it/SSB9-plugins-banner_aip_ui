@@ -12,6 +12,7 @@ module AIP {
         $state;
         $filter;
         ENDPOINT;
+        selectedGroup;
         adminGroupService: AIP.AdminGroupService;
         constructor($scope, AdminGroupService, $state, $window, $filter, ENDPOINT) {
             $scope.vm = this;
@@ -60,6 +61,30 @@ module AIP {
         }
         add() {
             this.$state.go("admin-group-add");
+        }
+        select(data,index) {
+            this.selectedGroup = data.id
+            this.enableOpen();
+        }
+        enableOpen() {
+            $("#openGroupBtn").removeAttr("disabled");
+        }
+        open() {
+            this.adminGroupService.getGroupDetail(this.selectedGroup)
+                .then((response:IGroupDetailResponse) => {
+                    //this.$state.go("admin-group-open");
+                    //var groupParams = {};
+                    if(response.group) {
+                        this.$state.go("admin-group-open", {grp: response.group});
+                    } else {
+                        console.log("fail");
+                    }
+
+                }, (err) => {
+                    //TODO:: handle error call
+                    console.log(err);
+                });
+
         }
         getHeight() {
             var containerHeight = $(document).height() -
