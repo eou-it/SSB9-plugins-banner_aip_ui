@@ -127,19 +127,45 @@ class AipGroupControllerIntegrationTests extends BaseIntegrationTestCase {
         def folderId = CommunicationFolder.fetchByName('AIPGeneral').id
 
         def requestObj = [:]
-        requestObj.groupTitle = "test unique group 1a2b" // Make sure title and folder create unique pair
+        requestObj.groupTitle = "test1a2b" // Make sure title and folder create unique pair
         requestObj.folderId = folderId
         requestObj.groupStatus = "pending"
         requestObj.groupDesc = "<p><strong>This is a group description</p></strong>"
-        requestObj.userId = "CSRADM001"
+        //requestObj.userId = "CSRADM001"
         controller.request.method = "POST"
         controller.request.json = requestObj
-
         controller.createGroup()
         def answer = JSON.parse( controller.response.contentAsString )
         assertTrue( answer.success )
         assertNotNull( answer.newGroup )
         assertTrue( answer.message.equals( null ) )
+    }
+
+    @Test
+    void testCreateActionItemTitleFolderIdDuplicateConstraint() {
+
+        def admin = PersonUtility.getPerson( "BCMADMIN" ) // role: advisor
+        assertNotNull admin
+
+        def auth = selfServiceBannerAuthenticationProvider.authenticate(
+                new UsernamePasswordAuthenticationToken( admin.bannerId, '111111' ) )
+        SecurityContextHolder.getContext().setAuthentication( auth )
+
+        def folderId = CommunicationFolder.fetchByName( 'AIPGeneral' ).id
+
+        def requestObj = [:]
+        requestObj.groupTitle = "International Students" // group in AIPGeneral Folder with this name already exists
+        requestObj.folderId = folderId
+        requestObj.groupStatus = "pending"
+        requestObj.groupDesc = "<p><strong>This is a group description</p></strong>"
+        //requestObj.userId = "CSRADM001"
+        controller.request.method = "POST"
+        controller.request.json = requestObj
+        controller.createGroup()
+        def answer = JSON.parse( controller.response.contentAsString )
+        assertFalse answer.success
+        assertTrue( answer.group.equals( null ) )
+        assertEquals( answer.errors[0], 'Save failed. The Group Title and Folder must be unique.')
     }
 
 
@@ -160,7 +186,7 @@ class AipGroupControllerIntegrationTests extends BaseIntegrationTestCase {
         requestObj.folderId = folderId
         requestObj.groupStatus = null
         requestObj.groupDesc = "<p><strong>This is a group description</p></strong>"
-        requestObj.userId = ""
+        //requestObj.userId = ""
         controller.request.method = "POST"
         controller.request.json = requestObj
 
@@ -189,7 +215,7 @@ class AipGroupControllerIntegrationTests extends BaseIntegrationTestCase {
         requestObj.folderId = folderId
         requestObj.groupStatus = "pending"
         requestObj.groupDesc = "<p><strong>This is a group description</p></strong>"
-        requestObj.userId = ""
+        //requestObj.userId = ""
         controller.request.method = "POST"
         controller.request.json = requestObj
 
@@ -217,7 +243,7 @@ class AipGroupControllerIntegrationTests extends BaseIntegrationTestCase {
         requestObj.folderId = folderId
         requestObj.groupStatus = "pendingstatusoverthe30characterlimit"
         requestObj.groupDesc = "<p><strong>This is a group description</p></strong>"
-        requestObj.userId = "CSRADM001"
+        //requestObj.userId = "CSRADM001"
         controller.request.method = "POST"
         controller.request.json = requestObj
 
@@ -307,8 +333,6 @@ class AipGroupControllerIntegrationTests extends BaseIntegrationTestCase {
         assertNotNull admin
 
         List<ActionItemGroup> actionItemGroups = actionItemGroupService.listActionItemGroups()
-        def actionItemGroupId = actionItemGroups[0].id
-        def actionItemGroupTitle = actionItemGroups[0].title
 
         def auth = selfServiceBannerAuthenticationProvider.authenticate(
                 new UsernamePasswordAuthenticationToken( admin.bannerId, '111111' ) )

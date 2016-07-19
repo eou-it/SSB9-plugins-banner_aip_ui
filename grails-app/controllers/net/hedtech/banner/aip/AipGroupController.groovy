@@ -112,7 +112,8 @@ class AipGroupController {
         def map
         def readOnlyGroup
         try {
-            map = actionItemGroupService.create( [domainModel: group] )
+            // flush=false. This is expected to fail and rollback under certain conditions
+            map = actionItemGroupService.create( [domainModel: group], false )
             readOnlyGroup = groupFolderReadOnlyService.getActionItemGroupById( map.id )
             success = true
         } catch (ApplicationException ae) {
