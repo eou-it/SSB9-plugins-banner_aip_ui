@@ -89,7 +89,7 @@ module AIP {
                             notiType: "saveSuccess",
                             data: response
                         };
-                        this.$state.go("admin-group-list", {noti: notiParams});
+                        this.$state.go("admin-group-open", {noti: notiParams, grp: response.newGroup[0]});
                     } else {
                         this.saveErrorCallback(response.invalidField, response.errors);
                     }

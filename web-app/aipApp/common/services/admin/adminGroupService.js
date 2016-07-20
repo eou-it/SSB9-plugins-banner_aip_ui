@@ -67,10 +67,13 @@ var AIP;
             return request;
         };
         AdminGroupService.prototype.getGroupDetail = function (groupId) {
+            var params = {
+                groupId: groupId
+            };
             var request = this.$http({
                 method: "POST",
                 url: this.ENDPOINT.admin.openGroup,
-                data: { groupId: groupId }
+                data: params
             })
                 .then(function (response) {
                 return response.data;
@@ -81,7 +84,7 @@ var AIP;
         };
         AdminGroupService.$inject = ["$http", "ENDPOINT"];
         return AdminGroupService;
-    }());
+    })();
     AIP.AdminGroupService = AdminGroupService;
 })(AIP || (AIP = {}));
 register("bannerAIP").service("AdminGroupService", AIP.AdminGroupService);

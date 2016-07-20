@@ -18,11 +18,10 @@ describe("CSR User service", function() {
             $injector = _$injector_;
             userService = CSRUserService;
             // Mock http request
-            $httpBackend.when("GET", "/aip/checkActionItem")
-                .respond({isActionItem: true});
+            $httpBackend.when("GET", "/aip/checkActionItem").respond({isActionItem: true});
             // bypass common-components' defect code
-            $httpBackend.when("GET", "/dest/i18n/messages-en-us.json")
-                .respond({});
+           // $httpBackend.when("GET", "/dest/i18n/messages-en-us.json")
+             //   .respond({});
             $httpBackend.when("POST", "aip/userInfo")
                 .respond({
                     data: {

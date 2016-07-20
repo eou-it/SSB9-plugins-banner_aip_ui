@@ -52,13 +52,15 @@ class AipGroupController {
     }
 
 
-    def openGroup( groupId ) {
+    def openGroup() {
         /* //TODO: determine access in later US
         if (!hasAccess( 'read' )) {
             response.sendError( 403 )
             return
         }
         */
+        def jsonObj = request.JSON;
+        def groupId = jsonObj.groupId;
 
         if (!groupId) {
             response.sendError( 403 )

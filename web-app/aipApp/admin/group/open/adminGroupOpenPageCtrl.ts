@@ -59,8 +59,27 @@ module AIP {
         }
         displayGroup() {
             console.log(this.$state.params.grp);
-            $("#title-panel h1" ).html(this.$state.params.grp.title);
+            //todo: need to make responses more consistent
+            var groupTitle =
+                this.$state.params.grp.title ? this.$state.params.grp.title: this.$state.params.grp.groupTitle;
+            $("#title-panel h1" ).html(groupTitle);
         }
+        handleNotification(noti) {
+            if(noti.notiType === "saveSuccess") {
+                var data = noti.data.newGroup[0];
+                var n = new Notification({
+                    message: this.$filter("i18n_aip")("aip.admin.group.add.success"), //+
+                    type: "success",
+                    flash: true
+                });
+                setTimeout(() => {
+                    notifications.addNotification(n);
+                    this.$state.params.noti = undefined;
+                    //$(".groupListContainer .controls .control button").focus();
+                }, 500);
+            }
+        }
+
     }
 
 }

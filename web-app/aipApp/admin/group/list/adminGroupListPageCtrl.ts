@@ -34,30 +34,9 @@ module AIP {
         init() {
             this.adminGroupService.getGroupList().then((response:IGridData) => {
                 this.gridData = response;
-                if(this.$state.params.noti) {
-                    this.handleNotification(this.$state.params.noti);
-                }
             }, (err) => {
                 console.log(err);
             });
-        }
-        handleNotification(noti) {
-            if(noti.notiType === "saveSuccess") {
-                var data = noti.data.newGroup[0];
-                var n = new Notification({
-                    message: this.$filter("i18n_aip")("aip.admin.group.add.success"), //+
-                        //"</br>Title: " + data.groupTitle +
-                        //"</br>Status: " + data.groupStatus +
-                        //"</br>Folder: " + data.folderName,
-                    type: "success",
-                    flash: true
-                });
-                setTimeout(() => {
-                    notifications.addNotification(n);
-                    this.$state.params.noti = undefined;
-                    $(".groupListContainer .controls .control button").focus();
-                }, 500);
-            }
         }
         add() {
             this.$state.go("admin-group-add");
@@ -72,19 +51,15 @@ module AIP {
         open() {
             this.adminGroupService.getGroupDetail(this.selectedGroup)
                 .then((response:IGroupDetailResponse) => {
-                    //this.$state.go("admin-group-open");
-                    //var groupParams = {};
                     if(response.group) {
                         this.$state.go("admin-group-open", {grp: response.group});
                     } else {
                         console.log("fail");
                     }
-
                 }, (err) => {
                     //TODO:: handle error call
                     console.log(err);
                 });
-
         }
         getHeight() {
             var containerHeight = $(document).height() -

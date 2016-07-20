@@ -266,7 +266,12 @@ class AipGroupControllerIntegrationTests extends BaseIntegrationTestCase {
                 new UsernamePasswordAuthenticationToken( admin.bannerId, '111111' ) )
         SecurityContextHolder.getContext().setAuthentication( auth )
 
-        controller.openGroup( actionItemGroupId )
+        def requestObj = [:]
+        requestObj.groupId = actionItemGroupId
+        controller.request.method = "POST"
+        controller.request.json = requestObj
+
+        controller.openGroup()
         assertEquals 200, controller.response.status
         def answer = JSON.parse( controller.response.contentAsString )
         assertEquals( true, answer.success )
@@ -288,7 +293,13 @@ class AipGroupControllerIntegrationTests extends BaseIntegrationTestCase {
                 new UsernamePasswordAuthenticationToken( admin.bannerId, '111111' ) )
         SecurityContextHolder.getContext().setAuthentication( auth )
 
-        controller.openGroup( actionItemGroupId )
+        def requestObj = [:]
+        requestObj.groupId = actionItemGroupId
+        controller.request.method = "POST"
+        controller.request.json = requestObj
+
+        controller.openGroup()
+
         assertEquals 200, controller.response.status
         def answer = JSON.parse( controller.response.contentAsString )
         assertEquals( true, answer.success )
@@ -302,7 +313,13 @@ class AipGroupControllerIntegrationTests extends BaseIntegrationTestCase {
         def actionItemGroupId = actionItemGroups[0].id
         def actionItemGroupTitle = actionItemGroups[0].title
 
-        controller.openGroup( actionItemGroupId )
+        def requestObj = [:]
+        requestObj.groupId = actionItemGroupId
+        controller.request.method = "POST"
+        controller.request.json = requestObj
+
+        controller.openGroup()
+
         assertEquals 200, controller.response.status
         def answer = JSON.parse( controller.response.contentAsString )
         assertEquals( true, answer.success )
@@ -319,7 +336,13 @@ class AipGroupControllerIntegrationTests extends BaseIntegrationTestCase {
                 new UsernamePasswordAuthenticationToken( admin.bannerId, '111111' ) )
         SecurityContextHolder.getContext().setAuthentication( auth )
 
-        controller.openGroup(1234567895)
+        def requestObj = [:]
+        requestObj.groupId = 1234567895
+        controller.request.method = "POST"
+        controller.request.json = requestObj
+
+        controller.openGroup()
+
         assertEquals 200, controller.response.status
         def answer = JSON.parse( controller.response.contentAsString )
         assertEquals( false, answer.success )
@@ -338,7 +361,12 @@ class AipGroupControllerIntegrationTests extends BaseIntegrationTestCase {
                 new UsernamePasswordAuthenticationToken( admin.bannerId, '111111' ) )
         SecurityContextHolder.getContext().setAuthentication( auth )
 
-        controller.openGroup( "" )
+        def requestObj = [:]
+        requestObj.groupId = null
+        controller.request.method = "POST"
+        controller.request.json = requestObj
+
+        controller.openGroup( )
         assertEquals 403, controller.response.status
     }
 

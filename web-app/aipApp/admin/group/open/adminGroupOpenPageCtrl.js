@@ -40,10 +40,28 @@ var AIP;
         };
         AdminGroupOpenPageCtrl.prototype.displayGroup = function () {
             console.log(this.$state.params.grp);
-            $("#title-panel h1").html(this.$state.params.grp.title);
+            //todo: need to make responses more consistent
+            var groupTitle = this.$state.params.grp.title ? this.$state.params.grp.title : this.$state.params.grp.groupTitle;
+            $("#title-panel h1").html(groupTitle);
+        };
+        AdminGroupOpenPageCtrl.prototype.handleNotification = function (noti) {
+            var _this = this;
+            if (noti.notiType === "saveSuccess") {
+                var data = noti.data.newGroup[0];
+                var n = new Notification({
+                    message: this.$filter("i18n_aip")("aip.admin.group.add.success"),
+                    type: "success",
+                    flash: true
+                });
+                setTimeout(function () {
+                    notifications.addNotification(n);
+                    _this.$state.params.noti = undefined;
+                    //$(".groupListContainer .controls .control button").focus();
+                }, 500);
+            }
         };
         return AdminGroupOpenPageCtrl;
-    })();
+    }());
     AIP.AdminGroupOpenPageCtrl = AdminGroupOpenPageCtrl;
 })(AIP || (AIP = {}));
 register("bannerAIP").controller("AdminGroupOpenPageCtrl", AIP.AdminGroupOpenPageCtrl);
