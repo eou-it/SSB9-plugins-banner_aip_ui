@@ -52,7 +52,7 @@ class AipGroupController {
     }
 
 
-    def openGroup( ) {
+    def openGroup( groupId ) {
         /* //TODO: determine access in later US
         if (!hasAccess( 'read' )) {
             response.sendError( 403 )
@@ -60,9 +60,7 @@ class AipGroupController {
         }
         */
 
-        def jsonObj = request.JSON; //type, groupId, actionItemId
-
-        if (!jsonObj.groupId) {
+        if (!groupId) {
             response.sendError( 403 )
             return
         }
@@ -70,7 +68,7 @@ class AipGroupController {
         def success = false
         def errors = []
 
-        def group = actionItemGroupService.getActionItemGroupById( jsonObj.groupId )
+        def group = actionItemGroupService.getActionItemGroupById( groupId )
 
         if (group) {
             response.status = 200

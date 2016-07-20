@@ -182,7 +182,7 @@ class AipGroupControllerIntegrationTests extends BaseIntegrationTestCase {
         def folderId = CommunicationFolder.fetchByName( 'AIPGeneral' ).id
 
         def requestObj = [:]
-        requestObj.groupTitle = ""
+        requestObj.groupTitle = null
         requestObj.folderId = folderId
         requestObj.groupStatus = null
         requestObj.groupDesc = "<p><strong>This is a group description</p></strong>"
@@ -192,8 +192,8 @@ class AipGroupControllerIntegrationTests extends BaseIntegrationTestCase {
 
         controller.createGroup()
         def answer = JSON.parse( controller.response.contentAsString )
-        assertEquals( "title cannot be null", answer.errors[0])
-        assertEquals( "status cannot be null", answer.errors[1])
+        assertEquals( "Save failed. Title cannot be null.", answer.errors[0])
+        assertEquals( "Save failed. Status cannot be null.", answer.errors[1])
         assertEquals( false, answer.success)
     }
 
@@ -221,7 +221,7 @@ class AipGroupControllerIntegrationTests extends BaseIntegrationTestCase {
 
         controller.createGroup()
         def answer = JSON.parse( controller.response.contentAsString )
-        assertEquals( "title cannot be null", answer.errors[0])
+        assertEquals( "Save failed. Title cannot be null.", answer.errors[0])
         assertEquals( false, answer.success)
     }
 
