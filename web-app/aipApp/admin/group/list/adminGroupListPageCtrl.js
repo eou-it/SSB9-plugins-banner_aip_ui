@@ -32,9 +32,11 @@ var AIP;
         AdminGroupListPageCtrl.prototype.add = function () {
             this.$state.go("admin-group-add");
         };
-        AdminGroupListPageCtrl.prototype.select = function (data, index) {
-            this.selectedGroup = data.id;
-            this.enableOpen();
+        AdminGroupListPageCtrl.prototype.select = function (data) {
+            if (data) {
+                this.selectedGroup = data.id;
+                this.enableOpen();
+            }
         };
         AdminGroupListPageCtrl.prototype.enableOpen = function () {
             $("#openGroupBtn").removeAttr("disabled");
@@ -44,9 +46,10 @@ var AIP;
             this.adminGroupService.getGroupDetail(this.selectedGroup)
                 .then(function (response) {
                 if (response.group) {
-                    _this.$state.go("admin-group-open", { grp: response.group });
+                    _this.$state.go("admin-group-open", { grp: response.group.id });
                 }
                 else {
+                    //todo: output error in notification center?
                     console.log("fail");
                 }
             }, function (err) {

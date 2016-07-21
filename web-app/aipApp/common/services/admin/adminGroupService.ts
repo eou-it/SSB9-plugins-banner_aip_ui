@@ -37,7 +37,7 @@ module AIP {
     export interface IGroupDetailResponse {
         success: string;
         errors? : string[];
-        group?  : string[];
+        group?  : IGroupInfo;
     }
     export interface IAddGroupResponse {
         success: boolean;

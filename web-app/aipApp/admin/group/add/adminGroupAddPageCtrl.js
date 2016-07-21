@@ -48,7 +48,9 @@ var AIP;
             this.$q.all(promises).then(function () {
                 //TODO:: turn off the spinner
                 _this.spinnerService.showSpinner(false);
-                _this.groupInfo.status = _this.status[0];
+                //this.groupInfo.status = this.status[0];
+                //todo: this is where we will want to modify code to set status value i select2
+                //console.log("groupInfo status = " + this.groupInfo.status );
             });
         };
         AdminGroupAddPageCtrl.prototype.save = function () {
@@ -61,7 +63,7 @@ var AIP;
                         notiType: "saveSuccess",
                         data: response
                     };
-                    _this.$state.go("admin-group-open", { noti: notiParams, grp: response.newGroup[0] });
+                    _this.$state.go("admin-group-open", { noti: notiParams, grp: response.newGroup[0].groupId });
                 }
                 else {
                     _this.saveErrorCallback(response.invalidField, response.errors);
@@ -134,7 +136,7 @@ var AIP;
             notifications.addNotification(n);
         };
         return AdminGroupAddPageCtrl;
-    }());
+    })();
     AIP.AdminGroupAddPageCtrl = AdminGroupAddPageCtrl;
 })(AIP || (AIP = {}));
 register("bannerAIP").controller("AdminGroupAddPageCtrl", AIP.AdminGroupAddPageCtrl);

@@ -12,7 +12,7 @@ var AIP;
             this.$filter = $filter;
             this.adminGroupService = AdminGroupService;
             this.spinnerService = SpinnerService;
-            $scope.$watch("[vm.groupDetailResponse]", function (newVal, oldVal) {
+            $scope.$watch("[vm.groupDetailResponse, vm.groupInfo]", function (newVal, oldVal) {
                 if (!$scope.$$phase) {
                     $scope.apply();
                 }
@@ -23,27 +23,20 @@ var AIP;
             var _this = this;
             this.spinnerService.showSpinner(true);
             var promises = [];
-            this.groupDetail = {};
-            if (this.$state.params.grp) {
-                this.displayGroup();
+            this.adminGroupService.getGroupDetail(this.$state.params.grp).then(function (response) {
+                $("#title-panel h1").html(response.group.title);
+            }, function (err) {
+                console.log(err);
+            });
+            if (this.$state.params.noti) {
+                this.handleNotification(this.$state.params.noti);
             }
-            /*
-            promises.push(
-                this.adminGroupService.getGroupDetail(this.$state.params.grp.groupId).then((status) => {
-                })
-            );
-            */
             this.$q.all(promises).then(function () {
                 //TODO:: turn off the spinner
                 _this.spinnerService.showSpinner(false);
             });
         };
-        AdminGroupOpenPageCtrl.prototype.displayGroup = function () {
-            console.log(this.$state.params.grp);
-            //todo: need to make responses more consistent
-            var groupTitle = this.$state.params.grp.title ? this.$state.params.grp.title : this.$state.params.grp.groupTitle;
-            $("#title-panel h1").html(groupTitle);
-        };
+        ;
         AdminGroupOpenPageCtrl.prototype.handleNotification = function (noti) {
             var _this = this;
             if (noti.notiType === "saveSuccess") {
@@ -56,7 +49,7 @@ var AIP;
                 setTimeout(function () {
                     notifications.addNotification(n);
                     _this.$state.params.noti = undefined;
-                    //$(".groupListContainer .controls .control button").focus();
+                    $(".groupAddContainer").focus();
                 }, 500);
             }
         };

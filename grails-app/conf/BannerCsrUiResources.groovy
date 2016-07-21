@@ -19,6 +19,7 @@ modules = {
         resource url: [plugin: 'banner-csr-ui', file: 'node_modules/angular-aria/angular-aria.js']
         resource url: [plugin: 'banner-csr-ui', file: 'node_modules/angular-ui-bootstrap/dist/ui-bootstrap-tpls.js']
         resource url: [plugin: 'banner-csr-ui', file: 'node_modules/moment/min/moment.min.js']
+        resource url:[plugin: 'banner-ui-ss',file: 'js/angular/angular-translate.min.js']
 //        resource url:[plugin: 'banner-csr', file: 'bower_components/angular-common/build/angular-common.js']
     }
 
@@ -27,18 +28,19 @@ modules = {
     }
     'bannerAIPUI' {
         dependsOn 'csr-angular'
-        dependsOn 'bannerSelfServiceCommonLTR, extensibilityCommon, extensibilityAngular, common-components, angularApp, bootstrap'
+        dependsOn 'bannerSelfServiceCommonLTR, extensibilityCommon, extensibilityAngular, common-components, common-components-ltr, angularApp, ' +
+                'bootstrap'
         dependsOn 'bannerAIPApp'
         dependsOn 'font-awesome'
-        resource url:[plugin: 'banner-csr-ui', file: 'css/xe-ui-components.css']
+        //resource url:[plugin: 'banner-csr-ui', file: 'css/xe-ui-components.css']
         resource url:[plugin: 'banner-csr-ui', file: 'css/aip-main.css']
         resource url:[plugin: 'banner-csr-ui', file: 'aipApp/common/directives/ckeditor/css/ckEditor.css']
     }
     'bannerAIPUIRTL' {
 //        dependsOn 'bannerAIPUI'
-        dependsOn 'bannerSelfServiceCommonRTL, extensibilityAngularRTL'
+        dependsOn 'bannerSelfServiceCommonRTL, extensibilityAngularRTL, common-components, common-components-rtl'
         resource url:[plugin: 'banner-ui-ss', file: 'bootstrap/css/bootstrap-rtl.css']
-        resource url:[plugin: 'banner-csr-ui', file: 'css/xe-ui-components-rtl.css']
+        //resource url:[plugin: 'banner-csr-ui', file: 'css/xe-ui-components-rtl.css']
         resource url:[plugin: 'banner-csr-ui', file: 'css/aip-main-rtl.css']
     }
     'bannerAIPUtils' {

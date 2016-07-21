@@ -41,9 +41,11 @@ module AIP {
         add() {
             this.$state.go("admin-group-add");
         }
-        select(data,index) {
-            this.selectedGroup = data.id
-            this.enableOpen();
+        select(data) {
+            if (data) {
+                this.selectedGroup = data.id
+                this.enableOpen();
+            }
         }
         enableOpen() {
             $("#openGroupBtn").removeAttr("disabled");
@@ -52,8 +54,10 @@ module AIP {
             this.adminGroupService.getGroupDetail(this.selectedGroup)
                 .then((response:IGroupDetailResponse) => {
                     if(response.group) {
-                        this.$state.go("admin-group-open", {grp: response.group});
+                        this.$state.go("admin-group-open", {grp: response.group.id});
+
                     } else {
+                        //todo: output error in notification center?
                         console.log("fail");
                     }
                 }, (err) => {

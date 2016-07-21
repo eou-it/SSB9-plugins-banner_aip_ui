@@ -11,11 +11,11 @@ module AIP {
         //status: AIP.IStatus[];
         //folders: AIP.IFolder[];
         adminGroupService: AIP.AdminGroupService;
-        groupDetail: IGroupDetailResponse;
+        groupInfo: IGroupInfo;
     }
     export class AdminGroupOpenPageCtrl implements IAdminGroupOpenPageCtrl{
         $inject = ["$scope", "AdminGroupService", "$q", "SpinnerService", "$state", "$filter"];
-        groupDetail:IGroupDetailResponse;
+        groupInfo:IGroupInfo;
         adminGroupService: AIP.AdminGroupService;
         spinnerService: AIP.SpinnerService;
         $q: ng.IQService;
@@ -30,7 +30,7 @@ module AIP {
             this.adminGroupService = AdminGroupService;
             this.spinnerService = SpinnerService;
             $scope.$watch(
-                "[vm.groupDetailResponse]", function(newVal, oldVal) {
+                "[vm.groupDetailResponse, vm.groupInfo]", function(newVal, oldVal) {
                     if(!$scope.$$phase) {
                         $scope.apply();
                     }
@@ -39,31 +39,24 @@ module AIP {
         }
 
         init() {
-            this.spinnerService.showSpinner(true);
+            this.spinnerService.showSpinner( true );
             var promises = [];
-            this.groupDetail = <any>{};
 
-            if(this.$state.params.grp) {
-                this.displayGroup();
+            this.adminGroupService.getGroupDetail( this.$state.params.grp).then( (response:IGroupDetailResponse ) => {
+                $("#title-panel h1" ).html(response.group.title);
+            }, ( err ) => {
+                console.log( err );
+            } );
+
+            if (this.$state.params.noti) {
+                this.handleNotification( this.$state.params.noti );
             }
-            /*
-            promises.push(
-                this.adminGroupService.getGroupDetail(this.$state.params.grp.groupId).then((status) => {
-                })
-            );
-            */
-            this.$q.all(promises).then(() => {
+            this.$q.all( promises ).then( () => {
                 //TODO:: turn off the spinner
-                this.spinnerService.showSpinner(false);
-            });
-        }
-        displayGroup() {
-            console.log(this.$state.params.grp);
-            //todo: need to make responses more consistent
-            var groupTitle =
-                this.$state.params.grp.title ? this.$state.params.grp.title: this.$state.params.grp.groupTitle;
-            $("#title-panel h1" ).html(groupTitle);
-        }
+                this.spinnerService.showSpinner( false );
+            } );
+        };
+
         handleNotification(noti) {
             if(noti.notiType === "saveSuccess") {
                 var data = noti.data.newGroup[0];
@@ -75,11 +68,10 @@ module AIP {
                 setTimeout(() => {
                     notifications.addNotification(n);
                     this.$state.params.noti = undefined;
-                    //$(".groupListContainer .controls .control button").focus();
+                    $(".groupAddContainer").focus();
                 }, 500);
             }
         }
-
     }
 
 }

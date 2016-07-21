@@ -1,8 +1,5 @@
-/**
- * Created by jshin on 1/21/16.
- */
 angular.module('bannerAIPUI')
-    .directive('aipLandingItem', [function() {
+    .directive('aipGroupDetail', [function() {
         return {
             restrict: 'EA',
             terminal: true,
@@ -10,7 +7,7 @@ angular.module('bannerAIPUI')
                 model: "=",
                 method: "&"
             },
-            controller: ['$scope', '$attrs', "$state", function($scope, $attrs, $state) {
+            controller: ['$scope', '$attrs', "$state", "$filter", function($scope, $attrs, $state, $filter) {
                 if (!$scope.model) {
                     devErrorMessages += "model attribute is required\n";
                 }

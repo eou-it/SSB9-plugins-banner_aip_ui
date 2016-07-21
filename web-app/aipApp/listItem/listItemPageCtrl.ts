@@ -162,6 +162,7 @@ module AIP {
                 this.selectItem(groupId, nextItemId);
             }
         }
+
         selectItem(groupId, itemId) {
             var defer = this.$q.defer();
             var index = this.getIndex(groupId, itemId);
@@ -195,7 +196,6 @@ module AIP {
             }
             return index;
         }
-
         toggleDetail(state) {
             if(state.open) {
                 this.itemListViewService.getDetailInformation(state.groupId, "group", null)

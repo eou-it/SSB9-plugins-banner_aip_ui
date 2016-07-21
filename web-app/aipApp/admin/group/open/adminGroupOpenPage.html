@@ -1,12 +1,28 @@
-<div class="groupAddContainer">
+<div class="groupOpenContainer">
     <div class="groupInfo">
         <div class="row groupInfoRow">
-            <div class="groupElement col-xs-12 col-sm-5">
+            <div class="groupElement col-xs-12 col-sm-12">
                 <div class="row">
-                    Open group.
-                    </div>
+                    <xe-tab-nav>
+                        <xe-tab-panel heading="{{'aip.common.overview'|i18n_aip}}">
+                           <!-- <aip-group-detail model="vm.groupDetail" ></aip-group-detail>-->
+                            <!--<div ng-model="vm.groupInfo">-->
+                            <div>
+                                <br />
+                                <h3>{{"aip.common.title"|i18n_aip}}</h3>
+                                <p>placeholder</p>
+                                <h3>{{"aip.common.folder"|i18n_aip}}</h3>
+                                <p></p>
+                                <h3>{{"aip.common.status"|i18n_aip}}</h3>
+                                <p></p>
+                                <h3>{{"aip.common.group.description"|i18n_aip}}</h3>
+                            </div>
+                        </xe-tab-panel>
+                        <xe-tab-panel heading="{{'aip.common.order.action.items'|i18n_aip}}">
+                        </xe-tab-panel>
+                    </xe-tab-nav>
                 </div>
-
             </div>
         </div>
+    </div>
 </div>

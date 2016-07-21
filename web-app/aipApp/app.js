@@ -9,12 +9,13 @@ var bannerAIPApp = angular.module("bannerAIP", [
     "ngResource",
     "ngSanitize",
     "ui.router",
+    "extensibility",
     "ui.bootstrap",
     "ngAria",
     "I18nAIP",
     "ngAnimate",
-    "xe-ui-components",
-    "bannerAIPUI"
+    "bannerAIPUI",
+    "xe-ui-components"
     ])
 
 //set application root url
@@ -50,8 +51,7 @@ var bannerAIPApp = angular.module("bannerAIP", [
             controller:"AdminGroupAddPageCtrl",
             breadcrumb: {
                 label: "aip.admin.group.add",
-                url: "/aip/admin#/group/add"
-            }
+                url: "/aip/admin#/group/add"}
         },
         "admin-group-open": {
             url: "/group/open",
@@ -59,7 +59,8 @@ var bannerAIPApp = angular.module("bannerAIP", [
             controller:"AdminGroupOpenPageCtrl",
             breadcrumb: {
                 label: "aip.admin.group.open",
-                url: "/aip/admin#/group/open"
+                url: "/aip/admin#/group/open",
+
             }
         },
 
@@ -153,13 +154,17 @@ var bannerAIPApp = angular.module("bannerAIP", [
             $.i18n.prop("aip.common.next");
             $.i18n.prop("aip.common.add");
             $.i18n.prop("aip.common.open");
+            $.i18n.prop("aip.common.overview");
+            $.i18n.prop("aip.common.order.action.items");
             $.i18n.prop("aip.common.saveandreturn");
             $.i18n.prop("aip.common.add.group.jaws");
+            $.i18n.prop("aip.common.open.group.jaws");
+
             $.i18n.prop("aip.placeholder.nogroups");
-
-
             $.i18n.prop("aip.placeholder.noitems");
+
             $.i18n.prop("aip.admin.landing");
+
             $.i18n.prop("aip.admin.group");
             $.i18n.prop("aip.admin.group.description");
             $.i18n.prop("aip.admin.group.add");
@@ -168,7 +173,6 @@ var bannerAIPApp = angular.module("bannerAIP", [
             $.i18n.prop("aip.admin.group.error.exceedMax");
 
             $.i18n.prop("aip.admin.group.add.folder.default");
-
             $.i18n.prop("aip.admin.group.add.defaultFolder");
             $.i18n.prop("aip.admin.group.add.success");
             $.i18n.prop("aip.admin.group.add.error.blank");
@@ -200,14 +204,6 @@ var bannerAIPApp = angular.module("bannerAIP", [
             $.i18n.prop("aip.user.detail.button.return");
 
             $.i18n.prop("aip.operation.not.permitted");
-
-            /*
-            $.i18n.prop("nullable");
-            $.i18n.prop("maxSize.exceeded");
-            $.i18n.prop("unique");
-            $.i18n.prop("actionItemGroup.title.unique");
-            $.i18n.prop("actionItemGroup.status.null");
-            */
     }]
 );
 
@@ -243,5 +239,13 @@ var bannerAIPUI = angular.module("bannerAIPUI", [])
             directive.templateUrl = APP_ROOT + "common/directives/item-detail/template/itemDetail.html";
             return $delegate;
         });
+        /*
+        $provide.decorator("aipGroupDetailDirective", function($delegate) {
+            var directive = $delegate[0];
+            directive.templateUrl = APP_ROOT + "common/directives/admin/group-detail/template/groupDetail.html";
+            return $delegate;
+        });
+        */
+
     }]
 );

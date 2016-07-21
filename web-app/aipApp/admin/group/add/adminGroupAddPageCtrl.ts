@@ -11,7 +11,7 @@ module AIP {
         status: AIP.IStatus[];
         folders: AIP.IFolder[];
         adminGroupService: AIP.AdminGroupService;
-        groupInfo: IGroupInfo;
+        groupInfo: AIP.IGroupInfo;
         errorMessage;
         save(): void;
         cancel(): void;
@@ -20,7 +20,7 @@ module AIP {
         $inject = ["$scope", "AdminGroupService", "$q", "SpinnerService", "$state", "$filter"];
         status: AIP.IStatus[];
         folders: AIP.IFolder[];
-        groupInfo: IGroupInfo;
+        groupInfo: AIP.IGroupInfo;
         errorMessage;
         adminGroupService: AIP.AdminGroupService;
         spinnerService: AIP.SpinnerService;
@@ -43,7 +43,6 @@ module AIP {
                     }
                 }, true);
             this.init();
-
         }
 
         init() {
@@ -77,8 +76,11 @@ module AIP {
             this.$q.all(promises).then(() => {
                 //TODO:: turn off the spinner
                 this.spinnerService.showSpinner(false);
-                this.groupInfo.status = this.status[0];
+                //this.groupInfo.status = this.status[0];
+                //todo: this is where we will want to modify code to set status value i select2
+                //console.log("groupInfo status = " + this.groupInfo.status );
             });
+
         }
         save() {
             this.adminGroupService.saveGroup(this.groupInfo)
@@ -89,7 +91,7 @@ module AIP {
                             notiType: "saveSuccess",
                             data: response
                         };
-                        this.$state.go("admin-group-open", {noti: notiParams, grp: response.newGroup[0]});
+                        this.$state.go("admin-group-open", {noti: notiParams, grp: response.newGroup[0].groupId});
                     } else {
                         this.saveErrorCallback(response.invalidField, response.errors);
                     }
