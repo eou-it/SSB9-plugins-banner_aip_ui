@@ -67,13 +67,10 @@ var AIP;
             return request;
         };
         AdminGroupService.prototype.getGroupDetail = function (groupId) {
-            var params = {
-                groupId: groupId
-            };
             var request = this.$http({
                 method: "POST",
                 url: this.ENDPOINT.admin.openGroup,
-                data: params
+                data: { groupId: groupId }
             })
                 .then(function (response) {
                 return response.data;

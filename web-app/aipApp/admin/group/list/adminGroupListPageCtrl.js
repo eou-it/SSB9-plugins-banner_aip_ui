@@ -10,6 +10,7 @@ var AIP;
             this.$state = $state;
             this.ENDPOINT = ENDPOINT;
             this.$filter = $filter;
+            this.selectedGroup;
             this.init();
             $scope.$watch("vm.gridData", function (newVal, oldVal) {
                 if (!$scope.$$phase) {
@@ -34,7 +35,7 @@ var AIP;
         };
         AdminGroupListPageCtrl.prototype.select = function (data) {
             if (data) {
-                this.selectedGroup = data.id;
+                this.selectedGroup = data;
                 this.enableOpen();
             }
         };
@@ -43,8 +44,7 @@ var AIP;
         };
         AdminGroupListPageCtrl.prototype.open = function () {
             var _this = this;
-            this.adminGroupService.getGroupDetail(this.selectedGroup)
-                .then(function (response) {
+            this.adminGroupService.getGroupDetail(this.selectedGroup.id).then(function (response) {
                 if (response.group) {
                     _this.$state.go("admin-group-open", { grp: response.group.id });
                 }

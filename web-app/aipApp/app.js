@@ -239,13 +239,14 @@ var bannerAIPUI = angular.module("bannerAIPUI", [])
             directive.templateUrl = APP_ROOT + "common/directives/item-detail/template/itemDetail.html";
             return $delegate;
         });
-        /*
+
         $provide.decorator("aipGroupDetailDirective", function($delegate) {
             var directive = $delegate[0];
             directive.templateUrl = APP_ROOT + "common/directives/admin/group-detail/template/groupDetail.html";
             return $delegate;
         });
-        */
+
+
 
     }]
 );

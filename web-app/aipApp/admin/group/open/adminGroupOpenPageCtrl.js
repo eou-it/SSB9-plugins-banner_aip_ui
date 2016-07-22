@@ -24,7 +24,8 @@ var AIP;
             this.spinnerService.showSpinner(true);
             var promises = [];
             this.adminGroupService.getGroupDetail(this.$state.params.grp).then(function (response) {
-                $("#title-panel h1").html(response.group.title);
+                _this.groupInfo = response.group;
+                $("#title-panel h1").html(_this.groupInfo.title);
             }, function (err) {
                 console.log(err);
             });
@@ -34,6 +35,8 @@ var AIP;
             this.$q.all(promises).then(function () {
                 //TODO:: turn off the spinner
                 _this.spinnerService.showSpinner(false);
+                //console.log(this.)
+                // $("#title-panel h1" ).html(this.adminGroupService.g);
             });
         };
         ;
@@ -54,7 +57,7 @@ var AIP;
             }
         };
         return AdminGroupOpenPageCtrl;
-    }());
+    })();
     AIP.AdminGroupOpenPageCtrl = AdminGroupOpenPageCtrl;
 })(AIP || (AIP = {}));
 register("bannerAIP").controller("AdminGroupOpenPageCtrl", AIP.AdminGroupOpenPageCtrl);

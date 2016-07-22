@@ -20,6 +20,7 @@ module AIP {
             this.$state = $state;
             this.ENDPOINT = ENDPOINT;
             this.$filter = $filter;
+            this.selectedGroup;
             this.init();
             $scope.$watch("vm.gridData", (newVal, oldVal) => {
                 if(!$scope.$$phase) {
@@ -43,7 +44,8 @@ module AIP {
         }
         select(data) {
             if (data) {
-                this.selectedGroup = data.id
+
+                this.selectedGroup = data
                 this.enableOpen();
             }
         }
@@ -51,11 +53,9 @@ module AIP {
             $("#openGroupBtn").removeAttr("disabled");
         }
         open() {
-            this.adminGroupService.getGroupDetail(this.selectedGroup)
-                .then((response:IGroupDetailResponse) => {
-                    if(response.group) {
+            this.adminGroupService.getGroupDetail(this.selectedGroup.id).then((response:IGroupDetailResponse) => {
+                if(response.group) {
                         this.$state.go("admin-group-open", {grp: response.group.id});
-
                     } else {
                         //todo: output error in notification center?
                         console.log("fail");

@@ -19,7 +19,7 @@ var AIP;
         };
         UserService.$inject = ["$http", "$q", "APP_PATH"];
         return UserService;
-    }());
+    })();
     AIP.UserService = UserService;
 })(AIP || (AIP = {}));
 register("bannerAIP").service("AIPUserService", AIP.UserService);

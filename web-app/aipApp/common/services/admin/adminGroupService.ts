@@ -39,6 +39,7 @@ module AIP {
         errors? : string[];
         group?  : IGroupInfo;
     }
+
     export interface IAddGroupResponse {
         success: boolean;
         invalidField?: string[];
@@ -46,6 +47,7 @@ module AIP {
         newGroup?: any;
         errors?: string[];
     }
+
     interface IAdminGroupService {
         getStatus();
         getFolder();
@@ -122,15 +124,10 @@ module AIP {
             return request;
         }
         getGroupDetail(groupId) {
-
-            var params = {
-                groupId: groupId
-            }
-
             var request = this.$http({
                     method: "POST",
                     url: this.ENDPOINT.admin.openGroup,
-                    data: params
+                    data: { groupId: groupId }
                 })
                 .then((response:any) => {
                     return <IGroupDetailResponse>response.data;

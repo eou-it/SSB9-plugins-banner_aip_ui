@@ -42,11 +42,14 @@ module AIP {
             this.spinnerService.showSpinner( true );
             var promises = [];
 
-            this.adminGroupService.getGroupDetail( this.$state.params.grp).then( (response:IGroupDetailResponse ) => {
-                $("#title-panel h1" ).html(response.group.title);
+
+            this.adminGroupService.getGroupDetail( this.$state.params.grp).then((response:IGroupDetailResponse ) => {
+                this.groupInfo = response.group;
+                $("#title-panel h1" ).html(this.groupInfo.title);
             }, ( err ) => {
                 console.log( err );
             } );
+
 
             if (this.$state.params.noti) {
                 this.handleNotification( this.$state.params.noti );
@@ -54,6 +57,8 @@ module AIP {
             this.$q.all( promises ).then( () => {
                 //TODO:: turn off the spinner
                 this.spinnerService.showSpinner( false );
+                //console.log(this.)
+               // $("#title-panel h1" ).html(this.adminGroupService.g);
             } );
         };
 
