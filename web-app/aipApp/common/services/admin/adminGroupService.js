@@ -79,6 +79,18 @@ var AIP;
             });
             return request;
         };
+        AdminGroupService.prototype.enableGroupOpen = function (groupId) {
+            //var selectedGroup = groupId;
+            $("#openGroupBtn").removeAttr("disabled");
+            // console.log("enable");
+            //console.log(groupId);
+            // return <IGroupInfo>response.data;
+            //var params = {grp: groupId};
+            //console.log("params");
+            //console.log(params);
+            //return $this.$state.params = {grp: groupId};
+            return groupId;
+        };
         AdminGroupService.$inject = ["$http", "ENDPOINT"];
         return AdminGroupService;
     }());

@@ -14,8 +14,9 @@ var bannerAIPApp = angular.module("bannerAIP", [
     "ngAria",
     "I18nAIP",
     "ngAnimate",
-    "bannerAIPUI",
-    "xe-ui-components"
+    "xe-ui-components",
+    "bannerAIPUI"
+    //"xe-ui-components"
     ])
 
 //set application root url

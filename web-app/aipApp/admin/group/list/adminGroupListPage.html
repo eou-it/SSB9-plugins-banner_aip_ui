@@ -11,14 +11,38 @@
             </button>
         </div>
     </div>
+    <!--
     <div class="groupListTable" ng-style="vm.getHeight()">
         <xe-table-grid
+                table-id="gridDataTable"
                 header="vm.gridData.header"
                 content="vm.gridData.data"
                 paginate="false"
                 toolbar="false"
                 on-row-click="vm.select(data)"
                 end-point="vm.ENDPOINT.admin.grouplist">
+        </xe-table-grid>
+    </div>
+    -->
+    <div class="groupListTable"  ng-style="vm.getHeight()" ng-controller="DataGridCtrl">
+        <xe-table-grid
+                table-id="dataTable"
+                header="headings"
+                fetch="fetchData(query)"
+                end-point="urlTest"
+                content="rows"
+                results-found="records"
+                toolbar="false"
+                paginate="false"
+                continuous-scrolling="false"
+                on-row-click="selectRecord(data)"
+                no-data-msg="No Results Found"
+                empty-table-msg="emptyTableMsg"
+                search-config="searchConfig"
+                pagination-config="paginationConfig"
+                height="416px"
+                refresh-grid="refreshGrid"
+        >
         </xe-table-grid>
     </div>
 </div>

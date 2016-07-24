@@ -15,11 +15,11 @@ modules = {
         resource url: [plugin: 'banner-csr-ui', file: 'node_modules/angular-ui-router/release/angular-ui-router.js']
         resource url: [plugin: 'banner-csr-ui', file: 'node_modules/angular-sanitize/angular-sanitize.js']
         resource url: [plugin: 'banner-csr-ui', file: 'node_modules/angular-messages/angular-messages.js']
+        resource url:[plugin: 'banner-ui-ss',file: 'js/angular/angular-translate.min.js']
         resource url: [plugin: 'banner-csr-ui', file: 'node_modules/angular-resource/angular-resource.js']
         resource url: [plugin: 'banner-csr-ui', file: 'node_modules/angular-aria/angular-aria.js']
         resource url: [plugin: 'banner-csr-ui', file: 'node_modules/angular-ui-bootstrap/dist/ui-bootstrap-tpls.js']
         resource url: [plugin: 'banner-csr-ui', file: 'node_modules/moment/min/moment.min.js']
-        resource url:[plugin: 'banner-ui-ss',file: 'js/angular/angular-translate.min.js']
 //        resource url:[plugin: 'banner-csr', file: 'bower_components/angular-common/build/angular-common.js']
     }
 
@@ -28,7 +28,9 @@ modules = {
     }
     'bannerAIPUI' {
         dependsOn 'csr-angular'
-        dependsOn 'bannerSelfServiceCommonLTR, extensibilityCommon, extensibilityAngular, common-components, common-components-ltr, angularApp, ' +
+       // dependsOn 'bannerSelfServiceCommonLTR, extensibilityCommon, extensibilityAngular, common-components, common-components-ltr, angularApp, ' +
+        //        'bootstrap'
+        dependsOn 'bannerSelfServiceCommonLTR, extensibilityCommon, extensibilityAngular, commonComponents, commonComponentsLTR, angularApp, ' +
                 'bootstrap'
         dependsOn 'bannerAIPApp'
         dependsOn 'font-awesome'
@@ -38,7 +40,8 @@ modules = {
     }
     'bannerAIPUIRTL' {
 //        dependsOn 'bannerAIPUI'
-        dependsOn 'bannerSelfServiceCommonRTL, extensibilityAngularRTL, common-components, common-components-rtl'
+        //dependsOn 'bannerSelfServiceCommonRTL, extensibilityAngularRTL, common-components, common-components-rtl'
+        dependsOn 'bannerSelfServiceCommonRTL, extensibilityAngularRTL, commonComponents, commonComponentsRTL'
         resource url:[plugin: 'banner-ui-ss', file: 'bootstrap/css/bootstrap-rtl.css']
         //resource url:[plugin: 'banner-csr-ui', file: 'css/xe-ui-components-rtl.css']
         resource url:[plugin: 'banner-csr-ui', file: 'css/aip-main-rtl.css']
@@ -68,7 +71,18 @@ modules = {
         resource url:[plugin: 'banner-csr-ui', file: 'aipApp/common/directives/item-detail/js/itemDetail.js']
         resource url:[plugin: 'banner-csr-ui', file: 'aipApp/common/directives/admin/group-detail/js/groupDetail.js']
         resource url:[plugin: 'banner-csr-ui', file: 'aipApp/common/utils/spinnerCtrl.js']
+        resource url:[plugin: 'banner-csr-ui', file: 'aipApp/common/utils/dataGridCtrl.js']
         resource url:[plugin: 'banner-csr-ui', file: 'aipApp/common/directives/ckeditor/js/ckEditor.js']
+    }
+
+    'commonComponents' {
+        resource url:[plugin: 'banner-csr-ui', file: 'js/xe-components/xe-ui-components.js']
+    }
+    'commonComponentsLTR' {
+        resource url:[plugin: 'banner-csr-ui', file: 'css/xe-ui-components.min.css']
+    }
+    'commonComponentsRTL' {
+        resource url:[plugin: 'banner-csr-ui', file: 'css/xe-ui-components-rtl.min.css']
     }
 
 }

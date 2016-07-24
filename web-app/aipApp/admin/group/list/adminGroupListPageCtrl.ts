@@ -8,7 +8,7 @@ declare var notifications: any;
 module AIP {
     export class AdminGroupListPageCtrl {
         $inject = ["$scope", "AdminGroupService", "$state", "$window", "$filter", "ENDPOINT"];
-        gridData: IGridData;
+        //gridData: IGridData;
         $state;
         $filter;
         ENDPOINT;
@@ -20,9 +20,11 @@ module AIP {
             this.$state = $state;
             this.ENDPOINT = ENDPOINT;
             this.$filter = $filter;
-            this.selectedGroup;
+           // this.selectedGroup;
             this.init();
-            $scope.$watch("vm.gridData", (newVal, oldVal) => {
+
+
+            $scope.$watch("dataGridCtrl", "vm.enableGroupOpen",  "vm.groupDetailResponse", "vm.groupInfo" , (newVal, oldVal) => {
                 if(!$scope.$$phase) {
                     $scope.apply();
                 }
@@ -31,31 +33,28 @@ module AIP {
                 //$scope.onResize();
                 $scope.$apply();
             });
+
         }
         init() {
+            /*
             this.adminGroupService.getGroupList().then((response:IGridData) => {
                 this.gridData = response;
             }, (err) => {
                 console.log(err);
             });
+            */
+
         }
+
         add() {
             this.$state.go("admin-group-add");
         }
-        select(data) {
-            if (data) {
 
-                this.selectedGroup = data
-                this.enableOpen();
-            }
-        }
-        enableOpen() {
-            $("#openGroupBtn").removeAttr("disabled");
-        }
         open() {
-            this.adminGroupService.getGroupDetail(this.selectedGroup.id).then((response:IGroupDetailResponse) => {
-                if(response.group) {
-                        this.$state.go("admin-group-open", {grp: response.group.id});
+            this.adminGroupService.getGroupDetail(this.$state.params.grp).then((groupId) => {
+
+                if(groupId) {
+                        this.$state.go("admin-group-open", {grp: groupId.group.id});
                     } else {
                         //todo: output error in notification center?
                         console.log("fail");
@@ -65,6 +64,7 @@ module AIP {
                     console.log(err);
                 });
         }
+
         getHeight() {
             var containerHeight = $(document).height() -
                 $("#breadcrumb-panel").height() -

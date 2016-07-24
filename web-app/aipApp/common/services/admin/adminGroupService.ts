@@ -54,6 +54,7 @@ module AIP {
         getGroupList();
         saveGroup(groupInfo:IGroupInfo);
         getGroupDetail(groupId: number|string);
+        enableGroupOpen(groupId: number|string);
     }
     export class AdminGroupService implements IAdminGroupService{
         static $inject=["$http", "ENDPOINT"];
@@ -123,6 +124,7 @@ module AIP {
             });
             return request;
         }
+
         getGroupDetail(groupId) {
             var request = this.$http({
                     method: "POST",
@@ -135,6 +137,23 @@ module AIP {
                     throw new Error(err);
                 })
             return request;
+        }
+
+        enableGroupOpen(groupId) {
+            //var selectedGroup = groupId;
+            $("#openGroupBtn").removeAttr("disabled");
+           // console.log("enable");
+            //console.log(groupId);
+
+
+
+           // return <IGroupInfo>response.data;
+
+            //var params = {grp: groupId};
+            //console.log("params");
+            //console.log(params);
+            //return $this.$state.params = {grp: groupId};
+            return groupId;
         }
     }
 }
