@@ -35,7 +35,6 @@ module AIP {
                 $http.get(url)
                     .success(function(data) {
                         deferred.resolve(data);
-                        console.log("headings");
                         $scope.headings = data.header;
                     })
                     .error(function(data) {
@@ -78,7 +77,8 @@ module AIP {
             */
 
             $scope.selectRecord  = function(data) {
-                console.log(data);
+                //console.log("select data from grid");
+                //console.log(data);
                 this.selectedRecord = data;
                 $scope.adminGroupService.enableGroupOpen(data.id);
                 $scope.$state.params.grp = data.id;

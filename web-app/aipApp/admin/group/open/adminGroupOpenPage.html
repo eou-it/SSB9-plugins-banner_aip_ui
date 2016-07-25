@@ -6,22 +6,30 @@
                     <!--<aip-group-detail model="vm.groupInfo" ></aip-group-detail>-->
                     <xe-tab-nav>
                         <xe-tab-panel heading="{{'aip.common.overview'|i18n_aip}}">
-                           <div ng-model="vm.groupInfo">
-                                <br />
-                                <h3>{{"aip.common.title"|i18n_aip}}</h3>
-                               <p>{{ title }}</p>
-                                <h3>{{"aip.common.folder"|i18n_aip}}</h3>
-                                <p></p>
-                                <h3>{{"aip.common.status"|i18n_aip}}</h3>
-                                <p></p>
-                                <h3>{{"aip.common.group.description"|i18n_aip}}</h3>
+                            <div id="openGroupDetail">
+                                <div class="groupElement groupDetail col-xs-12 col-sm-8">
+                                    <h3>{{"aip.common.title"|i18n_aip}}</h3>
+                                   <p class="openGroupTitle"></p>
+                                    <h3>{{"aip.common.folder"|i18n_aip}}</h3>
+                                    <p class="openGroupFolder"></p>
+                                    <h3>{{"aip.common.status"|i18n_aip}}</h3>
+                                    <p class="openGroupStatus"></p>
+                                    <h3>{{"aip.common.group.description"|i18n_aip}}</h3>
+                                   <p class="openGroupDesc"></p>
+                                </div>
+
+
+                                <div class="groupElement col-xs-12 col-sm-4">
+                                    <h3>{{"aip.common.activity.date"|i18n_aip}}</h3>
+                                    <p class="openGroupActivityDate"></p>
+                                    <h3>{{"aip.common.last.updated.by"|i18n_aip}}</h3>
+                                    <p class="openGroupLastUpdatedBy"></p>
+                                </div>
                             </div>
-                            <!--<aip-group-detail model="vm.groupInfo" ></aip-group-detail>-->
-                        </xe-tab-panel>
+                            </xe-tab-panel>
                         <xe-tab-panel heading="{{'aip.common.order.action.items'|i18n_aip}}">
                         </xe-tab-panel>
-                    </xe-tab-nav>
-
+                        </xe-tab-nav>
                 </div>
             </div>
         </div>

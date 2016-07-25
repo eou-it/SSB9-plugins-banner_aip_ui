@@ -23,6 +23,20 @@ module AIP {
         lastModifiedBy?: string;
         version?:number|string;
     }
+
+    export interface IGroupFolder {
+        id: string|number|boolean;
+        folderName: string;
+        folderDesc?: string;
+        groupActivityDate?: Date|string;
+        groupUserId?: string;
+        groupDesc?: string;
+        groupId: string;
+        groupStatus: string;
+        version?:number|string;
+    }
+
+
     export interface IStatus {
         id: string|number;
         value: string;
@@ -30,7 +44,7 @@ module AIP {
     export interface IGroupInfo {
         id: string|number;
         title: string;
-        status: AIP.IStatus;
+        status: string;
         folder: number|string;
         description: string;
     }
@@ -38,6 +52,7 @@ module AIP {
         success: string;
         errors? : string[];
         group?  : IGroupInfo;
+        folder? : IGroupFolder;
     }
 
     export interface IAddGroupResponse {
@@ -142,17 +157,6 @@ module AIP {
         enableGroupOpen(groupId) {
             //var selectedGroup = groupId;
             $("#openGroupBtn").removeAttr("disabled");
-           // console.log("enable");
-            //console.log(groupId);
-
-
-
-           // return <IGroupInfo>response.data;
-
-            //var params = {grp: groupId};
-            //console.log("params");
-            //console.log(params);
-            //return $this.$state.params = {grp: groupId};
             return groupId;
         }
     }

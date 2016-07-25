@@ -21,7 +21,6 @@ var AIP;
                 $http.get(url)
                     .success(function (data) {
                     deferred.resolve(data);
-                    console.log("headings");
                     $scope.headings = data.header;
                 })
                     .error(function (data) {
@@ -56,7 +55,8 @@ var AIP;
             };
             */
             $scope.selectRecord = function (data) {
-                console.log(data);
+                //console.log("select data from grid");
+                //console.log(data);
                 this.selectedRecord = data;
                 $scope.adminGroupService.enableGroupOpen(data.id);
                 $scope.$state.params.grp = data.id;
@@ -91,7 +91,7 @@ var AIP;
         }
         DataGridCtrl.$inject = ["$scope", "AdminGroupService", "$http", "$q", "$filter", "ENDPOINT"];
         return DataGridCtrl;
-    })();
+    }());
     AIP.DataGridCtrl = DataGridCtrl;
 })(AIP || (AIP = {}));
 register("bannerAIP").controller("DataGridCtrl", AIP.DataGridCtrl);

@@ -12,7 +12,6 @@ module AIP {
         $state;
         $filter;
         ENDPOINT;
-        selectedGroup;
         adminGroupService: AIP.AdminGroupService;
         constructor($scope, AdminGroupService, $state, $window, $filter, ENDPOINT) {
             $scope.vm = this;
@@ -20,11 +19,9 @@ module AIP {
             this.$state = $state;
             this.ENDPOINT = ENDPOINT;
             this.$filter = $filter;
-           // this.selectedGroup;
             this.init();
 
-
-            $scope.$watch("dataGridCtrl", "vm.enableGroupOpen",  "vm.groupDetailResponse", "vm.groupInfo" , (newVal, oldVal) => {
+            $scope.$watch("[vm.groupDetailResponse, vm.groupInfo]" , (newVal, oldVal) => {
                 if(!$scope.$$phase) {
                     $scope.apply();
                 }
@@ -36,14 +33,7 @@ module AIP {
 
         }
         init() {
-            /*
-            this.adminGroupService.getGroupList().then((response:IGridData) => {
-                this.gridData = response;
-            }, (err) => {
-                console.log(err);
-            });
-            */
-
+            //todo: anything needing to be moved here?
         }
 
         add() {
@@ -51,10 +41,10 @@ module AIP {
         }
 
         open() {
-            this.adminGroupService.getGroupDetail(this.$state.params.grp).then((groupId) => {
-
-                if(groupId) {
-                        this.$state.go("admin-group-open", {grp: groupId.group.id});
+            this.adminGroupService.getGroupDetail(this.$state.params.grp).then((response) => {
+               // console.log(groupId);
+                if(response) {
+                        this.$state.go("admin-group-open", {grp: response.group.id});
                     } else {
                         //todo: output error in notification center?
                         console.log("fail");

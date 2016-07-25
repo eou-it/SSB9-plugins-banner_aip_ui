@@ -8,14 +8,18 @@ declare var notifications: any;
 
 module AIP {
     interface IAdminGroupOpenPageCtrl {
-        //status: AIP.IStatus[];
-        //folders: AIP.IFolder[];
+       // status: IStatus;
+       // folder: IFolder;
         adminGroupService: AIP.AdminGroupService;
         groupInfo: IGroupInfo;
+        groupFolder: IGroupFolder;
     }
     export class AdminGroupOpenPageCtrl implements IAdminGroupOpenPageCtrl{
         $inject = ["$scope", "AdminGroupService", "$q", "SpinnerService", "$state", "$filter"];
         groupInfo:IGroupInfo;
+        groupFolder: IGroupFolder;
+      //  status: IStatus;
+     //   folder: IFolder;
         adminGroupService: AIP.AdminGroupService;
         spinnerService: AIP.SpinnerService;
         $q: ng.IQService;
@@ -41,11 +45,19 @@ module AIP {
         init() {
             this.spinnerService.showSpinner( true );
             var promises = [];
-
-
+           // console.log(this.$state.params);
             this.adminGroupService.getGroupDetail( this.$state.params.grp).then((response:IGroupDetailResponse ) => {
                 this.groupInfo = response.group;
+                this.groupFolder = response.folder;
+
                 $("#title-panel h1" ).html(this.groupInfo.title);
+                $("p.openGroupTitle" ).html(this.groupInfo.title);
+                $("p.openGroupFolder" ).html(this.groupFolder[0].folderName);
+                $("p.openGroupStatus" ).html(this.groupInfo.status);
+                $("p.openGroupDesc" ).html(this.groupFolder[0].folderDesc);
+                $("p.openGroupActivityDate" ).html(this.groupFolder[0].groupActivityDate);
+                $("p.openGroupLastUpdatedBy" ).html(this.groupFolder[0].groupUserId);
+                //console.log(this.groupInfo);
             }, ( err ) => {
                 console.log( err );
             } );
@@ -57,8 +69,6 @@ module AIP {
             this.$q.all( promises ).then( () => {
                 //TODO:: turn off the spinner
                 this.spinnerService.showSpinner( false );
-                //console.log(this.)
-               // $("#title-panel h1" ).html(this.adminGroupService.g);
             } );
         };
 

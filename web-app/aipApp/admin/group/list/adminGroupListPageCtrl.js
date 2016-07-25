@@ -10,9 +10,8 @@ var AIP;
             this.$state = $state;
             this.ENDPOINT = ENDPOINT;
             this.$filter = $filter;
-            // this.selectedGroup;
             this.init();
-            $scope.$watch("dataGridCtrl", "vm.enableGroupOpen", "vm.groupDetailResponse", "vm.groupInfo", function (newVal, oldVal) {
+            $scope.$watch("[vm.groupDetailResponse, vm.groupInfo]", function (newVal, oldVal) {
                 if (!$scope.$$phase) {
                     $scope.apply();
                 }
@@ -23,22 +22,17 @@ var AIP;
             });
         }
         AdminGroupListPageCtrl.prototype.init = function () {
-            /*
-            this.adminGroupService.getGroupList().then((response:IGridData) => {
-                this.gridData = response;
-            }, (err) => {
-                console.log(err);
-            });
-            */
+            //todo: anything needing to be moved here?
         };
         AdminGroupListPageCtrl.prototype.add = function () {
             this.$state.go("admin-group-add");
         };
         AdminGroupListPageCtrl.prototype.open = function () {
             var _this = this;
-            this.adminGroupService.getGroupDetail(this.$state.params.grp).then(function (groupId) {
-                if (groupId) {
-                    _this.$state.go("admin-group-open", { grp: groupId.group.id });
+            this.adminGroupService.getGroupDetail(this.$state.params.grp).then(function (response) {
+                // console.log(groupId);
+                if (response) {
+                    _this.$state.go("admin-group-open", { grp: response.group.id });
                 }
                 else {
                     //todo: output error in notification center?

@@ -71,16 +71,20 @@ class AipGroupController {
         def errors = []
 
         def group = actionItemGroupService.getActionItemGroupById( groupId )
+        def groupRO = groupFolderReadOnlyService.getActionItemGroupById( groupId)
+
 
         if (group) {
             response.status = 200
             success = true
         }
 
+
         def model = [
                 success: success,
                 errors : errors,
-                group  : group
+                group  : group,
+                folder : groupRO
         ]
 
         render model as JSON
