@@ -15,7 +15,7 @@ modules = {
         resource url: [plugin: 'banner-csr-ui', file: 'node_modules/angular-ui-router/release/angular-ui-router.js']
         resource url: [plugin: 'banner-csr-ui', file: 'node_modules/angular-sanitize/angular-sanitize.js']
         resource url: [plugin: 'banner-csr-ui', file: 'node_modules/angular-messages/angular-messages.js']
-        resource url:[plugin: 'banner-ui-ss',file: 'js/angular/angular-translate.min.js']
+        resource url: [plugin: 'banner-csr-ui', file: 'node_modules/angular-translate/dist/angular-translate.js']
         resource url: [plugin: 'banner-csr-ui', file: 'node_modules/angular-resource/angular-resource.js']
         resource url: [plugin: 'banner-csr-ui', file: 'node_modules/angular-aria/angular-aria.js']
         resource url: [plugin: 'banner-csr-ui', file: 'node_modules/angular-ui-bootstrap/dist/ui-bootstrap-tpls.js']
@@ -79,10 +79,10 @@ modules = {
         resource url:[plugin: 'banner-csr-ui', file: 'js/xe-components/xe-ui-components.js']
     }
     'commonComponentsLTR' {
-        resource url:[plugin: 'banner-csr-ui', file: 'css/xe-ui-components.min.css']
+        resource url:[plugin: 'banner-csr-ui', file: 'css/xe-ui-components.css']
     }
     'commonComponentsRTL' {
-        resource url:[plugin: 'banner-csr-ui', file: 'css/xe-ui-components-rtl.min.css']
+        resource url:[plugin: 'banner-csr-ui', file: 'css/xe-ui-components-rtl.css']
     }
 
 }

@@ -2170,7 +2170,11 @@ angular.module('dataTableModule', ['utils'])
 
                 // As endsWith is not supported by IE and opera using userDefined funtion 
                 function endsWith(str, suffix) {
-                    return str.indexOf(suffix, str.length - suffix.length) !== -1;
+                    if (str) {
+                        return str.indexOf(suffix, str.length - suffix.length) !== -1;
+                    } else {
+                        return false;
+                    }
                 }
                 
                 function calculateWidth(width, parentWidth, headerFontSize) {
@@ -2243,7 +2247,7 @@ angular.module('dataTableModule', ['utils'])
                         
                         angular.forEach($scope.header, function (heading) {
                             if (heading.options.visible) {
-                                if (undefinedWidth && heading.width.trim() === '') {
+                                if (undefinedWidth && (!heading.width || heading.width.trim() === '')) {
                                     heading.dynamicWidth = undefinedWidth;
                                 } else if (endsWith(heading.width, '%')) {
                                     heading.dynamicWidth+=availableWidthPerColumn;
