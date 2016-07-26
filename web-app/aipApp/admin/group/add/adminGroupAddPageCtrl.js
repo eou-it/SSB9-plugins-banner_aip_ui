@@ -38,7 +38,7 @@ var AIP;
                     minimumResultsForSearch: Infinity
                 });
                 //TODO: find better and proper way to set defalut value in SELECT2 - current one is just dom object hack.
-                $(".groupStatus .select2-container.groupSelect .select2-chosen")[0].innerHTML = _this.$filter("i18n_aip")(_this.groupInfo.status.value);
+                // $(".groupStatus .select2-container.groupSelect .select2-chosen")[0].innerHTML = this.$filter("i18n_aip")(this.groupInfo.status.value);
             }));
             promises.push(this.adminGroupService.getFolder().then(function (folders) {
                 _this.folders = folders;
