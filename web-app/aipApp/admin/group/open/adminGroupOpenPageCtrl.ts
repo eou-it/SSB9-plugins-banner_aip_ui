@@ -8,29 +8,27 @@ declare var notifications: any;
 
 module AIP {
     interface IAdminGroupOpenPageCtrl {
-       // status: IStatus;
-       // folder: IFolder;
         adminGroupService: AIP.AdminGroupService;
         groupInfo: IGroupInfo;
         groupFolder: IGroupFolder;
     }
     export class AdminGroupOpenPageCtrl implements IAdminGroupOpenPageCtrl{
-        $inject = ["$scope", "AdminGroupService", "$q", "SpinnerService", "$state", "$filter"];
+        $inject = ["$scope", "AdminGroupService", "$q", "SpinnerService", "$state", "$filter", "$sce"];
         groupInfo:IGroupInfo;
         groupFolder: IGroupFolder;
-      //  status: IStatus;
-     //   folder: IFolder;
         adminGroupService: AIP.AdminGroupService;
         spinnerService: AIP.SpinnerService;
         $q: ng.IQService;
         $state;
         $filter;
+        $sce;
         constructor($scope, AdminGroupService:AIP.AdminGroupService,
-                    $q:ng.IQService, SpinnerService, $state, $filter) {
+                    $q:ng.IQService, SpinnerService, $state, $filter, $sce) {
             $scope.vm = this;
             this.$q = $q;
             this.$state = $state;
             this.$filter = $filter;
+            this.$sce = $sce;
             this.adminGroupService = AdminGroupService;
             this.spinnerService = SpinnerService;
             $scope.$watch(

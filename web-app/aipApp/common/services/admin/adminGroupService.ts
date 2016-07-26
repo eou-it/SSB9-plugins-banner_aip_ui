@@ -36,7 +36,6 @@ module AIP {
         version?:number|string;
     }
 
-
     export interface IStatus {
         id: string|number;
         value: string;
@@ -71,6 +70,7 @@ module AIP {
         getGroupDetail(groupId: number|string);
         enableGroupOpen(groupId: number|string);
     }
+
     export class AdminGroupService implements IAdminGroupService{
         static $inject=["$http", "ENDPOINT"];
         $http: ng.IHttpService;

@@ -121,8 +121,8 @@ var bannerAIPApp = angular.module("bannerAIP", [
     ])
 
 //instance-injector
-    .run(["$rootScope", "$state", "$stateParams", "$filter", "BreadcrumbService",
-        function($rootScope, $state, $stateParams, $filter, BreadcrumService) {
+    .run(["$rootScope", "$state", "$stateParams", "$filter","$sce", "BreadcrumbService",
+        function($rootScope, $state, $stateParams, $filter, $sce, BreadcrumService) {
             $rootScope.$state = $state;
             $rootScope.$stateParams = $stateParams;
             //when state successfully changed, update breadcrumbs

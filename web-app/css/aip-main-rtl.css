@@ -130,7 +130,7 @@ aip-list .aip-list-container  {
     clear:both;
 }
   .AIP-landing-container aip-landing-item .ladingItem-container  {
-    background-color:#ECECEC;
+    background-color:#ffffff;
     font-size:1.5em;
     border-radius:4px;
     padding:8px;
@@ -138,7 +138,7 @@ aip-list .aip-list-container  {
     cursor:pointer;
 }
     .AIP-landing-container aip-landing-item .ladingItem-container:hover  {
-    background-color:lightgray;
+    background-color:#ffffff;
 }
     .AIP-landing-container aip-landing-item .ladingItem-container .landing-icon  {
     padding:0;
@@ -298,6 +298,30 @@ aip-list .aip-list-container  {
     margin-top:8px;
 }
 
+.groupOpenContainer  {
+    padding:0;
+    margin:0;
+    background-color:#ffffff;
+}
+  .groupOpenContainer .row  {
+    margin-right:0;
+    margin-left:0;
+}
+  .groupOpenContainer .groupInfo  {
+    margin-bottom:20px;
+}
+    .groupOpenContainer .groupInfo .groupInfoRow  {
+    margin-bottom:16px;
+}
+      .groupOpenContainer .groupInfo .groupInfoRow .groupElement  {
+    padding-left:8px;
+    padding-right:8px;
+    margin-bottom:8px;
+}
+        .groupOpenContainer .groupInfo .groupInfoRow .groupElement .groupDetail  {
+    border-left:1px solid #444444;
+}
+
 #username  {
     padding-left:0.5em;
 }
@@ -350,9 +374,15 @@ a:focus, div:focus, input:focus, span:focus, i:focus, button:focus, .breadcrumbB
     padding:8px 16px;
     height:100%;
     overflow-x:auto;
+    background-color:#edf2f7;
 }
   .viewContainer xe-table-grid .table-container .pagination-container  {
     box-sizing:border-box;
+}
+  .viewContainer hr  {
+    margin-top:0;
+    margin-bottom:8px;
+    border-top:1px solid #000000;
 }
   .viewContainer .listActionItem .welcome  {
     padding:0 0 16px 0;
@@ -360,11 +390,6 @@ a:focus, div:focus, input:focus, span:focus, i:focus, button:focus, .breadcrumbB
     .viewContainer .listActionItem .welcome .username  {
     font-size:2em;
     font-weight:bold;
-}
-  .viewContainer .listActionItem hr  {
-    margin-top:0;
-    margin-bottom:8px;
-    border-top:1px solid #000000;
 }
   .viewContainer .listActionItem .welcometext  {
     font-size:1.5em;

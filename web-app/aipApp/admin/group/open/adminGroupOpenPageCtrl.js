@@ -4,12 +4,13 @@
 var AIP;
 (function (AIP) {
     var AdminGroupOpenPageCtrl = (function () {
-        function AdminGroupOpenPageCtrl($scope, AdminGroupService, $q, SpinnerService, $state, $filter) {
-            this.$inject = ["$scope", "AdminGroupService", "$q", "SpinnerService", "$state", "$filter"];
+        function AdminGroupOpenPageCtrl($scope, AdminGroupService, $q, SpinnerService, $state, $filter, $sce) {
+            this.$inject = ["$scope", "AdminGroupService", "$q", "SpinnerService", "$state", "$filter", "$sce"];
             $scope.vm = this;
             this.$q = $q;
             this.$state = $state;
             this.$filter = $filter;
+            this.$sce = $sce;
             this.adminGroupService = AdminGroupService;
             this.spinnerService = SpinnerService;
             $scope.$watch("[vm.groupDetailResponse, vm.groupInfo]", function (newVal, oldVal) {
