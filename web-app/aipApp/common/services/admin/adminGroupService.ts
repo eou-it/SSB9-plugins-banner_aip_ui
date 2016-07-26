@@ -38,7 +38,7 @@ module AIP {
 
     export interface IStatus {
         id: string|number;
-        value: IStatus;
+        value: string;
     }
     export interface IGroupInfo {
         id: string|number;
