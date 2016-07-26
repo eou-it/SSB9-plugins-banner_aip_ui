@@ -31,7 +31,7 @@ var AIP;
                 $("#title-panel h1").html(_this.groupInfo.title);
                 $("p.openGroupTitle").html(_this.groupInfo.title);
                 $("p.openGroupFolder").html(_this.groupFolder[0].folderName);
-                $("p.openGroupStatus").html(_this.groupInfo.status);
+                $("p.openGroupStatus").html(_this.groupInfo.status.value);
                 $("p.openGroupDesc").html(_this.groupInfo.description);
                 $("p.openGroupActivityDate").html(_this.groupFolder[0].groupActivityDate);
                 $("p.openGroupLastUpdatedBy").html(_this.groupFolder[0].groupUserId);
@@ -65,7 +65,7 @@ var AIP;
             }
         };
         return AdminGroupOpenPageCtrl;
-    })();
+    }());
     AIP.AdminGroupOpenPageCtrl = AdminGroupOpenPageCtrl;
 })(AIP || (AIP = {}));
 register("bannerAIP").controller("AdminGroupOpenPageCtrl", AIP.AdminGroupOpenPageCtrl);

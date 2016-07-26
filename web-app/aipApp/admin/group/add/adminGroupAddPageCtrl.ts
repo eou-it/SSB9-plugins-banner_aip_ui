@@ -56,11 +56,14 @@ module AIP {
                         return item;
                     });
                     var groupStatus:any = $("#groupStatus");
+                    this.groupInfo.status = this.status[0];
                     groupStatus
                         .select2({
                         width: "25em",
-                        minimumResultsForSearch: Infinity
+                        minimumResultsForSearch: Infinity,
                     });
+                    //TODO: find better and proper way to set defalut value in SELECT2 - current one is just dom object hack.
+                    $(".groupStatus .select2-container.groupSelect .select2-chosen")[0].innerHTML = this.$filter("i18n_aip")(this.groupInfo.status.value);
                 })
             );
             promises.push(
@@ -74,14 +77,8 @@ module AIP {
                 })
             );
             this.$q.all(promises).then(() => {
-                //TODO:: turn off the spinner
                 this.spinnerService.showSpinner(false);
-                //this.groupInfo.status = this.status[0].id;
-                console.log( this.status[0].id);
-                //todo: this is where we will want to modify code to set status value i select2
-                //console.log("groupInfo status = " + this.groupInfo.status );
             });
-
         }
         save() {
             this.adminGroupService.saveGroup(this.groupInfo)

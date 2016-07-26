@@ -9,6 +9,7 @@ declare var notifications: any;
 module AIP {
     interface IAdminGroupOpenPageCtrl {
         adminGroupService: AIP.AdminGroupService;
+        groupStatus: IStatus;
         groupInfo: IGroupInfo;
         groupFolder: IGroupFolder;
     }
@@ -16,6 +17,7 @@ module AIP {
         $inject = ["$scope", "AdminGroupService", "$q", "SpinnerService", "$state", "$filter", "$sce"];
         groupInfo:IGroupInfo;
         groupFolder: IGroupFolder;
+        groupStatus: IStatus;
         adminGroupService: AIP.AdminGroupService;
         spinnerService: AIP.SpinnerService;
         $q: ng.IQService;
@@ -51,7 +53,7 @@ module AIP {
                 $("#title-panel h1" ).html(this.groupInfo.title);
                 $("p.openGroupTitle" ).html(this.groupInfo.title);
                 $("p.openGroupFolder" ).html(this.groupFolder[0].folderName);
-                $("p.openGroupStatus" ).html(this.groupInfo.status);
+                $("p.openGroupStatus" ).html(this.groupInfo.status.value);
                 $("p.openGroupDesc" ).html(this.groupInfo.description);
                 $("p.openGroupActivityDate" ).html(this.groupFolder[0].groupActivityDate);
                 $("p.openGroupLastUpdatedBy" ).html(this.groupFolder[0].groupUserId);

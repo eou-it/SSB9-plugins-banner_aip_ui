@@ -59,7 +59,7 @@ var AIP;
         };
         ItemListViewService.$inject = ["$http", "APP_PATH"];
         return ItemListViewService;
-    })();
+    }());
     AIP.ItemListViewService = ItemListViewService;
 })(AIP || (AIP = {}));
 register("bannerAIP").service("ItemListViewService", AIP.ItemListViewService);

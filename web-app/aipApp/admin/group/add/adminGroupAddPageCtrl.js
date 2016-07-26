@@ -31,11 +31,14 @@ var AIP;
                     return item;
                 });
                 var groupStatus = $("#groupStatus");
+                _this.groupInfo.status = _this.status[0];
                 groupStatus
                     .select2({
                     width: "25em",
                     minimumResultsForSearch: Infinity
                 });
+                //TODO: find better and proper way to set defalut value in SELECT2 - current one is just dom object hack.
+                $(".groupStatus .select2-container.groupSelect .select2-chosen")[0].innerHTML = _this.$filter("i18n_aip")(_this.groupInfo.status.value);
             }));
             promises.push(this.adminGroupService.getFolder().then(function (folders) {
                 _this.folders = folders;
@@ -46,12 +49,7 @@ var AIP;
                 });
             }));
             this.$q.all(promises).then(function () {
-                //TODO:: turn off the spinner
                 _this.spinnerService.showSpinner(false);
-                //this.groupInfo.status = this.status[0].id;
-                console.log(_this.status[0].id);
-                //todo: this is where we will want to modify code to set status value i select2
-                //console.log("groupInfo status = " + this.groupInfo.status );
             });
         };
         AdminGroupAddPageCtrl.prototype.save = function () {
@@ -137,7 +135,7 @@ var AIP;
             notifications.addNotification(n);
         };
         return AdminGroupAddPageCtrl;
-    }());
+    })();
     AIP.AdminGroupAddPageCtrl = AdminGroupAddPageCtrl;
 })(AIP || (AIP = {}));
 register("bannerAIP").controller("AdminGroupAddPageCtrl", AIP.AdminGroupAddPageCtrl);
