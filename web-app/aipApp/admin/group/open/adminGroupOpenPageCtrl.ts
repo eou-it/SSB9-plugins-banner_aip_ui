@@ -53,9 +53,9 @@ module AIP {
                 $("#title-panel h1" ).html(this.groupInfo.title);
                 $("p.openGroupTitle" ).html(this.groupInfo.title);
                 $("p.openGroupFolder" ).html(this.groupFolder[0].folderName);
-                $("p.openGroupStatus" ).html(this.groupInfo.status.value);
+                $("p.openGroupStatus" ).html(this.$filter("i18n_aip")(this.groupInfo.status));
                 $("p.openGroupDesc" ).html(this.groupInfo.description);
-                $("p.openGroupActivityDate" ).html(this.groupFolder[0].groupActivityDate);
+                $("p.openGroupActivityDate" ).html( this.groupFolder[0].groupActivityDate);
                 $("p.openGroupLastUpdatedBy" ).html(this.groupFolder[0].groupUserId);
                 //console.log(this.groupInfo);
             }, ( err ) => {
