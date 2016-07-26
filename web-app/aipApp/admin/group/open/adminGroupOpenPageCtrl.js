@@ -64,7 +64,7 @@ var AIP;
             }
         };
         return AdminGroupOpenPageCtrl;
-    })();
+    }());
     AIP.AdminGroupOpenPageCtrl = AdminGroupOpenPageCtrl;
 })(AIP || (AIP = {}));
 register("bannerAIP").controller("AdminGroupOpenPageCtrl", AIP.AdminGroupOpenPageCtrl);
