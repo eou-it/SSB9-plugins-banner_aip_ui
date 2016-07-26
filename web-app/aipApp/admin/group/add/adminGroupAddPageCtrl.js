@@ -51,7 +51,8 @@ var AIP;
             this.$q.all(promises).then(function () {
                 //TODO:: turn off the spinner
                 _this.spinnerService.showSpinner(false);
-                //this.groupInfo.status = this.status[0];
+                //this.groupInfo.status = this.status[0].id;
+                console.log(_this.status[0].id);
                 //todo: this is where we will want to modify code to set status value i select2
                 //console.log("groupInfo status = " + this.groupInfo.status );
             });
@@ -139,7 +140,7 @@ var AIP;
             notifications.addNotification(n);
         };
         return AdminGroupAddPageCtrl;
-    }());
+    })();
     AIP.AdminGroupAddPageCtrl = AdminGroupAddPageCtrl;
 })(AIP || (AIP = {}));
 register("bannerAIP").controller("AdminGroupAddPageCtrl", AIP.AdminGroupAddPageCtrl);
