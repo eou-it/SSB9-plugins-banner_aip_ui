@@ -31,7 +31,7 @@ var AIP;
                 $("p.openGroupTitle").html(_this.groupInfo.title);
                 $("p.openGroupFolder").html(_this.groupFolder[0].folderName);
                 $("p.openGroupStatus").html(_this.groupInfo.status);
-                $("p.openGroupDesc").html(_this.groupFolder[0].folderDesc);
+                $("p.openGroupDesc").html(_this.groupInfo.description);
                 $("p.openGroupActivityDate").html(_this.groupFolder[0].groupActivityDate);
                 $("p.openGroupLastUpdatedBy").html(_this.groupFolder[0].groupUserId);
                 //console.log(this.groupInfo);

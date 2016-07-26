@@ -76,7 +76,8 @@ module AIP {
             this.$q.all(promises).then(() => {
                 //TODO:: turn off the spinner
                 this.spinnerService.showSpinner(false);
-                //this.groupInfo.status = this.status[0];
+                //this.groupInfo.status = this.status[0].id;
+                console.log( this.status[0].id);
                 //todo: this is where we will want to modify code to set status value i select2
                 //console.log("groupInfo status = " + this.groupInfo.status );
             });

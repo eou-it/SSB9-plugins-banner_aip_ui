@@ -148,6 +148,7 @@ var bannerAIPApp = angular.module("bannerAIP", [
             $.i18n.prop("aip.common.status");
             $.i18n.prop("aip.common.folder");
             $.i18n.prop("aip.common.group.description");
+            $.i18n.prop("aip.common.activity");
             $.i18n.prop("aip.common.activity.date");
             $.i18n.prop("aip.common.last.updated.by");
             $.i18n.prop("aip.common.save");

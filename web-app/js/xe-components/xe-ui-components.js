@@ -2048,7 +2048,6 @@ angular.module('dataTableModule', ['utils'])
                 }
 
                 if (!$scope.pagination) {
-                    console.log("scrolling");
                     $scope.pagination = $scope.continuousScrolling;
                 }
 
@@ -2276,14 +2275,11 @@ angular.module('dataTableModule', ['utils'])
                         if (!$scope.pagination && !$attrs.endPoint) {
                             console.error("Provide either end-point or fetch attribute");
                         } else if (!$scope.pagination) {
-                            console.log("no pagination");
                             _this.loadingDataIndicator(true);
                             $http.get($scope.endPoint + "?searchString=" + $scope.searchConfig.searchString + "&sortColumnName=" + (_this.sortColumnName || "") + "&ascending=" + (_this.ascending || ""))
                                 .success(function (data) {
                                     $scope.postFetch({response: data, oldResult: $scope.content});
                                     $scope.content = data.result;
-                                    //console.log(data);
-                                   // console.log($scope.content);
                                     _this.loadingDataIndicator(false);
                                 })
                                 .error(function (data) {

@@ -54,7 +54,7 @@ module AIP {
                 $("p.openGroupTitle" ).html(this.groupInfo.title);
                 $("p.openGroupFolder" ).html(this.groupFolder[0].folderName);
                 $("p.openGroupStatus" ).html(this.groupInfo.status);
-                $("p.openGroupDesc" ).html(this.groupFolder[0].folderDesc);
+                $("p.openGroupDesc" ).html(this.groupInfo.description);
                 $("p.openGroupActivityDate" ).html(this.groupFolder[0].groupActivityDate);
                 $("p.openGroupLastUpdatedBy" ).html(this.groupFolder[0].groupUserId);
                 //console.log(this.groupInfo);
