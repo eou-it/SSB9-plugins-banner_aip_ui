@@ -33,7 +33,7 @@ var AIPUI;
             };
         };
         return AIPItemDetailDirective;
-    })();
+    }());
     AIPUI.AIPItemDetailDirective = AIPItemDetailDirective;
 })(AIPUI || (AIPUI = {}));
 register("bannerAIPUI").directive("aipItemDetail", AIPUI.AIPItemDetailDirective);

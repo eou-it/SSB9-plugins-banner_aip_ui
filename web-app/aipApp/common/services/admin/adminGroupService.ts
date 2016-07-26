@@ -44,7 +44,7 @@ module AIP {
     export interface IGroupInfo {
         id: string|number;
         title: string;
-        status: string;
+        status: IStatus;
         folder: number|string;
         description: string;
     }
@@ -71,6 +71,11 @@ module AIP {
         getGroupDetail(groupId: number|string);
         enableGroupOpen(groupId: number|string);
     }
+
+    enum Status {
+        pending=1, active=2, inactive=3
+    }
+
     export class AdminGroupService implements IAdminGroupService{
         static $inject=["$http", "ENDPOINT"];
         $http: ng.IHttpService;
@@ -122,7 +127,7 @@ module AIP {
             var params = {
                 groupTitle: groupInfo.title,
                 folderId: groupInfo.folder,
-                groupStatus: groupInfo.status,
+                groupStatus: Status[groupInfo.status.id],
                 groupDesc: groupInfo.description,
                 version: 0
             };

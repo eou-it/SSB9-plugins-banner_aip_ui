@@ -1,6 +1,12 @@
 ///<reference path="../../../../typings/tsd.d.ts"/>
 var AIP;
 (function (AIP) {
+    var Status;
+    (function (Status) {
+        Status[Status["pending"] = 1] = "pending";
+        Status[Status["active"] = 2] = "active";
+        Status[Status["inactive"] = 3] = "inactive";
+    })(Status || (Status = {}));
     var AdminGroupService = (function () {
         function AdminGroupService($http, ENDPOINT) {
             this.$http = $http;
@@ -49,7 +55,7 @@ var AIP;
             var params = {
                 groupTitle: groupInfo.title,
                 folderId: groupInfo.folder,
-                groupStatus: groupInfo.status,
+                groupStatus: Status[groupInfo.status.id],
                 groupDesc: groupInfo.description,
                 version: 0
             };
