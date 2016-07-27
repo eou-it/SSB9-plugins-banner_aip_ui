@@ -92,7 +92,7 @@ var AIP;
         };
         AdminGroupService.$inject = ["$http", "ENDPOINT"];
         return AdminGroupService;
-    })();
+    }());
     AIP.AdminGroupService = AdminGroupService;
 })(AIP || (AIP = {}));
 register("bannerAIP").service("AdminGroupService", AIP.AdminGroupService);
