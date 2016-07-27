@@ -174,6 +174,7 @@ var bannerAIPApp = angular.module("bannerAIP", [
             $.i18n.prop("aip.admin.group.add.maxLength");
             $.i18n.prop("aip.admin.group.error.exceedMax");
 
+            $.i18n.prop("aip.admin.group.add.status.default");
             $.i18n.prop("aip.admin.group.add.folder.default");
             $.i18n.prop("aip.admin.group.add.defaultFolder");
             $.i18n.prop("aip.admin.group.add.success");

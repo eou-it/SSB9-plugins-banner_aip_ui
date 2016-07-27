@@ -37,7 +37,7 @@ var AIPUI;
             return lessText;
         };
         return AIPReadmoreDirective;
-    })();
+    }());
     AIPUI.AIPReadmoreDirective = AIPReadmoreDirective;
 })(AIPUI || (AIPUI = {}));
 register("bannerAIPUI").directive("aipReadmore", AIPUI.AIPReadmoreDirective);

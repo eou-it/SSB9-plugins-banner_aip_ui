@@ -30,8 +30,8 @@ modules = {
         dependsOn 'csr-angular'
        // dependsOn 'bannerSelfServiceCommonLTR, extensibilityCommon, extensibilityAngular, common-components, common-components-ltr, angularApp, ' +
         //        'bootstrap'
-        dependsOn 'bannerSelfServiceCommonLTR, extensibilityCommon, extensibilityAngular, commonComponents, commonComponentsLTR, angularApp, ' +
-                'bootstrap'
+        dependsOn 'bannerSelfServiceCommonLTR, extensibilityCommon, extensibilityAngular, commonComponents, commonComponentsLTR, ' +
+                'angularApp, bootstrap'
         dependsOn 'bannerAIPApp'
         dependsOn 'font-awesome'
         //resource url:[plugin: 'banner-csr-ui', file: 'css/xe-ui-components.css']
@@ -84,5 +84,7 @@ modules = {
     'commonComponentsRTL' {
         resource url:[plugin: 'banner-csr-ui', file: 'css/xe-ui-components-rtl.css']
     }
+
+
 
 }

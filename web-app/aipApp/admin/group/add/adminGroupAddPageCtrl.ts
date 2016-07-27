@@ -67,6 +67,7 @@ module AIP {
                         .select2({
                         width: "25em",
                         minimumResultsForSearch: Infinity,
+                        placeholderOption:'first'
                     });
                     //TODO: find better and proper way to set defalut value in SELECT2 - current one is just dom object hack.
                     $(".groupStatus .select2-container.groupSelect .select2-chosen")[0].innerHTML = this.$filter("i18n_aip")(this.status[0].value);
@@ -78,7 +79,8 @@ module AIP {
                     var groupFolder:any = $("#groupFolder");
                     groupFolder.select2( {
                         width: "25em",
-                        minimumResultsForSearch: Infinity
+                        minimumResultsForSearch: Infinity,
+                        placeholderOption:'first'
                     });
                 })
             );
