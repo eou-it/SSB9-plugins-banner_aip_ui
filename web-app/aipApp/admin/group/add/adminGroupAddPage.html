@@ -29,8 +29,8 @@
                 <div class="row">
                     <select id="groupStatus" class="groupSelect" xe-data="" aria-labelledby="groupAdd-status" required aria-required="true"
                             ng-model="vm.groupInfo.status">
-                        <option selected="selected" value="{{'aip.status.pending'|i18n_aip}}">{{"aip.status.pending"|i18n_aip}}</option>
-                        <option ng-repeat="item in vm.status" value="{{item.value|i18n_aip}}">{{item.value|i18n_aip}}</option>
+                        <!--<option selected="selected" value="{{'aip.status.pending'|i18n_aip}}">{{"aip.status.pending"|i18n_aip}}</option>-->
+                        <option ng-repeat="item in vm.status" value="{{item.id}}">{{item.value|i18n_aip}}</option>
                     </select>
                     <!--<select id="groupStatus" class="groupSelect" xe-data="" aria-labelledby="groupAdd-status" required aria-required="true"-->
                     <!--ng-options="item as item.value|i18n_aip for item in vm.status track by item.value" ng-model="vm.groupInfo.status">-->

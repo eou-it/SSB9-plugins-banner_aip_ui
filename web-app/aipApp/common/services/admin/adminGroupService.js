@@ -55,7 +55,7 @@ var AIP;
             var params = {
                 groupTitle: groupInfo.title,
                 folderId: groupInfo.folder,
-                groupStatus: Status[groupInfo.status.id],
+                groupStatus: Status[groupInfo.status],
                 groupDesc: groupInfo.description,
                 version: 0
             };

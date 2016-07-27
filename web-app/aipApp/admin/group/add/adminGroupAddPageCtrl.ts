@@ -11,16 +11,22 @@ module AIP {
         status: AIP.IStatus[];
         folders: AIP.IFolder[];
         adminGroupService: AIP.AdminGroupService;
-        groupInfo: AIP.IGroupInfo;
+        groupInfo: IGroupSelect;
         errorMessage;
         save(): void;
         cancel(): void;
+    }
+    interface IGroupSelect {
+        title: string;
+        status: string|number;
+        folder: number|string;
+        description: string;
     }
     export class AdminGroupAddPageCtrl implements IAdminGroupAddPageCtrl{
         $inject = ["$scope", "AdminGroupService", "$q", "SpinnerService", "$state", "$filter"];
         status: AIP.IStatus[];
         folders: AIP.IFolder[];
-        groupInfo: AIP.IGroupInfo;
+        groupInfo: IGroupSelect;
         errorMessage;
         adminGroupService: AIP.AdminGroupService;
         spinnerService: AIP.SpinnerService;
@@ -56,14 +62,14 @@ module AIP {
                         return item;
                     });
                     var groupStatus:any = $("#groupStatus");
-                    this.groupInfo.status = this.status[0];
+                    this.groupInfo.status = this.status[0].id;
                     groupStatus
                         .select2({
                         width: "25em",
                         minimumResultsForSearch: Infinity,
                     });
                     //TODO: find better and proper way to set defalut value in SELECT2 - current one is just dom object hack.
-                    // $(".groupStatus .select2-container.groupSelect .select2-chosen")[0].innerHTML = this.$filter("i18n_aip")(this.groupInfo.status.value);
+                    $(".groupStatus .select2-container.groupSelect .select2-chosen")[0].innerHTML = this.$filter("i18n_aip")(this.status[0].value);
                 })
             );
             promises.push(
