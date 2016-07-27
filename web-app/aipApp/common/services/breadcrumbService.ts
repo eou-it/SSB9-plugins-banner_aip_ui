@@ -27,8 +27,9 @@ module AIP {
             var existItemTitle = Object.keys(this.breadcrumbs);
             var itemTitle = this.$filter('i18n_aip')(item.title);
             if(existItemTitle.indexOf(item.title)===-1) {
-                if(existItemTitle[existItemTitle.length-1] === 'aip.admin.group.add' && item.title === 'aip.admin.group.open')  {
-                    delete this.breadcrumbs['aip.admin.group.add'];
+                if((existItemTitle[existItemTitle.length-1] === 'aip.admin.group.add' && item.title === 'aip.admin.group.open') ||
+                    (existItemTitle[existItemTitle.length - 1] === 'aip.admin.group.open' && item.title === 'aip.admin.group.add')){
+                    delete this.breadcrumbs[existItemTitle[existItemTitle.length - 1]];
                 }
                 this.breadcrumbs[item.title] = item.url
             } else {
