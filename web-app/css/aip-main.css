@@ -264,8 +264,7 @@ aip-list .aip-list-container {
   padding-right: 0.5em; }
 
 #content {
-  overflow: hidden;
-  top: 90px !important; }
+  overflow: hidden; }
   #content #title-panel h1 {
     line-height: normal; }
 
