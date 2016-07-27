@@ -3,9 +3,9 @@ var AIP;
 (function (AIP) {
     var Status;
     (function (Status) {
-        Status[Status["pending"] = 1] = "pending";
-        Status[Status["active"] = 2] = "active";
-        Status[Status["inactive"] = 3] = "inactive";
+        Status[Status["Pending"] = 1] = "Pending";
+        Status[Status["Active"] = 2] = "Active";
+        Status[Status["Inactive"] = 3] = "Inactive";
     })(Status || (Status = {}));
     var AdminGroupService = (function () {
         function AdminGroupService($http, ENDPOINT) {
@@ -92,7 +92,7 @@ var AIP;
         };
         AdminGroupService.$inject = ["$http", "ENDPOINT"];
         return AdminGroupService;
-    }());
+    })();
     AIP.AdminGroupService = AdminGroupService;
 })(AIP || (AIP = {}));
 register("bannerAIP").service("AdminGroupService", AIP.AdminGroupService);

@@ -73,7 +73,7 @@ module AIP {
 
 
     enum Status {
-        pending=1, active=2, inactive=3
+        Pending=1, Active=2, Inactive=3
     }
 
     export class AdminGroupService implements IAdminGroupService{
