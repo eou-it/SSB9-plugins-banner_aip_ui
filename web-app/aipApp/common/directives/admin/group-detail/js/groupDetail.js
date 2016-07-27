@@ -37,7 +37,7 @@ var AIPUI;
             */
         };
         return AIPGroupDetailDirective;
-    })();
+    }());
     AIPUI.AIPGroupDetailDirective = AIPGroupDetailDirective;
 })(AIPUI || (AIPUI = {}));
 register("bannerAIPUI").directive("aipGroupDetail", AIPUI.AIPGroupDetailDirective);

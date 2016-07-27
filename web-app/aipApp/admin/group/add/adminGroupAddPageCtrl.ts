@@ -61,9 +61,12 @@ module AIP {
                         .select2({
                         width: "25em",
                         minimumResultsForSearch: Infinity,
+                        placeholderOption:'first'
                     });
                     //TODO: find better and proper way to set defalut value in SELECT2 - current one is just dom object hack.
-                    $(".groupStatus .select2-container.groupSelect .select2-chosen")[0].innerHTML = this.$filter("i18n_aip")(this.groupInfo.status.value);
+                    //$(".groupStatus .select2-container.groupSelect .select2-chosen")[0].innerHTML =
+                    // this.$filter("i18n_aip")(this.groupInfo.status.value);
+                    //$("#groupStatus").val(this.$filter("i18n_aip")(this.groupInfo.status.value));
                 })
             );
             promises.push(
@@ -72,12 +75,16 @@ module AIP {
                     var groupFolder:any = $("#groupFolder");
                     groupFolder.select2( {
                         width: "25em",
-                        minimumResultsForSearch: Infinity
+                        minimumResultsForSearch: Infinity,
+                        placeholderOption:'first'
                     });
                 })
             );
             this.$q.all(promises).then(() => {
                 this.spinnerService.showSpinner(false);
+               // var defaultVal = $("#groupStatus option:first-child" ).attr("value");
+               // console.log("default " + defaultVal);
+
             });
         }
         save() {
@@ -102,6 +109,7 @@ module AIP {
             this.$state.go("admin-group-list");
         }
         validateInput() {
+
             if(!this.groupInfo.title || this.groupInfo.title === null || this.groupInfo.title === "" || this.groupInfo.title.length > 60) {
                 this.errorMessage.title = "invalid title";
             } else {

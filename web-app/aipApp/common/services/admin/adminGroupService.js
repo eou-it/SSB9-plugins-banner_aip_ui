@@ -3,9 +3,9 @@ var AIP;
 (function (AIP) {
     var Status;
     (function (Status) {
-        Status[Status["pending"] = 1] = "pending";
-        Status[Status["active"] = 2] = "active";
-        Status[Status["inactive"] = 3] = "inactive";
+        Status[Status["Pending"] = 1] = "Pending";
+        Status[Status["Active"] = 2] = "Active";
+        Status[Status["Inactive"] = 3] = "Inactive";
     })(Status || (Status = {}));
     var AdminGroupService = (function () {
         function AdminGroupService($http, ENDPOINT) {
@@ -52,10 +52,12 @@ var AIP;
             return request;
         };
         AdminGroupService.prototype.saveGroup = function (groupInfo) {
+            console.log(groupInfo);
             var params = {
                 groupTitle: groupInfo.title,
                 folderId: groupInfo.folder,
-                groupStatus: Status[groupInfo.status.id],
+                //groupStatus: Status[groupInfo.status.id],
+                groupStatus: groupInfo.status,
                 groupDesc: groupInfo.description,
                 version: 0
             };

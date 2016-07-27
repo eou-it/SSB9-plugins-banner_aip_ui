@@ -15,7 +15,7 @@ var AIP;
         }
         SpinnerCtrl.$inject = ["$scope", "SpinnerService", "$rootScope"];
         return SpinnerCtrl;
-    })();
+    }());
     AIP.SpinnerCtrl = SpinnerCtrl;
 })(AIP || (AIP = {}));
 register("bannerAIP").controller("SpinnerCtrl", AIP.SpinnerCtrl);
