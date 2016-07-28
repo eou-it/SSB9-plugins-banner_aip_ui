@@ -1,18 +1,22 @@
-.groupOpenContainer {
-  padding: 0;
-  .row {
-    margin-left: 0;
-    margin-right: 0;
-  }
-  .groupInfo {
-    margin-bottom:20px;
-    .groupInfoRow {
-      margin-bottom: 16px;
-      .groupElement {
-        padding-right: 8px;
-        padding-left: 8px;
-        margin-bottom: 8px;
+ .groupOpenContainer {
+    padding: 0;
+    margin: 0;
+    .row {
+      margin-left: 0;
+      margin-right: 0;
+    }
+    .groupInfo  {
+      margin-bottom: 20px;
+      .groupInfoRow {
+        margin-bottom: 16px;
+        .groupElement {
+          padding-right: 8px;
+          padding-left: 8px;
+          margin-bottom: 8px;
+          .groupDetail {
+            border-right: 1px solid #444444;
+          }
+        }
       }
     }
   }
-}

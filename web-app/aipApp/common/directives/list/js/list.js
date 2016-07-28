@@ -83,7 +83,7 @@ var AIPUI;
             };
         };
         return AIPListDirective;
-    })();
+    }());
     AIPUI.AIPListDirective = AIPListDirective;
 })(AIPUI || (AIPUI = {}));
 register("bannerAIPUI").directive("aipList", AIPUI.AIPListDirective);

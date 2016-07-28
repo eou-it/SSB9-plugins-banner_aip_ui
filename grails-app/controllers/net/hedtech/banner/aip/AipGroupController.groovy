@@ -61,6 +61,7 @@ class AipGroupController {
         */
         def jsonObj = request.JSON;
         def groupId = jsonObj.groupId;
+        def groupDesc;
 
         if (!groupId) {
             response.sendError( 403 )
@@ -71,16 +72,37 @@ class AipGroupController {
         def errors = []
 
         def group = actionItemGroupService.getActionItemGroupById( groupId )
+        def groupRO = groupFolderReadOnlyService.getActionItemGroupById( groupId)
+
 
         if (group) {
             response.status = 200
             success = true
         }
 
+        if (!group.description) {
+            groupDesc = MessageUtility.message( "aip.placeholder.nogroups" )
+        } else {
+            groupDesc = group.description
+        }
+
+        def groupItem = [
+                id             : group.id,
+                title          : group.title,
+                status         : group.status,
+                folder         : group.folderId,
+                userId         : group.userId,
+                description    : groupDesc,
+                activity       : group.activityDate,
+                version        : group.version,
+                dataOrigin     : group.dataOrigin
+        ]
+
         def model = [
                 success: success,
                 errors : errors,
-                group  : group
+                group  : groupItem,
+                folder : groupRO
         ]
 
         render model as JSON

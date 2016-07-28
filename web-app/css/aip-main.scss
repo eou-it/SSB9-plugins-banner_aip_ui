@@ -15,7 +15,7 @@
 }
 #content {
   overflow:hidden;
-  top: 90px !important;
+  //top: 90px !important;
   #title-panel {
     h1 {
       line-height: normal;
@@ -79,6 +79,7 @@ a:focus, div:focus, input:focus, span:focus, i:focus, button:focus, .breadcrumbB
   padding: 8px 16px;
   height: 100%;
   overflow-x: auto;
+  background-color: #edf2f7;
   //overflow-y: scroll;
   //margin-top: 5px;
   //override common-component angular-grid
@@ -89,7 +90,11 @@ a:focus, div:focus, input:focus, span:focus, i:focus, button:focus, .breadcrumbB
       }
     }
   }
-
+  hr {
+    margin-top: 0;
+    margin-bottom: 8px;
+    border-top: 1px solid #000000;
+  }
   .listActionItem {
     .welcome {
       padding: 0 0 16px 0;
@@ -97,11 +102,6 @@ a:focus, div:focus, input:focus, span:focus, i:focus, button:focus, .breadcrumbB
         font-size: 2em;
         font-weight: bold;
       }
-    }
-    hr {
-      margin-top: 0;
-      margin-bottom: 8px;
-      border-top: 1px solid #000000;
     }
     .welcometext {
       font-size: 1.5em;

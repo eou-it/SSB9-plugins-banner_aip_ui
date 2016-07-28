@@ -14,8 +14,9 @@ var bannerAIPApp = angular.module("bannerAIP", [
     "ngAria",
     "I18nAIP",
     "ngAnimate",
-    "bannerAIPUI",
-    "xe-ui-components"
+    "xe-ui-components",
+    "bannerAIPUI"
+    //"xe-ui-components"
     ])
 
 //set application root url
@@ -97,7 +98,7 @@ var bannerAIPApp = angular.module("bannerAIP", [
                     url: item.url,
                     templateUrl: APP_ROOT + item.templateUrl,
                     controller: item.controller,
-                    params: {noti:undefined, grp:undefined},
+                    params: {noti:undefined, grp:undefined, grpFolder:undefined, grpStatus:undefined},
                     onEnter: function($stateParams, $filter) {
                         this.data.breadcrumbs.url = item.breadcrumb.url;
                         this.data.breadcrumbs.title = item.breadcrumb.label;
@@ -120,8 +121,8 @@ var bannerAIPApp = angular.module("bannerAIP", [
     ])
 
 //instance-injector
-    .run(["$rootScope", "$state", "$stateParams", "$filter", "BreadcrumbService",
-        function($rootScope, $state, $stateParams, $filter, BreadcrumService) {
+    .run(["$rootScope", "$state", "$stateParams", "$filter","$sce", "BreadcrumbService",
+        function($rootScope, $state, $stateParams, $filter, $sce, BreadcrumService) {
             $rootScope.$state = $state;
             $rootScope.$stateParams = $stateParams;
             //when state successfully changed, update breadcrumbs
@@ -147,6 +148,7 @@ var bannerAIPApp = angular.module("bannerAIP", [
             $.i18n.prop("aip.common.status");
             $.i18n.prop("aip.common.folder");
             $.i18n.prop("aip.common.group.description");
+            $.i18n.prop("aip.common.activity");
             $.i18n.prop("aip.common.activity.date");
             $.i18n.prop("aip.common.last.updated.by");
             $.i18n.prop("aip.common.save");
@@ -172,6 +174,7 @@ var bannerAIPApp = angular.module("bannerAIP", [
             $.i18n.prop("aip.admin.group.add.maxLength");
             $.i18n.prop("aip.admin.group.error.exceedMax");
 
+            $.i18n.prop("aip.admin.group.add.status.default");
             $.i18n.prop("aip.admin.group.add.folder.default");
             $.i18n.prop("aip.admin.group.add.defaultFolder");
             $.i18n.prop("aip.admin.group.add.success");

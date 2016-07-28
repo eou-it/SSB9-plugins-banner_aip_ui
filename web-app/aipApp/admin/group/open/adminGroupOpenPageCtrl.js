@@ -4,12 +4,13 @@
 var AIP;
 (function (AIP) {
     var AdminGroupOpenPageCtrl = (function () {
-        function AdminGroupOpenPageCtrl($scope, AdminGroupService, $q, SpinnerService, $state, $filter) {
-            this.$inject = ["$scope", "AdminGroupService", "$q", "SpinnerService", "$state", "$filter"];
+        function AdminGroupOpenPageCtrl($scope, AdminGroupService, $q, SpinnerService, $state, $filter, $sce) {
+            this.$inject = ["$scope", "AdminGroupService", "$q", "SpinnerService", "$state", "$filter", "$sce"];
             $scope.vm = this;
             this.$q = $q;
             this.$state = $state;
             this.$filter = $filter;
+            this.$sce = $sce;
             this.adminGroupService = AdminGroupService;
             this.spinnerService = SpinnerService;
             $scope.$watch("[vm.groupDetailResponse, vm.groupInfo]", function (newVal, oldVal) {
@@ -23,9 +24,18 @@ var AIP;
             var _this = this;
             this.spinnerService.showSpinner(true);
             var promises = [];
+            // console.log(this.$state.params);
             this.adminGroupService.getGroupDetail(this.$state.params.grp).then(function (response) {
                 _this.groupInfo = response.group;
+                _this.groupFolder = response.folder;
                 $("#title-panel h1").html(_this.groupInfo.title);
+                $("p.openGroupTitle").html(_this.groupInfo.title);
+                $("p.openGroupFolder").html(_this.groupFolder[0].folderName);
+                $("p.openGroupStatus").html(_this.$filter("i18n_aip")(_this.groupInfo.status));
+                $("p.openGroupDesc").html(_this.groupInfo.description);
+                $("p.openGroupActivityDate").html(_this.groupFolder[0].groupActivityDate);
+                $("p.openGroupLastUpdatedBy").html(_this.groupFolder[0].groupUserId);
+                //console.log(this.groupInfo);
             }, function (err) {
                 console.log(err);
             });
@@ -35,8 +45,6 @@ var AIP;
             this.$q.all(promises).then(function () {
                 //TODO:: turn off the spinner
                 _this.spinnerService.showSpinner(false);
-                //console.log(this.)
-                // $("#title-panel h1" ).html(this.adminGroupService.g);
             });
         };
         ;
@@ -57,7 +65,7 @@ var AIP;
             }
         };
         return AdminGroupOpenPageCtrl;
-    })();
+    }());
     AIP.AdminGroupOpenPageCtrl = AdminGroupOpenPageCtrl;
 })(AIP || (AIP = {}));
 register("bannerAIP").controller("AdminGroupOpenPageCtrl", AIP.AdminGroupOpenPageCtrl);

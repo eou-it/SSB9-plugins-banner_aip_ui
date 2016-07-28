@@ -23,6 +23,19 @@ module AIP {
         lastModifiedBy?: string;
         version?:number|string;
     }
+
+    export interface IGroupFolder {
+        id: string|number|boolean;
+        folderName: string;
+        folderDesc?: string;
+        groupActivityDate?: Date|string;
+        groupUserId?: string;
+        groupDesc?: string;
+        groupId: string;
+        groupStatus: string;
+        version?:number|string;
+    }
+
     export interface IStatus {
         id: string|number;
         value: string;
@@ -30,7 +43,7 @@ module AIP {
     export interface IGroupInfo {
         id: string|number;
         title: string;
-        status: AIP.IStatus;
+        status: IStatus;
         folder: number|string;
         description: string;
     }
@@ -38,6 +51,7 @@ module AIP {
         success: string;
         errors? : string[];
         group?  : IGroupInfo;
+        folder? : IGroupFolder;
     }
 
     export interface IAddGroupResponse {
@@ -54,7 +68,14 @@ module AIP {
         getGroupList();
         saveGroup(groupInfo:IGroupInfo);
         getGroupDetail(groupId: number|string);
+        enableGroupOpen(groupId: number|string);
     }
+
+
+    enum Status {
+        Pending=1, Active=2, Inactive=3
+    }
+
     export class AdminGroupService implements IAdminGroupService{
         static $inject=["$http", "ENDPOINT"];
         $http: ng.IHttpService;
@@ -102,11 +123,11 @@ module AIP {
             });
             return request;
         }
-        saveGroup(groupInfo:IGroupInfo) {
+        saveGroup(groupInfo:any) {
             var params = {
                 groupTitle: groupInfo.title,
                 folderId: groupInfo.folder,
-                groupStatus: groupInfo.status,
+                groupStatus: Status[groupInfo.status],
                 groupDesc: groupInfo.description,
                 version: 0
             };
@@ -123,6 +144,7 @@ module AIP {
             });
             return request;
         }
+
         getGroupDetail(groupId) {
             var request = this.$http({
                     method: "POST",
@@ -135,6 +157,12 @@ module AIP {
                     throw new Error(err);
                 })
             return request;
+        }
+
+        enableGroupOpen(groupId) {
+            //var selectedGroup = groupId;
+            $("#openGroupBtn").removeAttr("disabled");
+            return groupId;
         }
     }
 }

@@ -11,16 +11,22 @@ module AIP {
         status: AIP.IStatus[];
         folders: AIP.IFolder[];
         adminGroupService: AIP.AdminGroupService;
-        groupInfo: AIP.IGroupInfo;
+        groupInfo: IGroupSelect;
         errorMessage;
         save(): void;
         cancel(): void;
+    }
+    interface IGroupSelect {
+        title: string;
+        status: string|number;
+        folder: number|string;
+        description: string;
     }
     export class AdminGroupAddPageCtrl implements IAdminGroupAddPageCtrl{
         $inject = ["$scope", "AdminGroupService", "$q", "SpinnerService", "$state", "$filter"];
         status: AIP.IStatus[];
         folders: AIP.IFolder[];
-        groupInfo: AIP.IGroupInfo;
+        groupInfo: IGroupSelect;
         errorMessage;
         adminGroupService: AIP.AdminGroupService;
         spinnerService: AIP.SpinnerService;
@@ -56,11 +62,15 @@ module AIP {
                         return item;
                     });
                     var groupStatus:any = $("#groupStatus");
+                    this.groupInfo.status = this.status[0].id;
                     groupStatus
                         .select2({
                         width: "25em",
                         minimumResultsForSearch: Infinity
+                        //placeholderOption:'first'
                     });
+                    //TODO: find better and proper way to set defalut value in SELECT2 - current one is just dom object hack.
+                    $(".groupStatus .select2-container.groupSelect .select2-chosen")[0].innerHTML = this.$filter("i18n_aip")(this.status[0].value);
                 })
             );
             promises.push(
@@ -69,18 +79,14 @@ module AIP {
                     var groupFolder:any = $("#groupFolder");
                     groupFolder.select2( {
                         width: "25em",
-                        minimumResultsForSearch: Infinity
+                        minimumResultsForSearch: Infinity,
+                        placeholderOption:'first'
                     });
                 })
             );
             this.$q.all(promises).then(() => {
-                //TODO:: turn off the spinner
                 this.spinnerService.showSpinner(false);
-                //this.groupInfo.status = this.status[0];
-                //todo: this is where we will want to modify code to set status value i select2
-                //console.log("groupInfo status = " + this.groupInfo.status );
             });
-
         }
         save() {
             this.adminGroupService.saveGroup(this.groupInfo)

@@ -82,7 +82,9 @@ class AipController {
         ]
         def model = [
                 header: testDataHeader,
-                data  : groupList
+                result  : groupList,
+                length: groupList.size()
+
         ]
         render model as JSON
     }

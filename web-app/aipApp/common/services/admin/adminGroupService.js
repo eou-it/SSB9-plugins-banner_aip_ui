@@ -1,6 +1,12 @@
 ///<reference path="../../../../typings/tsd.d.ts"/>
 var AIP;
 (function (AIP) {
+    var Status;
+    (function (Status) {
+        Status[Status["Pending"] = 1] = "Pending";
+        Status[Status["Active"] = 2] = "Active";
+        Status[Status["Inactive"] = 3] = "Inactive";
+    })(Status || (Status = {}));
     var AdminGroupService = (function () {
         function AdminGroupService($http, ENDPOINT) {
             this.$http = $http;
@@ -49,7 +55,7 @@ var AIP;
             var params = {
                 groupTitle: groupInfo.title,
                 folderId: groupInfo.folder,
-                groupStatus: groupInfo.status,
+                groupStatus: Status[groupInfo.status],
                 groupDesc: groupInfo.description,
                 version: 0
             };
@@ -78,6 +84,11 @@ var AIP;
                 throw new Error(err);
             });
             return request;
+        };
+        AdminGroupService.prototype.enableGroupOpen = function (groupId) {
+            //var selectedGroup = groupId;
+            $("#openGroupBtn").removeAttr("disabled");
+            return groupId;
         };
         AdminGroupService.$inject = ["$http", "ENDPOINT"];
         return AdminGroupService;
