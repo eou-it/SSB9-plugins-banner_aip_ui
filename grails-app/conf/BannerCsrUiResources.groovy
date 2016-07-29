@@ -31,7 +31,7 @@ modules = {
        // dependsOn 'bannerSelfServiceCommonLTR, extensibilityCommon, extensibilityAngular, common-components, common-components-ltr, angularApp, ' +
         //        'bootstrap'
         dependsOn 'bannerSelfServiceCommonLTR, extensibilityCommon, extensibilityAngular, commonComponents, commonComponentsLTR, ' +
-                'angularApp, bootstrap'
+                'bannerSelfServiceAngular, bootstrap'
         dependsOn 'bannerAIPApp'
         dependsOn 'font-awesome'
         //resource url:[plugin: 'banner-csr-ui', file: 'css/xe-ui-components.css']
@@ -83,6 +83,20 @@ modules = {
     }
     'commonComponentsRTL' {
         resource url:[plugin: 'banner-csr-ui', file: 'css/xe-ui-components-rtl.css']
+    }
+
+    'bannerSelfServiceAngular' {
+        resource url:[plugin: 'banner-ui-ss',file: 'js/angular/lrInfiniteScroll.js']
+        resource url:[plugin: 'banner-ui-ss',file: 'js/moment.js']
+        resource url:[plugin: 'banner-ui-ss',file: 'js/angular/angular-common.js']
+        resource url:[plugin: 'banner-ui-ss',file: 'js/angular-components/locale-numeric-input/custom-number-input.js']
+        resource url:[plugin: 'banner-ui-ss',file: 'js/angular-components/locale-numeric-input/directives/currency-directive.js']
+        resource url:[plugin: 'banner-ui-ss',file: 'js/angular-components/locale-numeric-input/directives/decimal-directive.js']
+        resource url:[plugin: 'banner-ui-ss',file: 'js/angular-components/locale-numeric-input/directives/percent-directive.js']
+        resource url:[plugin: 'banner-ui-ss',file: 'js/angular-components/locale-numeric-input/directives/only-number.js']
+        resource url:[plugin: 'banner-ui-ss',file: 'css/custom-number-input/custom-number-input.css'],     attrs:[media:'screen, projection']
+        resource url:[plugin: 'banner-ui-ss',file: 'js/angular-components/locale-numeric-input/services/readonly-service.js']
+        resource url:[plugin: 'banner-ui-ss',file: 'js/angular-components/date-picker/directives/date-picker-directive.js']
     }
 
 
