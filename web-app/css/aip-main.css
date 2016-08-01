@@ -116,7 +116,7 @@ aip-list .aip-list-container {
       background-color: #ffffff; }
     .AIP-landing-container aip-landing-item .ladingItem-container .landing-icon {
       padding: 16px;
-      border-right: 2px solid #EDF2F7; }
+      max-width: 90px; }
       .AIP-landing-container aip-landing-item .ladingItem-container .landing-icon .well {
         background-color: transparent;
         border: none;
@@ -125,14 +125,18 @@ aip-list .aip-list-container {
         font-size: 3em;
         color: #206E9F; }
     .AIP-landing-container aip-landing-item .ladingItem-container .landing-context {
-      padding: 8px 24px; }
+      padding: 8px 24px;
+      border-left: 2px solid #EDF2F7;
+      border-right: none; }
       .AIP-landing-container aip-landing-item .ladingItem-container .landing-context .landing-title {
         font-weight: bold;
         padding-bottom: 16px; }
   @media screen and (max-width: 480px) {
     .AIP-landing-container aip-landing-item .ladingItem-container {
       margin-left: 8px;
-      margin-right: 8px; } }
+      margin-right: 8px; }
+      .AIP-landing-container aip-landing-item .ladingItem-container .landing-icon {
+        padding: 16px 8px; } }
 
 .aip-item-detail-container {
   height: inherit; }

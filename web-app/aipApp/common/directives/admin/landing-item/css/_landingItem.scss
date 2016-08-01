@@ -23,7 +23,7 @@
       }
       .landing-icon {
         padding: 16px;
-        border-right: 2px solid #EDF2F7;
+        max-width: 90px;
         .well {
           background-color: transparent;
           border: none;
@@ -36,6 +36,8 @@
       }
       .landing-context {
         padding: 8px 24px;
+        border-left: 2px solid #EDF2F7;
+        border-right: none;
         .landing-title {
           font-weight: bold;
           padding-bottom: 16px;
@@ -49,6 +51,9 @@
       .ladingItem-container {
         margin-left: 8px;
         margin-right: 8px;
+        .landing-icon {
+          padding: 16px 8px;
+        }
       }
     }
   }
