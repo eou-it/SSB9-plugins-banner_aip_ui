@@ -187,6 +187,9 @@ var bannerAIPApp = angular.module("bannerAIP", [
             $.i18n.prop("aip.admin.group.error.exceedMax");
             $.i18n.prop("aip.admin.group.add.folder.default");
 
+            $.i18n.prop("aip.admin.action");
+            $.i18n.prop("aip.admin.action.description");
+
             $.i18n.prop("aip.status.active");
             $.i18n.prop("aip.status.inactive");
             $.i18n.prop("aip.status.pending");
