@@ -18,16 +18,16 @@ module AIP {
         init() {
             this.landingItem = [
                 {
-                    title:"aip.admin.group",
-                    icon: "info",
-                    click:"admin-group-list",
-                    description:"aip.admin.group.description"
+                    title:"aip.admin.action",
+                    icon: "icon-check-SO",
+                    click:"admin-list",
+                    description:"aip.admin.action.description"
                 },
                 {
-                    title:"Title",
-                    icon: "info",
-                    click:"admin-list",
-                    description:"Placeholder for item (to check layout)"
+                    title:"aip.admin.group",
+                    icon: "icon-cardView-SO",
+                    click:"admin-group-list",
+                    description:"aip.admin.group.description"
                 }
             ];
         }

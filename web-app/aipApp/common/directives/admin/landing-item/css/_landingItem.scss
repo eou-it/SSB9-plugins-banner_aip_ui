@@ -22,15 +22,20 @@
         background-color: #ffffff;
       }
       .landing-icon {
-        padding: 0;
+        padding: 16px;
+        border-right: 2px solid #EDF2F7;
         .well {
           background-color: transparent;
           border: none;
           box-shadow: none;
         }
+        .icon {
+          font-size: 3em;
+          color: #206E9F;
+        }
       }
       .landing-context {
-        padding: 8px;
+        padding: 8px 24px;
         .landing-title {
           font-weight: bold;
           padding-bottom: 16px;

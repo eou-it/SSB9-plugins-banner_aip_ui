@@ -37,6 +37,7 @@ modules = {
         //resource url:[plugin: 'banner-csr-ui', file: 'css/xe-ui-components.css']
         resource url:[plugin: 'banner-csr-ui', file: 'css/aip-main.css']
         resource url:[plugin: 'banner-csr-ui', file: 'aipApp/common/directives/ckeditor/css/ckEditor.css']
+        resource url:[plugin: 'banner-csr-ui', file: 'css/iconFonts.css']
     }
     'bannerAIPUIRTL' {
 //        dependsOn 'bannerAIPUI'

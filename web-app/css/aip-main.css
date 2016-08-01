@@ -115,13 +115,17 @@ aip-list .aip-list-container {
     .AIP-landing-container aip-landing-item .ladingItem-container:hover {
       background-color: #ffffff; }
     .AIP-landing-container aip-landing-item .ladingItem-container .landing-icon {
-      padding: 0; }
+      padding: 16px;
+      border-right: 2px solid #EDF2F7; }
       .AIP-landing-container aip-landing-item .ladingItem-container .landing-icon .well {
         background-color: transparent;
         border: none;
         box-shadow: none; }
+      .AIP-landing-container aip-landing-item .ladingItem-container .landing-icon .icon {
+        font-size: 3em;
+        color: #206E9F; }
     .AIP-landing-container aip-landing-item .ladingItem-container .landing-context {
-      padding: 8px; }
+      padding: 8px 24px; }
       .AIP-landing-container aip-landing-item .ladingItem-container .landing-context .landing-title {
         font-weight: bold;
         padding-bottom: 16px; }
