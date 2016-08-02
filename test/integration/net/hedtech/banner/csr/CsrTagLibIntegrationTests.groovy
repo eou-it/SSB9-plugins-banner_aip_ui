@@ -51,7 +51,7 @@ class CsrTagLibIntegrationTests extends BaseIntegrationTestCase {
     //FIXME: need to parse and validate
     @Test
     void testi18nEntry() {
-        def answer = lib.i18n_setup().toString()
+        def answer = lib.i18n_aip_setup().toString()
         assertTrue answer.contains( 'window.i18n_aip' )
         assertTrue answer.contains( 'window.i18n_aip_bundle_plugins' )
         assertTrue answer.contains( 'window.i18n_aip_bundle' )
