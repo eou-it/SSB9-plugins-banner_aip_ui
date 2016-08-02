@@ -49,7 +49,7 @@ class CsrTagLib {
         }
     }
 
-    def i18n_setup = { attrs ->
+    def i18n_aip_setup = { attrs ->
         def names = resourceModuleNames( request )
         Set keys = []
 
