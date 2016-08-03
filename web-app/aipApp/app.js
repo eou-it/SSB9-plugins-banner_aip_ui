@@ -37,6 +37,14 @@ var bannerAIPApp = angular.module("bannerAIP", [
                 url: "/aip/admin#/landing"
             }
         },
+        "admin-action-list": {
+            url: "/action",
+            templateUrl: "admin/action/list/actionItemListPage.html",
+            breadcrumb: {
+                label: "aip.admin.action",
+                url: "/aip/admin#/action"
+            }
+        },
         "admin-group-list": {
             url: "/group",
             templateUrl: "admin/group/list/adminGroupListPage.html",

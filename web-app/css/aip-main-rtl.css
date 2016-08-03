@@ -141,15 +141,22 @@ aip-list .aip-list-container  {
     background-color:#ffffff;
 }
     .AIP-landing-container aip-landing-item .ladingItem-container .landing-icon  {
-    padding:0;
+    padding:16px;
+    max-width:90px;
 }
       .AIP-landing-container aip-landing-item .ladingItem-container .landing-icon .well  {
     background-color:transparent;
     border:none;
     box-shadow:none;
 }
+      .AIP-landing-container aip-landing-item .ladingItem-container .landing-icon .icon  {
+    font-size:3em;
+    color:#206E9F;
+}
     .AIP-landing-container aip-landing-item .ladingItem-container .landing-context  {
-    padding:8px;
+    padding:8px 24px;
+    border-right:2px solid #EDF2F7;
+    border-left:none;
 }
       .AIP-landing-container aip-landing-item .ladingItem-container .landing-context .landing-title  {
     font-weight:bold;
@@ -328,7 +335,6 @@ aip-list .aip-list-container  {
 
 #content  {
     overflow:hidden;
-    top:90px !important;
 }
   #content #title-panel h1  {
     line-height:normal;
@@ -436,6 +442,9 @@ a:focus, div:focus, input:focus, span:focus, i:focus, button:focus, .breadcrumbB
     .AIP-landing-container aip-landing-item .ladingItem-container  {
     margin-right:8px;
     margin-left:8px;
+}
+      .AIP-landing-container aip-landing-item .ladingItem-container .landing-icon  {
+    padding:16px 8px;
 }
 }
 @media (min-width: 769px) {
