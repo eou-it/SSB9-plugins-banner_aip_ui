@@ -346,7 +346,7 @@ class AipGroupControllerIntegrationTests extends BaseIntegrationTestCase {
         assertEquals 200, controller.response.status
         def answer = JSON.parse( controller.response.contentAsString )
         assertEquals( false, answer.success )
-        assertTrue( answer.group.equals( null ) )
+        assertTrue( answer.group.id.equals( null ) )
     }
 
 
