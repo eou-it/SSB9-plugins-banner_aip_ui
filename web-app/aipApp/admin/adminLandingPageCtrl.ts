@@ -20,7 +20,7 @@ module AIP {
                 {
                     title:"aip.admin.action",
                     icon: "icon-check-SO",
-                    click:"admin-list",
+                    click:"admin-action-list",
                     description:"aip.admin.action.description"
                 },
                 {
