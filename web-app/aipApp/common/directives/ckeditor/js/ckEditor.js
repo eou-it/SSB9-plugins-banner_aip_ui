@@ -1,3 +1,4 @@
+///<reference path="../../../../../typings/tsd.d.ts"/>
 angular.module('bannerAIPUI')
     .directive('ckEditor', function () {
     return {

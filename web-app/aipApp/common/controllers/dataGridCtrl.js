@@ -9,7 +9,7 @@ var AIP;
             $scope.rows = [];
             $scope.fetchData = function (query) {
                 var deferred = $q.defer(), url = "";
-                url = $scope.urlTest + "?";
+                url = this.ENDPOINT.admin.groupList + "?";
                 '?searchString=' + (query.searchString || '') +
                     '&sortColumnName=' + (query.sortColumnName || '') +
                     '&ascending=' + query.ascending +

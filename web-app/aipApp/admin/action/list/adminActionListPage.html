@@ -1,0 +1,34 @@
+<div class="actionListContainer" ng-controller="AdminActionListPageCtrl">
+    <div class="row controls">
+        <div class="control">
+            <!--<button type="button" class="btn btn-default" ng-click="vm.add()" aria-label="{{'aip.common.add.group.jaws'|i18n_aip}}">-->
+                <!--<i class="fa fa-plus" aria-hidden="true"></i>-->
+                <!--<span>{{"aip.common.add"|i18n_aip}}</span>-->
+            <!--</button>-->
+            <!--<button id="openGroupBtn" type="button" class="btn btn-default" ng-click="vm.open()" aria-label="{{'aip.common.open.group.jaws'|i18n_aip}}" disabled="disabled">-->
+                <!--<i class="fa fa-sign-out" aria-hidden="true"></i>-->
+                <!--<span>{{"aip.common.open"|i18n_aip}}</span>-->
+            <!--</button>-->
+        </div>
+    </div>
+    <div class="actionListTable" ng-style="vm.getHeight()">
+        <xe-table-grid
+                table-id="dataTableAdminActionList"
+                header="vm.gridData.headings"
+                fetch="vm.fetchData(query)"
+                end-point="vm.adminActionListEnd"
+                content="vm.gridData.rows"
+                results-found="vm.records"
+                toolbar="false"
+                paginate="true"
+                continuous-scrolling="false"
+                on-row-click="vm.selectRecord(data)"
+                no-data-msg="No Results Found"
+                empty-table-msg="emptyTableMsg"
+                search-config="vm.searchConfig"
+                pagination-config="vm.paginationConfig"
+                <!--height="416px"-->
+                refresh-grid="vm.refreshGrid"
+        </xe-table-grid>
+    </div>
+</div>

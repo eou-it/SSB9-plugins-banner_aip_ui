@@ -1,8 +1,15 @@
+///<reference path="../../../../../typings/tsd.d.ts"/>
+
+declare var CKEDITOR;
+interface JQueryStatic {
+    i18n:any;
+}
+
 angular.module('bannerAIPUI')
     .directive('ckEditor', function() {
     return {
         require: '?ngModel',
-        link: function(scope, elm, attr, ngModel) {
+        link: function(scope, elm, attr, ngModel:any) {
             var ck = CKEDITOR.replace(elm[0]);
             var helpLabel = $.i18n.prop("aip.ckeditor.keyhelp");
 

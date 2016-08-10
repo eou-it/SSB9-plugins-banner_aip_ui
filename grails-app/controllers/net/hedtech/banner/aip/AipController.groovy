@@ -89,6 +89,12 @@ class AipController {
         render model as JSON
     }
 
+    // Return all action items from admin
+    def adminActionLists() {
+        def actionItems = actionItemReadOnlyService.listActionItemRO()
+        return actionItems as JSON
+    }
+
     // Return user's action items
     @Secured(['ROLE_SELFSERVICE-FACULTY_BAN_DEFAULT_M', 'ROLE_SELFSERVICE-STUDENT_BAN_DEFAULT_M'])
     def actionItems() {

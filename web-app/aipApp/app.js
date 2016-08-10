@@ -39,7 +39,7 @@ var bannerAIPApp = angular.module("bannerAIP", [
         },
         "admin-action-list": {
             url: "/action",
-            templateUrl: "admin/action/list/actionItemListPage.html",
+            templateUrl: "admin/action/list/adminActionListPage.html",
             breadcrumb: {
                 label: "aip.admin.action",
                 url: "/aip/admin#/action"
@@ -88,12 +88,25 @@ var bannerAIPApp = angular.module("bannerAIP", [
         admin: {
             groupList: aipAppAbsPath + "aip/adminGroupList",
             groupStatus: aipAppAbsPath + "aip/adminGroupStatus",
+            actionList: aipAppAbsPath + "aip/adminActionLists",
             folders: aipAppAbsPath + "aipGroup/folders",
             addFolder: aipAppAbsPath + "aipGroup/addFolder",
             createGroup: aipAppAbsPath + "aipGroup/createGroup",
             openGroup: aipAppAbsPath + "aipGroup/openGroup"
         }
     })
+    .constant("PAGINATIONCONFIG",
+        {
+            pageLengths : [ 5, 10, 25, 50, 100],
+            offset : 10,
+            recordsFoundLabel : "Results found",
+            pageTitle: "Go To Page (End)",
+            pageLabel: "Page",
+            pageAriaLabel: "Go To Page. Short cut is End",
+            ofLabel: "of"
+            //    perPageLabel: 'pagination.per.page.label'
+        }
+    )
 
 //provider-injector
     .config(["$stateProvider", "$urlRouterProvider", "$locationProvider",  "$httpProvider",
