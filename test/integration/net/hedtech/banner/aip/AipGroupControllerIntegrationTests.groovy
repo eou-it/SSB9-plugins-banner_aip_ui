@@ -29,6 +29,7 @@ import org.springframework.security.core.context.SecurityContextHolder
 class AipGroupControllerIntegrationTests extends BaseIntegrationTestCase {
     def selfServiceBannerAuthenticationProvider
     def actionItemGroupService
+    def actionItemReadOnlyService
 
     def VALID_FOLDER_NAME = "My Folder"
     def VALID_FOLDER_DESCRIPTION = "My Folder"
@@ -108,7 +109,7 @@ class AipGroupControllerIntegrationTests extends BaseIntegrationTestCase {
         SecurityContextHolder.getContext().setAuthentication( auth )
         controller.addFolder(VALID_FOLDER_NAME, VALID_FOLDER_DESCRIPTION)
         def answer = JSON.parse( controller.response.contentAsString )
-        println answer
+        //println answer
         //TODO: fix BCMADMIN test in general app
         //assertTrue( answer.success )
         //assertNotNull( answer.newFolder )
@@ -138,6 +139,8 @@ class AipGroupControllerIntegrationTests extends BaseIntegrationTestCase {
         controller.request.json = requestObj
         controller.createGroup()
         def answer = JSON.parse( controller.response.contentAsString )
+       // println answer
+
         assertTrue( answer.success )
         assertNotNull( answer.newGroup )
         assertTrue( answer.message.equals( null ) )
@@ -371,5 +374,33 @@ class AipGroupControllerIntegrationTests extends BaseIntegrationTestCase {
         controller.openGroup( )
         assertEquals 403, controller.response.status
     }
+
+    @Test
+    void testAipActionItemsAsStudent() {
+        def admin = PersonUtility.getPerson( "CSRSTU002" ) // role: student
+        assertNotNull admin
+
+        List<ActionItemReadOnly> actionItemReadOnlyList = actionItemReadOnlyService.listActionItemRO()
+        def actionItemId = actionItemReadOnlyList[0].id
+        def actionItemName = actionItemReadOnlyList[0].name
+
+        def auth = selfServiceBannerAuthenticationProvider.authenticate(
+                new UsernamePasswordAuthenticationToken( admin.bannerId, '111111' ) )
+        SecurityContextHolder.getContext().setAuthentication( auth )
+
+        def requestObj = [:]
+        controller.request.method = "POST"
+        controller.request.json = requestObj
+
+        controller.actionItemList()
+
+        assertEquals 200, controller.response.status
+        def answer = JSON.parse( controller.response.contentAsString )
+        println answer
+        //assertEquals( true, answer.success )
+        assertEquals( actionItemName, answer[0].name)
+    }
+
+
 
 }

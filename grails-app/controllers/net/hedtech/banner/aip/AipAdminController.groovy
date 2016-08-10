@@ -13,7 +13,6 @@ class AipGroupController {
     def communicationFolderService
     def groupFolderReadOnlyService
     def actionItemGroupService
-    def actionItemReadOnlyService
 
 
     def folders() {
@@ -163,12 +162,6 @@ class AipGroupController {
 
         render model as JSON
 
-    }
-
-    def actionItemList() {
-        def results = actionItemReadOnlyService.listActionItemRO( )
-        response.status = 200
-        render results as JSON
     }
 
 }
