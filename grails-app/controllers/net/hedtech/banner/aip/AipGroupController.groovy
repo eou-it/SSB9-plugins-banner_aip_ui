@@ -172,7 +172,7 @@ class AipGroupController {
     }
 
 
-    def getGridData(){
+    def getGridData(rows){
 
         def offset = params.offset ? params.int('offset'): 0;
         //def offset = params.int('offset');
@@ -180,13 +180,11 @@ class AipGroupController {
         def searchString = params.searchString;
         def sortColumnName = params.sortColumnName
 
-        def rows = actionItemList();
-
         if(params.searchString) {
-            rows = rows.findAll { it.crn.toString().contains(searchString) }
+            rows = rows.findAll { it.name.toString().contains(searchString) }
         }
 
-        if(params.sortColumnName != ""){
+        if(sortColumnName != ""){
             if(params.ascending == "true") {
                 rows = gridNavigationService.ascSort(rows, params);
             }
