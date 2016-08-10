@@ -14,6 +14,7 @@ class AipGroupController {
     def groupFolderReadOnlyService
     def actionItemGroupService
     def actionItemReadOnlyService
+    def gridNavigationService
 
 
     def folders() {
@@ -162,13 +163,55 @@ class AipGroupController {
         ]
 
         render model as JSON
-
     }
 
     def actionItemList() {
         def results = actionItemReadOnlyService.listActionItemRO( )
         response.status = 200
         render results as JSON
+    }
+
+
+    def getGridData(){
+
+        def offset = params.offset ? params.int('offset'): 0;
+        //def offset = params.int('offset');
+        def max = params.int('max');
+        def searchString = params.searchString;
+        def sortColumnName = params.sortColumnName
+
+        def rows = actionItemList();
+
+        if(params.searchString) {
+            rows = rows.findAll { it.crn.toString().contains(searchString) }
+        }
+
+        if(params.sortColumnName != ""){
+            if(params.ascending == "true") {
+                rows = gridNavigationService.ascSort(rows, params);
+            }
+            else if(params.ascending == "false"){
+                rows = gridNavigationService.descSort(rows, params);
+            }
+        }
+
+        def length = rows.size();
+
+        if(max > length){
+            max = length-1;
+        }
+
+        if(offset >= 0 &&  max >0 ){
+            rows = rows[offset..max-1];
+        }
+
+        def returnMap = [
+                result: rows,
+                length: length
+        ]
+
+        render returnMap as JSON
+
     }
 
 }

@@ -21,12 +21,10 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.context.SecurityContextHolder
 
 /**
- * AipGroupControllerIntegrationTests.
+ * AipAdminControllerIntegrationTests.
  *
- * Date: 4/25/2016
- * Time: 11:10 AM
  */
-class AipGroupControllerIntegrationTests extends BaseIntegrationTestCase {
+class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
     def selfServiceBannerAuthenticationProvider
     def actionItemGroupService
     def actionItemReadOnlyService
@@ -43,7 +41,7 @@ class AipGroupControllerIntegrationTests extends BaseIntegrationTestCase {
         formContext = ['GUAGMNU']
         //formContext = ['SELFSERVICE']
         super.setUp()
-        controller = new AipGroupController()
+        controller = new AipAdminController()
     }
 
     @After

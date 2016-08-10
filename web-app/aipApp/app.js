@@ -83,7 +83,8 @@ var bannerAIPApp = angular.module("bannerAIP", [
             folders: aipAppAbsPath + "aipGroup/folders",
             addFolder: aipAppAbsPath + "aipGroup/addFolder",
             createGroup: aipAppAbsPath + "aipGroup/createGroup",
-            openGroup: aipAppAbsPath + "aipGroup/openGroup"
+            openGroup: aipAppAbsPath + "aipGroup/openGroup",
+            actionItemList: aipAppAbsPath + "aipAdmin/actionItemList"
         }
     })
 
