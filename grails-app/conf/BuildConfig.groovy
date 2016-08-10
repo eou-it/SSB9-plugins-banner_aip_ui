@@ -1,5 +1,5 @@
 /*********************************************************************************
- Copyright 2010-2015 Ellucian Company L.P. and its affiliates.
+ Copyright 2016 Ellucian Company L.P. and its affiliates.
  **********************************************************************************/
 
 grails.project.class.dir = "target/classes"
@@ -9,6 +9,7 @@ grails.project.test.reports.dir = "target/test-reports"
 
 grails.plugin.location.'banner-csr'="../banner_csr.git"
 grails.plugin.location.'i18n_core'="../i18n_core.git"
+grails.plugin.location.'banner-general-common'="../banner_general_common.git"
 grails.plugin.location.'banner-general-person'="../banner_general_person.git"
 grails.plugin.location.'banner-core'="../banner_core.git"
 

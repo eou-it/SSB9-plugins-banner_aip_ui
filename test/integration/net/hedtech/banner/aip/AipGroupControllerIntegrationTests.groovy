@@ -108,6 +108,7 @@ class AipGroupControllerIntegrationTests extends BaseIntegrationTestCase {
         SecurityContextHolder.getContext().setAuthentication( auth )
         controller.addFolder(VALID_FOLDER_NAME, VALID_FOLDER_DESCRIPTION)
         def answer = JSON.parse( controller.response.contentAsString )
+        println answer
         assertTrue( answer.success )
         assertNotNull( answer.newFolder )
         assertTrue( answer.message.equals(null) )
@@ -346,7 +347,7 @@ class AipGroupControllerIntegrationTests extends BaseIntegrationTestCase {
         assertEquals 200, controller.response.status
         def answer = JSON.parse( controller.response.contentAsString )
         assertEquals( false, answer.success )
-        assertTrue( answer.group.equals( null ) )
+        assertTrue( answer.group.id.equals( null ) )
     }
 
 

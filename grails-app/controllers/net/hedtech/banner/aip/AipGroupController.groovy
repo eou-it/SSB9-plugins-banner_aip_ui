@@ -80,23 +80,25 @@ class AipGroupController {
             success = true
         }
 
-        if (!group.description) {
+        if (!group) {
             groupDesc = MessageUtility.message( "aip.placeholder.nogroups" )
         } else {
             groupDesc = group.description
         }
 
         def groupItem = [
-                id             : group.id,
-                title          : group.title,
-                status         : group.status,
-                folder         : group.folderId,
-                userId         : group.userId,
+                id             : group?.id,
+                title          : group?.title,
+                status         : group?.status,
+                folder         : group?.folderId,
+                userId         : group?.userId,
                 description    : groupDesc,
-                activity       : group.activityDate,
-                version        : group.version,
-                dataOrigin     : group.dataOrigin
+                activity       : group?.activityDate,
+                version        : group?.version,
+                dataOrigin     : group?.dataOrigin
         ]
+
+
 
         def model = [
                 success: success,

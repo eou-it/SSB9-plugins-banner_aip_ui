@@ -154,7 +154,7 @@ class AipControllerIntegrationTests extends BaseIntegrationTestCase {
         controller.adminGroupList()
         assertEquals 200, controller.response.status
         def answer = JSON.parse( controller.response.contentAsString )
-        assert 1 < answer.data.size()
+        assert 1 < answer.result.size()
     }
 
 
