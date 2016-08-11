@@ -5,9 +5,10 @@
 var AIP;
 (function (AIP) {
     var AdminActionService = (function () {
-        function AdminActionService($http, $q, ENDPOINT) {
+        function AdminActionService($http, $q, $filter, ENDPOINT) {
             this.$http = $http;
             this.$q = $q;
+            this.$filter = $filter;
             this.ENDPOINT = ENDPOINT;
         }
         AdminActionService.prototype.getActionLists = function () {
@@ -18,6 +19,7 @@ var AIP;
             return request;
         };
         AdminActionService.prototype.fetchData = function (query) {
+            var _this = this;
             var deferred = this.$q.defer();
             var url = this.ENDPOINT.admin.actionItemList + "?" +
                 '?searchString=' + (query.searchString || '') +
@@ -37,35 +39,35 @@ var AIP;
                         }
                     }, {
                         name: "name",
-                        title: "Action Item Title",
+                        title: _this.$filter("i18n_aip")("aip.list.grid.itemTitle"),
                         options: {
                             isSortable: true,
                             visible: true
                         }
                     }, {
                         name: "folderName",
-                        title: "Folder",
+                        title: _this.$filter("i18n_aip")("aip.list.grid.folder"),
                         options: {
                             isSortable: true,
                             visible: true
                         }
                     }, {
                         name: "status",
-                        title: "Status",
+                        title: _this.$filter("i18n_aip")("aip.list.grid.status"),
                         options: {
                             isSortable: true,
                             visible: true
                         }
                     }, {
                         name: "userId",
-                        title: "Last Updated By",
+                        title: _this.$filter("i18n_aip")("aip.list.grid.lastUpdated"),
                         options: {
                             isSortable: true,
                             visible: true
                         }
                     }, {
                         name: "activityDate",
-                        title: "Activity Date",
+                        title: _this.$filter("i18n_aip")("aip.list.grid.activityDate"),
                         options: {
                             isSortable: true,
                             visible: true
@@ -80,7 +82,7 @@ var AIP;
             return deferred.promise;
         };
         ;
-        AdminActionService.$inject = ["$http", "$q", "ENDPOINT"];
+        AdminActionService.$inject = ["$http", "$q", "$filter", "ENDPOINT"];
         return AdminActionService;
     }());
     AIP.AdminActionService = AdminActionService;

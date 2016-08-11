@@ -329,6 +329,11 @@ aip-list .aip-list-container  {
     border-left:1px solid #444444;
 }
 
+.actionListContainer  {
+    overflow-y:auto;
+    font-size:14px;
+}
+
 #username  {
     padding-left:0.5em;
 }

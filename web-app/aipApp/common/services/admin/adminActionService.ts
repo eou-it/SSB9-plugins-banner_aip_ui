@@ -12,13 +12,15 @@ module AIP {
     }
 
     export class AdminActionService implements IAdminActionService{
-        static $inject=["$http", "$q", "ENDPOINT"];
+        static $inject=["$http", "$q", "$filter", "ENDPOINT"];
         $http: ng.IHttpService;
         $q: ng.IQService;
+        $filter;
         ENDPOINT;
-        constructor($http:ng.IHttpService, $q, ENDPOINT) {
+        constructor($http:ng.IHttpService, $q, $filter, ENDPOINT) {
             this.$http = $http;
             this.$q = $q;
+            this.$filter = $filter;
             this.ENDPOINT = ENDPOINT;
         }
         getActionLists() {
@@ -37,7 +39,7 @@ module AIP {
                 '&offset=' + (query.offset || '') +
                 '&max=' + (query.max || '');
             this.$http.get(url)
-                .success(function(data:any) {
+                .success((data:any) => {
                     //Action Item Title, Folder, Status, Last Update By, Activity Date
                     var header = [{
                         name: "id",
@@ -48,35 +50,35 @@ module AIP {
                         }
                     }, {
                         name: "name",
-                        title: "Action Item Title",
+                        title: this.$filter("i18n_aip")("aip.list.grid.itemTitle"),
                         options: {
                             isSortable: true,
                             visible: true
                         }
                     }, {
                         name: "folderName",
-                        title: "Folder",
+                        title: this.$filter("i18n_aip")("aip.list.grid.folder"),
                         options: {
                             isSortable: true,
                             visible: true
                         }
                     }, {
                         name: "status",
-                        title: "Status",
+                        title: this.$filter("i18n_aip")("aip.list.grid.status"),
                         options: {
                             isSortable: true,
                             visible: true
                         }
                     }, {
                         name: "userId",
-                        title: "Last Updated By",
+                        title: this.$filter("i18n_aip")("aip.list.grid.lastUpdated"),
                         options: {
                             isSortable: true,
                             visible: true
                         }
                     }, {
                         name: "activityDate",
-                        title: "Activity Date",
+                        title: this.$filter("i18n_aip")("aip.list.grid.activityDate"),
                         options: {
                             isSortable: true,
                             visible: true
@@ -85,7 +87,7 @@ module AIP {
                     var result = {header:header, result:data, length: data.length};
                     deferred.resolve(result);
                 })
-                .error(function(data) {
+                .error((data) => {
                     deferred.reject(data);
                 });
             return deferred.promise;
