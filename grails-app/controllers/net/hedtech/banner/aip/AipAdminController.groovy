@@ -7,14 +7,13 @@ import net.hedtech.banner.general.communication.folder.CommunicationFolder
 import org.springframework.security.core.context.SecurityContextHolder
 
 
-class AipGroupController {
+class AipAdminController {
 
     static defaultAction = "folders"
     def communicationFolderService
     def groupFolderReadOnlyService
     def actionItemGroupService
     def actionItemReadOnlyService
-    def gridNavigationService
 
 
     def folders() {
@@ -163,53 +162,13 @@ class AipGroupController {
         ]
 
         render model as JSON
+
     }
 
     def actionItemList() {
         def results = actionItemReadOnlyService.listActionItemRO( )
         response.status = 200
         render results as JSON
-    }
-
-
-    def getGridData(rows){
-
-        def offset = params.offset ? params.int('offset'): 0;
-        //def offset = params.int('offset');
-        def max = params.int('max');
-        def searchString = params.searchString;
-        def sortColumnName = params.sortColumnName
-
-        if(params.searchString) {
-            rows = rows.findAll { it.name.toString().contains(searchString) }
-        }
-
-        if(sortColumnName != ""){
-            if(params.ascending == "true") {
-                rows = gridNavigationService.ascSort(rows, params);
-            }
-            else if(params.ascending == "false"){
-                rows = gridNavigationService.descSort(rows, params);
-            }
-        }
-
-        def length = rows.size();
-
-        if(max > length){
-            max = length-1;
-        }
-
-        if(offset >= 0 &&  max >0 ){
-            rows = rows[offset..max-1];
-        }
-
-        def returnMap = [
-                result: rows,
-                length: length
-        ]
-
-        render returnMap as JSON
-
     }
 
 }

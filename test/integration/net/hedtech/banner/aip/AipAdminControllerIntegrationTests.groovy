@@ -21,12 +21,10 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.context.SecurityContextHolder
 
 /**
- * AipGroupControllerIntegrationTests.
+ * AipAdminControllerIntegrationTests.
  *
- * Date: 4/25/2016
- * Time: 11:10 AM
  */
-class AipGroupControllerIntegrationTests extends BaseIntegrationTestCase {
+class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
     def selfServiceBannerAuthenticationProvider
     def actionItemGroupService
     def actionItemReadOnlyService
@@ -43,7 +41,7 @@ class AipGroupControllerIntegrationTests extends BaseIntegrationTestCase {
         formContext = ['GUAGMNU']
         //formContext = ['SELFSERVICE']
         super.setUp()
-        controller = new AipGroupController()
+        controller = new AipAdminController()
     }
 
     @After
@@ -396,47 +394,8 @@ class AipGroupControllerIntegrationTests extends BaseIntegrationTestCase {
 
         assertEquals 200, controller.response.status
         def answer = JSON.parse( controller.response.contentAsString )
-       // println answer
+        println answer
         assertEquals( actionItemName, answer[0].name)
-    }
-
-    @Test
-    void testSortAipActionItemsAsStudent() {
-        def admin = PersonUtility.getPerson( "CSRSTU002" ) // role: student
-        assertNotNull admin
-
-
-        List<ActionItemReadOnly> actionItemReadOnlyList = actionItemReadOnlyService.listActionItemRO()
-        def actionItemId = actionItemReadOnlyList[0].id
-        def actionItemName = actionItemReadOnlyList[0].name
-
-        def auth = selfServiceBannerAuthenticationProvider.authenticate(
-                new UsernamePasswordAuthenticationToken( admin.bannerId, '111111' ) )
-        SecurityContextHolder.getContext().setAuthentication( auth )
-
-        def requestObj = [:]
-        //requestObj.params.sortColumnName="folderName"
-
-        controller.actionItemList()
-        def answer = JSON.parse( controller.response.contentAsString )
-        //println answer
-
-        controller.response.reset()
-
-        //sort by action item name and descending
-        controller.params.sortColumnName = "name"
-        controller.params.ascending = "false"
-        println controller.params
-
-        //controller.request.method = "POST"
-        //controller.request.json = "{ params.sortColumnName='folderName'; params.ascending=false}"
-        controller.getGridData(answer)
-
-        def sortedAnswer = JSON.parse( controller.response.contentAsString )
-        println sortedAnswer
-
-
-        assertEquals 200, controller.response.status
     }
 
 
