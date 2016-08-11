@@ -45,21 +45,21 @@ module AIP {
                         name: "actionItemId",
                         title: "id",
                         options: {
-                            isSortable: true,
-                            visible: false
+                            sortable: true,
+                            visible: false,
                         }
                     }, {
                         name: "actionItemName",
                         title: this.$filter("i18n_aip")("aip.list.grid.itemTitle"),
                         options: {
-                            isSortable: true,
+                            sortable: true,
                             visible: true
                         }
                     }, {
                         name: "folderName",
                         title: this.$filter("i18n_aip")("aip.list.grid.folder"),
                         options: {
-                            isSortable: true,
+                            sortable: true,
                             visible: true
                         }
                     }, {
@@ -73,14 +73,14 @@ module AIP {
                         name: "actionItemUserId",
                         title: this.$filter("i18n_aip")("aip.list.grid.lastUpdated"),
                         options: {
-                            isSortable: true,
+                            sortable: true,
                             visible: true
                         }
                     }, {
                         name: "actionItemActivityDate",
                         title: this.$filter("i18n_aip")("aip.list.grid.activityDate"),
                         options: {
-                            isSortable: true,
+                            sortable: true,
                             visible: true
                         }
                     }];
