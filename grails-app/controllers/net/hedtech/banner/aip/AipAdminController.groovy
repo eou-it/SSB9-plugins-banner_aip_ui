@@ -7,13 +7,14 @@ import net.hedtech.banner.general.communication.folder.CommunicationFolder
 import org.springframework.security.core.context.SecurityContextHolder
 
 
-class AipAdminController {
+class AipGroupController {
 
     static defaultAction = "folders"
     def communicationFolderService
     def groupFolderReadOnlyService
     def actionItemGroupService
     def actionItemReadOnlyService
+    def gridNavigationService
 
 
     def folders() {
@@ -162,12 +163,19 @@ class AipAdminController {
         ]
 
         render model as JSON
-
     }
 
-    def actionItemList() {
-        def adminActionItems = []
-        def results = actionItemReadOnlyService.listActionItemRO( )
+    def actionItemList( ) {
+
+        def jsonObj = request.JSON
+
+        def params = [filterName:jsonObj.filterName,
+                      sortColumn:jsonObj.sortColumn,
+                      sortDirection:jsonObj.sortDirection,
+                      max:jsonObj.max,
+                      offset:jsonObj.offset]
+
+        def results = actionItemReadOnlyService.listActionItemsPageSort( params )
         response.status = 200
         render results as JSON
     }

@@ -379,8 +379,8 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
         assertNotNull admin
 
         List<ActionItemReadOnly> actionItemReadOnlyList = actionItemReadOnlyService.listActionItemRO()
-        def actionItemId = actionItemReadOnlyList[0].id
-        def actionItemName = actionItemReadOnlyList[0].name
+        def actionItemId = actionItemReadOnlyList[0].actionItemId
+        def actionItemName = actionItemReadOnlyList[0].actionItemName
 
         def auth = selfServiceBannerAuthenticationProvider.authenticate(
                 new UsernamePasswordAuthenticationToken( admin.bannerId, '111111' ) )
@@ -395,9 +395,33 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
         assertEquals 200, controller.response.status
         def answer = JSON.parse( controller.response.contentAsString )
         println answer
-        assertEquals( actionItemName, answer[0].name)
+        assertEquals( actionItemName, answer[0].actionItemName)
     }
 
+    @Test
+    void testSortAipActionItemsAsStudent() {
+        def admin = PersonUtility.getPerson( "CSRSTU002" ) // role: student
+        assertNotNull admin
 
+        def auth = selfServiceBannerAuthenticationProvider.authenticate(
+                new UsernamePasswordAuthenticationToken( admin.bannerId, '111111' ) )
+        SecurityContextHolder.getContext().setAuthentication( auth )
+
+        def requestObj = [:]
+        requestObj.filterName="%"
+        requestObj.sortColumn="actionItemName"
+        requestObj.sortDirection="asc"
+        requestObj.max=20
+        requestObj.offset=0
+
+        controller.request.method = "POST"
+        controller.request.json = requestObj
+
+        controller.actionItemList()
+        def answer = JSON.parse( controller.response.contentAsString )
+        println answer
+
+        assertEquals 200, controller.response.status
+    }
 
 }
