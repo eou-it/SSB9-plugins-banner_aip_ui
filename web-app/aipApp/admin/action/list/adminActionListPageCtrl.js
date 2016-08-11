@@ -16,6 +16,11 @@ var AIP;
                 //$scope.onResize();
                 $scope.$apply();
             });
+            $scope.$watch("[vm.gridData]", function (newVal, oldVal) {
+                if (!$scope.$$phase) {
+                    $scope.apply();
+                }
+            });
         }
         AdminActionListPageCtrl.prototype.init = function () {
             var _this = this;
@@ -23,7 +28,7 @@ var AIP;
             this.gridData = {};
             this.actionListService.getActionLists()
                 .then(function (response) {
-                _this.gridData = response.data;
+                _this.gridData.rows = response.data;
             }, function (err) {
                 console.log(err);
             });
@@ -39,6 +44,12 @@ var AIP;
             return { height: containerHeight };
         };
         AdminActionListPageCtrl.prototype.fetchData = function (query) {
+            this.actionListService.fetchData(query)
+                .then(function (response) {
+                console.log(response);
+            }, function (error) {
+                console.log(error);
+            });
         };
         AdminActionListPageCtrl.prototype.selectRecord = function (data) {
         };

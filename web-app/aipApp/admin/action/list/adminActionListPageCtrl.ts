@@ -28,6 +28,11 @@ module AIP {
                 //$scope.onResize();
                 $scope.$apply();
             });
+            $scope.$watch("[vm.gridData]" , (newVal, oldVal) => {
+                if(!$scope.$$phase) {
+                    $scope.apply();
+                }
+            });
 
         }
         init() {
@@ -35,7 +40,7 @@ module AIP {
             this.gridData = {};
             this.actionListService.getActionLists()
                 .then((response) => {
-                    this.gridData = response.data;
+                    this.gridData.rows = response.data;
                 }, (err) => {
                     console.log(err);
             });
@@ -54,7 +59,12 @@ module AIP {
 
 
         fetchData(query) {
-
+            this.actionListService.fetchData(query)
+                .then((response) => {
+                    console.log(response);
+                }, (error) => {
+                    console.log(error);
+                });
         }
         selectRecord(data) {
 

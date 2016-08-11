@@ -17,6 +17,24 @@ var AIP;
             });
             return request;
         };
+        AdminActionService.prototype.fetchData = function (query) {
+            var deferred = this.$q.defer();
+            var url = this.ENDPOINT.admin.actionList + "?" +
+                '?searchString=' + (query.searchString || '') +
+                '&sortColumnName=' + (query.sortColumnName || '') +
+                '&ascending=' + query.ascending +
+                '&offset=' + (query.offset || '') +
+                '&max=' + (query.max || '');
+            this.$http.get(url)
+                .success(function (data) {
+                deferred.resolve(data);
+            })
+                .error(function (data) {
+                deferred.reject(data);
+            });
+            return deferred.promise;
+        };
+        ;
         AdminActionService.$inject = ["$http", "$q", "ENDPOINT"];
         return AdminActionService;
     }());

@@ -28,7 +28,23 @@ module AIP {
             });
             return request;
         }
-
+        fetchData (query) {
+            var deferred = this.$q.defer();
+            var url = this.ENDPOINT.admin.actionList + "?" +
+                '?searchString=' + (query.searchString || '') +
+                '&sortColumnName=' + (query.sortColumnName || '') +
+                '&ascending=' + query.ascending +
+                '&offset=' + (query.offset || '') +
+                '&max=' + (query.max || '');
+            this.$http.get(url)
+                .success(function(data) {
+                    deferred.resolve(data);
+                })
+                .error(function(data) {
+                    deferred.reject(data);
+                });
+            return deferred.promise;
+        };
     }
 }
 

@@ -23,6 +23,7 @@ class AipController {
 
     def groupFolderReadOnlyService
 
+    def actionItemReadOnlyService
 
     @Secured(['ROLE_SELFSERVICE-FACULTY_BAN_DEFAULT_M', 'ROLE_SELFSERVICE-STUDENT_BAN_DEFAULT_M'])
     def list() {
@@ -92,7 +93,7 @@ class AipController {
     // Return all action items from admin
     def adminActionLists() {
         def actionItems = actionItemReadOnlyService.listActionItemRO()
-        return actionItems as JSON
+        render actionItems as JSON
     }
 
     // Return user's action items
