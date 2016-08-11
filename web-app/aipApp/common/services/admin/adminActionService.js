@@ -31,14 +31,14 @@ var AIP;
                 .success(function (data) {
                 //Action Item Title, Folder, Status, Last Update By, Activity Date
                 var header = [{
-                        name: "id",
+                        name: "actionItemId",
                         title: "id",
                         options: {
                             isSortable: true,
                             visible: false
                         }
                     }, {
-                        name: "name",
+                        name: "actionItemName",
                         title: _this.$filter("i18n_aip")("aip.list.grid.itemTitle"),
                         options: {
                             isSortable: true,
@@ -52,21 +52,21 @@ var AIP;
                             visible: true
                         }
                     }, {
-                        name: "status",
+                        name: "actionItemStatus",
                         title: _this.$filter("i18n_aip")("aip.list.grid.status"),
                         options: {
                             isSortable: true,
                             visible: true
                         }
                     }, {
-                        name: "userId",
+                        name: "actionItemUserId",
                         title: _this.$filter("i18n_aip")("aip.list.grid.lastUpdated"),
                         options: {
                             isSortable: true,
                             visible: true
                         }
                     }, {
-                        name: "activityDate",
+                        name: "actionItemActivityDate",
                         title: _this.$filter("i18n_aip")("aip.list.grid.activityDate"),
                         options: {
                             isSortable: true,
