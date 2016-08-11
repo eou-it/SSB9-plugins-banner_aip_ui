@@ -14,7 +14,7 @@
     <div class="actionListTable" ng-style="vm.getHeight()">
         <xe-table-grid
                 table-id="dataTableAdminActionList"
-                header="vm.gridData.headings"
+                header="vm.gridData.header"
                 fetch="vm.fetchData(query)"
                 end-point="vm.adminActionListEnd"
                 content="vm.gridData.rows"
@@ -27,8 +27,7 @@
                 empty-table-msg="emptyTableMsg"
                 search-config="vm.searchConfig"
                 pagination-config="vm.paginationConfig"
-                <!--height="416px"-->
-                refresh-grid="vm.refreshGrid"
+                refresh-grid="refreshGrid"
         </xe-table-grid>
     </div>
 </div>

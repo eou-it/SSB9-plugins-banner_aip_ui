@@ -166,6 +166,7 @@ class AipAdminController {
     }
 
     def actionItemList() {
+        def adminActionItems = []
         def results = actionItemReadOnlyService.listActionItemRO( )
         response.status = 200
         render results as JSON

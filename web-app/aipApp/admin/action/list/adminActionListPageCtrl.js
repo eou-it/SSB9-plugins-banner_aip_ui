@@ -2,12 +2,13 @@
 var AIP;
 (function (AIP) {
     var AdminActionListPageCtrl = (function () {
-        function AdminActionListPageCtrl($scope, $state, $window, $filter, ENDPOINT, PAGINATIONCONFIG, AdminActionService) {
-            this.$inject = ["$scope", "$state", "$window", "$filter", "ENDPOINT", "PAGINATIONCONFIG",
+        function AdminActionListPageCtrl($scope, $state, $window, $filter, $q, ENDPOINT, PAGINATIONCONFIG, AdminActionService) {
+            this.$inject = ["$scope", "$state", "$window", "$filter", "$q", "ENDPOINT", "PAGINATIONCONFIG",
                 "AdminActionService"];
             $scope.vm = this;
             this.$state = $state;
             this.$filter = $filter;
+            this.$q = $q;
             this.endPoint = ENDPOINT; //ENDPOINT.admin.actionList
             this.paginationConfig = PAGINATIONCONFIG;
             this.actionListService = AdminActionService;
@@ -16,22 +17,21 @@ var AIP;
                 //$scope.onResize();
                 $scope.$apply();
             });
-            $scope.$watch("[vm.gridData]", function (newVal, oldVal) {
-                if (!$scope.$$phase) {
-                    $scope.apply();
-                }
-            });
+            // $scope.$watch("[vm.gridData]" , (newVal, oldVal) => {
+            //     if(!$scope.$$phase) {
+            //         $scope.apply();
+            //     }
+            // });
         }
         AdminActionListPageCtrl.prototype.init = function () {
-            var _this = this;
             //todo: anything needing to be moved here?
             this.gridData = {};
-            this.actionListService.getActionLists()
-                .then(function (response) {
-                _this.gridData.rows = response.data;
-            }, function (err) {
-                console.log(err);
-            });
+            // this.actionListService.getActionLists()
+            //     .then((response) => {
+            //         this.gridData.rows = response.data;
+            //     }, (err) => {
+            //         console.log(err);
+            // });
         };
         AdminActionListPageCtrl.prototype.getHeight = function () {
             var containerHeight = $(document).height() -
@@ -44,12 +44,17 @@ var AIP;
             return { height: containerHeight };
         };
         AdminActionListPageCtrl.prototype.fetchData = function (query) {
+            var _this = this;
+            var deferred = this.$q.defer();
             this.actionListService.fetchData(query)
                 .then(function (response) {
-                console.log(response);
+                _this.gridData = response;
+                deferred.resolve(response);
             }, function (error) {
                 console.log(error);
+                deferred.reject(error);
             });
+            return deferred.promise;
         };
         AdminActionListPageCtrl.prototype.selectRecord = function (data) {
         };
