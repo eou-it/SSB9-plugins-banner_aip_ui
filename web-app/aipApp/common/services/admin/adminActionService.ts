@@ -42,45 +42,45 @@ module AIP {
                 .success((data:any) => {
                     //Action Item Title, Folder, Status, Last Update By, Activity Date
                     var header = [{
-                        name: "id",
+                        name: "actionItemId",
                         title: "id",
                         options: {
-                            isSortable: true,
-                            visible: false
+                            sortable: true,
+                            visible: false,
                         }
                     }, {
-                        name: "name",
+                        name: "actionItemName",
                         title: this.$filter("i18n_aip")("aip.list.grid.itemTitle"),
                         options: {
-                            isSortable: true,
+                            sortable: true,
                             visible: true
                         }
                     }, {
                         name: "folderName",
                         title: this.$filter("i18n_aip")("aip.list.grid.folder"),
                         options: {
-                            isSortable: true,
+                            sortable: true,
                             visible: true
                         }
                     }, {
-                        name: "status",
+                        name: "actionItemStatus",
                         title: this.$filter("i18n_aip")("aip.list.grid.status"),
                         options: {
                             isSortable: true,
                             visible: true
                         }
                     }, {
-                        name: "userId",
+                        name: "actionItemUserId",
                         title: this.$filter("i18n_aip")("aip.list.grid.lastUpdated"),
                         options: {
-                            isSortable: true,
+                            sortable: true,
                             visible: true
                         }
                     }, {
-                        name: "activityDate",
+                        name: "actionItemActivityDate",
                         title: this.$filter("i18n_aip")("aip.list.grid.activityDate"),
                         options: {
-                            isSortable: true,
+                            sortable: true,
                             visible: true
                         }
                     }];
