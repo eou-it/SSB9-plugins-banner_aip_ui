@@ -28,6 +28,7 @@ var AIP;
                         sortable: true,
                         visible: false,
                         ascending: true,
+                        columnShowHide: false,
                         width: 0
                     }
                 }, {
@@ -36,6 +37,7 @@ var AIP;
                     options: {
                         sortable: true,
                         visible: true,
+                        columnShowHide: false,
                         width: 0
                     }
                 }, {
@@ -52,6 +54,7 @@ var AIP;
                     options: {
                         sortable: true,
                         visible: true,
+                        columnShowHide: true,
                         width: 0
                     }
                 }, {
@@ -60,6 +63,7 @@ var AIP;
                     options: {
                         sortable: true,
                         visible: true,
+                        columnShowHide: true,
                         width: 0
                     }
                 }, {
@@ -68,6 +72,7 @@ var AIP;
                     options: {
                         sortable: true,
                         visible: true,
+                        columnShowHide: true,
                         width: 0
                     }
                 }];
