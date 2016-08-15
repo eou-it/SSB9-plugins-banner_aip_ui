@@ -17,22 +17,60 @@ var AIP;
                 //$scope.onResize();
                 $scope.$apply();
             });
-            // $scope.$watch("[vm.gridData]" , (newVal, oldVal) => {
-            //     if(!$scope.$$phase) {
-            //         $scope.apply();
-            //     }
-            // });
         }
         AdminActionListPageCtrl.prototype.init = function () {
-            //todo: anything needing to be moved here?
             this.gridData = {};
             this.draggableColumnNames = [];
-            // this.actionListService.getActionLists()
-            //     .then((response) => {
-            //         this.gridData.rows = response.data;
-            //     }, (err) => {
-            //         console.log(err);
-            // });
+            this.header = [{
+                    name: "actionItemId",
+                    title: "id",
+                    options: {
+                        sortable: true,
+                        visible: false,
+                        ascending: true,
+                        width: 0
+                    }
+                }, {
+                    name: "actionItemName",
+                    title: this.$filter("i18n_aip")("aip.list.grid.itemTitle"),
+                    options: {
+                        sortable: true,
+                        visible: true,
+                        width: 0
+                    }
+                }, {
+                    name: "folderName",
+                    title: this.$filter("i18n_aip")("aip.list.grid.folder"),
+                    options: {
+                        sortable: true,
+                        visible: true,
+                        width: 0
+                    }
+                }, {
+                    name: "actionItemStatus",
+                    title: this.$filter("i18n_aip")("aip.list.grid.status"),
+                    options: {
+                        sortable: true,
+                        visible: true,
+                        width: 0
+                    }
+                }, {
+                    name: "actionItemUserId",
+                    title: this.$filter("i18n_aip")("aip.list.grid.lastUpdated"),
+                    options: {
+                        sortable: true,
+                        visible: true,
+                        width: 0
+                    }
+                }, {
+                    name: "actionItemActivityDate",
+                    title: this.$filter("i18n_aip")("aip.list.grid.activityDate"),
+                    options: {
+                        sortable: true,
+                        visible: true,
+                        width: 0
+                    }
+                }];
         };
         AdminActionListPageCtrl.prototype.getHeight = function () {
             var containerHeight = $(document).height() -
@@ -50,7 +88,8 @@ var AIP;
             this.actionListService.fetchData(query)
                 .then(function (response) {
                 _this.gridData = response;
-                deferred.resolve(response);
+                _this.gridData.header = _this.header;
+                deferred.resolve(_this.gridData);
             }, function (error) {
                 console.log(error);
                 deferred.reject(error);
