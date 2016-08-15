@@ -10,7 +10,7 @@
  ****************************************************************************** */
 package net.hedtech.banner.csr
 
-import net.hedtech.banner.aip.AipGroupController
+import net.hedtech.banner.aip.AipAdminController
 import net.hedtech.banner.testing.BaseIntegrationTestCase
 import org.junit.After
 import org.junit.Before
@@ -29,7 +29,7 @@ class CsrTagLibIntegrationTests extends BaseIntegrationTestCase {
         formContext = ['GUAGMNU']
         //formContext = ['SELFSERVICE']
         super.setUp()
-        controller = new AipGroupController()
+        controller = new AipAdminController()
     }
 
 
