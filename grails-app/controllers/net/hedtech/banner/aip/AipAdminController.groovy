@@ -170,7 +170,7 @@ class AipAdminController {
         def jsonObj = request.JSON
         def params = [filterName:jsonObj.filterName,
                       sortColumn:jsonObj.sortColumn,
-                      sortDirection:jsonObj.sortDirection,
+                      sortAscending:jsonObj.sortAscending,
                       max:jsonObj.max,
                       offset:jsonObj.offset]
 

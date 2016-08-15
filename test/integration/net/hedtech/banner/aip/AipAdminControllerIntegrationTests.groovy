@@ -374,31 +374,6 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
     }
 
     @Test
-    void testAipActionItemsAsStudent() {
-        def admin = PersonUtility.getPerson( "CSRSTU002" ) // role: student
-        assertNotNull admin
-
-        List<ActionItemReadOnly> actionItemReadOnlyList = actionItemReadOnlyService.listActionItemRO()
-        def actionItemId = actionItemReadOnlyList[0].actionItemId
-        def actionItemName = actionItemReadOnlyList[0].actionItemName
-
-        def auth = selfServiceBannerAuthenticationProvider.authenticate(
-                new UsernamePasswordAuthenticationToken( admin.bannerId, '111111' ) )
-        SecurityContextHolder.getContext().setAuthentication( auth )
-
-        def requestObj = [:]
-        controller.request.method = "POST"
-        controller.request.json = requestObj
-
-        controller.actionItemList()
-
-        assertEquals 200, controller.response.status
-        def answer = JSON.parse( controller.response.contentAsString )
-        println answer
-        assertEquals( actionItemName, answer[0].actionItemName)
-    }
-
-    @Test
     void testSortAipActionItemsAsStudent() {
         def admin = PersonUtility.getPerson( "CSRSTU002" ) // role: student
         assertNotNull admin
@@ -410,7 +385,7 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
         def requestObj = [:]
         requestObj.filterName="%"
         requestObj.sortColumn="actionItemName"
-        requestObj.sortDirection="asc"
+        requestObj.sortAscending=true
         requestObj.max=20
         requestObj.offset=0
 
