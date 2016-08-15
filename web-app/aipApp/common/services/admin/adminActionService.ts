@@ -42,7 +42,7 @@ module AIP {
             var params = {
                 filterName: query.searchString||"%",
                 sortColumn: query.sortColumnName||"id",
-                sortDirection: query.ascending||false,
+                sortAscending: query.ascending||false,
                 max: realMax||"",
                 offset: query.offset || 0
             };
@@ -57,6 +57,7 @@ module AIP {
                     options: {
                         sortable: true,
                         visible: false,
+                        ascending:query.ascending,
                         width: 0
                     }
                 }, {
@@ -65,6 +66,7 @@ module AIP {
                     options: {
                         sortable: true,
                         visible: true,
+                        ascending:query.ascending,
                         width: 0
                     }
                 }, {
@@ -73,6 +75,7 @@ module AIP {
                     options: {
                         sortable: true,
                         visible: true,
+                        ascending:query.ascending,
                         width: 0
                     }
                 }, {
@@ -81,6 +84,7 @@ module AIP {
                     options: {
                         sortable: true,
                         visible: true,
+                        ascending:query.ascending,
                         width: 0
                     }
                 }, {
@@ -89,6 +93,7 @@ module AIP {
                     options: {
                         sortable: true,
                         visible: true,
+                        ascending:query.ascending,
                         width: 0
                     }
                 }, {
@@ -97,6 +102,7 @@ module AIP {
                     options: {
                         sortable: true,
                         visible: true,
+                        ascending:query.ascending,
                         width: 0
                     }
                 }];

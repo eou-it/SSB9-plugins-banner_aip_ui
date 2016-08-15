@@ -31,7 +31,7 @@ var AIP;
             var params = {
                 filterName: query.searchString || "%",
                 sortColumn: query.sortColumnName || "id",
-                sortDirection: query.ascending || false,
+                sortAscending: query.ascending || false,
                 max: realMax || "",
                 offset: query.offset || 0
             };

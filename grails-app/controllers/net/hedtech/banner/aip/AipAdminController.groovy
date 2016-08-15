@@ -176,6 +176,18 @@ class AipAdminController {
 
         def results = actionItemReadOnlyService.listActionItemsPageSort( params )
         response.status = 200
+
+        def actionItemHeadings = [
+                [name: "actionItemId", title: "id", options: [visible: false, isSortable: true]],
+                [name: "actionItemName", title: MessageUtility.message( "aip.common.title" ), options: [visible: true, isSortable: true, ascending:jsonObj.sortAscending], width: 0],
+                [name: "actionItemStatus", title: MessageUtility.message( "aip.common.status" ), options: [visible: true, isSortable: true, ascending:jsonObj.sortAscending], width: 0],
+                [name: "folderName", title: MessageUtility.message( "aip.common.folder" ), options: [visible: true, isSortable: true, ascending:jsonObj.sortAscending], width: 0],
+                [name: "actionItemActivityDate", title: MessageUtility.message( "aip.common.activity.date" ), options: [visible: true, isSortable: true, ascending:jsonObj.sortAscending], width: 0],
+                [name: "actioncdItemUserId", title: MessageUtility.message( "aip.common.last.updated.by" ), options: [visible: true, isSortable: true, ascending:jsonObj.sortAscending], width: 0]
+        ]
+
+        results.header = actionItemHeadings
+
         render results as JSON
     }
 
