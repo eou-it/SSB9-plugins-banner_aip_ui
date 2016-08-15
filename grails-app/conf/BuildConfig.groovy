@@ -41,7 +41,7 @@ grails.project.dependency.resolution = {
 //        compile ':zipped-resources:1.0'
 //        compile ':cached-resources:1.0'
 //        compile ':cache-headers:1.1.5'
-        test ':code-coverage:1.2.5'
+        test ':code-coverage:2.0.3-3'
         compile ":ckeditor:4.5.4.1"
     }
 
