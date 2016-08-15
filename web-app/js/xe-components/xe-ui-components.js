@@ -2,10 +2,10 @@
  * component-library
  * 
 
- * Version: 0.0.1 - 2016-05-25
+ * Version: 0.0.1 - 2016-08-10
  * License: ISC
  */
-angular.module("xe-ui-components", ['badge','button','checkbox','dropdown','label','radiobutton','simpleTextbox','statusLabel','switch','textarea','textbox','external-resouces','utils','columnFilter','pagination','search','dataTableModule','tabnav','xe-ui-components-tpls']);
+angular.module("xe-ui-components", ['badge','button','checkbox','dropdown','label','radiobutton','simpleTextbox','statusLabel','switch','textarea','textbox','external-resouces','utils','columnFilter','pagination','search','dataTableModule','pieChartModule','tabnav','xe-ui-components-tpls']);
 angular.module('xe-ui-components-tpls', ['templates/badge.html', 'templates/button.html', 'templates/checkbox.html', 'templates/dropdown.html', 'templates/label.html', 'templates/radio-button.html', 'templates/simple-textbox.html', 'templates/statusLabel.html', 'templates/switch.html', 'templates/text-area.html', 'templates/text-box.html', 'templates/column-filter.html', 'templates/pagination.html', 'templates/search.html', 'templates/dataTable.html', 'templates/tabNav.html', 'templates/tabPanel.html']);
 
 angular.module("templates/badge.html", []).run(["$templateCache", function($templateCache) {
@@ -20,7 +20,7 @@ angular.module("templates/button.html", []).run(["$templateCache", function($tem
 
 angular.module("templates/checkbox.html", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("templates/checkbox.html",
-    "<div class=\"xe-checkbox\" ng-class=\"{disabled: xeDisabled, checked: xeModel}\" ng-click=\"cbClicked($event)\" ng-checked=\"xeModel\" role=\"{{ariaRole ? ariaRole : 'checkbox'}}\" aria-checked=\"{{xeModel}}\" aria-disabled=\"{{xeDisabled}}\" aria-labelledby=\"{{::xeId}}-ckbox\" aria-live=\"assertive\" tabindex=\"0\"><span class=\"checkbox\" role=\"presentaion\"></span><xe-label id=\"{{::xeId}}-ckbox\" xe-value=\"{{::xeLabel}}\" xe-hidden=\"{{!xeLabel || xeLabelHidden}}\"></xe-label></div>");
+    "<div class=\"xe-checkbox\" ng-class=\"{disabled: xeDisabled, checked: xeModel}\" ng-click=\"cbClicked($event)\" ng-checked=\"xeModel\" role=\"{{ariaRole ? ariaRole : 'checkbox'}}\" aria-checked=\"{{xeModel}}\" aria-disabled=\"{{xeDisabled}}\" aria-labelledby=\"{{::'ckbox-' + xeId}}\" aria-live=\"assertive\" tabindex=\"0\"><span class=\"checkbox\" role=\"presentaion\"></span><xe-label id=\"{{::'ckbox-' + xeId}}\" xe-value=\"{{::xeLabel}}\" xe-hidden=\"{{!xeLabel || xeLabelHidden}}\"></xe-label></div>");
 }]);
 
 angular.module("templates/dropdown.html", []).run(["$templateCache", function($templateCache) {
@@ -40,7 +40,7 @@ angular.module("templates/radio-button.html", []).run(["$templateCache", functio
 
 angular.module("templates/simple-textbox.html", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("templates/simple-textbox.html",
-    "<input id=\"{{::inputField}}\" xe-field=\"{{::inputField}}\" name=\"{{::inputField}}\" placeholder=\"{{placeHolder}}\" class=\"simple-input-field font-semibold {{xeClass}}\" ng-model=\"value\" ng-class=\"{readOnly: inputDisabled}\" ng-disabled=\"{{disabled}}\" ng-keyup=\"onChange({data: value, id: inputField, event: $event})\" ng-keydown=\"onKeydown({data: value, id: inputField, event: $event})\" ng-keypress=\"onKeypress({data: value, id: inputField, event: $event})\" ng-paste=\"onKeypress({data: $event.originalEvent.clipboardData.getData('text/plain'), id: inputField, event: $event})\" ng-focus=\"onFocus({event: $event})\" ng-blur=\"onBlur(({event: $event}))\" autocomplete=\"off\" aria-label=\"{{xeAriaLabel}}\">");
+    "<input id=\"{{::inputField}}\" xe-field=\"search\" name=\"{{::inputField}}\" placeholder=\"{{placeHolder}}\" class=\"simple-input-field font-semibold {{xeClass}}\" ng-model=\"value\" ng-class=\"{readOnly: inputDisabled}\" ng-disabled=\"{{disabled}}\" ng-keyup=\"onChange({data: value, id: inputField, event: $event})\" ng-keydown=\"onKeydown({data: value, id: inputField, event: $event})\" ng-keypress=\"onKeypress({data: value, id: inputField, event: $event})\" ng-paste=\"onKeypress({data: $event.originalEvent.clipboardData.getData('text/plain'), id: inputField, event: $event})\" ng-focus=\"onFocus({event: $event})\" ng-blur=\"onBlur(({event: $event}))\" autocomplete=\"off\">");
 }]);
 
 angular.module("templates/statusLabel.html", []).run(["$templateCache", function($templateCache) {
@@ -66,27 +66,27 @@ angular.module("templates/text-box.html", []).run(["$templateCache", function($t
 
 angular.module("templates/column-filter.html", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("templates/column-filter.html",
-    "<div class=\"column-filter-container\"><button type=\"button\" class=\"column-filter-button\" ng-click=\"bindClickEvent($event)\" aria-haspopup=\"true\" aria-labelledby=\"columnFilter\"><span id=\"columnFilter\" class=\"placeholder\" ng-bind=\"'dataTable.columnFilter.label' | xei18n\"></span><div class=\"dropdown-icon\">&nbsp;</div></button><ul class=\"column-setting-menu\" ng-hide=\"hideColumnSettingMenu\" role=\"menu\" aria-labelledby=\"columnFilter\"><li role=\"presentation\"><xe-checkbox xe-label=\"{{::'dataTable.columnFilter.selectAll' | translate}}\" xe-model=\"selectAll.visible\" xe-on-click=\"onSelectAll(header, event)\" xe-id=\"0\" data-name=\"all\" aria-role=\"menuitemcheckbox\"></xe-checkbox></li><li ng-repeat=\"heading in header\" ng-class=\"{'disabled': heading.options.disable}\" ng-hide=\"heading.options.columnShowHide === false\" data-name=\"{{heading.name}}\" role=\"presentation\"><xe-checkbox xe-id=\"{{heading.name}}\" xe-value=\"{{$index+1}}\" xe-label=\"{{heading.title}}\" xe-model=\"heading.options.visible\" xe-on-click=\"hideUnhideColumn(heading, event)\" xe-disabled=\"heading.options.disable\" aria-role=\"menuitemcheckbox\"></xe-checkbox></li></ul></div>");
+    "<span><div class=\"column-filter-container\" ng-if=\"::!nocolumnFilterMenu\"><button type=\"button\" class=\"column-filter-button\" ng-click=\"bindClickEvent($event)\" aria-haspopup=\"true\" aria-labelledby=\"columnFilter\" xe-field=\"columnFilterMenu\"><span id=\"columnFilter\" class=\"placeholder\" ng-bind=\"'dataTable.columnFilter.label' | xei18n\"></span><div class=\"dropdown-icon\">&nbsp;</div></button><ul class=\"column-setting-menu\" ng-hide=\"hideColumnSettingMenu\" role=\"menu\" aria-labelledby=\"columnFilter\"><li role=\"presentation\"><xe-checkbox xe-label=\"{{::'dataTable.columnFilter.selectAll' | xei18n}}\" xe-model=\"selectAll.visible\" xe-on-click=\"onSelectAll(header, event)\" xe-id=\"0\" data-name=\"all\" aria-role=\"menuitemcheckbox\"></xe-checkbox></li><li ng-repeat=\"heading in header\" ng-class=\"{'disabled': heading.options.disable}\" ng-hide=\"heading.options.columnShowHide === false\" data-name=\"{{heading.name}}\" role=\"presentation\"><xe-checkbox xe-id=\"{{heading.name}}\" xe-value=\"{{$index+1}}\" xe-label=\"{{heading.title}}\" xe-model=\"heading.options.visible\" xe-on-click=\"hideUnhideColumn(heading, event)\" xe-disabled=\"heading.options.disable\" aria-role=\"menuitemcheckbox\"></xe-checkbox></li></ul></div></span>");
 }]);
 
 angular.module("templates/pagination.html", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("templates/pagination.html",
-    "<div class=\"tfoot pagination-container visible-lg\" role=\"navigation\" ng-cloak><div id=\"resultsFound\" class=\"results-container\" ng-bind=\"('pagination.record.found' | xei18n) + ': ' + resultsFound\"></div><div class=\"pagination-controls\"><xe-button xe-type=\"secondary\" xe-btn-class=\"first\" aria-label=\"{{::'pagination.first.label' | xei18n}}\" xe-btn-click=\"first()\" xe-disabled=\"firstPrev\" ng-cloak></xe-button><xe-button xe-type=\"secondary\" xe-btn-class=\"previous\" aria-label=\"{{::'pagination.previous.label' | xei18n}}\" xe-btn-click=\"prev()\" xe-disabled=\"firstPrev\" ng-cloak></xe-button><xe-label xe-value=\"{{::'pagination.page.label' | xei18n}}\" role=\"presentation\" aria-hidden=\"true\"></xe-label><span title=\"{{'pagination.page.aria.Label' | xei18n}}\" role=\"presentation\"><input id=\"pageInput\" type=\"number\" ng-model=\"onPage\" aria-valuenow=\"{{onPage}}\" aria-valuemax=\"{{numberOfPages}}\" aria-valuemin=\"{{!numberOfPages ? 0 : 1}}\" max=\"{{numberOfPages}}\" min=\"{{!numberOfPages ? 0 : 1}}\" ng-model-options=\"{ debounce: {'default': 200, 'blur': 0} }\" ng-change=\"paggeNumberChange($element)\" ng-blur=\"focusOut($event)\" aria-label=\"{{'pagination.page.aria.Label' | xei18n}}. {{::'pagination.page.label' | xei18n}} {{onPage}} {{::'pagination.page.of.Label' | xei18n}} {{numberOfPages}}\" ng-cloak></span><xe-label xe-value=\"{{::'pagination.page.of.Label' | xei18n}} {{numberOfPages}}\" role=\"presentation\"></xe-label><xe-button xe-type=\"secondary\" xe-btn-class=\"next\" aria-label=\"{{::'pagination.next.label' | xei18n}}\" xe-btn-click=\"next()\" xe-disabled=\"nextLast\" ng-cloak></xe-button><xe-button xe-type=\"secondary\" xe-btn-class=\"last\" aria-label=\"{{::'pagination.last.label' | xei18n}}\" xe-btn-click=\"last()\" xe-disabled=\"nextLast\" ng-cloak></xe-button><xe-label id=\"perPage\" xe-value=\"{{::'pagination.per.page.label' | xei18n}}\" role=\"presentation\" aria-hidden=\"true\"></xe-label><select class=\"per-page-select\" aria-labelledby=\"perPage\" ng-model=\"offset\" ng-options=\"pageOffset for pageOffset in ::pageOffsets\" ng-change=\"offsetChanged(true)\" ng-disabled=\"resultsFound === 0\"></select></div></div>");
+    "<div class=\"tfoot pagination-container visible-lg\" role=\"navigation\" ng-cloak><div id=\"resultsFound\" class=\"results-container\" ng-bind=\"('pagination.record.found' | xei18n) + ': ' + resultsFound\"></div><div class=\"pagination-controls\"><xe-button xe-type=\"secondary\" xe-btn-class=\"first\" aria-label=\"{{::'pagination.first.label' | xei18n}}\" xe-btn-click=\"first()\" xe-disabled=\"firstPrev\" ng-cloak></xe-button><xe-button xe-type=\"secondary\" xe-btn-class=\"previous\" aria-label=\"{{::'pagination.previous.label' | xei18n}}\" xe-btn-click=\"prev()\" xe-disabled=\"firstPrev\" ng-cloak></xe-button><xe-label xe-value=\"{{::'pagination.page.label' | xei18n}}\" role=\"presentation\" aria-hidden=\"true\"></xe-label><span title=\"{{::'pagination.page.shortcut.label' | xei18n}}\" role=\"presentation\"><input id=\"pageInput\" type=\"number\" ng-model=\"onPage\" aria-valuenow=\"{{onPage}}\" aria-valuemax=\"{{numberOfPages}}\" aria-valuemin=\"{{!numberOfPages ? 0 : 1}}\" max=\"{{numberOfPages}}\" min=\"{{!numberOfPages ? 0 : 1}}\" ng-model-options=\"{ debounce: {'default': 200, 'blur': 0} }\" ng-change=\"paggeNumberChange()\" ng-blur=\"focusOut($event)\" aria-label=\"{{::'pagination.page.aria.label' | xei18n}}. {{::'pagination.page.label' | xei18n}} {{onPage}} {{::'pagination.page.of.label' | xei18n}} {{numberOfPages}}\" ng-cloak></span><xe-label xe-value=\"{{::'pagination.page.of.label' | xei18n}} {{numberOfPages}}\" role=\"presentation\"></xe-label><xe-button xe-type=\"secondary\" xe-btn-class=\"next\" aria-label=\"{{::'pagination.next.label' | xei18n}}\" xe-btn-click=\"next()\" xe-disabled=\"nextLast\" ng-cloak></xe-button><xe-button xe-type=\"secondary\" xe-btn-class=\"last\" aria-label=\"{{::'pagination.last.label' | xei18n}}\" xe-btn-click=\"last()\" xe-disabled=\"nextLast\" ng-cloak></xe-button><xe-label id=\"perPage\" xe-value=\"{{::'pagination.per.page.label' | xei18n}}\" role=\"presentation\" aria-hidden=\"true\"></xe-label><select class=\"per-page-select\" aria-labelledby=\"perPage\" ng-model=\"offset\" ng-options=\"pageOffset for pageOffset in ::pageOffsets\" ng-change=\"offsetChanged(true)\" ng-disabled=\"resultsFound === 0\"></select></div></div>");
 }]);
 
 angular.module("templates/search.html", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("templates/search.html",
-    "<form name=\"form\" class=\"search-container\"><xe-simple-text-box input-field=\"{{searchConfig.id}}\" xe-class=\"search\" value=\"value\" place-holder=\"placeHolder\" disabled on-keydown=\"searchKeydown(data, id, event)\" on-keypress=\"searchKeypress(data, id, event)\" on-focus=\"onFocus(event)\" on-blur=\"onBlur(event)\" xe-aria-label=\"searchConfig.ariaLabel\"></xe-simple-text-box></form>");
+    "<form name=\"form\" class=\"search-container\"><xe-simple-text-box input-field=\"{{searchConfig.id}}\" xe-class=\"search\" value=\"value\" place-holder=\"placeHolder\" disabled on-keydown=\"searchKeydown(data, id, event)\" on-keypress=\"searchKeypress(data, id, event)\" on-focus=\"onFocus(event)\" on-blur=\"onBlur(event)\" aria-label=\"{{::ariaLabel}}\"></xe-simple-text-box></form>");
 }]);
 
 angular.module("templates/dataTable.html", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("templates/dataTable.html",
-    "<div id=\"{{tableId}}\" class=\"table-container\" ng-class=\"{'fixed-height': !!height, 'noToolbar': noCaptionAndToolbar, 'no-data': !resultsFound, 'empty': emptyTableMsg}\" browser-detect role=\"grid\" aria-labelledby=\"gridCaption\" ng-cloak><div class=\"caption\" ng-if=\"!noCaptionAndToolbar\"><table class=\"data-table\" role=\"presentaion\"><caption ng-class=\"{'search-opened': hideContainer}\"><span id=\"gridCaption\" class=\"caption-container font-semibold\" ng-bind=\"::caption\"></span><div class=\"toolbar\" ng-if=\"toolbar\"><xe-toolbar></xe-toolbar><xe-column-filter></xe-column-filter><span role=\"search\" title=\"{{'search.title' | xei18n}}\"><xe-search value=\"searchConfig.searchString\" place-holder=\"{{'search.label' | xei18n}}\" on-change=\"fetchSpecial(query)\" on-focus=\"onSearchFocus({event: event})\" on-blur=\"onSearchBlur({event: event})\" search-config=\"searchConfig\" loading-data=\"loadingData\"></xe-search></span></div></caption></table></div><div class=\"hr-scrollable-content\"><div class=\"thead\"><table class=\"data-table\" ng-style=\"{'padding-right': headerPadding + 'px'}\" role=\"presentaion\"><thead role=\"rowgroup\"><tr role=\"row\"><th class=\"font-semibold width-animate {{::heading.name}}\" ng-repeat=\"heading in header\" ng-class=\"{'sortable': heading.options.sortable, 'ascending': sortArray[heading.name].ascending, 'decending': sortArray[heading.name].decending}\" ng-if=\"heading.options.visible === true\" ng-style=\"{'width': heading.dynamicWidth + 'px'}\" data-name=\"{{::heading.name}}\" ng-click=\"onSort({heading: heading}); sortOnHeading(heading, $index);\" role=\"columnheader\" aria-sort=\"{{sortArray[heading.name].ascending ? ('dataTable.sort.ascending.label' | xei18n) : (sortArray[heading.name].decending ? ('dataTable.sort.descending.label' | xei18n) : 'none')}}\" aria-describedby=\"headingAria + {{$index}}\" draggable drag=\"handleDrag\" dragdata=\"{{heading.name}}\" dragimage=\"dragtable\" droppable drop=\"handleDrop\" tabindex=\"0\" xe-field=\"{{::heading.name}}\" xe-heading-injector><div class=\"data\" title=\"{{heading.label}}\"><span ng-show=\"::heading.options.titleVisible !== false\" aria-hidden=\"false\" ng-bind=\"::heading.title\"></span><label id=\"headingAria + {{$index}}\" class=\"sr-only\" ng-bind=\"heading.ariaLabel + (heading.options.sortable ? ('dataTable.sortable.label' | xei18n) : '')\"></label></div></th></tr></thead></table></div><div class=\"tbody\" ng-style=\"{'height': height}\" continuous-scroll=\"nextPage()\" scroll-parent-id=\"{{continuousScrollParentId}}\" aria-labelledby=\"msg\" tabindex=\"{{(!resultsFound || emptyTableMsg) ? 0 : ''}}\" resize><div id=\"msg\" ng-bind=\"emptyTableMsg? emptyTableMsg : ((!resultsFound && !loadingData) ? noDataMsg : '')\"></div><table class=\"data-table\" ng-class=\"::mobileLayout ? 'mobileLayout' : 'noMobileLayout'\" role=\"presentaion\"><thead role=\"presentaion\" aria-hidden=\"true\"><tr><th class=\"font-semibold {{::heading.name}}\" ng-repeat=\"heading in header\" ng-class=\"{'sortable': heading.options.sortable, 'ascending': sortArray[heading.name].ascending, 'decending': sortArray[heading.name].decending}\" ng-if=\"heading.options.visible === true\" ng-style=\"{'width': heading.dynamicWidth + 'px'}\" data-name=\"{{::heading.name}}\" xe-field=\"{{::heading.name}}\" xe-heading-injector tab-index><div class=\"data\"><span ng-show=\"::heading.options.titleVisible !== false\" ng-bind=\"::heading.title\"></span></div></th></tr></thead><tbody role=\"rowgroup\"><tr ng-repeat=\"row in content\" ng-click=\"onRowClick({data:row,index:$index})\" ng-dblclick=\"onRowDoubleClick({data:row,index:$index})\" xe-row-injector tabindex=\"-1\" role=\"row\" xe-field=\"{{::heading.name}}\"><td class=\"width-animate\" ng-repeat=\"heading in header\" ng-class=\"{'align-right': heading.options.actionOrStatus, 'sortable': heading.options.sortable}\" ng-if=\"heading.options.visible === true\" data-name=\"{{::heading.name}}\" data-title=\"{{::(heading.title && heading.options.titleVisible !== false) ? heading.title + ':' : ''}}\" attain-mobile-layout=\"{{mobileLayout[heading.name]}}\" xe-cell-injector tab-index role=\"gridcell\" xe-dynamic ng-cloak>{{getObjectValue(row, heading.name)}}</td></tr></tbody></table></div></div><div class=\"tfoot\" ng-transclude></div><xe-pagination model=\"content\" results-found=\"resultsFound\" ng-show=\"showPagination\" search-string=\"searchConfig.searchString\"></xe-pagination><div ng-show=\"loadingData\" class=\"load-indicator\"><div class=\"spinner\"><div class=\"bounce1\"></div><div class=\"bounce2\"></div><div class=\"bounce3\"></div></div></div></div>");
+    "<div id=\"{{tableId}}\" class=\"table-container\" ng-class=\"{'fixed-height': !!height, 'noToolbar': noCaptionAndToolbar, 'no-data': !resultsFound, 'empty': emptyTableMsg}\" browser-detect role=\"grid\" aria-labelledby=\"gridCaption\" ng-cloak><div class=\"caption\" ng-if=\"::!noCaptionBar\" xe-section=\"{{xeSection + 'CaptionBar'}}\"><table class=\"data-table\" role=\"presentaion\"><caption ng-class=\"{'search-opened': hideContainer}\"><span id=\"gridCaption\" class=\"caption-container font-semibold\" ng-if=\"::!nocaption\" ng-bind=\"::caption\" xe-field=\"caption\"></span><div class=\"toolbar\" ng-if=\"toolbar\"><xe-toolbar></xe-toolbar><xe-column-filter></xe-column-filter><span role=\"search\" title=\"{{'search.shortcut.label' | xei18n}}\" ng-if=\"::!nosearch\"><xe-search value=\"searchConfig.searchString\" place-holder=\"{{'search.label' | xei18n}}\" on-change=\"fetchSpecial(query)\" on-focus=\"onSearchFocus({event: event})\" on-blur=\"onSearchBlur({event: event})\" search-config=\"searchConfig\" loading-data=\"loadingData\"></xe-search></span></div></caption></table></div><div class=\"hr-scrollable-content\"><div class=\"thead\"><table class=\"data-table\" ng-style=\"headerPadding\" role=\"presentaion\"><thead role=\"rowgroup\"><tr role=\"row\"><th class=\"font-semibold width-animate {{::heading.name}}\" ng-repeat=\"heading in header\" ng-class=\"{'sortable': heading.options.sortable, 'ascending': sortArray[heading.name].ascending, 'decending': sortArray[heading.name].decending}\" ng-if=\"heading.options.visible === true\" ng-style=\"{'width': heading.dynamicWidth + 'px'}\" data-name=\"{{::heading.name}}\" ng-click=\"onSort({heading: heading}); sortOnHeading(heading, $index);\" role=\"columnheader\" aria-sort=\"{{sortArray[heading.name].ascending ? ('dataTable.sort.ascending.label' | xei18n) : (sortArray[heading.name].decending ? ('dataTable.sort.descending.label' | xei18n) : 'none')}}\" aria-describedby=\"{{'headingAria' + $index}}\" drag-drop=\"handleDrop\" tabindex=\"0\" xe-field=\"{{::heading.name}}\" xe-heading-injector><div class=\"data\" title=\"{{heading.label}}\"><span ng-show=\"::heading.options.titleVisible !== false\" aria-hidden=\"false\" ng-bind=\"::heading.title\"></span><label id=\"${{'headingAria' + $index}}\" class=\"sr-only\" ng-bind=\"heading.ariaLabel + (heading.options.sortable ? ('dataTable.sortable.label' | xei18n) : '')\"></label></div></th></tr></thead></table></div><div class=\"tbody\" ng-style=\"::{'height': height}\" continuous-scroll=\"nextPage()\" scroll-parent=\"{{::continuousScrollParent}}\" aria-labelledby=\"msg\" tabindex=\"{{(!resultsFound || emptyTableMsg) ? 0 : ''}}\" resize><div id=\"msg\" ng-bind=\"emptyTableMsg? emptyTableMsg : ((!resultsFound && !loadingData) ? noDataMsg : '')\"></div><table class=\"data-table\" ng-class=\"::mobileLayout ? 'mobileLayout' : 'noMobileLayout'\" role=\"presentaion\"><thead role=\"presentaion\" aria-hidden=\"true\"><tr><th class=\"font-semibold {{::heading.name}}\" ng-repeat=\"heading in header\" ng-class=\"{'sortable': heading.options.sortable, 'ascending': sortArray[heading.name].ascending, 'decending': sortArray[heading.name].decending}\" ng-if=\"heading.options.visible === true\" ng-style=\"{'width': heading.dynamicWidth + 'px'}\" data-name=\"{{::heading.name}}\" xe-field=\"{{::heading.name}}\" xe-heading-injector tab-index><div class=\"data\"><span ng-show=\"::heading.options.titleVisible !== false\" ng-bind=\"::heading.title\"></span></div></th></tr></thead><tbody role=\"rowgroup\"><tr ng-repeat=\"row in content\" ng-click=\"onRowClick({data:row,index:$index})\" ng-dblclick=\"onRowDoubleClick({data:row,index:$index})\" xe-row-injector tabindex=\"-1\" role=\"row\"><td class=\"width-animate\" ng-repeat=\"heading in header\" ng-class=\"{'align-right': heading.options.actionOrStatus, 'sortable': heading.options.sortable}\" ng-if=\"heading.options.visible === true\" data-name=\"{{::heading.name}}\" data-title=\"{{::(heading.title && heading.options.titleVisible !== false) ? heading.title + ':' : ''}}\" attain-mobile-layout=\"{{mobileLayout[heading.name]}}\" xe-field=\"{{::heading.name}}\" xe-cell-injector tab-index role=\"gridcell\" ng-cloak>{{getObjectValue(row, heading.name)}}</td></tr></tbody></table></div></div><div class=\"tfoot\" ng-transclude></div><xe-pagination model=\"content\" results-found=\"resultsFound\" ng-show=\"showPagination\" search-string=\"searchConfig.searchString\"></xe-pagination><div ng-show=\"loadingData\" class=\"load-indicator\"><div class=\"spinner\"><div class=\"bounce1\"></div><div class=\"bounce2\"></div><div class=\"bounce3\"></div></div></div></div>");
 }]);
 
 angular.module("templates/tabNav.html", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("templates/tabNav.html",
-    "<div class=\"xe-tab-container\" role=\"presentation\"><ul class=\"xe-tab-nav\" role=\"tablist\"><li ng-repeat=\"tab in tabnav.tabs\" ng-click=\"tabnav.activate(tab)\" ng-class=\"{active: tab.active}\" ng-repeat-complete role=\"tab\" aria-controls=\"{{'xe-tab-panel'+ ($index+1)}}\" aria-selected=\"{{tab.active}}\"><a href=\"#\" id=\"{{'xe-tab'+ ($index+1)}}\" title=\"{{tab.heading}}\">{{tab.heading}} <span></span></a></li></ul><div class=\"xe-tab-content\" role=\"presentation\"><ng-transclude></ng-transclude></div></div>");
+    "<div class=\"xe-tab-container\" role=\"presentation\"><ul class=\"xe-tab-nav\" role=\"tablist\"><li ng-repeat=\"tab in tabnav.tabs\" ng-click=\"tabnav.activate(tab)\" ng-class=\"{active: tab.active}\" ng-repeat-complete role=\"tab\" aria-controls=\"{{'xe-tab-panel'+ ($index+1)}}\" aria-selected=\"{{tab.active}}\"><a ui-sref=\"{{ tab.state && tab.state || '#' }}\" href=\"#\" id=\"{{'xe-tab'+ ($index+1)}}\" title=\"{{tab.heading}}\" ng-if=\"tab.state\">{{tab.heading}} <span></span></a> <a href=\"#\" id=\"{{'xe-tab'+ ($index+1)}}\" title=\"{{tab.heading}}\" ng-if=\"!tab.state\">{{tab.heading}} <span></span></a></li></ul><div class=\"xe-tab-content\" role=\"presentation\"><ng-transclude></ng-transclude></div></div>");
 }]);
 
 angular.module("templates/tabPanel.html", []).run(["$templateCache", function($templateCache) {
@@ -264,8 +264,7 @@ angular.module("templates/tabPanel.html", []).run(["$templateCache", function($t
                 onKeypress: '&',
                 onFocus : '&',
                 onBlur : '&',
-                required: '=',
-                xeAriaLabel: '='
+                required: '='
             },
             replace: true,
             templateUrl: 'templates/simple-textbox.html'
@@ -458,8 +457,9 @@ angular.module("external-resouces", ['pascalprecht.translate', 'ngSanitize']);
             HELP: 47,
             NUM_LOCK: 144
         })
-        .run(['$rootScope', '$window', 'getlocale', '$translate', function ($rootScope, $window, getlocale, $translate) {
+        .run(['$rootScope', '$window', 'getlocale', 'Language', '$translate', function ($rootScope, $window, getlocale, Language, $translate) {
             $rootScope.isMAC = ($window.navigator.userAgent.indexOf("Mac") !== -1);
+            $rootScope.isRtl = Language.isRtl();
             $translate.use(getlocale.getUserLocale());
         }]);
 }());
@@ -470,15 +470,25 @@ angular.module("external-resouces", ['pascalprecht.translate', 'ngSanitize']);
     'use strict';
     var translations = {
         en: {
+            "pieChart.title": "Pie Chart",
+            "pieChart.subtitle": "Demo Pie Slices",
+            "pieChart.svg.title": "Pie Chart Title",
+            "pieChart.svg.desc": "Pie Chart Description",
+            "pieChart.pie.ariaLabel": "Pie Chart",
+            "pieChart.pie.group.main.ariaLabel": "Enter to Main Group",
+            "pieChart.pie.group.other.ariaLabel": "Enter to Other Group",
+            "pieChart.table.label": "label",
+            "pieChart.table.value": "value",
+            "pieChart.table.percentage": "percentage",
+            "pieChart.table.ariaLabel": "A tabular view of the data in the chart.",
+            "pieChart.main.label.other": "Other",
             "search.label": "Search",
             "dataTable.columnFilter.label": "Show/Hide Column",
             "dataTable.columnFilter.selectAll": "Select All",
-            "dataTable.loadingData.label": "Loading...",
             "dataTable.sortable.label": "Sortable",
             "dataTable.sort.descending.label": "descending",
             "dataTable.sort.ascending.label": "ascending",
             "dataTable.no.record.found": "No records found",
-            "dataTable.record.found": "Results found",
             "pagination.record.found": "Results found",
             "pagination.first.label": "First page",
             "pagination.previous.label": "Previous page",
@@ -486,22 +496,20 @@ angular.module("external-resouces", ['pascalprecht.translate', 'ngSanitize']);
             "pagination.next.label": "Next page",
             "pagination.per.page.label": "Per Page",
             "pagination.page.label": "Page",
-            "pagination.page.end.title": "Page",
-            "pagination.page.aria.Label": "Go To Page. Short cut is End",
-            "pagination.page.of.Label": "of",
-            "search.title": "Search (Alt+Y)",
-            "search.aria.label": "Search text field. Short cut is Alt+Y Search for any course or section"
+            "pagination.page.shortcut.label": "Go To Page (End)",
+            "pagination.page.aria.label": "Go To Page. Short cut is End",
+            "pagination.page.of.label": "of",
+            "search.shortcut.label": "Search (Alt+Y)",
+            "search.aria.label": "Search text field. Short cut is Alt+Y."
         },
         ar: {
             "search.label": "\u0627\u0644\u0628\u062D\u062B",
             "dataTable.columnFilter.label": "\u0625\u0638\u0647\u0627\u0631/\u0625\u062E\u0641\u0627\u0621 \u0627\u0644\u0639\u0645\u0648\u062F",
             "dataTable.columnFilter.selectAll": "\u0627\u062E\u062A\u064A\u0627\u0631 \u0627\u0644\u0643\u0644",
-            "dataTable.loadingData.label": "\u062C\u0627\u0631\u064A \u0627\u0644\u062A\u062D\u0645\u064A\u0644...",
             "dataTable.sortable.label": "\u0642\u0627\u0628\u0644 \u0644\u0644\u062A\u0631\u062A\u064A\u0628",
             "dataTable.sort.descending.label": "\u062A\u0646\u0627\u0632\u0644\u064A\u0627",
             "dataTable.sort.ascending.label": "\u062A\u0635\u0627\u0639\u062F\u064A\u0627",
             "dataTable.no.record.found": "\u0644\u0645 \u064A\u062A\u0645 \u0627\u0644\u0639\u062B\u0648\u0631 \u0639\u0644\u0649 \u0633\u062C\u0644\u0627\u062A",
-            "dataTable.record.found": "\u0627\u0644\u0646\u062A\u0627\u0626\u062C \u0627\u0644\u062A\u064A \u062A\u0645 \u0627\u0644\u0639\u062B\u0648\u0631 \u0639\u0644\u064A\u0647\u0627",
             "pagination.record.found": "\u0627\u0644\u0646\u062A\u0627\u0626\u062C \u0627\u0644\u062A\u064A \u062A\u0645 \u0627\u0644\u0639\u062B\u0648\u0631 \u0639\u0644\u064A\u0647\u0627",
             "pagination.first.label": "\u0627\u0644\u0635\u0641\u062D\u0629 \u0627\u0644\u0623\u0648\u0644\u0649",
             "pagination.previous.label": "\u0627\u0644\u0635\u0641\u062D\u0629 \u0627\u0644\u0633\u0627\u0628\u0642\u0629",
@@ -509,22 +517,20 @@ angular.module("external-resouces", ['pascalprecht.translate', 'ngSanitize']);
             "pagination.next.label": "\u0627\u0644\u0635\u0641\u062D\u0629 \u0627\u0644\u062A\u0627\u0644\u064A\u0629",
             "pagination.per.page.label": "\u0641\u064A \u0643\u0644 \u0635\u0641\u062D\u0629",
             "pagination.page.label": "\u0627\u0644\u0635\u0641\u062D\u0629",
-            "pagination.page.end.title": "\u0627\u0644\u0635\u0641\u062D\u0629",
-            "pagination.page.aria.Label": "\u0627\u0644\u0630\u0647\u0627\u0628 \u0625\u0644\u0649 \u0627\u0644\u0635\u0641\u062D\u0629. \u0627\u0644\u0627\u062E\u062A\u0635\u0627\u0631 \u0647\u0648 End",
-            "pagination.page.of.Label": "\u0645\u0646",
-            "search.title": "\u0627\u0644\u0628\u062D\u062B (Alt+Y)",
-            "search.aria.label": "\u0627\u0644\u0628\u062D\u062B \u0641\u064A \u062D\u0642\u0644 \u0627\u0644\u0646\u0635. \u0627\u0644\u0627\u062E\u062A\u0635\u0627\u0631 \u0647\u0648 Alt+Y \u0644\u0644\u0628\u062D\u062B \u0641\u064A \u0623\u064A \u0645\u0642\u0631\u0631 \u0623\u0648 \u0634\u0639\u0628\u0629"
+            "pagination.page.shortcut.label": "\u0627\u0644\u0630\u0647\u0627\u0628 \u0644\u0644\u0635\u0641\u062D\u0629 (End)",
+            "pagination.page.aria.label": "\u0627\u0644\u0630\u0647\u0627\u0628 \u0625\u0644\u0649 \u0627\u0644\u0635\u0641\u062D\u0629. \u0627\u0644\u0627\u062E\u062A\u0635\u0627\u0631 \u0647\u0648 End",
+            "pagination.page.of.label": "\u0645\u0646",
+            "search.shortcut.label": "\u0627\u0644\u0628\u062D\u062B (Alt+Y)",
+            "search.aria.label": "\u0627\u0644\u0628\u062D\u062B \u0641\u064A \u062D\u0642\u0644 \u0627\u0644\u0646\u0635. \u0645\u0641\u062A\u0627\u062D \u0627\u0644\u0627\u062E\u062A\u0635\u0627\u0631 Alt+Y."
         },
         en_AU: {
             "search.label": "Search",
             "dataTable.columnFilter.label": "Show/Hide Column",
             "dataTable.columnFilter.selectAll": "Select All",
-            "dataTable.loadingData.label": "Loading...",
             "dataTable.sortable.label": "Sortable",
             "dataTable.sort.descending.label": "descending",
             "dataTable.sort.ascending.label": "ascending",
             "dataTable.no.record.found": "No records found",
-            "dataTable.record.found": "Results found",
             "pagination.record.found": "Results found",
             "pagination.first.label": "First page",
             "pagination.previous.label": "Previous page",
@@ -532,22 +538,20 @@ angular.module("external-resouces", ['pascalprecht.translate', 'ngSanitize']);
             "pagination.next.label": "Next page",
             "pagination.per.page.label": "Per Page",
             "pagination.page.label": "Page",
-            "pagination.page.end.title": "Page",
-            "pagination.page.aria.Label": "Go To Page. Short cut is End",
-            "pagination.page.of.Label": "of",
-            "search.title": "Search (Alt+Y)",
-            "search.aria.label": "Search text field. Short cut is Alt+Y Search for any course or section"
+            "pagination.page.shortcut.label": "Go To Page (End)",
+            "pagination.page.aria.label": "Go To Page. Short cut is End",
+            "pagination.page.of.label": "of",
+            "search.shortcut.label": "Search (Alt+Y)",
+            "search.aria.label": "Search text field. Short cut is Alt+Y."
         },
         en_GB: {
             "search.label": "Search",
             "dataTable.columnFilter.label": "Show/Hide Column",
             "dataTable.columnFilter.selectAll": "Select All",
-            "dataTable.loadingData.label": "Loading...",
             "dataTable.sortable.label": "Sortable",
             "dataTable.sort.descending.label": "descending",
             "dataTable.sort.ascending.label": "ascending",
             "dataTable.no.record.found": "No records found",
-            "dataTable.record.found": "Results found",
             "pagination.record.found": "Results found",
             "pagination.first.label": "First page",
             "pagination.previous.label": "Previous page",
@@ -555,22 +559,20 @@ angular.module("external-resouces", ['pascalprecht.translate', 'ngSanitize']);
             "pagination.next.label": "Next page",
             "pagination.per.page.label": "Per Page",
             "pagination.page.label": "Page",
-            "pagination.page.end.title": "Page",
-            "pagination.page.aria.Label": "Go To Page. Short cut is End",
-            "pagination.page.of.Label": "of",
-            "search.title": "Search (Alt+Y)",
-            "search.aria.label": "Search text field. Short cut is Alt+Y Search for any course or section"
+            "pagination.page.shortcut.label": "Go To Page (End)",
+            "pagination.page.aria.label": "Go To Page. Short cut is End",
+            "pagination.page.of.label": "of",
+            "search.shortcut.label": "Search (Alt+Y)",
+            "search.aria.label": "Search text field. Short cut is Alt+Y."
         },
         en_IE: {
             "search.label": "Search",
             "dataTable.columnFilter.label": "Show/Hide Column",
             "dataTable.columnFilter.selectAll": "Select All",
-            "dataTable.loadingData.label": "Loading...",
             "dataTable.sortable.label": "Sortable",
             "dataTable.sort.descending.label": "descending",
             "dataTable.sort.ascending.label": "ascending",
             "dataTable.no.record.found": "No records found",
-            "dataTable.record.found": "Results found",
             "pagination.record.found": "Results found",
             "pagination.first.label": "First page",
             "pagination.previous.label": "Previous page",
@@ -578,22 +580,20 @@ angular.module("external-resouces", ['pascalprecht.translate', 'ngSanitize']);
             "pagination.next.label": "Next page",
             "pagination.per.page.label": "Per Page",
             "pagination.page.label": "Page",
-            "pagination.page.end.title": "Page",
-            "pagination.page.aria.Label": "Go To Page. Short cut is End",
-            "pagination.page.of.Label": "of",
-            "search.title": "Search (Alt+Y)",
-            "search.aria.label": "Search text field. Short cut is Alt+Y Search for any course or section"
+            "pagination.page.shortcut.label": "Go To Page (End)",
+            "pagination.page.aria.label": "Go To Page. Short cut is End",
+            "pagination.page.of.label": "of",
+            "search.shortcut.label": "Search (Alt+Y)",
+            "search.aria.label": "Search text field. Short cut is Alt+Y."
         },
         en_IN: {
             "search.label": "Search",
             "dataTable.columnFilter.label": "Show/Hide Column",
             "dataTable.columnFilter.selectAll": "Select All",
-            "dataTable.loadingData.label": "Loading...",
             "dataTable.sortable.label": "Sortable",
             "dataTable.sort.descending.label": "descending",
             "dataTable.sort.ascending.label": "ascending",
             "dataTable.no.record.found": "No records found",
-            "dataTable.record.found": "Results found",
             "pagination.record.found": "Results found",
             "pagination.first.label": "First page",
             "pagination.previous.label": "Previous page",
@@ -601,22 +601,20 @@ angular.module("external-resouces", ['pascalprecht.translate', 'ngSanitize']);
             "pagination.next.label": "Next page",
             "pagination.per.page.label": "Per Page",
             "pagination.page.label": "Page",
-            "pagination.page.end.title": "Page",
-            "pagination.page.aria.Label": "Go To Page. Short cut is End",
-            "pagination.page.of.Label": "of",
-            "search.title": "Search (Alt+Y)",
-            "search.aria.label": "Search text field. Short cut is Alt+Y Search for any course or section"
+            "pagination.page.shortcut.label": "Go To Page (End)",
+            "pagination.page.aria.label": "Go To Page. Short cut is End",
+            "pagination.page.of.label": "of",
+            "search.shortcut.label": "Search (Alt+Y)",
+            "search.aria.label": "Search text field. Short cut is Alt+Y."
         },
         es: {
             "search.label": "Buscar",
             "dataTable.columnFilter.label": "Mostrar/Ocultar columna",
             "dataTable.columnFilter.selectAll": "Seleccionar todo",
-            "dataTable.loadingData.label": "Cargando...",
             "dataTable.sortable.label": "Que pueda ordenarse",
             "dataTable.sort.descending.label": "descendente",
             "dataTable.sort.ascending.label": "ascendente",
             "dataTable.no.record.found": "No se encontraron registros.",
-            "dataTable.record.found": "Resultados encontrados",
             "pagination.record.found": "Resultados encontrados",
             "pagination.first.label": "Primera p\u00E1gina",
             "pagination.previous.label": "P\u00E1gina anterior",
@@ -624,22 +622,20 @@ angular.module("external-resouces", ['pascalprecht.translate', 'ngSanitize']);
             "pagination.next.label": "P\u00E1gina siguiente",
             "pagination.per.page.label": "Por p\u00E1gina",
             "pagination.page.label": "P\u00E1gina",
-            "pagination.page.end.title": "P\u00E1gina",
-            "pagination.page.aria.Label": "Ir a p\u00E1gina. Atajo es Fin",
-            "pagination.page.of.Label": "de",
-            "search.title": "Buscar (Alt+Y)",
-            "search.aria.label": "Campo de texto a buscar. Atajo es Alt+Y para buscar cualquier curso o secci\u00F3n"
+            "pagination.page.shortcut.label": "Ir a la p\u00E1gina (Fin)",
+            "pagination.page.aria.label": "Ir a p\u00E1gina. Atajo es Fin",
+            "pagination.page.of.label": "de",
+            "search.shortcut.label": "Buscar (Alt+Y)",
+            "search.aria.label": "Campo de b\u00FAsqueda de texto. El atajo es Alt+Y."
         },
         fr: {
             "search.label": "Rechercher",
             "dataTable.columnFilter.label": "Afficher/cacher colonne",
             "dataTable.columnFilter.selectAll": "Tout s\u00E9lectionner",
-            "dataTable.loadingData.label": "Chargement en cours...",
             "dataTable.sortable.label": "Peut \u00EAtre tri\u00E9",
             "dataTable.sort.descending.label": "descendant",
             "dataTable.sort.ascending.label": "ascendant",
             "dataTable.no.record.found": "Aucun enregistrement trouv\u00E9",
-            "dataTable.record.found": "R\u00E9sultats trouv\u00E9s",
             "pagination.record.found": "R\u00E9sultats trouv\u00E9s",
             "pagination.first.label": "Premi\u00E8re page",
             "pagination.previous.label": "Page pr\u00E9c\u00E9dente",
@@ -647,22 +643,20 @@ angular.module("external-resouces", ['pascalprecht.translate', 'ngSanitize']);
             "pagination.next.label": "Page suivante",
             "pagination.per.page.label": "Par page",
             "pagination.page.label": "Page",
-            "pagination.page.end.title": "Page",
-            "pagination.page.aria.Label": "Aller \u00E0 la page. Le raccourci est Fin.",
-            "pagination.page.of.Label": "de",
-            "search.title": "Rechercher (Alt+Y)",
-            "search.aria.label": "Champ de texte de recherce. Le raccourci est Alt+Y. Rechercher tous les enseingnments ou UP."
+            "pagination.page.shortcut.label": "Aller \u00E0 page (Fin)",
+            "pagination.page.aria.label": "Aller \u00E0 la page. Le raccourci est Fin.",
+            "pagination.page.of.label": "de",
+            "search.shortcut.label": "Rechercher (Alt+Y)",
+            "search.aria.label": "Recherche de champ de texte. Raccourci Alt+Y."
         },
         fr_CA: {
             "search.label": "Rechercher",
             "dataTable.columnFilter.label": "Afficher/cacher colonne",
             "dataTable.columnFilter.selectAll": "Tout s\u00E9lectionner",
-            "dataTable.loadingData.label": "Chargement en cours...",
             "dataTable.sortable.label": "Peut \u00EAtre tri\u00E9",
             "dataTable.sort.descending.label": "descendant",
             "dataTable.sort.ascending.label": "ascendant",
             "dataTable.no.record.found": "Aucun enregistrement trouv\u00E9",
-            "dataTable.record.found": "R\u00E9sultats trouv\u00E9s",
             "pagination.record.found": "R\u00E9sultats trouv\u00E9s",
             "pagination.first.label": "Premi\u00E8re page",
             "pagination.previous.label": "Page pr\u00E9c\u00E9dente",
@@ -670,22 +664,20 @@ angular.module("external-resouces", ['pascalprecht.translate', 'ngSanitize']);
             "pagination.next.label": "Page suivante",
             "pagination.per.page.label": "Par page",
             "pagination.page.label": "Page",
-            "pagination.page.end.title": "Page",
-            "pagination.page.aria.Label": "Aller \u00E0 la page. Le raccourci est Fin.",
-            "pagination.page.of.Label": "de",
-            "search.title": "Rechercher (Alt+Y)",
-            "search.aria.label": "Champ de texte de recherce. Le raccourci est Alt+Y. Rechercher tous les enseingnments ou UP."
+            "pagination.page.shortcut.label": "Aller \u00E0 page (Fin)",
+            "pagination.page.aria.label": "Aller \u00E0 la page. Le raccourci est Fin.",
+            "pagination.page.of.label": "de",
+            "search.shortcut.label": "Rechercher (Alt+Y)",
+            "search.aria.label": "Recherche de champ de texte. Raccourci Alt+Y."
         },
         pt: {
             "search.label": "Pesquisar",
             "dataTable.columnFilter.label": "Exibir/ocultar coluna",
             "dataTable.columnFilter.selectAll": "Selecionar todos",
-            "dataTable.loadingData.label": "Carregando...",
             "dataTable.sortable.label": "Classific\u00E1vel",
             "dataTable.sort.descending.label": "decrescente",
             "dataTable.sort.ascending.label": "crescente",
             "dataTable.no.record.found": "N\u00E3o foram encontrados registros",
-            "dataTable.record.found": "Resultados encontrados",
             "pagination.record.found": "Resultados encontrados",
             "pagination.first.label": "Primeira p\u00E1gina",
             "pagination.previous.label": "P\u00E1gina anterior",
@@ -693,11 +685,11 @@ angular.module("external-resouces", ['pascalprecht.translate', 'ngSanitize']);
             "pagination.next.label": "pagination.next.label=Pr\u00F3xima p\u00E1gina",
             "pagination.per.page.label": "Por p\u00E1gina",
             "pagination.page.label": "P\u00E1gina",
-            "pagination.page.end.title": "P\u00E1gina",
-            "pagination.page.aria.Label": "V\u00E1 para P\u00E1gina. A tecla de atalho \u00E9 End",
-            "pagination.page.of.Label": "de",
-            "search.title": "Pesquisar (Alt+Y)",
-            "search.aria.label": "Campo para texto de pesquisa. A tecla de atalho \u00E9 Alt+Y para pesquisar qualquer curso ou se\u00E7\u00E3o."
+            "pagination.page.shortcut.label": "V\u00E1 para p\u00E1gina (End)",
+            "pagination.page.aria.label": "V\u00E1 para P\u00E1gina. A tecla de atalho \u00E9 End",
+            "pagination.page.of.label": "de",
+            "search.shortcut.label": "Pesquisar (Alt+Y)",
+            "search.aria.label": "Campo para texto de busca. A tecla de atalho \u00E9 Alt+Y."
         }
     };
 
@@ -772,40 +764,57 @@ angular.module("external-resouces", ['pascalprecht.translate', 'ngSanitize']);
                 }
             };
         })
-        .directive('continuousScroll', function () {
+        .directive('continuousScroll', ['$window', function ($window) {
             return {
                 restrict : "A",
                 scope : {
                     continuousScroll : "&",
-                    scrollParentId: '@'
+                    scrollParent: '@'
                 },
                 link : function (scope, element) {
-                    var scrollableElement, visibleHeight, threshold = 0;
+                    var scrollableElement, threshold = 500;
 
-                    if (scope.scrollParentId) {
-                        scrollableElement = angular.element('#' + scope.scrollParentId);
+                    if (scope.scrollParent === 'body') {
+                        scrollableElement = angular.element($window);
+                    } else if (scope.scrollParent !== '') {
+                        scrollableElement = angular.element('#' + scope.scrollParent);
                     } else {
                         scrollableElement = element;
                     }
 
-                    visibleHeight = scrollableElement.height();
+                    /**
+                     * The function is called when scrollbar position is close enough to the bottom
+                     */
+                    var onBottomTooClose = function() {
+                        scope.continuousScroll();
+                    };
 
+                    var checkIfBottomTooClose = _.throttle(function(elm) {
+                        var scrollHeight = (scope.scrollParent === 'body') ? angular.element(document).height() : elm[0].scrollHeight;
+
+                        // Check if we're too close to the bottom
+                        if((scrollHeight - elm.scrollTop() - elm.height()) <= threshold) {
+                            onBottomTooClose();
+                        }
+                    }, 500);
+
+                    /**
+                     * maintain scroll event
+                     */
                     scrollableElement.bind("scroll", function () {
-                        var scrollableHeight = scrollableElement.prop('scrollHeight'),
-                            hiddenContentHeight = scrollableHeight - visibleHeight;
+                        checkIfBottomTooClose(scrollableElement);
+                    });
 
-                        if (threshold === 0) {
-                            threshold += scrollableHeight + 10;
-                        }
-
-                        if (hiddenContentHeight - scrollableElement.scrollTop() <= threshold) {
-                            // Scroll is almost at the bottom. Loading more rows
-                            scope.continuousScroll();
-                        }
+                    /**
+                    * Destructor
+                    */
+                    scope.$on("$destroy", function() {
+                        // Remove jquery events manually because angular doesn't know about them
+                        scrollableElement.off('scroll');
                     });
                 }
             };
-        })
+        }])
         .directive("xeKeypress", ['keyCodes', function (keyCodes) {
             var keyCodeMatch = function (keyPress, codes) {
                 var keys = codes.split(","),
@@ -836,15 +845,26 @@ angular.module("external-resouces", ['pascalprecht.translate', 'ngSanitize']);
         }])
 
         /* Factory Methods */
-        .factory("accessibility", ['$rootScope', 'keyCodes', '$timeout', '$document', function ($rootScope, keyCodes, $timeout, $document) {
+        .factory("accessibility", ['$rootScope', 'keyCodes', '$document', function ($rootScope, keyCodes, $document) {
             var accessibility = {
                 provideAccessibilityForTable: provideAccessibilityForTable
             }, globalKeydownHandler = function (event) {
-                var targetToClick = checkKeyTarget(event, event.data.find('[global-key][shortcut-key]'));
+                var targetToClick = checkKeyTarget(event, event.data.table.find('[global-key][shortcut-key]'));
 
                 if (targetToClick && targetToClick.length) {
+                    scrollToTarget(targetToClick, event.data.parent);
                     targetToClick.select().focus().click();
                     event.preventDefault();
+                }
+            }, scrollToTarget = function (element, scrollableParent) {
+                if (!scrollableParent.prop('nodeName')) {
+                    scrollableParent = angular.element('#content');
+                }
+
+                if (scrollableParent.length && element) {
+                    scrollableParent.animate({
+                        scrollTop: element.offset().top - scrollableParent.offset().top + scrollableParent.scrollTop()
+                    });
                 }
             };
 
@@ -879,7 +899,7 @@ angular.module("external-resouces", ['pascalprecht.translate', 'ngSanitize']);
                 }
 
                 table.find('input.search:first').attr('shortcut-key', searchShortcutKey).attr('global-key', true);
-                table.find('.thead th:first').attr('shortcut-key', 'HOME');
+                table.find('.thead th:not(":hidden"):first').attr('shortcut-key', 'HOME');
                 table.find('.tfoot input#pageInput').attr('shortcut-key', 'END');
             }
 
@@ -887,7 +907,7 @@ angular.module("external-resouces", ['pascalprecht.translate', 'ngSanitize']);
                 var tempTargetIndex; // Variable to remember previous column position, 
                                      // used while traversing across columns inside rows
 
-                $document.off('keydown', globalKeydownHandler).on('keydown', table, globalKeydownHandler);
+                $document.off('keydown', globalKeydownHandler).on('keydown', {"table": table, "parent": scrollableParent}, globalKeydownHandler);
 
                 table.on('keydown', function (event) {
                     var targetToFocus,        // Target to focus itself
@@ -906,10 +926,6 @@ angular.module("external-resouces", ['pascalprecht.translate', 'ngSanitize']);
                         return;
                     }
 
-                    if (!scrollableParent.prop('nodeName')) {
-                        scrollableParent = angular.element('#content');
-                    }
-
                     switch (event.which) {
                     case keyCodes.ENTER:
                         if (isFromSearch) {
@@ -922,12 +938,6 @@ angular.module("external-resouces", ['pascalprecht.translate', 'ngSanitize']);
                     case keyCodes.SPACEBAR:
                         if (isFromHeader) {
                             targetToClick = element;
-                        } else if (isFromBody) {
-                            if (element.is('a')) {
-                                event.preventDefault();
-                            } else {
-                                targetToClick = element;
-                            }
                         }
                         break;
                     case keyCodes.TAB:
@@ -941,32 +951,21 @@ angular.module("external-resouces", ['pascalprecht.translate', 'ngSanitize']);
                             if (isFromHeader) {
                                 targetToFocus = table.find('input.search:first');
                             } else if (isFromBody && !element.closest('.slick-dots').length) {
-                                targetToFocusChildren = table.find('.thead th:first');
+                                targetToFocusChildren = table.find('.thead th:not(":hidden"):first');
                             } else if (isFromFooter && !isEmptyBody) {
-                                targetToFocusChildren = table.find('.thead th:first');
+                                targetToFocusChildren = table.find('.thead th:not(":hidden"):first');
                             }
                         } else if (isFromSearch) {
-                            targetToFocusChildren = table.find('.thead th:first');
+                            targetToFocusChildren = table.find('.thead th:not(":hidden"):first');
                         } else if (isFromHeader) {
                             if (isEmptyBody) {
                                 targetToFocus = table.find('.tbody[tabindex=0]');
                             } else {
-                                targetToFocus = table.find('.tfoot input#pageInput');
-                                
-                                // scrolling page scroll till pagination when grid is not fixed-height
-                                if (scrollableParent.length) {
-                                    scrollableParent.animate({
-                                        scrollTop: angular.element('#pageInput').offset().top - scrollableParent.offset().top + scrollableParent.scrollTop()
-                                    });
-                                }
+                                targetToFocus = table.find('.tfoot input#pageInput');                                
+                                scrollToTarget(angular.element('#pageInput'), scrollableParent);
                             }
                         } else if (isFromBody) {
-                            // scrolling page scroll till pagination when grid is not fixed-height
-                            if (scrollableParent.length) {
-                                scrollableParent.animate({
-                                    scrollTop: angular.element('#pageInput').offset().top - scrollableParent.offset().top + scrollableParent.scrollTop()
-                                });
-                            }
+                            scrollToTarget(angular.element('#pageInput'), scrollableParent);
                         }
                         break;
                     case keyCodes.ESC:
@@ -975,6 +974,16 @@ angular.module("external-resouces", ['pascalprecht.translate', 'ngSanitize']);
                         } else if (isFromBody) {
                             tempTargetIndex = undefined;
                             targetToFocus = element.closest('tr');
+                        }
+                        break;
+                    case keyCodes.PAGE_UP:
+                        if (isFromBody) {
+                            targetToFocus = table.find('.tbody tbody tr:first');
+                        }
+                        break;
+                    case keyCodes.PAGE_DOWN:
+                        if (isFromBody) {
+                            targetToFocus = table.find('.tbody tbody tr:last');
                         }
                         break;
                     case keyCodes.UP:
@@ -997,7 +1006,7 @@ angular.module("external-resouces", ['pascalprecht.translate', 'ngSanitize']);
                             if (targetToFocusChildren && !targetToFocusChildren.length) {
                                 elementIndex = undefined;
                                 tempTargetIndex = undefined;
-                                targetToFocusChildren = table.find('.thead th:first');
+                                targetToFocusChildren = table.find('.thead th:not(":hidden"):first');
                             }
                         }
                         break;
@@ -1055,6 +1064,7 @@ angular.module("external-resouces", ['pascalprecht.translate', 'ngSanitize']);
                         break;
                     default:
                         targetToFocusChildren = checkKeyTarget(event, table.find(':not([global-key])[shortcut-key]'));
+                        scrollToTarget(targetToFocusChildren, scrollableParent);
                     }
 
                     if (targetToFocusChildren && targetToFocusChildren.length) {
@@ -1233,6 +1243,32 @@ angular.module("external-resouces", ['pascalprecht.translate', 'ngSanitize']);
                 }
             };
         }])
+        .factory("Language", function($translate) {
+            var isRtl = function() {
+                var dir = jQuery('meta[name=dir]').attr("content");
+
+                if (!dir) {
+                    //add the languages you support here. ar stands for arabic
+                    var rtlLanguages = ['ar'];
+
+                    var languageKey = $translate.proposedLanguage() || $translate.use();
+                    for (var i = 0; i < rtlLanguages.length; i += 1) {
+                        // You may need to change this logic depending on your supported languages (possible languageKey values)
+                        // This code will match both "ar", "ar-XXX" locales. It won't match any other languages as we only support en, es, ar.
+                        if (languageKey.indexOf(rtlLanguages[i]) > -1)
+                            return true;
+                    }
+                    return false;
+                } else if (dir === 'rtl') {
+                    return true;
+                }
+                return false;
+            };
+
+            return {
+                isRtl: isRtl
+            };
+        })
         .filter('xei18n', ['$filter', function ($filter) {
             return function (key) {
                 var value = "";
@@ -1466,6 +1502,10 @@ angular.module('pagination', [])
             };
 
             $scope.paggeNumberChange = function() {
+                if ($scope.onPage) {
+                    focusPageInput();
+                }
+
                 if (($scope.onPage !== null) && (oldPageValue != $scope.onPage)) {
                     if (angular.isUndefined($scope.onPage) || ($scope.onPage <= 0) || ($scope.onPage > $scope.numberOfPages)){
                         $scope.onPage = oldPageValue;
@@ -1475,26 +1515,11 @@ angular.module('pagination', [])
                         disableButtons($scope.onPage, $scope.numberOfPages);
                     }
                 }
-
-                if (oldPageValue) {
-                    focusPageInput();
-                }
             };
 
             $scope.focusOut = function(event) {
                 angular.element(event.target).val(oldPageValue);
             };
-
-            // Wathers
-            $scope.$watch("searchString", function(newValue, oldValue) {
-                if (newValue !== oldValue) {
-                    if ($scope.resultsFound > 0) {
-                        setPageValue(1);
-                    }
-                    
-                    $scope.fetchData($scope.onPage, $scope.offset);             
-                }
-            });
 
             $scope.$watch("resultsFound", function(newValue, oldValue) {              
                 $timeout(function() {
@@ -1629,7 +1654,7 @@ angular.module('pagination', [])
             scope.ascending = parentController.ascending;
 
             if(!scope.emptyTableMsg) {
-                scope.fetchData(scope.onPage, scope.offset);
+                scope.fetchData(1, scope.offset);
             }
 
             // If continuous scrolling is true then we can to hide paginations across devices and desktop.
@@ -1664,7 +1689,7 @@ angular.module('pagination', [])
 }]);
 (function () {
     'use strict';
-    angular.module('search', []).directive('xeSearch', ['$timeout', 'keyCodes', function ($timeout, keyCodes) {
+    angular.module('search', []).directive('xeSearch', ['keyCodes', '$filter', function (keyCodes, $filter) {
         return {
             restrict: 'E',
             scope: {
@@ -1680,8 +1705,7 @@ angular.module('pagination', [])
             replace: true,
             templateUrl: 'templates/search.html',
             link: function (scope, element, attrs) {
-                var promise,
-                    minCharactersToStartSearch = 0,
+                var minCharactersToStartSearch = 0,
                     maxlength = Infinity,
                     onDataChange,
                     transformedInput;
@@ -1704,22 +1728,20 @@ angular.module('pagination', [])
                     if (minCharactersToStartSearch >= maxlength) {
                         console.error('Wrong searchConfig: maxlength value should be more than the minimumCharacters value inside searchConfig to enable searching.');
                     }
+                    scope.ariaLabel = $filter('xei18n')('search.aria.label');
+                    if (angular.isDefined(scope.searchConfig.ariaLabel)) {
+                        scope.ariaLabel = scope.ariaLabel + ' ' + scope.searchConfig.ariaLabel;
+                    }
                 }
 
-                onDataChange = function (data) {
-
+                // Debouncing search call as per provided value or default is 0ms(immediate)
+                /*jslint nomen: true*/
+                onDataChange = _.debounce(function (data) {
                     if (angular.isUndefined(data)) { return; }
 
-                    // Debouncing search call as per provided value or default is 0ms(immediate)
-                    if (promise) {
-                        $timeout.cancel(promise);
-                    }
-
-                    promise = $timeout(function () {
-                        scope.onChange({query: data});
-                        promise = null;
-                    }, scope.searchConfig.delay || 0);
-                };
+                    scope.onChange({query: data});
+                }, scope.searchConfig.delay || 0);
+                /*jslint nomen: false*/
 
                 scope.$watch("searchConfig.searchString", function (newValue, oldValue) {
                     if (angular.isDefined(newValue)) {
@@ -1744,7 +1766,7 @@ angular.module('pagination', [])
 
                             if (searchString.length >= minCharactersToStartSearch) {
                                 onDataChange(searchString);
-                            } else if (searchString.length < oldValue.length && searchString.length < minCharactersToStartSearch) {
+                            } else if ((searchString.length < oldValue.length) && (oldValue.length >= minCharactersToStartSearch) && (searchString.length < minCharactersToStartSearch)) {
                                 onDataChange('');
                             }
                         }
@@ -1782,8 +1804,8 @@ angular.module('pagination', [])
     }]);
 }());
 /**
-    DataTable Module is used to render data in table format. 
-    
+    DataTable Module is used to render data in table format.
+
     HTML Markup(Syntax) :
     ------------------------
     <xe-table-grid
@@ -1798,14 +1820,14 @@ angular.module('pagination', [])
         toolbar="true"
         paginate="true"
         continuous-scrolling="false"
-        continuous-scroll-parent-id="content"
+        continuous-scroll-parent="body"
         on-row-click="onClick(data,index)"
         on-row-double-click="onDoubleClick(data,index)"
         no-data-msg="No Results Found"
         empty-table-msg="emptyTableMsg"
         search-config="searchConfig"
         pagination-config="paginationConfig"
-        draggable-column-names="draggableColumnNames" 
+        draggable-column-names="draggableColumnNames"
         mobile-layout="mobileConfig"
         height="416px"
         refresh-grid="refreshGrid"
@@ -1813,20 +1835,20 @@ angular.module('pagination', [])
 
         <xe-cell-markup heading-name="tick">
             <input type="checkbox" ng-click="someMethod()" value="all"/>
-        </xe-cell-markup> 
+        </xe-cell-markup>
 
         <xe-cell-markup column-name="tick">
             <input type="checkbox"/>
-        </xe-cell-markup> 
+        </xe-cell-markup>
     </xe-table-grid>
-    
+
     Input :
     ----------
-    Basically It requires two inputs 
+    Basically It requires two inputs
         1. Column headings
         2. Column Content / URL Endpoint / Fetch Method
-    
-    These should be in following format. 
+
+    These should be in following format.
 
         $scope.headings = [
             {
@@ -1865,129 +1887,182 @@ angular.module('pagination', [])
                         '&ascending=' + query.ascending +
                         '&offset=' + (query.offset || '') +
                         '&max=' + (query.max || '');
-            
+
             $http.get(url)
                 .success(function(data) {
                     deferred.resolve(data);
                 })
                 .error(function(data) {
                     deferred.reject(data);
-                });     
+                });
 
             return deferred.promise;
         };
 
 
-    Output : 
+    Output :
     -----------
-    Using given arrays this directive will render the data in table format by enabling/disabling specified configurations for 
+    Using given arrays this directive will render the data in table format by enabling/disabling specified configurations for
     each individual columns and headings.
 
 
     Features Available :
     -----------------------
-    1. position: This configuration for each heading in $scope.headings array, orders the headings in the specified positions
+    1. Extensibility: 
+        - Hiding different fields under header/caption bar
+            EX: {
+                    "sections": [
+                        {
+                            "name": "dataTable",
+                            "fields": [
+                                {
+                                    "name": "term",
+                                    "exclude": true
+                                }
+                            ]
+                        },{
+                            "name": "dataTableCaptionBar",
+                            "exclude": false,
+                            "fields": [
+                                {
+                                    "name": "caption",
+                                    "exclude": true
+                                },
+                                {
+                                    "name": "columnFilterMenu",
+                                    "exclude": true
+                                },
+                                {
+                                    "name": "search",
+                                    "exclude": true
+                                }
+                            ]
+                        }
+                    ]
+                }
+        - Reordering different columns 
+            EX: {
+                    "sections": [
+                        {
+                            "name": "dataTable",
+                            "fields": [
+                                {
+                                    "name": "term",
+                                    "nextSibling": "subject"
+                                }
+                            ]
+                        }
+                    ]
+                }
+        - replacing columns attributes
+            // TO-DO
+    2. position: This configuration for each heading in $scope.headings array, orders the headings in the specified positions
         ex: position : {
                 desktop: 1, // displays in 1st position for desktop & in 2nd position for mobile
                 mobile: 2
             }
-    2. options: This configuration for each heading in $scope.headings array, controls the different column behaviours
-        ex: options : {   
+
+    3. options: This configuration for each heading in $scope.headings array, controls the different column behaviours
+        ex: options : {
                 visible: true,      // If "true" then display the column
                                     // If "false"/not specified then hide it
 
                 titleVisible: false,// If "true"/not specified then display the column header name
                                     // If "false" then hide it
-                
-                isSortable: false,  // If "true" then it will provide sortable feature for the specified column 
+
+                isSortable: false,  // If "true" then it will provide sortable feature for the specified column
                                     // If "false"/not specified it does not display any sortable controls
-                
-                ascending: true,    // If "true" for a column then initially this column will be in ascending order, 
+
+                ascending: true,    // If "true" for a column then initially this column will be in ascending order,
                                     // If "false" then descending,
                                     // If not specified then no initial sorting will be applied to that column
-                
+
                 disable: false,     // If "true" then this column name will be disabled in the "Show/Hide Columns" settings menu and user can't check/uncheck this column to show/hide.
                                     // If "false"/not specified by default column name will be enabled in settings menu
-                
-                columnShowHide: true// If "true" then this column name will be removed from the "Show/Hide Columns" settings menu, 
+
+                columnShowHide: true// If "true" then this column name will be removed from the "Show/Hide Columns" settings menu,
                                     // If "false"/not specified by default column name will be displayed in the "Show/Hide Columns" settings menu
             }
-    3. Adding custom HTML elements
+
+    4. Adding custom HTML elements
         As column heading: using attrabute heading-name="column name"
         ex: <xe-cell-markup heading-name="tick">
                 <input type="checkbox" ng-click="someMethod()" value="all"/>
-            </xe-cell-markup> 
+            </xe-cell-markup>
 
         As column Data: using attrabute column-name="column name"
         ex: <xe-cell-markup column-name="tick">
                 <input type="checkbox"/>
             </xe-cell-markup>
-    4. Exposing grid data array and no of records
+
+    5. Exposing grid data array and no of records
         ex: content="rows" results-found="records"
         use these two attributes to get an reference to the currently displaying grid data set and the total no. of records available.
-    5. Post fetch handler method(fetch callback method)
+
+    6. Post fetch handler method(fetch callback method)
         ex: post-fetch="postFetch(response, oldResult)"
         use this attribute to do some extra processing just after grid data populates.
-    6. How to make grid variable height(not fixed height tbody)??
-        Ans: don't specify the height attribute of grid and 
-            specify the attribute "continuous-scroll-parent-id" with value as id of the scrollable html element,
-            so that the continuous scroll will work in tab and mobiles. 
-            ex: continuous-scroll-parent-id="content" // #content has overflow-y: auto
-    7. No data found on search & empty table msg display
+
+    7. How to make grid variable height(not fixed height tbody)??
+        Ans: don't specify the height attribute of grid and
+            specify the attribute "continuous-scroll-parent" with value as the id of scrollable parent html element / 'body' if the scroll is present on document/page wise,
+            so that the continuous scroll will work in tab and mobiles.
+            ex: continuous-scroll-parent="content" // #content has overflow: auto
+            ex: continuous-scroll-parent="body" // body has overflow: auto
+
+    8. No data found on search & empty table msg display
         ex: no-data-msg="No Results Found"
             empty-table-msg="emptyTableMsg"
-        set no-data-msg attribute to display a custom message(ex. "no results found") inside grid on empty search scenario. 
+
+        set no-data-msg attribute to display a custom message(ex. "no results found") inside grid on empty search scenario.
         In the above scenario "grid caption", "show/hide column", "search field", "column headers" & "custom message" will be visible, only "grid rows" will be hidden.
+
         set empty-table-msg attribute to display a custom message(ex. "You don't have access to view the grid") inside grid to handle not authorized scenarios.
-        In the above scenario "grid caption" & "custom message" will be visible, but "show/hide column", "search field", "column headers" & "grid rows" will be hidden.
-    8. Search configuration to control search behaviour
+        In the above scenario whole grid template will be hidden and a message will be shown instead.
+
+    9. Search configuration to control search behaviour
         ex: $scope.searchConfig = {
                 id: 'dataTableSearch',  // A unique id for search input element
 
-                title: 'Search (Alt+Y)',// Onhover tooltip text for search field
-
-                ariaLabel: 'Search text field. Short cut is Alt+Y, Search for any course or section',
-                                        // Aria text for search field
+                ariaLabel: 'Search for any course or section',
+                                        // Additional aria text for search field, This is optional
 
                 delay: 300,             // Debouncing frequent search calls to server when user types fast
                                         // defaults to: 0(in ms)
-                
+
                 searchString : 201410,  // provided search string to filter grid on initial load itself
                                         // defaults to: ''
-                
-                maxlength: 200,         // Specifying maximum length for user input 
+
+                maxlength: 200,         // Specifying maximum length for user input
                                         // defaults to: infinite(∞)
-                
+
                 minimumCharacters : 2   // Limiting no of characters to start search
                                         // defaults to: 1
             };
-    9. Pagination configuration to control pagination behaviour
+
+    10. Pagination configuration to control pagination behaviour
         ex: $scope.paginationConfig = {
                 pageLengths : [ 5, 10, 25], // Page offsets
-                
+
                 offset : 7,                 // Page offset to set on initial grid load
                                             // this value will be added to pageLengths [] if not present
-                
-                recordsFoundLabel : "Results found", // Pagination section texts(provide i18n texts)
-                pageTitle: "Go To Page (End)",
-                pageLabel: "Page",
-                pageAriaLabel: "Go To Page. Short cut is End",
-                ofLabel: "Page of",
-                perPageLabel: "Per Page"
             };
-    10. Enabling drag and drop for columns
+
+    11. Enabling drag and drop for columns
         ex: draggable-column-names="draggableColumnNames"
             $scope.draggableColumnNames = ['tick', 'term', 'crn', 'subject', 'status'];
         bind an array to draggable-column-names attribute for which drap&drop will be enabled.
-    11. Mobile layout configuration [1: "single-column", 2: "two-columns", 3: "all-columns"]
+
+    12. Mobile layout configuration [1: "single-column", 2: "two-columns", 3: "all-columns"]
         ex: mobile-layout="mobileConfig"
             $scope.mobileConfig = {
                 term: 2,
-                crn: 2, 
-                subject: 3, 
+                crn: 2,
+                subject: 3,
                 status: 3
             };
-    12. Method exposed to refresh grid data without recreating/rerendering html 
+
+    13. Method exposed to refresh grid data without recreating/rerendering html
         ex: refresh-grid="refreshGrid"
             $scope.refreshGrid('Table Caption');
         call this method with "caption name" as parameter, to refresh corresponding grid data
@@ -2005,7 +2080,7 @@ angular.module('dataTableModule', ['utils'])
             transclude : true,
             replace : true,
             scope: {
-                tableId : '@?',
+                tableId : '@',
                 caption : '@?',
                 header : '=',
                 endPoint : '=?',
@@ -2016,24 +2091,26 @@ angular.module('dataTableModule', ['utils'])
                 toolbar : '=',
                 paginate : '=?',
                 continuousScrolling : '=?',
-                continuousScrollParentId : '@',
+                continuousScrollParent : '@?',
                 onRowClick  : '&',
                 onRowDoubleClick : '&',
-                noDataMsg : '@',
-                emptyTableMsg : '=',
+                noDataMsg : '@?',
+                emptyTableMsg : '=?',
                 searchConfig : '=',
-                paginationConfig : '=?',
-                draggableColumnNames : '=',
+                paginationConfig : '=',
+                draggableColumnNames : '=?',
                 mobileLayout : '=?',
                 height : '@?',
-                refreshContent: '=refreshGrid'
+                refreshContent: '=?refreshGrid',
+                xeSection: '@?'
             },
             controller : ['$scope', '$filter', '$attrs', "$http",  function ($scope, $filter, $attrs, $http) {
                 var orderBy = $filter('orderBy'),
                     filter  = $filter("filter"),
                     _this = this,
                     content,
-                    previousSortColumn;
+                    previousSortColumn,
+                    device;
                 $scope.hideColumnSettingMenu = true;
                 $scope.transcludes = {};
                 $scope.headingTranscludes = {};
@@ -2052,18 +2129,28 @@ angular.module('dataTableModule', ['utils'])
                 }
 
                 if (!$scope.toolbar && !$scope.caption) {
-                    $scope.noCaptionAndToolbar = true;
+                    $scope.noCaptionBar = true;
                 }
-                
-                // if (!$scope.noDataMsg) {
-                //     $scope.noDataMsg = $filter('xei18n')('dataTable.no.record.found');
-                // }
-                
+
+                if ($window.innerWidth > mobileMaxWidth) {
+                    $scope.header = $filter('orderBy')($scope.header, 'position.desktop', false);
+                    device = 'desktop';
+                } else {
+                    $scope.header = $filter('orderBy')($scope.header, 'position.mobile', false);
+                    device = 'mobile';
+                }
+
+                /* 
+                * Applying extensibility after $scope level initializations and the initial header ordering
+                */
+                applyExtensions('captionBar');
+                applyExtensions('header');
+
                 if (angular.isObject($scope.searchConfig) && angular.isUndefined($scope.searchConfig.searchString)) {
                     $scope.searchConfig.searchString = '';
                 }
 
-                /* 
+                /*
                     START: Shared properties and methods across directives
                 */
                 // Used in pagination directive
@@ -2075,16 +2162,16 @@ angular.module('dataTableModule', ['utils'])
                 this.loadingDataIndicator = function (loading) {
                     $scope.loadingData = loading;
                 };
-                
+
                 // Used in pagination directive
                 // If continuous scrolling is true then hide pagination on tablets and mobile.
                 this.hidePaginationIfContinuousScroll = function () {
                     $scope.showPagination = !$scope.continuousScrolling;
                 };
-                /* 
+                /*
                     END: Shared properties and methods across directives
                 */
-                
+
                 // If Pagination is false, then all the data will be loaded at once and no need to hit the server for sorting.
                 // Sorting will be done on model data.
                 $scope.onSort = function (params) {
@@ -2092,7 +2179,6 @@ angular.module('dataTableModule', ['utils'])
                     _this.ascending = !_this.ascending;
                     // TODO: Too many ifs. Revisit this.
                     if (!$scope.pagination) {
-                        console.log("if pag false do stuff");
                         if (params.heading.options.sortable) {
                             if (!angular.isDefined($attrs.fetch)) {
                                 // Model sort
@@ -2127,6 +2213,117 @@ angular.module('dataTableModule', ['utils'])
                         }
                     }
                 };
+
+                $scope.handleDrop = function(draggedFrom, draggedTo) {
+                    $scope.header = orderColumns($scope.header, draggedFrom, draggedTo);
+                };
+
+                function applyExtensions(sectionName) {
+                    var gridXESection;
+                    var gridSectionExtns;
+
+                    if (typeof xe !== 'undefined' && xe.extensionsFound ) {
+                        switch (sectionName) {
+                            case 'captionBar':
+                                gridXESection = $scope.xeSection + 'CaptionBar';
+
+                                if (gridXESection) {
+                                    gridSectionExtns = _.find(xe.extensions.sections, function (section) {
+                                        return section.name == gridXESection;
+                                    });
+
+                                    if (gridSectionExtns) {
+                                        setVisibilityForCaptionBar(gridSectionExtns);
+                                    }
+                                }
+                                break;
+                            case 'header':
+                                gridXESection = $scope.xeSection;
+
+                                if (gridXESection) {
+                                    gridSectionExtns = _.find(xe.extensions.sections, function (section) {
+                                        return section.name == gridXESection;
+                                    });
+
+                                    if (gridSectionExtns) {
+                                        $scope.header = setVisibilityForHeaders(gridSectionExtns, $scope.header);
+                                        $scope.header = orderHeaders(gridSectionExtns, $scope.header);
+                                    }
+                                }
+                        }
+                    }
+                }
+
+                function setVisibilityForCaptionBar(sectionExtns) {
+                    if (sectionExtns.exclude) {
+                        $scope.noCaptionBar = true;
+                        return;
+                    }
+
+                    _.each( sectionExtns.fields, function (extensibleField) {
+                        if (extensibleField.exclude) {
+                            $scope['no' + extensibleField.name] = true;
+                        }
+                    });
+                }
+
+                function setVisibilityForHeaders(sectionExtns, columnHeaders) {
+                    var updatedOption, columnToHide;
+
+                    _.each( sectionExtns.fields, function (extensibleField) {
+                        columnToHide  = _.findWhere(columnHeaders, { name: extensibleField.name } );
+                        
+                        if(angular.isDefined(columnToHide)) {  //Set visibility to false only if the column exists
+                            updatedOption = extensibleField.exclude ? { visible: !extensibleField.exclude, columnShowHide: !extensibleField.exclude } : {};
+                            _.extend( _.findWhere(columnHeaders, { name: extensibleField.name } ).options, updatedOption );
+                        }
+                    });
+
+                    return columnHeaders;
+                }
+
+                function orderHeaders(sectionExtns, columnHeaders) {
+                    _.each( sectionExtns.fields, function (extension) {
+                        if ( _.has(extension, "nextSibling") ) {
+                            var current_field_idx = _.indexOf(_.pluck(columnHeaders, 'name'), extension.name);
+                            var nextSibling_idx = _.indexOf(_.pluck(columnHeaders, 'name'), extension.nextSibling);
+                            
+                            if (_.isNull(extension.nextSibling) && current_field_idx >= 0) {
+                                // A “nextSibling” of null indicates that the element should be placed as the last element of its siblings 
+                                // {"name": "field2", "nextSibling": null}
+                                var lastSibling = _.last(columnHeaders).name;
+
+                                // Reusing same method used for drag-drop column functionality
+                                columnHeaders = orderColumns(columnHeaders, extension.name, lastSibling);
+                            } else if (current_field_idx >= 0 && nextSibling_idx >= 0) {
+                                var prev_of_nextSibling = ((current_field_idx < nextSibling_idx) && columnHeaders[nextSibling_idx - 1]) ? columnHeaders[nextSibling_idx - 1].name : columnHeaders[nextSibling_idx].name;
+
+                                // Reusing same method used for drag-drop column functionality
+                                columnHeaders = orderColumns(columnHeaders, extension.name, prev_of_nextSibling);
+                            }
+                        }
+                    });
+
+                    return columnHeaders;
+                }
+
+                function orderColumns(columnHeaders, draggedFrom, draggedTo) {
+                    var srcIdx = _.indexOf(_.pluck(columnHeaders, 'name'), draggedFrom),
+                        destIdx = _.indexOf(_.pluck(columnHeaders, 'name'), draggedTo);
+
+                    if (srcIdx >= 0 && destIdx >= 0) {
+                        var element = columnHeaders[srcIdx];
+                        columnHeaders.splice(srcIdx, 1);
+                        columnHeaders.splice(destIdx, 0, element);
+
+                        _.each(columnHeaders, function(item, index) {
+                            item.position[device] = index + 1;
+                        });
+                    }
+
+                    return columnHeaders;
+                }
+
 
                 var defaultOptions = {visible: true, sortable: false};
 
@@ -2167,15 +2364,11 @@ angular.module('dataTableModule', ['utils'])
                     }
                 });
 
-                // As endsWith is not supported by IE and opera using userDefined funtion 
+                // As endsWith is not supported by IE and opera using userDefined funtion
                 function endsWith(str, suffix) {
-                    if (str) {
-                        return str.indexOf(suffix, str.length - suffix.length) !== -1;
-                    } else {
-                        return false;
-                    }
+                    return str.indexOf(suffix, str.length - suffix.length) !== -1;
                 }
-                
+
                 function calculateWidth(width, parentWidth, headerFontSize) {
                     if (endsWith(width, '%')) {
                         width = Math.floor(((parentWidth * width.substr(0, width.indexOf('%'))) / 100));
@@ -2199,8 +2392,8 @@ angular.module('dataTableModule', ['utils'])
                         headerFontSize = parseFloat(table.find('.tbody thead').css('font-size')) || 16,
                         availableWidth = headerWidth,
                         invisibleColumnWidths = 0,
-                        scrollableContainerWidth = table.find('.hr-scrollable-content') ? table.find('.hr-scrollable-content').get(0).scrollWidth : 0,
-                        scrollableContentWidth = table.find('.tbody') ? table.find('.tbody').scrollWidth: 0;
+                        scrollableContainerWidth = table.find('.hr-scrollable-content')[0] ? table.find('.hr-scrollable-content')[0].scrollWidth : 0,
+                        scrollableContentWidth = table.find('.tbody')[0] ? table.find('.tbody').width() : 0;
 
                     if (scrollableContentWidth < scrollableContainerWidth) {
                         // Setting width to display overflowed contents incase of overflow-x
@@ -2210,9 +2403,6 @@ angular.module('dataTableModule', ['utils'])
 
                     // Calculating 'px' value of the column widths specified in header configuration
                     angular.forEach($scope.header, function (heading) {
-
-                        console.log("heading " + $scope.header);
-
                         var width = heading.width;
 
                         if ($window.innerWidth < mobileMaxWidth) {
@@ -2243,10 +2433,10 @@ angular.module('dataTableModule', ['utils'])
                     if (undefinedWidthCount || invisibleColumnWidths) {
                         var undefinedWidth = Math.floor(availableWidth / undefinedWidthCount),
                             availableWidthPerColumn = Math.floor(invisibleColumnWidths / dynamicWidthColumnCount);
-                        
+
                         angular.forEach($scope.header, function (heading) {
                             if (heading.options.visible) {
-                                if (undefinedWidth && (!heading.width || heading.width.trim() === '')) {
+                                if (undefinedWidth && heading.width.trim() === '') {
                                     heading.dynamicWidth = undefinedWidth;
                                 } else if (endsWith(heading.width, '%')) {
                                     heading.dynamicWidth+=availableWidthPerColumn;
@@ -2280,6 +2470,7 @@ angular.module('dataTableModule', ['utils'])
                                 .success(function (data) {
                                     $scope.postFetch({response: data, oldResult: $scope.content});
                                     $scope.content = data.result;
+                                    $scope.resultsFound = $scope.content.length;
                                     _this.loadingDataIndicator(false);
                                 })
                                 .error(function (data) {
@@ -2292,7 +2483,7 @@ angular.module('dataTableModule', ['utils'])
                         _this.loadingDataIndicator(true);
                         $scope.fetch({
                             query: {
-                                searchString: $scope.searchConfig.searchString, 
+                                searchString: $scope.searchConfig.searchString,
                                 sortColumnName: _this.sortColumnName,
                                 ascending: _this.ascending
                             }
@@ -2301,6 +2492,7 @@ angular.module('dataTableModule', ['utils'])
                             function (data) {
                                 $scope.postFetch({response: data, oldResult: $scope.content});
                                 $scope.content = data.result;
+                                $scope.resultsFound = $scope.content.length;
                                 _this.loadingDataIndicator(false);
                             },
     	                    // error
@@ -2312,11 +2504,12 @@ angular.module('dataTableModule', ['utils'])
                    	    );
 				    }
                 }
+
                 loadData();
 
                 // TODO: This is just a temporary arrangement to change the search string. Ideally two-way data-binding should this job for us.
 				// Right now with nested directive two-way data-biding is not working. Need to revisit this.
-				$scope.fetchSpecial = function(searchString) {		
+				$scope.fetchSpecial = function(searchString) {
 
 					if (!$scope.pagination) {
 						var promise = $scope.fetch({
@@ -2333,8 +2526,9 @@ angular.module('dataTableModule', ['utils'])
 							promise.then(
 								// success
 								function(data) {
-                                    $scope.postFetch({response: data, oldResult: $scope.content});        	
+                                    $scope.postFetch({response: data, oldResult: $scope.content});
 		                        	$scope.content = data.result;
+                                    $scope.resultsFound = $scope.content.length;
 		                        	_this.loadingDataIndicator(false);
 			                    },
 			                    // error
@@ -2345,7 +2539,9 @@ angular.module('dataTableModule', ['utils'])
 			                    }
 		                   	);
 						}
-					}
+					} else {
+                        _this.fetchData(1);
+                    }
 				};
 				// END TODO: May be use Factory pattern
 
@@ -2360,7 +2556,7 @@ angular.module('dataTableModule', ['utils'])
                     var id = directiveTransclude.id;
                      $scope.headingTranscludes[id] = directiveTransclude;
                 };
-                
+
                 $scope.onSearchFocus = function (event) {
                     $scope.hideContainer= !$scope.hideContainer;
                 };
@@ -2369,9 +2565,9 @@ angular.module('dataTableModule', ['utils'])
                     $scope.hideContainer= !$scope.hideContainer;
                     angular.element(event.target).val($scope.searchConfig.searchString);
                 };
-                
+
                 $scope.sortOnHeading = function(heading, headerIndex) {
-                	
+
                 	if(heading.options.sortable) {
 	                	var columnName = heading.name;
 
@@ -2391,27 +2587,7 @@ angular.module('dataTableModule', ['utils'])
 	                            }
 	                        }
 	                    }
-	                }	                
-                };             
-                
-                $scope.dragHead = '';
-
-                function arraymove(arr, fromIndex, toIndex) {
-                    var element = arr[fromIndex];
-                    arr.splice(fromIndex, 1);
-                    arr.splice(toIndex, 0, element);
-                }
-
-                $scope.handleDrop = function(draggedData, targetElem) {
-                    var srcInd = $scope.draggableColumnNames.indexOf(draggedData);
-                    var destInd = $scope.draggableColumnNames.indexOf(targetElem);
-                    
-                    arraymove($scope.header, srcInd, destInd);
-                    arraymove($scope.draggableColumnNames, srcInd, destInd);
-                };
-
-                $scope.handleDrag = function(columnName) {
-                    $scope.dragHead = columnName.replace(/["']/g, "");
+	                }
                 };
 
                 if (document.doctype && navigator.appVersion.indexOf("MSIE 9") > -1) {
@@ -2455,7 +2631,7 @@ angular.module('dataTableModule', ['utils'])
                 // Setting opacity of table to 0 till html rendering completes(to avoid displaying UI distortions)
                 tElement.css('opacity', 0);
 
-                if (tAttrs.paginate === "true" || tAttrs.continuousScrolling === "true") {     		 		 		
+                if (tAttrs.paginate === "true" || tAttrs.continuousScrolling === "true") {
      		 		var paginationObject = tElement.find("xe-pagination");
 
      		 		if(angular.isDefined(tAttrs.fetch)) {
@@ -2472,12 +2648,12 @@ angular.module('dataTableModule', ['utils'])
 
                     if(tAttrs.endPoint){
                         paginationObject.attr('end-point', 'endPoint');
-                    }                    
+                    }
      		 	}  else {
      		 		// Removing pagination if its not set to true, to avoid getting executed even when its not needed.
-     		 		tElement.find("xe-pagination").remove();		 		
-     		 	}           
-            
+     		 		tElement.find("xe-pagination").remove();
+     		 	}
+
                 return function postLink(scope, element, attrs, controller) {
                     angular.element(".tfoot").remove();
 
@@ -2487,16 +2663,16 @@ angular.module('dataTableModule', ['utils'])
 
                         scope.populateHeaderWidths(element);
 
-                        accessibility.provideAccessibilityForTable(element, angular.element('#' + scope.continuousScrollParentId));
+                        accessibility.provideAccessibilityForTable(element, angular.element('#' + scope.continuousScrollParent));
 
-                        scope.nextPage = function() { 
-                        	if (scope.pagination && 
-                                element.find(".pagination-container").is(':hidden') && 
+                        scope.nextPage = function() {
+                        	if (scope.pagination &&
+                                element.find(".pagination-container").is(':hidden') &&
                                 controller.next) {
                         		controller.next(true);
-                        	}                         		
+                        	}
                         };
-                    });                    
+                    });
              	};
             }
         };
@@ -2508,9 +2684,9 @@ angular.module('dataTableModule', ['utils'])
  			replace:true,
  			scope:true,
 			/*
-				This block to provide DOM manipulation methods if any. 
+				This block to provide DOM manipulation methods if any.
 			*/
-			link :function(scope, element, attrs, controllerInstance,$transclude){	
+			link :function(scope, element, attrs, controllerInstance,$transclude){
 				var id = attrs.name;
 				var transclude = scope.transcludes[id];
 				if(transclude){
@@ -2537,7 +2713,7 @@ angular.module('dataTableModule', ['utils'])
  			replace:true,
  			require : '^xeTableGrid',
  			scope:true,
- 			link :function(scope, element, attrs, controllerInstance,$transclude) {	
+ 			link :function(scope, element, attrs, controllerInstance,$transclude) {
                 element.on("click",function(event){
                     if(previousElement){
                        previousElement.removeClass("active-row");
@@ -2554,7 +2730,7 @@ angular.module('dataTableModule', ['utils'])
             replace:true,
             require : '^xeTableGrid',
             scope:true,
-            link :function(scope, element, attrs, controllerInstance, $transclude) {    
+            link :function(scope, element, attrs, controllerInstance, $transclude) {
                 var id = attrs.name;
                 var transclude = scope.headingTranscludes[id];
                 if(transclude){
@@ -2597,7 +2773,7 @@ angular.module('dataTableModule', ['utils'])
                     };
                     controllerInstance.registerHeadingTransclude(directiveTransclude);
                 }
-                
+
 			}
 		};
 	}])
@@ -2606,8 +2782,8 @@ angular.module('dataTableModule', ['utils'])
     	var columnClasses = {1: "single-column", 2: "two-columns", 3: "all-columns"};
     	return {
     		restrict: "A",
-    		scope: true,		
-    		link: function(scope, element, attrs) {				
+    		scope: true,
+    		link: function(scope, element, attrs) {
     			element.addClass(columnClasses[parseInt(attrs.attainMobileLayout)]);
     		}
     	};
@@ -2616,113 +2792,100 @@ angular.module('dataTableModule', ['utils'])
             return {
 
                 link: function(scope, element, attr) {
-                    function onDragOver(e) {
-                        if (e.preventDefault) {
-                            e.preventDefault();
-                        }
-                        if (e.stopPropagation) {
-                            e.stopPropagation();
-                        }
-                        e = e || window.event;
-                        var dragX = e.originalEvent.pageX, dragY = e.originalEvent.pageY - 170;
-
-                        angular.element('#dragtable').show();
-
-                        angular.element('#dragtable').css({
-                            left:  dragX,
-                            top:   dragY
-                        });
-                        e.originalEvent.dataTransfer.dropEffect = 'move';
-
-                        if (e.preventDefault) {
-                            e.preventDefault();
-                        }
-                        return false;
-                    }
-
-                    function onDrop(event) {
-                        angular.element('#dragtable').hide();
-                        if (event.preventDefault) {
-                            event.preventDefault();
-                        }
-                        if (event.stopPropagation) {
-                            event.stopPropagation();
-                        }
-
-                        var data =  event.originalEvent.dataTransfer.getData("Text");
-                        data = angular.fromJson(data);
-                        var dropfn = attr.drop;
-                        var fn = $parse(attr.drop);
-
-                        var headerElem=angular.element(event.target).closest('th');
-                        var textOfHeader=angular.element(headerElem).data('name');
-
-                        scope.$apply(function() {
-                            scope[dropfn](data, textOfHeader);
-                        });
-                    }
-                    element.bind("dragover", onDragOver);
-                    element.bind("drop", onDrop);
+                    
                 }
             };
         }
     ])
-    .directive('draggable', function() {
+    .directive('dragDrop', function() {
         return {
             link: function(scope, element, attr) {
-                var enterTarget = null;
+                var enterTarget = null,
+                    index = element.index();
+
+                // Draggable column check
+                if (scope.draggableColumnNames.indexOf(scope.header[index].name) === -1) {
+                    return;
+                }
                 element.attr("draggable", true);
 
-                var dragDataVal = '';
-                var draggedGhostImgElemId = '';
-                attr.$observe('dragdata', function(newVal) {
-                    dragDataVal = newVal;
-                });
-                attr.$observe('dragimage', function(newVal) {
-                    draggedGhostImgElemId = newVal;
-                });
+                function  dragstart(event) {
+                    angular.element(event.target).addClass('dragged');
+                    index = angular.element(event.target).closest('th').index() + 1;
+                    element.closest('.table-container').find("td:nth-child(" + index + ")").addClass('dragged');
 
-
-                function  dragstart(e){
-                    angular.element(e.target).addClass('dragged');
-                    var index = angular.element(e.target).closest('th').index() + 1;
-                    angular.element( "table td:nth-child("+index+")" ).addClass('dragged');
-
-                    var sendData = angular.toJson(dragDataVal);
-                    e.originalEvent.dataTransfer.setData("text", sendData);
-                    var dragFn = attr.drag;
-
-                    if (dragFn !== 'undefined') {
-                        scope.$apply(function() {
-                            scope[dragFn](sendData);
-                        });
-                    }
+                    var sendData = angular.element(event.target).data('name');
+                    event.originalEvent.dataTransfer.setData('text', sendData);
                 }
 
-                function dragend(e) {
-                    angular.element(e.target).removeClass('dragged');
-                    var index = angular.element(e.target).closest('th').index() + 1;
-                    angular.element("table td:nth-child("+index+")" ).removeClass('dragged');
+                function dragend(event) {
+                    angular.element(event.target).removeClass('dragged');
+                    index = angular.element(event.target).closest('th').index() + 1;
+                    element.closest('.table-container').find("td:nth-child(" + index + ")").removeClass('dragged');
                     angular.element(".drag-enter").removeClass('drag-enter');
                     angular.element('#dragtable').hide();
                 }
 
-                function dragenter(e) {
-                    angular.element(e.target).closest('th').addClass('drag-enter');
-                    var index = angular.element(e.target).closest('th').index() + 1;
-                    angular.element( "table td:nth-child("+index+")" ).addClass('drag-enter');
-                    enterTarget = e.target;
-                    e.preventDefault();
+                function dragenter(event) {
+                    angular.element(event.target).closest('th').addClass('drag-enter');
+                    index = angular.element(event.target).closest('th').index() + 1;
+                    element.closest('.table-container').find("td:nth-child(" + index + ")").addClass('drag-enter');
+                    enterTarget = event.target;
+                    event.preventDefault();
                 }
 
-                function dragleave(e) {
-                    if (enterTarget == e.target){
-                        angular.element(e.target).closest('th').removeClass('drag-enter');
-                        var index = angular.element(e.target).closest('th').index() + 1;
-                        angular.element( "table td:nth-child("+index+")" ).removeClass('drag-enter');
+                function dragleave(event) {
+                    if (enterTarget == event.target) {
+                        angular.element(event.target).closest('th').removeClass('drag-enter');
+                        index = angular.element(event.target).closest('th').index() + 1;
+                        element.closest('.table-container').find("td:nth-child(" + index + ")").removeClass('drag-enter');
                     }
                 }
 
+                function onDragOver(event) {
+                    processEvent(event);
+
+                    event = event || window.event;
+                    var dragX = event.originalEvent.pageX, dragY = event.originalEvent.pageY - 170;
+
+                    angular.element('#dragtable').show();
+
+                    angular.element('#dragtable').css({
+                        left:  dragX,
+                        top:   dragY
+                    });
+                    event.originalEvent.dataTransfer.dropEffect = 'move';
+
+                    if (event.preventDefault) {
+                        event.preventDefault();
+                    }
+                    return false;
+                }
+
+                function onDrop(event) {
+                    angular.element('#dragtable').hide();
+                    processEvent(event);
+
+                    var fromHeader =  event.originalEvent.dataTransfer.getData('text');
+                    var toHeader = angular.element(event.target).closest('th').data('name');
+                    var dropfn = attr.dragDrop;
+
+                    scope.$apply(function() {
+                        scope[dropfn](fromHeader, toHeader);
+                    });
+                }
+
+                function processEvent(e) {
+                    if (e.preventDefault) {
+                        e.preventDefault();
+                    }
+                    if (e.stopPropagation) {
+                        e.stopPropagation();
+                    }
+                }
+
+                element.bind("dragover", onDragOver);
+                element.bind("drop", onDrop);
                 element.bind("dragstart", dragstart);
                 element.bind("dragend", dragend);
                 element.bind("dragenter", dragenter);
@@ -2730,58 +2893,64 @@ angular.module('dataTableModule', ['utils'])
             }
         };
     })
-    
+
     /*
-        DataTable resize handler
+        DataTable resize handlers
     */
-    .directive('resize', ['$window', '$filter', '$timeout', 'mobileMaxWidth', function ($window, $filter, $timeout, mobileMaxWidth) {
+    .directive('resize', ['$timeout', '$window', '$filter', 'Language', 'mobileMaxWidth', function ($timeout, $window, $filter, Language, mobileMaxWidth) {
         return function ($scope, element, attr) {
-            var w = angular.element($window), promise;
-
-            $scope.$watch(
-                function () {
-                    return element.closest('.table-container').width();
-                },
-                function (newValue, oldValue) {
-                    if ($window.innerWidth > mobileMaxWidth) {
-                        $scope.header = $filter('orderBy')($scope.header, 'position.desktop', false);
-                    } else {
-                        $scope.header = $filter('orderBy')($scope.header, 'position.mobile', false);    
+            $timeout(function() {
+                // Watch to resize headers & populate their widths based on visibility on window/table resize
+                $scope.$watch(
+                    function () {
+                        return element.closest('.table-container').width();
+                    },
+                    function (newValue, oldValue) {
+                        if (newValue !== oldValue) {
+                            if ($window.innerWidth > mobileMaxWidth) {
+                                $scope.header = $filter('orderBy')($scope.header, 'position.desktop', false);
+                                
+                                // Adjust dataTable header widths on window resize
+                                $scope.populateHeaderWidths(element.closest('.table-container'));
+                                adjustHeader();
+                            } else {
+                                $scope.header = $filter('orderBy')($scope.header, 'position.mobile', false);
+                            }
+                        }
                     }
-                    
-                    if (newValue !== oldValue) {
-                        // Adjust dataTable header widths on window resize
-                        $scope.populateHeaderWidths(element.closest('.table-container'));
-                        adjustColumnWidths();
+                );
+
+                // Watch to resize headers on resolve of each search result
+                $scope.$watch(
+                    function () {
+                        return element[0].scrollHeight;
+                    },
+                    function (newValue, oldValue) {
+                        if ($window.innerWidth > mobileMaxWidth) {
+                            adjustHeader();
+                        }
                     }
-                }
-            );
+                );
+            });
 
-            $scope.$watch(
-                function () {
-                    return element[0].scrollHeight;
-                },
-                function (newValue, oldValue) {
-                    adjustColumnWidths();
-                }
-            );
-
-            function adjustColumnWidths() {
+            function adjustHeader() {
                 var adjustHeader = (element[0].scrollHeight > element[0].clientHeight) && (element[0].clientWidth !== element[0].offsetWidth);
-                $scope.headerPadding = adjustHeader ? (element.width() - element[0].scrollWidth) : '';
+                if (adjustHeader) {
+                    var headerPadding = (element.width() - element[0].scrollWidth) + 'px';
+                    $scope.headerPadding = Language.isRtl() ? {'padding-left': headerPadding} : {'padding-right': headerPadding};
+                } else {
+                    $scope.headerPadding = {};
+                }
             }
 
             // Debouncing window resize trigger within every 500ms
-            if (promise) {
-                $timeout.cancel(promise);
-            }
-
-            promise = $timeout(function () {
-                w.bind('resize', function () {
+            var w = angular.element($window);
+            var applyScope = _.debounce(function () {
                     $scope.$apply();
-                });
-            }, 500);
-            
+                }, 500);
+
+            w.bind('resize', applyScope);
+
         };
     }])
     .directive('tabIndex', [function(){
@@ -2796,6 +2965,960 @@ angular.module('dataTableModule', ['utils'])
     }]);
 }());
 
+/*****************************************************
+ *  © 2016 Ellucian Company L.P. and its affiliates. *
+ *****************************************************/
+
+; // safe for iife
+(function () {
+
+    'use strict';
+
+    angular.module('pieChartModule', [])
+        .factory('d3', ['$window', '$log', function ($window, $log) {
+            if (!$window.d3) {
+                $log.error('D3 must be present');
+            }
+            return $window.d3;
+        }])
+        .directive('xePieChart', ['d3', '$window', '$log', '$timeout', 'Language', function (d3, $window, $log, $timeout, Language) {
+
+            var uniqueId = 0;
+
+            function draw(tooltip, table, svg, radius, scope, options, element) {
+
+                // var declaration
+                var subdata = [], other, subdatatotal, total,
+                    subPieStartAngle, subPieEndAngle,
+                    pie, subPie,
+                    arc, lineArc, lineOuterArc, subArc, lineSubArc, lineSubOuterArc,
+                    color, subColor,
+                    slice, text, polyline, bgSubSlice, subslice, subtext, subpolyline, ua, msie, trident, edge;
+
+                // remove the old data
+                if (table) {
+                    table.select('thead').remove();
+                    table.select('tbody').remove();
+                    // append new element
+                    table.append('thead').attr('class', 'xe-pie-table-head');
+                    table.append('tbody').attr('class', 'xe-pie-table-body');
+                }
+
+                svg.selectAll('g').remove();
+
+                svg.append("g").attr({
+                    "role": "presentation",
+                    "class": "xe-pie-slices"
+                });
+                svg.append("g").attr({
+                    "role": "listitem",
+                    "class": "xe-pie-labels",
+                    'id': "main-group-" + uniqueId,
+                    'aria-live': "polite",
+                    'aria-relevant': "additions removals"
+                });
+                svg.append("g").attr({
+                    "role": "presentation",
+                    "class": "xe-pie-lines"
+                });
+
+                // render when if needed
+                if (scope.data.length > 7) {
+                    svg.append('g').attr({
+                        'role': 'presentation',
+                        'class': 'xe-pie-bg-sub-slice'
+                    });
+                    svg.append("g").attr({
+                        'role': 'presentation',
+                        "class": "xe-pie-sub-slices"
+                    });
+                    svg.append("g").attr({
+                        'role': 'listitem',
+                        "class": "xe-pie-sub-labels",
+                        'id': "other-group-" + uniqueId,
+                        'aria-live': "polite",
+                        'aria-relevant': "additions removals"
+                    });
+                    svg.append("g").attr({
+                        'role': 'presentation',
+                        "class": "xe-pie-sub-lines"
+                    });
+                }
+
+                function tabulate(data, columns) {
+                    // var declaration
+                    var thead, tbody, rows, dtLabel = columns[0], dtValue = columns[1], dtPercentage = columns[2];
+
+                    thead = table.select('thead.xe-pie-table-head');
+                    tbody = table.select('tbody.xe-pie-table-body');
+
+                    // append the header row
+                    thead.append("tr")
+                        .selectAll("th")
+                        .data(columns)
+                        .enter()
+                        .append("th")
+                        .text(function (column) {
+                            return column;
+                        });
+
+                    // create a row for each object in the data
+                    rows = tbody.selectAll("tr")
+                        .data(data)
+                        .enter()
+                        .append("tr");
+
+                    // create a cell in each row for each column
+                    rows.selectAll("td")
+                        .data(function (row) {
+                            return columns.map(function (column) {
+                                row[dtLabel] = row.label;
+                                row[dtValue] = row.value;
+                                if (!Language.isRtl()) {
+                                    if (subdatatotal || row[dtValue]) {
+                                        row[dtPercentage] = (Math.round(1000 * row[dtValue] / subdatatotal) / 10).toFixed(2) + '%';
+                                    } else {
+                                        row[dtPercentage] = '0.00%';
+                                    }
+                                }
+                                if (Language.isRtl()) {
+                                    if (subdatatotal || row[dtValue]) {
+                                        row[dtPercentage] = '%' + (Math.round(1000 * row[dtValue] / subdatatotal) / 10).toFixed(2);
+                                    } else {
+                                        row[dtPercentage] = '%0.00';
+                                    }
+                                }
+                                return { column: column, value: row[column] };
+                            });
+                        })
+                        .enter()
+                        .append("td")
+                        .html(function (d) {
+                            return d.value;
+                        });
+
+                    return table;
+                }
+                function detectIE() {
+                    ua = window.navigator.userAgent;
+                    msie = ua.indexOf('MSIE ');
+                    trident = ua.indexOf('Trident/');
+                    if (msie > 0 || trident > 0) {
+                        return true;
+                    }
+                    return false;
+                }
+                function detectEdge() {
+                    edge = ua.indexOf('Edge/');
+                    if (edge > 0) {
+                        return true;
+                    }
+                    return false;
+                }
+                function mouseover(d) {
+                    if (tooltip && d3.select(this).style("opacity") !== '0') {
+                        tooltip.select('.xe-pie-tooltip-label').html(d.data.label);
+                        tooltip.select('.xe-pie-tooltip-value').html(d.data.value);
+                        tooltip.select('.xe-pie-tooltip-percent').html(d.data.percentage);
+                        tooltip.style('display', 'block');
+                    }
+                }
+
+                function mouseout(d) {
+                    if (tooltip) {
+                        tooltip.style('display', 'none');
+                    }
+                }
+
+                function mousemove(d) {
+                    if (tooltip) {
+                        var te = angular.element(element).find('.xe-pie-tooltip')[0],
+                            width = te.clientWidth,
+                            height = te.clientHeight;
+                        if (Language.isRtl() && detectIE()) {
+                            tooltip.style('top', (d3.event.layerY - height - 10) + 'px').style('left', ((d3.event.layerX - width + 10) / 2) + 'px');
+                        } else {
+                            tooltip.style('top', (d3.event.layerY - height - 10) + 'px').style('left', (d3.event.layerX - width / 2) + 'px');
+                        }
+                    }
+                }
+
+                function key(d) {
+                    return d.data.label;
+                }
+
+                function midAngle(d) {
+                    return d.startAngle + (d.endAngle - d.startAngle) / 2;
+                }
+
+                function wrap(textWrap) {
+                    textWrap.each(function () {
+                        var t = d3.select(this),
+                            si = 0,
+                            ei = 10,
+                            w = t.text(),
+                            l = w.substring(si, ei),
+                            y = t.attr("y"),
+                            dy = parseFloat(textWrap.attr("dy")),
+                            tspan = t.text(null).append("tspan").attr("x", 0).attr("y", y).attr("dy", dy + "em");
+
+                        while (l) {
+                            if (si === 0) {
+                                tspan.text(l.trim());
+                            } else {
+                                tspan = t.append("tspan").attr("x", 0).attr("y", y).attr("dy", dy + "em").text(l.trim());
+                            }
+                            si += 10;
+                            ei += 10;
+                            l = w.substring(si, ei);
+                        }
+                    });
+                }
+
+                function relaxSub() {
+                    // var declaration
+                    var again, labelElements;
+
+                    again = false;
+
+                    if (subtext) {
+
+                        subtext.each(function (d1) {
+
+                            var that = this,
+                                a = this.getBoundingClientRect();
+
+                            subtext.each(function (d2) {
+
+                                if (this !== that) {
+                                    var b = this.getBoundingClientRect(), dy, tt, to;
+                                    if ((Math.abs(a.left - b.left) * 2 < (a.width + b.width)) && (Math.abs(a.top - b.top) * 2 < (a.height + b.height))) {
+                                        // overlap, move labels
+                                        dy = (Math.max(0, a.bottom - b.top) + Math.min(0, a.top - b.bottom)) * 0.01;
+                                        tt = d3.transform(d3.select(this).attr("transform"));
+                                        to = d3.transform(d3.select(that).attr("transform"));
+                                        again = true;
+
+                                        to.translate = [radius * 0.65 * (midAngle(d1) < Math.PI ? 1 : -1), to.translate[1] + dy];
+                                        tt.translate = [radius * 0.65 * (midAngle(d2) < Math.PI ? 1 : -1), tt.translate[1] - dy];
+                                        d3.select(this).attr("transform", "translate(" + tt.translate + ")");
+                                        d3.select(that).attr("transform", "translate(" + to.translate + ")");
+                                    }
+                                }
+                            });
+                        });
+
+                        if (again) {
+                            labelElements = subtext[0];
+                            if (subpolyline) {
+                                subpolyline.attr('points', function (d, i) {
+                                    var labelForLine = d3.select(labelElements[i]),
+                                        t = d3.transform(labelForLine.attr("transform")),
+                                        tx = t.translate[0],
+                                        ty = t.translate[1];
+                                    return [lineSubArc.centroid(d), lineSubOuterArc.centroid(d), tx, ty];
+                                });
+                            }
+                            $timeout(relaxSub);
+                        }
+                    }
+                }
+
+                function toggle(d, i) {
+                    d3.event.preventDefault();
+                    d3.event.stopPropagation();
+                    if (i === 6 && subdata.length > 7) {
+                        slice.style('opacity', function (d, i) {
+                            if (i === 6) {
+                                return 1.0;
+                            }
+                            return 0.1; // 10% of opacity
+                        });
+                        text.style('display', 'none').attr('aria-hidden', true);
+                        polyline.style('display', 'none').attr('aria-hidden', true);
+                        if (bgSubSlice || subslice || subtext || subpolyline) {
+                            bgSubSlice.style('display', 'block').attr('aria-hidden', false);
+                            subslice.style('display', 'block').attr('aria-hidden', false);
+                            subtext.style('display', 'block').attr('aria-hidden', false);
+                            subpolyline.style('display', 'block').attr('aria-hidden', false);
+                            subtext.selectAll('.xe-pie-light-text').call(wrap);
+                            relaxSub();
+                        }
+                    } else {
+                        if (bgSubSlice || subslice || subtext || subpolyline) {
+                            bgSubSlice.style('display', 'none').attr('aria-hidden', true);
+                            subslice.style('display', 'none').attr('aria-hidden', true);
+                            subtext.style('display', 'none').attr('aria-hidden', true);
+                            subpolyline.style('display', 'none').attr('aria-hidden', true);
+                        }
+                        slice.style('opacity', 1.0);
+                        text.style('display', 'block').attr('aria-hidden', false);
+                        polyline.style('display', 'block').attr('aria-hidden', false);
+                    }
+                }
+
+                function touchTarget() {
+                    d3.select(this).classed("xe-pie-touch", !d3.select(this).classed("xe-pie-touch"));
+                }
+
+                function relax() {
+                    // var declaration
+                    var again, labelElements;
+
+                    again = false;
+
+                    if (text) {
+
+                        text.selectAll("text").each(function (d1) {
+
+                            var that = this,
+                                a = this.getBoundingClientRect();
+
+                            text.selectAll("text").each(function (d2, i) {
+
+                                if (this !== that) {
+                                    var b = this.getBoundingClientRect(), dy, tt, to;
+                                    if ((Math.abs(a.left - b.left) * 2 < (a.width + b.width)) && (Math.abs(a.top - b.top) * 2 < (a.height + b.height))) {
+                                        // overlap, move labels
+                                        // dx = (Math.max(0, a.left - b.right) + Math.min(0, a.right - b.left)) * 0.01;
+                                        dy = (Math.max(0, a.bottom - b.top) + Math.min(0, a.top - b.bottom)) * 0.01;
+                                        tt = d3.transform(d3.select(this).attr("transform"));
+                                        to = d3.transform(d3.select(that).attr("transform"));
+                                        again = true;
+
+                                        to.translate = [radius * 0.55 * (midAngle(d1) < Math.PI ? 1 : -1), to.translate[1] + dy];
+                                        tt.translate = [radius * 0.55 * (midAngle(d2) < Math.PI ? 1 : -1), tt.translate[1] - dy];
+
+                                        d3.select(this).attr("transform", "translate(" + tt.translate + ")");
+                                        d3.select(that).attr("transform", "translate(" + to.translate + ")");
+                                    }
+                                }
+                            });
+                        });
+
+                        if (again) {
+                            labelElements = text[0];
+                            if (polyline) {
+                                polyline.attr('points', function (d, i) {
+                                    var labelForLine = d3.select(labelElements[i]).select('text'),
+                                        t = d3.transform(labelForLine.attr("transform")),
+                                        tx = t.translate[0],
+                                        ty = t.translate[1];
+                                    return [lineArc.centroid(d), lineOuterArc.centroid(d), tx, ty];
+                                });
+                            }
+                            $timeout(relax);
+                        }
+                    }
+                }
+
+                function change(data) {
+
+                    /* ------- PIE SLICES -------*/
+                    slice = svg.select(".xe-pie-slices").selectAll("path.xe-pie-slice")
+                        .data(pie(data), key);
+
+                    slice.enter()
+                        .insert("path")
+                        .style("fill", function (d, i) {
+                            if (i === 6) {
+                                subPieStartAngle = d.startAngle;
+                                subPieEndAngle = d.endAngle;
+                            }
+                            return color(i);
+                        })
+                        .attr("class", "xe-pie-slice")
+                        .on('click', toggle)
+                        .on('touchstart', toggle)
+                        .on('mouseover', mouseover)
+                        .on('touchstart', mouseover)
+                        .on('touchstart', touchTarget)
+                        .on('mouseout', mouseout)
+                        .on('touchend', mouseout)
+                        .on('touchend', touchTarget)
+                        .on('mousemove', mousemove)
+                        .on('touchmove', mousemove);
+
+                    slice.transition().duration(1000)
+                        .attrTween("d", function (d) {
+                            this.d3current = this.d3current || d;
+                            var interpolate = d3.interpolate(this.d3current, d);
+                            this.d3current = interpolate(0);
+                            return function (t) {
+                                return arc(interpolate(t));
+                            };
+                        });
+
+                    slice.exit()
+                        .remove();
+
+                    /* ------- TEXT LABELS -------*/
+
+                    text = svg.select(".xe-pie-labels").selectAll("text")
+                        .data(pie(data), key);
+
+                    text.enter()
+                        .append('a')
+                        .attr({
+                            'xlink:href': function (d, i) {
+                                if (d.data.label === options.pie.otherLabel) {
+                                    return '#other-group-' + uniqueId;
+                                }
+                                return;
+                            },
+                            'tabindex': function (d, i) {
+                                if (d.data.label === options.pie.otherLabel) {
+                                    return 0;
+                                }
+                                return;
+                            },
+                            'aria-controls': function (d, i) {
+                                if (d.data.label === options.pie.otherLabel) {
+                                    return 'other-group-' + uniqueId;
+                                }
+                                return;
+                            },
+                            'aria-label': function (d, i) {
+                                if (d.data.label === options.pie.otherLabel) {
+                                    return options.pie.group.otherAriaLabel;
+                                }
+                                return;
+                            }
+                        })
+                        .on('click', toggle)
+                        .on('touchstart', toggle)
+                        .append("text")
+                        .attr({
+                            'class': function (d, i) {
+                                if (d.data.label === options.pie.otherLabel) {
+                                    return 'xe-pie-large-text xe-pie-other-text';
+                                }
+                                return 'xe-pie-large-text';
+                            }
+                        })
+                        .on('click', toggle)
+                        .on('touchstart', toggle)
+                        .on('mouseover', mouseover)
+                        .on('touchstart', mouseover)
+                        .on('mouseout', mouseout)
+                        .on('touchend', mouseout)
+                        .on('mousemove', mousemove)
+                        .on('touchmove', mousemove);
+
+                    text.selectAll("text").append('tspan')
+                        .attr('x', '0')
+                        .attr('dy', function (d) {
+                            if ((d.startAngle + d.endAngle) / 2 > Math.PI / 2 && (d.startAngle + d.endAngle) / 2 < Math.PI * 1.5) {
+                                return '1em';
+                            }
+                            return '-1em';
+                        })
+                        .attr('class', 'xe-pie-bold-text')
+                        .text(function (d) {
+                            return d.data.percentage;
+                        });
+
+                    text.selectAll("text").append('tspan')
+                        .attr('x', '0')
+                        .attr('dy', '1em')
+                        .attr('class', 'xe-pie-light-text')
+                        .text(function (d) {
+                            return d.data.label;
+                        });
+
+                    text.selectAll('text').transition().duration(1000)
+                        .attrTween("transform", function (d) {
+                            this.d3current = this.d3current || d;
+                            var interpolate = d3.interpolate(this.d3current, d);
+                            this.d3current = interpolate(0);
+                            return function (t) {
+                                var d2 = interpolate(t),
+                                    pos = lineOuterArc.centroid(d2);
+                                // pos[0] = radius * 0.6 * (midAngle(d2) < Math.PI ? 1 : -1);
+                                return "translate(" + pos + ")";
+                            };
+                        })
+                        .attrTween("text-anchor", function (d) {
+                            this.d3current = this.d3current || d;
+                            var interpolate = d3.interpolate(this.d3current, d);
+                            this.d3current = interpolate(0);
+                            return function (t) {
+                                var d2 = interpolate(t);
+                                if (!Language.isRtl()) {
+                                    return midAngle(d2) < Math.PI ? "start" : "end";
+                                }
+                                if (detectIE() || detectEdge()) {
+                                    return midAngle(d2) < Math.PI ? "start" : "end";
+                                }
+                                return midAngle(d2) < Math.PI ? "end" : "start";
+                            };
+                        });
+
+                    text.exit()
+                        .remove();
+
+                    text.selectAll('.xe-pie-light-text').call(wrap);
+
+                    /* ------- SLICE TO TEXT POLYLINES -------*/
+
+                    polyline = svg.select(".xe-pie-lines").selectAll("polyline")
+                        .data(pie(data), key);
+
+                    polyline.enter()
+                        .append("polyline")
+                        .style('stroke', function (d, i) {
+                            return color(i);
+                        });
+
+                    polyline.transition().duration(1000)
+                        .attrTween("points", function (d) {
+                            this.d3current = this.d3current || d;
+                            var interpolate = d3.interpolate(this.d3current, d);
+                            this.d3current = interpolate(0);
+                            return function (t) {
+                                var d2 = interpolate(t),
+                                    pos = lineOuterArc.centroid(d2);
+                                // pos[0] = radius * 0.5 * (midAngle(d2) < Math.PI ? 1 : -1);
+                                return [lineArc.centroid(d2), lineOuterArc.centroid(d2), pos];
+                            };
+                        });
+
+                    polyline.exit()
+                        .remove();
+
+                    relax();
+                }
+
+                function changeSub(other) {
+
+                    /* ------- SUB PIE SLICES -------*/
+                    bgSubSlice = svg.select(".xe-pie-bg-sub-slice")
+                        .append('a')
+                        .attr({
+                            'xlink:href': function (d, i) {
+                                return '#main-group-' + uniqueId;
+                            },
+                            'tabindex': function (d, i) {
+                                return 0;
+                            },
+                            'aria-controls': function (d, i) {
+                                return 'main-group-' + uniqueId;
+                            },
+                            'aria-label': options.pie.group.mainAriaLabel
+                        })
+                        .on('click', toggle)
+                        .on('touchstart', toggle)
+                        .append('path')
+                        .attr('aria-hidden', true)
+                        .style('display', 'none')
+                        .datum({
+                            startAngle: 0,
+                            endAngle: 2 * Math.PI
+                        })
+                        .style('fill', '#e3e3e3')
+                        .attr('d', subArc)
+                        .on('click', toggle)
+                        .on('touchstart', toggle);
+
+                    subslice = svg.select(".xe-pie-sub-slices").selectAll("path.xe-pie-sub-slice")
+                        .data(subPie(other), key);
+
+                    subslice.enter()
+                        .insert("path")
+                        .attr('aria-hidden', true)
+                        .style('display', 'none')
+                        .style("fill", function (d, i) {
+                            return subColor(i);
+                        })
+                        .attr("class", "xe-pie-sub-slice")
+                        .on('mouseover', mouseover)
+                        .on('touchstart', mouseover)
+                        .on('mouseout', mouseout)
+                        .on('touchend', mouseout)
+                        .on('mousemove', mousemove)
+                        .on('touchmove', mousemove);
+
+                    subslice.transition().duration(1000)
+                        .attrTween("d", function (d) {
+                            this.d3current = this.d3current || d;
+                            var interpolate = d3.interpolate(this.d3current, d);
+                            this.d3current = interpolate(0);
+                            return function (t) {
+                                return subArc(interpolate(t));
+                            };
+                        });
+
+                    subslice.exit()
+                        .remove();
+
+                    /* ------- SUB TEXT LABELS -------*/
+
+                    subtext = svg.select(".xe-pie-sub-labels").selectAll("text")
+                        .data(subPie(other), key);
+
+                    subtext.enter()
+                        .append("text")
+                        .attr('class', function (d, i) {
+                            if (other.length > 7) {
+                                return 'xe-pie-small-text';
+                            }
+                            return 'xe-pie-large-text';
+                        })
+                        .attr('aria-hidden', true)
+                        .style('display', 'none')
+                        .on('mouseover', mouseover)
+                        .on('touchstart', mouseover)
+                        .on('mouseout', mouseout)
+                        .on('touchend', mouseout)
+                        .on('mousemove', mousemove)
+                        .on('touchmove', mousemove);
+
+                    subtext.append('tspan')
+                        .attr('x', '0')
+                        .attr('dy', '.35em')
+                        .attr('class', 'xe-pie-bold-text')
+                        .text(function (d) {
+                            return d.data.percentage;
+                        });
+
+                    subtext.append('tspan')
+                        .attr('x', '0')
+                        .attr('dy', '1em')
+                        .attr('class', 'xe-pie-light-text')
+                        .text(function (d) {
+                            return d.data.label;
+                        });
+
+                    subtext.transition().duration(1000)
+                        .attrTween("transform", function (d) {
+                            this.d3current = this.d3current || d;
+                            var interpolate = d3.interpolate(this.d3current, d);
+                            this.d3current = interpolate(0);
+                            return function (t) {
+                                var d2 = interpolate(t),
+                                    pos = lineSubOuterArc.centroid(d2);
+                                pos[0] = radius * 0.65 * (midAngle(d2) < Math.PI ? 1 : -1);
+                                return "translate(" + pos + ")";
+                            };
+                        })
+                        .attrTween("text-anchor", function (d) {
+                            this.d3current = this.d3current || d;
+                            var interpolate = d3.interpolate(this.d3current, d);
+                            this.d3current = interpolate(0);
+                            return function (t) {
+                                var d2 = interpolate(t);
+                                if (!Language.isRtl()) {
+                                    return midAngle(d2) < Math.PI ? "start" : "end";
+                                }
+                                return midAngle(d2) < Math.PI ? "end" : "start";
+                            };
+                        });
+
+                    subtext.exit()
+                        .remove();
+
+                    /* ------- SUB SLICE TO TEXT POLYLINES -------*/
+
+                    subpolyline = svg.select(".xe-pie-sub-lines").selectAll("polyline")
+                        .data(subPie(other), key);
+
+                    subpolyline.enter()
+                        .append("polyline")
+                        .attr('aria-hidden', true)
+                        .style('display', 'none')
+                        .style('stroke', function (d, i) {
+                            return subColor(i);
+                        });
+
+                    subpolyline.transition().duration(1000)
+                        .attrTween("points", function (d) {
+                            this.d3current = this.d3current || d;
+                            var interpolate = d3.interpolate(this.d3current, d);
+                            this.d3current = interpolate(0);
+                            return function (t) {
+                                var d2 = interpolate(t),
+                                    pos = lineSubOuterArc.centroid(d2);
+                                pos[0] = radius * 0.6 * (midAngle(d2) < Math.PI ? 1 : -1);
+                                return [lineSubArc.centroid(d2), lineSubOuterArc.centroid(d2), pos];
+                            };
+                        });
+
+                    subpolyline.exit()
+                        .remove();
+
+                }
+
+
+                total = 0;
+
+                // Polyfill for Number.isFinite
+
+                Number.isFinite = Number.isFinite || function (value) {
+                    return typeof value === "number" && isFinite(value);
+                };
+
+                subdata = angular.copy(scope['data']);
+
+                angular.forEach(subdata, function (d, key) {
+                    d.value = Number.isFinite(d.value) ? Math.abs(d.value) : 0;
+                });
+
+                subdata.sort(function (a, b) {
+                    return d3.descending(a.value, b.value);
+                });
+
+                subdatatotal = d3.sum(subdata, function (d) {
+                    return d.value;
+                });
+
+                // render the table
+                if (table) {
+                    tabulate(subdata, [options.table.label, options.table.value, options.table.percentage]);
+                }
+
+                angular.forEach(subdata, function (value, key) {
+                    if (key < 6 || subdata.length < 8) {
+                        value.origin = "main";
+                    } else {
+                        value.origin = "sub";
+                        total += +value.value;
+                    }
+                });
+
+                if (subdata.length > 7) {
+                    subdata.splice(7, 0, { label: options.pie.otherLabel, value: total, origin: 'main' });
+                }
+
+                subdata.forEach(function (d) {
+                    if (!Language.isRtl()) {
+                        if (subdatatotal || d.value) {
+                            d.percentage = (Math.round(1000 * d.value / subdatatotal) / 10).toFixed(2) + '%';
+                        } else {
+                            d.percentage = '0.00%';
+                        }
+                    }
+                    if (Language.isRtl()) {
+                        if (subdatatotal || d.value) {
+                            d.percentage = '%' + (Math.round(1000 * d.value / subdatatotal) / 10).toFixed(2);
+                        } else {
+                            d.percentage = '%0.00';
+                        }
+                    }
+                });
+
+                other = d3.nest()
+                    .key(function (d) {
+                        return d.origin;
+                    })
+                    .entries(subdata);
+
+                pie = d3.layout.pie()
+                    .sort(function (a, b) {
+                        if (!Language.isRtl()) {
+                            return d3.descending(a.value, b.value);
+                        }
+                        if (Language.isRtl()) {
+                            return d3.ascending(a.value, b.value);
+                        }
+                        return d3.descending(a.value, b.value);
+                    })
+                    .value(function (d) {
+                        return d.value;
+                    });
+
+                subPie = d3.layout.pie()
+                    .value(function (d) {
+                        return d.value;
+                    })
+                    .startAngle(function (d) {
+                        return subPieStartAngle;
+                    })
+                    .endAngle(function (d) {
+                        return subPieEndAngle;
+                    });
+
+                arc = d3.svg.arc()
+                    .innerRadius(0)
+                    .outerRadius(radius * 0.5);
+
+                lineArc = d3.svg.arc()
+                    .innerRadius(radius * 0.5)
+                    .outerRadius(radius * 0.5);
+
+                lineOuterArc = d3.svg.arc()
+                    .innerRadius(radius * 0.5)
+                    .outerRadius(radius * 0.6);
+
+                subArc = d3.svg.arc()
+                    .innerRadius(radius * 0.5)
+                    .outerRadius(radius * 0.6);
+
+                lineSubArc = d3.svg.arc()
+                    .innerRadius(radius * 0.6)
+                    .outerRadius(radius * 0.6);
+
+                lineSubOuterArc = d3.svg.arc()
+                    .innerRadius(radius * 0.6)
+                    .outerRadius(radius * 0.7);
+
+                color = d3.scale.ordinal()
+                    .range([
+                        '#783084',
+                        '#810c33',
+                        '#8073ce',
+                        '#c28041',
+                        '#008241',
+                        '#f39fba',
+                        '#6bafa6'
+                    ]);
+
+                subColor = d3.scale.ordinal()
+                    .range([
+                        '#eef6f5',
+                        '#ddedeb',
+                        '#bcdbd7',
+                        '#9ac9c3',
+                        '#67aea5',
+                        '#56a59b',
+                        '#4d948b',
+                        '#45847d',
+                        '#3c746d',
+                        '#33635d',
+                        '#2b524d',
+                        '#23423e',
+                        '#1a312e',
+                        '#11201f',
+                        '#07100f'
+                    ]);
+
+                if (subdata.length > 7) {
+                    change(other[0].values);
+                    changeSub(other[1].values);
+                } else {
+                    change(other[0].values);
+                }
+            }
+
+            return {
+                restrict: 'E',
+                scope: {
+                    data: '=xePieData',
+                    config: '=xePieConfig'
+                },
+                link: function (scope, element, attrs) {
+
+                    uniqueId += 1;
+
+                    element.addClass("xe-pie-chart");
+
+                    var w = element[0].clientWidth,
+                        margin = 10,
+                        width,
+                        height,
+                        radius,
+                        defaultOptions = {
+                            tooltip: false,
+                            hiddenTable: false,
+                            svg: {
+                                title: '',
+                                desc: ''
+                            },
+                            pie: {
+                                otherLabel: 'Other'
+                            },
+                            table: {
+                                ariaLabel: '',
+                                label: 'label',
+                                value: 'value',
+                                percentage: 'percentage'
+                            }
+                        },
+                        options = angular.merge({}, defaultOptions, scope.config),
+                        table,
+                        s,
+                        svg,
+                        tooltip;
+
+                    if (options.hiddenTable) {
+                        table = d3.select(element[0]).append("table")
+                            .attr({
+                                'aria-label': options.table.ariaLabel,
+                                'class': 'xe-pie-table-hidden'
+                            });
+                    }
+
+                    width = w - margin;
+                    height = width + width / 2;
+                    radius = Math.min(width, height) / 2;
+
+                    s = d3.select(element[0]).append('svg')
+                        .attr({
+                            'xmlns': "http://www.w3.org/2000/svg",
+                            'xmlns:xlink': "http://www.w3.org/1999/xlink",
+                            'version': 1.1,
+                            'width': width + 'px',
+                            'height': height + 'px',
+                            'viewBox': '0 0 ' + Math.min(width, height) + ' ' + Math.min(width, height),
+                            'preserveAspectRatio': 'xMinYMid meet',
+                            'role': 'group',
+                            'aria-labelledby': 'title' + uniqueId + ' ' + 'desc' + uniqueId
+                        });
+
+                    s.append('title').attr('id', 'title' + uniqueId).text(options.svg.title);
+                    s.append('desc').attr('id', 'desc' + uniqueId).text(options.svg.desc);
+
+                    svg = s.append('g')
+                        .attr({
+                            'role': 'list',
+                            'aria-label': options.pie.ariaLabel,
+                            'class': 'xe-pie-svg',
+                            'transform': 'translate(' + radius + ', ' + radius + ')' // For better readability used 12'o clock as starting point for pie chart
+                        });
+
+                    if (options.tooltip) {
+                        tooltip = d3.select(element[0])
+                            .append('div')
+                            .attr('class', 'xe-pie-tooltip');
+
+                        tooltip.append('p').attr('class', 'xe-pie-tooltip-label');
+                        tooltip.append('p').attr('class', 'xe-pie-tooltip-value');
+                        tooltip.append('p').attr('class', 'xe-pie-tooltip-percent xe-pie-bold-text');
+                    }
+
+                    // on window resize, re-render d3
+                    window.onresize = function () {
+                        return scope.$apply();
+                    };
+                    scope.$watch(function () {
+                        return angular.element(window)[0].innerWidth;
+                    }, function () {
+                        w = element[0].clientWidth;
+                        width = w - margin;
+                        height = width + width / 2;
+                        radius = Math.min(width, height) / 2;
+                        s.attr({
+                            'width': width + 'px',
+                            'height': height + 'px',
+                            'viewBox': '0 0 ' + Math.min(width, height) + ' ' + Math.min(width, height)
+                        });
+                        svg.attr({
+                            'transform': 'translate(' + radius + ', ' + radius + ')'
+                        });
+                        draw(tooltip, table, svg, radius, scope, options, element);
+                    });
+
+                    // Watch the data attribute of the scope
+                    scope.$watch('data', function (newVal, oldVal, scope) {
+
+                        // Update the chart
+                        if (newVal) {
+                            draw(tooltip, table, svg, radius, scope, options, element);
+                        }
+                    }, true);
+                }
+            };
+        }]);
+}());
 (function () {
     'use strict';
     angular
@@ -2845,6 +3968,7 @@ angular.module('dataTableModule', ['utils'])
                                         scope.activeElement = null;
                                     }
                                     scope.$apply(function () {
+                                        currentItem.focus();
                                         scope.tabnav.activate(scope.tabnav.tabs[currentItemPos - 1]);
                                     });
                                 };
@@ -2886,7 +4010,7 @@ angular.module('dataTableModule', ['utils'])
                 transclude: true,
                 templateUrl: 'templates/tabNav.html',
                 controllerAs: 'tabnav',
-                controller: ['$compile', '$sce', '$q', '$scope', function ($compile, $sce, $q, $scope) {
+                controller: ['$compile', '$sce', '$q', '$scope', '$state', function ($compile, $sce, $q, $scope, $state) {
                     var self = this;
                     self.currentActive = null;
                     self.tabs = [];
@@ -2906,6 +4030,9 @@ angular.module('dataTableModule', ['utils'])
                         selectedTab.active = true;
                         self.currentActive = selectedTab;
                         self.loadDynamicContent(selectedTab.loadDataOnClick, selectedTab);
+                        if (selectedTab.state) {
+                            $state.go(selectedTab.state);
+                        }
                     };
                 }]
             };
@@ -2916,6 +4043,7 @@ angular.module('dataTableModule', ['utils'])
                 transclude: true,
                 scope: {
                     heading: '@',
+                    state: '@',
                     loadDataOnClick: '&',
                     jsLazyLoad: '@'
                 },

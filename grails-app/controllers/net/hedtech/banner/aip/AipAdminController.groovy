@@ -7,7 +7,7 @@ import net.hedtech.banner.general.communication.folder.CommunicationFolder
 import org.springframework.security.core.context.SecurityContextHolder
 
 
-class AipGroupController {
+class AipAdminController {
 
     static defaultAction = "folders"
     def communicationFolderService
@@ -168,7 +168,6 @@ class AipGroupController {
     def actionItemList( ) {
 
         def jsonObj = request.JSON
-
         def params = [filterName:jsonObj.filterName,
                       sortColumn:jsonObj.sortColumn,
                       sortDirection:jsonObj.sortDirection,

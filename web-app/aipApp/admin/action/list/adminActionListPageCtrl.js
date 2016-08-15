@@ -26,6 +26,7 @@ var AIP;
         AdminActionListPageCtrl.prototype.init = function () {
             //todo: anything needing to be moved here?
             this.gridData = {};
+            this.draggableColumnNames = [];
             // this.actionListService.getActionLists()
             //     .then((response) => {
             //         this.gridData.rows = response.data;

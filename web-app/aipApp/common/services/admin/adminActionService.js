@@ -27,58 +27,125 @@ var AIP;
                 '&ascending=' + query.ascending +
                 '&offset=' + (query.offset || '') +
                 '&max=' + (query.max || '');
-            this.$http.get(url)
-                .success(function (data) {
-                //Action Item Title, Folder, Status, Last Update By, Activity Date
+            var realMax = parseInt(query.max) - parseInt(query.offset);
+            var params = {
+                filterName: query.searchString || "%",
+                sortColumn: query.sortColumnName || "id",
+                sortDirection: query.ascending || false,
+                max: realMax || "",
+                offset: query.offset || 0
+            };
+            this.$http({
+                method: "POST",
+                url: this.ENDPOINT.admin.actionItemList,
+                data: params
+            }).then(function (response) {
                 var header = [{
                         name: "actionItemId",
                         title: "id",
                         options: {
                             sortable: true,
-                            visible: false
+                            visible: false,
+                            width: 0
                         }
                     }, {
                         name: "actionItemName",
                         title: _this.$filter("i18n_aip")("aip.list.grid.itemTitle"),
                         options: {
                             sortable: true,
-                            visible: true
+                            visible: true,
+                            width: 0
                         }
                     }, {
                         name: "folderName",
                         title: _this.$filter("i18n_aip")("aip.list.grid.folder"),
                         options: {
                             sortable: true,
-                            visible: true
+                            visible: true,
+                            width: 0
                         }
                     }, {
                         name: "actionItemStatus",
                         title: _this.$filter("i18n_aip")("aip.list.grid.status"),
                         options: {
-                            isSortable: true,
-                            visible: true
+                            sortable: true,
+                            visible: true,
+                            width: 0
                         }
                     }, {
                         name: "actionItemUserId",
                         title: _this.$filter("i18n_aip")("aip.list.grid.lastUpdated"),
                         options: {
                             sortable: true,
-                            visible: true
+                            visible: true,
+                            width: 0
                         }
                     }, {
                         name: "actionItemActivityDate",
                         title: _this.$filter("i18n_aip")("aip.list.grid.activityDate"),
                         options: {
                             sortable: true,
-                            visible: true
+                            visible: true,
+                            width: 0
                         }
                     }];
-                var result = { header: header, result: data, length: data.length };
+                var result = { header: header, result: response.data.result, length: response.data.length };
                 deferred.resolve(result);
-            })
-                .error(function (data) {
+            }, function (data) {
                 deferred.reject(data);
             });
+            // this.$http.get(url)
+            //     .success((data:any) => {
+            //         //Action Item Title, Folder, Status, Last Update By, Activity Date
+            //         var header = [{
+            //             name: "actionItemId",
+            //             title: "id",
+            //             options: {
+            //                 sortable: true,
+            //                 visible: false,
+            //             }
+            //         }, {
+            //             name: "actionItemName",
+            //             title: this.$filter("i18n_aip")("aip.list.grid.itemTitle"),
+            //             options: {
+            //                 sortable: true,
+            //                 visible: true
+            //             }
+            //         }, {
+            //             name: "folderName",
+            //             title: this.$filter("i18n_aip")("aip.list.grid.folder"),
+            //             options: {
+            //                 sortable: true,
+            //                 visible: true
+            //             }
+            //         }, {
+            //             name: "actionItemStatus",
+            //             title: this.$filter("i18n_aip")("aip.list.grid.status"),
+            //             options: {
+            //                 isSortable: true,
+            //                 visible: true
+            //             }
+            //         }, {
+            //             name: "actionItemUserId",
+            //             title: this.$filter("i18n_aip")("aip.list.grid.lastUpdated"),
+            //             options: {
+            //                 sortable: true,
+            //                 visible: true
+            //             }
+            //         }, {
+            //             name: "actionItemActivityDate",
+            //             title: this.$filter("i18n_aip")("aip.list.grid.activityDate"),
+            //             options: {
+            //                 sortable: true,
+            //                 visible: true
+            //             }
+            //         }];
+            //         var result = {header:header, result:data, length: data.length};
+            //         deferred.resolve(result);
+            //     })
+            //     .error((data) => {
+            //         deferred.reject(data);
+            //     });
             return deferred.promise;
         };
         ;

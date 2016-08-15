@@ -963,6 +963,55 @@
     display:none;
 }.xe-tab-container .xe-tab-content>.xe-tab-panel.active {
     display:block;
+}.xe-pie-chart {
+    width:100%;
+    height:100%;
+    position:relative;
+    display:block;
+}.xe-pie-chart .xe-pie-tooltip {
+    background:#fffeea;
+    border:.0625em solid #E0D397;
+    color:#4F585F;
+    display:none;
+    font-size:.875em;
+    padding:.5em;
+    position:absolute;
+    text-align:center;
+    width:6.25em;
+    z-index:10;
+    word-break:break-word;
+    word-wrap:break-word;
+}.xe-pie-chart .xe-pie-tooltip p {
+    margin:0;
+    padding:0;
+}.xe-pie-chart .xe-pie-table-hidden {
+    position:absolute;
+    right:-625em;
+    top:auto;
+    width:.0625em;
+    height:.0625em;
+    overflow:hidden;
+}.xe-pie-chart path.xe-pie-slice,.xe-pie-chart path.xe-pie-sub-slice {
+    stroke-width:.03125em;
+    stroke:#fff;
+}.xe-pie-chart polyline {
+    stroke-width:.063em;
+    fill:none;
+}.xe-pie-large-text,.xe-pie-small-text {
+    fill:#4f585f;
+}.xe-pie-large-text.xe-pie-other-text tspan {
+    fill:#206e9f;
+    text-decoration:underline;
+}.xe-pie-chart .xe-pie-large-text {
+    font-size:.75em;
+}.xe-pie-chart .xe-pie-small-text {
+    font-size:.563em;
+}.xe-pie-chart .xe-pie-bold-text {
+    font-family:OpenSans-semibold,sans-serif;
+}.xe-pie-chart .xe-pie-light-text {
+    font-family:OpenSans-light,sans-serif;
+}.xe-pie-chart .xe-pie-touch {
+    stroke:red !important;
 }
 /*** Media Query Section ***/
 @media only screen and (max-width:768px){.input-field {

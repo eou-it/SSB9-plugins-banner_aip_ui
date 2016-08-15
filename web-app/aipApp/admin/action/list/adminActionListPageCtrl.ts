@@ -13,7 +13,7 @@ module AIP {
         endPoint;
         paginationConfig;
         actionListService;
-
+        draggableColumnNames;
         gridData;
 
         constructor($scope, $state, $window, $filter, $q, ENDPOINT, PAGINATIONCONFIG,
@@ -40,6 +40,7 @@ module AIP {
         init() {
             //todo: anything needing to be moved here?
             this.gridData = {};
+            this.draggableColumnNames=[];
             // this.actionListService.getActionLists()
             //     .then((response) => {
             //         this.gridData.rows = response.data;
