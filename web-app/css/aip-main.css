@@ -238,7 +238,9 @@ aip-list .aip-list-container {
       margin-left: 33.33%; }
     .groupAddContainer .groupButton {
       margin-left: 10px; } }
-
+.groupListContainer {
+  overflow-y: auto;
+  font-size: 14px; }
 .groupListContainer .row {
   margin-right: 0;
   margin-left: 0; }
@@ -271,6 +273,8 @@ aip-list .aip-list-container {
 .actionListContainer {
   overflow-y: auto;
   font-size: 14px; }
+  .actionListContainer table #actionItemDataTableSearch {
+    display: none; }
 
 #username {
   padding-right: 0.5em; }
