@@ -49,7 +49,6 @@ module AIP {
                 options: {
                     sortable: true,
                     visible: false,
-                    ascending:true,
                     columnShowHide: false,
                     width: 0
                 }
@@ -60,6 +59,7 @@ module AIP {
                 options: {
                     sortable: true,
                     visible: true,
+                    ascending:true,
                     columnShowHide: false,
                     width: 0
                 }
