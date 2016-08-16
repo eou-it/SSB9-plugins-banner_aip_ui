@@ -97,16 +97,25 @@ var bannerAIPApp = angular.module("bannerAIP", [
         }
     })
     .constant("PAGINATIONCONFIG",
-        {
-            pageLengths : [ 5, 10, 25, 50, 100],
-            offset : 10,
-            recordsFoundLabel : "Results found",
-            pageTitle: "Go To Page (End)",
-            pageLabel: "Page",
-            pageAriaLabel: "Go To Page. Short cut is End",
-            ofLabel: "of"
-            //    perPageLabel: 'pagination.per.page.label'
-        }
+            {
+                pageLengths: [5, 10, 25, 50, 100],
+                offset: 10,
+                recordsFoundLabel: "Results found",
+                pageTitle: "Go To Page (End)",
+                pageLabel: "Page",
+                pageAriaLabel: "Go To Page. Short cut is End",
+                ofLabel: "of"
+            })
+    .constant("SEARCHCONFIG",
+            {
+                id: 'dataTableSearch',
+                title: 'Search (Alt+Y)',
+                ariaLabel: 'Search for any text in the list',
+                delay: 300,
+                searchString: '',
+                maxlength: 200,
+                minimumCharacters: 2
+            }
     )
 
 //provider-injector

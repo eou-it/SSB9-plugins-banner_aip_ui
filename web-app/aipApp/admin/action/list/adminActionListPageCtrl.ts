@@ -5,18 +5,19 @@ declare var register: any;
 
 module AIP {
     export class AdminActionListPageCtrl {
-        $inject = ["$scope", "$state", "$window", "$filter", "$q", "ENDPOINT", "PAGINATIONCONFIG",
+        $inject = ["$scope", "$state", "$window", "$filter", "$q", "ENDPOINT", "PAGINATIONCONFIG", "SEARCHCONFIG",
             "AdminActionService"];
         $state;
         $filter;
         $q: ng.IQService;
         endPoint;
         paginationConfig;
+        searchConfig;
         actionListService;
         draggableColumnNames;
         gridData;
         header;
-        constructor($scope, $state, $window, $filter, $q, ENDPOINT, PAGINATIONCONFIG,
+        constructor($scope, $state, $window, $filter, $q, ENDPOINT, PAGINATIONCONFIG, SEARCHCONFIG,
             AdminActionService) {
             $scope.vm = this;
             this.$state = $state;
@@ -24,6 +25,7 @@ module AIP {
             this.$q = $q;
             this.endPoint = ENDPOINT;   //ENDPOINT.admin.actionList
             this.paginationConfig = PAGINATIONCONFIG;
+            this.searchConfig = SEARCHCONFIG;
             this.actionListService = AdminActionService;
             this.init();
             angular.element($window).bind('resize', function() {
