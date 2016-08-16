@@ -34,7 +34,7 @@ module AIP {
             var deferred = this.$q.defer();
             var url = this.ENDPOINT.admin.actionItemList + "?" +
                 '?searchString=' + (query.searchString || '') +
-                '&sortColumnName=' + (query.sortColumnName || '') +
+                '&sortColumnName=' + (query.sortColumnName || 'actionItemName') +
                 '&ascending=' + query.ascending +
                 '&offset=' + (query.offset || '') +
                 '&max=' + (query.max || '');

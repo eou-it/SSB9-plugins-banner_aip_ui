@@ -22,28 +22,38 @@ var AIP;
         AdminActionListPageCtrl.prototype.init = function () {
             this.gridData = {};
             this.draggableColumnNames = [];
+            this.searchConfig = {
+                id: "actionItemDataTableSearch",
+                delay: 300,
+                ariaLabel: "Search for any action Items",
+                searchString: "",
+                maxlength: 200,
+                minimumCharacters: 1
+            };
             this.header = [{
                     name: "actionItemId",
                     title: "id",
                     options: {
                         sortable: true,
                         visible: false,
-                        ascending: true,
                         columnShowHide: false,
                         width: 0
                     }
                 }, {
                     name: "actionItemName",
                     title: this.$filter("i18n_aip")("aip.list.grid.itemTitle"),
+                    ariaLabel: "Action Item Title",
                     options: {
                         sortable: true,
                         visible: true,
+                        ascending: true,
                         columnShowHide: false,
                         width: 0
                     }
                 }, {
                     name: "folderName",
                     title: this.$filter("i18n_aip")("aip.list.grid.folder"),
+                    ariaLabel: "Folder Name",
                     options: {
                         sortable: true,
                         visible: true,
@@ -52,6 +62,7 @@ var AIP;
                 }, {
                     name: "actionItemStatus",
                     title: this.$filter("i18n_aip")("aip.list.grid.status"),
+                    ariaLabel: "Status",
                     options: {
                         sortable: true,
                         visible: true,
@@ -61,6 +72,7 @@ var AIP;
                 }, {
                     name: "actionItemUserId",
                     title: this.$filter("i18n_aip")("aip.list.grid.lastUpdated"),
+                    ariaLabel: "Last Updated By",
                     options: {
                         sortable: true,
                         visible: true,
@@ -70,6 +82,7 @@ var AIP;
                 }, {
                     name: "actionItemActivityDate",
                     title: this.$filter("i18n_aip")("aip.list.grid.activityDate"),
+                    ariaLabel: "Activity Date",
                     options: {
                         sortable: true,
                         visible: true,
