@@ -106,17 +106,6 @@ var bannerAIPApp = angular.module("bannerAIP", [
                 pageAriaLabel: "Go To Page. Short cut is End",
                 ofLabel: "of"
             })
-    .constant("SEARCHCONFIG",
-            {
-                id: 'dataTableSearch',
-                title: 'Search (Alt+Y)',
-                ariaLabel: 'Search for any text in the list',
-                delay: 300,
-                searchString: '',
-                maxlength: 200,
-                minimumCharacters: 2
-            }
-    )
 
 //provider-injector
     .config(["$stateProvider", "$urlRouterProvider", "$locationProvider",  "$httpProvider",

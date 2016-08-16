@@ -1,4 +1,4 @@
-<div class="actionListContainer" ng-controller="AdminActionListPageCtrl">
+<div class="actionListContainer" id="adminActionListPage" ng-controller="AdminActionListPageCtrl">
     <div class="row controls">
         <div class="control">
             <!--<button type="button" class="btn btn-default" ng-click="vm.add()" aria-label="{{'aip.common.add.group.jaws'|i18n_aip}}">-->
@@ -21,7 +21,6 @@
                 results-found="vm.records"
                 toolbar="true"
                 paginate="true"
-                toolbar="true"
                 on-row-click="vm.selectRecord(data)"
                 no-data-msg="No Results Found"
                 empty-table-msg="emptyTableMsg"
@@ -31,8 +30,7 @@
                 refresh-grid="refreshGrid"
                 draggable-column-names="vm.draggableColumnNames"
                 continuous-scrolling="false"
-                continuous-scroll-parent="adminActionListTable"
-                >
+                continuous-scroll-parent="adminActionListPage"
         </xe-table-grid>
     </div>
 </div>
