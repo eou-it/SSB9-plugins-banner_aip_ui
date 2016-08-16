@@ -2,8 +2,8 @@
 var AIP;
 (function (AIP) {
     var AdminActionListPageCtrl = (function () {
-        function AdminActionListPageCtrl($scope, $state, $window, $filter, $q, ENDPOINT, PAGINATIONCONFIG, AdminActionService) {
-            this.$inject = ["$scope", "$state", "$window", "$filter", "$q", "ENDPOINT", "PAGINATIONCONFIG",
+        function AdminActionListPageCtrl($scope, $state, $window, $filter, $q, ENDPOINT, PAGINATIONCONFIG, SEARCHCONFIG, AdminActionService) {
+            this.$inject = ["$scope", "$state", "$window", "$filter", "$q", "ENDPOINT", "PAGINATIONCONFIG", "SEARCHCONFIG",
                 "AdminActionService"];
             $scope.vm = this;
             this.$state = $state;
@@ -11,6 +11,7 @@ var AIP;
             this.$q = $q;
             this.endPoint = ENDPOINT; //ENDPOINT.admin.actionList
             this.paginationConfig = PAGINATIONCONFIG;
+            this.searchConfig = SEARCHCONFIG;
             this.actionListService = AdminActionService;
             this.init();
             angular.element($window).bind('resize', function () {
