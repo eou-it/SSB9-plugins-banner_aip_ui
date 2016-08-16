@@ -16,6 +16,7 @@ module AIP {
         draggableColumnNames;
         gridData;
         header;
+        searchConfig;
         constructor($scope, $state, $window, $filter, $q, ENDPOINT, PAGINATIONCONFIG,
             AdminActionService) {
             $scope.vm = this;
@@ -34,6 +35,14 @@ module AIP {
         init() {
             this.gridData = {};
             this.draggableColumnNames=[];
+            this.searchConfig = {
+                id: "actionItemDataTableSearch",
+                delay: 300,
+                ariaLabel: "Search for any action Items",
+                searchString: "",
+                maxlength: 200,
+                minimumCharacters: 1
+            };
             this.header = [{
                 name: "actionItemId",
                 title: "id",
@@ -47,6 +56,7 @@ module AIP {
             }, {
                 name: "actionItemName",
                 title: this.$filter("i18n_aip")("aip.list.grid.itemTitle"),
+                ariaLabel: "Action Item Title",
                 options: {
                     sortable: true,
                     visible: true,
@@ -56,6 +66,7 @@ module AIP {
             }, {
                 name: "folderName",
                 title: this.$filter("i18n_aip")("aip.list.grid.folder"),
+                ariaLabel: "Folder Name",
                 options: {
                     sortable: true,
                     visible: true,
@@ -64,6 +75,7 @@ module AIP {
             }, {
                 name: "actionItemStatus",
                 title: this.$filter("i18n_aip")("aip.list.grid.status"),
+                ariaLabel: "Status",
                 options: {
                     sortable: true,
                     visible: true,
@@ -73,6 +85,7 @@ module AIP {
             }, {
                 name: "actionItemUserId",
                 title: this.$filter("i18n_aip")("aip.list.grid.lastUpdated"),
+                ariaLabel: "Last Updated By",
                 options: {
                     sortable: true,
                     visible: true,
@@ -82,6 +95,7 @@ module AIP {
             }, {
                 name: "actionItemActivityDate",
                 title: this.$filter("i18n_aip")("aip.list.grid.activityDate"),
+                ariaLabel: "Activity Date",
                 options: {
                     sortable: true,
                     visible: true,
