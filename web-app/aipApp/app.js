@@ -106,17 +106,6 @@ var bannerAIPApp = angular.module("bannerAIP", [
                 pageAriaLabel: "Go To Page. Short cut is End",
                 ofLabel: "of"
             })
-    .constant("SEARCHCONFIG",
-            {
-                id: 'dataTableSearch',
-                title: 'Search (Alt+Y)',
-                ariaLabel: 'Search for any text in the list',
-                delay: 300,
-                searchString: '',
-                maxlength: 200,
-                minimumCharacters: 2
-            }
-    )
 
 //provider-injector
     .config(["$stateProvider", "$urlRouterProvider", "$locationProvider",  "$httpProvider",
@@ -188,11 +177,13 @@ var bannerAIPApp = angular.module("bannerAIP", [
             $.i18n.prop("aip.common.add");
             $.i18n.prop("aip.common.open");
             $.i18n.prop("aip.common.overview");
+            $.i18n.prop("aip.common.table.action.items");
             $.i18n.prop("aip.common.order.action.items");
             $.i18n.prop("aip.common.saveandreturn");
             $.i18n.prop("aip.common.add.group.jaws");
             $.i18n.prop("aip.common.open.group.jaws");
-
+            $.i18n.prop("aip.common.no.results.found");
+            $.i18n.prop("aip.common.results.found");
             $.i18n.prop("aip.placeholder.nogroups");
             $.i18n.prop("aip.placeholder.noitems");
 

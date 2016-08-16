@@ -273,7 +273,7 @@ aip-list .aip-list-container {
 .actionListContainer {
   overflow-y: auto;
   font-size: 14px; }
-  .actionListContainer table #actionItemDataTableSearch {
+  .actionListContainer .actionListTable #actionItemDataTableSearch {
     display: none; }
 
 #username {

@@ -1,4 +1,4 @@
-<div class="actionListContainer" ng-controller="AdminActionListPageCtrl">
+<div class="actionListContainer" id="adminActionListPage" ng-controller="AdminActionListPageCtrl">
     <div class="row controls">
         <div class="control">
             <!--<button type="button" class="btn btn-default" ng-click="vm.add()" aria-label="{{'aip.common.add.group.jaws'|i18n_aip}}">-->
@@ -13,24 +13,25 @@
     </div>
     <div class="actionListTable" ng-style="vm.getHeight()">
         <xe-table-grid
+                caption="{{'aip.common.table.action.items'|i18n_aip}}"
                 table-id="dataTableAdminActionList"
                 header="vm.header"
                 fetch="vm.fetchData(query)"
                 end-point="vm.adminActionListEnd"
-                content="vm.gridData.result"
+                content="vm.gridData.row"
                 results-found="vm.records"
                 toolbar="true"
                 paginate="true"
-                toolbar="true"
-                continuous-scrolling="false"
                 on-row-click="vm.selectRecord(data)"
                 no-data-msg="No Results Found"
                 empty-table-msg="emptyTableMsg"
                 search-config="vm.searchConfig"
                 pagination-config="vm.paginationConfig"
+                mobile-layout="vm.mobileConfig"
                 refresh-grid="refreshGrid"
                 draggable-column-names="vm.draggableColumnNames"
-                >
+                continuous-scrolling="false"
+                continuous-scroll-parent="adminActionListPage"
         </xe-table-grid>
     </div>
 </div>
