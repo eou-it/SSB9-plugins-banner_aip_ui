@@ -188,11 +188,13 @@ var bannerAIPApp = angular.module("bannerAIP", [
             $.i18n.prop("aip.common.add");
             $.i18n.prop("aip.common.open");
             $.i18n.prop("aip.common.overview");
+            $.i18n.prop("aip.common.table.action.items");
             $.i18n.prop("aip.common.order.action.items");
             $.i18n.prop("aip.common.saveandreturn");
             $.i18n.prop("aip.common.add.group.jaws");
             $.i18n.prop("aip.common.open.group.jaws");
-
+            $.i18n.prop("aip.common.no.results.found");
+            $.i18n.prop("aip.common.results.found");
             $.i18n.prop("aip.placeholder.nogroups");
             $.i18n.prop("aip.placeholder.noitems");
 
