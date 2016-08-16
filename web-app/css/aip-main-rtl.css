@@ -289,7 +289,10 @@ aip-list .aip-list-container  {
     max-width:200px;
 }
   
-
+.groupListContainer  {
+    overflow-y:auto;
+    font-size:14px;
+}
 .groupListContainer .row  {
     margin-left:0;
     margin-right:0;
@@ -332,6 +335,9 @@ aip-list .aip-list-container  {
 .actionListContainer  {
     overflow-y:auto;
     font-size:14px;
+}
+  .actionListContainer .actionListTable #actionItemDataTableSearch  {
+    display:none;
 }
 
 #username  {
