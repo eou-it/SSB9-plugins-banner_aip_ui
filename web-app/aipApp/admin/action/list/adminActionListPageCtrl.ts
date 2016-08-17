@@ -18,6 +18,7 @@ module AIP {
         header;
         searchConfig;
         mobileConfig;
+        mobileSize;
         constructor($scope, $state, $window, $filter, $q, ENDPOINT, PAGINATIONCONFIG,
             AdminActionService) {
             $scope.vm = this;
@@ -43,6 +44,7 @@ module AIP {
                 actionItemUserId: 3,
                 actionItemActivityDate: 3
             };
+            this.mobileSize = angular.element("body").width()>768?false:true;
             this.searchConfig = {
                 id: "actionItemDataTableSearch",
                 delay: 300,
@@ -112,6 +114,8 @@ module AIP {
                     columnShowHide: true
                 }
             }];
+
+
         }
 
         getHeight() {

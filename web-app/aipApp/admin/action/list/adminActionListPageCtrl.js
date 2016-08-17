@@ -28,6 +28,7 @@ var AIP;
                 actionItemUserId: 3,
                 actionItemActivityDate: 3
             };
+            this.mobileSize = angular.element("body").width() > 768 ? false : true;
             this.searchConfig = {
                 id: "actionItemDataTableSearch",
                 delay: 300,
