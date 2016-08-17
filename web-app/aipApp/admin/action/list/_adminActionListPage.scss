@@ -7,3 +7,13 @@
     }
   }
 }
+
+@media (min-width: 1024px) {
+  .actionListContainer {
+    .actionListTable {
+      .visible-lg {
+        display: block !important;
+      }
+    }
+  }
+}

@@ -238,19 +238,20 @@ aip-list .aip-list-container {
       margin-left: 33.33%; }
     .groupAddContainer .groupButton {
       margin-left: 10px; } }
+
 .groupListContainer {
   overflow-y: auto;
   font-size: 14px; }
-.groupListContainer .row {
-  margin-right: 0;
-  margin-left: 0; }
-.groupListContainer .control {
-  float: right;
-  padding-top: 8px; }
-.groupListContainer .groupListTable {
-  overflow: auto; }
-  .groupListContainer .groupListTable .table-container {
-    margin-top: 8px; }
+  .groupListContainer .row {
+    margin-right: 0;
+    margin-left: 0; }
+  .groupListContainer .control {
+    float: right;
+    padding-top: 8px; }
+  .groupListContainer .groupListTable {
+    overflow: auto; }
+    .groupListContainer .groupListTable .table-container {
+      margin-top: 8px; }
 
 .groupOpenContainer {
   padding: 0;
@@ -276,6 +277,9 @@ aip-list .aip-list-container {
   .actionListContainer .actionListTable #actionItemDataTableSearch {
     display: none; }
 
+@media (min-width: 1024px) {
+  .actionListContainer .actionListTable .visible-lg {
+    display: block !important; } }
 #username {
   padding-right: 0.5em; }
 
