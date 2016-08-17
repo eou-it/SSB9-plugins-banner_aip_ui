@@ -289,22 +289,23 @@ aip-list .aip-list-container  {
     max-width:200px;
 }
   
+
 .groupListContainer  {
     overflow-y:auto;
     font-size:14px;
 }
-.groupListContainer .row  {
+  .groupListContainer .row  {
     margin-left:0;
     margin-right:0;
 }
-.groupListContainer .control  {
+  .groupListContainer .control  {
     float:left;
     padding-top:8px;
 }
-.groupListContainer .groupListTable  {
+  .groupListContainer .groupListTable  {
     overflow:auto;
 }
-  .groupListContainer .groupListTable .table-container  {
+    .groupListContainer .groupListTable .table-container  {
     margin-top:8px;
 }
 
@@ -339,6 +340,7 @@ aip-list .aip-list-container  {
   .actionListContainer .actionListTable #actionItemDataTableSearch  {
     display:none;
 }
+
 
 #username  {
     padding-left:0.5em;
@@ -464,6 +466,11 @@ a:focus, div:focus, input:focus, span:focus, i:focus, button:focus, .breadcrumbB
 }
     .groupAddContainer .groupButton  {
     margin-right:10px;
+}
+}
+@media (min-width: 1024px) {
+  .actionListContainer .actionListTable .visible-lg  {
+    display:block !important;
 }
 }
 @media screen and (max-width: 768px) {
