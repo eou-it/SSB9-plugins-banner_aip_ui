@@ -8,8 +8,10 @@ var AIP;
         Status[Status["Inactive"] = 3] = "Inactive";
     })(Status || (Status = {}));
     var AdminGroupService = (function () {
-        function AdminGroupService($http, ENDPOINT) {
+        function AdminGroupService($http, $q, $filter, ENDPOINT) {
             this.$http = $http;
+            this.$q = $q;
+            this.$filter = $filter;
             this.ENDPOINT = ENDPOINT;
         }
         AdminGroupService.prototype.getStatus = function () {
@@ -38,19 +40,21 @@ var AIP;
             });
             return request;
         };
-        AdminGroupService.prototype.getGroupList = function () {
+        /*
+        getGroupList() {
             var request = this.$http({
                 method: "POST",
                 url: this.ENDPOINT.admin.groupList
             })
-                .then(function (response) {
-                return response.data;
-            }, function (err) {
-                //TODO: handle ajax fail in global
-                throw new Error(err);
+                .then((response) => {
+                    return <IGridData>response.data;
+                }, (err) => {
+                    //TODO: handle ajax fail in global
+                    throw new Error(err);
             });
             return request;
-        };
+        }
+        */
         AdminGroupService.prototype.saveGroup = function (groupInfo) {
             var params = {
                 groupTitle: groupInfo.title,
@@ -90,7 +94,35 @@ var AIP;
             $("#openGroupBtn").removeAttr("disabled");
             return groupId;
         };
-        AdminGroupService.$inject = ["$http", "ENDPOINT"];
+        AdminGroupService.prototype.fetchData = function (query) {
+            var deferred = this.$q.defer();
+            var url = this.ENDPOINT.admin.groupList + "?" +
+                '?searchString=' + (query.searchString || '') +
+                '&sortColumnName=' + (query.sortColumnName || 'groupTitle') +
+                '&ascending=' + query.ascending +
+                '&offset=' + (query.offset || '') +
+                '&max=' + (query.max || '');
+            var realMax = parseInt(query.max) - parseInt(query.offset);
+            var params = {
+                filterName: query.searchString || "%",
+                sortColumn: query.sortColumnName || "id",
+                sortAscending: query.ascending || false,
+                max: realMax || "",
+                offset: query.offset || 0
+            };
+            this.$http({
+                method: "POST",
+                url: this.ENDPOINT.admin.groupList,
+                data: params
+            }).then(function (response) {
+                deferred.resolve(response.data);
+            }, function (data) {
+                deferred.reject(data);
+            });
+            return deferred.promise;
+        };
+        ;
+        AdminGroupService.$inject = ["$http", "$q", "$filter", "ENDPOINT"];
         return AdminGroupService;
     }());
     AIP.AdminGroupService = AdminGroupService;

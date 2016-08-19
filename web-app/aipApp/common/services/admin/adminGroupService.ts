@@ -65,7 +65,8 @@ module AIP {
     interface IAdminGroupService {
         getStatus();
         getFolder();
-        getGroupList();
+        //getGroupList();
+        fetchData(query: string);
         saveGroup(groupInfo:IGroupInfo);
         getGroupDetail(groupId: number|string);
         enableGroupOpen(groupId: number|string);
@@ -77,11 +78,15 @@ module AIP {
     }
 
     export class AdminGroupService implements IAdminGroupService{
-        static $inject=["$http", "ENDPOINT"];
+        static $inject=["$http", "$q", "$filter", "ENDPOINT"];
         $http: ng.IHttpService;
+        $q: ng.IQService;
+        $filter;
         ENDPOINT;
-        constructor($http:ng.IHttpService, ENDPOINT) {
+        constructor($http:ng.IHttpService, $q, $filter, ENDPOINT) {
             this.$http = $http;
+            this.$q = $q;
+            this.$filter = $filter;
             this.ENDPOINT = ENDPOINT;
         }
         getStatus() {
@@ -110,6 +115,7 @@ module AIP {
             });
             return request;
         }
+        /*
         getGroupList() {
             var request = this.$http({
                 method: "POST",
@@ -123,6 +129,7 @@ module AIP {
             });
             return request;
         }
+        */
         saveGroup(groupInfo:any) {
             var params = {
                 groupTitle: groupInfo.title,
@@ -164,6 +171,35 @@ module AIP {
             $("#openGroupBtn").removeAttr("disabled");
             return groupId;
         }
+
+        fetchData (query) {
+            var deferred = this.$q.defer();
+            var url = this.ENDPOINT.admin.groupList + "?" +
+                '?searchString=' + (query.searchString || '') +
+                '&sortColumnName=' + (query.sortColumnName || 'groupTitle') +
+                '&ascending=' + query.ascending +
+                '&offset=' + (query.offset || '') +
+                '&max=' + (query.max || '');
+            var realMax = parseInt(query.max) - parseInt(query.offset);
+            var params = {
+                filterName: query.searchString||"%",
+                sortColumn: query.sortColumnName||"id",
+                sortAscending: query.ascending||false,
+                max: realMax||"",
+                offset: query.offset || 0
+            };
+            this.$http({
+                method: "POST",
+                url: this.ENDPOINT.admin.groupList,
+                data: params
+            }).then((response:any)=> {
+                deferred.resolve(response.data);
+            }, (data) => {
+                deferred.reject(data);
+            })
+
+            return deferred.promise;
+        };
     }
 }
 

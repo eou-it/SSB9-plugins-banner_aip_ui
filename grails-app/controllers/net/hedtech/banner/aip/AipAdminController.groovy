@@ -14,7 +14,6 @@ class AipAdminController {
     def groupFolderReadOnlyService
     def actionItemGroupService
     def actionItemReadOnlyService
-    def gridNavigationService
 
 
     def folders() {
@@ -187,6 +186,33 @@ class AipAdminController {
         ]
 
         results.header = actionItemHeadings
+
+        render results as JSON
+    }
+
+
+    def groupList( ) {
+
+        def jsonObj = request.JSON
+        def params = [filterName:jsonObj.filterName,
+                      sortColumn:jsonObj.sortColumn,
+                      sortAscending:jsonObj.sortAscending,
+                      max:jsonObj.max,
+                      offset:jsonObj.offset]
+
+        def results = groupFolderReadOnlyService.listGroupFolderPageSort( params )
+        response.status = 200
+
+        def groupHeadings = [
+                [name: "groupId", title: "id", options: [visible: false, isSortable: true]],
+                [name: "groupTitle", title: MessageUtility.message( "aip.common.title" ), options: [visible: true, isSortable: true, ascending:jsonObj.sortAscending], width: 0],
+                [name: "groupStatus", title: MessageUtility.message( "aip.common.status" ), options: [visible: true, isSortable: true, ascending:jsonObj.sortAscending], width: 0],
+                [name: "folderName", title: MessageUtility.message( "aip.common.folder" ), options: [visible: true, isSortable: true, ascending:jsonObj.sortAscending], width: 0],
+                [name: "groupActivityDate", title: MessageUtility.message( "aip.common.activity.date" ), options: [visible: true, isSortable: true, ascending:jsonObj.sortAscending], width: 0],
+                [name: "groupUserId", title: MessageUtility.message( "aip.common.last.updated.by" ), options: [visible: true, isSortable: true, ascending:jsonObj.sortAscending], width: 0]
+        ]
+
+        results.header = groupHeadings
 
         render results as JSON
     }

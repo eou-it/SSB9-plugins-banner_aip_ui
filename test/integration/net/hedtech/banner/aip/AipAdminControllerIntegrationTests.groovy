@@ -399,4 +399,31 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
         assertEquals 200, controller.response.status
     }
 
+
+    @Test
+    void testSortAipGroupAsStudent() {
+        def admin = PersonUtility.getPerson( "CSRSTU002" ) // role: student
+        assertNotNull admin
+
+        def auth = selfServiceBannerAuthenticationProvider.authenticate(
+                new UsernamePasswordAuthenticationToken( admin.bannerId, '111111' ) )
+        SecurityContextHolder.getContext().setAuthentication( auth )
+
+        def requestObj = [:]
+        requestObj.filterName="%"
+        requestObj.sortColumn="groupTitle"
+        requestObj.sortAscending=true
+        requestObj.max=20
+        requestObj.offset=0
+
+        controller.request.method = "POST"
+        controller.request.json = requestObj
+
+        controller.groupList()
+        def answer = JSON.parse( controller.response.contentAsString )
+        println answer
+
+        assertEquals 200, controller.response.status
+    }
+
 }

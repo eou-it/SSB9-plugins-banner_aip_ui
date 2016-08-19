@@ -7,33 +7,128 @@ declare var notifications: any;
 
 module AIP {
     export class AdminGroupListPageCtrl {
-        $inject = ["$scope", "AdminGroupService", "$state", "$window", "$filter", "ENDPOINT"];
-        //gridData: IGridData;
+        $inject = ["$scope", "$state", "$window", "$filter", "$q", "ENDPOINT", "PAGINATIONCONFIG",
+            "AdminGroupService"];
         $state;
         $filter;
-        ENDPOINT;
-        adminGroupService: AIP.AdminGroupService;
-        constructor($scope, AdminGroupService, $state, $window, $filter, ENDPOINT) {
-            $scope.vm = this;
-            this.adminGroupService = AdminGroupService
-            this.$state = $state;
-            this.ENDPOINT = ENDPOINT;
-            this.$filter = $filter;
-            this.init();
+        $q: ng.IQService;
+        endPoint;
+        paginationConfig;
+        draggableColumnNames;
+        gridData;
+        header;
+        searchConfig;
+        mobileConfig;
+        mobileSize;
+        adminGroupService;
 
-            $scope.$watch("[vm.groupDetailResponse, vm.groupInfo]" , (newVal, oldVal) => {
-                if(!$scope.$$phase) {
-                    $scope.apply();
-                }
-            });
+        constructor($scope, $state, $window, $filter, $q, ENDPOINT, PAGINATIONCONFIG,
+            AdminGroupService) {
+            $scope.vm = this;
+            this.$state = $state;
+            this.$filter = $filter;
+            this.$q = $q;
+            this.endPoint = ENDPOINT;   //ENDPOINT.admin.actionList
+            this.paginationConfig = PAGINATIONCONFIG;
+            this.adminGroupService = AdminGroupService;
+            this.init();
             angular.element($window).bind('resize', function() {
                 //$scope.onResize();
                 $scope.$apply();
             });
 
+        $scope.$watch("[vm.groupDetailResponse, vm.groupInfo]" , (newVal, oldVal) => {
+            if(!$scope.$$phase) {
+                $scope.apply();
+            }
+        });
+        angular.element($window).bind('resize', function() {
+            //$scope.onResize();
+            $scope.$apply();
+        });
+
         }
         init() {
-            //todo: anything needing to be moved here?
+            this.gridData = {};
+            this.draggableColumnNames=[];
+            this.mobileConfig = {
+                groupTitle: 3,
+                folderName: 3,
+                groupStatus: 3,
+                groupmUserId: 3,
+                groupActivityDate: 3
+            };
+            this.mobileSize = angular.element("body").width()>768?false:true;
+            this.searchConfig = {
+                id: "actionItemDataTableSearch",
+                delay: 300,
+                //todo:change this out for message property
+                ariaLabel: "Search for any action Items",
+                searchString: "",
+                maxlength: 200,
+                minimumCharacters: 1
+            };
+            this.header = [{
+                name: "groupId",
+                title: "id",
+                width: "0px",
+                options: {
+                    sortable: true,
+                    visible: false,
+                    columnShowHide: false
+                }
+            }, {
+                name: "groupTitle",
+                title: this.$filter("i18n_aip")("aip.list.grid.activityDate"),
+                ariaLabel: this.$filter("i18n_aip")("aip.list.grid.activityDate"),
+                width: "100px",
+                options: {
+                    sortable: true,
+                    visible: true,
+                    ascending:true,
+                    columnShowHide: false
+                }
+            }, {
+                name: "folderName",
+                title: this.$filter("i18n_aip")("aip.list.grid.activityDate"),
+                ariaLabel: this.$filter("i18n_aip")("aip.list.grid.activityDate"),
+                width: "100px",
+                options: {
+                    sortable: true,
+                    visible: true,
+                    columnShowHide: false
+                }
+            }, {
+                name: "groupStatus",
+                title: this.$filter("i18n_aip")("aip.list.grid.activityDate"),
+                ariaLabel: this.$filter("i18n_aip")("aip.list.grid.activityDate"),
+                width: "100px",
+                options: {
+                    sortable: true,
+                    visible: true,
+                    columnShowHide: true
+                }
+            }, {
+                name: "groupUserId",
+                title: this.$filter("i18n_aip")("aip.list.grid.activityDate"),
+                ariaLabel: this.$filter("i18n_aip")("aip.list.grid.activityDate"),
+                width: "100px",
+                options: {
+                    sortable: true,
+                    visible: true,
+                    columnShowHide: true
+                }
+            }, {
+                name: "groupActivityDate",
+                title: this.$filter("i18n_aip")("aip.list.grid.activityDate"),
+                ariaLabel: this.$filter("i18n_aip")("aip.list.grid.activityDate"),
+                width: "100px",
+                options: {
+                    sortable: true,
+                    visible: true,
+                    columnShowHide: true
+                }
+            }];
         }
 
         add() {
@@ -64,6 +159,26 @@ module AIP {
                 $(".groupListContainer .control").height() -
                 30;
             return {height: containerHeight};
+        }
+
+        fetchData(query) {
+            var deferred = this.$q.defer();
+            this.adminGroupService.fetchData(query)
+                .then((response) => {
+                    // this.gridData = response;
+                    // this.gridData.header = this.header;
+                    deferred.resolve(response);
+                }, (error) => {
+                    console.log(error);
+                    deferred.reject(error);
+                });
+            return deferred.promise;
+        }
+        selectRecord(data) {
+
+        }
+        refreshGrid() {
+
         }
     }
 }
