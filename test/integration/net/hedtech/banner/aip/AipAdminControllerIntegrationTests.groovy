@@ -107,7 +107,7 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
         SecurityContextHolder.getContext().setAuthentication( auth )
         controller.addFolder(VALID_FOLDER_NAME, VALID_FOLDER_DESCRIPTION)
         def answer = JSON.parse( controller.response.contentAsString )
-        //println answer
+        // TODO: verify something
         //TODO: fix BCMADMIN test in general app
         //assertTrue( answer.success )
         //assertNotNull( answer.newFolder )
@@ -137,7 +137,6 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
         controller.request.json = requestObj
         controller.createGroup()
         def answer = JSON.parse( controller.response.contentAsString )
-       // println answer
 
         assertTrue( answer.success )
         assertNotNull( answer.newGroup )
@@ -256,8 +255,115 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
         assertEquals( false, answer.success )
     }
 
+
     @Test
-        void testAipGroupAsAdmin() {
+    void testCreateActionItem() {
+
+        def admin = PersonUtility.getPerson( "BCMADMIN" ) // role: advisor
+        assertNotNull admin
+
+        def auth = selfServiceBannerAuthenticationProvider.authenticate(
+                new UsernamePasswordAuthenticationToken( admin.bannerId, '111111' ) )
+        SecurityContextHolder.getContext().setAuthentication( auth )
+
+        def folderId = CommunicationFolder.fetchByName( 'AIPGeneral' ).id
+
+        def requestObj = [:]
+        requestObj.active = "Y"
+        requestObj.folderId = folderId
+        requestObj.title = "a title"
+        requestObj.description = "<p><strong>This is a group description</p></strong>"
+        //requestObj.userId = "CSRADM001"
+        controller.request.method = "POST"
+        controller.request.json = requestObj
+        controller.addActionItem()
+        def answer = JSON.parse( controller.response.contentAsString )
+
+        assertTrue( answer.success )
+        assertNotNull( answer.newActionItem )
+        assertTrue( answer.message.equals( null ) )
+        assertEquals( "BCMADMIN", answer.newActionItem.creatorId )
+        assertEquals( "BCMADMIN", answer.newActionItem.userId )
+    }
+
+
+    @Test
+    void testCreateActionItemNoDescription() {
+
+        def admin = PersonUtility.getPerson( "BCMADMIN" ) // role: advisor
+        assertNotNull admin
+
+        def auth = selfServiceBannerAuthenticationProvider.authenticate(
+                new UsernamePasswordAuthenticationToken( admin.bannerId, '111111' ) )
+        SecurityContextHolder.getContext().setAuthentication( auth )
+
+        def folderId = CommunicationFolder.fetchByName( 'AIPGeneral' ).id
+
+        def requestObj = [:]
+        requestObj.active = "Y"
+        requestObj.folderId = folderId
+        requestObj.title = "a title"
+        requestObj.description = null
+        //requestObj.userId = "CSRADM001"
+        controller.request.method = "POST"
+        controller.request.json = requestObj
+        controller.addActionItem()
+        def answer = JSON.parse( controller.response.contentAsString )
+
+        assertTrue( answer.success )
+        assertNotNull( answer.newActionItem )
+        assertTrue( answer.message.equals( null ) )
+        assertEquals( "BCMADMIN", answer.newActionItem.creatorId )
+        assertEquals( "BCMADMIN", answer.newActionItem.userId )
+    }
+
+
+    @Test
+    void testCreateActionItemNoSession() {
+        def folderId = CommunicationFolder.fetchByName( 'AIPGeneral' ).id
+
+        def requestObj = [:]
+        requestObj.active = "Y"
+        requestObj.folderId = folderId
+        requestObj.title = "a title"
+        requestObj.description = null
+        //requestObj.userId = "CSRADM001"
+        controller.request.method = "POST"
+        controller.request.json = requestObj
+        controller.addActionItem()
+        assertEquals 403, controller.response.status
+    }
+
+
+    @Test
+    void testCreateActionItemOperationNotPermitted() {
+
+        def admin = PersonUtility.getPerson( "BCMADMIN" ) // role: advisor
+        assertNotNull admin
+
+        def auth = selfServiceBannerAuthenticationProvider.authenticate(
+                new UsernamePasswordAuthenticationToken( admin.bannerId, '111111' ) )
+        SecurityContextHolder.getContext().setAuthentication( auth )
+
+        def folderId = CommunicationFolder.fetchByName( 'AIPGeneral' ).id
+
+        def requestObj = [:]
+        requestObj.active = null
+        requestObj.folderId = folderId
+        requestObj.title = "a title"
+        requestObj.description = null
+        //requestObj.userId = "CSRADM001"
+        controller.request.method = "POST"
+        controller.request.json = requestObj
+        controller.addActionItem()
+        def answer = JSON.parse( controller.response.contentAsString )
+        assertFalse( answer.success )
+        assertEquals( "Operation Not Permitted", answer.message )
+    }
+
+
+    @Test
+    void testAipGroupAsAdmin() {
         def admin = PersonUtility.getPerson( "BCMADMIN" ) // role: advisor
         assertNotNull admin
 
@@ -394,9 +500,9 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
 
         controller.actionItemList()
         def answer = JSON.parse( controller.response.contentAsString )
-        println answer
 
         assertEquals 200, controller.response.status
+        // TODO: verify something
     }
 
 
@@ -421,8 +527,7 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
 
         controller.groupList()
         def answer = JSON.parse( controller.response.contentAsString )
-        println answer
-
+        // TODO: verify something
         assertEquals 200, controller.response.status
     }
 

@@ -14,6 +14,7 @@ class AipAdminController {
     def groupFolderReadOnlyService
     def actionItemGroupService
     def actionItemReadOnlyService
+    def actionItemService
 
 
     def folders() {
@@ -48,6 +49,53 @@ class AipAdminController {
                 success  : success,
                 message  : message,
                 newFolder: aFolder
+        ]
+        render result as JSON
+    }
+
+
+    def addActionItem() {
+        def user = SecurityContextHolder?.context?.authentication?.principal
+        if (!user.pidm) {
+            response.sendError( 403 )
+            return
+        }
+        /* TODO: determine access in later US
+        if (!hasAccess( 'save' )) {
+            response.sendError( 403 )
+            return
+        }
+        */
+        ActionItem aActionItem
+        def success = false
+        def message
+
+
+        def aipUser = AipControllerUtils.getPersonForAip( params, user.pidm )
+        def jsonObj = request.JSON
+
+        ActionItem ai = new ActionItem()
+        ai.folderId = jsonObj.folderId
+        ai.active = jsonObj.active
+        ai.title = jsonObj.title
+        ai.creatorId = aipUser.bannerId ? aipUser.bannerId : null
+        ai.userId = aipUser.bannerId ? aipUser.bannerId : null
+        ai.description = jsonObj.description
+        ai.activityDate = new Date()
+
+        try {
+            aActionItem = actionItemService.create( ai )
+            response.status = 200
+            success = true
+        } catch (ApplicationException e) {
+            // Using simple failure for bad data which should never happen.
+            // Future requirements may mean moving to producing error message like we do in createGroup()
+            message = MessageUtility.message( "aip.operation.not.permitted" )
+        }
+        def result = [
+                success      : success,
+                message      : message,
+                newActionItem: aActionItem
         ]
         render result as JSON
     }
