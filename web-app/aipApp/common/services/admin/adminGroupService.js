@@ -40,21 +40,19 @@ var AIP;
             });
             return request;
         };
-        /*
-        getGroupList() {
+        AdminGroupService.prototype.getGroupList = function () {
             var request = this.$http({
                 method: "POST",
                 url: this.ENDPOINT.admin.groupList
             })
-                .then((response) => {
-                    return <IGridData>response.data;
-                }, (err) => {
-                    //TODO: handle ajax fail in global
-                    throw new Error(err);
+                .then(function (response) {
+                return response.data;
+            }, function (err) {
+                //TODO: handle ajax fail in global
+                throw new Error(err);
             });
             return request;
-        }
-        */
+        };
         AdminGroupService.prototype.saveGroup = function (groupInfo) {
             var params = {
                 groupTitle: groupInfo.title,

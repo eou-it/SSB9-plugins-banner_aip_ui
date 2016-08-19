@@ -21,6 +21,7 @@ module AIP {
         mobileConfig;
         mobileSize;
         adminGroupService;
+        selectedRecord;
 
         constructor($scope, $state, $window, $filter, $q, ENDPOINT, PAGINATIONCONFIG,
             AdminGroupService) {
@@ -60,7 +61,7 @@ module AIP {
             };
             this.mobileSize = angular.element("body").width()>768?false:true;
             this.searchConfig = {
-                id: "actionItemDataTableSearch",
+                id: "groupDataTableSearch",
                 delay: 300,
                 //todo:change this out for message property
                 ariaLabel: "Search for any action Items",
@@ -79,8 +80,8 @@ module AIP {
                 }
             }, {
                 name: "groupTitle",
-                title: this.$filter("i18n_aip")("aip.list.grid.activityDate"),
-                ariaLabel: this.$filter("i18n_aip")("aip.list.grid.activityDate"),
+                title: this.$filter("i18n_aip")("aip.list.grid.groupTitle"),
+                ariaLabel: this.$filter("i18n_aip")("aip.list.grid.groupTitle"),
                 width: "100px",
                 options: {
                     sortable: true,
@@ -90,8 +91,8 @@ module AIP {
                 }
             }, {
                 name: "folderName",
-                title: this.$filter("i18n_aip")("aip.list.grid.activityDate"),
-                ariaLabel: this.$filter("i18n_aip")("aip.list.grid.activityDate"),
+                title: this.$filter("i18n_aip")("aip.list.grid.folder"),
+                ariaLabel: this.$filter("i18n_aip")("aip.list.grid.folder"),
                 width: "100px",
                 options: {
                     sortable: true,
@@ -100,8 +101,8 @@ module AIP {
                 }
             }, {
                 name: "groupStatus",
-                title: this.$filter("i18n_aip")("aip.list.grid.activityDate"),
-                ariaLabel: this.$filter("i18n_aip")("aip.list.grid.activityDate"),
+                title: this.$filter("i18n_aip")("aip.list.grid.status"),
+                ariaLabel: this.$filter("i18n_aip")("aip.list.grid.status"),
                 width: "100px",
                 options: {
                     sortable: true,
@@ -110,8 +111,8 @@ module AIP {
                 }
             }, {
                 name: "groupUserId",
-                title: this.$filter("i18n_aip")("aip.list.grid.activityDate"),
-                ariaLabel: this.$filter("i18n_aip")("aip.list.grid.activityDate"),
+                title: this.$filter("i18n_aip")("aip.list.grid.lastUpdated"),
+                ariaLabel: this.$filter("i18n_aip")("aip.list.grid.lastUpdated"),
                 width: "100px",
                 options: {
                     sortable: true,
@@ -175,7 +176,9 @@ module AIP {
             return deferred.promise;
         }
         selectRecord(data) {
-
+            this.selectedRecord = data;
+            this.adminGroupService.enableGroupOpen(data.id);
+            this.$state.params.grp = data.id;
         }
         refreshGrid() {
 

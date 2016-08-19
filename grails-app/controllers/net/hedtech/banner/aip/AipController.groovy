@@ -51,6 +51,8 @@ class AipController {
     }
 
 
+
+    //todo: this is probably going to go away w/new method in admin controller
     @Secured(['ROLE_SELFSERVICE-FACULTY_BAN_DEFAULT_M', 'ROLE_SELFSERVICE-STUDENT_BAN_DEFAULT_M'])
     def adminGroupList() {
         def actionItemGroups = groupFolderReadOnlyService.listActionItemGroups()

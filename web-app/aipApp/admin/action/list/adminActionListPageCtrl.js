@@ -49,7 +49,7 @@ var AIP;
                 }, {
                     name: "actionItemName",
                     title: this.$filter("i18n_aip")("aip.list.grid.itemTitle"),
-                    ariaLabel: "Action Item Title",
+                    ariaLabel: this.$filter("i18n_aip")("aip.list.grid.itemTitle"),
                     width: "100px",
                     options: {
                         sortable: true,
@@ -60,7 +60,7 @@ var AIP;
                 }, {
                     name: "folderName",
                     title: this.$filter("i18n_aip")("aip.list.grid.folder"),
-                    ariaLabel: "Folder Name",
+                    ariaLabel: this.$filter("i18n_aip")("aip.list.grid.folder"),
                     width: "100px",
                     options: {
                         sortable: true,
@@ -70,7 +70,7 @@ var AIP;
                 }, {
                     name: "actionItemStatus",
                     title: this.$filter("i18n_aip")("aip.list.grid.status"),
-                    ariaLabel: "Status",
+                    ariaLabel: this.$filter("i18n_aip")("aip.list.grid.status"),
                     width: "100px",
                     options: {
                         sortable: true,
@@ -80,7 +80,7 @@ var AIP;
                 }, {
                     name: "actionItemUserId",
                     title: this.$filter("i18n_aip")("aip.list.grid.lastUpdated"),
-                    ariaLabel: "Last Updated By",
+                    ariaLabel: this.$filter("i18n_aip")("aip.list.grid.lastUpdated"),
                     width: "100px",
                     options: {
                         sortable: true,
@@ -90,7 +90,7 @@ var AIP;
                 }, {
                     name: "actionItemActivityDate",
                     title: this.$filter("i18n_aip")("aip.list.grid.activityDate"),
-                    ariaLabel: "Activity Date",
+                    ariaLabel: this.$filter("i18n_aip")("aip.list.grid.activityDate"),
                     width: "100px",
                     options: {
                         sortable: true,

@@ -115,7 +115,7 @@ module AIP {
             });
             return request;
         }
-        /*
+
         getGroupList() {
             var request = this.$http({
                 method: "POST",
@@ -129,7 +129,7 @@ module AIP {
             });
             return request;
         }
-        */
+
         saveGroup(groupInfo:any) {
             var params = {
                 groupTitle: groupInfo.title,

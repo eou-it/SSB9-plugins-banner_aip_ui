@@ -86,13 +86,13 @@ var bannerAIPApp = angular.module("bannerAIP", [
 //constant for endpoint
     .constant("ENDPOINT", {
         admin: {
-            groupList: aipAppAbsPath + "aip/adminGroupList",
+            groupList: aipAppAbsPath + "aipAdmin/groupList",
             groupStatus: aipAppAbsPath + "aip/adminGroupStatus",
             actionList: aipAppAbsPath + "aip/adminActionLists",
-            folders: aipAppAbsPath + "aipGroup/folders",
-            addFolder: aipAppAbsPath + "aipGroup/addFolder",
-            createGroup: aipAppAbsPath + "aipGroup/createGroup",
-            openGroup: aipAppAbsPath + "aipGroup/openGroup",
+            folders: aipAppAbsPath + "aipAdmin/folders",
+            addFolder: aipAppAbsPath + "aipAdmin/addFolder",
+            createGroup: aipAppAbsPath + "aipAdmin/createGroup",
+            openGroup: aipAppAbsPath + "aipAdmin/openGroup",
             actionItemList: aipAppAbsPath + "aipAdmin/actionItemList"
         }
     })
@@ -212,6 +212,10 @@ var bannerAIPApp = angular.module("bannerAIP", [
             $.i18n.prop("aip.admin.action");
             $.i18n.prop("aip.admin.action.description");
 
+            $.i18n.prop("aip.admin.selectable.action.items");
+            $.i18n.prop("aip.admin.selectable.groups");
+
+            $.i18n.prop("aip.list.grid.groupTitle");
             $.i18n.prop("aip.list.grid.itemTitle");
             $.i18n.prop("aip.list.grid.folder");
             $.i18n.prop("aip.list.grid.status");
