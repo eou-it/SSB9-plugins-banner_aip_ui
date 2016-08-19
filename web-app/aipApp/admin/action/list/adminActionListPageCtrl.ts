@@ -149,6 +149,9 @@ module AIP {
         refreshGrid() {
 
         }
+        goAddPage() {
+
+        }
     }
 }
 

@@ -211,6 +211,7 @@ var bannerAIPApp = angular.module("bannerAIP", [
 
             $.i18n.prop("aip.admin.action");
             $.i18n.prop("aip.admin.action.description");
+            $.i18n.prop("aip.admin.action.addActionItem");
 
             $.i18n.prop("aip.list.grid.itemTitle");
             $.i18n.prop("aip.list.grid.folder");

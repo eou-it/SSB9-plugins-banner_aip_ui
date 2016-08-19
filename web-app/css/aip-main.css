@@ -274,10 +274,29 @@ aip-list .aip-list-container {
 .actionListContainer {
   overflow-y: auto;
   font-size: 14px; }
+  .actionListContainer .row.controls {
+    margin-right: 0px;
+    margin-left: 0px; }
+    .actionListContainer .row.controls .control {
+      text-align: right;
+      padding: 0 24px; }
+      .actionListContainer .row.controls .control .btn-default {
+        background-color: transparent;
+        border: none;
+        font-size: 0.85em;
+        color: #41566F; }
+        .actionListContainer .row.controls .control .btn-default .button-text,
+        .actionListContainer .row.controls .control .btn-default .icon {
+          display: table-row; }
   .actionListContainer .actionListTable #actionItemDataTableSearch {
     display: none; }
 
-@media (min-width: 1024px) {
+@media screen and (max-width: 768px) {
+  .actionListContainer .row.controls .control {
+    padding: 0; }
+    .actionListContainer .row.controls .control .btn-default .button-text {
+      display: none; } }
+@media screen and (min-width: 1024px) {
   .actionListContainer .actionListTable .visible-lg {
     display: block !important; } }
 #username {

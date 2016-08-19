@@ -337,6 +337,22 @@ aip-list .aip-list-container  {
     overflow-y:auto;
     font-size:14px;
 }
+  .actionListContainer .row.controls  {
+    margin-left:0px;
+    margin-right:0px;
+}
+    .actionListContainer .row.controls .control  {
+    text-align:left;
+}
+      .actionListContainer .row.controls .control .btn-default  {
+    background-color:transparent;
+    border:none;
+    font-size:0.85em;
+    color:#41566F;
+}
+        .actionListContainer .row.controls .control .btn-default span  {
+    display:table-row;
+}
   .actionListContainer .actionListTable #actionItemDataTableSearch  {
     display:none;
 }
