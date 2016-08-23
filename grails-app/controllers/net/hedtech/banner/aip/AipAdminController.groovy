@@ -23,6 +23,22 @@ class AipAdminController {
         render results as JSON
     }
 
+    def adminActionItemStatus() {
+        //TODO:: get action item status from DB through service
+        def model = [
+                [
+                        "id"   : 0,
+                        "value": "pending"
+                ], [
+                        "id"   : 1,
+                        "value": "active"
+                ], [
+                        "id"   : 2,
+                        "value": "inactive"
+                ]
+        ]
+        render model as JSON
+    }
 
     def addFolder( name, description ) {
 

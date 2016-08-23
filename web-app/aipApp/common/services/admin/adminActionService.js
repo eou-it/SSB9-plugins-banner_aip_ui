@@ -46,6 +46,30 @@ var AIP;
             return deferred.promise;
         };
         ;
+        AdminActionService.prototype.getFolder = function () {
+            var request = this.$http({
+                method: "POST",
+                url: this.ENDPOINT.admin.folders
+            });
+            return request;
+        };
+        ;
+        AdminActionService.prototype.getStatus = function () {
+            var request = this.$http({
+                method: "POST",
+                url: this.ENDPOINT.admin.actionItemStatus
+            });
+            return request;
+        };
+        AdminActionService.prototype.saveActionItem = function (actionItem) {
+            var params = {};
+            var request = this.$http({
+                method: "POST",
+                data: params,
+                url: ""
+            });
+            return request;
+        };
         AdminActionService.$inject = ["$http", "$q", "$filter", "ENDPOINT"];
         return AdminActionService;
     }());

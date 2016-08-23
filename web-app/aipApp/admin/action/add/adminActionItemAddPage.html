@@ -1,0 +1,82 @@
+<div class="actionItemAddContainer">
+    <div class="actionItemInfo">
+        <div class="row actionItemInfoRow actionItemTitle">
+            <div class="actionItemElement row input-actionItem">
+                <div class="actionItemTitle col-xs-12 col-md-8">
+                    <label for="actionItemTitle" class="titleValue" id="actionItemAdd-Title">{{"aip.admin.action.actionItem.title"|i18n_aip}}
+                        {{"aip.character.astrick"|i18n_aip}}</label>
+                    <span class="titleValue supplement">{{"aip.admin.action.add.maxLength"|i18n_aip:300}}</span>
+                </div>
+            </div>
+            <div class="actionItemElement col-xs-12 col-md-8">
+                <div class="row" ng-class="{'has-error':vm.actionItemInfo.title.length>300}">
+                    <input id="actionItemTitle" maxlength="300" aria-valuemax="300" type="text" class="form-control" ng-model="vm.actionItemInfo.title"
+                           placeholder="{{'aip.admin.action.actionItem.title'|i18n_aip}}" aria-describedby="actionItemAdd-Title" required="required" aria-required="true">
+                </div>
+                <div class="alert alert-danger" role="alert" ng-if="vm.actionItemInfo.title.length>300">
+                    <i class="fa fa-exclamation-circle" aria-hidden="true"></i>
+                    <span class="sr-only">Error:</span>
+                    {{"aip.admin.action.add.error.exceedMax"|i18n_aip:300}}"}}
+                </div>
+            </div>
+        </div>
+        <div class="row actionItemInfoRow actionItemFolder">
+            <div class="actionItemElement row input-actionItem">
+                <label for="actionItemFolder" class="titleValue" id="actionItemAdd-folder">{{"aip.common.folder"|i18n_aip}}
+                    {{"aip.character.astrick"|i18n_aip}}</label>
+            </div>
+            <div class="actionItemElement col-xs-12 col-sm-5">
+                <div class="row">
+                    <select id="actionItemFolder" class="actionItemSelect" xe-data="" aria-labelledby="actionItemAdd-folder" ng-required="true" aria-required="true"
+                            ng-model="vm.actionItemInfo.folder">
+                        <option selected="selected" value="">{{"aip.common.select.folder.default"|i18n_aip}}</option>
+                        <option ng-repeat="item in vm.folders" value="{{item.id}}">{{item.name}}</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="row actionItemInfoRow actionItemStatus">
+            <div class="actionItemElement row input-actionItem">
+                <label for="actionItemStatus" class="titleValue" id="actionItemAdd-status">{{"aip.common.status"|i18n_aip}}
+                    {{"aip.character.astrick"|i18n_aip}}</label>
+            </div>
+            <div class="actionItemElement col-xs-12 col-sm-5">
+                <div class="row">
+                    <select id="actionItemStatus" class="actionItemSelect" xe-data="" aria-labelledby="actionItemAdd-status" required aria-required="true"
+                            ng-model="vm.actionItemInfo.status">
+                        <option ng-repeat="item in vm.status" value="{{item.id}}">{{item.value|i18n_aip}}</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="row actionItemInfoRow">
+            <div class="actionItemElement row input-actionItem">
+                <div class="actionItemTitle col-xs-12 col-sm-8">
+                    <label for="actionItemFolder" class="titleValue" id="actionItemAdd-description">{{"aip.common.description"|i18n_aip}}
+                        {{"aip.character.astrick"|i18n_aip}}</label>
+                    <span class="titleValue supplement dimmed">{{"aip.common.plainText"|i18n_aip}}</span>
+                </div>
+            </div>
+            <div class="actionItemElement col-xs-12 col-sm-8">
+                <div class="row">
+                    <textarea id="actionItemDesc" ng-required="true" aria-required="true" name="actionItemDesc"
+                              placeholder="{{'aip.admin.action.add.description.placeholder'|i18n_aip}}" rows="20"
+                              ng-model="vm.actionItemInfo.description"></textarea>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="actionItemControl">
+        <div class="row">
+            <div class="col-sm-2 col-xs-6 actionItemButton">
+                <button type="button" class="btn btn-default" ng-click="vm.cancel()">{{"aip.common.cancel"|i18n_aip}}</button>
+            </div>
+            <div class="col-sm-2 col-xs-6 actionItemButton">
+                <button type="button" class="btn btn-primary" ng-disabled="!vm.validateInput()" ng-click="vm.save()">
+                    {{"aip.common.saveandreturn"|i18n_aip}}
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--<script src="/StudentSSB/plugins/banner-csr-ui-1.0/aipApp/common/directives/ckeditor/js/ckEditor.js" type="application/javascript" />-->

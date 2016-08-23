@@ -150,7 +150,7 @@ module AIP {
 
         }
         goAddPage() {
-
+            this.$state.go("admin-action-add");
         }
     }
 }
