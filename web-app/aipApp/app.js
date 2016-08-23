@@ -97,15 +97,16 @@ var bannerAIPApp = angular.module("bannerAIP", [
             folders: aipAppAbsPath + "aipAdmin/folders",
 
             groupList: aipAppAbsPath + "aip/adminGroupList",
+            groupList: aipAppAbsPath + "aipAdmin/groupList",
             groupStatus: aipAppAbsPath + "aip/adminGroupStatus",
             actionList: aipAppAbsPath + "aip/adminActionLists",
-
+            folders: aipAppAbsPath + "aipAdmin/folders",
+            addFolder: aipAppAbsPath + "aipAdmin/addFolder",
+            createGroup: aipAppAbsPath + "aipAdmin/createGroup",
+            openGroup: aipAppAbsPath + "aipAdmin/openGroup",
             actionItemList: aipAppAbsPath + "aipAdmin/actionItemList",
-            actionItemStatus: aipAppAbsPath + "aipAdmin/adminActionItemStatus",
-
-            addFolder: aipAppAbsPath + "aipGroup/addFolder",
-            createGroup: aipAppAbsPath + "aipGroup/createGroup",
-            openGroup: aipAppAbsPath + "aipGroup/openGroup",
+            actionItemList: aipAppAbsPath + "aipAdmin/actionItemList",
+            actionItemStatus: aipAppAbsPath + "aipAdmin/adminActionItemStatus"
         }
     })
     .constant("PAGINATIONCONFIG",
@@ -180,7 +181,6 @@ var bannerAIPApp = angular.module("bannerAIP", [
             $.i18n.prop("aip.common.status");
             $.i18n.prop("aip.common.folder");
             $.i18n.prop("aip.common.group.description");
-            $.i18n.prop("aip.common.description");
             $.i18n.prop("aip.common.activity");
             $.i18n.prop("aip.common.activity.date");
             $.i18n.prop("aip.common.last.updated.by");
@@ -236,6 +236,10 @@ var bannerAIPApp = angular.module("bannerAIP", [
             $.i18n.prop("aip.admin.action.add.maxLength");
             $.i18n.prop("aip.admin.action.add.description.placeholder");
 
+            $.i18n.prop("aip.admin.selectable.action.items");
+            $.i18n.prop("aip.admin.selectable.groups");
+
+            $.i18n.prop("aip.list.grid.groupTitle");
             $.i18n.prop("aip.list.grid.itemTitle");
             $.i18n.prop("aip.list.grid.folder");
             $.i18n.prop("aip.list.grid.status");

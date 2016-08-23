@@ -1,4 +1,4 @@
-<div class="groupListContainer">
+<div class="groupListContainer" id="adminGroupListPage" ng-controller="AdminGroupListPageCtrl">
     <div class="row controls">
         <div class="control">
             <button type="button" class="btn btn-default" ng-click="vm.add()" aria-label="{{'aip.common.add.group.jaws'|i18n_aip}}">
@@ -11,38 +11,27 @@
             </button>
         </div>
     </div>
-    <!--
     <div class="groupListTable" ng-style="vm.getHeight()">
         <xe-table-grid
-                table-id="gridDataTable"
-                header="vm.gridData.header"
-                content="vm.gridData.data"
-                paginate="false"
-                toolbar="false"
-                on-row-click="vm.select(data)"
-                end-point="vm.ENDPOINT.admin.grouplist">
-        </xe-table-grid>
-    </div>
-    -->
-    <div class="groupListTable"  ng-style="vm.getHeight()" ng-controller="DataGridCtrl">
-        <xe-table-grid
-                table-id="dataTable"
-                header="headings"
-                fetch="fetchData(query)"
-                end-point="urlTest"
-                content="rows"
-                results-found="records"
-                toolbar="false"
-                paginate="false"
-                continuous-scrolling="false"
-                on-row-click="selectRecord(data)"
+                caption="{{'aip.admin.selectable.groups'|i18n_aip}}"
+                table-id="dataTableAdminGroupList"
+                header="vm.header"
+                fetch="vm.fetchData(query)"
+                end-point="vm.adminGroupListEnd"
+                content="vm.gridData.row"
+                results-found="vm.records"
+                toolbar="true"
+                paginate="true"
+                on-row-click="vm.selectRecord(data)"
                 no-data-msg="No Results Found"
                 empty-table-msg="emptyTableMsg"
-                search-config="searchConfig"
-                pagination-config="paginationConfig"
-                height="416px"
+                search-config="vm.searchConfig"
+                pagination-config="vm.paginationConfig"
+                mobile-layout="vm.mobileConfig"
                 refresh-grid="refreshGrid"
-        >
+                draggable-column-names="vm.draggableColumnNames"
+                continuous-scrolling="vm.mobileSize"
+                continuous-scroll-parent="adminGroupListPage">
         </xe-table-grid>
     </div>
 </div>

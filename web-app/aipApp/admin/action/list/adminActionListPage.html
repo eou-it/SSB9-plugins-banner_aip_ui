@@ -13,7 +13,7 @@
     </div>
     <div class="actionListTable" ng-style="vm.getHeight()">
         <xe-table-grid
-                caption="{{'aip.common.table.action.items'|i18n_aip}}"
+                caption="{{'aip.admin.selectable.action.items'|i18n_aip}}"
                 table-id="dataTableAdminActionList"
                 header="vm.header"
                 fetch="vm.fetchData(query)"
@@ -31,7 +31,7 @@
                 refresh-grid="refreshGrid"
                 draggable-column-names="vm.draggableColumnNames"
                 continuous-scrolling="vm.mobileSize"
-                continuous-scroll-parent="adminActionListPage"
+                continuous-scroll-parent="adminActionListPage">
         </xe-table-grid>
     </div>
 </div>

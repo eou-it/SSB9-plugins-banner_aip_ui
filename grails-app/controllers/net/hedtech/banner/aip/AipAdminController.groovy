@@ -14,7 +14,7 @@ class AipAdminController {
     def groupFolderReadOnlyService
     def actionItemGroupService
     def actionItemReadOnlyService
-    def gridNavigationService
+    def actionItemService
 
 
     def folders() {
@@ -65,6 +65,53 @@ class AipAdminController {
                 success  : success,
                 message  : message,
                 newFolder: aFolder
+        ]
+        render result as JSON
+    }
+
+
+    def addActionItem() {
+        def user = SecurityContextHolder?.context?.authentication?.principal
+        if (!user.pidm) {
+            response.sendError( 403 )
+            return
+        }
+        /* TODO: determine access in later US
+        if (!hasAccess( 'save' )) {
+            response.sendError( 403 )
+            return
+        }
+        */
+        ActionItem aActionItem
+        def success = false
+        def message
+
+
+        def aipUser = AipControllerUtils.getPersonForAip( params, user.pidm )
+        def jsonObj = request.JSON
+
+        ActionItem ai = new ActionItem()
+        ai.folderId = jsonObj.folderId
+        ai.active = jsonObj.active
+        ai.title = jsonObj.title
+        ai.creatorId = aipUser.bannerId ? aipUser.bannerId : null
+        ai.userId = aipUser.bannerId ? aipUser.bannerId : null
+        ai.description = jsonObj.description
+        ai.activityDate = new Date()
+
+        try {
+            aActionItem = actionItemService.create( ai )
+            response.status = 200
+            success = true
+        } catch (ApplicationException e) {
+            // Using simple failure for bad data which should never happen.
+            // Future requirements may mean moving to producing error message like we do in createGroup()
+            message = MessageUtility.message( "aip.operation.not.permitted" )
+        }
+        def result = [
+                success      : success,
+                message      : message,
+                newActionItem: aActionItem
         ]
         render result as JSON
     }
@@ -203,6 +250,33 @@ class AipAdminController {
         ]
 
         results.header = actionItemHeadings
+
+        render results as JSON
+    }
+
+
+    def groupList( ) {
+
+        def jsonObj = request.JSON
+        def params = [filterName:jsonObj.filterName,
+                      sortColumn:jsonObj.sortColumn,
+                      sortAscending:jsonObj.sortAscending,
+                      max:jsonObj.max,
+                      offset:jsonObj.offset]
+
+        def results = groupFolderReadOnlyService.listGroupFolderPageSort( params )
+        response.status = 200
+
+        def groupHeadings = [
+                [name: "groupId", title: "id", options: [visible: false, isSortable: true]],
+                [name: "groupTitle", title: MessageUtility.message( "aip.common.title" ), options: [visible: true, isSortable: true, ascending:jsonObj.sortAscending], width: 0],
+                [name: "groupStatus", title: MessageUtility.message( "aip.common.status" ), options: [visible: true, isSortable: true, ascending:jsonObj.sortAscending], width: 0],
+                [name: "folderName", title: MessageUtility.message( "aip.common.folder" ), options: [visible: true, isSortable: true, ascending:jsonObj.sortAscending], width: 0],
+                [name: "groupActivityDate", title: MessageUtility.message( "aip.common.activity.date" ), options: [visible: true, isSortable: true, ascending:jsonObj.sortAscending], width: 0],
+                [name: "groupUserId", title: MessageUtility.message( "aip.common.last.updated.by" ), options: [visible: true, isSortable: true, ascending:jsonObj.sortAscending], width: 0]
+        ]
+
+        results.header = groupHeadings
 
         render results as JSON
     }

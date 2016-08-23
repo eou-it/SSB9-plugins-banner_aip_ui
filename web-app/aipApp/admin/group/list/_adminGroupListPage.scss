@@ -1,6 +1,11 @@
 .groupListContainer {
   overflow-y: auto;
   font-size: 14px;
+  .groupListTable {
+    #groupDataTableSearch {
+      display: none;
+    }
+  }
   .row {
     margin-right: 0;
     margin-left: 0;
