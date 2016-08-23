@@ -96,15 +96,12 @@ var bannerAIPApp = angular.module("bannerAIP", [
         admin: {
             folders: aipAppAbsPath + "aipAdmin/folders",
 
-            groupList: aipAppAbsPath + "aip/adminGroupList",
             groupList: aipAppAbsPath + "aipAdmin/groupList",
             groupStatus: aipAppAbsPath + "aip/adminGroupStatus",
             actionList: aipAppAbsPath + "aip/adminActionLists",
-            folders: aipAppAbsPath + "aipAdmin/folders",
             addFolder: aipAppAbsPath + "aipAdmin/addFolder",
             createGroup: aipAppAbsPath + "aipAdmin/createGroup",
             openGroup: aipAppAbsPath + "aipAdmin/openGroup",
-            actionItemList: aipAppAbsPath + "aipAdmin/actionItemList",
             actionItemList: aipAppAbsPath + "aipAdmin/actionItemList",
             actionItemStatus: aipAppAbsPath + "aipAdmin/adminActionItemStatus"
         }
@@ -181,6 +178,7 @@ var bannerAIPApp = angular.module("bannerAIP", [
             $.i18n.prop("aip.common.status");
             $.i18n.prop("aip.common.folder");
             $.i18n.prop("aip.common.group.description");
+            $.i18n.prop("aip.common.description");
             $.i18n.prop("aip.common.activity");
             $.i18n.prop("aip.common.activity.date");
             $.i18n.prop("aip.common.last.updated.by");
