@@ -126,6 +126,9 @@ var AIP;
         };
         AdminActionListPageCtrl.prototype.refreshGrid = function () {
         };
+        AdminActionListPageCtrl.prototype.goAddPage = function () {
+            this.$state.go("admin-action-add");
+        };
         return AdminActionListPageCtrl;
     }());
     AIP.AdminActionListPageCtrl = AdminActionListPageCtrl;

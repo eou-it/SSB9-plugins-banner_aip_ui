@@ -5,7 +5,7 @@
                 <div class="groupTitle col-xs-12 col-sm-5">
                     <label for="groupTitle" class="titleValue" id="groupAdd-Title">{{"aip.common.title"|i18n_aip}}
                         {{"aip.character.astrick"|i18n_aip}}</label>
-                    <span class="titleValue supplement">{{"aip.admin.group.add.maxLength"|i18n_aip}}</span>
+                    <span class="titleValue supplement">{{"aip.admin.group.add.maxLength"|i18n_aip:60}}</span>
                 </div>
             </div>
             <div class="groupElement col-xs-12 col-sm-5">
@@ -16,7 +16,7 @@
                 <div class="alert alert-danger" role="alert" ng-if="vm.groupInfo.title.length>60">
                     <i class="fa fa-exclamation-circle" aria-hidden="true"></i>
                     <span class="sr-only">Error:</span>
-                    {{"aip.admin.group.error.exceedMax"|i18n_aip}}"}}
+                    {{"aip.admin.group.error.exceedMax"|i18n_aip:60}}"}}
                 </div>
             </div>
         </div>
@@ -29,7 +29,7 @@
                 <div class="row">
                     <select id="groupFolder" class="groupSelect" xe-data="" aria-labelledby="groupAdd-folder" ng-required="true" aria-required="true"
                             ng-model="vm.groupInfo.folder">
-                        <option selected="selected" value="">{{"aip.admin.group.add.folder.default"|i18n_aip}}</option>
+                        <option selected="selected" value="">{{"aip.common.select.folder.default"|i18n_aip}}</option>
                         <option ng-repeat="item in vm.folders" value="{{item.id}}">{{item.name}}</option>
                     </select>
                     <!--<select id="groupFolder" class="groupSelect" xe-data="" aria-labelledby="groupAdd-folder" required aria-required="true"-->

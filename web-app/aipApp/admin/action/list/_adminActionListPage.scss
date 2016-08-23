@@ -1,6 +1,25 @@
 .actionListContainer {
   overflow-y: auto;
   font-size: 14px;
+  .row.controls {
+    margin-right: 0px;
+    margin-left: 0px;
+    .control {
+      text-align: right;
+      padding: 0 24px;
+      .btn-default {
+        background-color: transparent;;
+        border: none;
+        font-size: 0.85em;
+        color: #41566F;
+        .button-text,
+        .icon {
+          display: table-row;
+        }
+      }
+    }
+  }
+
   .actionListTable {
     #actionItemDataTableSearch {
       display: none;
@@ -8,7 +27,22 @@
   }
 }
 
-@media (min-width: 1024px) {
+@media screen and (max-width:768px) {
+  .actionListContainer {
+    .row.controls {
+      .control {
+        padding: 0;
+        .btn-default {
+          .button-text {
+            display: none;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media screen and (min-width: 1024px) {
   .actionListContainer {
     .actionListTable {
       .visible-lg {

@@ -58,6 +58,29 @@ module AIP {
 
             return deferred.promise;
         };
+        getFolder() {
+            var request = this.$http({
+                method: "POST",
+                url: this.ENDPOINT.admin.folders
+            });
+            return request;
+        };
+        getStatus() {
+            var request = this.$http({
+                method: "POST",
+                url: this.ENDPOINT.admin.actionItemStatus
+            });
+            return request;
+        }
+        saveActionItem(actionItem) {
+            var params = {};
+            var request = this.$http({
+                method: "POST",
+                data: params,
+                url: ""
+            });
+            return request;
+        }
     }
 }
 

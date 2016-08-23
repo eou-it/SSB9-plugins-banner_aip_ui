@@ -276,12 +276,99 @@ aip-list .aip-list-container {
 .actionListContainer {
   overflow-y: auto;
   font-size: 14px; }
+  .actionListContainer .row.controls {
+    margin-right: 0px;
+    margin-left: 0px; }
+    .actionListContainer .row.controls .control {
+      text-align: right;
+      padding: 0 24px; }
+      .actionListContainer .row.controls .control .btn-default {
+        background-color: transparent;
+        border: none;
+        font-size: 0.85em;
+        color: #41566F; }
+        .actionListContainer .row.controls .control .btn-default .button-text,
+        .actionListContainer .row.controls .control .btn-default .icon {
+          display: table-row; }
   .actionListContainer .actionListTable #actionItemDataTableSearch {
     display: none; }
 
-@media (min-width: 1024px) {
+@media screen and (max-width: 768px) {
+  .actionListContainer .row.controls .control {
+    padding: 0; }
+    .actionListContainer .row.controls .control .btn-default .button-text {
+      display: none; } }
+@media screen and (min-width: 1024px) {
   .actionListContainer .actionListTable .visible-lg {
     display: block !important; } }
+.actionItemAddContainer {
+  padding: 8px 0; }
+  .actionItemAddContainer .row {
+    margin-left: 0;
+    margin-right: 0; }
+  .actionItemAddContainer .actionItemInfo {
+    margin-bottom: 20px; }
+    .actionItemAddContainer .actionItemInfo .actionItemInfoRow {
+      margin-bottom: 16px; }
+      .actionItemAddContainer .actionItemInfo .actionItemInfoRow .actionItemElement {
+        padding-right: 8px;
+        padding-left: 8px;
+        margin-bottom: 8px; }
+        .actionItemAddContainer .actionItemInfo .actionItemInfoRow .actionItemElement .alert {
+          padding-top: 8px;
+          padding-bottom: 8px; }
+        .actionItemAddContainer .actionItemInfo .actionItemInfoRow .actionItemElement .open > .dropdown-menu {
+          max-height: 200px;
+          overflow-y: scroll; }
+        .actionItemAddContainer .actionItemInfo .actionItemInfoRow .actionItemElement .titleValue {
+          font-size: 1.5em;
+          font-weight: bold; }
+        .actionItemAddContainer .actionItemInfo .actionItemInfoRow .actionItemElement .titleValue.supplement {
+          font-size: 1.0em;
+          position: absolute;
+          bottom: 0;
+          left: auto;
+          right: 8px; }
+        .actionItemAddContainer .actionItemInfo .actionItemInfoRow .actionItemElement .titleValue.supplement.dimmed {
+          color: gray;
+          font-style: italic; }
+        .actionItemAddContainer .actionItemInfo .actionItemInfoRow .actionItemElement [lang='ar'] .titleValue.supplement {
+          left: 8px;
+          right: auto; }
+        .actionItemAddContainer .actionItemInfo .actionItemInfoRow .actionItemElement textArea {
+          width: 100%; }
+      .actionItemAddContainer .actionItemInfo .actionItemInfoRow .actionItemElement.input-actionItem {
+        width: 100%; }
+        .actionItemAddContainer .actionItemInfo .actionItemInfoRow .actionItemElement.input-actionItem .actionItemTitle {
+          padding-right: 0;
+          padding-left: 0; }
+      .actionItemAddContainer .actionItemInfo .actionItemInfoRow .dropdown {
+        border: none;
+        box-shadow: none;
+        width: auto;
+        padding: 0; }
+        .actionItemAddContainer .actionItemInfo .actionItemInfoRow .dropdown .dropdown-menu {
+          width: auto;
+          border: 1px solid rgba(0, 0, 0, 0.15); }
+  .actionItemAddContainer .actionItemControl {
+    position: relative;
+    width: 100%;
+    bottom: 10px;
+    margin-bottom: 15px;
+    height: 5em; }
+    .actionItemAddContainer .actionItemControl .actionItemButton {
+      text-align: center;
+      padding-left: 0;
+      margin-left: 0px; }
+      .actionItemAddContainer .actionItemControl .actionItemButton button {
+        width: 100%;
+        max-width: 200px; }
+  @media (min-width: 769px) {
+    .actionItemAddContainer .actionItemControl {
+      margin-left: 33.33%; }
+    .actionItemAddContainer .actionItemButton {
+      margin-left: 10px; } }
+
 #username {
   padding-right: 0.5em; }
 

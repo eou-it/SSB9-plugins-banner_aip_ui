@@ -45,6 +45,14 @@ var bannerAIPApp = angular.module("bannerAIP", [
                 url: "/aip/admin#/action"
             }
         },
+        "admin-action-add": {
+            url: "/action/add",
+            templateUrl:"admin/action/add/adminActionItemAddPage.html",
+            controller:"AdminActionItemAddPageCtrl",
+            breadcrumb: {
+                label: "aip.admin.action.add.actionItem",
+                url: "/aip/admin#/action/add"}
+        },
         "admin-group-list": {
             url: "/group",
             templateUrl: "admin/group/list/adminGroupListPage.html",
@@ -86,14 +94,16 @@ var bannerAIPApp = angular.module("bannerAIP", [
 //constant for endpoint
     .constant("ENDPOINT", {
         admin: {
+            folders: aipAppAbsPath + "aipAdmin/folders",
+
             groupList: aipAppAbsPath + "aipAdmin/groupList",
             groupStatus: aipAppAbsPath + "aip/adminGroupStatus",
             actionList: aipAppAbsPath + "aip/adminActionLists",
-            folders: aipAppAbsPath + "aipAdmin/folders",
             addFolder: aipAppAbsPath + "aipAdmin/addFolder",
             createGroup: aipAppAbsPath + "aipAdmin/createGroup",
             openGroup: aipAppAbsPath + "aipAdmin/openGroup",
-            actionItemList: aipAppAbsPath + "aipAdmin/actionItemList"
+            actionItemList: aipAppAbsPath + "aipAdmin/actionItemList",
+            actionItemStatus: aipAppAbsPath + "aipAdmin/adminActionItemStatus"
         }
     })
     .constant("PAGINATIONCONFIG",
@@ -168,6 +178,7 @@ var bannerAIPApp = angular.module("bannerAIP", [
             $.i18n.prop("aip.common.status");
             $.i18n.prop("aip.common.folder");
             $.i18n.prop("aip.common.group.description");
+            $.i18n.prop("aip.common.description");
             $.i18n.prop("aip.common.activity");
             $.i18n.prop("aip.common.activity.date");
             $.i18n.prop("aip.common.last.updated.by");
@@ -184,10 +195,15 @@ var bannerAIPApp = angular.module("bannerAIP", [
             $.i18n.prop("aip.common.open.group.jaws");
             $.i18n.prop("aip.common.no.results.found");
             $.i18n.prop("aip.common.results.found");
+            $.i18n.prop("aip.common.select.folder.default");
+            $.i18n.prop("aip.common.plainText");
             $.i18n.prop("aip.placeholder.nogroups");
             $.i18n.prop("aip.placeholder.noitems");
 
             $.i18n.prop("aip.admin.landing");
+
+            $.i18n.prop("aip.admin.maxLength");
+            $.i18n.prop("aip.admin.error.exceedMax");
 
             $.i18n.prop("aip.admin.group");
             $.i18n.prop("aip.admin.group.description");
@@ -211,6 +227,12 @@ var bannerAIPApp = angular.module("bannerAIP", [
 
             $.i18n.prop("aip.admin.action");
             $.i18n.prop("aip.admin.action.description");
+            $.i18n.prop("aip.admin.action.actionItem.title");
+
+            $.i18n.prop("aip.admin.action.add.actionItem");
+            $.i18n.prop("aip.admin.action.add.error.exceedMax");
+            $.i18n.prop("aip.admin.action.add.maxLength");
+            $.i18n.prop("aip.admin.action.add.description.placeholder");
 
             $.i18n.prop("aip.admin.selectable.action.items");
             $.i18n.prop("aip.admin.selectable.groups");

@@ -13,6 +13,7 @@ var AIP;
             this.adminGroupService = AdminGroupService;
             this.spinnerService = SpinnerService;
             this.errorMessage = {};
+            this.errorMessage = {};
             $scope.$watch("[vm.status, vm.folders, vm.groupInfo.folder, vm.groupInfo.status, vm.groupInfo.description]", function (newVal, oldVal) {
                 if (!$scope.$$phase) {
                     $scope.apply();
@@ -35,7 +36,8 @@ var AIP;
                 groupStatus
                     .select2({
                     width: "25em",
-                    minimumResultsForSearch: Infinity
+                    minimumResultsForSearch: Infinity,
+                    placeholderOption: 'first'
                 });
                 //TODO: find better and proper way to set defalut value in SELECT2 - current one is just dom object hack.
                 $(".groupStatus .select2-container.groupSelect .select2-chosen")[0].innerHTML = _this.$filter("i18n_aip")(_this.status[0].value);
