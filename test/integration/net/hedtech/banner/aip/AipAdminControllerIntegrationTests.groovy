@@ -269,7 +269,7 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
         def folderId = CommunicationFolder.fetchByName( 'AIPGeneral' ).id
 
         def requestObj = [:]
-        requestObj.active = "Y"
+        requestObj.status = "Pending"
         requestObj.folderId = folderId
         requestObj.title = "a title"
         requestObj.description = "<p><strong>This is a group description</p></strong>"
@@ -300,7 +300,7 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
         def folderId = CommunicationFolder.fetchByName( 'AIPGeneral' ).id
 
         def requestObj = [:]
-        requestObj.active = "Y"
+        requestObj.status = "Pending"
         requestObj.folderId = folderId
         requestObj.title = "a title"
         requestObj.description = null
@@ -323,7 +323,7 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
         def folderId = CommunicationFolder.fetchByName( 'AIPGeneral' ).id
 
         def requestObj = [:]
-        requestObj.active = "Y"
+        requestObj.status = "Pending"
         requestObj.folderId = folderId
         requestObj.title = "a title"
         requestObj.description = null
@@ -348,7 +348,7 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
         def folderId = CommunicationFolder.fetchByName( 'AIPGeneral' ).id
 
         def requestObj = [:]
-        requestObj.active = null
+        requestObj.status = null
         requestObj.folderId = folderId
         requestObj.title = "a title"
         requestObj.description = null

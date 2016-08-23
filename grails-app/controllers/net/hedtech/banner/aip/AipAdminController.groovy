@@ -92,7 +92,7 @@ class AipAdminController {
 
         ActionItem ai = new ActionItem()
         ai.folderId = jsonObj.folderId
-        ai.active = jsonObj.active
+        ai.status = jsonObj.status
         ai.title = jsonObj.title
         ai.creatorId = aipUser.bannerId ? aipUser.bannerId : null
         ai.userId = aipUser.bannerId ? aipUser.bannerId : null
