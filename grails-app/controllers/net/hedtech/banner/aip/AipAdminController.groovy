@@ -104,9 +104,11 @@ class AipAdminController {
             response.status = 200
             success = true
         } catch (ApplicationException e) {
-            // Using simple failure for bad data which should never happen.
-            // Future requirements may mean moving to producing error message like we do in createGroup()
-            message = MessageUtility.message( "aip.operation.not.permitted" )
+            if ("@@r1:UniqueTitleInFolderError@@".equals( e.getMessage() )) {
+                message = MessageUtility.message( 'actionItem.title.unique', ai.title )
+            } else {
+                message = MessageUtility.message( "aip.operation.not.permitted" )
+            }
         }
         def result = [
                 success      : success,
