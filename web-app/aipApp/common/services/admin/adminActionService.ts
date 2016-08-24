@@ -10,7 +10,9 @@ module AIP {
     interface IAdminActionService {
 
     }
-
+    enum ActionItemStatus {
+        pending=0, active=1, inactive=2
+    }
     export class AdminActionService implements IAdminActionService{
         static $inject=["$http", "$q", "$filter", "ENDPOINT"];
         $http: ng.IHttpService;
@@ -73,11 +75,16 @@ module AIP {
             return request;
         }
         saveActionItem(actionItem) {
-            var params = {};
+            var params = {
+                title: actionItem.title,
+                folderId: parseInt(actionItem.folder),
+                description: actionItem.description,
+                active: ActionItemStatus[actionItem.status]
+            };
             var request = this.$http({
                 method: "POST",
                 data: params,
-                url: ""
+                url: this.ENDPOINT.admin.createActionItem
             });
             return request;
         }

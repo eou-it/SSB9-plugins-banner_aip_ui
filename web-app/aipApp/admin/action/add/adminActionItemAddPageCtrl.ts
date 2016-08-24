@@ -87,6 +87,57 @@ module AIP {
                 return true;
             }
         }
+        save() {
+            this.adminActionService.saveActionItem(this.actionItemInfo)
+                .then((response) => {
+                    var notiParams = {};
+                    if(response.success) {
+                        notiParams = {
+                            notiType: "saveSuccess",
+                            data: response
+                        };
+                        this.$state.go("admin-group-open", {noti: notiParams, grp: response.newGroup[0].groupId});
+                    } else {
+                        this.saveErrorCallback(response.invalidField, response.errors);
+                    }
+                }, (err) => {
+                    //TODO:: handle error call
+                    console.log(err);
+                });
+        }
+        saveErrorCallback(invalidFields, errors) {
+            //todo: iterate through errors given back through contraints
+            /*
+             errors.forEach( function(e, i) {
+             message += (e[i]);
+             });
+             */
+            var message = this.$filter("i18n_aip")("aip.admin.group.add.error.blank")
+            if (errors != null) {
+                message = errors[0]
+            }
+
+            angular.forEach(invalidFields, (field) => {
+                if(field === "group status") {
+                    message += "</br>" + this.$filter("i18n_aip")("admin.group.add.error.noStatus");
+                }
+                if(field === "folder") {
+                    message += "</br>" + this.$filter("i18n_aip")("aip.admin.group.add.error.noFolder");
+                }
+                if(field === "group title") {
+                    message += "</br>" + this.$filter("i18n_aip")("aip.admin.group.add.error.noTitle");
+                }
+                if(field === "group description") {
+                    message += "</br>" + this.$filter("i18n_aip")("aip.admin.group.add.error.noDesc");
+                }
+            });
+            var n = new Notification({
+                message: message,
+                type: "error",
+                flash: true
+            });
+            notifications.addNotification(n);
+        }
     }
 }
 

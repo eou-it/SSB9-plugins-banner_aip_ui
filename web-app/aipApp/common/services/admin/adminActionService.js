@@ -4,6 +4,12 @@
 ///<reference path="../../../../typings/tsd.d.ts"/>
 var AIP;
 (function (AIP) {
+    var ActionItemStatus;
+    (function (ActionItemStatus) {
+        ActionItemStatus[ActionItemStatus["pending"] = 0] = "pending";
+        ActionItemStatus[ActionItemStatus["active"] = 1] = "active";
+        ActionItemStatus[ActionItemStatus["inactive"] = 2] = "inactive";
+    })(ActionItemStatus || (ActionItemStatus = {}));
     var AdminActionService = (function () {
         function AdminActionService($http, $q, $filter, ENDPOINT) {
             this.$http = $http;
@@ -62,11 +68,16 @@ var AIP;
             return request;
         };
         AdminActionService.prototype.saveActionItem = function (actionItem) {
-            var params = {};
+            var params = {
+                title: actionItem.title,
+                folderId: parseInt(actionItem.folder),
+                description: actionItem.description,
+                active: ActionItemStatus[actionItem.status]
+            };
             var request = this.$http({
                 method: "POST",
                 data: params,
-                url: ""
+                url: this.ENDPOINT.admin.createActionItem
             });
             return request;
         };

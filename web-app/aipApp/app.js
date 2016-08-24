@@ -95,15 +95,17 @@ var bannerAIPApp = angular.module("bannerAIP", [
     .constant("ENDPOINT", {
         admin: {
             folders: aipAppAbsPath + "aipAdmin/folders",
+            addFolder: aipAppAbsPath + "aipAdmin/addFolder",
 
             groupList: aipAppAbsPath + "aipAdmin/groupList",
             groupStatus: aipAppAbsPath + "aip/adminGroupStatus",
-            actionList: aipAppAbsPath + "aip/adminActionLists",
-            addFolder: aipAppAbsPath + "aipAdmin/addFolder",
             createGroup: aipAppAbsPath + "aipAdmin/createGroup",
             openGroup: aipAppAbsPath + "aipAdmin/openGroup",
+            // actionList: aipAppAbsPath + "aip/adminActionLists",
+
             actionItemList: aipAppAbsPath + "aipAdmin/actionItemList",
-            actionItemStatus: aipAppAbsPath + "aipAdmin/adminActionItemStatus"
+            actionItemStatus: aipAppAbsPath + "aipAdmin/adminActionItemStatus",
+            createActionItem: aipAppAbsPath + "aipAdmin/addActionItem"
         }
     })
     .constant("PAGINATIONCONFIG",

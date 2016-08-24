@@ -72,6 +72,59 @@ var AIP;
                 return true;
             }
         };
+        AdminActionItemAddPageCtrl.prototype.save = function () {
+            var _this = this;
+            this.adminActionService.saveActionItem(this.actionItemInfo)
+                .then(function (response) {
+                var notiParams = {};
+                if (response.success) {
+                    notiParams = {
+                        notiType: "saveSuccess",
+                        data: response
+                    };
+                    _this.$state.go("admin-group-open", { noti: notiParams, grp: response.newGroup[0].groupId });
+                }
+                else {
+                    _this.saveErrorCallback(response.invalidField, response.errors);
+                }
+            }, function (err) {
+                //TODO:: handle error call
+                console.log(err);
+            });
+        };
+        AdminActionItemAddPageCtrl.prototype.saveErrorCallback = function (invalidFields, errors) {
+            var _this = this;
+            //todo: iterate through errors given back through contraints
+            /*
+             errors.forEach( function(e, i) {
+             message += (e[i]);
+             });
+             */
+            var message = this.$filter("i18n_aip")("aip.admin.group.add.error.blank");
+            if (errors != null) {
+                message = errors[0];
+            }
+            angular.forEach(invalidFields, function (field) {
+                if (field === "group status") {
+                    message += "</br>" + _this.$filter("i18n_aip")("admin.group.add.error.noStatus");
+                }
+                if (field === "folder") {
+                    message += "</br>" + _this.$filter("i18n_aip")("aip.admin.group.add.error.noFolder");
+                }
+                if (field === "group title") {
+                    message += "</br>" + _this.$filter("i18n_aip")("aip.admin.group.add.error.noTitle");
+                }
+                if (field === "group description") {
+                    message += "</br>" + _this.$filter("i18n_aip")("aip.admin.group.add.error.noDesc");
+                }
+            });
+            var n = new Notification({
+                message: message,
+                type: "error",
+                flash: true
+            });
+            notifications.addNotification(n);
+        };
         return AdminActionItemAddPageCtrl;
     }());
     AIP.AdminActionItemAddPageCtrl = AdminActionItemAddPageCtrl;
