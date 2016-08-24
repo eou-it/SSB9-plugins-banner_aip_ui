@@ -87,16 +87,19 @@ module AIP {
                 return true;
             }
         }
+        cancel() {
+            this.$state.go("admin-action-add");
+        }
         save() {
             this.adminActionService.saveActionItem(this.actionItemInfo)
                 .then((response) => {
                     var notiParams = {};
-                    if(response.success) {
+                    if(response.data.success) {
                         notiParams = {
                             notiType: "saveSuccess",
-                            data: response
+                            data: response.data
                         };
-                        this.$state.go("admin-group-open", {noti: notiParams, grp: response.newGroup[0].groupId});
+                        // this.$state.go("admin-group-open", {noti: notiParams, grp: response.newGroup[0].groupId});
                     } else {
                         this.saveErrorCallback(response.invalidField, response.errors);
                     }

@@ -72,17 +72,19 @@ var AIP;
                 return true;
             }
         };
+        AdminActionItemAddPageCtrl.prototype.cancel = function () {
+            this.$state.go("admin-action-add");
+        };
         AdminActionItemAddPageCtrl.prototype.save = function () {
             var _this = this;
             this.adminActionService.saveActionItem(this.actionItemInfo)
                 .then(function (response) {
                 var notiParams = {};
-                if (response.success) {
+                if (response.data.success) {
                     notiParams = {
                         notiType: "saveSuccess",
-                        data: response
+                        data: response.data
                     };
-                    _this.$state.go("admin-group-open", { noti: notiParams, grp: response.newGroup[0].groupId });
                 }
                 else {
                     _this.saveErrorCallback(response.invalidField, response.errors);

@@ -72,7 +72,7 @@ var AIP;
                 title: actionItem.title,
                 folderId: parseInt(actionItem.folder),
                 description: actionItem.description,
-                active: ActionItemStatus[actionItem.status]
+                status: ActionItemStatus[actionItem.status]
             };
             var request = this.$http({
                 method: "POST",
