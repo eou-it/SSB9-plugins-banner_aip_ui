@@ -6,6 +6,8 @@ import net.hedtech.banner.exceptions.ApplicationException
 import net.hedtech.banner.general.communication.folder.CommunicationFolder
 import org.springframework.security.core.context.SecurityContextHolder
 
+import java.text.MessageFormat
+
 
 class AipAdminController {
 
@@ -91,12 +93,12 @@ class AipAdminController {
         def jsonObj = request.JSON
 
         ActionItem ai = new ActionItem()
-        ai.folderId = jsonObj.folderId
-        ai.status = jsonObj.status
-        ai.title = jsonObj.title
+        ai.folderId = jsonObj.folderId ? jsonObj.folderId : null
+        ai.status = jsonObj.status ? jsonObj.status : null
+        ai.title = jsonObj.title ? jsonObj.title : null
         ai.creatorId = aipUser.bannerId ? aipUser.bannerId : null
         ai.userId = aipUser.bannerId ? aipUser.bannerId : null
-        ai.description = jsonObj.description
+        ai.description = jsonObj.description ? jsonObj.description : null
         ai.activityDate = new Date()
 
         try {
@@ -104,10 +106,12 @@ class AipAdminController {
             response.status = 200
             success = true
         } catch (ApplicationException e) {
-            if ("@@r1:UniqueTitleInFolderError@@".equals( e.getMessage() )) {
-                message = MessageUtility.message( 'actionItem.title.unique', ai.title )
+            if (ActionItemService.UNIQUE_TITLE_ERROR.equals( e.getMessage() )) {
+                message = MessageUtility.message( e.getDefaultMessage(), ai.title )
+            } else if (ActionItemService.FOLDER_VALIDATION_ERROR.equals( e.getMessage() )) {
+                message = MessageUtility.message( e.getDefaultMessage(), MessageFormat.format("{0,number,#}", ai.folderId))
             } else {
-                message = MessageUtility.message( "aip.operation.not.permitted" )
+                message = MessageUtility.message( e.getDefaultMessage() )
             }
         }
         def result = [
