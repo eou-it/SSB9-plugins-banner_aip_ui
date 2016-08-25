@@ -1,5 +1,6 @@
 ///<reference path="../../../../typings/tsd.d.ts"/>
 ///<reference path="../../../common/services/spinnerService.ts"/>
+///<reference path="../../../common/services/admin/adminActionService.ts"/>
 var AIP;
 (function (AIP) {
     var AdminActionItemAddPageCtrl = (function () {
@@ -26,8 +27,7 @@ var AIP;
                 _this.actionItemInfo.status = _this.status[0].id;
                 actionItemStatus.select2({
                     width: "25em",
-                    minimumResultsForSearch: Infinity,
-                    placeholderOption: "first"
+                    minimumResultsForSearch: Infinity
                 });
                 //TODO: find better and proper way to set defalut value in SELECT2 - current one is just dom object hack.
                 $(".actionItemStatus .select2-container.actionItemSelect .select2-chosen")[0].innerHTML = _this.$filter("i18n_aip")(_this.status[0].value);
@@ -73,7 +73,7 @@ var AIP;
             }
         };
         AdminActionItemAddPageCtrl.prototype.cancel = function () {
-            this.$state.go("admin-action-add");
+            this.$state.go("admin-action-list");
         };
         AdminActionItemAddPageCtrl.prototype.save = function () {
             var _this = this;
@@ -85,41 +85,17 @@ var AIP;
                         notiType: "saveSuccess",
                         data: response.data
                     };
+                    _this.$state.go("admin-action-open", { noti: notiParams, data: response.data.newActionItem.id });
                 }
                 else {
-                    _this.saveErrorCallback(response.invalidField, response.errors);
+                    _this.saveErrorCallback(response.data.message);
                 }
             }, function (err) {
                 //TODO:: handle error call
                 console.log(err);
             });
         };
-        AdminActionItemAddPageCtrl.prototype.saveErrorCallback = function (invalidFields, errors) {
-            var _this = this;
-            //todo: iterate through errors given back through contraints
-            /*
-             errors.forEach( function(e, i) {
-             message += (e[i]);
-             });
-             */
-            var message = this.$filter("i18n_aip")("aip.admin.group.add.error.blank");
-            if (errors != null) {
-                message = errors[0];
-            }
-            angular.forEach(invalidFields, function (field) {
-                if (field === "group status") {
-                    message += "</br>" + _this.$filter("i18n_aip")("admin.group.add.error.noStatus");
-                }
-                if (field === "folder") {
-                    message += "</br>" + _this.$filter("i18n_aip")("aip.admin.group.add.error.noFolder");
-                }
-                if (field === "group title") {
-                    message += "</br>" + _this.$filter("i18n_aip")("aip.admin.group.add.error.noTitle");
-                }
-                if (field === "group description") {
-                    message += "</br>" + _this.$filter("i18n_aip")("aip.admin.group.add.error.noDesc");
-                }
-            });
+        AdminActionItemAddPageCtrl.prototype.saveErrorCallback = function (message) {
             var n = new Notification({
                 message: message,
                 type: "error",

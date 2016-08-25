@@ -46,7 +46,7 @@ module AIP {
             this.spinnerService.showSpinner( true );
             var promises = [];
            // console.log(this.$state.params);
-            this.adminGroupService.getGroupDetail( this.$state.params.grp).then((response:IGroupDetailResponse ) => {
+            this.adminGroupService.getGroupDetail( this.$state.params.data).then((response:IGroupDetailResponse ) => {
                 this.groupInfo = response.group;
                 this.groupFolder = response.folder;
 

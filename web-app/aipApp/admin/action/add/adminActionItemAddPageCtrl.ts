@@ -1,5 +1,6 @@
 ///<reference path="../../../../typings/tsd.d.ts"/>
 ///<reference path="../../../common/services/spinnerService.ts"/>
+///<reference path="../../../common/services/admin/adminActionService.ts"/>
 
 declare var register;
 declare var Notification: any;
@@ -7,19 +8,29 @@ declare var notifications: any;
 
 
 module AIP {
+    interface IAdminActionItemAddPageCtrl {
+        validateInput(): boolean;
+        cancel(): void;
+        save(): void;
+        saveErrorCallback(message: string): void;
+    }
+    interface IActionItemAddPageScope {
+        vm: AdminActionItemAddPageCtrl;
+    }
 
-    export class AdminActionItemAddPageCtrl {
+    export class AdminActionItemAddPageCtrl implements IAdminActionItemAddPageCtrl{
         $inject = ["$scope", "$q", "$state", "$filter", "SpinnerService", "AdminActionService" ];
-        status;
-        folders;
-        actionItemInfo;
-        errorMessage;
-        adminActionService;
-        spinnerService;
-        $q;
+        status: [AIP.IStatus];
+        folders: [AIP.IFolder];
+        actionItemInfo: AIP.IActionItemParam|any;
+        errorMessage:any;
+        adminActionService:AIP.AdminActionService;
+        spinnerService:AIP.SpinnerService;
+        $q: ng.IQService;
         $state;
         $filter;
-        constructor($scope, $q, $state, $filter, SpinnerService, AdminActionService) {
+        constructor($scope:IActionItemAddPageScope, $q:ng.IQService, $state, $filter,
+                    SpinnerService:AIP.SpinnerService, AdminActionService:AIP.AdminActionService) {
             $scope.vm = this;
             this.$q = $q;
             this.$state = $state;
@@ -36,14 +47,14 @@ module AIP {
             this.actionItemInfo = {};
             allPromises.push(
                 this.adminActionService.getStatus()
-                    .then((response) => {
+                    .then((response: AIP.IActionItemStatusResponse) => {
                         this.status = response.data;
                         var actionItemStatus:any = $("#actionItemStatus");
                         this.actionItemInfo.status = this.status[0].id;
                         actionItemStatus.select2({
                             width: "25em",
                             minimumResultsForSearch: Infinity,
-                            placeholderOption: "first"
+                            // placeholderOption: "first"
                         });
                         //TODO: find better and proper way to set defalut value in SELECT2 - current one is just dom object hack.
                         $(".actionItemStatus .select2-container.actionItemSelect .select2-chosen")[0].innerHTML = this.$filter("i18n_aip")(this.status[0].value);
@@ -51,7 +62,7 @@ module AIP {
             );
             allPromises.push(
                 this.adminActionService.getFolder()
-                    .then((response) => {
+                    .then((response:AIP.IActionItemFolderResponse) => {
                         this.folders = response.data;
                         var actionItemFolder:any = $("#actionItemFolder");
                         actionItemFolder.select2( {
@@ -88,52 +99,27 @@ module AIP {
             }
         }
         cancel() {
-            this.$state.go("admin-action-add");
+            this.$state.go("admin-action-list");
         }
         save() {
             this.adminActionService.saveActionItem(this.actionItemInfo)
-                .then((response) => {
+                .then((response:AIP.IActionItemSaveResponse) => {
                     var notiParams = {};
                     if(response.data.success) {
                         notiParams = {
                             notiType: "saveSuccess",
                             data: response.data
                         };
-                        // this.$state.go("admin-group-open", {noti: notiParams, grp: response.newGroup[0].groupId});
+                        this.$state.go("admin-action-open", {noti: notiParams, data: response.data.newActionItem.id});
                     } else {
-                        this.saveErrorCallback(response.invalidField, response.errors);
+                        this.saveErrorCallback(response.data.message);
                     }
                 }, (err) => {
                     //TODO:: handle error call
                     console.log(err);
                 });
         }
-        saveErrorCallback(invalidFields, errors) {
-            //todo: iterate through errors given back through contraints
-            /*
-             errors.forEach( function(e, i) {
-             message += (e[i]);
-             });
-             */
-            var message = this.$filter("i18n_aip")("aip.admin.group.add.error.blank")
-            if (errors != null) {
-                message = errors[0]
-            }
-
-            angular.forEach(invalidFields, (field) => {
-                if(field === "group status") {
-                    message += "</br>" + this.$filter("i18n_aip")("admin.group.add.error.noStatus");
-                }
-                if(field === "folder") {
-                    message += "</br>" + this.$filter("i18n_aip")("aip.admin.group.add.error.noFolder");
-                }
-                if(field === "group title") {
-                    message += "</br>" + this.$filter("i18n_aip")("aip.admin.group.add.error.noTitle");
-                }
-                if(field === "group description") {
-                    message += "</br>" + this.$filter("i18n_aip")("aip.admin.group.add.error.noDesc");
-                }
-            });
+        saveErrorCallback(message) {
             var n = new Notification({
                 message: message,
                 type: "error",

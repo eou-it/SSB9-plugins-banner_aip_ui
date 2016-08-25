@@ -1,10 +1,21 @@
 ///<reference path="../../../../typings/tsd.d.ts"/>
+///<reference path="../../../common/services/admin/adminActionService.ts"/>
 
 declare var register: any;
 
-
 module AIP {
-    export class AdminActionListPageCtrl {
+    interface IActionListPageCtrlScope {
+        vm: AdminActionListPageCtrl;
+        $apply():any;
+    }
+    interface IAdminActionListPageCtrl {
+        getHeight(): {height:number};
+        fetchData(query:IActionItemListQuery):ng.IPromise<IActionItemFetchResponse>;
+        selectRecord(data:any):void;
+        goAddPage():void;
+    }
+
+    export class AdminActionListPageCtrl implements IAdminActionListPageCtrl{
         $inject = ["$scope", "$state", "$window", "$filter", "$q", "ENDPOINT", "PAGINATIONCONFIG",
             "AdminActionService"];
         $state;
@@ -12,15 +23,15 @@ module AIP {
         $q: ng.IQService;
         endPoint;
         paginationConfig;
-        actionListService;
+        actionListService: AIP.AdminActionService;
         draggableColumnNames;
         gridData;
-        header;
+        header: [AIP.IActionItemHeader];
         searchConfig;
         mobileConfig;
-        mobileSize;
-        constructor($scope, $state, $window, $filter, $q, ENDPOINT, PAGINATIONCONFIG,
-            AdminActionService) {
+        mobileSize: boolean;
+        constructor($scope: IActionListPageCtrlScope, $state, $window, $filter, $q, ENDPOINT, PAGINATIONCONFIG,
+            AdminActionService: AIP.AdminActionService) {
             $scope.vm = this;
             this.$state = $state;
             this.$filter = $filter;
@@ -130,10 +141,11 @@ module AIP {
         }
 
 
-        fetchData(query) {
+        fetchData(query:AIP.IActionItemListQuery) {
+
             var deferred = this.$q.defer();
             this.actionListService.fetchData(query)
-                .then((response) => {
+                .then((response:AIP.IActionItemFetchResponse) => {
                     // this.gridData = response;
                     // this.gridData.header = this.header;
                     deferred.resolve(response);

@@ -294,7 +294,7 @@ aip-list .aip-list-container  {
     overflow-y:auto;
     font-size:14px;
 }
-.groupListContainer .groupListTable #groupDataTableSearch  {
+  .groupListContainer .groupListTable #groupDataTableSearch  {
     display:none;
 }
   .groupListContainer .row  {
@@ -400,6 +400,10 @@ aip-list .aip-list-container  {
     bottom:0;
     right:auto;
     left:8px;
+}
+        .actionItemAddContainer .actionItemInfo .actionItemInfoRow .actionItemElement .titleValue.supplement.dimmed  {
+    color:gray;
+    font-style:italic;
 }
         .actionItemAddContainer .actionItemInfo .actionItemInfoRow .actionItemElement [lang='ar'] .titleValue.supplement  {
     right:8px;

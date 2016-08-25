@@ -36,8 +36,7 @@ var AIP;
                 groupStatus
                     .select2({
                     width: "25em",
-                    minimumResultsForSearch: Infinity,
-                    placeholderOption: 'first'
+                    minimumResultsForSearch: Infinity
                 });
                 //TODO: find better and proper way to set defalut value in SELECT2 - current one is just dom object hack.
                 $(".groupStatus .select2-container.groupSelect .select2-chosen")[0].innerHTML = _this.$filter("i18n_aip")(_this.status[0].value);
@@ -65,7 +64,7 @@ var AIP;
                         notiType: "saveSuccess",
                         data: response
                     };
-                    _this.$state.go("admin-group-open", { noti: notiParams, grp: response.newGroup[0].groupId });
+                    _this.$state.go("admin-group-open", { noti: notiParams, data: response.newGroup[0].groupId });
                 }
                 else {
                     _this.saveErrorCallback(response.invalidField, response.errors);

@@ -17,13 +17,6 @@ var AIP;
             this.$filter = $filter;
             this.ENDPOINT = ENDPOINT;
         }
-        AdminActionService.prototype.getActionLists = function () {
-            var request = this.$http({
-                method: "GET",
-                url: this.ENDPOINT.admin.actionList
-            });
-            return request;
-        };
         AdminActionService.prototype.fetchData = function (query) {
             var deferred = this.$q.defer();
             var url = this.ENDPOINT.admin.actionItemList + "?" +
@@ -78,6 +71,14 @@ var AIP;
                 method: "POST",
                 data: params,
                 url: this.ENDPOINT.admin.createActionItem
+            });
+            return request;
+        };
+        AdminActionService.prototype.getActionItemDetail = function (actionItemId) {
+            var request = this.$http({
+                method: "POST",
+                url: this.ENDPOINT.admin.openActionItem,
+                data: { actionItemId: actionItemId }
             });
             return request;
         };

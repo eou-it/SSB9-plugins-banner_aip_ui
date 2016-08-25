@@ -25,7 +25,7 @@ var AIP;
             this.spinnerService.showSpinner(true);
             var promises = [];
             // console.log(this.$state.params);
-            this.adminGroupService.getGroupDetail(this.$state.params.grp).then(function (response) {
+            this.adminGroupService.getGroupDetail(this.$state.params.data).then(function (response) {
                 _this.groupInfo = response.group;
                 _this.groupFolder = response.folder;
                 $("#title-panel h1").html(_this.groupInfo.title);

@@ -1,0 +1,44 @@
+
+<div class="actionItemOpenContainer">
+    <div class="actionItemInfo">
+        <div class="row actionItemInfoRow">
+            <div class="actionItemElement col-xs-12 col-sm-12">
+                <div class="row">
+                    <xe-tab-nav>
+                        <xe-tab-panel heading="{{'aip.common.overview'|i18n_aip}}">
+                            <div id="openActionItemDetail" ng-controller="AdminActionItemOpenPageCtrl">
+                                <div class="actionItemElement actionItemDetail col-xs-12 col-sm-8">
+                                    <h3>{{"aip.common.title"|i18n_aip}}</h3>
+                                    <p class="openActionItemTitle">{{vm.actionItem.title}}</p>
+                                    <h3>{{"aip.common.folder"|i18n_aip}}</h3>
+                                    <p class="openActionItemFolder">{{vm.actionItem.folder.name}}</p>
+                                    <h3>{{"aip.common.status"|i18n_aip}}</h3>
+                                    <p class="openActionItemStatus">{{vm.actionItem.status}}</p>
+                                    <h3>{{"aip.common.description"|i18n_aip}}</h3>
+                                    <p class="openActionItemDesc">{{vm.actionItem.description}}</p>
+                                </div>
+
+                                <div class="actionItemElement col-xs-12 col-sm-4">
+                                    <h3>{{"aip.common.activity"|i18n_aip}}</h3>
+                                    <hr />
+                                    <div class="actionItemElement">
+                                        <h4>{{"aip.common.last.updated.by"|i18n_aip}}</h4>
+                                        <p class="openActionItemLastUpdatedBy">{{vm.actionItem.creatorId}}</p>
+                                    </div>
+
+                                    <hr />
+                                    <div class="actionItemElement">
+                                        <h4>{{"aip.common.activity.date"|i18n_aip}}</h4>
+                                        <p class="openActionItemActivityDate">{{vm.actionItem.activityDate}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </xe-tab-panel>
+                        <xe-tab-panel heading="{{'aip.common.order.action.items'|i18n_aip}}">
+                        </xe-tab-panel>
+                    </xe-tab-nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -13,8 +13,7 @@ var AIP;
             var existItemTitle = Object.keys(this.breadcrumbs);
             var itemTitle = this.$filter('i18n_aip')(item.title);
             if (existItemTitle.indexOf(item.title) === -1) {
-                if ((existItemTitle[existItemTitle.length - 1] === 'aip.admin.group.add' && item.title === 'aip.admin.group.open') ||
-                    (existItemTitle[existItemTitle.length - 1] === 'aip.admin.group.open' && item.title === 'aip.admin.group.add')) {
+                if (this.checkSkip(existItemTitle[existItemTitle.length - 1], item.title)) {
                     delete this.breadcrumbs[existItemTitle[existItemTitle.length - 1]];
                 }
                 this.breadcrumbs[item.title] = item.url;
@@ -28,6 +27,21 @@ var AIP;
                 this.breadcrumbs = temp;
             }
             this.draw(item.title);
+        };
+        AIPBreadcrumbService.prototype.checkSkip = function (newVal, oldVal) {
+            if (oldVal === "aip.admin.group.add" && newVal === "aip.admin.group.open") {
+                return true;
+            }
+            if (oldVal === "aip.admin.group.open" && newVal === "aip.admin.group.add") {
+                return true;
+            }
+            if (oldVal === "aip.admin.action.add.actionItem" && newVal === "aip.admin.action.open") {
+                return true;
+            }
+            if (oldVal === "aip.admin.action.open" && newVal === "aip.admin.action.add.actionItem") {
+                return true;
+            }
+            return false;
         };
         AIPBreadcrumbService.prototype.draw = function (title) {
             var _this = this;

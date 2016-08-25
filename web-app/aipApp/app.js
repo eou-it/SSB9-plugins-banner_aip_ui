@@ -53,6 +53,15 @@ var bannerAIPApp = angular.module("bannerAIP", [
                 label: "aip.admin.action.add.actionItem",
                 url: "/aip/admin#/action/add"}
         },
+        "admin-action-open": {
+            url: "/action/open",
+            templateUrl:"admin/action/open/adminActionItemOpenPage.html",
+            controller:"AdminActionItemOpenPageCtrl",
+            breadcrumb: {
+                label: "aip.admin.action.open",
+                url: "/aip/admin#/action/open",
+            }
+        },
         "admin-group-list": {
             url: "/group",
             templateUrl: "admin/group/list/adminGroupListPage.html",
@@ -105,7 +114,8 @@ var bannerAIPApp = angular.module("bannerAIP", [
 
             actionItemList: aipAppAbsPath + "aipAdmin/actionItemList",
             actionItemStatus: aipAppAbsPath + "aipAdmin/adminActionItemStatus",
-            createActionItem: aipAppAbsPath + "aipAdmin/addActionItem"
+            createActionItem: aipAppAbsPath + "aipAdmin/addActionItem",
+            openActionItem: aipAppAbsPath + "aipAdmin/openActionItem"
         }
     })
     .constant("PAGINATIONCONFIG",
@@ -130,7 +140,7 @@ var bannerAIPApp = angular.module("bannerAIP", [
                     url: item.url,
                     templateUrl: APP_ROOT + item.templateUrl,
                     controller: item.controller,
-                    params: {noti:undefined, grp:undefined, grpFolder:undefined, grpStatus:undefined},
+                    params: {noti:undefined, data:undefined},
                     onEnter: function($stateParams, $filter) {
                         this.data.breadcrumbs.url = item.breadcrumb.url;
                         this.data.breadcrumbs.title = item.breadcrumb.label;
@@ -235,6 +245,8 @@ var bannerAIPApp = angular.module("bannerAIP", [
             $.i18n.prop("aip.admin.action.add.error.exceedMax");
             $.i18n.prop("aip.admin.action.add.maxLength");
             $.i18n.prop("aip.admin.action.add.description.placeholder");
+            $.i18n.prop("aip.admin.action.open");
+            $.i18n.prop("actionItem.title.unique");
 
             $.i18n.prop("aip.admin.selectable.action.items");
             $.i18n.prop("aip.admin.selectable.groups");

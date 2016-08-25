@@ -6,10 +6,101 @@
 declare var register;
 
 module AIP {
-
-    interface IAdminActionService {
-
+    export interface IActionItemListQuery {
+        searchString: string;
+        sortColumnName: string;
+        ascending: string;
+        offset: string;
+        max: string;
     }
+    interface IActionItem {
+        actionItemId: number;
+        actionItemActivityDate: Date,
+        actionItemCreateDate: Date,
+        actionItemCreatorId: string;
+        actionItemDesc: string;
+        actionItemName: string;
+        actionItemStatus: string|number;
+        folderId: string;
+        folderName: string;
+    }
+    interface IActionItem2 {
+        id: number;
+        activityDate: Date,
+        createDate: Date,
+        creatorId: string;
+        description: string;
+        title: string;
+        status: string|number;
+        folder?: IFolder;
+        folderId?: string;
+        folderName?: string;
+    }
+    export interface IActionItemHeader {
+        name: string;
+        title: string;
+        ariaLabel?: string;
+        options: {
+            visible: boolean,
+            inSortable?: boolean,
+            sortable?: boolean,
+            ascending?: boolean,
+            columnShowHide?: boolean
+        },
+        width: any
+    }
+    export interface IFolder {
+        id: number;
+        dataOrigin: string;
+        description: string;
+        internal: boolean;
+        lastModified: Date;
+        lastModifiedBy: string;
+        name: string;
+    }
+    export interface IStatus {
+        id: number;
+        value: string;
+    }
+    export interface IActionItemFetchResponse {
+        result: [IActionItem],
+        length: number;
+        header: [IActionItemHeader]
+    }
+    export interface IActionItemFolderResponse {
+        data: [IFolder];
+    }
+    export interface IActionItemStatusResponse {
+        data: [IStatus]
+    }
+    export interface IActionItemParam {
+        title: string;
+        status: string;
+        folderId: number;
+        description: string;
+    }
+    export interface IActionItemSaveResponse {
+        data: {
+            success: boolean;
+            message: string;
+            newActionItem: IActionItem2;
+        };
+    }
+    export interface IActionItemOpenResponse {
+        data: {
+            success: boolean;
+            errors: [any];
+            actionItem: IActionItem2;
+        };
+    }
+    interface IAdminActionService {
+        fetchData(query:IActionItemListQuery):ng.IPromise<IActionItemFetchResponse>;
+        getFolder(): ng.IHttpPromise<IActionItemFolderResponse>;
+        getStatus(): ng.IHttpPromise<IActionItemStatusResponse>;
+        saveActionItem(actionItem: IActionItemParam): ng.IHttpPromise<IActionItemSaveResponse>;
+        getActionItemDetail(actionItemId:number): ng.IHttpPromise<IActionItemOpenResponse>;
+    }
+
     enum ActionItemStatus {
         pending=0, active=1, inactive=2
     }
@@ -25,14 +116,8 @@ module AIP {
             this.$filter = $filter;
             this.ENDPOINT = ENDPOINT;
         }
-        getActionLists() {
-            var request = this.$http({
-                method: "GET",
-                url: this.ENDPOINT.admin.actionList
-            });
-            return request;
-        }
-        fetchData (query) {
+
+        fetchData (query:IActionItemListQuery) {
             var deferred = this.$q.defer();
             var url = this.ENDPOINT.admin.actionItemList + "?" +
                 '?searchString=' + (query.searchString || '') +
@@ -87,6 +172,15 @@ module AIP {
                 url: this.ENDPOINT.admin.createActionItem
             });
             return request;
+        }
+        getActionItemDetail(actionItemId) {
+            var request = this.$http({
+                method: "POST",
+                url: this.ENDPOINT.admin.openActionItem,
+                data: {actionItemId: actionItemId}
+            });
+            return request;
+
         }
     }
 }

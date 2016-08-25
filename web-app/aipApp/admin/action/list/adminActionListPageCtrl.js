@@ -1,4 +1,5 @@
 ///<reference path="../../../../typings/tsd.d.ts"/>
+///<reference path="../../../common/services/admin/adminActionService.ts"/>
 var AIP;
 (function (AIP) {
     var AdminActionListPageCtrl = (function () {
