@@ -288,6 +288,32 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
 
 
     @Test
+    void testCreateActionItemMaxSizeError() {
+        def admin = PersonUtility.getPerson( "BCMADMIN" ) // role: advisor
+        assertNotNull admin
+
+        def auth = selfServiceBannerAuthenticationProvider.authenticate(
+                new UsernamePasswordAuthenticationToken( admin.bannerId, '111111' ) )
+        SecurityContextHolder.getContext().setAuthentication( auth )
+
+        def folderId = CommunicationFolder.fetchByName( 'AIPGeneral' ).id
+
+        def requestObj = [:]
+        requestObj.status = "123456789012345678901234567890123"
+        requestObj.folderId = folderId
+        requestObj.title = "max size title 4tr0"
+        requestObj.description = "<p><strong>This is a group description</p></strong>"
+        //requestObj.userId = "CSRADM001"
+        controller.request.method = "POST"
+        controller.request.json = requestObj
+        controller.addActionItem()
+        def answer = JSON.parse( controller.response.contentAsString )
+        assertFalse( answer.success )
+        assertEquals( "Operation Not Permitted", answer.message )
+    }
+
+
+    @Test
     void testCreateActionItemNoDescription() {
 
         def admin = PersonUtility.getPerson( "BCMADMIN" ) // role: advisor
@@ -336,7 +362,7 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
 
 
     @Test
-    void testCreateActionItemOperationNotPermitted() {
+    void testCreateActionItemNoStatus() {
 
         def admin = PersonUtility.getPerson( "BCMADMIN" ) // role: advisor
         assertNotNull admin
@@ -358,7 +384,111 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
         controller.addActionItem()
         def answer = JSON.parse( controller.response.contentAsString )
         assertFalse( answer.success )
-        assertEquals( "Operation Not Permitted", answer.message )
+        assertEquals( "The Status can not be null or empty", answer.message )
+    }
+
+
+    @Test
+    void testCreateActionItemNoTitle() {
+
+        def admin = PersonUtility.getPerson( "BCMADMIN" ) // role: advisor
+        assertNotNull admin
+
+        def auth = selfServiceBannerAuthenticationProvider.authenticate(
+                new UsernamePasswordAuthenticationToken( admin.bannerId, '111111' ) )
+        SecurityContextHolder.getContext().setAuthentication( auth )
+
+        def folderId = CommunicationFolder.fetchByName( 'AIPGeneral' ).id
+
+        def requestObj = [:]
+        requestObj.status = 'Pending'
+        requestObj.folderId = folderId
+        requestObj.title = ''
+        requestObj.description = null
+        //requestObj.userId = "CSRADM001"
+        controller.request.method = "POST"
+        controller.request.json = requestObj
+        controller.addActionItem()
+        def answer = JSON.parse( controller.response.contentAsString )
+        assertFalse( answer.success )
+        assertEquals( "The Title can not be null or empty", answer.message )
+    }
+
+
+    @Test
+    void testCreateActionItemNoFolderId() {
+
+        def admin = PersonUtility.getPerson( "BCMADMIN" ) // role: advisor
+        assertNotNull admin
+
+        def auth = selfServiceBannerAuthenticationProvider.authenticate(
+                new UsernamePasswordAuthenticationToken( admin.bannerId, '111111' ) )
+        SecurityContextHolder.getContext().setAuthentication( auth )
+
+        def requestObj = [:]
+        requestObj.status = 'Pending'
+        requestObj.folderId = ''
+        requestObj.title = 'title 4238j'
+        requestObj.description = null
+        //requestObj.userId = "CSRADM001"
+        controller.request.method = "POST"
+        controller.request.json = requestObj
+        controller.addActionItem()
+        def answer = JSON.parse( controller.response.contentAsString )
+        assertFalse( answer.success )
+        assertEquals( "The Folder Id can not be null or empty", answer.message )
+    }
+
+
+    @Test
+    void testCreateActionItemTitleNotUniqueInFolder() {
+
+        def admin = PersonUtility.getPerson( "BCMADMIN" ) // role: advisor
+        assertNotNull admin
+
+        def auth = selfServiceBannerAuthenticationProvider.authenticate(
+                new UsernamePasswordAuthenticationToken( admin.bannerId, '111111' ) )
+        SecurityContextHolder.getContext().setAuthentication( auth )
+
+        def ai = ActionItem.fetchActionItems(  )[7]
+
+        def requestObj = [:]
+        requestObj.status = 'Pending'
+        requestObj.folderId = ai.folderId
+        requestObj.title = ai.title
+        requestObj.description = null
+        //requestObj.userId = "CSRADM001"
+        controller.request.method = "POST"
+        controller.request.json = requestObj
+        controller.addActionItem()
+        def answer = JSON.parse( controller.response.contentAsString )
+        assertFalse( answer.success )
+        assertEquals( "The Title ( " + ai.title + " ) must be unique within the selected Folder", answer.message )
+    }
+
+
+    @Test
+    void testCreateActionItemFolderValidationError() {
+        def BAD_FOLDER_ID = 9842374
+        def admin = PersonUtility.getPerson( "BCMADMIN" ) // role: advisor
+        assertNotNull admin
+
+        def auth = selfServiceBannerAuthenticationProvider.authenticate(
+                new UsernamePasswordAuthenticationToken( admin.bannerId, '111111' ) )
+        SecurityContextHolder.getContext().setAuthentication( auth )
+
+        def requestObj = [:]
+        requestObj.status = 'Pending'
+        requestObj.folderId = BAD_FOLDER_ID
+        requestObj.title = 'a title 49rtu423'
+        requestObj.description = null
+        //requestObj.userId = "CSRADM001"
+        controller.request.method = "POST"
+        controller.request.json = requestObj
+        controller.addActionItem()
+        def answer = JSON.parse( controller.response.contentAsString )
+        assertFalse( answer.success )
+        assertEquals( "The Folder with Id " + BAD_FOLDER_ID + " does not exist", answer.message )
     }
 
 
