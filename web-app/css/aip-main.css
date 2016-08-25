@@ -325,13 +325,16 @@ aip-list .aip-list-container {
           font-weight: bold; }
         .actionItemAddContainer .actionItemInfo .actionItemInfoRow .actionItemElement .titleValue.supplement {
           font-size: 1.0em;
+          font-style: italic;
           position: absolute;
           bottom: 0;
           left: auto;
           right: 8px; }
         .actionItemAddContainer .actionItemInfo .actionItemInfoRow .actionItemElement .titleValue.supplement.dimmed {
           color: gray;
-          font-style: italic; }
+          font-style: italic;
+          position: relative;
+          padding: 0 24px; }
         .actionItemAddContainer .actionItemInfo .actionItemInfoRow .actionItemElement [lang='ar'] .titleValue.supplement {
           left: 8px;
           right: auto; }

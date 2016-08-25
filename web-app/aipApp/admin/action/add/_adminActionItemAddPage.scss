@@ -27,6 +27,7 @@
         }
         .titleValue.supplement {
           font-size: 1.0em;
+          font-style: italic;
           position: absolute;
           bottom: 0;
           left: auto;
@@ -35,6 +36,8 @@
         .titleValue.supplement.dimmed {
           color: gray;
           font-style: italic;
+          position: relative;
+          padding: 0 24px;
         }
         [lang='ar'] .titleValue.supplement {
           left: 8px;

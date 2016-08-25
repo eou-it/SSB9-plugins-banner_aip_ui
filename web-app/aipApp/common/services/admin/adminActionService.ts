@@ -102,7 +102,7 @@ module AIP {
     }
 
     enum ActionItemStatus {
-        pending=0, active=1, inactive=2
+        Pending=0, Active=1, Inactive=2
     }
     export class AdminActionService implements IAdminActionService{
         static $inject=["$http", "$q", "$filter", "ENDPOINT"];

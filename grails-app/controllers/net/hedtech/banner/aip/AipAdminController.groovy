@@ -30,13 +30,13 @@ class AipAdminController {
         def model = [
                 [
                         "id"   : 0,
-                        "value": "pending"
+                        "value": "Pending"
                 ], [
                         "id"   : 1,
-                        "value": "active"
+                        "value": "Active"
                 ], [
                         "id"   : 2,
-                        "value": "inactive"
+                        "value": "Inactive"
                 ]
         ]
         render model as JSON

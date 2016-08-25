@@ -6,9 +6,9 @@ var AIP;
 (function (AIP) {
     var ActionItemStatus;
     (function (ActionItemStatus) {
-        ActionItemStatus[ActionItemStatus["pending"] = 0] = "pending";
-        ActionItemStatus[ActionItemStatus["active"] = 1] = "active";
-        ActionItemStatus[ActionItemStatus["inactive"] = 2] = "inactive";
+        ActionItemStatus[ActionItemStatus["Pending"] = 0] = "Pending";
+        ActionItemStatus[ActionItemStatus["Active"] = 1] = "Active";
+        ActionItemStatus[ActionItemStatus["Inactive"] = 2] = "Inactive";
     })(ActionItemStatus || (ActionItemStatus = {}));
     var AdminActionService = (function () {
         function AdminActionService($http, $q, $filter, ENDPOINT) {
