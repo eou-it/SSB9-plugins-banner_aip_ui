@@ -119,24 +119,16 @@ module AIP {
 
         fetchData (query:IActionItemListQuery) {
             var deferred = this.$q.defer();
+            var realMax = parseInt(query.max) - parseInt(query.offset);
             var url = this.ENDPOINT.admin.actionItemList + "?" +
                 '?searchString=' + (query.searchString || '') +
                 '&sortColumnName=' + (query.sortColumnName || 'actionItemName') +
-                '&ascending=' + query.ascending +
-                '&offset=' + (query.offset || '') +
-                '&max=' + (query.max || '');
-            var realMax = parseInt(query.max) - parseInt(query.offset);
-            var params = {
-                filterName: query.searchString||"%",
-                sortColumn: query.sortColumnName||"id",
-                sortAscending: query.ascending||false,
-                max: realMax||"",
-                offset: query.offset || 0
-            };
+                '&ascending=' + (query.ascending.toString() || "") +
+                '&offset=' + (query.offset.toString() || '') +
+                '&max=' + (realMax.toString() || '');
             this.$http({
-                method: "POST",
-                url: this.ENDPOINT.admin.actionItemList,
-                data: params
+                method: "GET",
+                url: url
             }).then((response:any)=> {
                 deferred.resolve(response.data);
             }, (data) => {
@@ -147,14 +139,14 @@ module AIP {
         };
         getFolder() {
             var request = this.$http({
-                method: "POST",
+                method: "GET",
                 url: this.ENDPOINT.admin.folders
             });
             return request;
         };
         getStatus() {
             var request = this.$http({
-                method: "POST",
+                method: "GET",
                 url: this.ENDPOINT.admin.actionItemStatus
             });
             return request;
@@ -175,9 +167,8 @@ module AIP {
         }
         getActionItemDetail(actionItemId) {
             var request = this.$http({
-                method: "POST",
-                url: this.ENDPOINT.admin.openActionItem,
-                data: {actionItemId: actionItemId}
+                method: "GET",
+                url: this.ENDPOINT.admin.openActionItem + "?actionItemId=" + actionItemId.toString()
             });
             return request;
 

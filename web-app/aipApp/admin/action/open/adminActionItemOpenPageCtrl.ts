@@ -35,7 +35,13 @@ module AIP {
             this.adminActionService.getActionItemDetail( this.$state.params.data)
                 .then((response:AIP.IActionItemOpenResponse) => {
                     this.actionItem = response.data.actionItem;
-                    $("#title-panel h1" ).html(this.actionItem.title);
+                    $("#title-panel h1" ).html(this.actionItem.actionItemName);
+                    $("p.openActionItemTitle" ).html(this.actionItem.actionItemName);
+                    $("p.openActionItemFolder" ).html(this.actionItem.folderName);
+                    $("p.openActionItemStatus" ).html(this.actionItem.actionItemStatus);
+                    $("p.openActionItemDesc" ).html(this.actionItem.actionItemDesc);
+                    $("p.openActionItemActivityDate" ).html( this.actionItem.actionItemActivityDate);
+                    $("p.openActionItemLastUpdatedBy" ).html(this.actionItem.actionItemUserId);
                 }, ( err ) => {
                     console.log( err );
                 } );

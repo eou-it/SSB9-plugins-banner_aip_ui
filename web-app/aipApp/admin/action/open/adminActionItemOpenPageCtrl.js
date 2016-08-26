@@ -23,7 +23,13 @@ var AIP;
             this.adminActionService.getActionItemDetail(this.$state.params.data)
                 .then(function (response) {
                 _this.actionItem = response.data.actionItem;
-                $("#title-panel h1").html(_this.actionItem.title);
+                $("#title-panel h1").html(_this.actionItem.actionItemName);
+                $("p.openActionItemTitle").html(_this.actionItem.actionItemName);
+                $("p.openActionItemFolder").html(_this.actionItem.folderName);
+                $("p.openActionItemStatus").html(_this.actionItem.actionItemStatus);
+                $("p.openActionItemDesc").html(_this.actionItem.actionItemDesc);
+                $("p.openActionItemActivityDate").html(_this.actionItem.actionItemActivityDate);
+                $("p.openActionItemLastUpdatedBy").html(_this.actionItem.actionItemUserId);
             }, function (err) {
                 console.log(err);
             });

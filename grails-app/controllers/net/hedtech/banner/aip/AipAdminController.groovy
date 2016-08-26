@@ -236,23 +236,22 @@ class AipAdminController {
 
     def actionItemList( ) {
 
-        def jsonObj = request.JSON
-        def params = [filterName:jsonObj.filterName,
-                      sortColumn:jsonObj.sortColumn,
-                      sortAscending:jsonObj.sortAscending,
-                      max:jsonObj.max,
-                      offset:jsonObj.offset]
+        def paramObj = [filterName: params.searchString ?: "%",
+                      sortColumn: params.sortColumnName ?: "id",
+                      sortAscending: params.ascending ? params.ascending.toBoolean() : false,
+                      max: params.max.toInteger(),
+                      offset: params.offset ? params.offset.toInteger(): 0]
 
-        def results = actionItemReadOnlyService.listActionItemsPageSort( params )
+        def results = actionItemReadOnlyService.listActionItemsPageSort( paramObj )
         response.status = 200
 
         def actionItemHeadings = [
                 [name: "actionItemId", title: "id", options: [visible: false, isSortable: true]],
-                [name: "actionItemName", title: MessageUtility.message( "aip.common.title" ), options: [visible: true, isSortable: true, ascending:jsonObj.sortAscending], width: 0],
-                [name: "actionItemStatus", title: MessageUtility.message( "aip.common.status" ), options: [visible: true, isSortable: true, ascending:jsonObj.sortAscending], width: 0],
-                [name: "folderName", title: MessageUtility.message( "aip.common.folder" ), options: [visible: true, isSortable: true, ascending:jsonObj.sortAscending], width: 0],
-                [name: "actionItemActivityDate", title: MessageUtility.message( "aip.common.activity.date" ), options: [visible: true, isSortable: true, ascending:jsonObj.sortAscending], width: 0],
-                [name: "actioncdItemUserId", title: MessageUtility.message( "aip.common.last.updated.by" ), options: [visible: true, isSortable: true, ascending:jsonObj.sortAscending], width: 0]
+                [name: "actionItemName", title: MessageUtility.message( "aip.common.title" ), options: [visible: true, isSortable: true, ascending:paramObj.sortAscending], width: 0],
+                [name: "actionItemStatus", title: MessageUtility.message( "aip.common.status" ), options: [visible: true, isSortable: true, ascending:paramObj.sortAscending], width: 0],
+                [name: "folderName", title: MessageUtility.message( "aip.common.folder" ), options: [visible: true, isSortable: true, ascending:paramObj.sortAscending], width: 0],
+                [name: "actionItemActivityDate", title: MessageUtility.message( "aip.common.activity.date" ), options: [visible: true, isSortable: true, ascending:paramObj.sortAscending], width: 0],
+                [name: "actioncdItemUserId", title: MessageUtility.message( "aip.common.last.updated.by" ), options: [visible: true, isSortable: true, ascending:paramObj.sortAscending], width: 0]
         ]
 
         results.header = actionItemHeadings
@@ -268,8 +267,7 @@ class AipAdminController {
             return
         }
         */
-        def jsonObj = request.JSON;
-        def actionItemId = jsonObj.actionItemId;
+        def actionItemId = params.actionItemId;
 
         if (!actionItemId) {
             response.sendError( 403 )
@@ -279,7 +277,7 @@ class AipAdminController {
         def success = false
         def errors = []
 
-        def actionItem = actionItemReadOnlyService.getActionItemROById( actionItemId )
+        def actionItem = actionItemReadOnlyService.getActionItemROById( actionItemId.toInteger() )
 
         if (actionItem) {
             response.status = 200

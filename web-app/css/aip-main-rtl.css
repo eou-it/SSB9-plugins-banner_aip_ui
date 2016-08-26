@@ -396,6 +396,7 @@ aip-list .aip-list-container  {
 }
         .actionItemAddContainer .actionItemInfo .actionItemInfoRow .actionItemElement .titleValue.supplement  {
     font-size:1.0em;
+    font-style:italic;
     position:absolute;
     bottom:0;
     right:auto;
@@ -404,6 +405,8 @@ aip-list .aip-list-container  {
         .actionItemAddContainer .actionItemInfo .actionItemInfoRow .actionItemElement .titleValue.supplement.dimmed  {
     color:gray;
     font-style:italic;
+    position:relative;
+    padding:0 24px;
 }
         .actionItemAddContainer .actionItemInfo .actionItemInfoRow .actionItemElement [lang='ar'] .titleValue.supplement  {
     right:8px;

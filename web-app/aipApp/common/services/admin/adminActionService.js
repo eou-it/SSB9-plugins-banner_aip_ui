@@ -19,24 +19,16 @@ var AIP;
         }
         AdminActionService.prototype.fetchData = function (query) {
             var deferred = this.$q.defer();
+            var realMax = parseInt(query.max) - parseInt(query.offset);
             var url = this.ENDPOINT.admin.actionItemList + "?" +
                 '?searchString=' + (query.searchString || '') +
                 '&sortColumnName=' + (query.sortColumnName || 'actionItemName') +
-                '&ascending=' + query.ascending +
-                '&offset=' + (query.offset || '') +
-                '&max=' + (query.max || '');
-            var realMax = parseInt(query.max) - parseInt(query.offset);
-            var params = {
-                filterName: query.searchString || "%",
-                sortColumn: query.sortColumnName || "id",
-                sortAscending: query.ascending || false,
-                max: realMax || "",
-                offset: query.offset || 0
-            };
+                '&ascending=' + (query.ascending.toString() || "") +
+                '&offset=' + (query.offset.toString() || '') +
+                '&max=' + (realMax.toString() || '');
             this.$http({
-                method: "POST",
-                url: this.ENDPOINT.admin.actionItemList,
-                data: params
+                method: "GET",
+                url: url
             }).then(function (response) {
                 deferred.resolve(response.data);
             }, function (data) {
@@ -47,7 +39,7 @@ var AIP;
         ;
         AdminActionService.prototype.getFolder = function () {
             var request = this.$http({
-                method: "POST",
+                method: "GET",
                 url: this.ENDPOINT.admin.folders
             });
             return request;
@@ -55,7 +47,7 @@ var AIP;
         ;
         AdminActionService.prototype.getStatus = function () {
             var request = this.$http({
-                method: "POST",
+                method: "GET",
                 url: this.ENDPOINT.admin.actionItemStatus
             });
             return request;
@@ -76,9 +68,8 @@ var AIP;
         };
         AdminActionService.prototype.getActionItemDetail = function (actionItemId) {
             var request = this.$http({
-                method: "POST",
-                url: this.ENDPOINT.admin.openActionItem,
-                data: { actionItemId: actionItemId }
+                method: "GET",
+                url: this.ENDPOINT.admin.openActionItem + "?actionItemId=" + actionItemId.toString()
             });
             return request;
         };
