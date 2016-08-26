@@ -259,6 +259,8 @@ class AipAdminController {
 
         render results as JSON
     }
+
+
     def openActionItem() {
         /* //TODO: determine access in later US
         if (!hasAccess( 'read' )) {
@@ -268,7 +270,6 @@ class AipAdminController {
         */
         def jsonObj = request.JSON;
         def actionItemId = jsonObj.actionItemId;
-        def actionItemDesc;
 
         if (!actionItemId) {
             response.sendError( 403 )
@@ -278,43 +279,24 @@ class AipAdminController {
         def success = false
         def errors = []
 
-        def actionItem = actionItemService.getActionItemById( actionItemId )
-        def folder = CommunicationFolder.fetchById( actionItem.folderId )
-
+        def actionItem = actionItemReadOnlyService.getActionItemROById( actionItemId )
 
         if (actionItem) {
             response.status = 200
             success = true
         }
 
-        if (!actionItem) {
-            actionItemDesc = MessageUtility.message( "aip.placeholder.nogroups" )
-        } else {
-            actionItemDesc = actionItem.description
-        }
-
-        def actionItemObj = [
-                id             : actionItem?.id,
-                title          : actionItem?.title,
-                status         : actionItem?.status,
-                userId         : actionItem?.userId,
-                description    : actionItemDesc,
-                activityDate   : actionItem?.activityDate,
-                version        : actionItem?.version,
-                creatorId      : actionItem?.creatorId,
-                folder          : folder
-        ]
-
         def model = [
-                success: success,
-                errors : errors,
-                actionItem  : actionItemObj,
+                success   : success,
+                errors    : errors,
+                actionItem: actionItem,
         ]
 
         render model as JSON
     }
 
-    def groupList( ) {
+
+    def groupList() {
 
         def jsonObj = request.JSON
         def params = [filterName:jsonObj.filterName,
