@@ -685,4 +685,45 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
         assertEquals( myActionItem.folderDesc, answer.actionItem.folderDesc )
         assertEquals( myActionItem.folderId, answer.actionItem.folderId )
     }
+
+
+    @Test
+    void testOpenActionItemNoId() {
+        def admin = PersonUtility.getPerson( "BCMADMIN" ) // role: admin
+        assertNotNull admin
+
+        def auth = selfServiceBannerAuthenticationProvider.authenticate(
+                new UsernamePasswordAuthenticationToken( admin.bannerId, '111111' ) )
+        SecurityContextHolder.getContext().setAuthentication( auth )
+
+        def requestObj = [:]
+        requestObj.actionItemId = null
+
+        controller.request.method = "POST"
+        controller.request.json = requestObj
+
+        controller.openActionItem()
+        assertEquals 403, controller.response.status
+    }
+
+
+    @Test
+    void testOpenActionItemBadId() {
+        def admin = PersonUtility.getPerson( "BCMADMIN" ) // role: admin
+        assertNotNull admin
+
+        def auth = selfServiceBannerAuthenticationProvider.authenticate(
+                new UsernamePasswordAuthenticationToken( admin.bannerId, '111111' ) )
+        SecurityContextHolder.getContext().setAuthentication( auth )
+
+        def requestObj = [:]
+        requestObj.actionItemId = 99995511
+
+        controller.request.method = "POST"
+        controller.request.json = requestObj
+
+        controller.openActionItem()
+        def answer = JSON.parse( controller.response.contentAsString )
+        assertEquals( false, answer.success )
+    }
 }
