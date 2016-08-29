@@ -463,7 +463,7 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
         controller.addActionItem()
         def answer = JSON.parse( controller.response.contentAsString )
         assertFalse( answer.success )
-        assertEquals( "The Title ( " + ai.title + " ) must be unique within the selected Folder", answer.message )
+        assertEquals( "Action Item Title and Folder must be unique", answer.message )
     }
 
 
