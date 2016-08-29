@@ -247,6 +247,7 @@ var bannerAIPApp = angular.module("bannerAIP", [
             $.i18n.prop("aip.admin.action.add.description.placeholder");
             $.i18n.prop("aip.admin.action.open");
             $.i18n.prop("actionItem.title.unique");
+            $.i18n.prop("aip.admin.action.add.success");
 
             $.i18n.prop("aip.admin.selectable.action.items");
             $.i18n.prop("aip.admin.selectable.groups");
