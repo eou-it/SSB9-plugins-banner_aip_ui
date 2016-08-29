@@ -618,15 +618,11 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
                 new UsernamePasswordAuthenticationToken( admin.bannerId, '111111' ) )
         SecurityContextHolder.getContext().setAuthentication( auth )
 
-        def requestObj = [:]
-        requestObj.filterName="%"
-        requestObj.sortColumn="actionItemName"
-        requestObj.sortAscending=true
-        requestObj.max=20
-        requestObj.offset=0
-
-        controller.request.method = "POST"
-        controller.request.json = requestObj
+        controller.params.filterName="%"
+        controller.params.sortColumn="actionItemName"
+        controller.params.sortAscending=true
+        controller.params.max=20
+        controller.params.offset=0
 
         controller.actionItemList()
         def answer = JSON.parse( controller.response.contentAsString )
@@ -672,11 +668,8 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
         SecurityContextHolder.getContext().setAuthentication( auth )
 
         ActionItemReadOnly myActionItem = actionItemReadOnlyService.listActionItemRO(  )[6]
-        def requestObj = [:]
-        requestObj.actionItemId = myActionItem.actionItemId
 
-        controller.request.method = "POST"
-        controller.request.json = requestObj
+        controller.params.actionItemId = myActionItem.actionItemId
 
         controller.openActionItem()
         def answer = JSON.parse( controller.response.contentAsString )
@@ -696,11 +689,8 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
                 new UsernamePasswordAuthenticationToken( admin.bannerId, '111111' ) )
         SecurityContextHolder.getContext().setAuthentication( auth )
 
-        def requestObj = [:]
-        requestObj.actionItemId = null
+        controller.params.actionItemId = null
 
-        controller.request.method = "POST"
-        controller.request.json = requestObj
 
         controller.openActionItem()
         assertEquals 403, controller.response.status
@@ -716,11 +706,7 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
                 new UsernamePasswordAuthenticationToken( admin.bannerId, '111111' ) )
         SecurityContextHolder.getContext().setAuthentication( auth )
 
-        def requestObj = [:]
-        requestObj.actionItemId = 99995511
-
-        controller.request.method = "POST"
-        controller.request.json = requestObj
+        controller.params.actionItemId = 99995511
 
         controller.openActionItem()
         def answer = JSON.parse( controller.response.contentAsString )
