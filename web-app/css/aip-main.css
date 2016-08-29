@@ -387,6 +387,12 @@ aip-list .aip-list-container {
     .actionItemOpenContainer .actionItemElement .xe-tab-container .xe-tab-content xe-tab-panel .xe-tab-container {
       padding: 0; }
 
+@media screen and (max-width: 768px) {
+  .actionItemOpenContainer .row {
+    margin-right: 0;
+    margin-left: 0; }
+  .actionItemOpenContainer .actionItemElement xe-tab-nav .xe-tab-content {
+    padding: 4px 0; } }
 #username {
   padding-right: 0.5em; }
 
