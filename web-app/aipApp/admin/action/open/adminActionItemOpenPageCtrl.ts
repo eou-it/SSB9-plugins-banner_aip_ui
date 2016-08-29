@@ -9,24 +9,30 @@ declare var notifications: any;
 module AIP {
 
     export class AdminActionItemOpenPageCtrl{
-        $inject = ["$scope", "$q", "$state", "$filter", "$sce", "SpinnerService", "AdminActionService"];
+        $inject = ["$scope", "$q", "$state", "$filter", "$sce", "$window", "SpinnerService", "AdminActionService"];
         adminActionService: AIP.AdminActionService;
         spinnerService: AIP.SpinnerService;
         $q: ng.IQService;
         $state;
         $filter;
         $sce;
+        $window;
         actionItem;
-        constructor($scope, $q:ng.IQService, $state, $filter, $sce, SpinnerService, AdminActionService) {
+        constructor($scope, $q:ng.IQService, $state, $filter, $sce, $window, SpinnerService, AdminActionService) {
             $scope.vm = this;
             this.$q = $q;
             this.$state = $state;
             this.$filter = $filter;
             this.$sce = $sce;
+            this.$window = $window;
             this.adminActionService = AdminActionService;
             this.spinnerService = SpinnerService;
             this.actionItem = {};
             this.init();
+            angular.element($window).bind('resize', function() {
+                //$scope.onResize();
+                $scope.$apply();
+            });
         }
 
         init() {
@@ -42,6 +48,7 @@ module AIP {
                     $("p.openActionItemDesc" ).html(this.actionItem.actionItemDesc);
                     $("p.openActionItemActivityDate" ).html( this.actionItem.actionItemActivityDate);
                     $("p.openActionItemLastUpdatedBy" ).html(this.actionItem.actionItemUserId);
+                    // $(".actionItemOpenContainer").height(this.getHeight());
                 }, ( err ) => {
                     console.log( err );
                 } );
@@ -52,7 +59,7 @@ module AIP {
                 //TODO:: turn off the spinner
                 this.spinnerService.showSpinner( false );
             } );
-        };
+        }
 
         handleNotification(noti) {
             if(noti.notiType === "saveSuccess") {
@@ -68,6 +75,24 @@ module AIP {
                     $(".actionItemAddContainer").focus();
                 }, 500);
             }
+        }
+
+        getHeight() {
+            var containerHeight = $(document).height() -
+                $("#breadcrumb-panel").height() -
+                $("#title-panel").height() -
+                $("#header-main-section").height() -
+                $("#outerFooter").height() - 30;
+            return {height: containerHeight};
+        }
+        getSaparatorHeight() {
+            var containerHeight = $(document).height() -
+                $("#breadcrumb-panel").height() -
+                $("#title-panel").height() -
+                $("#header-main-section").height() -
+                $(".xe-tab-container").height() -
+                $("#outerFooter").height() - 30;
+            return {height: containerHeight};
         }
     }
 

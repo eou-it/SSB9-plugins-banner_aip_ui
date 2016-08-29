@@ -1,0 +1,28 @@
+.actionItemOpenContainer {
+  border: 1px solid #C8D4DE;
+  background-color: white;
+
+  .actionItemElement {
+    color: #4F585F;
+    .dividerContainer {
+      padding: 16px;
+      .divider {
+        border-right: 2px solid #C0C0C0;
+        height: 100%;
+      }
+    }
+    hr {
+      border-top: solid 1px #c0c0c0;
+    }
+    .xe-tab-container {
+      .xe-tab-content {
+        xe-tab-panel {
+          .xe-tab-container {
+            padding: 0;
+          }
+        }
+      }
+    }
+  }
+
+}

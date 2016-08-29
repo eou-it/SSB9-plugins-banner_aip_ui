@@ -4,17 +4,22 @@
 var AIP;
 (function (AIP) {
     var AdminActionItemOpenPageCtrl = (function () {
-        function AdminActionItemOpenPageCtrl($scope, $q, $state, $filter, $sce, SpinnerService, AdminActionService) {
-            this.$inject = ["$scope", "$q", "$state", "$filter", "$sce", "SpinnerService", "AdminActionService"];
+        function AdminActionItemOpenPageCtrl($scope, $q, $state, $filter, $sce, $window, SpinnerService, AdminActionService) {
+            this.$inject = ["$scope", "$q", "$state", "$filter", "$sce", "$window", "SpinnerService", "AdminActionService"];
             $scope.vm = this;
             this.$q = $q;
             this.$state = $state;
             this.$filter = $filter;
             this.$sce = $sce;
+            this.$window = $window;
             this.adminActionService = AdminActionService;
             this.spinnerService = SpinnerService;
             this.actionItem = {};
             this.init();
+            angular.element($window).bind('resize', function () {
+                //$scope.onResize();
+                $scope.$apply();
+            });
         }
         AdminActionItemOpenPageCtrl.prototype.init = function () {
             var _this = this;
@@ -30,6 +35,7 @@ var AIP;
                 $("p.openActionItemDesc").html(_this.actionItem.actionItemDesc);
                 $("p.openActionItemActivityDate").html(_this.actionItem.actionItemActivityDate);
                 $("p.openActionItemLastUpdatedBy").html(_this.actionItem.actionItemUserId);
+                // $(".actionItemOpenContainer").height(this.getHeight());
             }, function (err) {
                 console.log(err);
             });
@@ -41,7 +47,6 @@ var AIP;
                 _this.spinnerService.showSpinner(false);
             });
         };
-        ;
         AdminActionItemOpenPageCtrl.prototype.handleNotification = function (noti) {
             var _this = this;
             if (noti.notiType === "saveSuccess") {
@@ -57,6 +62,23 @@ var AIP;
                     $(".actionItemAddContainer").focus();
                 }, 500);
             }
+        };
+        AdminActionItemOpenPageCtrl.prototype.getHeight = function () {
+            var containerHeight = $(document).height() -
+                $("#breadcrumb-panel").height() -
+                $("#title-panel").height() -
+                $("#header-main-section").height() -
+                $("#outerFooter").height() - 30;
+            return { height: containerHeight };
+        };
+        AdminActionItemOpenPageCtrl.prototype.getSaparatorHeight = function () {
+            var containerHeight = $(document).height() -
+                $("#breadcrumb-panel").height() -
+                $("#title-panel").height() -
+                $("#header-main-section").height() -
+                $(".xe-tab-container").height() -
+                $("#outerFooter").height() - 30;
+            return { height: containerHeight };
         };
         return AdminActionItemOpenPageCtrl;
     }());
