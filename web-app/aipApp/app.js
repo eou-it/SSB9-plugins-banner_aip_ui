@@ -150,15 +150,13 @@ var bannerAIPApp = angular.module("bannerAIP", [
                     }
                 })
             });
-            //TODO:: add ajax interceptor function as needed
-            //$httpProvider.interceptors.push(function($q) {
-            //    return {
-            //        "request": function(config) {
-            //            config.url = APP_ABS_PATH + config.url;
-            //            return config || $q.when(config);
-            //        }
-            //    }
-            //});
+            // Prevent using cache for GET method for IE cache issue
+            if (!$httpProvider.defaults.headers.get) {
+                $httpProvider.defaults.headers.get = {};
+            }
+            $httpProvider.defaults.headers.get['If-Modified-Since'] = 'Mon, 26 Jul 1997 05:00:00 GMT';
+            $httpProvider.defaults.headers.get['Cache-Control'] = 'no-cache';
+            $httpProvider.defaults.headers.get['Parama'] = 'no-cache';
         }
     ])
 

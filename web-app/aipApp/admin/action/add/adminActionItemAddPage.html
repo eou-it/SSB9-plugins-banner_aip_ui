@@ -3,7 +3,7 @@
         <div class="row actionItemInfoRow actionItemTitle">
             <div class="actionItemElement row input-actionItem">
                 <div class="actionItemTitle col-xs-12 col-md-8">
-                    <label for="actionItemTitle" class="titleValue" id="actionItemAdd-Title">{{"aip.admin.action.actionItem.title"|i18n_aip}}
+                    <label for="actionItemTitle" class="titleValue" id="actionItemAdd-Title" aria-label="Action Item Title">{{"aip.admin.action.actionItem.title"|i18n_aip}}
                         {{"aip.character.astrick"|i18n_aip}}</label>
                     <span class="titleValue supplement">{{"aip.admin.action.add.maxLength"|i18n_aip:300}}</span>
                 </div>
@@ -11,7 +11,7 @@
             <div class="actionItemElement col-xs-12 col-md-8">
                 <div class="row" ng-class="{'has-error':vm.actionItemInfo.title.length>300}">
                     <input id="actionItemTitle" maxlength="300" aria-valuemax="300" type="text" class="form-control" ng-model="vm.actionItemInfo.title"
-                           placeholder="{{'aip.admin.action.actionItem.title'|i18n_aip}}" aria-describedby="actionItemAdd-Title" required="required" aria-required="true">
+                           placeholder="{{'aip.admin.action.actionItem.title'|i18n_aip}}"  aria-required="true">
                 </div>
                 <div class="alert alert-danger" role="alert" ng-if="vm.actionItemInfo.title.length>300">
                     <i class="fa fa-exclamation-circle" aria-hidden="true"></i>
@@ -52,16 +52,16 @@
         <div class="row actionItemInfoRow">
             <div class="actionItemElement row input-actionItem">
                 <div class="actionItemTitle col-xs-12 col-sm-8">
-                    <label for="actionItemFolder" class="titleValue" id="actionItemAdd-description">{{"aip.common.description"|i18n_aip}}
+                    <label for="actionItemDesc" class="titleValue" id="actionItemAdd-description">{{"aip.common.description"|i18n_aip}}
                         {{"aip.character.astrick"|i18n_aip}}</label>
                     <span class="titleValue supplement dimmed">{{"aip.common.plainText"|i18n_aip}}</span>
                 </div>
             </div>
             <div class="actionItemElement col-xs-12 col-sm-8">
                 <div class="row">
-                    <textarea id="actionItemDesc" ng-required="true" aria-required="true" name="actionItemDesc"
+                    <textarea id="actionItemDesc"  aria-required="true" name="actionItemDesc"
                               placeholder="{{'aip.admin.action.add.description.placeholder'|i18n_aip}}" rows="20"
-                              ng-model="vm.actionItemInfo.description"></textarea>
+                              ng-model="vm.actionItemInfo.description" aria-describedby="actionItemAdd-description"></textarea>
                 </div>
             </div>
         </div>

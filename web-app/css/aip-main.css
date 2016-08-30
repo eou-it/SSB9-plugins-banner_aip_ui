@@ -331,7 +331,6 @@ aip-list .aip-list-container {
           left: auto;
           right: 8px; }
         .actionItemAddContainer .actionItemInfo .actionItemInfoRow .actionItemElement .titleValue.supplement.dimmed {
-          color: gray;
           font-style: italic;
           position: relative;
           padding: 0 24px; }
