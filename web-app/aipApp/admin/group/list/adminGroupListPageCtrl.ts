@@ -38,11 +38,12 @@ module AIP {
                 $scope.$apply();
             });
 
+            /*
         $scope.$watch("[vm.groupDetailResponse, vm.groupInfo]" , (newVal, oldVal) => {
             if(!$scope.$$phase) {
                 $scope.apply();
             }
-        });
+        });*/
         angular.element($window).bind('resize', function() {
             //$scope.onResize();
             $scope.$apply();
@@ -138,9 +139,8 @@ module AIP {
 
         open() {
             this.adminGroupService.getGroupDetail(this.$state.params.grp).then((response) => {
-               // console.log(groupId);
-                if(response) {
-                        this.$state.go("admin-group-open", {grp: response.group.id});
+                if(response.group) {
+                        this.$state.go("admin-group-open", {data: response.group});
                     } else {
                         //todo: output error in notification center?
                         console.log("fail");

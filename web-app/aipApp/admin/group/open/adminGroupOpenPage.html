@@ -6,16 +6,16 @@
                     <!--<aip-group-detail model="vm.groupInfo" ></aip-group-detail>-->
                     <xe-tab-nav>
                         <xe-tab-panel heading="{{'aip.common.overview'|i18n_aip}}">
-                            <div id="openGroupDetail">
+                            <div id="openGroupDetail" ng-controller="AdminGroupOpenPageCtrl">
                                 <div class="groupElement groupDetail col-xs-12 col-sm-8">
                                     <h3>{{"aip.common.title"|i18n_aip}}</h3>
-                                   <p class="openGroupTitle"></p>
+                                   <p class="openGroupTitle">{{vm.groupFolder.title}}</p>
                                     <h3>{{"aip.common.folder"|i18n_aip}}</h3>
-                                    <p class="openGroupFolder"></p>
+                                    <p class="openGroupFolder">{{vm.groupFolder.folderDesc}}</p>
                                     <h3>{{"aip.common.status"|i18n_aip}}</h3>
-                                    <p class="openGroupStatus"></p>
+                                    <p class="openGroupStatus">{{vm.groupFolder.status}}</p>
                                     <h3>{{"aip.common.group.description"|i18n_aip}}</h3>
-                                    <p class="openGroupDesc"></p>
+                                    <p class="openGroupDesc">{{vm.groupFolder.description}}</p>
                                 </div>
 
                                 <div class="groupElement col-xs-12 col-sm-4">
@@ -23,13 +23,13 @@
                                     <hr />
                                     <div class="groupElement">
                                         <h4>{{"aip.common.last.updated.by"|i18n_aip}}</h4>
-                                        <p class="openGroupLastUpdatedBy"></p>
+                                        <p class="openGroupLastUpdatedBy">{{vm.groupFolder.userId}}</p>
                                     </div>
 
                                     <hr />
                                     <div class="groupElement">
                                         <h4>{{"aip.common.activity.date"|i18n_aip}}</h4>
-                                        <p class="openGroupActivityDate"></p>
+                                        <p class="openGroupActivityDate">{{vm.groupFolder.activityDate}}</p>
                                     </div>
                                 </div>
                             </div>
