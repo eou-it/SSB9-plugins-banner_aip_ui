@@ -323,6 +323,8 @@ aip-list .aip-list-container {
         .actionItemAddContainer .actionItemInfo .actionItemInfoRow .actionItemElement .titleValue {
           font-size: 1.5em;
           font-weight: bold; }
+        .actionItemAddContainer .actionItemInfo .actionItemInfoRow .actionItemElement .titleValue.required:after {
+          content: " *"; }
         .actionItemAddContainer .actionItemInfo .actionItemInfoRow .actionItemElement .titleValue.supplement {
           font-size: 1.0em;
           font-style: italic;
