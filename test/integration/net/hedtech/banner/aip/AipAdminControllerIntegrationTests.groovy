@@ -309,7 +309,7 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
         controller.addActionItem()
         def answer = JSON.parse( controller.response.contentAsString )
         assertFalse( answer.success )
-        assertEquals( "Operation Not Permitted", answer.message )
+        assertEquals( "Operation Not Permitted.", answer.message )
     }
 
 
@@ -384,7 +384,7 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
         controller.addActionItem()
         def answer = JSON.parse( controller.response.contentAsString )
         assertFalse( answer.success )
-        assertEquals( "The Status can not be null or empty", answer.message )
+        assertEquals( "The Status can not be null or empty.", answer.message )
     }
 
 
@@ -411,7 +411,7 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
         controller.addActionItem()
         def answer = JSON.parse( controller.response.contentAsString )
         assertFalse( answer.success )
-        assertEquals( "The Title can not be null or empty", answer.message )
+        assertEquals( "The Title can not be null or empty.", answer.message )
     }
 
 
@@ -436,7 +436,7 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
         controller.addActionItem()
         def answer = JSON.parse( controller.response.contentAsString )
         assertFalse( answer.success )
-        assertEquals( "The Folder Id can not be null or empty", answer.message )
+        assertEquals( "The Folder Id can not be null or empty.", answer.message )
     }
 
 
@@ -463,7 +463,7 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
         controller.addActionItem()
         def answer = JSON.parse( controller.response.contentAsString )
         assertFalse( answer.success )
-        assertEquals( "Action Item Title and Folder must be unique", answer.message )
+        assertEquals( "Action Item Title and Folder must be unique.", answer.message )
     }
 
 
@@ -488,7 +488,7 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
         controller.addActionItem()
         def answer = JSON.parse( controller.response.contentAsString )
         assertFalse( answer.success )
-        assertEquals( "The Folder with Id " + BAD_FOLDER_ID + " does not exist", answer.message )
+        assertEquals( "The Folder with Id " + BAD_FOLDER_ID + " does not exist.", answer.message )
     }
 
 
