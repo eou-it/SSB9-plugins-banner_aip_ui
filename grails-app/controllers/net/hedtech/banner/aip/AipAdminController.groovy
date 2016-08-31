@@ -142,31 +142,33 @@ class AipAdminController {
         def success = false
         def errors = []
 
-        def group = actionItemGroupService.getActionItemGroupById( groupId )
+        //def group = actionItemGroupService.getActionItemGroupById( groupId )
         def groupRO = groupFolderReadOnlyService.getActionItemGroupById( groupId)
 
 
-        if (group) {
+        if (groupRO) {
             response.status = 200
             success = true
         }
 
-        if (!group) {
+        if (!groupRO) {
             groupDesc = MessageUtility.message( "aip.placeholder.nogroups" )
         } else {
-            groupDesc = group.description
+            groupDesc = groupRO.groupDesc[0]
         }
 
         def groupItem = [
-                id             : group?.id,
-                title          : group?.title,
-                status         : group?.status,
-                folder         : group?.folderId,
-                userId         : group?.userId,
+                id             : groupRO?.groupId[0],
+                title          : groupRO?.groupTitle[0],
+                status         : groupRO?.groupStatus[0],
+                folderId       : groupRO?.folderId[0],
+                folderName     : groupRO?.folderName[0],
+                folderDesc     : groupRO?.folderDesc[0],
+                userId         : groupRO?.groupUserId[0],
                 description    : groupDesc,
-                activity       : group?.activityDate,
-                version        : group?.version,
-                dataOrigin     : group?.dataOrigin
+                activityDate   : groupRO?.groupActivityDate[0],
+                version        : groupRO?.groupVersion[0],
+                //dataOrigin     : groupRO?.groupDataOrigin
         ]
 
 
@@ -174,8 +176,8 @@ class AipAdminController {
         def model = [
                 success: success,
                 errors : errors,
-                group  : groupItem,
-                folder : groupRO
+                group  : groupItem
+                //folder : groupRO
         ]
 
         render model as JSON
@@ -207,11 +209,11 @@ class AipAdminController {
         )
 
         def map
-        def readOnlyGroup
+        def groupRO
         try {
             // flush=false. This is expected to fail and rollback under certain conditions
             map = actionItemGroupService.create( [domainModel: group], false )
-            readOnlyGroup = groupFolderReadOnlyService.getActionItemGroupById( map.id )
+            groupRO = groupFolderReadOnlyService.getActionItemGroupById( map.id )
             success = true
         } catch (ApplicationException ae) {
             // hasErrors()
@@ -224,11 +226,34 @@ class AipAdminController {
 
         // def groupId = actionItemGroupService.create( map ).id
 
+        def groupDesc;
+
+        if (!groupRO) {
+            groupDesc = MessageUtility.message( "aip.placeholder.nogroups" )
+        } else {
+            groupDesc = groupRO.groupDesc[0]
+        }
+
+
+        def groupItem = [
+                id             : groupRO?.groupId[0],
+                title          : groupRO?.groupTitle[0],
+                status         : groupRO?.groupStatus[0],
+                folderId       : groupRO?.folderId[0],
+                folderName     : groupRO?.folderName[0],
+                folderDesc     : groupRO?.folderDesc[0],
+                userId         : groupRO?.groupUserId[0],
+                description    : groupDesc,
+                activityDate   : groupRO?.groupActivityDate[0],
+                version        : groupRO?.groupVersion[0],
+                //dataOrigin     : groupRO?.groupDataOrigin
+        ]
+
         response.status = 200
         def model = [
                 success : success,
                 errors : errors,
-                newGroup: readOnlyGroup
+                newGroup: groupItem
         ]
 
         render model as JSON

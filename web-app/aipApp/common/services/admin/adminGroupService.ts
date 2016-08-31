@@ -26,6 +26,7 @@ module AIP {
 
     export interface IGroupFolder {
         id: string|number|boolean;
+        groupTitle: string;
         folderName: string;
         folderDesc?: string;
         groupActivityDate?: Date|string;
@@ -50,8 +51,7 @@ module AIP {
     export interface IGroupDetailResponse {
         success: string;
         errors? : string[];
-        group?  : IGroupInfo;
-        folder? : IGroupFolder;
+        group?  : IGroupFolder;
     }
 
     export interface IAddGroupResponse {
@@ -78,14 +78,16 @@ module AIP {
     }
 
     export class AdminGroupService implements IAdminGroupService{
-        static $inject=["$http", "$q", "$filter", "ENDPOINT"];
+        static $inject=["$http", "$q", "$filter", "ENDPOINT", "$sce"];
         $http: ng.IHttpService;
         $q: ng.IQService;
         $filter;
+        $sce;
         ENDPOINT;
-        constructor($http:ng.IHttpService, $q, $filter, ENDPOINT) {
+        constructor($http:ng.IHttpService, $q, $filter, ENDPOINT, $sce) {
             this.$http = $http;
             this.$q = $q;
+            this.$sce = $sce;
             this.$filter = $filter;
             this.ENDPOINT = ENDPOINT;
         }

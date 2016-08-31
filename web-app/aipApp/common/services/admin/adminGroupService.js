@@ -8,9 +8,10 @@ var AIP;
         Status[Status["Inactive"] = 3] = "Inactive";
     })(Status || (Status = {}));
     var AdminGroupService = (function () {
-        function AdminGroupService($http, $q, $filter, ENDPOINT) {
+        function AdminGroupService($http, $q, $filter, ENDPOINT, $sce) {
             this.$http = $http;
             this.$q = $q;
+            this.$sce = $sce;
             this.$filter = $filter;
             this.ENDPOINT = ENDPOINT;
         }
@@ -120,7 +121,7 @@ var AIP;
             return deferred.promise;
         };
         ;
-        AdminGroupService.$inject = ["$http", "$q", "$filter", "ENDPOINT"];
+        AdminGroupService.$inject = ["$http", "$q", "$filter", "ENDPOINT", "$sce"];
         return AdminGroupService;
     }());
     AIP.AdminGroupService = AdminGroupService;

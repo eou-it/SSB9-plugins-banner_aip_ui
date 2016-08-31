@@ -13,32 +13,17 @@ var AIP;
             this.$sce = $sce;
             this.adminGroupService = AdminGroupService;
             this.spinnerService = SpinnerService;
-            $scope.$watch("[vm.groupDetailResponse, vm.groupInfo]", function (newVal, oldVal) {
-                if (!$scope.$$phase) {
-                    $scope.apply();
-                }
-            }, true);
             this.init();
         }
         AdminGroupOpenPageCtrl.prototype.init = function () {
             var _this = this;
             this.spinnerService.showSpinner(true);
             var promises = [];
-            // console.log(this.$state.params);
-            this.adminGroupService.getGroupDetail(this.$state.params.data).then(function (response) {
-                _this.groupInfo = response.group;
-                _this.groupFolder = response.folder;
-                $("#title-panel h1").html(_this.groupInfo.title);
-                $("p.openGroupTitle").html(_this.groupInfo.title);
-                $("p.openGroupFolder").html(_this.groupFolder[0].folderName);
-                $("p.openGroupStatus").html(_this.$filter("i18n_aip")(_this.groupInfo.status));
-                $("p.openGroupDesc").html(_this.groupInfo.description);
-                $("p.openGroupActivityDate").html(_this.groupFolder[0].groupActivityDate);
-                $("p.openGroupLastUpdatedBy").html(_this.groupFolder[0].groupUserId);
-                //console.log(this.groupInfo);
-            }, function (err) {
-                console.log(err);
-            });
+            this.groupFolder = this.$state.params.data;
+            //var groupDescHtml = this.$sce.trustAsHtml(this.$state.params.data.description);
+            //console.log(groupDescHtml);
+            //todo: replace this temporary workaround for sce not working for description
+            $("p.openGroupDesc").html(this.$state.params.data.description);
             if (this.$state.params.noti) {
                 this.handleNotification(this.$state.params.noti);
             }

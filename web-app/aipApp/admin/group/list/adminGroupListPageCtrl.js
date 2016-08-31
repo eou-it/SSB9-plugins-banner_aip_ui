@@ -18,11 +18,12 @@ var AIP;
                 //$scope.onResize();
                 $scope.$apply();
             });
-            $scope.$watch("[vm.groupDetailResponse, vm.groupInfo]", function (newVal, oldVal) {
-                if (!$scope.$$phase) {
-                    $scope.apply();
-                }
-            });
+            /*
+        $scope.$watch("[vm.groupDetailResponse, vm.groupInfo]" , (newVal, oldVal) => {
+            if(!$scope.$$phase) {
+                $scope.apply();
+            }
+        });*/
             angular.element($window).bind('resize', function () {
                 //$scope.onResize();
                 $scope.$apply();
@@ -116,9 +117,8 @@ var AIP;
         AdminGroupListPageCtrl.prototype.open = function () {
             var _this = this;
             this.adminGroupService.getGroupDetail(this.$state.params.grp).then(function (response) {
-                // console.log(groupId);
-                if (response) {
-                    _this.$state.go("admin-group-open", { grp: response.group.id });
+                if (response.group) {
+                    _this.$state.go("admin-group-open", { data: response.group });
                 }
                 else {
                     //todo: output error in notification center?
