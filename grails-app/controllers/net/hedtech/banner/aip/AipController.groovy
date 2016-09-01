@@ -68,7 +68,7 @@ class AipController {
                         description: group.groupDesc,
                         activity   : group.groupActivityDate,
                         folder     : group.folderName,
-                        vpdiCode   : group.groupVpdiCode
+                        dataOrigin : group.groupDataOrigin
                 ]
                 groupList << groupItem
             }
@@ -188,7 +188,7 @@ class AipController {
                                 userId  : group.groupUserId,
                                 text    : groupDesc,
                                 activity: group.groupActivityDate,
-                                vpdiCode: group.groupVpdiCode,
+                                dataOrigin: group.groupDataOrigin,
                                 version : group.groupVersion
                         ]
                         itemDetailInfo << groupItem

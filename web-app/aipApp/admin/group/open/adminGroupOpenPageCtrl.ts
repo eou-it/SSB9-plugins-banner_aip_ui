@@ -33,35 +33,18 @@ module AIP {
             this.$sce = $sce;
             this.adminGroupService = AdminGroupService;
             this.spinnerService = SpinnerService;
-            $scope.$watch(
-                "[vm.groupDetailResponse, vm.groupInfo]", function(newVal, oldVal) {
-                    if(!$scope.$$phase) {
-                        $scope.apply();
-                    }
-                }, true);
             this.init();
         }
 
         init() {
             this.spinnerService.showSpinner( true );
             var promises = [];
-           // console.log(this.$state.params);
-            this.adminGroupService.getGroupDetail( this.$state.params.data).then((response:IGroupDetailResponse ) => {
-                this.groupInfo = response.group;
-                this.groupFolder = response.folder;
 
-                $("#title-panel h1" ).html(this.groupInfo.title);
-                $("p.openGroupTitle" ).html(this.groupInfo.title);
-                $("p.openGroupFolder" ).html(this.groupFolder[0].folderName);
-                $("p.openGroupStatus" ).html(this.$filter("i18n_aip")(this.groupInfo.status));
-                $("p.openGroupDesc" ).html(this.groupInfo.description);
-                $("p.openGroupActivityDate" ).html( this.groupFolder[0].groupActivityDate);
-                $("p.openGroupLastUpdatedBy" ).html(this.groupFolder[0].groupUserId);
-                //console.log(this.groupInfo);
-            }, ( err ) => {
-                console.log( err );
-            } );
-
+            this.groupFolder = this.$state.params.data;
+            //var groupDescHtml = this.$sce.trustAsHtml(this.$state.params.data.description);
+            //console.log(groupDescHtml);
+            //todo: replace this temporary workaround for sce not working for description
+            $("p.openGroupDesc" ).html(this.$state.params.data.description);
 
             if (this.$state.params.noti) {
                 this.handleNotification( this.$state.params.noti );
