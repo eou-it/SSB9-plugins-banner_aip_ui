@@ -15,7 +15,8 @@ var bannerAIPApp = angular.module("bannerAIP", [
     "I18nAIP",
     "ngAnimate",
     "xe-ui-components",
-    "bannerAIPUI"
+    "bannerAIPUI",
+    "ngRoute"
     //"xe-ui-components"
     ])
 
@@ -161,8 +162,8 @@ var bannerAIPApp = angular.module("bannerAIP", [
     ])
 
 //instance-injector
-    .run(["$rootScope", "$state", "$stateParams", "$filter","$sce", "BreadcrumbService",
-        function($rootScope, $state, $stateParams, $filter, $sce, BreadcrumService) {
+    .run(["$rootScope", "$state", "$stateParams", "$filter","$sce", "$templateCache", "BreadcrumbService",
+        function($rootScope, $state, $stateParams, $filter, $sce, $templateCache, BreadcrumService) {
             $rootScope.$state = $state;
             $rootScope.$stateParams = $stateParams;
             //when state successfully changed, update breadcrumbs
@@ -177,6 +178,7 @@ var bannerAIPApp = angular.module("bannerAIP", [
             $rootScope.$on("$stateNotFound", function(err) {
 
             });
+            // $templateCache.put('adminActionItemOpenOverview.html', '<div class="actionItemElement actionItemDetail col-xs-12 col-sm-8"><h3>{{"aip.list.grid.itemTitle"|i18n_aip}}</h3><p class="openActionItemTitle">{{vm.actionItem.title}}</p><h3>{{"aip.common.folder"|i18n_aip}}</h3></div><div class="hidden-xs col-sm-1 dividerContainer" ng-style="vm.getSaparatorHeight()"><div class="divider"></div></div><div class="actionItemElement col-xs-12 col-sm-3"><h3>{{"aip.common.activity"|i18n_aip}}</h3><hr /><div class="actionItemElement"><h4>{{"aip.common.last.updated.by"|i18n_aip}}</h4><p class="openActionItemLastUpdatedBy">{{vm.actionItem.creatorId}}</p></div><hr /><div class="actionItemElement"> <h4>{{"aip.common.activity.date"|i18n_aip}}</h4><p class="openActionItemActivityDate">{{vm.actionItem.activityDate}}</p></div></div>');
 
 
             //expose message.properties values for taglib
@@ -247,6 +249,11 @@ var bannerAIPApp = angular.module("bannerAIP", [
             $.i18n.prop("actionItem.title.unique");
             $.i18n.prop("aip.admin.action.add.success");
             $.i18n.prop("aip.admin.acation.add.jaws");
+            $.i18n.prop("aip.admin.action.open.tab.content");
+            $.i18n.prop("aip.admin.action.open.tab.content.noItem1");
+            $.i18n.prop("aip.admin.action.open.tab.content.noItem2");
+            $.i18n.prop("aip.admin.action.open.tab.content.edit");
+            $.i18n.prop("aip.admin.action.open.tab.content.templateSelect");
 
             $.i18n.prop("aip.admin.selectable.action.items");
             $.i18n.prop("aip.admin.selectable.groups");
@@ -278,8 +285,38 @@ var bannerAIPApp = angular.module("bannerAIP", [
             $.i18n.prop("aip.user.detail.button.return");
 
             $.i18n.prop("aip.operation.not.permitted");
+
+            $templateCache.put("adminActionItemOpenOverview.html",
+                '<div class="actionItemElement actionItemDetail col-xs-12 col-sm-8"> \
+                    <h3>{{"aip.list.grid.itemTitle"|i18n_aip}}</h3> \
+                    <p class="openActionItemTitle">{{vm.actionItem.title}}</p> \
+                    <h3>{{"aip.common.folder"|i18n_aip}}</h3> \
+                    <p class="openActionItemFolder">{{vm.actionItem.folder.name}}</p> \
+                    <h3>{{"aip.common.status"|i18n_aip}}</h3> \
+                    <p class="openActionItemStatus">{{vm.actionItem.status}}</p> \
+                    <h3>{{"aip.common.description"|i18n_aip}}</h3> \
+                    <p class="openActionItemDesc">{{vm.actionItem.description}}</p> \
+                </div> \
+                <div class="hidden-xs col-sm-1 dividerContainer" ng-style="vm.getSaparatorHeight()"> \
+                    <div class="divider"></div> \
+                </div> \
+                <div class="actionItemElement col-xs-12 col-sm-3"> \
+                    <h3>{{"aip.common.activity"|i18n_aip}}</h3> \
+                <hr /> \
+                <div class="actionItemElement"> \
+                    <h4>{{"aip.common.last.updated.by"|i18n_aip}}</h4> \
+                <p class="openActionItemLastUpdatedBy">{{vm.actionItem.creatorId}}</p> \
+                </div> \
+                <hr /> \
+                <div class="actionItemElement"> \
+                        <h4>{{"aip.common.activity.date"|i18n_aip}}</h4> \
+                    <p class="openActionItemActivityDate">{{vm.actionItem.activityDate}}</p> \
+                    </div> \
+                </div>'
+            );
     }]
 );
+
 
 var bannerAIPUI = angular.module("bannerAIPUI", [])
     //set application root url
@@ -319,8 +356,12 @@ var bannerAIPUI = angular.module("bannerAIPUI", [])
             directive.templateUrl = APP_ROOT + "common/directives/admin/group-detail/template/groupDetail.html";
             return $delegate;
         });
-
-
-
     }]
 );
+
+
+// Override common components
+angular.module("templates/tabNav.html", []).run(["$templateCache", function($templateCache) {
+    $templateCache.put("templates/tabNav.html",
+        "<div class=\"xe-tab-container\" role=\"presentation\"><ul class=\"xe-tab-nav\" role=\"tablist\"><li ng-repeat=\"tab in tabnav.tabs\" ng-click=\"tabnav.activate(tab)\" ng-class=\"{active: tab.active}\" ng-repeat-complete role=\"tab\" aria-controls=\"{{'xe-tab-panel'+ ($index+1)}}\" aria-selected=\"{{tab.active}}\"><a ui-sref=\"{{ tab.state && tab.state || '#' }}\" href=\"#\" id=\"{{'xe-tab'+ ($index+1)}}\" title=\"{{tab.heading}}\" ng-if=\"tab.state\">{{tab.heading}} <span></span></a> <a href=\"javascript:void(0)\;\" id=\"{{'xe-tab'+ ($index+1)}}\" title=\"{{tab.heading}}\" ng-if=\"!tab.state\">{{tab.heading}} <span></span></a></li></ul><div class=\"xe-tab-content\" role=\"presentation\"><ng-transclude></ng-transclude></div></div>");
+}]);

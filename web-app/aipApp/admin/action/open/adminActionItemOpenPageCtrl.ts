@@ -9,7 +9,8 @@ declare var notifications: any;
 module AIP {
 
     export class AdminActionItemOpenPageCtrl{
-        $inject = ["$scope", "$q", "$state", "$filter", "$sce", "$window", "SpinnerService", "AdminActionService"];
+        $inject = ["$scope", "$q", "$state", "$filter", "$sce", "$window", "$templateRequest", "$templateCache", "$compile",
+            "SpinnerService", "AdminActionService"];
         adminActionService: AIP.AdminActionService;
         spinnerService: AIP.SpinnerService;
         $q: ng.IQService;
@@ -17,17 +18,28 @@ module AIP {
         $filter;
         $sce;
         $window;
+        $templateRequest;
+        $templateCache;
+        $compile;
         actionItem;
-        constructor($scope, $q:ng.IQService, $state, $filter, $sce, $window, SpinnerService, AdminActionService) {
+        scope;
+        isAssigned;
+        constructor($scope, $q:ng.IQService, $state, $filter, $sce, $window, $templateRequest, $templateCache, $compile,
+                    SpinnerService, AdminActionService) {
             $scope.vm = this;
+            this.scope = $scope;
             this.$q = $q;
             this.$state = $state;
             this.$filter = $filter;
             this.$sce = $sce;
             this.$window = $window;
+            this.$templateRequest = $templateRequest;
+            this.$templateCache = $templateCache;
+            this.$compile = $compile;
             this.adminActionService = AdminActionService;
             this.spinnerService = SpinnerService;
             this.actionItem = {};
+            this.isAssigned = false;
             this.init();
             angular.element($window).bind('resize', function() {
                 //$scope.onResize();
@@ -58,6 +70,14 @@ module AIP {
             this.$q.all( promises ).then( () => {
                 //TODO:: turn off the spinner
                 this.spinnerService.showSpinner( false );
+                var actionItemFolder:any = $("#actionItemTemplate");
+                if(actionItemFolder) {
+                    actionItemFolder.select2({
+                        width: "25em",
+                        minimumResultsForSearch: Infinity,
+                        placeholderOption: "first"
+                    });
+                }
             } );
         }
 
@@ -94,6 +114,20 @@ module AIP {
                 $("#outerFooter").height() - 30;
             return {height: containerHeight};
         }
+        // openDetailPanel() {
+        //     var deferred=this.$q.defer();
+        //     // var templateUrl = this.$sce.getTrustedResourceUrl("/action/open/overview");
+        //     var template = this.$templateCache.get("adminActionItemOpenOverview.html");
+        //     deferred.resolve(template);
+        //     // this.$templateRequest(templateUrl)
+        //     //     .then((template) => {
+        //     //         var compiled = this.$compile(template)(this.scope);
+        //     //         deferred.resolve(compiled);
+        //     //     }, (error) => {
+        //     //         console.log(error);
+        //     //     });
+        //     return deferred.promise;
+        // }
     }
 
 }

@@ -4,17 +4,23 @@
 var AIP;
 (function (AIP) {
     var AdminActionItemOpenPageCtrl = (function () {
-        function AdminActionItemOpenPageCtrl($scope, $q, $state, $filter, $sce, $window, SpinnerService, AdminActionService) {
-            this.$inject = ["$scope", "$q", "$state", "$filter", "$sce", "$window", "SpinnerService", "AdminActionService"];
+        function AdminActionItemOpenPageCtrl($scope, $q, $state, $filter, $sce, $window, $templateRequest, $templateCache, $compile, SpinnerService, AdminActionService) {
+            this.$inject = ["$scope", "$q", "$state", "$filter", "$sce", "$window", "$templateRequest", "$templateCache", "$compile",
+                "SpinnerService", "AdminActionService"];
             $scope.vm = this;
+            this.scope = $scope;
             this.$q = $q;
             this.$state = $state;
             this.$filter = $filter;
             this.$sce = $sce;
             this.$window = $window;
+            this.$templateRequest = $templateRequest;
+            this.$templateCache = $templateCache;
+            this.$compile = $compile;
             this.adminActionService = AdminActionService;
             this.spinnerService = SpinnerService;
             this.actionItem = {};
+            this.isAssigned = false;
             this.init();
             angular.element($window).bind('resize', function () {
                 //$scope.onResize();
@@ -45,6 +51,14 @@ var AIP;
             this.$q.all(promises).then(function () {
                 //TODO:: turn off the spinner
                 _this.spinnerService.showSpinner(false);
+                var actionItemFolder = $("#actionItemTemplate");
+                if (actionItemFolder) {
+                    actionItemFolder.select2({
+                        width: "25em",
+                        minimumResultsForSearch: Infinity,
+                        placeholderOption: "first"
+                    });
+                }
             });
         };
         AdminActionItemOpenPageCtrl.prototype.handleNotification = function (noti) {

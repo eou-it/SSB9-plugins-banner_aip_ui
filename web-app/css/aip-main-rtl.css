@@ -394,6 +394,9 @@ aip-list .aip-list-container  {
     font-size:1.5em;
     font-weight:bold;
 }
+        .actionItemAddContainer .actionItemInfo .actionItemInfoRow .actionItemElement .titleValue.required:after  {
+    content:" *";
+}
         .actionItemAddContainer .actionItemInfo .actionItemInfoRow .actionItemElement .titleValue.supplement  {
     font-size:1.0em;
     font-style:italic;
@@ -403,7 +406,6 @@ aip-list .aip-list-container  {
     left:8px;
 }
         .actionItemAddContainer .actionItemInfo .actionItemInfoRow .actionItemElement .titleValue.supplement.dimmed  {
-    color:gray;
     font-style:italic;
     position:relative;
     padding:0 24px;
@@ -467,8 +469,16 @@ aip-list .aip-list-container  {
     .actionItemOpenContainer .actionItemElement hr  {
     border-top:solid 1px #c0c0c0;
 }
-    .actionItemOpenContainer .actionItemElement .xe-tab-container .xe-tab-content xe-tab-panel .xe-tab-container  {
+    .actionItemOpenContainer .actionItemElement xe-tab-panel .xe-tab-container  {
     padding:0;
+}
+      .actionItemOpenContainer .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContentNoInfo .contentText  {
+    padding-top:1.5em;
+}
+      .actionItemOpenContainer .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContentNoInfo .control button  {
+    float:left;
+    color:#206E9F;
+    border:none;
 }
 
 

@@ -2,6 +2,13 @@
   border: 1px solid #C8D4DE;
   background-color: white;
 
+  label.required:after {
+    content: " *";
+  }
+  .row {
+    margin-right: 0;
+    margin-left: 0;
+  }
   .actionItemElement {
     color: #4F585F;
     .dividerContainer {
@@ -14,11 +21,35 @@
     hr {
       border-top: solid 1px #c0c0c0;
     }
-    .xe-tab-container {
-      .xe-tab-content {
-        xe-tab-panel {
-          .xe-tab-container {
-            padding: 0;
+    xe-tab-panel {
+      .xe-tab-container {
+        padding: 0;
+
+        #openActionItemContent {
+
+          .actionItemContentNoInfo {
+
+            .contentText {
+              padding-top: 1.5em;
+            }
+            .control {
+              button {
+                float: right;
+                color: #206E9F;
+                border: none;
+              }
+            }
+          }
+          .actionItemContent {
+            padding-right: 16px;
+            padding-left: 16px;
+
+            .control {
+              text-align: right;
+              .templateButton {
+                float: right;
+              }
+            }
           }
         }
       }

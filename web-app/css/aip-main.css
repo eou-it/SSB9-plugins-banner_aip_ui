@@ -376,6 +376,11 @@ aip-list .aip-list-container {
 .actionItemOpenContainer {
   border: 1px solid #C8D4DE;
   background-color: white; }
+  .actionItemOpenContainer label.required:after {
+    content: " *"; }
+  .actionItemOpenContainer .row {
+    margin-right: 0;
+    margin-left: 0; }
   .actionItemOpenContainer .actionItemElement {
     color: #4F585F; }
     .actionItemOpenContainer .actionItemElement .dividerContainer {
@@ -385,8 +390,21 @@ aip-list .aip-list-container {
         height: 100%; }
     .actionItemOpenContainer .actionItemElement hr {
       border-top: solid 1px #c0c0c0; }
-    .actionItemOpenContainer .actionItemElement .xe-tab-container .xe-tab-content xe-tab-panel .xe-tab-container {
+    .actionItemOpenContainer .actionItemElement xe-tab-panel .xe-tab-container {
       padding: 0; }
+      .actionItemOpenContainer .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContentNoInfo .contentText {
+        padding-top: 1.5em; }
+      .actionItemOpenContainer .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContentNoInfo .control button {
+        float: right;
+        color: #206E9F;
+        border: none; }
+      .actionItemOpenContainer .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent {
+        padding-right: 16px;
+        padding-left: 16px; }
+        .actionItemOpenContainer .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .control {
+          text-align: right; }
+          .actionItemOpenContainer .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .control .templateButton {
+            float: right; }
 
 @media screen and (max-width: 768px) {
   .actionItemOpenContainer .row {
