@@ -45,8 +45,7 @@ module AIP {
             //console.log(groupDescHtml);
             //todo: replace this temporary workaround for sce not working for description
             $("p.openGroupDesc" ).html(this.$state.params.data.description);
-            $("#title-panel h1" ).html(this.groupFolder.groupTitle);
-
+            $("#title-panel h1" ).html(this.$state.params.data.title);
 
             if (this.$state.params.noti) {
                 this.handleNotification( this.$state.params.noti );
