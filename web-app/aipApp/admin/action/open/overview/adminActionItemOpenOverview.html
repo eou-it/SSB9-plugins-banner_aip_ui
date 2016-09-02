@@ -1,0 +1,27 @@
+<div class="actionItemElement actionItemDetail col-xs-12 col-sm-8">
+    <h3>{{"aip.list.grid.itemTitle"|i18n_aip}}</h3>
+    <p class="openActionItemTitle">{{vm.actionItem.title}}</p>
+    <h3>{{"aip.common.folder"|i18n_aip}}</h3>
+    <p class="openActionItemFolder">{{vm.actionItem.folder.name}}</p>
+    <h3>{{"aip.common.status"|i18n_aip}}</h3>
+    <p class="openActionItemStatus">{{vm.actionItem.status}}</p>
+    <h3>{{"aip.common.description"|i18n_aip}}</h3>
+    <p class="openActionItemDesc">{{vm.actionItem.description}}</p>
+</div>
+<div class="hidden-xs col-sm-1 dividerContainer" ng-style="vm.getSaparatorHeight()">
+    <div class="divider"></div>
+</div>
+<div class="actionItemElement col-xs-12 col-sm-3">
+    <h3>{{"aip.common.activity"|i18n_aip}}</h3>
+    <hr />
+    <div class="actionItemElement">
+        <h4>{{"aip.common.last.updated.by"|i18n_aip}}</h4>
+        <p class="openActionItemLastUpdatedBy">{{vm.actionItem.creatorId}}</p>
+    </div>
+
+    <hr />
+    <div class="actionItemElement">
+        <h4>{{"aip.common.activity.date"|i18n_aip}}</h4>
+        <p class="openActionItemActivityDate">{{vm.actionItem.activityDate}}</p>
+    </div>
+</div>
