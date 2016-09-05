@@ -1,0 +1,38 @@
+<div id="openActionItemContent"  ng-controller="AdminActionItemOpenPageCtrl">
+    <div class="actionItemContentNoInfo row" ng-if="vm.isNoContent()">
+        <div class="contentText">
+            <span class="col-xs-12 col-sm-8">{{'aip.admin.action.open.tab.content.noItem1'|i18n_aip}}</span>
+            <span class="col-xs-12 col-sm-8">{{'aip.admin.action.open.tab.content.noItem2'|i18n_aip}}</span>
+        </div>
+        <div class="control col-xs-12 col-sm-4">
+            <button type="button" class="btn btn-default" ng-click="vm.openContentEdit()" aria-label="">
+                <span class="icon icon-edit-CO"></span>
+                <span class="button-text hidden-sm-down">{{'aip.admin.action.open.tab.content.edit'|i18n_aip}}</span>
+            </button>
+        </div>
+    </div>
+    <div class="actionItemContent row" ng-if="!vm.isNoContent()">
+        <div class="contentSelect">
+            <div class="row input-actionItem">
+                <label for="actionItemTemplate" class="templateSelect required" id="actionItemTemplateSelector">{{"aip.admin.action.open.tab.content.templateSelect"|i18n_aip}} - All Values are hard coded for placehold</label>
+            </div>
+            <div class="row">
+                <select id="actionItemTemplate" class="actionItemSelect" xe-data="" aria-label="Template" required aria-required="true">
+                    <option value="0" selected = "selected">Policy Template (Baseline)</option>
+                    <option value="1">Review and Update Data Template (Baseline)</option>
+                </select>
+            </div>
+        </div>
+        <div class="control row">
+            <div class="col-sm-2 col-xs-6 templateButton">
+                <button type="button" class="btn btn-default" ng-click="">{{"aip.common.cancel"|i18n_aip}}</button>
+            </div>
+            <div class="col-sm-2 col-xs-6 templateButton">
+                <button type="button" class="btn btn-primary" ng-click="">
+                    {{"aip.common.saveandreturn"|i18n_aip}}
+                </button>
+            </div>
+
+        </div>
+    </div>
+</div>

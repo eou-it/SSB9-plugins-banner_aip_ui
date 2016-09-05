@@ -4,9 +4,9 @@
 var AIP;
 (function (AIP) {
     var AdminActionItemOpenPageCtrl = (function () {
-        function AdminActionItemOpenPageCtrl($scope, $q, $state, $filter, $sce, $window, $templateRequest, $templateCache, $compile, SpinnerService, AdminActionService) {
+        function AdminActionItemOpenPageCtrl($scope, $q, $state, $filter, $sce, $window, $templateRequest, $templateCache, $compile, SpinnerService, AdminActionService, APP_ROOT) {
             this.$inject = ["$scope", "$q", "$state", "$filter", "$sce", "$window", "$templateRequest", "$templateCache", "$compile",
-                "SpinnerService", "AdminActionService"];
+                "SpinnerService", "AdminActionService", "APP_ROOT"];
             $scope.vm = this;
             this.scope = $scope;
             this.$q = $q;
@@ -19,6 +19,7 @@ var AIP;
             this.$compile = $compile;
             this.adminActionService = AdminActionService;
             this.spinnerService = SpinnerService;
+            this.APP_ROOT = APP_ROOT;
             this.actionItem = {};
             this.isAssigned = false;
             this.init();
@@ -93,6 +94,39 @@ var AIP;
                 $(".xe-tab-container").height() -
                 $("#outerFooter").height() - 30;
             return { height: containerHeight };
+        };
+        AdminActionItemOpenPageCtrl.prototype.openOverviewPanel = function () {
+            return this.openPanel("overview");
+        };
+        AdminActionItemOpenPageCtrl.prototype.openContentPanel = function () {
+            return this.openPanel("content");
+        };
+        AdminActionItemOpenPageCtrl.prototype.openPanel = function (panelName) {
+            var _this = this;
+            var deferred = this.$q.defer();
+            var url = "";
+            switch (panelName) {
+                case "overview":
+                    url = this.APP_ROOT + "admin/action/open/overview/adminActionItemOpenOverview.html";
+                    break;
+                case "content":
+                    url = this.APP_ROOT + "admin/action/open/content/adminActionItemOpenContent.html";
+                    break;
+                default:
+                    break;
+            }
+            var templateUrl = this.$sce.getTrustedResourceUrl(url);
+            this.$templateRequest(templateUrl)
+                .then(function (template) {
+                var compiled = _this.$compile(template)(_this.scope);
+                deferred.resolve(compiled);
+            }, function (error) {
+                console.log(error);
+            });
+            return deferred.promise;
+        };
+        AdminActionItemOpenPageCtrl.prototype.isNoContent = function () {
+            return true;
         };
         return AdminActionItemOpenPageCtrl;
     }());

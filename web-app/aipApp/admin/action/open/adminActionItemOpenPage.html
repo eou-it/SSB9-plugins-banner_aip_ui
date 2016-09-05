@@ -5,79 +5,16 @@
             <div class="actionItemElement col-xs-12 col-sm-12">
                 <div class="row">
                     <xe-tab-nav>
-                        <xe-tab-panel heading="{{'aip.common.overview'|i18n_aip}}">
-                            <div id="openActionItemDetail"  ng-controller="AdminActionItemOpenPageCtrl">
-                                <div class="actionItemElement actionItemDetail col-xs-12 col-sm-8">
-                                    <h3>{{"aip.list.grid.itemTitle"|i18n_aip}}</h3>
-                                    <p class="openActionItemTitle">{{vm.actionItem.title}}</p>
-                                    <h3>{{"aip.common.folder"|i18n_aip}}</h3>
-                                    <p class="openActionItemFolder">{{vm.actionItem.folder.name}}</p>
-                                    <h3>{{"aip.common.status"|i18n_aip}}</h3>
-                                    <p class="openActionItemStatus">{{vm.actionItem.status}}</p>
-                                    <h3>{{"aip.common.description"|i18n_aip}}</h3>
-                                    <p class="openActionItemDesc">{{vm.actionItem.description}}</p>
-                                </div>
-                                <div class="hidden-xs col-sm-1 dividerContainer" ng-style="vm.getSaparatorHeight()">
-                                    <div class="divider"></div>
-                                </div>
-                                <div class="actionItemElement col-xs-12 col-sm-3">
-                                    <h3>{{"aip.common.activity"|i18n_aip}}</h3>
-                                    <hr />
-                                    <div class="actionItemElement">
-                                        <h4>{{"aip.common.last.updated.by"|i18n_aip}}</h4>
-                                        <p class="openActionItemLastUpdatedBy">{{vm.actionItem.creatorId}}</p>
-                                    </div>
-
-                                    <hr />
-                                    <div class="actionItemElement">
-                                        <h4>{{"aip.common.activity.date"|i18n_aip}}</h4>
-                                        <p class="openActionItemActivityDate">{{vm.actionItem.activityDate}}</p>
-                                    </div>
-                                </div>
-                            </div>
+                        <xe-tab-panel
+                                heading="{{'aip.common.overview'|i18n_aip}}"
+                                load-data-on-click="vm.openOverviewPanel()">
                         </xe-tab-panel>
                         <xe-tab-panel heading="{{'aip.common.order.action.items'|i18n_aip}}">
                             <div>Placehold for the tab</div>
                         </xe-tab-panel>
-                        <xe-tab-panel heading="{{'aip.admin.action.open.tab.content'|i18n_aip}}">
-                            <div id="openActionItemContent"  ng-controller="AdminActionItemOpenPageCtrl">
-                                <div class="actionItemContentNoInfo row">
-                                    <div class="contentText">
-                                        <span class="col-xs-12 col-sm-8">{{'aip.admin.action.open.tab.content.noItem1'|i18n_aip}}</span>
-                                        <span class="col-xs-12 col-sm-8">{{'aip.admin.action.open.tab.content.noItem2'|i18n_aip}}</span>
-                                    </div>
-                                    <div class="control col-xs-12 col-sm-4">
-                                        <button type="button" class="btn btn-default" ng-click="vm.openContentEdit()" aria-label="">
-                                            <span class="icon icon-edit-CO"></span>
-                                            <span class="button-text hidden-sm-down">{{'aip.admin.action.open.tab.content.edit'|i18n_aip}}</span>
-                                        </button>
-                                    </div>
-                                </div>
-                                <div class="actionItemContent row">
-                                    <div class="contentSelect">
-                                        <div class="row input-actionItem">
-                                            <label for="actionItemTemplate" class="templateSelect required" id="actionItemTemplateSelector">{{"aip.admin.action.open.tab.content.templateSelect"|i18n_aip}} - All Values are hard coded for placehold</label>
-                                        </div>
-                                        <div class="row">
-                                            <select id="actionItemTemplate" class="actionItemSelect" xe-data="" aria-label="Template" required aria-required="true">
-                                                <option value="0" selected = "selected">Policy Template (Baseline)</option>
-                                                <option value="1">Review and Update Data Template (Baseline)</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="control row">
-                                        <div class="col-sm-2 col-xs-6 templateButton">
-                                            <button type="button" class="btn btn-default" ng-click="">{{"aip.common.cancel"|i18n_aip}}</button>
-                                        </div>
-                                        <div class="col-sm-2 col-xs-6 templateButton">
-                                            <button type="button" class="btn btn-primary" ng-click="">
-                                                {{"aip.common.saveandreturn"|i18n_aip}}
-                                            </button>
-                                        </div>
-
-                                    </div>
-                                </div>
-                            </div>
+                        <xe-tab-panel
+                                heading="{{'aip.admin.action.open.tab.content'|i18n_aip}}"
+                                load-data-on-click="vm.openContentPanel()">
                         </xe-tab-panel>
                     </xe-tab-nav>
                 </div>

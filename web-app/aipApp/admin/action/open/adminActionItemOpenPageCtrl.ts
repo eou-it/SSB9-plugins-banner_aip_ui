@@ -10,7 +10,7 @@ module AIP {
 
     export class AdminActionItemOpenPageCtrl{
         $inject = ["$scope", "$q", "$state", "$filter", "$sce", "$window", "$templateRequest", "$templateCache", "$compile",
-            "SpinnerService", "AdminActionService"];
+            "SpinnerService", "AdminActionService", "APP_ROOT"];
         adminActionService: AIP.AdminActionService;
         spinnerService: AIP.SpinnerService;
         $q: ng.IQService;
@@ -23,9 +23,10 @@ module AIP {
         $compile;
         actionItem;
         scope;
+        APP_ROOT;
         isAssigned;
         constructor($scope, $q:ng.IQService, $state, $filter, $sce, $window, $templateRequest, $templateCache, $compile,
-                    SpinnerService, AdminActionService) {
+                    SpinnerService, AdminActionService, APP_ROOT) {
             $scope.vm = this;
             this.scope = $scope;
             this.$q = $q;
@@ -38,6 +39,7 @@ module AIP {
             this.$compile = $compile;
             this.adminActionService = AdminActionService;
             this.spinnerService = SpinnerService;
+            this.APP_ROOT = APP_ROOT;
             this.actionItem = {};
             this.isAssigned = false;
             this.init();
@@ -114,20 +116,38 @@ module AIP {
                 $("#outerFooter").height() - 30;
             return {height: containerHeight};
         }
-        // openDetailPanel() {
-        //     var deferred=this.$q.defer();
-        //     // var templateUrl = this.$sce.getTrustedResourceUrl("/action/open/overview");
-        //     var template = this.$templateCache.get("adminActionItemOpenOverview.html");
-        //     deferred.resolve(template);
-        //     // this.$templateRequest(templateUrl)
-        //     //     .then((template) => {
-        //     //         var compiled = this.$compile(template)(this.scope);
-        //     //         deferred.resolve(compiled);
-        //     //     }, (error) => {
-        //     //         console.log(error);
-        //     //     });
-        //     return deferred.promise;
-        // }
+        openOverviewPanel() {
+            return this.openPanel("overview");
+        }
+        openContentPanel() {
+            return this.openPanel("content");
+        }
+        openPanel(panelName) {
+            var deferred=this.$q.defer();
+            var url = "";
+            switch (panelName) {
+                case "overview":
+                    url = this.APP_ROOT + "admin/action/open/overview/adminActionItemOpenOverview.html";
+                    break;
+                case "content":
+                    url = this.APP_ROOT + "admin/action/open/content/adminActionItemOpenContent.html";
+                    break;
+                default:
+                    break;
+            }
+            var templateUrl = this.$sce.getTrustedResourceUrl(url);
+            this.$templateRequest(templateUrl)
+                .then((template) => {
+                    var compiled = this.$compile(template)(this.scope);
+                    deferred.resolve(compiled);
+                }, (error) => {
+                    console.log(error);
+                });
+            return deferred.promise;
+        }
+        isNoContent() {
+            return true;
+        }
     }
 
 }
