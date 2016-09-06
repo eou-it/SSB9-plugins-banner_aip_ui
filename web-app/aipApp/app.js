@@ -116,7 +116,8 @@ var bannerAIPApp = angular.module("bannerAIP", [
             actionItemList: aipAppAbsPath + "aipAdmin/actionItemList",
             actionItemStatus: aipAppAbsPath + "aipAdmin/adminActionItemStatus",
             createActionItem: aipAppAbsPath + "aipAdmin/addActionItem",
-            openActionItem: aipAppAbsPath + "aipAdmin/openActionItem"
+            openActionItem: aipAppAbsPath + "aipAdmin/openActionItem",
+            actionItemTemplateList: aipAppAbsPath + "aipAdmin/actionItemTemplateList"
         }
     })
     .constant("PAGINATIONCONFIG",

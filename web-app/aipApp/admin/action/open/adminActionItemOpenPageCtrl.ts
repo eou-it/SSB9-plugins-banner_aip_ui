@@ -10,7 +10,7 @@ module AIP {
 
     export class AdminActionItemOpenPageCtrl{
         $inject = ["$scope", "$q", "$state", "$filter", "$sce", "$window", "$templateRequest", "$templateCache", "$compile",
-            "SpinnerService", "AdminActionService", "APP_ROOT"];
+            "$timeout", "SpinnerService", "AdminActionService", "APP_ROOT"];
         adminActionService: AIP.AdminActionService;
         spinnerService: AIP.SpinnerService;
         $q: ng.IQService;
@@ -21,12 +21,14 @@ module AIP {
         $templateRequest;
         $templateCache;
         $compile;
+        $timeout;
         actionItem;
         scope;
         APP_ROOT;
-        isAssigned;
+        templates;
+        templateSelect: boolean;
         constructor($scope, $q:ng.IQService, $state, $filter, $sce, $window, $templateRequest, $templateCache, $compile,
-                    SpinnerService, AdminActionService, APP_ROOT) {
+                    $timeout, SpinnerService, AdminActionService, APP_ROOT) {
             $scope.vm = this;
             this.scope = $scope;
             this.$q = $q;
@@ -37,11 +39,13 @@ module AIP {
             this.$templateRequest = $templateRequest;
             this.$templateCache = $templateCache;
             this.$compile = $compile;
+            this.$timeout = $timeout;
             this.adminActionService = AdminActionService;
             this.spinnerService = SpinnerService;
             this.APP_ROOT = APP_ROOT;
             this.actionItem = {};
-            this.isAssigned = false;
+            this.templateSelect = false;
+            this.templates = [];
             this.init();
             angular.element($window).bind('resize', function() {
                 //$scope.onResize();
@@ -120,6 +124,13 @@ module AIP {
             return this.openPanel("overview");
         }
         openContentPanel() {
+            var deferred = this.$q.defer();
+            this.adminActionService.getActionItemTemplates()
+                .then((response) => {
+                    this.templates = response.data;
+                }, (error) => {
+                    console.log(error);
+                });
             return this.openPanel("content");
         }
         openPanel(panelName) {
@@ -146,7 +157,19 @@ module AIP {
             return deferred.promise;
         }
         isNoContent() {
-            return true;
+            return !this.templateSelect;
+        }
+        selectTemplate() {
+            this.templateSelect = true;
+            this.$timeout(() => {
+                var actionItemTemplate:any = $("#actionItemTemplate");
+                if(actionItemTemplate) {
+                    actionItemTemplate.select2({
+                        width: "25em",
+                        minimumResultsForSearch: Infinity
+                    });
+                }
+            }, 500);
         }
     }
 

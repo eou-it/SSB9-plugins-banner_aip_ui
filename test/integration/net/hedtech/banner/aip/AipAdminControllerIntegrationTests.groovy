@@ -28,6 +28,7 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
     def selfServiceBannerAuthenticationProvider
     def actionItemGroupService
     def actionItemReadOnlyService
+    def actionItemTemplateService
 
     def VALID_FOLDER_NAME = "My Folder"
     def VALID_FOLDER_DESCRIPTION = "My Folder"
@@ -711,5 +712,15 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
         controller.openActionItem()
         def answer = JSON.parse( controller.response.contentAsString )
         assertEquals( false, answer.success )
+    }
+
+
+    @Test
+    void testActionItemTemplateList() {
+        List<ActionItemTemplate> templates = actionItemTemplateService.listActionItemTemplates()
+        controller.actionItemTemplateList()
+        def answer = JSON.parse( controller.response.contentAsString )
+        assertEquals( templates.size(), answer.size() )
+        assertEquals( templates[0].id, answer[0].id )
     }
 }

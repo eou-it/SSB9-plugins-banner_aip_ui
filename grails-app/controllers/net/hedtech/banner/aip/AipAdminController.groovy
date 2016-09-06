@@ -17,6 +17,7 @@ class AipAdminController {
     def actionItemGroupService
     def actionItemReadOnlyService
     def actionItemService
+    def actionItemTemplateService
 
 
     def folders() {
@@ -343,6 +344,11 @@ class AipAdminController {
         results.header = groupHeadings
 
         render results as JSON
+    }
+
+    def actionItemTemplateList() {
+        def templates = actionItemTemplateService.listActionItemTemplates()
+        render templates as JSON
     }
 
 }

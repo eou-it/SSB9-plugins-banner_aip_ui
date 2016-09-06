@@ -399,8 +399,7 @@ aip-list .aip-list-container {
         color: #206E9F;
         border: none; }
       .actionItemOpenContainer .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent {
-        padding-right: 16px;
-        padding-left: 16px; }
+        padding: 16px; }
         .actionItemOpenContainer .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .control {
           text-align: right; }
           .actionItemOpenContainer .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .control .templateButton {

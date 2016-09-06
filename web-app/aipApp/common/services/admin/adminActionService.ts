@@ -171,7 +171,13 @@ module AIP {
                 url: this.ENDPOINT.admin.openActionItem + "?actionItemId=" + actionItemId.toString()
             });
             return request;
-
+        }
+        getActionItemTemplates() {
+            var request = this.$http({
+                method: "GET",
+                url: this.ENDPOINT.admin.actionItemTemplateList
+            });
+            return request;
         }
     }
 }

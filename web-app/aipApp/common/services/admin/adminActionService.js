@@ -73,6 +73,13 @@ var AIP;
             });
             return request;
         };
+        AdminActionService.prototype.getActionItemTemplates = function () {
+            var request = this.$http({
+                method: "GET",
+                url: this.ENDPOINT.admin.actionItemTemplateList
+            });
+            return request;
+        };
         AdminActionService.$inject = ["$http", "$q", "$filter", "ENDPOINT"];
         return AdminActionService;
     }());

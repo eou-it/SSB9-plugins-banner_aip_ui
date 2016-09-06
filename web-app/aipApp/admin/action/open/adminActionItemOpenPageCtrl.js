@@ -4,9 +4,9 @@
 var AIP;
 (function (AIP) {
     var AdminActionItemOpenPageCtrl = (function () {
-        function AdminActionItemOpenPageCtrl($scope, $q, $state, $filter, $sce, $window, $templateRequest, $templateCache, $compile, SpinnerService, AdminActionService, APP_ROOT) {
+        function AdminActionItemOpenPageCtrl($scope, $q, $state, $filter, $sce, $window, $templateRequest, $templateCache, $compile, $timeout, SpinnerService, AdminActionService, APP_ROOT) {
             this.$inject = ["$scope", "$q", "$state", "$filter", "$sce", "$window", "$templateRequest", "$templateCache", "$compile",
-                "SpinnerService", "AdminActionService", "APP_ROOT"];
+                "$timeout", "SpinnerService", "AdminActionService", "APP_ROOT"];
             $scope.vm = this;
             this.scope = $scope;
             this.$q = $q;
@@ -17,11 +17,13 @@ var AIP;
             this.$templateRequest = $templateRequest;
             this.$templateCache = $templateCache;
             this.$compile = $compile;
+            this.$timeout = $timeout;
             this.adminActionService = AdminActionService;
             this.spinnerService = SpinnerService;
             this.APP_ROOT = APP_ROOT;
             this.actionItem = {};
-            this.isAssigned = false;
+            this.templateSelect = false;
+            this.templates = [];
             this.init();
             angular.element($window).bind('resize', function () {
                 //$scope.onResize();
@@ -99,6 +101,14 @@ var AIP;
             return this.openPanel("overview");
         };
         AdminActionItemOpenPageCtrl.prototype.openContentPanel = function () {
+            var _this = this;
+            var deferred = this.$q.defer();
+            this.adminActionService.getActionItemTemplates()
+                .then(function (response) {
+                _this.templates = response.data;
+            }, function (error) {
+                console.log(error);
+            });
             return this.openPanel("content");
         };
         AdminActionItemOpenPageCtrl.prototype.openPanel = function (panelName) {
@@ -126,7 +136,19 @@ var AIP;
             return deferred.promise;
         };
         AdminActionItemOpenPageCtrl.prototype.isNoContent = function () {
-            return true;
+            return !this.templateSelect;
+        };
+        AdminActionItemOpenPageCtrl.prototype.selectTemplate = function () {
+            this.templateSelect = true;
+            this.$timeout(function () {
+                var actionItemTemplate = $("#actionItemTemplate");
+                if (actionItemTemplate) {
+                    actionItemTemplate.select2({
+                        width: "25em",
+                        minimumResultsForSearch: Infinity
+                    });
+                }
+            }, 500);
         };
         return AdminActionItemOpenPageCtrl;
     }());
