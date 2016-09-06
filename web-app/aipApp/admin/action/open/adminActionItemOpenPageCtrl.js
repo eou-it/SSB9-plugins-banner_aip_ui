@@ -26,8 +26,13 @@ var AIP;
             this.templates = [];
             this.init();
             angular.element($window).bind('resize', function () {
-                //$scope.onResize();
-                $scope.$apply();
+                // $scope.onResize();
+                if (!$scope.$root.$$phase) {
+                    $scope.$apply();
+                }
+                // $scope.$evalAsync(() => {
+                //     $scope.$apply();
+                // });
             });
         }
         AdminActionItemOpenPageCtrl.prototype.init = function () {
@@ -88,13 +93,18 @@ var AIP;
                 $("#outerFooter").height() - 30;
             return { height: containerHeight };
         };
-        AdminActionItemOpenPageCtrl.prototype.getSaparatorHeight = function () {
+        AdminActionItemOpenPageCtrl.prototype.getSeparatorHeight = function () {
             var containerHeight = $(document).height() -
                 $("#breadcrumb-panel").height() -
                 $("#title-panel").height() -
                 $("#header-main-section").height() -
                 $(".xe-tab-container").height() -
                 $("#outerFooter").height() - 30;
+            return { height: containerHeight };
+        };
+        AdminActionItemOpenPageCtrl.prototype.getTemplateContentHeight = function () {
+            var containerHeight = $($(".xe-tab-container")[0]).height() -
+                $(".xe-tab-nav").height();
             return { height: containerHeight };
         };
         AdminActionItemOpenPageCtrl.prototype.openOverviewPanel = function () {
@@ -148,7 +158,17 @@ var AIP;
                         minimumResultsForSearch: Infinity
                     });
                 }
+                $(".actionItemContent").height($(".actionItemElement").height() - $(".xe-tab-nav").height());
             }, 500);
+        };
+        AdminActionItemOpenPageCtrl.prototype.cancel = function (option) {
+            switch (option) {
+                case "content":
+                    this.templateSelect = false;
+                    break;
+                default:
+                    break;
+            }
         };
         return AdminActionItemOpenPageCtrl;
     }());

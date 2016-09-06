@@ -9,44 +9,59 @@
     margin-right: 0;
     margin-left: 0;
   }
-  .actionItemElement {
-    color: #4F585F;
-    .dividerContainer {
-      padding: 16px;
-      .divider {
-        border-right: 2px solid #C0C0C0;
-        height: 100%;
-      }
-    }
-    hr {
-      border-top: solid 1px #c0c0c0;
-    }
-    xe-tab-panel {
-      .xe-tab-container {
-        padding: 0;
-
-        #openActionItemContent {
-
-          .actionItemContentNoInfo {
-
-            .contentText {
-              padding-top: 1.5em;
-            }
-            .control {
-              button {
-                float: right;
-                color: #206E9F;
-                border: none;
-              }
-            }
+  .actionItemInfo {
+    height: inherit;
+    .actionItemInfoRow {
+      height: inherit;
+      .actionItemElement {
+        height: inherit;
+        color: #4F585F;
+        .dividerContainer {
+          padding: 16px;
+          .divider {
+            border-right: 2px solid #C0C0C0;
+            height: 100%;
           }
-          .actionItemContent {
-            padding: 16px;
+        }
+        hr {
+          border-top: solid 1px #c0c0c0;
+        }
+        xe-tab-panel {
+          .xe-tab-container {
+            padding: 0;
 
-            .control {
-              text-align: right;
-              .templateButton {
-                float: right;
+            #openActionItemContent {
+
+              .actionItemContentNoInfo {
+
+                .contentText {
+                  padding-top: 1.5em;
+                }
+                .control {
+                  button {
+                    float: right;
+                    color: #206E9F;
+                    border: none;
+                  }
+                }
+              }
+              .actionItemContent {
+                padding: 16px;
+
+                .control {
+                  position: absolute;
+                  bottom: 24px;
+                  width: 100%;
+                  .templateButton {
+                    float: right;
+                    span {
+                      padding-left: 24px;
+                      button {
+                        min-width: 100px;
+                      }
+                    }
+                  }
+                }
               }
             }
           }

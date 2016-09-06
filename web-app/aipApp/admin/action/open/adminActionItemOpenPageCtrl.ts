@@ -48,8 +48,13 @@ module AIP {
             this.templates = [];
             this.init();
             angular.element($window).bind('resize', function() {
-                //$scope.onResize();
-                $scope.$apply();
+                // $scope.onResize();
+                if(!$scope.$root.$$phase) {
+                    $scope.$apply();
+                }
+                // $scope.$evalAsync(() => {
+                //     $scope.$apply();
+                // });
             });
         }
 
@@ -111,13 +116,18 @@ module AIP {
                 $("#outerFooter").height() - 30;
             return {height: containerHeight};
         }
-        getSaparatorHeight() {
+        getSeparatorHeight() {
             var containerHeight = $(document).height() -
                 $("#breadcrumb-panel").height() -
                 $("#title-panel").height() -
                 $("#header-main-section").height() -
                 $(".xe-tab-container").height() -
                 $("#outerFooter").height() - 30;
+            return {height: containerHeight};
+        }
+        getTemplateContentHeight() {
+            var containerHeight = $($(".xe-tab-container")[0]).height() -
+                    $(".xe-tab-nav").height();
             return {height: containerHeight};
         }
         openOverviewPanel() {
@@ -169,7 +179,17 @@ module AIP {
                         minimumResultsForSearch: Infinity
                     });
                 }
+                $(".actionItemContent").height($(".actionItemElement").height() - $(".xe-tab-nav").height());
             }, 500);
+        }
+        cancel(option) {
+            switch(option) {
+                case "content":
+                    this.templateSelect = false;
+                    break;
+                default:
+                    break;
+            }
         }
     }
 

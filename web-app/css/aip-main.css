@@ -381,29 +381,40 @@ aip-list .aip-list-container {
   .actionItemOpenContainer .row {
     margin-right: 0;
     margin-left: 0; }
-  .actionItemOpenContainer .actionItemElement {
-    color: #4F585F; }
-    .actionItemOpenContainer .actionItemElement .dividerContainer {
-      padding: 16px; }
-      .actionItemOpenContainer .actionItemElement .dividerContainer .divider {
-        border-right: 2px solid #C0C0C0;
-        height: 100%; }
-    .actionItemOpenContainer .actionItemElement hr {
-      border-top: solid 1px #c0c0c0; }
-    .actionItemOpenContainer .actionItemElement xe-tab-panel .xe-tab-container {
-      padding: 0; }
-      .actionItemOpenContainer .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContentNoInfo .contentText {
-        padding-top: 1.5em; }
-      .actionItemOpenContainer .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContentNoInfo .control button {
-        float: right;
-        color: #206E9F;
-        border: none; }
-      .actionItemOpenContainer .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent {
-        padding: 16px; }
-        .actionItemOpenContainer .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .control {
-          text-align: right; }
-          .actionItemOpenContainer .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .control .templateButton {
-            float: right; }
+  .actionItemOpenContainer .actionItemInfo {
+    height: inherit; }
+    .actionItemOpenContainer .actionItemInfo .actionItemInfoRow {
+      height: inherit; }
+      .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement {
+        height: inherit;
+        color: #4F585F; }
+        .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement .dividerContainer {
+          padding: 16px; }
+          .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement .dividerContainer .divider {
+            border-right: 2px solid #C0C0C0;
+            height: 100%; }
+        .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement hr {
+          border-top: solid 1px #c0c0c0; }
+        .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container {
+          padding: 0; }
+          .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContentNoInfo .contentText {
+            padding-top: 1.5em; }
+          .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContentNoInfo .control button {
+            float: right;
+            color: #206E9F;
+            border: none; }
+          .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent {
+            padding: 16px; }
+            .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .control {
+              position: absolute;
+              bottom: 24px;
+              width: 100%; }
+              .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .control .templateButton {
+                float: right; }
+                .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .control .templateButton span {
+                  padding-left: 24px; }
+                  .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .control .templateButton span button {
+                    min-width: 100px; }
 
 @media screen and (max-width: 768px) {
   .actionItemOpenContainer .row {

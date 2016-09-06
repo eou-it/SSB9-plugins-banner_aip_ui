@@ -24,13 +24,15 @@
             </div>
         </div>
         <div class="control row">
-            <div class="col-sm-2 col-xs-6 templateButton">
-                <button type="button" class="btn btn-primary" ng-click="">
-                    {{"aip.common.saveandreturn"|i18n_aip}}
-                </button>
-            </div>
-            <div class="col-sm-2 col-xs-6 templateButton">
-                <button type="button" class="btn btn-default" ng-click="">{{"aip.common.cancel"|i18n_aip}}</button>
+            <div class="col-sm-3 offset-sm-9 col-xs-12 templateButton">
+                <span>
+                    <button type="button" class="btn btn-primary" ng-click="">
+                        {{"aip.common.saveandreturn"|i18n_aip}}
+                    </button>
+                </span>
+                <span>
+                    <button type="button" class="btn btn-default" ng-click="vm.cancel('content')">{{"aip.common.cancel"|i18n_aip}}</button>
+                </span>
             </div>
 
 

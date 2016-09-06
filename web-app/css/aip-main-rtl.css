@@ -456,6 +456,13 @@ aip-list .aip-list-container  {
     border:1px solid #C8D4DE;
     background-color:white;
 }
+  .actionItemOpenContainer label.required:after  {
+    content:" *";
+}
+  .actionItemOpenContainer .row  {
+    margin-left:0;
+    margin-right:0;
+}
   .actionItemOpenContainer .actionItemElement  {
     color:#4F585F;
 }
@@ -479,6 +486,15 @@ aip-list .aip-list-container  {
     float:left;
     color:#206E9F;
     border:none;
+}
+      .actionItemOpenContainer .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent  {
+    padding:16px;
+}
+        .actionItemOpenContainer .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .control  {
+    text-align:left;
+}
+          .actionItemOpenContainer .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .control .templateButton  {
+    float:left;
 }
 
 
