@@ -107,9 +107,7 @@ class AipAdminController {
             response.status = 200
             success = true
         } catch (ApplicationException e) {
-            if (ActionItemService.UNIQUE_TITLE_ERROR.equals( e.getMessage() )) {
-                message = MessageUtility.message( e.getDefaultMessage(), ai.title )
-            } else if (ActionItemService.FOLDER_VALIDATION_ERROR.equals( e.getMessage() )) {
+            if (ActionItemService.FOLDER_VALIDATION_ERROR.equals( e.getMessage() )) {
                 message = MessageUtility.message( e.getDefaultMessage(), MessageFormat.format("{0,number,#}", ai.folderId))
             } else {
                 message = MessageUtility.message( e.getDefaultMessage() )
@@ -187,7 +185,7 @@ class AipAdminController {
 
     def createGroup() {
         def success = false
-        def errors = []
+        def message
         /* //TODO: determine access in later US
         if (!hasAccess( 'save' )) {
             response.sendError( 403 )
@@ -195,13 +193,13 @@ class AipAdminController {
         }
         */
         def user = SecurityContextHolder?.context?.authentication?.principal
-        def aipUser = AipControllerUtils.getPersonForAip(params, user.pidm)
+        def aipUser = AipControllerUtils.getPersonForAip( params, user.pidm )
         def jsonObj = request.JSON
 
         def group = new ActionItemGroup(
                 title: jsonObj.groupTitle ? jsonObj.groupTitle : null,
                 folderId: jsonObj.folderId ? jsonObj.folderId : null,
-                description: jsonObj.groupDesc ? jsonObj.groupDesc: null,
+                description: jsonObj.groupDesc ? jsonObj.groupDesc : null,
                 status: jsonObj.groupStatus ? jsonObj.groupStatus : null,
                 version: jsonObj.version ? jsonObj.version : null,
                 userId: aipUser.bannerId ? aipUser.bannerId : null,
@@ -209,61 +207,35 @@ class AipAdminController {
                 dataOrigin: "GRAILS"
         )
 
-        def map
         def groupRO
         try {
-            // flush=false. This is expected to fail and rollback under certain conditions
-            map = actionItemGroupService.create( [domainModel: group], false )
-            groupRO = groupFolderReadOnlyService.getActionItemGroupById( map.id )
+            groupRO = actionItemGroupService.create( group )
+            response.status = 200
             success = true
-        } catch (ApplicationException ae) {
-            // hasErrors()
-            if (!group.validate()) {
-                group.errors.allErrors.each {
-                    errors.add( message( error: it ) )
-                }
+        } catch (ApplicationException e) {
+            if (ActionItemGroupService.FOLDER_VALIDATION_ERROR.equals( e.getMessage() )) {
+                message = MessageUtility.message( e.getDefaultMessage(), MessageFormat.format( "{0,number,#}", jsonObj.folderId ) )
+            } else {
+                message = MessageUtility.message( e.getDefaultMessage() )
             }
         }
 
-        // def groupId = actionItemGroupService.create( map ).id
-
-        def groupDesc;
-
-        if (!groupRO) {
-            groupDesc = MessageUtility.message( "aip.placeholder.nogroups" )
-        } else {
-            groupDesc = groupRO.groupDesc[0]
-        }
-
-
-        def groupItem = [
-                id             : groupRO?.groupId[0],
-                title          : groupRO?.groupTitle[0],
-                status         : groupRO?.groupStatus[0],
-                folderId       : groupRO?.folderId[0],
-                folderName     : groupRO?.folderName[0],
-                folderDesc     : groupRO?.folderDesc[0],
-                userId         : groupRO?.groupUserId[0],
-                description    : groupDesc,
-                activityDate   : groupRO?.groupActivityDate[0],
-                version        : groupRO?.groupVersion[0],
-                //dataOrigin     : groupRO?.groupDataOrigin
-        ]
-
         response.status = 200
+
         def model = [
                 success : success,
-                errors : errors,
-                newGroup: groupItem
+                message : message,
+                newGroup: groupRO
         ]
 
         render model as JSON
     }
 
-    def actionItemList( ) {
+
+    def actionItemList() {
 
         def paramObj = [filterName: params.searchString ?: "%",
-                      sortColumn: params.sortColumnName ?: "id",
+                        sortColumn: params.sortColumnName ?: "id",
                       sortAscending: params.ascending ? params.ascending.toBoolean() : false,
                       max: params.max.toInteger(),
                       offset: params.offset ? params.offset.toInteger(): 0]
@@ -346,9 +318,9 @@ class AipAdminController {
         render results as JSON
     }
 
+
     def actionItemTemplateList() {
         def templates = actionItemTemplateService.listActionItemTemplates()
         render templates as JSON
     }
-
 }

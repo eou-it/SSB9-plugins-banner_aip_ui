@@ -463,38 +463,53 @@ aip-list .aip-list-container  {
     margin-left:0;
     margin-right:0;
 }
-  .actionItemOpenContainer .actionItemElement  {
+  .actionItemOpenContainer .actionItemInfo  {
+    height:inherit;
+}
+    .actionItemOpenContainer .actionItemInfo .actionItemInfoRow  {
+    height:inherit;
+}
+      .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement  {
+    height:inherit;
     color:#4F585F;
 }
-    .actionItemOpenContainer .actionItemElement .dividerContainer  {
+        .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement .dividerContainer  {
     padding:16px;
 }
-      .actionItemOpenContainer .actionItemElement .dividerContainer .divider  {
+          .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement .dividerContainer .divider  {
     border-left:2px solid #C0C0C0;
     height:100%;
 }
-    .actionItemOpenContainer .actionItemElement hr  {
+        .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement hr  {
     border-top:solid 1px #c0c0c0;
 }
-    .actionItemOpenContainer .actionItemElement xe-tab-panel .xe-tab-container  {
+        .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container  {
     padding:0;
 }
-      .actionItemOpenContainer .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContentNoInfo .contentText  {
+          .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContentNoInfo .contentText  {
     padding-top:1.5em;
 }
-      .actionItemOpenContainer .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContentNoInfo .control button  {
+          .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContentNoInfo .control button  {
     float:left;
     color:#206E9F;
     border:none;
 }
-      .actionItemOpenContainer .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent  {
+          .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent  {
     padding:16px;
 }
-        .actionItemOpenContainer .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .control  {
-    text-align:left;
+            .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .control  {
+    position:absolute;
+    bottom:24px;
+    width:100%;
 }
-          .actionItemOpenContainer .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .control .templateButton  {
+              .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .control .templateButton  {
     float:left;
+}
+                .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .control .templateButton span  {
+    padding-right:24px;
+}
+                  .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .control .templateButton span button  {
+    min-width:100px;
 }
 
 
