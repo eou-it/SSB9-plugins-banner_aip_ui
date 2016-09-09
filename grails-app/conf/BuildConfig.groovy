@@ -12,6 +12,7 @@ grails.plugin.location.'i18n_core'="../i18n_core.git"
 grails.plugin.location.'banner-general-common'="../banner_general_common.git"
 grails.plugin.location.'banner-general-person'="../banner_general_person.git"
 grails.plugin.location.'banner-core'="../banner_core.git"
+grails.plugin.location.'banner-general-common'="../banner_general_common.git"
 
 grails.project.dependency.resolver = "maven" // or maven
 grails.project.dependency.resolution = {
