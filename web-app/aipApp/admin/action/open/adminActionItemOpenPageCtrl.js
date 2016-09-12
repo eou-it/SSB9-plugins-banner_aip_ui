@@ -149,6 +149,7 @@ var AIP;
             return !this.templateSelect;
         };
         AdminActionItemOpenPageCtrl.prototype.selectTemplate = function () {
+            var _this = this;
             this.templateSelect = true;
             this.$timeout(function () {
                 var actionItemTemplate = $("#actionItemTemplate");
@@ -159,6 +160,7 @@ var AIP;
                     });
                 }
                 $(".actionItemContent").height($(".actionItemElement").height() - $(".xe-tab-nav").height());
+                CKEDITOR.instances['templateContent'].setData(_this.actionItem.actionItemContent);
             }, 500);
         };
         AdminActionItemOpenPageCtrl.prototype.cancel = function (option) {

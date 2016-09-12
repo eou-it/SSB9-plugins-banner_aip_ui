@@ -5,6 +5,7 @@
 declare var register;
 declare var Notification: any;
 declare var notifications: any;
+declare var CKEDITOR: any;
 
 module AIP {
 
@@ -182,6 +183,8 @@ module AIP {
                     });
                 }
                 $(".actionItemContent").height($(".actionItemElement").height() - $(".xe-tab-nav").height());
+
+                CKEDITOR.instances['templateContent'].setData( this.actionItem.actionItemContent );
             }, 500);
         }
         cancel(option) {
