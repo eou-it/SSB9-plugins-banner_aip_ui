@@ -352,7 +352,7 @@ aip-list .aip-list-container  {
     background-color:transparent;
     border:none;
     color:#206E9F;
-    font-weight:600;
+    font-weight:500;
 }
         .actionListContainer .row.controls .control .btn-default .button-text  {
     font-size:0.875em;
@@ -501,6 +501,10 @@ aip-list .aip-list-container  {
 }
           .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent  {
     padding:16px;
+}
+            .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .contentContainer  {
+    margin-top:20px;
+    margin-bottom:20px;
 }
             .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .control  {
     position:absolute;

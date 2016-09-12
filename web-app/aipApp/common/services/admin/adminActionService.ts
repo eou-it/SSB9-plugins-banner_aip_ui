@@ -35,6 +35,8 @@ module AIP {
         folder?: IFolder;
         folderId?: string;
         folderName?: string;
+        actionItemContent?:string;
+        actionItemContentId?:number;
     }
     export interface IActionItemHeader {
         name: string;
@@ -165,6 +167,20 @@ module AIP {
             });
             return request;
         }
+        updateActionItemContent(actionItem) {
+            var params = {
+                actionItemContentId:  parseInt(actionItem.actionItemContentId),
+                actionItenContent: actionItem.actionItemContent
+            };
+            var request = this.$http({
+                method: "POST",
+                data: params,
+                url: this.ENDPOINT.admin.editActionItemContent
+            });
+            return request;
+        }
+
+
         enableActionItemOpen(actionItemId) {
             $("#openActionBtn").removeAttr("disabled");
             return actionItemId;

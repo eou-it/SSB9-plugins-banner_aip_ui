@@ -18,6 +18,7 @@ class AipAdminController {
     def actionItemReadOnlyService
     def actionItemService
     def actionItemTemplateService
+    def actionItemDetailService
 
 
     def folders() {
@@ -323,4 +324,37 @@ class AipAdminController {
         def templates = actionItemTemplateService.listActionItemTemplates()
         render templates as JSON
     }
+
+
+    def editActionItemContent() {
+        if (!params.actionItemId) {
+            response.sendError( 403 )
+            return
+        }
+        def actionItemContentId
+        try {
+            actionItemContentId = new Long( params.actionItemContentId )
+        } catch (NumberFormatException e) {
+            response.sendError( 403 )
+            return
+        }
+
+        try {
+
+            def actionItemText = params.actionItemContent?.toString()
+
+            actionItemDetailService.updateTemplateContent( actionItemContentId, actionItemText )
+            response.status = 200
+
+            def model = [
+                    success: true
+            ]
+            render model as JSON
+        } catch (ApplicationException ae) {
+            // UI doesn't do anything with error messages from here, just 403 it
+            response.sendError( 403 )
+            return
+        }
+    }
+
 }

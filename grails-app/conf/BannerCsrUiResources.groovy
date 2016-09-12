@@ -49,6 +49,7 @@ modules = {
     }
     'bannerAIPUtils' {
         resource url:[plugin: 'banner-csr-ui', file: 'aipApp/common/filters/i18n-filter.js']
+        resource url:[plugin: 'banner-csr-ui', file: 'aipApp/common/filters/trusted.js']
         resource url:[plugin: 'banner-csr-ui', file: 'aipApp/utils/register.js']
     }
     'bannerAIPApp' {

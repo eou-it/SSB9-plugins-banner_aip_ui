@@ -5,6 +5,7 @@
 declare var register;
 declare var Notification: any;
 declare var notifications: any;
+declare var CKEDITOR: any;
 
 module AIP {
 
@@ -64,7 +65,14 @@ module AIP {
 
             this.adminActionService.getActionItemDetail( this.$state.params.data)
                 .then((response:AIP.IActionItemOpenResponse) => {
+
+
                     this.actionItem = response.data.actionItem;
+
+                    //console.log(response.data.actionItem.actionItemContent);
+
+                    //this.actionItem.actionItemContent = this.$sce.trustAsHtml(response.data.actionItem.actionItemContent);
+
                     $("#title-panel h1" ).html(this.actionItem.actionItemName);
                     $("p.openActionItemTitle" ).html(this.actionItem.actionItemName);
                     $("p.openActionItemFolder" ).html(this.actionItem.folderName);
@@ -171,6 +179,10 @@ module AIP {
         isNoContent() {
             return !this.templateSelect;
         }
+        loadReadOnlyContent() {
+            var actionItemHtmlText = this.$sce.trustAsHtml(this.actionItem.actionItemContent);
+            return actionItemHtmlText;
+        }
         selectTemplate() {
             this.templateSelect = true;
             this.$timeout(() => {
@@ -182,6 +194,7 @@ module AIP {
                     });
                 }
                 $(".actionItemContent").height($(".actionItemElement").height() - $(".xe-tab-nav").height());
+                CKEDITOR.instances['templateContent'].setData( this.$sce.trustAsHtml(this.actionItem.actionItemContent) );
             }, 500);
         }
         cancel(option) {
@@ -193,6 +206,27 @@ module AIP {
                     break;
             }
         }
+        saveActionItemContent() {
+            this.adminActionService.updateActionItemContent(this.actionItem)
+                .then((response:AIP.IActionItemSaveResponse) => {
+                    var notiParams = {};
+                    if(response.data.success) {
+                        notiParams = {
+                            notiType: "saveSuccess",
+                            data: response.data
+                        };
+                        this.$state.go("admin-action-open", {noti: notiParams, data: response.data.newActionItem.id});
+                    } else {
+                        //this.saveErrorCallback(response.data.message); //todo: add callback error on actionitem open page
+                        console.log("error:");
+                        console.log(response);
+                    }
+                }, (err) => {
+                    //TODO:: handle error call
+                    console.log(err);
+                });
+        }
+
     }
 
 }

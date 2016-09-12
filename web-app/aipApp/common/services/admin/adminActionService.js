@@ -66,6 +66,18 @@ var AIP;
             });
             return request;
         };
+        AdminActionService.prototype.updateActionItemContent = function (actionItem) {
+            var params = {
+                actionItemContentId: parseInt(actionItem.actionItemContentId),
+                actionItenContent: actionItem.actionItemContent
+            };
+            var request = this.$http({
+                method: "POST",
+                data: params,
+                url: this.ENDPOINT.admin.editActionItemContent
+            });
+            return request;
+        };
         AdminActionService.prototype.enableActionItemOpen = function (actionItemId) {
             $("#openActionBtn").removeAttr("disabled");
             return actionItemId;

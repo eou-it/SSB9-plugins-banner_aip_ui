@@ -42,6 +42,8 @@ var AIP;
             this.adminActionService.getActionItemDetail(this.$state.params.data)
                 .then(function (response) {
                 _this.actionItem = response.data.actionItem;
+                //console.log(response.data.actionItem.actionItemContent);
+                //this.actionItem.actionItemContent = this.$sce.trustAsHtml(response.data.actionItem.actionItemContent);
                 $("#title-panel h1").html(_this.actionItem.actionItemName);
                 $("p.openActionItemTitle").html(_this.actionItem.actionItemName);
                 $("p.openActionItemFolder").html(_this.actionItem.folderName);
@@ -148,7 +150,12 @@ var AIP;
         AdminActionItemOpenPageCtrl.prototype.isNoContent = function () {
             return !this.templateSelect;
         };
+        AdminActionItemOpenPageCtrl.prototype.loadReadOnlyContent = function () {
+            var actionItemHtmlText = this.$sce.trustAsHtml(this.actionItem.actionItemContent);
+            return actionItemHtmlText;
+        };
         AdminActionItemOpenPageCtrl.prototype.selectTemplate = function () {
+            var _this = this;
             this.templateSelect = true;
             this.$timeout(function () {
                 var actionItemTemplate = $("#actionItemTemplate");
@@ -159,6 +166,7 @@ var AIP;
                     });
                 }
                 $(".actionItemContent").height($(".actionItemElement").height() - $(".xe-tab-nav").height());
+                CKEDITOR.instances['templateContent'].setData(_this.$sce.trustAsHtml(_this.actionItem.actionItemContent));
             }, 500);
         };
         AdminActionItemOpenPageCtrl.prototype.cancel = function (option) {
@@ -169,6 +177,28 @@ var AIP;
                 default:
                     break;
             }
+        };
+        AdminActionItemOpenPageCtrl.prototype.saveActionItemContent = function () {
+            var _this = this;
+            this.adminActionService.updateActionItemContent(this.actionItem)
+                .then(function (response) {
+                var notiParams = {};
+                if (response.data.success) {
+                    notiParams = {
+                        notiType: "saveSuccess",
+                        data: response.data
+                    };
+                    _this.$state.go("admin-action-open", { noti: notiParams, data: response.data.newActionItem.id });
+                }
+                else {
+                    //this.saveErrorCallback(response.data.message); //todo: add callback error on actionitem open page
+                    console.log("error:");
+                    console.log(response);
+                }
+            }, function (err) {
+                //TODO:: handle error call
+                console.log(err);
+            });
         };
         return AdminActionItemOpenPageCtrl;
     }());
