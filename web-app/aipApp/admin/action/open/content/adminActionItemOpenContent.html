@@ -12,17 +12,29 @@
         </div>
     </div>
     <div class="actionItemContent row" ng-if="!vm.isNoContent()">
-        <div class="contentSelect">
+        <div class="contentContainer">
             <div class="row input-actionItem">
                 <label for="actionItemTemplate" class="templateSelect required" id="actionItemTemplateSelector">{{"aip.admin.action.open.tab.content.templateSelect"|i18n_aip}}</label>
             </div>
             <div class="row">
                 <select id="actionItemTemplate" class="actionItemSelect" xe-data="" aria-label="Template" required aria-required="true">
-                    <!--<option value="0" selected = "selected">Policy Template (Baseline)</option>-->
                     <option ng-repeat="item in vm.templates" value="{{item.id}}">{{item.title}}</option>
                 </select>
             </div>
+
         </div>
+
+        <div class="contentContainer">
+            <div class="row">
+                <label for="templateContent" class="titleValue" id="template-content">{{"aip.admin.action.open.tab.content.templateContent"|i18n_aip}}</label>
+            </div>
+
+            <div class="row">
+                <textarea ck-editor id="templateContent" ng-required="true" aria-required="true" name="templateContent"></textarea>
+            </div>
+        </div>
+
+
         <div class="control row">
             <div class="col-sm-3 offset-sm-9 col-xs-12 templateButton">
                 <span>

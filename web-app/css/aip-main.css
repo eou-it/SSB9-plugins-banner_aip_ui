@@ -286,7 +286,7 @@ aip-list .aip-list-container {
         background-color: transparent;
         border: none;
         color: #206E9F;
-        font-weight: 600; }
+        font-weight: 500; }
         .actionListContainer .row.controls .control .btn-default .button-text {
           font-size: 0.875em; }
         .actionListContainer .row.controls .control .btn-default .icon {
@@ -409,6 +409,9 @@ aip-list .aip-list-container {
             border: none; }
           .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent {
             padding: 16px; }
+            .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .contentContainer {
+              margin-top: 20px;
+              margin-bottom: 20px; }
             .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .control {
               position: absolute;
               bottom: 24px;

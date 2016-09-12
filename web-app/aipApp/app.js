@@ -257,6 +257,7 @@ var bannerAIPApp = angular.module("bannerAIP", [
             $.i18n.prop("aip.admin.action.open.tab.content.noItem2");
             $.i18n.prop("aip.admin.action.open.tab.content.edit");
             $.i18n.prop("aip.admin.action.open.tab.content.templateSelect");
+            $.i18n.prop("aip.admin.action.open.tab.content.templateContent");
 
             $.i18n.prop("aip.admin.selectable.action.items");
             $.i18n.prop("aip.admin.selectable.groups");
