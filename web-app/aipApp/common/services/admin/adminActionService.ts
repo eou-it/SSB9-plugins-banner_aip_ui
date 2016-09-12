@@ -165,6 +165,10 @@ module AIP {
             });
             return request;
         }
+        enableActionItemOpen(actionItemId) {
+            $("#openActionBtn").removeAttr("disabled");
+            return actionItemId;
+        }
         getActionItemDetail(actionItemId) {
             var request = this.$http({
                 method: "GET",

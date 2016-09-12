@@ -66,6 +66,10 @@ var AIP;
             });
             return request;
         };
+        AdminActionService.prototype.enableActionItemOpen = function (actionItemId) {
+            $("#openActionBtn").removeAttr("disabled");
+            return actionItemId;
+        };
         AdminActionService.prototype.getActionItemDetail = function (actionItemId) {
             var request = this.$http({
                 method: "GET",

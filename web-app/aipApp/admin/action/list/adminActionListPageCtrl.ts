@@ -30,6 +30,8 @@ module AIP {
         searchConfig;
         mobileConfig;
         mobileSize: boolean;
+        selectedRecord;
+
         constructor($scope: IActionListPageCtrlScope, $state, $window, $filter, $q, ENDPOINT, PAGINATIONCONFIG,
             AdminActionService: AIP.AdminActionService) {
             $scope.vm = this;
@@ -156,13 +158,18 @@ module AIP {
             return deferred.promise;
         }
         selectRecord(data) {
-
+            this.selectedRecord = data;
+            this.actionListService.enableActionItemOpen(data.id);
+            this.$state.params.actionid = data.id;
         }
         refreshGrid() {
 
         }
         goAddPage() {
             this.$state.go("admin-action-add");
+        }
+        goOpenPage() {
+            this.$state.go("admin-action-open", { data: this.$state.params.actionid });
         }
     }
 }
