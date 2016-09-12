@@ -35,6 +35,7 @@ module AIP {
         folder?: IFolder;
         folderId?: string;
         folderName?: string;
+        actionItemContent?:string;
     }
     export interface IActionItemHeader {
         name: string;

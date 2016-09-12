@@ -13,6 +13,7 @@ var bannerAIPApp = angular.module("bannerAIP", [
     "ui.bootstrap",
     "ngAria",
     "I18nAIP",
+    "SCEAIP",
     "ngAnimate",
     "xe-ui-components",
     "bannerAIPUI",
@@ -253,6 +254,7 @@ var bannerAIPApp = angular.module("bannerAIP", [
             $.i18n.prop("aip.admin.acation.add.jaws");
             $.i18n.prop("aip.admin.acation.open.jaws");
             $.i18n.prop("aip.admin.action.open.tab.content");
+            $.i18n.prop("aip.admin.action.open.tab.template");
             $.i18n.prop("aip.admin.action.open.tab.content.noItem1");
             $.i18n.prop("aip.admin.action.open.tab.content.noItem2");
             $.i18n.prop("aip.admin.action.open.tab.content.edit");
