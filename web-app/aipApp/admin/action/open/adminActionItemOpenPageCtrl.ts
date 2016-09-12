@@ -61,6 +61,7 @@ module AIP {
         init() {
             this.spinnerService.showSpinner( true );
             var promises = [];
+
             this.adminActionService.getActionItemDetail( this.$state.params.data)
                 .then((response:AIP.IActionItemOpenResponse) => {
                     this.actionItem = response.data.actionItem;
@@ -75,6 +76,7 @@ module AIP {
                 }, ( err ) => {
                     console.log( err );
                 } );
+
             if (this.$state.params.noti) {
                 this.handleNotification( this.$state.params.noti );
             }

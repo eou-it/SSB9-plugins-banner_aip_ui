@@ -10,11 +10,15 @@
       .btn-default {
         background-color: transparent;;
         border: none;
-        font-size: 0.85em;
-        color: #41566F;
-        .button-text,
+        color: #206E9F;
+        font-weight: 600;
+        .button-text {
+          font-size:0.875em
+        }
         .icon {
-          display: table-row;
+          display: table;
+          margin: 0 auto;
+          font-size: 1.25em;
         }
       }
     }

@@ -124,11 +124,17 @@ var AIP;
             return deferred.promise;
         };
         AdminActionListPageCtrl.prototype.selectRecord = function (data) {
+            this.selectedRecord = data;
+            this.actionListService.enableActionItemOpen(data.id);
+            this.$state.params.actionid = data.id;
         };
         AdminActionListPageCtrl.prototype.refreshGrid = function () {
         };
         AdminActionListPageCtrl.prototype.goAddPage = function () {
             this.$state.go("admin-action-add");
+        };
+        AdminActionListPageCtrl.prototype.goOpenPage = function () {
+            this.$state.go("admin-action-open", { data: this.$state.params.actionid });
         };
         return AdminActionListPageCtrl;
     }());
