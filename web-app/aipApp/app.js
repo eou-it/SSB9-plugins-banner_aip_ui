@@ -117,6 +117,7 @@ var bannerAIPApp = angular.module("bannerAIP", [
             actionItemList: aipAppAbsPath + "aipAdmin/actionItemList",
             actionItemStatus: aipAppAbsPath + "aipAdmin/adminActionItemStatus",
             createActionItem: aipAppAbsPath + "aipAdmin/addActionItem",
+            editActionItemContent: aipAppAbsPath + "aipAdmin/openActionItem",
             openActionItem: aipAppAbsPath + "aipAdmin/openActionItem",
             actionItemTemplateList: aipAppAbsPath + "aipAdmin/actionItemTemplateList"
         }

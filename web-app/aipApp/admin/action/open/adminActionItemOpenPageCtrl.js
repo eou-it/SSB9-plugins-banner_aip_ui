@@ -166,7 +166,7 @@ var AIP;
                     });
                 }
                 $(".actionItemContent").height($(".actionItemElement").height() - $(".xe-tab-nav").height());
-                CKEDITOR.instances['templateContent'].setData(_this.actionItem.actionItemContent);
+                CKEDITOR.instances['templateContent'].setData(_this.$sce.trustAsHtml(_this.actionItem.actionItemContent));
             }, 500);
         };
         AdminActionItemOpenPageCtrl.prototype.cancel = function (option) {
@@ -177,6 +177,28 @@ var AIP;
                 default:
                     break;
             }
+        };
+        AdminActionItemOpenPageCtrl.prototype.saveActionItemContent = function () {
+            var _this = this;
+            this.adminActionService.updateActionItemContent(this.actionItem)
+                .then(function (response) {
+                var notiParams = {};
+                if (response.data.success) {
+                    notiParams = {
+                        notiType: "saveSuccess",
+                        data: response.data
+                    };
+                    _this.$state.go("admin-action-open", { noti: notiParams, data: response.data.newActionItem.id });
+                }
+                else {
+                    //this.saveErrorCallback(response.data.message); //todo: add callback error on actionitem open page
+                    console.log("error:");
+                    console.log(response);
+                }
+            }, function (err) {
+                //TODO:: handle error call
+                console.log(err);
+            });
         };
         return AdminActionItemOpenPageCtrl;
     }());

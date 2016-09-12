@@ -45,7 +45,8 @@
             </div>
 
             <div class="row">
-                <textarea ck-editor id="templateContent" ng-required="true" aria-required="true" name="templateContent"></textarea>
+                <textarea ck-editor id="templateContent" ng-required="true" aria-required="true" name="templateContent"
+                          ng-bind-html="vm.loadReadOnlyContent() | trusted"></textarea>
             </div>
         </div>
 
@@ -53,7 +54,7 @@
         <div class="control row">
             <div class="col-sm-3 offset-sm-9 col-xs-12 templateButton">
                 <span>
-                    <button type="button" class="btn btn-primary" ng-click="">
+                    <button type="button" class="btn btn-primary" ng-click="vm.saveActionItemContent()">
                         {{"aip.common.saveandreturn"|i18n_aip}}
                     </button>
                 </span>
