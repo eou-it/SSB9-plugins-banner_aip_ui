@@ -723,4 +723,23 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
         assertEquals( templates.size(), answer.size() )
         assertEquals( templates[0].id, answer[0].id )
     }
+
+    @Test
+    void testUpdateActionItemDetailWithTemplate() {
+        def admin = PersonUtility.getPerson( "CSRSTU002" ) // role: student
+        assertNotNull admin
+
+        def auth = selfServiceBannerAuthenticationProvider.authenticate(
+                new UsernamePasswordAuthenticationToken( admin.bannerId, '111111' ) )
+        SecurityContextHolder.getContext().setAuthentication( auth )
+
+        controller.params.templateId=1
+        controller.params.actionItemDetailId=116
+
+        controller.updateActionItemDetailWithTemplate()
+        def answer = JSON.parse( controller.response.contentAsString )
+
+        assertEquals 200, controller.response.status
+        assertEquals 1, answer.actionItem.templateReferenceId
+    }
 }

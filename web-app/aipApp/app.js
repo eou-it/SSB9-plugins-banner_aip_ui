@@ -249,7 +249,8 @@ var bannerAIPApp = angular.module("bannerAIP", [
             $.i18n.prop("aip.admin.action.open");
             $.i18n.prop("actionItem.title.unique");
             $.i18n.prop("aip.admin.action.add.success");
-            $.i18n.prop("aip.admin.acation.add.jaws");
+            $.i18n.prop("aip.admin.action.add.jaws");
+            $.i18n.prop("aip.admin.action.open.jaws");
             $.i18n.prop("aip.admin.action.open.tab.content");
             $.i18n.prop("aip.admin.action.open.tab.content.noItem1");
             $.i18n.prop("aip.admin.action.open.tab.content.noItem2");

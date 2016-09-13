@@ -18,7 +18,7 @@ class AipAdminController {
     def actionItemReadOnlyService
     def actionItemService
     def actionItemTemplateService
-
+    def actionItemDetailService
 
     def folders() {
         def results = CommunicationFolder.list( sort: "name", order: "asc" )
@@ -349,6 +349,43 @@ class AipAdminController {
     def actionItemTemplateList() {
         def templates = actionItemTemplateService.listActionItemTemplates()
         render templates as JSON
+    }
+
+    def updateActionItemDetailWithTemplate () {
+        def templateId = params.templateId
+        def actionItemDetailId = params.actionItemDetailId
+        def user = SecurityContextHolder?.context?.authentication?.principal
+        if (!user.pidm) {
+            response.sendError( 403 )
+            return
+        }
+        if(!actionItemDetailId) {
+            response.sendError( 403 )
+            return
+        }
+        def aipUser = AipControllerUtils.getPersonForAip( params, user.pidm )
+        ActionItemDetail actionItemDetail = actionItemDetailService.listActionItemDetailById(actionItemDetailId)
+        actionItemDetail.templateReferenceId = templateId
+        actionItemDetail.activityDate = new Date()
+        actionItemDetail.userId = (String)aipUser.bannerId
+
+        actionItemDetail.save()
+
+        def success = false
+        def errors = []
+        ActionItemDetail newActionItemDetail = actionItemDetailService.listActionItemDetailById(actionItemDetailId)
+        if (newActionItemDetail) {
+            response.status = 200
+            success = true
+        }
+
+        def model = [
+                success   : success,
+                errors    : errors,
+                actionItem: newActionItemDetail,
+        ]
+
+        render model as JSON
     }
 
 }

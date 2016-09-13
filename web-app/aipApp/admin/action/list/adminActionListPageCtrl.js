@@ -123,12 +123,22 @@ var AIP;
             });
             return deferred.promise;
         };
-        AdminActionListPageCtrl.prototype.selectRecord = function (data) {
-        };
         AdminActionListPageCtrl.prototype.refreshGrid = function () {
         };
         AdminActionListPageCtrl.prototype.goAddPage = function () {
             this.$state.go("admin-action-add");
+        };
+        AdminActionListPageCtrl.prototype.selectRecord = function (data) {
+            this.selectedRecord = data;
+        };
+        AdminActionListPageCtrl.prototype.openActionItem = function () {
+            var _this = this;
+            this.actionListService.getActionItemDetail(this.selectedRecord.id)
+                .then(function (response) {
+                _this.$state.go("admin-action-open", { data: response.data });
+            }, function (err) {
+                console.log(err);
+            });
         };
         return AdminActionListPageCtrl;
     }());

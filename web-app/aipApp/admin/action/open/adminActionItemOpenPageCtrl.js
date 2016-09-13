@@ -39,20 +39,21 @@ var AIP;
             var _this = this;
             this.spinnerService.showSpinner(true);
             var promises = [];
-            this.adminActionService.getActionItemDetail(this.$state.params.data)
-                .then(function (response) {
-                _this.actionItem = response.data.actionItem;
-                $("#title-panel h1").html(_this.actionItem.actionItemName);
-                $("p.openActionItemTitle").html(_this.actionItem.actionItemName);
-                $("p.openActionItemFolder").html(_this.actionItem.folderName);
-                $("p.openActionItemStatus").html(_this.actionItem.actionItemStatus);
-                $("p.openActionItemDesc").html(_this.actionItem.actionItemDesc);
-                $("p.openActionItemActivityDate").html(_this.actionItem.actionItemActivityDate);
-                $("p.openActionItemLastUpdatedBy").html(_this.actionItem.actionItemUserId);
-                // $(".actionItemOpenContainer").height(this.getHeight());
-            }, function (err) {
-                console.log(err);
-            });
+            this.actionItem = this.$state.params.actionItem;
+            // this.adminActionService.getActionItemDetail( this.$state.params.data)
+            //     .then((response:AIP.IActionItemOpenResponse) => {
+            //         this.actionItem = response.data.actionItem;
+            //         $("#title-panel h1" ).html(this.actionItem.actionItemName);
+            //         $("p.openActionItemTitle" ).html(this.actionItem.actionItemName);
+            //         $("p.openActionItemFolder" ).html(this.actionItem.folderName);
+            //         $("p.openActionItemStatus" ).html(this.actionItem.actionItemStatus);
+            //         $("p.openActionItemDesc" ).html(this.actionItem.actionItemDesc);
+            //         $("p.openActionItemActivityDate" ).html( this.actionItem.actionItemActivityDate);
+            //         $("p.openActionItemLastUpdatedBy" ).html(this.actionItem.actionItemUserId);
+            //         // $(".actionItemOpenContainer").height(this.getHeight());
+            //     }, ( err ) => {
+            //         console.log( err );
+            //     } );
             if (this.$state.params.noti) {
                 this.handleNotification(this.$state.params.noti);
             }
@@ -169,6 +170,8 @@ var AIP;
                 default:
                     break;
             }
+        };
+        AdminActionItemOpenPageCtrl.prototype.saveTemplate = function () {
         };
         return AdminActionItemOpenPageCtrl;
     }());

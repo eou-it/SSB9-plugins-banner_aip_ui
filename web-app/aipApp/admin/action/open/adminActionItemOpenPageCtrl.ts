@@ -61,20 +61,21 @@ module AIP {
         init() {
             this.spinnerService.showSpinner( true );
             var promises = [];
-            this.adminActionService.getActionItemDetail( this.$state.params.data)
-                .then((response:AIP.IActionItemOpenResponse) => {
-                    this.actionItem = response.data.actionItem;
-                    $("#title-panel h1" ).html(this.actionItem.actionItemName);
-                    $("p.openActionItemTitle" ).html(this.actionItem.actionItemName);
-                    $("p.openActionItemFolder" ).html(this.actionItem.folderName);
-                    $("p.openActionItemStatus" ).html(this.actionItem.actionItemStatus);
-                    $("p.openActionItemDesc" ).html(this.actionItem.actionItemDesc);
-                    $("p.openActionItemActivityDate" ).html( this.actionItem.actionItemActivityDate);
-                    $("p.openActionItemLastUpdatedBy" ).html(this.actionItem.actionItemUserId);
-                    // $(".actionItemOpenContainer").height(this.getHeight());
-                }, ( err ) => {
-                    console.log( err );
-                } );
+            this.actionItem = this.$state.params.actionItem;
+            // this.adminActionService.getActionItemDetail( this.$state.params.data)
+            //     .then((response:AIP.IActionItemOpenResponse) => {
+            //         this.actionItem = response.data.actionItem;
+            //         $("#title-panel h1" ).html(this.actionItem.actionItemName);
+            //         $("p.openActionItemTitle" ).html(this.actionItem.actionItemName);
+            //         $("p.openActionItemFolder" ).html(this.actionItem.folderName);
+            //         $("p.openActionItemStatus" ).html(this.actionItem.actionItemStatus);
+            //         $("p.openActionItemDesc" ).html(this.actionItem.actionItemDesc);
+            //         $("p.openActionItemActivityDate" ).html( this.actionItem.actionItemActivityDate);
+            //         $("p.openActionItemLastUpdatedBy" ).html(this.actionItem.actionItemUserId);
+            //         // $(".actionItemOpenContainer").height(this.getHeight());
+            //     }, ( err ) => {
+            //         console.log( err );
+            //     } );
             if (this.$state.params.noti) {
                 this.handleNotification( this.$state.params.noti );
             }
@@ -190,6 +191,9 @@ module AIP {
                 default:
                     break;
             }
+        }
+        saveTemplate() {
+
         }
     }
 
