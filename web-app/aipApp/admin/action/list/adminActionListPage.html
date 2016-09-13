@@ -1,19 +1,16 @@
 <div class="actionListContainer" id="adminActionListPage" ng-controller="AdminActionListPageCtrl">
     <div class="row controls">
         <div class="control">
-            <button type="button" class="btn btn-default" ng-click="vm.goAddPage()" aria-label="{{'aip.admin.action.add.jaws'|i18n_aip}}">
-                <span class="icon icon-add"></span>
-                <span class="button-text hidden-sm-down">{{'aip.admin.action.add.actionItem'|i18n_aip}}</span>
+            <button type="button" class="btn btn-default" ng-click="vm.goAddPage()" aria-label="{{'aip.admin.acation.add.jaws'|i18n_aip}}">
+                <span class="icon icon-add-CO"></span>
+                <span class="button-text hidden-sm-down">{{'aip.common.add.new'|i18n_aip}}</span>
             </button>
-            <button type="button" class="btn btn-default" ng-click="vm.openActionItem()" ng-disabled="!vm.selectedRecord"
-                    aria-label="{{'aip.admin.action.open.jaws'|i18n_aip}}">
-                <span class="icon icon-arrowright-A-SO"></span>
-                <span class="button-text hidden-sm-down">{{'aip.admin.action.open'|i18n_aip}}</span>
+
+            <button id="openActionBtn" type="button" class="btn btn-default" ng-click="vm.goOpenPage()"
+                    aria-label="{{'aip.admin.acation.open.jaws'|i18n_aip}}" disabled="disabled">
+                <span class="icon icon-view-CO"></span>
+                <span class="button-text hidden-sm-down">{{'aip.common.open'|i18n_aip}}</span>
             </button>
-            <!--<button id="openGroupBtn" type="button" class="btn btn-default" ng-click="vm.open()" aria-label="{{'aip.common.open.group.jaws'|i18n_aip}}" disabled="disabled">-->
-                <!--<i class="fa fa-sign-out" aria-hidden="true"></i>-->
-                <!--<span>{{"aip.common.open"|i18n_aip}}</span>-->
-            <!--</button>-->
         </div>
     </div>
     <div class="actionListTable" ng-style="vm.getHeight()">

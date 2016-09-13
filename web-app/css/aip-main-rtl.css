@@ -351,12 +351,16 @@ aip-list .aip-list-container  {
       .actionListContainer .row.controls .control .btn-default  {
     background-color:transparent;
     border:none;
-    font-size:0.85em;
-    color:#41566F;
+    color:#206E9F;
+    font-weight:500;
 }
-        .actionListContainer .row.controls .control .btn-default .button-text,
+        .actionListContainer .row.controls .control .btn-default .button-text  {
+    font-size:0.875em;
+}
         .actionListContainer .row.controls .control .btn-default .icon  {
-    display:table-row;
+    display:table;
+    margin:0 auto;
+    font-size:1.25em;
 }
   .actionListContainer .actionListTable #actionItemDataTableSearch  {
     display:none;
@@ -454,7 +458,8 @@ aip-list .aip-list-container  {
 
 .actionItemOpenContainer  {
     border:1px solid #C8D4DE;
-    background-color:white;
+    background-color:#ffffff;
+    height:100%;
 }
   .actionItemOpenContainer label.required:after  {
     content:" *";
@@ -496,6 +501,10 @@ aip-list .aip-list-container  {
 }
           .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent  {
     padding:16px;
+}
+            .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .contentContainer  {
+    margin-top:20px;
+    margin-bottom:20px;
 }
             .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .control  {
     position:absolute;

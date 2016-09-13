@@ -13,6 +13,7 @@ var bannerAIPApp = angular.module("bannerAIP", [
     "ui.bootstrap",
     "ngAria",
     "I18nAIP",
+    "SCEAIP",
     "ngAnimate",
     "xe-ui-components",
     "bannerAIPUI",
@@ -116,6 +117,7 @@ var bannerAIPApp = angular.module("bannerAIP", [
             actionItemList: aipAppAbsPath + "aipAdmin/actionItemList",
             actionItemStatus: aipAppAbsPath + "aipAdmin/adminActionItemStatus",
             createActionItem: aipAppAbsPath + "aipAdmin/addActionItem",
+            editActionItemContent: aipAppAbsPath + "aipAdmin/openActionItem",
             openActionItem: aipAppAbsPath + "aipAdmin/openActionItem",
             actionItemTemplateList: aipAppAbsPath + "aipAdmin/actionItemTemplateList"
         }
@@ -199,6 +201,7 @@ var bannerAIPApp = angular.module("bannerAIP", [
             $.i18n.prop("aip.common.cancel");
             $.i18n.prop("aip.common.next");
             $.i18n.prop("aip.common.add");
+            $.i18n.prop("aip.common.add.new");
             $.i18n.prop("aip.common.open");
             $.i18n.prop("aip.common.overview");
             $.i18n.prop("aip.common.table.action.items");
@@ -252,10 +255,12 @@ var bannerAIPApp = angular.module("bannerAIP", [
             $.i18n.prop("aip.admin.action.add.jaws");
             $.i18n.prop("aip.admin.action.open.jaws");
             $.i18n.prop("aip.admin.action.open.tab.content");
+            $.i18n.prop("aip.admin.action.open.tab.template");
             $.i18n.prop("aip.admin.action.open.tab.content.noItem1");
             $.i18n.prop("aip.admin.action.open.tab.content.noItem2");
             $.i18n.prop("aip.admin.action.open.tab.content.edit");
             $.i18n.prop("aip.admin.action.open.tab.content.templateSelect");
+            $.i18n.prop("aip.admin.action.open.tab.content.templateContent");
 
             $.i18n.prop("aip.admin.selectable.action.items");
             $.i18n.prop("aip.admin.selectable.groups");

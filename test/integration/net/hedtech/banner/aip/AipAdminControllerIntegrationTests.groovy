@@ -131,9 +131,9 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
         def requestObj = [:]
         requestObj.groupTitle = "test1a2b" // Make sure title and folder create unique pair
         requestObj.folderId = folderId
-        requestObj.groupStatus = "pending"
+        requestObj.groupStatus = "Pending"
         requestObj.groupDesc = "<p><strong>This is a group description</p></strong>"
-        //requestObj.userId = "CSRADM001"
+
         controller.request.method = "POST"
         controller.request.json = requestObj
         controller.createGroup()
@@ -145,7 +145,7 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
     }
 
     @Test
-    void testCreateActionItemTitleFolderIdDuplicateConstraint() {
+    void testCreateActionGroupTitleFolderIdDuplicateConstraint() {
 
         def admin = PersonUtility.getPerson( "BCMADMIN" ) // role: advisor
         assertNotNull admin
@@ -161,14 +161,14 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
         requestObj.folderId = folderId
         requestObj.groupStatus = "pending"
         requestObj.groupDesc = "<p><strong>This is a group description</p></strong>"
-        //requestObj.userId = "CSRADM001"
+
         controller.request.method = "POST"
         controller.request.json = requestObj
         controller.createGroup()
         def answer = JSON.parse( controller.response.contentAsString )
         assertFalse answer.success
         assertTrue( answer.group.equals( null ) )
-        assertEquals( answer.errors[0], 'Save failed. The Group Title and Folder must be unique.')
+        assertEquals( 'Save failed. The Group Title and Folder must be unique.', answer.message )
     }
 
 
@@ -189,14 +189,13 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
         requestObj.folderId = folderId
         requestObj.groupStatus = null
         requestObj.groupDesc = "<p><strong>This is a group description</p></strong>"
-        //requestObj.userId = ""
+
         controller.request.method = "POST"
         controller.request.json = requestObj
 
         controller.createGroup()
         def answer = JSON.parse( controller.response.contentAsString )
-        assertEquals( "Save failed. Title cannot be null.", answer.errors[0])
-        assertEquals( "Save failed. Status cannot be null.", answer.errors[1])
+        assertEquals( "Save failed. The Title can not be null or empty.", answer.message)
         assertEquals( false, answer.success)
     }
 
@@ -218,13 +217,13 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
         requestObj.folderId = folderId
         requestObj.groupStatus = "pending"
         requestObj.groupDesc = "<p><strong>This is a group description</p></strong>"
-        //requestObj.userId = ""
+
         controller.request.method = "POST"
         controller.request.json = requestObj
 
         controller.createGroup()
         def answer = JSON.parse( controller.response.contentAsString )
-        assertEquals( "Save failed. Title cannot be null.", answer.errors[0])
+        assertEquals( "Save failed. The Title can not be null or empty.", answer.message)
         assertEquals( false, answer.success)
     }
 
@@ -246,14 +245,39 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
         requestObj.folderId = folderId
         requestObj.groupStatus = "pendingstatusoverthe30characterlimit"
         requestObj.groupDesc = "<p><strong>This is a group description</p></strong>"
-        //requestObj.userId = "CSRADM001"
+
         controller.request.method = "POST"
         controller.request.json = requestObj
 
         controller.createGroup()
         def answer = JSON.parse( controller.response.contentAsString )
-        assertEquals( "status exceeded max size", answer.errors[0] )
+        assertEquals( 'Save failed. Max size exceeded.', answer.message )
         assertEquals( false, answer.success )
+    }
+
+
+    @Test
+    void testCreateActionItemGroupFolderValidationError() {
+        def BAD_FOLDER_ID = 9842374
+        def admin = PersonUtility.getPerson( "BCMADMIN" ) // role: advisor
+        assertNotNull admin
+
+        def auth = selfServiceBannerAuthenticationProvider.authenticate(
+                new UsernamePasswordAuthenticationToken( admin.bannerId, '111111' ) )
+        SecurityContextHolder.getContext().setAuthentication( auth )
+
+        def requestObj = [:]
+        requestObj.groupTitle = "myTitle"
+        requestObj.folderId = BAD_FOLDER_ID
+        requestObj.groupStatus = "pending"
+        requestObj.groupDesc = "<p><strong>This is a group description</p></strong>"
+
+        controller.request.method = "POST"
+        controller.request.json = requestObj
+        controller.createGroup()
+        def answer = JSON.parse( controller.response.contentAsString )
+        assertFalse( answer.success )
+        assertEquals( "Save failed. The Folder with Id " + BAD_FOLDER_ID + " does not exist.", answer.message )
     }
 
 
@@ -274,7 +298,7 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
         requestObj.folderId = folderId
         requestObj.title = "a title"
         requestObj.description = "<p><strong>This is a group description</p></strong>"
-        //requestObj.userId = "CSRADM001"
+
         controller.request.method = "POST"
         controller.request.json = requestObj
         controller.addActionItem()
@@ -304,13 +328,13 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
         requestObj.folderId = folderId
         requestObj.title = "max size title 4tr0"
         requestObj.description = "<p><strong>This is a group description</p></strong>"
-        //requestObj.userId = "CSRADM001"
+
         controller.request.method = "POST"
         controller.request.json = requestObj
         controller.addActionItem()
         def answer = JSON.parse( controller.response.contentAsString )
         assertFalse( answer.success )
-        assertEquals( "Operation Not Permitted.", answer.message )
+        assertEquals( "Save failed. Max size exceeded.", answer.message )
     }
 
 
@@ -354,7 +378,7 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
         requestObj.folderId = folderId
         requestObj.title = "a title"
         requestObj.description = null
-        //requestObj.userId = "CSRADM001"
+
         controller.request.method = "POST"
         controller.request.json = requestObj
         controller.addActionItem()
@@ -385,7 +409,7 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
         controller.addActionItem()
         def answer = JSON.parse( controller.response.contentAsString )
         assertFalse( answer.success )
-        assertEquals( "The Status can not be null or empty.", answer.message )
+        assertEquals( "Save failed. The Status can not be null or empty.", answer.message )
     }
 
 
@@ -406,13 +430,13 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
         requestObj.folderId = folderId
         requestObj.title = ''
         requestObj.description = null
-        //requestObj.userId = "CSRADM001"
+
         controller.request.method = "POST"
         controller.request.json = requestObj
         controller.addActionItem()
         def answer = JSON.parse( controller.response.contentAsString )
         assertFalse( answer.success )
-        assertEquals( "The Title can not be null or empty.", answer.message )
+        assertEquals( "Save failed. The Title can not be null or empty.", answer.message )
     }
 
 
@@ -431,13 +455,13 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
         requestObj.folderId = ''
         requestObj.title = 'title 4238j'
         requestObj.description = null
-        //requestObj.userId = "CSRADM001"
+
         controller.request.method = "POST"
         controller.request.json = requestObj
         controller.addActionItem()
         def answer = JSON.parse( controller.response.contentAsString )
         assertFalse( answer.success )
-        assertEquals( "The Folder Id can not be null or empty.", answer.message )
+        assertEquals( "Save failed. The Folder Id can not be null or empty.", answer.message )
     }
 
 
@@ -458,13 +482,13 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
         requestObj.folderId = ai.folderId
         requestObj.title = ai.title
         requestObj.description = null
-        //requestObj.userId = "CSRADM001"
+
         controller.request.method = "POST"
         controller.request.json = requestObj
         controller.addActionItem()
         def answer = JSON.parse( controller.response.contentAsString )
         assertFalse( answer.success )
-        assertEquals( "Action Item Title and Folder must be unique.", answer.message )
+        assertEquals( "Save failed. The Action Item Title and Folder must be unique.", answer.message )
     }
 
 
@@ -483,13 +507,13 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
         requestObj.folderId = BAD_FOLDER_ID
         requestObj.title = 'a title 49rtu423'
         requestObj.description = null
-        //requestObj.userId = "CSRADM001"
+
         controller.request.method = "POST"
         controller.request.json = requestObj
         controller.addActionItem()
         def answer = JSON.parse( controller.response.contentAsString )
         assertFalse( answer.success )
-        assertEquals( "The Folder with Id " + BAD_FOLDER_ID + " does not exist.", answer.message )
+        assertEquals( "Save failed. The Folder with Id " + BAD_FOLDER_ID + " does not exist.", answer.message )
     }
 
 
