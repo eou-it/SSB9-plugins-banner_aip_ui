@@ -159,8 +159,8 @@ module AIP {
         }
         selectRecord(data) {
             this.selectedRecord = data;
-            this.actionListService.enableActionItemOpen(data.id);
-            this.$state.params.actionid = data.id;
+            // this.actionListService.enableActionItemOpen(data.id);
+            // this.$state.params.actionid = data.id;
         }
         refreshGrid() {
 
@@ -168,19 +168,12 @@ module AIP {
         goAddPage() {
             this.$state.go("admin-action-add");
         }
-        goOpenPage() {
-            this.$state.go("admin-action-open", { data: this.$state.params.actionid });
-        }
-        selectRecord(data) {
-            this.selectedRecord = data;
-        }
+        // goOpenPage() {
+        //
+        // }
+
         openActionItem() {
-            this.actionListService.getActionItemDetail(this.selectedRecord.id)
-                .then((response:AIP.IActionItemOpenResponse) => {
-                    this.$state.go("admin-action-open", {data:response.data});
-                }, (err) => {
-                    console.log(err);
-                });
+            this.$state.go("admin-action-open", { data: this.selectedRecord.id });
         }
     }
 }

@@ -24,6 +24,7 @@ var AIP;
             this.actionItem = {};
             this.templateSelect = false;
             this.templates = [];
+            this.selectedTemplate;
             this.init();
             angular.element($window).bind('resize', function () {
                 // $scope.onResize();
@@ -39,36 +40,21 @@ var AIP;
             var _this = this;
             this.spinnerService.showSpinner(true);
             var promises = [];
-            this.adminActionService.getActionItemDetail(this.$state.params.data)
-                .then(function (response) {
-                _this.actionItem = response.data.actionItem;
-                //console.log(response.data.actionItem.actionItemContent);
-                //this.actionItem.actionItemContent = this.$sce.trustAsHtml(response.data.actionItem.actionItemContent);
-                $("#title-panel h1").html(_this.actionItem.actionItemName);
-                $("p.openActionItemTitle").html(_this.actionItem.actionItemName);
-                $("p.openActionItemFolder").html(_this.actionItem.folderName);
-                $("p.openActionItemStatus").html(_this.actionItem.actionItemStatus);
-                $("p.openActionItemDesc").html(_this.actionItem.actionItemDesc);
-                $("p.openActionItemActivityDate").html(_this.actionItem.actionItemActivityDate);
-                $("p.openActionItemLastUpdatedBy").html(_this.actionItem.actionItemUserId);
-                // $(".actionItemOpenContainer").height(this.getHeight());
-            }, function (err) {
-                console.log(err);
-            });
+            this.openOverviewPanel();
             if (this.$state.params.noti) {
                 this.handleNotification(this.$state.params.noti);
             }
             this.$q.all(promises).then(function () {
                 //TODO:: turn off the spinner
                 _this.spinnerService.showSpinner(false);
-                var actionItemFolder = $("#actionItemTemplate");
-                if (actionItemFolder) {
-                    actionItemFolder.select2({
-                        width: "25em",
-                        minimumResultsForSearch: Infinity,
-                        placeholderOption: "first"
-                    });
-                }
+                // var actionItemFolder:any = $("#actionItemTemplate");
+                // if(actionItemFolder) {
+                //     actionItemFolder.select2({
+                //         width: "25em",
+                //         minimumResultsForSearch: Infinity,
+                //         placeholderOption: "first"
+                //     });
+                // }
             });
         };
         AdminActionItemOpenPageCtrl.prototype.handleNotification = function (noti) {
@@ -93,7 +79,7 @@ var AIP;
                 $("#title-panel").height() -
                 $("#header-main-section").height() -
                 $("#outerFooter").height() - 30;
-            return { height: containerHeight };
+            return { "min-height": containerHeight };
         };
         AdminActionItemOpenPageCtrl.prototype.getSeparatorHeight = function () {
             var containerHeight = $(document).height() -
@@ -102,7 +88,7 @@ var AIP;
                 $("#header-main-section").height() -
                 $(".xe-tab-container").height() -
                 $("#outerFooter").height() - 30;
-            return { height: containerHeight };
+            return { "height": containerHeight };
         };
         AdminActionItemOpenPageCtrl.prototype.getTemplateContentHeight = function () {
             var containerHeight = $($(".xe-tab-container")[0]).height() -
@@ -110,6 +96,13 @@ var AIP;
             return { height: containerHeight };
         };
         AdminActionItemOpenPageCtrl.prototype.openOverviewPanel = function () {
+            var _this = this;
+            this.adminActionService.getActionItemDetail(this.$state.params.data)
+                .then(function (response) {
+                _this.actionItem = response.data.actionItem;
+            }, function (err) {
+                console.log(err);
+            });
             return this.openPanel("overview");
         };
         AdminActionItemOpenPageCtrl.prototype.openContentPanel = function () {
@@ -148,7 +141,17 @@ var AIP;
             return deferred.promise;
         };
         AdminActionItemOpenPageCtrl.prototype.isNoContent = function () {
-            return !this.templateSelect;
+            if (this.templateSelect) {
+                return false;
+            }
+            else {
+                if (!this.actionItem.actionItemTemplateId) {
+                    return true;
+                }
+                else {
+                    return false;
+                }
+            }
         };
         AdminActionItemOpenPageCtrl.prototype.loadReadOnlyContent = function () {
             var actionItemHtmlText = this.$sce.trustAsHtml(this.actionItem.actionItemContent);
@@ -177,6 +180,29 @@ var AIP;
                 default:
                     break;
             }
+        };
+        AdminActionItemOpenPageCtrl.prototype.saveTemplate = function () {
+            var _this = this;
+            this.adminActionService.saveActionItemTemplate(this.selectedTemplate, this.actionItem.actionItemId)
+                .then(function (response) {
+                var notiParams = {};
+                if (response.data.success) {
+                    notiParams = {
+                        notiType: "saveSuccess",
+                        data: response.data
+                    };
+                    _this.handleNotification(notiParams);
+                    _this.templateSelect = false;
+                    _this.openContentPanel();
+                }
+                else {
+                    //this.saveErrorCallback(response.data.message); //todo: add callback error on actionitem open page
+                    console.log("error:");
+                    console.log(response);
+                }
+            }, function (err) {
+                console.log(err);
+            });
         };
         AdminActionItemOpenPageCtrl.prototype.saveActionItemContent = function () {
             var _this = this;

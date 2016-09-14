@@ -171,7 +171,6 @@ module AIP {
                     deferred.resolve(response);
                 }, (error) => {
                     console.log(error);
-                    console.log(error);
                     deferred.reject(error);
                 });
             return deferred.promise;

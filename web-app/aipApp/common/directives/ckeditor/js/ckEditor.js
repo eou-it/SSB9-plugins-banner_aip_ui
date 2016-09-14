@@ -44,4 +44,4 @@ angular.module('bannerAIPUI')
         toolbarStartupExpanded: true
     };
 });
-//# sourceMappingURL=ckeditor.js.map
+//# sourceMappingURL=ckEditor.js.map

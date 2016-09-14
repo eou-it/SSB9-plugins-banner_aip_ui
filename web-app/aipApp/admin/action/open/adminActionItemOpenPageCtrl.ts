@@ -28,6 +28,7 @@ module AIP {
         APP_ROOT;
         templates;
         templateSelect: boolean;
+        selectedTemplate;
         constructor($scope, $q:ng.IQService, $state, $filter, $sce, $window, $templateRequest, $templateCache, $compile,
                     $timeout, SpinnerService, AdminActionService, APP_ROOT) {
             $scope.vm = this;
@@ -47,6 +48,7 @@ module AIP {
             this.actionItem = {};
             this.templateSelect = false;
             this.templates = [];
+            this.selectedTemplate;
             this.init();
             angular.element($window).bind('resize', function() {
                 // $scope.onResize();
@@ -63,27 +65,7 @@ module AIP {
             this.spinnerService.showSpinner( true );
             var promises = [];
 
-            this.adminActionService.getActionItemDetail( this.$state.params.data)
-                .then((response:AIP.IActionItemOpenResponse) => {
-
-
-                    this.actionItem = response.data.actionItem;
-
-                    //console.log(response.data.actionItem.actionItemContent);
-
-                    //this.actionItem.actionItemContent = this.$sce.trustAsHtml(response.data.actionItem.actionItemContent);
-
-                    $("#title-panel h1" ).html(this.actionItem.actionItemName);
-                    $("p.openActionItemTitle" ).html(this.actionItem.actionItemName);
-                    $("p.openActionItemFolder" ).html(this.actionItem.folderName);
-                    $("p.openActionItemStatus" ).html(this.actionItem.actionItemStatus);
-                    $("p.openActionItemDesc" ).html(this.actionItem.actionItemDesc);
-                    $("p.openActionItemActivityDate" ).html( this.actionItem.actionItemActivityDate);
-                    $("p.openActionItemLastUpdatedBy" ).html(this.actionItem.actionItemUserId);
-                    // $(".actionItemOpenContainer").height(this.getHeight());
-                }, ( err ) => {
-                    console.log( err );
-                } );
+            this.openOverviewPanel();
 
             if (this.$state.params.noti) {
                 this.handleNotification( this.$state.params.noti );
@@ -91,14 +73,14 @@ module AIP {
             this.$q.all( promises ).then( () => {
                 //TODO:: turn off the spinner
                 this.spinnerService.showSpinner( false );
-                var actionItemFolder:any = $("#actionItemTemplate");
-                if(actionItemFolder) {
-                    actionItemFolder.select2({
-                        width: "25em",
-                        minimumResultsForSearch: Infinity,
-                        placeholderOption: "first"
-                    });
-                }
+                // var actionItemFolder:any = $("#actionItemTemplate");
+                // if(actionItemFolder) {
+                //     actionItemFolder.select2({
+                //         width: "25em",
+                //         minimumResultsForSearch: Infinity,
+                //         placeholderOption: "first"
+                //     });
+                // }
             } );
         }
 
@@ -124,7 +106,7 @@ module AIP {
                 $("#title-panel").height() -
                 $("#header-main-section").height() -
                 $("#outerFooter").height() - 30;
-            return {height: containerHeight};
+            return {"min-height": containerHeight};
         }
         getSeparatorHeight() {
             var containerHeight = $(document).height() -
@@ -133,7 +115,7 @@ module AIP {
                 $("#header-main-section").height() -
                 $(".xe-tab-container").height() -
                 $("#outerFooter").height() - 30;
-            return {height: containerHeight};
+            return {"height": containerHeight};
         }
         getTemplateContentHeight() {
             var containerHeight = $($(".xe-tab-container")[0]).height() -
@@ -141,6 +123,12 @@ module AIP {
             return {height: containerHeight};
         }
         openOverviewPanel() {
+            this.adminActionService.getActionItemDetail(this.$state.params.data)
+                .then((response:AIP.IActionItemOpenResponse) => {
+                    this.actionItem = response.data.actionItem;
+                }, (err) => {
+                    console.log(err);
+                });
             return this.openPanel("overview");
         }
         openContentPanel() {
@@ -177,7 +165,15 @@ module AIP {
             return deferred.promise;
         }
         isNoContent() {
-            return !this.templateSelect;
+            if(this.templateSelect) {
+                return false;
+            } else {
+                if (!this.actionItem.actionItemTemplateId) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
         }
         loadReadOnlyContent() {
             var actionItemHtmlText = this.$sce.trustAsHtml(this.actionItem.actionItemContent);
@@ -207,7 +203,25 @@ module AIP {
             }
         }
         saveTemplate() {
-
+            this.adminActionService.saveActionItemTemplate(this.selectedTemplate, this.actionItem.actionItemId)
+                .then((response:any) => {
+                    var notiParams = {};
+                    if(response.data.success) {
+                        notiParams = {
+                            notiType: "saveSuccess",
+                            data: response.data
+                        };
+                        this.handleNotification( notiParams );
+                        this.templateSelect =  false;
+                        this.openContentPanel();
+                    } else {
+                        //this.saveErrorCallback(response.data.message); //todo: add callback error on actionitem open page
+                        console.log("error:");
+                        console.log(response);
+                    }
+                }, (err) => {
+                    console.log(err);
+                });
         }
         saveActionItemContent() {
             this.adminActionService.updateActionItemContent(this.actionItem)

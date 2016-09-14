@@ -758,12 +758,12 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
         SecurityContextHolder.getContext().setAuthentication( auth )
 
         controller.params.templateId=1
-        controller.params.actionItemDetailId=116
+        controller.params.actionItemDetailId=1
 
         controller.updateActionItemDetailWithTemplate()
         def answer = JSON.parse( controller.response.contentAsString )
 
         assertEquals 200, controller.response.status
-        assertEquals 1, answer.actionItem.templateReferenceId
+        assertEquals 1, answer.actionItem.actionItemTemplateId
     }
 }

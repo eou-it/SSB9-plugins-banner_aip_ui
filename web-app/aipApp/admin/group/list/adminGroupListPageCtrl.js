@@ -148,7 +148,6 @@ var AIP;
                 deferred.resolve(response);
             }, function (error) {
                 console.log(error);
-                console.log(error);
                 deferred.reject(error);
             });
             return deferred.promise;

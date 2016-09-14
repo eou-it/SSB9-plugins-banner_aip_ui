@@ -180,11 +180,6 @@ module AIP {
             return request;
         }
 
-
-        enableActionItemOpen(actionItemId) {
-            $("#openActionBtn").removeAttr("disabled");
-            return actionItemId;
-        }
         getActionItemDetail(actionItemId) {
             var request = this.$http({
                 method: "GET",
@@ -196,6 +191,15 @@ module AIP {
             var request = this.$http({
                 method: "GET",
                 url: this.ENDPOINT.admin.actionItemTemplateList
+            });
+            return request;
+        }
+        saveActionItemTemplate(templateId, actionItemDetailId) {
+            var request = this.$http({
+                method: "GET",
+                url: this.ENDPOINT.admin.saveActionItemTemplate +
+                    "?templateId="+templateId +
+                    "&actionItemDetailId="+actionItemDetailId
             });
             return request;
         }

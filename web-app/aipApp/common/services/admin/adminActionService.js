@@ -78,10 +78,6 @@ var AIP;
             });
             return request;
         };
-        AdminActionService.prototype.enableActionItemOpen = function (actionItemId) {
-            $("#openActionBtn").removeAttr("disabled");
-            return actionItemId;
-        };
         AdminActionService.prototype.getActionItemDetail = function (actionItemId) {
             var request = this.$http({
                 method: "GET",
@@ -93,6 +89,15 @@ var AIP;
             var request = this.$http({
                 method: "GET",
                 url: this.ENDPOINT.admin.actionItemTemplateList
+            });
+            return request;
+        };
+        AdminActionService.prototype.saveActionItemTemplate = function (templateId, actionItemDetailId) {
+            var request = this.$http({
+                method: "GET",
+                url: this.ENDPOINT.admin.saveActionItemTemplate +
+                    "?templateId=" + templateId +
+                    "&actionItemDetailId=" + actionItemDetailId
             });
             return request;
         };

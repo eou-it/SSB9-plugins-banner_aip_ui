@@ -357,8 +357,8 @@ class AipAdminController {
     }
 
     def updateActionItemDetailWithTemplate () {
-        def templateId = params.templateId
-        def actionItemDetailId = params.actionItemDetailId
+        def templateId = params.int('templateId')
+        def actionItemDetailId = params.int('actionItemDetailId')
         def user = SecurityContextHolder?.context?.authentication?.principal
         if (!user.pidm) {
             response.sendError( 403 )
@@ -370,7 +370,7 @@ class AipAdminController {
         }
         def aipUser = AipControllerUtils.getPersonForAip( params, user.pidm )
         ActionItemDetail actionItemDetail = actionItemDetailService.listActionItemDetailById(actionItemDetailId)
-        actionItemDetail.templateReferenceId = templateId
+        actionItemDetail.actionItemTemplateId = templateId
         actionItemDetail.activityDate = new Date()
         actionItemDetail.userId = (String)aipUser.bannerId
 

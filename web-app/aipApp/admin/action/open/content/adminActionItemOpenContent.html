@@ -26,13 +26,13 @@
             </div>
         </div>
     </div>
-    <div class="actionItemContent row" ng-if="!vm.isNoContent()">
+    <div class="actionItemContent row" ng-if="!vm.isNoContent() && vm.templateSelect">
         <div class="contentContainer">
             <div class="row input-actionItem">
                 <label for="actionItemTemplate" class="templateSelect required" id="actionItemTemplateSelector">{{"aip.admin.action.open.tab.content.templateSelect"|i18n_aip}}</label>
             </div>
             <div class="row">
-                <select id="actionItemTemplate" class="actionItemSelect" xe-data="" aria-label="Template" required aria-required="true">
+                <select id="actionItemTemplate" class="actionItemSelect" xe-data="" aria-label="Template" required aria-required="true" ng-model="vm.selectedTemplate">
                     <option ng-repeat="item in vm.templates" value="{{item.id}}">{{item.title}}</option>
                 </select>
             </div>
@@ -49,12 +49,10 @@
                           ng-bind-html="vm.loadReadOnlyContent() | trusted"></textarea>
             </div>
         </div>
-
-
         <div class="control row">
             <div class="col-sm-3 offset-sm-9 col-xs-12 templateButton">
                 <span>
-                    <button type="button" class="btn btn-primary" ng-click="vm.saveActionItemContent()">
+                    <button type="button" class="btn btn-primary" ng-click="vm.saveTemplate()">
                         {{"aip.common.saveandreturn"|i18n_aip}}
                     </button>
                 </span>
@@ -65,4 +63,29 @@
 
         </div>
     </div>
+
+
+    <div class="actionItemContent row" ng-if="!vm.isNoContent() && vm.actionItem.actionItemTemplateId && !vm.templateSelect">
+        <div class="contentText">
+            <div class="row">
+
+                <div class="col-xs-12 col-sm-8">
+                    <h2>{{'aip.common.text.template'|i18n_aip}}</h2>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-sm-8">
+                    {{vm.actionItem.actionItemTemplateName||"action item template name placeholder"}}
+                </div>
+
+                <div class="col-xs-12 col-sm-4">
+                    <button type="button" class="btn btn-default" ng-click="vm.selectTemplate()" aria-label="">
+                        <span class="icon icon-edit-CO"></span>
+                        <span class="button-text hidden-sm-down">{{'aip.admin.action.open.tab.content.edit'|i18n_aip}}</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </div>

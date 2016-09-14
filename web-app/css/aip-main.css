@@ -413,7 +413,6 @@ aip-list .aip-list-container {
               margin-top: 20px;
               margin-bottom: 20px; }
             .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .control {
-              position: absolute;
               bottom: 24px;
               width: 100%; }
               .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .control .templateButton {

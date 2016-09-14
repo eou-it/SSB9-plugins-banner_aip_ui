@@ -6,8 +6,8 @@
                 <span class="button-text hidden-sm-down">{{'aip.common.add.new'|i18n_aip}}</span>
             </button>
 
-            <button id="openActionBtn" type="button" class="btn btn-default" ng-click="vm.goOpenPage()"
-                    aria-label="{{'aip.admin.acation.open.jaws'|i18n_aip}}" disabled="disabled">
+            <button id="openActionBtn" type="button" class="btn btn-default" ng-click="vm.openActionItem()"
+                    aria-label="{{'aip.admin.acation.open.jaws'|i18n_aip}}" ng-disabled="!vm.selectedRecord">
                 <span class="icon icon-view-CO"></span>
                 <span class="button-text hidden-sm-down">{{'aip.common.open'|i18n_aip}}</span>
             </button>
