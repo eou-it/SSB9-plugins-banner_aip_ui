@@ -58,7 +58,7 @@ module AIP {
         success: boolean;
         invalidField?: string[];
         message?: string;
-        newGroup?: any;
+        group?: IGroupFolder;
         errors?: string[];
     }
 

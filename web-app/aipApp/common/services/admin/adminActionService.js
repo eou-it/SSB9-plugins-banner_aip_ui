@@ -69,7 +69,8 @@ var AIP;
         AdminActionService.prototype.updateActionItemContent = function (actionItem) {
             var params = {
                 actionItemContentId: parseInt(actionItem.actionItemContentId),
-                actionItenContent: actionItem.actionItemContent
+                actionItemContent: actionItem.actionItemContent,
+                templateId: parseInt(actionItem.templateId)
             };
             var request = this.$http({
                 method: "POST",
