@@ -374,7 +374,7 @@ class AipAdminController {
         actionItemDetail.activityDate = new Date()
         actionItemDetail.userId = (String)aipUser.bannerId
 
-        actionItemDetail.save()
+        actionItemDetailService.update(actionItemDetail)
 
         def success = false
         def errors = []
