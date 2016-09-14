@@ -368,29 +368,27 @@ class AipAdminController {
             response.sendError( 403 )
             return
         }
-        def aipUser = AipControllerUtils.getPersonForAip( params, user.pidm )
-        ActionItemDetail actionItemDetail = actionItemDetailService.listActionItemDetailById(actionItemDetailId)
-        actionItemDetail.actionItemTemplateId = templateId
-        actionItemDetail.activityDate = new Date()
-        actionItemDetail.userId = (String)aipUser.bannerId
 
-        actionItemDetail.save()
+        def aipUser = AipControllerUtils.getPersonForAip( params, user.pidm )
+        def userId = (String)aipUser.bannerId
+
+        actionItemDetailService.update(actionItemDetailId,templateId, userId )
 
         def success = false
         def errors = []
-        ActionItemDetail newActionItemDetail = actionItemDetailService.listActionItemDetailById(actionItemDetailId)
-        if (newActionItemDetail) {
+        ActionItemDetail updatedActionItemDetail = actionItemDetailService.listActionItemDetailById( actionItemDetailId )
+        if (updatedActionItemDetail) {
             response.status = 200
             success = true
         }
 
+
         def model = [
-                success   : success,
+                success: success,
                 errors    : errors,
-                actionItem: newActionItemDetail,
+                actionItemDetail:updatedActionItemDetail
         ]
 
         render model as JSON
     }
-
 }
