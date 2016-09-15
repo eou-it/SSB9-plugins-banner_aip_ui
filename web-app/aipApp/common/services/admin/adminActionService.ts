@@ -196,10 +196,12 @@ module AIP {
         }
         saveActionItemTemplate(templateId, actionItemDetailId) {
             var request = this.$http({
-                method: "GET",
-                url: this.ENDPOINT.admin.saveActionItemTemplate +
-                    "?templateId="+templateId +
-                    "&actionItemDetailId="+actionItemDetailId
+                method: "POST",
+                url: this.ENDPOINT.admin.saveActionItemTemplate,
+                data: {
+                    templateId: templateId,
+                    actionItemDetailId: actionItemDetailId
+                }
             });
             return request;
         }

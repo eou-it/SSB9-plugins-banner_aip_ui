@@ -357,8 +357,9 @@ class AipAdminController {
     }
 
     def updateActionItemDetailWithTemplate () {
-        def templateId = params.int('templateId')
-        def actionItemDetailId = params.int('actionItemDetailId')
+        def jsonObj = request.JSON
+        def templateId = jsonObj.templateId.toInteger()
+        def actionItemDetailId = jsonObj.actionItemDetailId.toInteger()
         def user = SecurityContextHolder?.context?.authentication?.principal
         if (!user.pidm) {
             response.sendError( 403 )
