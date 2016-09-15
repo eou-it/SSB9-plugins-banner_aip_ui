@@ -12,19 +12,12 @@ import java.text.MessageFormat
 class AipAdminController {
 
     static defaultAction = "folders"
-
     def communicationFolderService
-
     def groupFolderReadOnlyService
-
     def actionItemGroupService
-
     def actionItemReadOnlyService
-
     def actionItemService
-
     def actionItemTemplateService
-
     def actionItemDetailService
 
 
@@ -397,9 +390,9 @@ class AipAdminController {
 
 
     def updateActionItemDetail() {
-        def templateId = params.int( 'templateId' )
-        def actionItemDetailId = params.int( 'actionItemDetailId' )
-
+        def templateId = params.templateId
+        def actionItemDetailId = params.actionItemDetailId
+        def actionItemText = params.actionItemContent?.toString()
         def user = SecurityContextHolder?.context?.authentication?.principal
         if (!user.pidm) {
             response.sendError( 403 )
@@ -413,12 +406,18 @@ class AipAdminController {
         def aipUser = AipControllerUtils.getPersonForAip( params, user.pidm )
         def userId = (String) aipUser.bannerId
 
-        actionItemDetailService.update( actionItemDetailId, templateId, userId )
+        List<ActionItemReadOnly> actionItemDetail
+        actionItemDetail.actionItemTemplateId = templateId
+        actionItemDetail.actionItemContentId = actionItemDetailId
+        actionItemDetail.actionItemContent = actionItemText
+        actionItemDetail.actionItemUserId = userId
+
+        actionItemDetailService.update( actionItemDetail )
 
         def success = false
         def errors = []
-        ActionItemDetail updatedActionItemDetail = actionItemDetailService.listActionItemDetailById( actionItemDetailId )
-        if (updatedActionItemDetail) {
+        //ActionItemDetail updatedActionItemDetail = actionItemDetailService.listActionItemDetailById( actionItemDetailId )
+        if (actionItemDetail) {
             response.status = 200
             success = true
         }
@@ -426,7 +425,7 @@ class AipAdminController {
         def model = [
                 success         : success,
                 errors          : errors,
-                actionItemDetail: updatedActionItemDetail
+                actionItemDetail: actionItemDetail
         ]
 
         render model as JSON
