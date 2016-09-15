@@ -161,6 +161,10 @@ module AIP {
                 .then((template) => {
                     var compiled = this.$compile(template)(this.scope);
                     deferred.resolve(compiled);
+                    this.$timeout(()=> {
+                        //change page title
+                        $("#title-panel").children()[0].innerHTML = this.actionItem.actionItemName
+                    },0)
                 }, (error) => {
                     console.log(error);
                 });

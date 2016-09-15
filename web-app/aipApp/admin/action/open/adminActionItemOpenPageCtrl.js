@@ -136,6 +136,10 @@ var AIP;
                 .then(function (template) {
                 var compiled = _this.$compile(template)(_this.scope);
                 deferred.resolve(compiled);
+                _this.$timeout(function () {
+                    //change page title
+                    $("#title-panel").children()[0].innerHTML = _this.actionItem.actionItemName;
+                }, 0);
             }, function (error) {
                 console.log(error);
             });
