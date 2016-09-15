@@ -41,11 +41,12 @@ module AIP {
             var promises = [];
 
             this.groupFolder = this.$state.params.data;
+            console.log(this.groupFolder);
             //var groupDescHtml = this.$sce.trustAsHtml(this.$state.params.data.description);
             //console.log(groupDescHtml);
             //todo: replace this temporary workaround for sce not working for description
-            $("p.openGroupDesc" ).html(this.$state.params.data.description);
-            $("#title-panel h1" ).html(this.$state.params.data.title);
+            $("p.openGroupDesc" ).html(this.$state.params.data.groupDesc);
+            $("#title-panel h1" ).html(this.$state.params.data.groupTitle);
 
             if (this.$state.params.noti) {
                 this.handleNotification( this.$state.params.noti );
@@ -58,7 +59,7 @@ module AIP {
 
         handleNotification(noti) {
             if(noti.notiType === "saveSuccess") {
-                var data = noti.data.newGroup[0];
+                var data = noti.data.group[0];
                 var n = new Notification({
                     message: this.$filter("i18n_aip")("aip.admin.group.add.success"), //+
                     type: "success",

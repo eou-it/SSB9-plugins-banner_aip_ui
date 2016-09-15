@@ -4,9 +4,9 @@
 var AIP;
 (function (AIP) {
     var AdminActionItemOpenPageCtrl = (function () {
-        function AdminActionItemOpenPageCtrl($scope, $q, $state, $filter, $sce, $window, $templateRequest, $templateCache, $compile, $timeout, SpinnerService, AdminActionService, APP_ROOT) {
+        function AdminActionItemOpenPageCtrl($scope, $q, $state, $filter, $sce, $window, $templateRequest, $templateCache, $compile, $timeout, $interpolate, SpinnerService, AdminActionService, APP_ROOT) {
             this.$inject = ["$scope", "$q", "$state", "$filter", "$sce", "$window", "$templateRequest", "$templateCache", "$compile",
-                "$timeout", "SpinnerService", "AdminActionService", "APP_ROOT"];
+                "$timeout", "$interpolate", "SpinnerService", "AdminActionService", "APP_ROOT"];
             $scope.vm = this;
             this.scope = $scope;
             this.$q = $q;
@@ -18,6 +18,7 @@ var AIP;
             this.$templateCache = $templateCache;
             this.$compile = $compile;
             this.$timeout = $timeout;
+            this.$interpolate = $interpolate;
             this.adminActionService = AdminActionService;
             this.spinnerService = SpinnerService;
             this.APP_ROOT = APP_ROOT;
@@ -193,6 +194,7 @@ var AIP;
                     };
                     _this.handleNotification(notiParams);
                     _this.templateSelect = false;
+                    _this.actionItem = response.data.actionItem;
                     _this.openContentPanel();
                 }
                 else {

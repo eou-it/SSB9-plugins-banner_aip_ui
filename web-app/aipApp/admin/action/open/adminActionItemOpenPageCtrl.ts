@@ -11,7 +11,7 @@ module AIP {
 
     export class AdminActionItemOpenPageCtrl{
         $inject = ["$scope", "$q", "$state", "$filter", "$sce", "$window", "$templateRequest", "$templateCache", "$compile",
-            "$timeout", "SpinnerService", "AdminActionService", "APP_ROOT"];
+            "$timeout", "$interpolate", "SpinnerService", "AdminActionService", "APP_ROOT"];
         adminActionService: AIP.AdminActionService;
         spinnerService: AIP.SpinnerService;
         $q: ng.IQService;
@@ -23,6 +23,7 @@ module AIP {
         $templateCache;
         $compile;
         $timeout;
+        $interpolate;
         actionItem;
         scope;
         APP_ROOT;
@@ -30,7 +31,7 @@ module AIP {
         templateSelect: boolean;
         selectedTemplate;
         constructor($scope, $q:ng.IQService, $state, $filter, $sce, $window, $templateRequest, $templateCache, $compile,
-                    $timeout, SpinnerService, AdminActionService, APP_ROOT) {
+                    $timeout, $interpolate, SpinnerService, AdminActionService, APP_ROOT) {
             $scope.vm = this;
             this.scope = $scope;
             this.$q = $q;
@@ -42,6 +43,7 @@ module AIP {
             this.$templateCache = $templateCache;
             this.$compile = $compile;
             this.$timeout = $timeout;
+            this.$interpolate = $interpolate;
             this.adminActionService = AdminActionService;
             this.spinnerService = SpinnerService;
             this.APP_ROOT = APP_ROOT;
@@ -213,6 +215,7 @@ module AIP {
                         };
                         this.handleNotification( notiParams );
                         this.templateSelect =  false;
+                        this.actionItem = response.data.actionItem;
                         this.openContentPanel();
                     } else {
                         //this.saveErrorCallback(response.data.message); //todo: add callback error on actionitem open page

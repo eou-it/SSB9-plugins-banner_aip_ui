@@ -170,7 +170,8 @@ module AIP {
         updateActionItemContent(actionItem) {
             var params = {
                 actionItemContentId:  parseInt(actionItem.actionItemContentId),
-                actionItenContent: actionItem.actionItemContent
+                actionItemContent: actionItem.actionItemContent,
+                templateId: parseInt(actionItem.templateId)
             };
             var request = this.$http({
                 method: "POST",
@@ -196,10 +197,12 @@ module AIP {
         }
         saveActionItemTemplate(templateId, actionItemDetailId) {
             var request = this.$http({
-                method: "GET",
-                url: this.ENDPOINT.admin.saveActionItemTemplate +
-                    "?templateId="+templateId +
-                    "&actionItemDetailId="+actionItemDetailId
+                method: "POST",
+                url: this.ENDPOINT.admin.saveActionItemTemplate,
+                data: {
+                    templateId: templateId,
+                    actionItemDetailId: actionItemDetailId
+                }
             });
             return request;
         }
