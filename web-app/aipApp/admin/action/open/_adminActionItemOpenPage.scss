@@ -38,7 +38,7 @@
                   padding-top: 1.5em;
                 }
                 .control {
-                  button {
+                  button.edit {
                     float: right;
                     color: #206E9F;
                     border: none;
@@ -56,6 +56,11 @@
                   //position: absolute;
                   bottom: 24px;
                   width: 100%;
+                  button.edit {
+                    float: right;
+                    color: #206E9F;
+                    border: none;
+                  }
                   .templateButton {
                     float: right;
                     span {

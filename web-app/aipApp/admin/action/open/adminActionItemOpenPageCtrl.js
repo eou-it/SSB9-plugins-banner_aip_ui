@@ -101,6 +101,7 @@ var AIP;
             this.adminActionService.getActionItemDetail(this.$state.params.data)
                 .then(function (response) {
                 _this.actionItem = response.data.actionItem;
+                $("#title-panel h1").html(_this.actionItem.actionItemName);
             }, function (err) {
                 console.log(err);
             });
@@ -141,12 +142,25 @@ var AIP;
             });
             return deferred.promise;
         };
-        AdminActionItemOpenPageCtrl.prototype.isNoContent = function () {
+        AdminActionItemOpenPageCtrl.prototype.isNoTemplate = function () {
             if (this.templateSelect) {
                 return false;
             }
             else {
                 if (!this.actionItem.actionItemTemplateId) {
+                    return true;
+                }
+                else {
+                    return false;
+                }
+            }
+        };
+        AdminActionItemOpenPageCtrl.prototype.isNoContent = function () {
+            if (this.templateSelect) {
+                return false;
+            }
+            else {
+                if (!this.actionItem.actionItemContent) {
                     return true;
                 }
                 else {

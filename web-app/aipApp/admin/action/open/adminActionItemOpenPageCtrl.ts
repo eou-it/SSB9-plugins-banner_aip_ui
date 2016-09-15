@@ -128,6 +128,7 @@ module AIP {
             this.adminActionService.getActionItemDetail(this.$state.params.data)
                 .then((response:AIP.IActionItemOpenResponse) => {
                     this.actionItem = response.data.actionItem;
+                    $("#title-panel h1" ).html(this.actionItem.actionItemName);
                 }, (err) => {
                     console.log(err);
                 });
@@ -166,7 +167,7 @@ module AIP {
                 });
             return deferred.promise;
         }
-        isNoContent() {
+        isNoTemplate() {
             if(this.templateSelect) {
                 return false;
             } else {
@@ -177,6 +178,18 @@ module AIP {
                 }
             }
         }
+        isNoContent() {
+            if(this.templateSelect) {
+                return false;
+            } else {
+                if (!this.actionItem.actionItemContent) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+        }
+
         loadReadOnlyContent() {
             var actionItemHtmlText = this.$sce.trustAsHtml(this.actionItem.actionItemContent);
             return actionItemHtmlText;

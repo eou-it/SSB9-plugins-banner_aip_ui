@@ -1,5 +1,5 @@
 <div id="openActionItemContent">
-    <div class="actionItemContentNoInfo row" ng-if="vm.isNoContent()">
+    <div class="actionItemContentNoInfo row" ng-if="vm.isNoTemplate()">
         <div class="contentText">
             <div class="row">
 
@@ -10,7 +10,7 @@
                </div>
 
                 <div class="control col-xs-12 col-sm-4">
-                    <button type="button" class="btn btn-default" ng-click="vm.selectTemplate()" aria-label="">
+                    <button type="button" class="btn btn-default edit" ng-click="vm.selectTemplate()" aria-label="">
                         <span class="icon icon-edit-CO"></span>
                         <span class="button-text hidden-sm-down">{{'aip.admin.action.open.tab.content.edit'|i18n_aip}}</span>
                     </button>
@@ -21,12 +21,17 @@
             <div class="row">
                 <div class="col-xs-12 col-sm-12">
                     <h2>{{'aip.admin.action.open.tab.content'|i18n_aip}}</h2>
-                    <span id="actionItemText" ng-bind-html="vm.loadReadOnlyContent() | trusted">{{vm.actionItemHtmlText}}</span>
+                    <div ng-if="!vm.isNoContent()">
+                        <span id="actionItemText" ng-bind-html="vm.loadReadOnlyContent() | trusted">{{vm.actionItemHtmlText}}</span>
+                    </div>
+                    <div ng-if="vm.isNoContent()">
+                        <span>{{'aip.admin.action.open.tab.content.noContent'|i18n_aip}}</span>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-    <div class="actionItemContent row" ng-if="!vm.isNoContent() && vm.templateSelect">
+    <div class="actionItemContent row" ng-if="!vm.isNoTemplate() && vm.templateSelect">
         <div class="contentContainer">
             <div class="row input-actionItem">
                 <label for="actionItemTemplate" class="templateSelect required" id="actionItemTemplateSelector">{{"aip.admin.action.open.tab.content.templateSelect"|i18n_aip}}</label>
@@ -65,12 +70,12 @@
     </div>
 
 
-    <div class="actionItemContent row" ng-if="!vm.isNoContent() && vm.actionItem.actionItemTemplateId && !vm.templateSelect">
+    <div class="actionItemContent row" ng-if="!vm.isNoTemplate() && vm.actionItem.actionItemTemplateId && !vm.templateSelect">
         <div class="contentText">
             <div class="row">
 
                 <div class="col-xs-12 col-sm-8">
-                    <h2>{{'aip.common.text.template'|i18n_aip}}</h2>
+                    <h2>{{'aip.admin.action.open.tab.template'|i18n_aip}}</h2>
                 </div>
             </div>
             <div class="row">
@@ -78,13 +83,27 @@
                     {{vm.actionItem.actionItemTemplateName||"action item template name placeholder"}}
                 </div>
 
-                <div class="col-xs-12 col-sm-4">
-                    <button type="button" class="btn btn-default" ng-click="vm.selectTemplate()" aria-label="">
+                <div class="control col-xs-12 col-sm-4">
+                    <button type="button" class="btn btn-default edit" ng-click="vm.selectTemplate()" aria-label="">
                         <span class="icon icon-edit-CO"></span>
                         <span class="button-text hidden-sm-down">{{'aip.admin.action.open.tab.content.edit'|i18n_aip}}</span>
                     </button>
                 </div>
             </div>
+
+
+            <div class="row">
+                <div class="col-xs-12 col-sm-12">
+                    <h2>{{'aip.admin.action.open.tab.content'|i18n_aip}}</h2>
+                    <div ng-if="!vm.isNoContent()">
+                        <span  ng-bind-html="vm.loadReadOnlyContent() | trusted">{{vm.actionItemHtmlText}}</span>
+                    </div>
+                    <div ng-if="vm.isNoContent()">
+                        <span>{{'aip.admin.action.open.tab.content.noContent'|i18n_aip}}</span>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
 
