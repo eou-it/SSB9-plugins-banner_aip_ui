@@ -4018,7 +4018,7 @@ angular.module('dataTableModule', ['utils'])
                         self.tabs.push(tabScope);
                     };
                     self.loadDynamicContent = function (userMethod, selectedTab) {
-                        if (Object.prototype.toString.call(userMethod) === '[object Function]' && !selectedTab.hasTranscludedContent && !selectedTab.dynamicContent) {
+                        if (Object.prototype.toString.call(userMethod) === '[object Function]' && !selectedTab.hasTranscludedContent) {
                             userMethod().then(function (data) {
                                 selectedTab.dynamicContent = data;
                                 selectedTab.dynamic(data);
@@ -4079,10 +4079,11 @@ angular.module('dataTableModule', ['utils'])
                     }
                     scope.dynamic = function (data) {
                         var htmlTemplate, content, elementTo;
-                        htmlTemplate = angular.element(data);
-                        content = $compile(htmlTemplate)(scope);
+                        // htmlTemplate = angular.element(data);
+                        // content = $compile(htmlTemplate)(scope);
                         elementTo = angular.element(ele[0].querySelector('[content]'));
-                        elementTo.append(content);
+                        elementTo.empty();
+                        elementTo.append(data);
                         if (scope.jsLazyLoad && scope.active) {
                             scope.lazyLoadJs(scope);
                         }
