@@ -20,11 +20,13 @@ class AipAdminController {
     def actionItemTemplateService
     def actionItemDetailService
 
+
     def folders() {
         def results = CommunicationFolder.list( sort: "name", order: "asc" )
         response.status = 200
         render results as JSON
     }
+
 
     def adminActionItemStatus() {
         //TODO:: get action item status from DB through service
@@ -42,6 +44,7 @@ class AipAdminController {
         ]
         render model as JSON
     }
+
 
     def addFolder( name, description ) {
 
@@ -108,7 +111,7 @@ class AipAdminController {
             success = true
         } catch (ApplicationException e) {
             if (ActionItemService.FOLDER_VALIDATION_ERROR.equals( e.getMessage() )) {
-                message = MessageUtility.message( e.getDefaultMessage(), MessageFormat.format("{0,number,#}", ai.folderId))
+                message = MessageUtility.message( e.getDefaultMessage(), MessageFormat.format( "{0,number,#}", ai.folderId ) )
             } else {
                 message = MessageUtility.message( e.getDefaultMessage() )
             }
@@ -142,7 +145,7 @@ class AipAdminController {
         def errors = []
 
         //def group = actionItemGroupService.getActionItemGroupById( groupId )
-        def groupRO = groupFolderReadOnlyService.getActionItemGroupById( groupId)
+        def groupRO = groupFolderReadOnlyService.getActionItemGroupById( groupId )
 
 
         if (groupRO) {
@@ -157,16 +160,16 @@ class AipAdminController {
         }
 
         def groupItem = [
-                id             : groupRO?.groupId[0],
-                title          : groupRO?.groupTitle[0],
-                status         : groupRO?.groupStatus[0],
-                folderId       : groupRO?.folderId[0],
-                folderName     : groupRO?.folderName[0],
-                folderDesc     : groupRO?.folderDesc[0],
-                userId         : groupRO?.groupUserId[0],
-                description    : groupDesc,
-                activityDate   : groupRO?.groupActivityDate[0],
-                version        : groupRO?.groupVersion[0],
+                groupId          : groupRO?.groupId[0],
+                groupTitle       : groupRO?.groupTitle[0],
+                groupStatus      : groupRO?.groupStatus[0],
+                folderId         : groupRO?.folderId[0],
+                folderName       : groupRO?.folderName[0],
+                folderDesc       : groupRO?.folderDesc[0],
+                groupUserId      : groupRO?.groupUserId[0],
+                groupDesc        : groupDesc,
+                groupActivityDate: groupRO?.groupActivityDate[0],
+                groupVersion     : groupRO?.groupVersion[0]
                 //dataOrigin     : groupRO?.groupDataOrigin
         ]
 
@@ -207,11 +210,38 @@ class AipAdminController {
                 dataOrigin: "GRAILS"
         )
 
+        def groupNew
         def groupRO
+        def groupItem
+        def groupDesc
         try {
-            groupRO = actionItemGroupService.create( group )
+            groupNew = actionItemGroupService.create( group )
+
             response.status = 200
             success = true
+            groupRO = groupFolderReadOnlyService.getActionItemGroupById( groupNew.id.toInteger() )
+
+
+            if (!groupRO) {
+                groupDesc = MessageUtility.message( "aip.placeholder.nogroups" )
+            } else {
+                groupDesc = groupRO.groupDesc[0]
+            }
+
+            groupItem = [
+                    groupId          : groupRO?.groupId[0],
+                    groupTitle       : groupRO?.groupTitle[0],
+                    groupStatus      : groupRO?.groupStatus[0],
+                    folderId         : groupRO?.folderId[0],
+                    folderName       : groupRO?.folderName[0],
+                    folderDesc       : groupRO?.folderDesc[0],
+                    groupUserId      : groupRO?.groupUserId[0],
+                    groupDesc        : groupDesc,
+                    groupActivityDate: groupRO?.groupActivityDate[0],
+                    groupVersion     : groupRO?.groupVersion[0]
+            ]
+
+
         } catch (ApplicationException e) {
             if (ActionItemGroupService.FOLDER_VALIDATION_ERROR.equals( e.getMessage() )) {
                 message = MessageUtility.message( e.getDefaultMessage(), MessageFormat.format( "{0,number,#}", jsonObj.folderId ) )
@@ -223,9 +253,9 @@ class AipAdminController {
         response.status = 200
 
         def model = [
-                success : success,
-                message : message,
-                newGroup: groupRO
+                success: success,
+                message: message,
+                group  : groupItem
         ]
 
         render model as JSON
@@ -234,22 +264,22 @@ class AipAdminController {
 
     def actionItemList() {
 
-        def paramObj = [filterName: params.searchString ?: "%",
-                        sortColumn: params.sortColumnName ?: "id",
-                      sortAscending: params.ascending ? params.ascending.toBoolean() : false,
-                      max: params.max.toInteger(),
-                      offset: params.offset ? params.offset.toInteger(): 0]
+        def paramObj = [filterName   : params.searchString ?: "%",
+                        sortColumn   : params.sortColumnName ?: "id",
+                        sortAscending: params.ascending ? params.ascending.toBoolean() : false,
+                        max          : params.max.toInteger(),
+                        offset       : params.offset ? params.offset.toInteger() : 0]
 
         def results = actionItemReadOnlyService.listActionItemsPageSort( paramObj )
         response.status = 200
 
         def actionItemHeadings = [
                 [name: "actionItemId", title: "id", options: [visible: false, isSortable: true]],
-                [name: "actionItemName", title: MessageUtility.message( "aip.common.title" ), options: [visible: true, isSortable: true, ascending:paramObj.sortAscending], width: 0],
-                [name: "actionItemStatus", title: MessageUtility.message( "aip.common.status" ), options: [visible: true, isSortable: true, ascending:paramObj.sortAscending], width: 0],
-                [name: "folderName", title: MessageUtility.message( "aip.common.folder" ), options: [visible: true, isSortable: true, ascending:paramObj.sortAscending], width: 0],
-                [name: "actionItemActivityDate", title: MessageUtility.message( "aip.common.activity.date" ), options: [visible: true, isSortable: true, ascending:paramObj.sortAscending], width: 0],
-                [name: "actioncdItemUserId", title: MessageUtility.message( "aip.common.last.updated.by" ), options: [visible: true, isSortable: true, ascending:paramObj.sortAscending], width: 0]
+                [name: "actionItemName", title: MessageUtility.message( "aip.common.title" ), options: [visible: true, isSortable: true, ascending: paramObj.sortAscending], width: 0],
+                [name: "actionItemStatus", title: MessageUtility.message( "aip.common.status" ), options: [visible: true, isSortable: true, ascending: paramObj.sortAscending], width: 0],
+                [name: "folderName", title: MessageUtility.message( "aip.common.folder" ), options: [visible: true, isSortable: true, ascending: paramObj.sortAscending], width: 0],
+                [name: "actionItemActivityDate", title: MessageUtility.message( "aip.common.activity.date" ), options: [visible: true, isSortable: true, ascending: paramObj.sortAscending], width: 0],
+                [name: "actioncdItemUserId", title: MessageUtility.message( "aip.common.last.updated.by" ), options: [visible: true, isSortable: true, ascending: paramObj.sortAscending], width: 0]
         ]
 
         results.header = actionItemHeadings
@@ -285,7 +315,7 @@ class AipAdminController {
         def model = [
                 success   : success,
                 errors    : errors,
-                actionItem: actionItem,
+                actionItem: actionItem
         ]
 
         render model as JSON
@@ -295,22 +325,22 @@ class AipAdminController {
     def groupList() {
 
         def jsonObj = request.JSON
-        def params = [filterName:jsonObj.filterName,
-                      sortColumn:jsonObj.sortColumn,
-                      sortAscending:jsonObj.sortAscending,
-                      max:jsonObj.max,
-                      offset:jsonObj.offset]
+        def params = [filterName   : jsonObj.filterName,
+                      sortColumn   : jsonObj.sortColumn,
+                      sortAscending: jsonObj.sortAscending,
+                      max          : jsonObj.max,
+                      offset       : jsonObj.offset]
 
         def results = groupFolderReadOnlyService.listGroupFolderPageSort( params )
         response.status = 200
 
         def groupHeadings = [
                 [name: "groupId", title: "id", options: [visible: false, isSortable: true]],
-                [name: "groupTitle", title: MessageUtility.message( "aip.common.title" ), options: [visible: true, isSortable: true, ascending:jsonObj.sortAscending], width: 0],
-                [name: "groupStatus", title: MessageUtility.message( "aip.common.status" ), options: [visible: true, isSortable: true, ascending:jsonObj.sortAscending], width: 0],
-                [name: "folderName", title: MessageUtility.message( "aip.common.folder" ), options: [visible: true, isSortable: true, ascending:jsonObj.sortAscending], width: 0],
-                [name: "groupActivityDate", title: MessageUtility.message( "aip.common.activity.date" ), options: [visible: true, isSortable: true, ascending:jsonObj.sortAscending], width: 0],
-                [name: "groupUserId", title: MessageUtility.message( "aip.common.last.updated.by" ), options: [visible: true, isSortable: true, ascending:jsonObj.sortAscending], width: 0]
+                [name: "groupTitle", title: MessageUtility.message( "aip.common.title" ), options: [visible: true, isSortable: true, ascending: jsonObj.sortAscending], width: 0],
+                [name: "groupStatus", title: MessageUtility.message( "aip.common.status" ), options: [visible: true, isSortable: true, ascending: jsonObj.sortAscending], width: 0],
+                [name: "folderName", title: MessageUtility.message( "aip.common.folder" ), options: [visible: true, isSortable: true, ascending: jsonObj.sortAscending], width: 0],
+                [name: "groupActivityDate", title: MessageUtility.message( "aip.common.activity.date" ), options: [visible: true, isSortable: true, ascending: jsonObj.sortAscending], width: 0],
+                [name: "groupUserId", title: MessageUtility.message( "aip.common.last.updated.by" ), options: [visible: true, isSortable: true, ascending: jsonObj.sortAscending], width: 0]
         ]
 
         results.header = groupHeadings
@@ -394,5 +424,4 @@ class AipAdminController {
 
         render model as JSON
     }
-
 }

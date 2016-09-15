@@ -140,7 +140,7 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
         def answer = JSON.parse( controller.response.contentAsString )
 
         assertTrue( answer.success )
-        assertNotNull( answer.newGroup )
+        assertNotNull( answer.group )
         assertTrue( answer.message.equals( null ) )
     }
 
@@ -539,7 +539,7 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
         assertEquals 200, controller.response.status
         def answer = JSON.parse( controller.response.contentAsString )
         assertEquals( true, answer.success )
-        assertEquals( actionItemGroupTitle, answer.group?.title )
+        assertEquals( actionItemGroupTitle, answer.group?.groupTitle )
     }
 
 
@@ -567,7 +567,7 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
         assertEquals 200, controller.response.status
         def answer = JSON.parse( controller.response.contentAsString )
         assertEquals( true, answer.success )
-        assertEquals( actionItemGroupTitle, answer.group?.title )
+        assertEquals( actionItemGroupTitle, answer.group?.groupTitle )
     }
 
     // FIXME: security. should fail
@@ -587,7 +587,7 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
         assertEquals 200, controller.response.status
         def answer = JSON.parse( controller.response.contentAsString )
         assertEquals( true, answer.success )
-        assertEquals( actionItemGroupTitle, answer.group?.title )
+        assertEquals( actionItemGroupTitle, answer.group?.groupTitle )
     }
 
 
@@ -610,7 +610,7 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
         assertEquals 200, controller.response.status
         def answer = JSON.parse( controller.response.contentAsString )
         assertEquals( false, answer.success )
-        assertTrue( answer.group.id.equals( null ) )
+        assertTrue( answer.group.groupId.equals( null ) )
     }
 
 
@@ -749,7 +749,7 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
     }
 
     @Test
-    void testUpdateActionItemDetailWithTemplate() {
+    void testUpdateActionItemDetail() {
         def admin = PersonUtility.getPerson( "CSRSTU002" ) // role: student
         assertNotNull admin
 
@@ -765,10 +765,12 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
         controller.request.method = "POST"
         controller.request.json = requestObj
 
+
         controller.updateActionItemDetailWithTemplate()
         def answer = JSON.parse( controller.response.contentAsString )
 
         assertEquals 200, controller.response.status
         assertEquals 1, answer.actionItem.actionItemTemplateId
+        println answer
     }
 }
