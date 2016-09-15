@@ -355,7 +355,6 @@ class AipAdminController {
     }
 
 
-    /*
     def editActionItemContent() {
         if (!params.actionItemId) {
             response.sendError( 403 )
@@ -386,46 +385,40 @@ class AipAdminController {
             return
         }
     }
-    */
 
-
-    def updateActionItemDetail() {
-        def templateId = params.templateId
-        def actionItemDetailId = params.actionItemDetailId
-        def actionItemText = params.actionItemContent?.toString()
+    def updateActionItemDetailWithTemplate () {
+        def templateId = params.int('templateId')
+        def actionItemDetailId = params.int('actionItemDetailId')
         def user = SecurityContextHolder?.context?.authentication?.principal
         if (!user.pidm) {
             response.sendError( 403 )
             return
         }
-        if (!actionItemDetailId) {
+        if(!actionItemDetailId) {
             response.sendError( 403 )
             return
         }
 
         def aipUser = AipControllerUtils.getPersonForAip( params, user.pidm )
-        def userId = (String) aipUser.bannerId
-
-        List<ActionItemReadOnly> actionItemDetail
+        ActionItemDetail actionItemDetail = actionItemDetailService.listActionItemDetailById(actionItemDetailId)
         actionItemDetail.actionItemTemplateId = templateId
-        actionItemDetail.actionItemContentId = actionItemDetailId
-        actionItemDetail.actionItemContent = actionItemText
-        actionItemDetail.actionItemUserId = userId
+        actionItemDetail.activityDate = new Date()
+        actionItemDetail.userId = (String)aipUser.bannerId
 
-        actionItemDetailService.update( actionItemDetail )
+        actionItemDetailService.update(actionItemDetail)
 
         def success = false
         def errors = []
-        //ActionItemDetail updatedActionItemDetail = actionItemDetailService.listActionItemDetailById( actionItemDetailId )
-        if (actionItemDetail) {
+        ActionItemDetail newActionItemDetail = actionItemDetailService.listActionItemDetailById(actionItemDetailId)
+        if (newActionItemDetail) {
             response.status = 200
             success = true
         }
 
         def model = [
-                success         : success,
-                errors          : errors,
-                actionItemDetail: actionItemDetail
+                success   : success,
+                errors    : errors,
+                actionItem: newActionItemDetail,
         ]
 
         render model as JSON
