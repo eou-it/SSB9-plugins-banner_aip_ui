@@ -762,11 +762,11 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
         controller.params.actionItemDetailId=1
 
 
-        controller.updateActionItemDetail()
+        controller.updateActionItemDetailWithTemplate()
         def answer = JSON.parse( controller.response.contentAsString )
 
         assertEquals 200, controller.response.status
-        //assertEquals 1, answer.actionItem.actionItemTemplateId
+        assertEquals 1, answer.actionItem.actionItemTemplateId
         println answer
     }
 }
