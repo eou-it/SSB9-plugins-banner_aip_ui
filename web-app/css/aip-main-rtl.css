@@ -494,7 +494,7 @@ aip-list .aip-list-container  {
           .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContentNoInfo .contentText  {
     padding-top:1.5em;
 }
-          .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContentNoInfo .control button  {
+          .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContentNoInfo .control button.edit  {
     float:left;
     color:#206E9F;
     border:none;
@@ -509,6 +509,11 @@ aip-list .aip-list-container  {
             .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .control  {
     bottom:24px;
     width:100%;
+}
+              .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .control button.edit  {
+    float:left;
+    color:#206E9F;
+    border:none;
 }
               .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .control .templateButton  {
     float:left;

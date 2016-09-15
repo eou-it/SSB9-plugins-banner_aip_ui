@@ -195,13 +195,14 @@ module AIP {
             });
             return request;
         }
-        saveActionItemTemplate(templateId, actionItemDetailId) {
+        saveActionItemTemplate(templateId, actionItemDetailId, actionItemContent) {
             var request = this.$http({
                 method: "POST",
                 url: this.ENDPOINT.admin.saveActionItemTemplate,
                 data: {
                     templateId: templateId,
-                    actionItemDetailId: actionItemDetailId
+                    actionItemDetailId: actionItemDetailId,
+                    actionItemContent: actionItemContent
                 }
             });
             return request;

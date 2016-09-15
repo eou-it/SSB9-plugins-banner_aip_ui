@@ -390,6 +390,7 @@ class AipAdminController {
         def jsonObj = request.JSON
         def templateId = jsonObj.templateId.toInteger()
         def actionItemDetailId = jsonObj.actionItemDetailId.toInteger()
+        def actionItemDetailText= jsonObj.actionItemContent
         def user = SecurityContextHolder?.context?.authentication?.principal
         if (!user.pidm) {
             response.sendError( 403 )
@@ -405,12 +406,15 @@ class AipAdminController {
         actionItemDetail.actionItemTemplateId = templateId
         actionItemDetail.activityDate = new Date()
         actionItemDetail.userId = (String)aipUser.bannerId
+        actionItemDetail.text = actionItemDetailText
 
         actionItemDetailService.update(actionItemDetail)
 
         def success = false
         def errors = []
         ActionItemDetail newActionItemDetail = actionItemDetailService.listActionItemDetailById(actionItemDetailId)
+        //todo: add new method to service for action item detail to retreive an action item by detail id and action item id
+        ActionItemReadOnly actionItemRO = actionItemReadOnlyService.getActionItemROById( newActionItemDetail.actionItemId )
         if (newActionItemDetail) {
             response.status = 200
             success = true
@@ -419,7 +423,7 @@ class AipAdminController {
         def model = [
                 success   : success,
                 errors    : errors,
-                actionItem: newActionItemDetail,
+                actionItem: actionItemRO,
         ]
 
         render model as JSON

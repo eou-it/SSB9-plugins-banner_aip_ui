@@ -26,6 +26,7 @@ var AIP;
             this.templateSelect = false;
             this.templates = [];
             this.selectedTemplate;
+            this.updatedContent;
             this.init();
             angular.element($window).bind('resize', function () {
                 // $scope.onResize();
@@ -101,6 +102,7 @@ var AIP;
             this.adminActionService.getActionItemDetail(this.$state.params.data)
                 .then(function (response) {
                 _this.actionItem = response.data.actionItem;
+                _this.selectedTemplate = _this.actionItem.actionItemTemplateId;
                 $("#title-panel h1").html(_this.actionItem.actionItemName);
             }, function (err) {
                 console.log(err);
@@ -184,6 +186,7 @@ var AIP;
                     });
                 }
                 $(".actionItemContent").height($(".actionItemElement").height() - $(".xe-tab-nav").height());
+                console.log("set data");
                 CKEDITOR.instances['templateContent'].setData(_this.$sce.trustAsHtml(_this.actionItem.actionItemContent));
             }, 500);
         };
@@ -197,8 +200,20 @@ var AIP;
             }
         };
         AdminActionItemOpenPageCtrl.prototype.saveTemplate = function () {
+            //console.log(this.actionItem.actionItemContent);
+            //this.updatedContent = CKEDITOR.instances['templateContent'].getData();
             var _this = this;
-            this.adminActionService.saveActionItemTemplate(this.selectedTemplate, this.actionItem.actionItemId)
+            this.updatedContent = this.$filter("trusted")(this.$sce.trustAsHtml(CKEDITOR.instances['templateContent'].getData())).toString();
+            this.actionItem.actionItemContent = this.updatedContent.toString();
+            /*
+            try {
+                CKEDITOR.instances['templateContent'].destroy(true);
+            } catch (e) { }
+            CKEDITOR.replace('templateContent');
+            */
+            console.log("trusted");
+            console.log(CKEDITOR.instances['templateContent']);
+            this.adminActionService.saveActionItemTemplate(this.selectedTemplate, this.actionItem.actionItemId, this.updatedContent)
                 .then(function (response) {
                 var notiParams = {};
                 if (response.data.success) {
@@ -214,7 +229,6 @@ var AIP;
                 else {
                     //this.saveErrorCallback(response.data.message); //todo: add callback error on actionitem open page
                     console.log("error:");
-                    console.log(response);
                 }
             }, function (err) {
                 console.log(err);
@@ -235,7 +249,6 @@ var AIP;
                 else {
                     //this.saveErrorCallback(response.data.message); //todo: add callback error on actionitem open page
                     console.log("error:");
-                    console.log(response);
                 }
             }, function (err) {
                 //TODO:: handle error call

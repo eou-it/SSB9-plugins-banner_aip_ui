@@ -6,6 +6,7 @@ declare var register;
 declare var Notification: any;
 declare var notifications: any;
 declare var CKEDITOR: any;
+declare var ckInstance: any;
 
 module AIP {
 
@@ -30,6 +31,7 @@ module AIP {
         templates;
         templateSelect: boolean;
         selectedTemplate;
+        updatedContent;
         constructor($scope, $q:ng.IQService, $state, $filter, $sce, $window, $templateRequest, $templateCache, $compile,
                     $timeout, $interpolate, SpinnerService, AdminActionService, APP_ROOT) {
             $scope.vm = this;
@@ -51,6 +53,7 @@ module AIP {
             this.templateSelect = false;
             this.templates = [];
             this.selectedTemplate;
+            this.updatedContent;
             this.init();
             angular.element($window).bind('resize', function() {
                 // $scope.onResize();
@@ -68,7 +71,6 @@ module AIP {
             var promises = [];
 
             this.openOverviewPanel();
-
             if (this.$state.params.noti) {
                 this.handleNotification( this.$state.params.noti );
             }
@@ -128,7 +130,9 @@ module AIP {
             this.adminActionService.getActionItemDetail(this.$state.params.data)
                 .then((response:AIP.IActionItemOpenResponse) => {
                     this.actionItem = response.data.actionItem;
+                    this.selectedTemplate = this.actionItem.actionItemTemplateId;
                     $("#title-panel h1" ).html(this.actionItem.actionItemName);
+
                 }, (err) => {
                     console.log(err);
                 });
@@ -194,7 +198,9 @@ module AIP {
             var actionItemHtmlText = this.$sce.trustAsHtml(this.actionItem.actionItemContent);
             return actionItemHtmlText;
         }
+
         selectTemplate() {
+
             this.templateSelect = true;
             this.$timeout(() => {
                 var actionItemTemplate:any = $("#actionItemTemplate");
@@ -205,6 +211,7 @@ module AIP {
                     });
                 }
                 $(".actionItemContent").height($(".actionItemElement").height() - $(".xe-tab-nav").height());
+                console.log("set data");
                 CKEDITOR.instances['templateContent'].setData( this.$sce.trustAsHtml(this.actionItem.actionItemContent) );
             }, 500);
         }
@@ -218,7 +225,23 @@ module AIP {
             }
         }
         saveTemplate() {
-            this.adminActionService.saveActionItemTemplate(this.selectedTemplate, this.actionItem.actionItemId)
+            //console.log(this.actionItem.actionItemContent);
+            //this.updatedContent = CKEDITOR.instances['templateContent'].getData();
+
+            this.updatedContent = this.$filter("trusted")( this.$sce.trustAsHtml(CKEDITOR.instances['templateContent'].getData()) ).toString();
+            this.actionItem.actionItemContent = this.updatedContent.toString();
+
+            /*
+            try {
+                CKEDITOR.instances['templateContent'].destroy(true);
+            } catch (e) { }
+            CKEDITOR.replace('templateContent');
+            */
+
+            console.log("trusted");
+            console.log(CKEDITOR.instances['templateContent']);
+
+            this.adminActionService.saveActionItemTemplate(this.selectedTemplate, this.actionItem.actionItemId, this.updatedContent)
                 .then((response:any) => {
                     var notiParams = {};
                     if(response.data.success) {
@@ -233,7 +256,6 @@ module AIP {
                     } else {
                         //this.saveErrorCallback(response.data.message); //todo: add callback error on actionitem open page
                         console.log("error:");
-                        console.log(response);
                     }
                 }, (err) => {
                     console.log(err);
@@ -252,7 +274,6 @@ module AIP {
                     } else {
                         //this.saveErrorCallback(response.data.message); //todo: add callback error on actionitem open page
                         console.log("error:");
-                        console.log(response);
                     }
                 }, (err) => {
                     //TODO:: handle error call

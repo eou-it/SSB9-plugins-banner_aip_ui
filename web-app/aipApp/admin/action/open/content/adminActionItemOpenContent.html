@@ -80,7 +80,7 @@
             </div>
             <div class="row">
                 <div class="col-xs-12 col-sm-8">
-                    {{vm.actionItem.actionItemTemplateName||"action item template name placeholder"}}
+                    {{vm.actionItem.actionItemTemplateName||"action item template placeholder text"}}
                 </div>
 
                 <div class="control col-xs-12 col-sm-4">
@@ -96,7 +96,7 @@
                 <div class="col-xs-12 col-sm-12">
                     <h2>{{'aip.admin.action.open.tab.content'|i18n_aip}}</h2>
                     <div ng-if="!vm.isNoContent()">
-                        <span  ng-bind-html="vm.loadReadOnlyContent() | trusted">{{vm.actionItemHtmlText}}</span>
+                        <span ng-bind-html="vm.loadReadOnlyContent() | trusted">{{vm.actionItemHtmlText}}</span>
                     </div>
                     <div ng-if="vm.isNoContent()">
                         <span>{{'aip.admin.action.open.tab.content.noContent'|i18n_aip}}</span>
