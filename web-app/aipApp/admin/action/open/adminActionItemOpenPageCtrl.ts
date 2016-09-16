@@ -30,6 +30,7 @@ module AIP {
         templates;
         templateSelect: boolean;
         selectedTemplate;
+        saving;
         constructor($scope, $q:ng.IQService, $state, $filter, $sce, $window, $templateRequest, $templateCache, $compile,
                     $timeout, $interpolate, SpinnerService, AdminActionService, APP_ROOT) {
             $scope.vm = this;
@@ -51,6 +52,7 @@ module AIP {
             this.templateSelect = false;
             this.templates = [];
             this.selectedTemplate;
+            this.saving = false;
             this.init();
             angular.element($window).bind('resize', function() {
                 // $scope.onResize();
@@ -161,10 +163,12 @@ module AIP {
                 .then((template) => {
                     var compiled = this.$compile(template)(this.scope);
                     deferred.resolve(compiled);
-                    this.$timeout(()=> {
-                        //change page title
-                        $("#title-panel").children()[0].innerHTML = this.actionItem.actionItemName
-                    },0)
+                    if(panelName === "overview") {
+                        this.$timeout(()=> {
+                            //change page title
+                            $("#title-panel").children()[0].innerHTML = this.actionItem.actionItemName
+                        }, 0)
+                    }
                 }, (error) => {
                     console.log(error);
                 });
@@ -208,9 +212,17 @@ module AIP {
                     break;
             }
         }
+        saveValidate() {
+            if (this.selectedTemplate && !this.saving) {
+                return true;
+            }
+            return false;
+        }
         saveTemplate() {
+            this.saving = true;
             this.adminActionService.saveActionItemTemplate(this.selectedTemplate, this.actionItem.actionItemId)
                 .then((response:any) => {
+                    this.saving = false;
                     var notiParams = {};
                     if(response.data.success) {
                         notiParams = {
@@ -228,6 +240,7 @@ module AIP {
                     }
                 }, (err) => {
                     console.log(err);
+                    this.saving=false;
                 });
         }
         saveActionItemContent() {

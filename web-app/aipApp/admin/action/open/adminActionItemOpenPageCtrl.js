@@ -26,6 +26,7 @@ var AIP;
             this.templateSelect = false;
             this.templates = [];
             this.selectedTemplate;
+            this.saving = false;
             this.init();
             angular.element($window).bind('resize', function () {
                 // $scope.onResize();
@@ -136,10 +137,12 @@ var AIP;
                 .then(function (template) {
                 var compiled = _this.$compile(template)(_this.scope);
                 deferred.resolve(compiled);
-                _this.$timeout(function () {
-                    //change page title
-                    $("#title-panel").children()[0].innerHTML = _this.actionItem.actionItemName;
-                }, 0);
+                if (panelName === "overview") {
+                    _this.$timeout(function () {
+                        //change page title
+                        $("#title-panel").children()[0].innerHTML = _this.actionItem.actionItemName;
+                    }, 0);
+                }
             }, function (error) {
                 console.log(error);
             });
@@ -186,10 +189,18 @@ var AIP;
                     break;
             }
         };
+        AdminActionItemOpenPageCtrl.prototype.saveValidate = function () {
+            if (this.selectedTemplate && !this.saving) {
+                return true;
+            }
+            return false;
+        };
         AdminActionItemOpenPageCtrl.prototype.saveTemplate = function () {
             var _this = this;
+            this.saving = true;
             this.adminActionService.saveActionItemTemplate(this.selectedTemplate, this.actionItem.actionItemId)
                 .then(function (response) {
+                _this.saving = false;
                 var notiParams = {};
                 if (response.data.success) {
                     notiParams = {
@@ -208,6 +219,7 @@ var AIP;
                 }
             }, function (err) {
                 console.log(err);
+                _this.saving = false;
             });
         };
         AdminActionItemOpenPageCtrl.prototype.saveActionItemContent = function () {
