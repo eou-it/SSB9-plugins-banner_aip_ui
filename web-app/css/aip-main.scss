@@ -25,12 +25,23 @@
     }
   }
 }
+
+@media screen and (min-width: 1024px) {
+  .visible-lg {
+    display: block !important;
+  }
+}
+
 @media screen and (max-width:768px) {
   #content {
     top: 105px !important;
     .viewContainer {
       padding: 0 8px;
       overflow: auto;
+    }
+
+    .hidden-sm-down {
+      display: none;
     }
   }
 }
@@ -143,3 +154,5 @@ a:focus, div:focus, input:focus, span:focus, i:focus, button:focus, .breadcrumbB
     }
   }
 }
+
+

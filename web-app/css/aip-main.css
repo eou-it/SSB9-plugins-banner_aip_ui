@@ -276,20 +276,20 @@ aip-list .aip-list-container {
 .actionListContainer {
   overflow-y: auto;
   font-size: 14px; }
-  .actionListContainer .row.controls {
+  .actionListContainer .row {
     margin-right: 0px;
     margin-left: 0px; }
-    .actionListContainer .row.controls .control {
+    .actionListContainer .row .control {
       text-align: right;
       padding: 0 24px; }
-      .actionListContainer .row.controls .control .btn-default {
+      .actionListContainer .row .control .btn-default {
         background-color: transparent;
         border: none;
         color: #206E9F;
         font-weight: 500; }
-        .actionListContainer .row.controls .control .btn-default .button-text {
+        .actionListContainer .row .control .btn-default .button-text {
           font-size: 0.875em; }
-        .actionListContainer .row.controls .control .btn-default .icon {
+        .actionListContainer .row .control .btn-default .icon {
           display: table;
           margin: 0 auto;
           font-size: 1.25em; }
@@ -297,13 +297,8 @@ aip-list .aip-list-container {
     display: none; }
 
 @media screen and (max-width: 768px) {
-  .actionListContainer .row.controls .control {
-    padding: 0; }
-    .actionListContainer .row.controls .control .btn-default .button-text {
-      display: none; } }
-@media screen and (min-width: 1024px) {
-  .actionListContainer .actionListTable .visible-lg {
-    display: block !important; } }
+  .actionListContainer .row .control {
+    padding: 0; } }
 .actionItemAddContainer {
   padding: 8px 0; }
   .actionItemAddContainer .row {
@@ -436,12 +431,17 @@ aip-list .aip-list-container {
   #content #title-panel h1 {
     line-height: normal; }
 
+@media screen and (min-width: 1024px) {
+  .visible-lg {
+    display: block !important; } }
 @media screen and (max-width: 768px) {
   #content {
     top: 105px !important; }
     #content .viewContainer {
       padding: 0 8px;
-      overflow: auto; } }
+      overflow: auto; }
+    #content .hidden-sm-down {
+      display: none; } }
 @media screen and (max-width: 480px) {
   #content {
     top: 105px !important; }
