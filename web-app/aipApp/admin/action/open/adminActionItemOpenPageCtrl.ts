@@ -32,6 +32,7 @@ module AIP {
         templateSelect: boolean;
         selectedTemplate;
         updatedContent;
+        saving;
         constructor($scope, $q:ng.IQService, $state, $filter, $sce, $window, $templateRequest, $templateCache, $compile,
                     $timeout, $interpolate, SpinnerService, AdminActionService, APP_ROOT) {
             $scope.vm = this;
@@ -53,6 +54,7 @@ module AIP {
             this.templateSelect = false;
             this.templates = [];
             this.selectedTemplate;
+            this.saving = false;
             this.updatedContent;
             this.init();
             angular.element($window).bind('resize', function() {
@@ -131,7 +133,6 @@ module AIP {
                 .then((response:AIP.IActionItemOpenResponse) => {
                     this.actionItem = response.data.actionItem;
                     this.selectedTemplate = this.actionItem.actionItemTemplateId;
-                    $("#title-panel h1" ).html(this.actionItem.actionItemName);
 
                 }, (err) => {
                     console.log(err);
@@ -166,6 +167,12 @@ module AIP {
                 .then((template) => {
                     var compiled = this.$compile(template)(this.scope);
                     deferred.resolve(compiled);
+                    if(panelName === "overview") {
+                        this.$timeout(()=> {
+                            //change page title
+                            $("#title-panel").children()[0].innerHTML = this.actionItem.actionItemName
+                        }, 0)
+                    }
                 }, (error) => {
                     console.log(error);
                 });
@@ -211,7 +218,6 @@ module AIP {
                     });
                 }
                 $(".actionItemContent").height($(".actionItemElement").height() - $(".xe-tab-nav").height());
-                console.log("set data");
                 CKEDITOR.instances['templateContent'].setData( this.$sce.trustAsHtml(this.actionItem.actionItemContent) );
             }, 500);
         }
@@ -224,7 +230,15 @@ module AIP {
                     break;
             }
         }
+        saveValidate() {
+            if (this.selectedTemplate && !this.saving) {
+                return true;
+            }
+            return false;
+        }
         saveTemplate() {
+            this.saving = true;
+            this.adminActionService.saveActionItemTemplate(this.selectedTemplate, this.actionItem.actionItemId)
             //console.log(this.actionItem.actionItemContent);
             //this.updatedContent = CKEDITOR.instances['templateContent'].getData();
 
@@ -243,6 +257,7 @@ module AIP {
 
             this.adminActionService.saveActionItemTemplate(this.selectedTemplate, this.actionItem.actionItemId, this.updatedContent)
                 .then((response:any) => {
+                    this.saving = false;
                     var notiParams = {};
                     if(response.data.success) {
                         notiParams = {
@@ -259,6 +274,7 @@ module AIP {
                     }
                 }, (err) => {
                     console.log(err);
+                    this.saving=false;
                 });
         }
         saveActionItemContent() {
