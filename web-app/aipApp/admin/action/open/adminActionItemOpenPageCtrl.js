@@ -27,6 +27,7 @@ var AIP;
             this.templates = [];
             this.selectedTemplate;
             this.saving = false;
+            this.updatedContent;
             this.init();
             angular.element($window).bind('resize', function () {
                 // $scope.onResize();
@@ -80,7 +81,8 @@ var AIP;
                 $("#breadcrumb-panel").height() -
                 $("#title-panel").height() -
                 $("#header-main-section").height() -
-                $("#outerFooter").height() - 30;
+                // $("#outerFooter").height() - 30;
+                30;
             return { "min-height": containerHeight };
         };
         AdminActionItemOpenPageCtrl.prototype.getSeparatorHeight = function () {
@@ -102,6 +104,7 @@ var AIP;
             this.adminActionService.getActionItemDetail(this.$state.params.data)
                 .then(function (response) {
                 _this.actionItem = response.data.actionItem;
+                _this.selectedTemplate = _this.actionItem.actionItemTemplateId;
             }, function (err) {
                 console.log(err);
             });
@@ -148,12 +151,25 @@ var AIP;
             });
             return deferred.promise;
         };
-        AdminActionItemOpenPageCtrl.prototype.isNoContent = function () {
+        AdminActionItemOpenPageCtrl.prototype.isNoTemplate = function () {
             if (this.templateSelect) {
                 return false;
             }
             else {
                 if (!this.actionItem.actionItemTemplateId) {
+                    return true;
+                }
+                else {
+                    return false;
+                }
+            }
+        };
+        AdminActionItemOpenPageCtrl.prototype.isNoContent = function () {
+            if (this.templateSelect) {
+                return false;
+            }
+            else {
+                if (!this.actionItem.actionItemContent) {
                     return true;
                 }
                 else {
@@ -198,7 +214,20 @@ var AIP;
         AdminActionItemOpenPageCtrl.prototype.saveTemplate = function () {
             var _this = this;
             this.saving = true;
-            this.adminActionService.saveActionItemTemplate(this.selectedTemplate, this.actionItem.actionItemId)
+            // this.adminActionService.saveActionItemTemplate(this.selectedTemplate, this.actionItem.actionItemId)
+            //console.log(this.actionItem.actionItemContent);
+            //this.updatedContent = CKEDITOR.instances['templateContent'].getData();
+            this.updatedContent = this.$filter("trusted")(this.$sce.trustAsHtml(CKEDITOR.instances['templateContent'].getData())).toString();
+            this.actionItem.actionItemContent = this.updatedContent.toString();
+            /*
+            try {
+                CKEDITOR.instances['templateContent'].destroy(true);
+            } catch (e) { }
+            CKEDITOR.replace('templateContent');
+            */
+            console.log("trusted");
+            console.log(CKEDITOR.instances['templateContent']);
+            this.adminActionService.saveActionItemTemplate(this.selectedTemplate, this.actionItem.actionItemId, this.updatedContent)
                 .then(function (response) {
                 _this.saving = false;
                 var notiParams = {};
@@ -215,7 +244,6 @@ var AIP;
                 else {
                     //this.saveErrorCallback(response.data.message); //todo: add callback error on actionitem open page
                     console.log("error:");
-                    console.log(response);
                 }
             }, function (err) {
                 console.log(err);
@@ -237,7 +265,6 @@ var AIP;
                 else {
                     //this.saveErrorCallback(response.data.message); //todo: add callback error on actionitem open page
                     console.log("error:");
-                    console.log(response);
                 }
             }, function (err) {
                 //TODO:: handle error call

@@ -386,7 +386,11 @@ aip-list .aip-list-container {
       height: inherit; }
       .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement {
         height: inherit;
-        color: #4F585F; }
+        color: #4F585F;
+        padding-bottom: 30px; }
+        .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement .h2-container {
+          margin-top: 20px;
+          margin-bottom: 10px; }
         .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement .dividerContainer {
           padding: 16px; }
           .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement .dividerContainer .divider {
@@ -425,6 +429,8 @@ aip-list .aip-list-container {
   .actionItemOpenContainer .row {
     margin-right: 0;
     margin-left: 0; }
+  .actionItemOpenContainer .actionItemElement .h2-container button {
+    border: none; }
   .actionItemOpenContainer .actionItemElement xe-tab-nav .xe-tab-content {
     padding: 4px 0; } }
 #username {

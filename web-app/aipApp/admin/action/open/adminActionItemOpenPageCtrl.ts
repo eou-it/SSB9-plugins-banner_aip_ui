@@ -111,7 +111,8 @@ module AIP {
                 $("#breadcrumb-panel").height() -
                 $("#title-panel").height() -
                 $("#header-main-section").height() -
-                $("#outerFooter").height() - 30;
+                // $("#outerFooter").height() - 30;
+                30;
             return {"min-height": containerHeight};
         }
         getSeparatorHeight() {
@@ -238,7 +239,7 @@ module AIP {
         }
         saveTemplate() {
             this.saving = true;
-            this.adminActionService.saveActionItemTemplate(this.selectedTemplate, this.actionItem.actionItemId)
+            // this.adminActionService.saveActionItemTemplate(this.selectedTemplate, this.actionItem.actionItemId)
             //console.log(this.actionItem.actionItemContent);
             //this.updatedContent = CKEDITOR.instances['templateContent'].getData();
 
