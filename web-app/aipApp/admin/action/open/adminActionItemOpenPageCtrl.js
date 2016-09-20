@@ -111,14 +111,16 @@ var AIP;
         };
         AdminActionItemOpenPageCtrl.prototype.openOverviewPanel = function () {
             var _this = this;
+            var deferred = this.$q.defer();
             this.adminActionService.getActionItemDetail(this.$state.params.data)
                 .then(function (response) {
                 _this.actionItem = response.data.actionItem;
                 _this.selectedTemplate = _this.actionItem.actionItemTemplateId;
+                deferred.resolve(_this.openPanel("overview"));
             }, function (err) {
                 console.log(err);
             });
-            return this.openPanel("overview");
+            return deferred.promise;
         };
         AdminActionItemOpenPageCtrl.prototype.openContentPanel = function () {
             var _this = this;
@@ -126,10 +128,11 @@ var AIP;
             this.adminActionService.getActionItemTemplates()
                 .then(function (response) {
                 _this.templates = response.data;
+                deferred.resolve(_this.openPanel("content"));
             }, function (error) {
                 console.log(error);
             });
-            return this.openPanel("content");
+            return deferred.promise;
         };
         AdminActionItemOpenPageCtrl.prototype.openPanel = function (panelName) {
             var _this = this;
@@ -151,10 +154,7 @@ var AIP;
                 var compiled = _this.$compile(template)(_this.$scope);
                 deferred.resolve(compiled);
                 if (panelName === "overview") {
-                    _this.$timeout(function () {
-                        //change page title
-                        $("#title-panel").children()[0].innerHTML = _this.actionItem.actionItemName;
-                    }, 0);
+                    $("#title-panel").children()[0].innerHTML = _this.actionItem.actionItemName;
                 }
             }, function (error) {
                 console.log(error);

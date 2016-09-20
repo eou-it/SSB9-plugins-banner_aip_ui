@@ -136,25 +136,27 @@ module AIP {
             return {height: containerHeight};
         }
         openOverviewPanel() {
+            var deferred = this.$q.defer();
             this.adminActionService.getActionItemDetail(this.$state.params.data)
                 .then((response:AIP.IActionItemOpenResponse) => {
                     this.actionItem = response.data.actionItem;
                     this.selectedTemplate = this.actionItem.actionItemTemplateId;
-
+                    deferred.resolve(this.openPanel("overview"));
                 }, (err) => {
                     console.log(err);
                 });
-            return this.openPanel("overview");
+            return deferred.promise;
         }
         openContentPanel() {
             var deferred = this.$q.defer();
             this.adminActionService.getActionItemTemplates()
                 .then((response) => {
                     this.templates = response.data;
+                    deferred.resolve(this.openPanel("content"));
                 }, (error) => {
                     console.log(error);
                 });
-            return this.openPanel("content");
+            return deferred.promise;
         }
         openPanel(panelName) {
             var deferred=this.$q.defer();
@@ -175,10 +177,7 @@ module AIP {
                     var compiled = this.$compile(template)(this.$scope);
                     deferred.resolve(compiled);
                     if(panelName === "overview") {
-                        this.$timeout(()=> {
-                            //change page title
-                            $("#title-panel").children()[0].innerHTML = this.actionItem.actionItemName
-                        }, 0)
+                        $("#title-panel").children()[0].innerHTML = this.actionItem.actionItemName;
                     }
                 }, (error) => {
                     console.log(error);
