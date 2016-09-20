@@ -474,9 +474,20 @@ aip-list .aip-list-container  {
     height:inherit;
 }
       .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement  {
-    height:inherit;
+    height:100%;
     color:#4F585F;
+    padding-bottom:20px;
 }
+        .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement .h2-container  {
+    margin-top:20px;
+    margin-bottom:10px;
+}
+        .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement .activity  {
+    margin-top:30px;
+    border-right:2px solid #C0C0C0;
+    height:100%;
+}
+        
         .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement .dividerContainer  {
     padding:16px;
 }
@@ -493,7 +504,7 @@ aip-list .aip-list-container  {
           .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContentNoInfo .contentText  {
     padding-top:1.5em;
 }
-          .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContentNoInfo .control button.edit  {
+          .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .control .h2-container button.edit  {
     float:left;
     color:#206E9F;
     border:none;
@@ -505,22 +516,13 @@ aip-list .aip-list-container  {
     margin-top:20px;
     margin-bottom:20px;
 }
-            .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .control  {
-    bottom:24px;
-    width:100%;
-}
-              .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .control button.edit  {
-    float:left;
-    color:#206E9F;
-    border:none;
-}
-              .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .control .templateButton  {
+            .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .control .templateButton  {
     float:left;
 }
-                .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .control .templateButton span  {
+              .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .control .templateButton span  {
     padding-right:24px;
 }
-                  .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .control .templateButton span button  {
+                .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .control .templateButton span button  {
     min-width:100px;
 }
 
@@ -621,6 +623,25 @@ a:focus, div:focus, input:focus, span:focus, i:focus, button:focus, .breadcrumbB
         .viewContainer .listActionItem .listActionItem-container .itemList .groupDetail .detail-body-container .detail-body.Fixed  {
     position:fixed;
 }
+
+xe-tab-panel h2  {
+    color:#4F585F;
+    font-size:1.25em;
+    font-family:"OpenSans-semibold";
+}
+xe-tab-panel h3  {
+    color:#4F585F;
+    font-size:1em;
+    font-family:"OpenSans-semibold";
+}
+
+.cke_button_label.cke_button__a11ybtn_label  {
+    display:inline !important;
+}
+
+.cke_button_icon.cke_button__a11ybtn_icon  {
+    display:none;
+}
 /*** Media Query Section ***/
 @media screen and (max-width: 768px) {
     aip-list .aip-list-container .header .list-item .title .badge  {
@@ -665,10 +686,19 @@ a:focus, div:focus, input:focus, span:focus, i:focus, button:focus, .breadcrumbB
     margin-right:10px;
 }
 }
+@media (max-width: 768px) {
+          .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement .activity  {
+    margin-top:0px;
+    border-right:none;
+}
+}
 @media screen and (max-width: 768px) {
   .actionItemOpenContainer .row  {
     margin-left:0;
     margin-right:0;
+}
+  .actionItemOpenContainer .actionItemElement .h2-container button  {
+    border:none;
 }
   .actionItemOpenContainer .actionItemElement xe-tab-nav .xe-tab-content  {
     padding:4px 0;

@@ -11,7 +11,7 @@
 
                 <div class="control col-xs-2 col-sm-4">
                     <div class="h2-container">
-                        <button name="Edit" type="button" class="btn btn-default" ng-click="vm.selectTemplate()" aria-label="">
+                        <button name="Edit" type="button" class="btn btn-default edit" ng-click="vm.selectTemplate()" aria-label="">
                             <span class="icon icon-edit-CO"></span>
                             <span class="button-text hidden-sm-down">{{'aip.admin.action.open.tab.content.edit'|i18n_aip}}</span>
                         </button>
@@ -70,18 +70,15 @@
 
         </div>
     </div>
-
-
     <div class="actionItemContent row" ng-if="!vm.isNoTemplate() && vm.actionItem.actionItemTemplateId && !vm.templateSelect">
         <div class="contentText">
             <div class="row">
-
                 <div class="col-xs-10 col-sm-8">
                     <h2>{{'aip.admin.action.open.tab.template'|i18n_aip}}</h2>
                 </div>
-                <div class="col-xs-2 col-sm-4">
+                <div class="control col-xs-2 col-sm-4">
                     <div class="h2-container">
-                        <button name="Edit" type="button" class="btn btn-default" ng-click="vm.selectTemplate()" aria-label="">
+                        <button name="Edit" type="button" class="btn btn-default edit" ng-click="vm.selectTemplate()" aria-label="">
                             <span class="icon icon-edit-CO"></span>
                             <span class="button-text hidden-sm-down">{{'aip.admin.action.open.tab.content.edit'|i18n_aip}}</span>
                         </button>

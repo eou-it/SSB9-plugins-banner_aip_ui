@@ -385,12 +385,20 @@ aip-list .aip-list-container {
     .actionItemOpenContainer .actionItemInfo .actionItemInfoRow {
       height: inherit; }
       .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement {
-        height: inherit;
+        height: 100%;
         color: #4F585F;
-        padding-bottom: 30px; }
+        padding-bottom: 20px; }
         .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement .h2-container {
           margin-top: 20px;
           margin-bottom: 10px; }
+        .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement .activity {
+          margin-top: 30px;
+          border-left: 2px solid #C0C0C0;
+          height: 100%; }
+        @media (max-width: 768px) {
+          .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement .activity {
+            margin-top: 0px;
+            border-left: none; } }
         .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement .dividerContainer {
           padding: 16px; }
           .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement .dividerContainer .divider {
@@ -402,7 +410,7 @@ aip-list .aip-list-container {
           padding: 0; }
           .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContentNoInfo .contentText {
             padding-top: 1.5em; }
-          .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContentNoInfo .control button.edit {
+          .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .control .h2-container button.edit {
             float: right;
             color: #206E9F;
             border: none; }
@@ -411,19 +419,12 @@ aip-list .aip-list-container {
             .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .contentContainer {
               margin-top: 20px;
               margin-bottom: 20px; }
-            .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .control {
-              bottom: 24px;
-              width: 100%; }
-              .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .control button.edit {
-                float: right;
-                color: #206E9F;
-                border: none; }
-              .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .control .templateButton {
-                float: right; }
-                .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .control .templateButton span {
-                  padding-left: 24px; }
-                  .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .control .templateButton span button {
-                    min-width: 100px; }
+            .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .control .templateButton {
+              float: right; }
+              .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .control .templateButton span {
+                padding-left: 24px; }
+                .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .control .templateButton span button {
+                  min-width: 100px; }
 
 @media screen and (max-width: 768px) {
   .actionItemOpenContainer .row {
@@ -522,6 +523,15 @@ a:focus, div:focus, input:focus, span:focus, i:focus, button:focus, .breadcrumbB
         height: inherit; }
         .viewContainer .listActionItem .listActionItem-container .itemList .groupDetail .detail-body-container .detail-body.Fixed {
           position: fixed; }
+
+xe-tab-panel h2 {
+  color: #4F585F;
+  font-size: 1.25em;
+  font-family: "OpenSans-semibold"; }
+xe-tab-panel h3 {
+  color: #4F585F;
+  font-size: 1em;
+  font-family: "OpenSans-semibold"; }
 
 .cke_button_label.cke_button__a11ybtn_label {
   display: inline !important; }
