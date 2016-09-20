@@ -4,11 +4,15 @@
 var AIP;
 (function (AIP) {
     var AdminActionItemOpenPageCtrl = (function () {
-        function AdminActionItemOpenPageCtrl($scope, $q, $state, $filter, $sce, $window, $templateRequest, $templateCache, $compile, $timeout, $interpolate, SpinnerService, AdminActionService, APP_ROOT) {
+        function AdminActionItemOpenPageCtrl($scope, $q, $state, $filter, $sce, $window, $templateRequest, $templateCache, $compile, $timeout, $interpolate, SpinnerService, AdminActionService, APP_ROOT, CKEDITORCONFIG) {
             this.$inject = ["$scope", "$q", "$state", "$filter", "$sce", "$window", "$templateRequest", "$templateCache", "$compile",
-                "$timeout", "$interpolate", "SpinnerService", "AdminActionService", "APP_ROOT"];
+                "$timeout", "$interpolate", "SpinnerService", "AdminActionService", "APP_ROOT", "CKEDITORCONFIG"];
+            this.trustActionItemContent = function () {
+                this.actionItem.actionItemContent = this.$filter("html")(this.$sce.trustAsHtml(this.actionItem.actionItemContent));
+                return this.actionItem.actionItemContent;
+            };
             $scope.vm = this;
-            this.scope = $scope;
+            this.$scope = $scope;
             this.$q = $q;
             this.$state = $state;
             this.$filter = $filter;
@@ -22,6 +26,7 @@ var AIP;
             this.adminActionService = AdminActionService;
             this.spinnerService = SpinnerService;
             this.APP_ROOT = APP_ROOT;
+            this.CKEDITORCONFIG = CKEDITORCONFIG;
             this.actionItem = {};
             this.templateSelect = false;
             this.templates = [];
@@ -137,7 +142,7 @@ var AIP;
             var templateUrl = this.$sce.getTrustedResourceUrl(url);
             this.$templateRequest(templateUrl)
                 .then(function (template) {
-                var compiled = _this.$compile(template)(_this.scope);
+                var compiled = _this.$compile(template)(_this.$scope);
                 deferred.resolve(compiled);
             }, function (error) {
                 console.log(error);
@@ -170,12 +175,9 @@ var AIP;
                 }
             }
         };
-        AdminActionItemOpenPageCtrl.prototype.loadReadOnlyContent = function () {
-            var actionItemHtmlText = this.$sce.trustAsHtml(this.actionItem.actionItemContent);
-            return actionItemHtmlText;
-        };
         AdminActionItemOpenPageCtrl.prototype.selectTemplate = function () {
-            var _this = this;
+            this.trustActionItemContent();
+            console.log(this.actionItem.actionItemContent);
             this.templateSelect = true;
             this.$timeout(function () {
                 var actionItemTemplate = $("#actionItemTemplate");
@@ -186,8 +188,6 @@ var AIP;
                     });
                 }
                 $(".actionItemContent").height($(".actionItemElement").height() - $(".xe-tab-nav").height());
-                console.log("set data");
-                CKEDITOR.instances['templateContent'].setData(_this.$sce.trustAsHtml(_this.actionItem.actionItemContent));
             }, 500);
         };
         AdminActionItemOpenPageCtrl.prototype.cancel = function (option) {
@@ -200,20 +200,8 @@ var AIP;
             }
         };
         AdminActionItemOpenPageCtrl.prototype.saveTemplate = function () {
-            //console.log(this.actionItem.actionItemContent);
-            //this.updatedContent = CKEDITOR.instances['templateContent'].getData();
             var _this = this;
-            this.updatedContent = this.$filter("trusted")(this.$sce.trustAsHtml(CKEDITOR.instances['templateContent'].getData())).toString();
-            this.actionItem.actionItemContent = this.updatedContent.toString();
-            /*
-            try {
-                CKEDITOR.instances['templateContent'].destroy(true);
-            } catch (e) { }
-            CKEDITOR.replace('templateContent');
-            */
-            console.log("trusted");
-            console.log(CKEDITOR.instances['templateContent']);
-            this.adminActionService.saveActionItemTemplate(this.selectedTemplate, this.actionItem.actionItemId, this.updatedContent)
+            this.adminActionService.saveActionItemTemplate(this.selectedTemplate, this.actionItem.actionItemId, this.actionItem.actionItemContent)
                 .then(function (response) {
                 var notiParams = {};
                 if (response.data.success) {

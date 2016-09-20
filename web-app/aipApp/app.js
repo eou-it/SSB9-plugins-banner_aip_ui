@@ -13,11 +13,12 @@ var bannerAIPApp = angular.module("bannerAIP", [
     "ui.bootstrap",
     "ngAria",
     "I18nAIP",
-    "SCEAIP",
     "ngAnimate",
     "xe-ui-components",
     "bannerAIPUI",
-    "ngRoute"
+    "ngRoute",
+    "SCEAIP",
+    "ngCkeditor"
     //"xe-ui-components"
     ])
 
@@ -134,6 +135,31 @@ var bannerAIPApp = angular.module("bannerAIP", [
                 ofLabel: "of"
             })
 
+     .constant("CKEDITORCONFIG",
+                {
+                    fullPage: true,
+                    allowedContent: true,
+                    //removePlugins: removePlugins,
+                    height: 400,
+                    //readOnly: false,
+                    pasteFromWordRemoveFontStyles: true,
+                    pasteFromWordRemoveStyles: true,
+                    toolbar: [
+                        { name: 'document', items: [ 'Source', '-', 'NewPage', 'Preview', '-', 'Templates' ] },
+                        { name: 'clipboard', items: [ 'Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo' ] },
+                        { name: 'editing', items: [ 'Find', 'Replace', '-', 'SelectAll', '-', 'SpellChecker', 'Scayt' ] },
+                        { name: 'styles', items: [ 'Format', 'Font', 'FontSize' ] },
+                        { name: 'colors', items: [ 'TextColor', 'BGColor' ] },
+                        { name: 'basicstyles', items: [ 'Bold', 'Italic', 'Underline', 'Strike', '-', 'RemoveFormat' ] },
+                        { name: 'paragraph', items: [ 'NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'CreateDiv', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-' ] },
+                        { name: 'links', items: [ 'Link', 'Unlink', 'Anchor' ] },
+                        { name: 'insert', items: [ 'Image', 'Table', 'HorizontalRule', 'SpecialChar', 'PageBreak' ] },
+                        { name: 'tools', items: [ 'Maximize', 'ShowBlocks', '-', 'About' ] }
+                    ],
+                    toolbarCanCollapse: true,
+                    toolbarStartupExpanded: true
+                })
+
 //provider-injector
     .config(["$stateProvider", "$urlRouterProvider", "$locationProvider",  "$httpProvider",
         "PAGES", "APP_ROOT", "APP_ABS_PATH",
@@ -166,10 +192,11 @@ var bannerAIPApp = angular.module("bannerAIP", [
     ])
 
 //instance-injector
-    .run(["$rootScope", "$state", "$stateParams", "$filter","$sce", "$templateCache", "BreadcrumbService",
+    .run(["$rootScope", "$state", "$stateParams", "$filter","$sce", "$templateCache","BreadcrumbService",
         function($rootScope, $state, $stateParams, $filter, $sce, $templateCache, BreadcrumService) {
             $rootScope.$state = $state;
             $rootScope.$stateParams = $stateParams;
+
             //when state successfully changed, update breadcrumbs
             $rootScope.$on("$stateChangeSuccess", function(event, toState, toParams, fromState, fromParams) {
                 $state.previous = fromState;
@@ -324,6 +351,7 @@ var bannerAIPApp = angular.module("bannerAIP", [
                     </div> \
                 </div>'
             );
+
     }]
 );
 

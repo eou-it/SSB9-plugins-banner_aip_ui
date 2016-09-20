@@ -22,7 +22,7 @@
                 <div class="col-xs-12 col-sm-12">
                     <h2>{{'aip.admin.action.open.tab.content'|i18n_aip}}</h2>
                     <div ng-if="!vm.isNoContent()">
-                        <span id="actionItemText" ng-bind-html="vm.loadReadOnlyContent() | trusted">{{vm.actionItemHtmlText}}</span>
+                        <span ng-bind-html="vm.actionItem.actionItemContent | html"></span>
                     </div>
                     <div ng-if="vm.isNoContent()">
                         <span>{{'aip.admin.action.open.tab.content.noContent'|i18n_aip}}</span>
@@ -50,8 +50,8 @@
             </div>
 
             <div class="row">
-                <textarea ck-editor id="templateContent" ng-required="true" aria-required="true" name="templateContent"
-                          ng-bind-html="vm.loadReadOnlyContent() | trusted"></textarea>
+                <textarea id="templateContent" ng-required="true" aria-required="true" name="templateContent" ckeditor="vm.CKEDITORCONFIG"
+                          ng-model="vm.actionItem.actionItemContent" ng-bind-html="vm.actionItem.actionItemContent | html"></textarea>
             </div>
         </div>
         <div class="control row">
@@ -96,7 +96,7 @@
                 <div class="col-xs-12 col-sm-12">
                     <h2>{{'aip.admin.action.open.tab.content'|i18n_aip}}</h2>
                     <div ng-if="!vm.isNoContent()">
-                        <span ng-bind-html="vm.loadReadOnlyContent() | trusted">{{vm.actionItemHtmlText}}</span>
+                        <span ng-bind-html="vm.actionItem.actionItemContent | html"></span>
                     </div>
                     <div ng-if="vm.isNoContent()">
                         <span>{{'aip.admin.action.open.tab.content.noContent'|i18n_aip}}</span>

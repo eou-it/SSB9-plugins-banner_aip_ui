@@ -20,6 +20,8 @@ modules = {
         resource url: [plugin: 'banner-csr-ui', file: 'node_modules/angular-aria/angular-aria.js']
         resource url: [plugin: 'banner-csr-ui', file: 'node_modules/angular-ui-bootstrap/dist/ui-bootstrap-tpls.js']
         resource url: [plugin: 'banner-csr-ui', file: 'node_modules/moment/min/moment.min.js']
+        resource url: [plugin: 'banner-csr-ui', file: 'node_modules/ckeditor/ckeditor.js']
+        resource url: [plugin: 'banner-csr-ui', file: 'bower_components/ng-ckeditor/ng-ckeditor.min.js']
 //        resource url:[plugin: 'banner-csr', file: 'bower_components/angular-common/build/angular-common.js']
     }
 
@@ -36,8 +38,8 @@ modules = {
         dependsOn 'font-awesome'
         //resource url:[plugin: 'banner-csr-ui', file: 'css/xe-ui-components.css']
         resource url:[plugin: 'banner-csr-ui', file: 'css/aip-main.css']
-        resource url:[plugin: 'banner-csr-ui', file: 'aipApp/common/directives/ckeditor/css/ckEditor.css']
         resource url:[plugin: 'banner-csr-ui', file: 'css/iconFonts.css']
+        //resource url:[plugin: 'banner-csr-ui', file: 'node_modules/ckeditor/contents.css']
     }
     'bannerAIPUIRTL' {
 //        dependsOn 'bannerAIPUI'
@@ -49,7 +51,7 @@ modules = {
     }
     'bannerAIPUtils' {
         resource url:[plugin: 'banner-csr-ui', file: 'aipApp/common/filters/i18n-filter.js']
-        resource url:[plugin: 'banner-csr-ui', file: 'aipApp/common/filters/trusted.js']
+        resource url:[plugin: 'banner-csr-ui', file: 'aipApp/common/filters/html-filter.js']
         resource url:[plugin: 'banner-csr-ui', file: 'aipApp/utils/register.js']
     }
     'bannerAIPApp' {
@@ -77,7 +79,6 @@ modules = {
         resource url:[plugin: 'banner-csr-ui', file: 'aipApp/common/directives/item-detail/js/itemDetail.js']
         resource url:[plugin: 'banner-csr-ui', file: 'aipApp/common/directives/admin/group-detail/js/groupDetail.js']
         resource url:[plugin: 'banner-csr-ui', file: 'aipApp/common/utils/spinnerCtrl.js']
-        resource url:[plugin: 'banner-csr-ui', file: 'aipApp/common/directives/ckeditor/js/ckEditor.js']
     }
 
     'commonComponents' {

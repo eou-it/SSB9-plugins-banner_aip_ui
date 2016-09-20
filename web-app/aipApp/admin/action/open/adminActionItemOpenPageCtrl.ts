@@ -5,14 +5,12 @@
 declare var register;
 declare var Notification: any;
 declare var notifications: any;
-declare var CKEDITOR: any;
-declare var ckInstance: any;
 
 module AIP {
 
     export class AdminActionItemOpenPageCtrl{
         $inject = ["$scope", "$q", "$state", "$filter", "$sce", "$window", "$templateRequest", "$templateCache", "$compile",
-            "$timeout", "$interpolate", "SpinnerService", "AdminActionService", "APP_ROOT"];
+            "$timeout", "$interpolate", "SpinnerService", "AdminActionService", "APP_ROOT", "CKEDITORCONFIG"];
         adminActionService: AIP.AdminActionService;
         spinnerService: AIP.SpinnerService;
         $q: ng.IQService;
@@ -26,16 +24,17 @@ module AIP {
         $timeout;
         $interpolate;
         actionItem;
-        scope;
+        $scope;
         APP_ROOT;
+        CKEDITORCONFIG;
         templates;
         templateSelect: boolean;
         selectedTemplate;
         updatedContent;
         constructor($scope, $q:ng.IQService, $state, $filter, $sce, $window, $templateRequest, $templateCache, $compile,
-                    $timeout, $interpolate, SpinnerService, AdminActionService, APP_ROOT) {
+                    $timeout, $interpolate, SpinnerService, AdminActionService, APP_ROOT, CKEDITORCONFIG) {
             $scope.vm = this;
-            this.scope = $scope;
+            this.$scope = $scope;
             this.$q = $q;
             this.$state = $state;
             this.$filter = $filter;
@@ -49,6 +48,7 @@ module AIP {
             this.adminActionService = AdminActionService;
             this.spinnerService = SpinnerService;
             this.APP_ROOT = APP_ROOT;
+            this.CKEDITORCONFIG = CKEDITORCONFIG;
             this.actionItem = {};
             this.templateSelect = false;
             this.templates = [];
@@ -164,7 +164,7 @@ module AIP {
             var templateUrl = this.$sce.getTrustedResourceUrl(url);
             this.$templateRequest(templateUrl)
                 .then((template) => {
-                    var compiled = this.$compile(template)(this.scope);
+                    var compiled = this.$compile(template)(this.$scope);
                     deferred.resolve(compiled);
                 }, (error) => {
                     console.log(error);
@@ -194,13 +194,14 @@ module AIP {
             }
         }
 
-        loadReadOnlyContent() {
-            var actionItemHtmlText = this.$sce.trustAsHtml(this.actionItem.actionItemContent);
-            return actionItemHtmlText;
+        trustActionItemContent = function() {
+            this.actionItem.actionItemContent = this.$filter("html")(this.$sce.trustAsHtml(this.actionItem.actionItemContent));
+            return this.actionItem.actionItemContent;
         }
 
         selectTemplate() {
-
+            this.trustActionItemContent();
+            console.log(this.actionItem.actionItemContent);
             this.templateSelect = true;
             this.$timeout(() => {
                 var actionItemTemplate:any = $("#actionItemTemplate");
@@ -211,8 +212,6 @@ module AIP {
                     });
                 }
                 $(".actionItemContent").height($(".actionItemElement").height() - $(".xe-tab-nav").height());
-                console.log("set data");
-                CKEDITOR.instances['templateContent'].setData( this.$sce.trustAsHtml(this.actionItem.actionItemContent) );
             }, 500);
         }
         cancel(option) {
@@ -225,23 +224,7 @@ module AIP {
             }
         }
         saveTemplate() {
-            //console.log(this.actionItem.actionItemContent);
-            //this.updatedContent = CKEDITOR.instances['templateContent'].getData();
-
-            this.updatedContent = this.$filter("trusted")( this.$sce.trustAsHtml(CKEDITOR.instances['templateContent'].getData()) ).toString();
-            this.actionItem.actionItemContent = this.updatedContent.toString();
-
-            /*
-            try {
-                CKEDITOR.instances['templateContent'].destroy(true);
-            } catch (e) { }
-            CKEDITOR.replace('templateContent');
-            */
-
-            console.log("trusted");
-            console.log(CKEDITOR.instances['templateContent']);
-
-            this.adminActionService.saveActionItemTemplate(this.selectedTemplate, this.actionItem.actionItemId, this.updatedContent)
+            this.adminActionService.saveActionItemTemplate(this.selectedTemplate, this.actionItem.actionItemId, this.actionItem.actionItemContent)
                 .then((response:any) => {
                     var notiParams = {};
                     if(response.data.success) {
