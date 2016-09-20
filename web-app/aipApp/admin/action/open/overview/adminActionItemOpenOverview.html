@@ -1,36 +1,33 @@
 <div id="openActionItemDetail">
-    <div class="actionItemElement actionItemDetail col-xs-12 col-sm-9">
-
-            <div class="col-sm-11">
-                <h3>{{"aip.list.grid.itemTitle"|i18n_aip}}</h3>
-                <p class="openActionItemTitle">{{vm.actionItem.actionItemName}}</p>
-                <h3>{{"aip.common.folder"|i18n_aip}}</h3>
-                <p class="openActionItemFolder">{{vm.actionItem.folderName}}</p>
-                <h3>{{"aip.common.status"|i18n_aip}}</h3>
-                <p class="openActionItemStatus">{{vm.actionItem.actionItemStatus}}</p>
-                <h3>{{"aip.common.description"|i18n_aip}}</h3>
-                <p class="openActionItemDesc">{{vm.actionItem.actionItemDesc}}</p>
-            </div>
-            <div class="col-sm-1">
-                <div class="divider"></div>
-            </div>
-
-    </div>
-    <!--<div class="hidden-xs col-sm-1 dividerContainer" ng-style="vm.getSeparatorHeight()">-->
-        <!--<div class="divider"></div>-->
-    <!--</div>-->
-    <div class="actionItemElement col-xs-12 col-sm-3">
-        <h3>{{"aip.common.activity"|i18n_aip}}</h3>
-        <hr />
-        <div class="actionItemElement">
-            <h4>{{"aip.common.last.updated.by"|i18n_aip}}</h4>
-            <p class="openActionItemLastUpdatedBy">{{vm.actionItem.actionItemCreatorId}}</p>
+    <div class="row">
+        <div class="actionItemElement actionItemDetail col-xs-12 col-sm-9 col-height">
+                <div class="col-sm-11">
+                    <h2 name="titleLabel">{{"aip.list.grid.itemTitle"|i18n_aip}}</h2>
+                    <p class="openActionItemTitle">{{vm.actionItem.actionItemName}}</p>
+                    <h2 name="folderLabel">{{"aip.common.folder"|i18n_aip}}</h2>
+                    <p class="openActionItemFolder">{{vm.actionItem.folderName}}</p>
+                    <h2 name="statusLabel">{{"aip.common.status"|i18n_aip}}</h2>
+                    <p class="openActionItemStatus">{{vm.actionItem.actionItemStatus}}</p>
+                    <h2 name="descriptionLabel">{{"aip.common.description"|i18n_aip}}</h2>
+                    <p class="openActionItemDesc">{{vm.actionItem.actionItemDesc}}</p>
+                </div>
+                <div class="col-sm-1">
+                    <div class="divider"></div>
+                </div>
         </div>
-
-        <hr />
-        <div class="actionItemElement">
-            <h4>{{"aip.common.activity.date"|i18n_aip}}</h4>
-            <p class="openActionItemActivityDate">{{vm.actionItem.actionItemActivityDate}}</p>
+        <!--<div class="hidden-xs col-sm-1 dividerContainer" ng-style="vm.getSeparatorHeight()">-->
+            <!--<div class="divider"></div>-->
+        <!--</div>-->
+        <div class="actionItemElement activity col-xs-12 col-sm-3">
+                <div class="actionItemElement">
+                    <h2 name="updatedByLabel">{{"aip.common.last.updated.by"|i18n_aip}}</h2>
+                    <p class="openActionItemLastUpdatedBy">{{vm.actionItem.actionItemCreatorId}}</p>
+                </div>
+                <hr />
+                <div class="actionItemElement">
+                    <h2 name="activityDateLabel">{{"aip.common.activity.date"|i18n_aip}}</h2>
+                    <p class="openActionItemActivityDate">{{vm.actionItem.actionItemActivityDate}}</p>
+                </div>
         </div>
     </div>
 </div>

@@ -4,12 +4,17 @@
 var AIP;
 (function (AIP) {
     var AdminGroupAddPageCtrl = (function () {
-        function AdminGroupAddPageCtrl($scope, AdminGroupService, $q, SpinnerService, $state, $filter) {
-            this.$inject = ["$scope", "AdminGroupService", "$q", "SpinnerService", "$state", "$filter"];
+        function AdminGroupAddPageCtrl($scope, AdminGroupService, $q, SpinnerService, $state, $filter, CKEDITORCONFIG) {
+            this.$inject = ["$scope", "AdminGroupService", "$q", "SpinnerService", "$state", "$filter", "CKEDITORCONFIG"];
+            this.trustGroupDesc = function () {
+                this.groupInfo.description = this.$filter("html")(this.$sce.trustAsHtml(this.groupInfo.description));
+                return this.groupInfo.description;
+            };
             $scope.vm = this;
             this.$q = $q;
             this.$state = $state;
             this.$filter = $filter;
+            this.ckEditorConfig = CKEDITORCONFIG;
             this.adminGroupService = AdminGroupService;
             this.spinnerService = SpinnerService;
             this.errorMessage = {};
@@ -52,6 +57,7 @@ var AIP;
             }));
             this.$q.all(promises).then(function () {
                 _this.spinnerService.showSpinner(false);
+                _this.trustGroupDesc();
             });
         };
         AdminGroupAddPageCtrl.prototype.save = function () {
