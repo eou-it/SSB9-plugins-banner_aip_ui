@@ -1,13 +1,20 @@
 <div id="openActionItemDetail">
-    <div class="actionItemElement actionItemDetail col-xs-12 col-sm-8">
-        <h3>{{"aip.list.grid.itemTitle"|i18n_aip}}</h3>
-        <p class="openActionItemTitle">{{vm.actionItem.actionItemName}}</p>
-        <h3>{{"aip.common.folder"|i18n_aip}}</h3>
-        <p class="openActionItemFolder">{{vm.actionItem.folderName}}</p>
-        <h3>{{"aip.common.status"|i18n_aip}}</h3>
-        <p class="openActionItemStatus">{{vm.actionItem.actionItemStatus}}</p>
-        <h3>{{"aip.common.description"|i18n_aip}}</h3>
-        <p class="openActionItemDesc">{{vm.actionItem.actionItemDesc}}</p>
+    <div class="actionItemElement actionItemDetail col-xs-12 col-sm-9">
+
+            <div class="col-sm-11">
+                <h3>{{"aip.list.grid.itemTitle"|i18n_aip}}</h3>
+                <p class="openActionItemTitle">{{vm.actionItem.actionItemName}}</p>
+                <h3>{{"aip.common.folder"|i18n_aip}}</h3>
+                <p class="openActionItemFolder">{{vm.actionItem.folderName}}</p>
+                <h3>{{"aip.common.status"|i18n_aip}}</h3>
+                <p class="openActionItemStatus">{{vm.actionItem.actionItemStatus}}</p>
+                <h3>{{"aip.common.description"|i18n_aip}}</h3>
+                <p class="openActionItemDesc">{{vm.actionItem.actionItemDesc}}</p>
+            </div>
+            <div class="col-sm-1">
+                <div class="divider"></div>
+            </div>
+
     </div>
     <!--<div class="hidden-xs col-sm-1 dividerContainer" ng-style="vm.getSeparatorHeight()">-->
         <!--<div class="divider"></div>-->

@@ -100,7 +100,7 @@ class AipController {
             response.sendError( 403 )
             return
         }
-        def actionItems = userActionItemReadOnlyService.listActionItemByPidm( userPidm )
+        def actionItems = userActionItemReadOnlyService.listActionItemsByPidm( userPidm )
         //TODO: group is hardcoded. to be pulled from db in future US
 
         def userGroupInfo = []

@@ -5,6 +5,8 @@
 declare var register;
 declare var Notification: any;
 declare var notifications: any;
+declare var CKEDITOR;
+
 
 module AIP {
     interface IAdminGroupAddPageCtrl {
@@ -23,7 +25,7 @@ module AIP {
         description: string;
     }
     export class AdminGroupAddPageCtrl implements IAdminGroupAddPageCtrl{
-        $inject = ["$scope", "AdminGroupService", "$q", "SpinnerService", "$state", "$filter"];
+        $inject = ["$scope", "AdminGroupService", "$q", "SpinnerService", "$state", "$filter", "CKEDITORCONFIG"];
         status: AIP.IStatus[];
         folders: AIP.IFolder[];
         groupInfo: IGroupSelect;
@@ -33,12 +35,14 @@ module AIP {
         $q: ng.IQService;
         $state;
         $filter;
+        ckEditorConfig;
         constructor($scope, AdminGroupService:AIP.AdminGroupService,
-            $q:ng.IQService, SpinnerService, $state, $filter) {
+            $q:ng.IQService, SpinnerService, $state, $filter, CKEDITORCONFIG) {
             $scope.vm = this;
             this.$q = $q;
             this.$state = $state;
             this.$filter = $filter;
+            this.ckEditorConfig = CKEDITORCONFIG
             this.adminGroupService = AdminGroupService;
             this.spinnerService = SpinnerService;
             this.errorMessage = {};
@@ -87,6 +91,7 @@ module AIP {
             );
             this.$q.all(promises).then(() => {
                 this.spinnerService.showSpinner(false);
+                this.trustGroupDesc();
             });
         }
         save() {
@@ -132,6 +137,12 @@ module AIP {
                 return true;
             }
         }
+
+        trustGroupDesc = function() {
+            this.groupInfo.description = this.$filter("html")(this.$sce.trustAsHtml(this.groupInfo.description));
+            return this.groupInfo.description;
+        }
+
         saveErrorCallback(invalidFields, errors) {
            //todo: iterate through errors given back through contraints
             /*

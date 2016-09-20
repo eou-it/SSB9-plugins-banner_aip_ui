@@ -340,24 +340,24 @@ aip-list .aip-list-container  {
     overflow-y:auto;
     font-size:14px;
 }
-  .actionListContainer .row.controls  {
+  .actionListContainer .row  {
     margin-left:0px;
     margin-right:0px;
 }
-    .actionListContainer .row.controls .control  {
+    .actionListContainer .row .control  {
     text-align:left;
     padding:0 24px;
 }
-      .actionListContainer .row.controls .control .btn-default  {
+      .actionListContainer .row .control .btn-default  {
     background-color:transparent;
     border:none;
     color:#206E9F;
     font-weight:500;
 }
-        .actionListContainer .row.controls .control .btn-default .button-text  {
+        .actionListContainer .row .control .btn-default .button-text  {
     font-size:0.875em;
 }
-        .actionListContainer .row.controls .control .btn-default .icon  {
+        .actionListContainer .row .control .btn-default .icon  {
     display:table;
     margin:0 auto;
     font-size:1.25em;
@@ -365,7 +365,6 @@ aip-list .aip-list-container  {
   .actionListContainer .actionListTable #actionItemDataTableSearch  {
     display:none;
 }
-
 
 
 .actionItemAddContainer  {
@@ -539,6 +538,7 @@ aip-list .aip-list-container  {
 
 
 
+
 #breadcrumbHeader .breadcrumbButton  {
     font-size:0.8em;
 }
@@ -653,16 +653,8 @@ a:focus, div:focus, input:focus, span:focus, i:focus, button:focus, .breadcrumbB
 }
 }
 @media screen and (max-width: 768px) {
-  .actionListContainer .row.controls .control  {
+  .actionListContainer .row .control  {
     padding:0;
-}
-    .actionListContainer .row.controls .control .btn-default .button-text  {
-    display:none;
-}
-}
-@media screen and (min-width: 1024px) {
-  .actionListContainer .actionListTable .visible-lg  {
-    display:block !important;
 }
 }
 @media (min-width: 769px) {
@@ -682,6 +674,11 @@ a:focus, div:focus, input:focus, span:focus, i:focus, button:focus, .breadcrumbB
     padding:4px 0;
 }
 }
+@media screen and (min-width: 1024px) {
+  .visible-lg  {
+    display:block !important;
+}
+}
 @media screen and (max-width: 768px) {
   #content  {
     top:105px !important;
@@ -689,6 +686,9 @@ a:focus, div:focus, input:focus, span:focus, i:focus, button:focus, .breadcrumbB
     #content .viewContainer  {
     padding:0 8px;
     overflow:auto;
+}
+    #content .hidden-sm-down  {
+    display:none;
 }
 }
 @media screen and (max-width: 480px) {
