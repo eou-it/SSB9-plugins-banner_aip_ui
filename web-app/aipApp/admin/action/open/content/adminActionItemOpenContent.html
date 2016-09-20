@@ -11,7 +11,7 @@
 
                 <div class="control col-xs-2 col-sm-4">
                     <div class="h2-container">
-                        <button type="button" class="btn btn-default" ng-click="vm.selectTemplate()" aria-label="">
+                        <button name="Edit" type="button" class="btn btn-default" ng-click="vm.selectTemplate()" aria-label="">
                             <span class="icon icon-edit-CO"></span>
                             <span class="button-text hidden-sm-down">{{'aip.admin.action.open.tab.content.edit'|i18n_aip}}</span>
                         </button>
@@ -59,10 +59,10 @@
         <div class="control row">
             <div class="col-sm-3 offset-sm-9 col-xs-12 templateButton">
                 <span>
-                    <button type="button" class="btn btn-default" ng-click="vm.cancel('content')">{{"aip.common.cancel"|i18n_aip}}</button>
+                    <button name="Cancel" type="button" class="btn btn-default" ng-click="vm.cancel('content')">{{"aip.common.cancel"|i18n_aip}}</button>
                 </span>
                 <span>
-                    <button type="button" class="btn btn-primary" ng-click="vm.saveTemplate()" ng-disabled="!vm.saveValidate()">
+                    <button name="Save" type="button" class="btn btn-primary" ng-click="vm.saveTemplate()" ng-disabled="!vm.saveValidate()">
                         {{"aip.common.saveandreturn"|i18n_aip}}
                     </button>
                 </span>
@@ -81,7 +81,7 @@
                 </div>
                 <div class="col-xs-2 col-sm-4">
                     <div class="h2-container">
-                        <button type="button" class="btn btn-default" ng-click="vm.selectTemplate()" aria-label="">
+                        <button name="Edit" type="button" class="btn btn-default" ng-click="vm.selectTemplate()" aria-label="">
                             <span class="icon icon-edit-CO"></span>
                             <span class="button-text hidden-sm-down">{{'aip.admin.action.open.tab.content.edit'|i18n_aip}}</span>
                         </button>
