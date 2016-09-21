@@ -3,6 +3,8 @@ target
 target/**/*
 web-app/node_modules
 web-app/node_modules/**
+web-app/bower_components
+web-app/bower_components/**
 web-app/selenium/**/*
 web-app/WEB-INF/classes
 web-app/WEB-INF/classes/**/*

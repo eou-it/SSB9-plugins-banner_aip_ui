@@ -27,6 +27,7 @@ module.exports = function(config) {
         'node_modules/angular-sanitize/angular-sanitize.js',
         'node_modules/angular-ui-bootstrap/dist/ui-bootstrap-tpls.js',
         'node_modules/angular-sanitize/angular-sanitize.js',
+        'node_modules/ckeditor/ckeditor.js',
         '../../banner_ui_ss.git/web-app/angular-components/js/xe-ui-components.js',
         'aipApp/utils/register.js',
         'aipApp/app.js',
