@@ -42,19 +42,22 @@ var AIP;
                 //     $scope.$apply();
                 // });
             });
-            $scope.$watch("[vm.templateSelect]", function (value) {
+            /*
+             $scope.$watch("[vm.templateSelect]" , (value) => {
                 if (value[0] === false) {
-                    $timeout(function () {
+                    $timeout( () => {
                         var editor = CKEDITOR.instances["templateContent"];
                         if (editor) {
                             CKEDITOR.destroy(true);
+                            //console.log( editor );
                         }
-                        editor = CKEDITOR.instances["templateContent"];
+                     editor = CKEDITOR.instances["templateContent"];
                         console.log("watch");
-                        console.log(editor);
+                        console.log( editor );
                     }, 500);
                 }
-            });
+             })
+             */
         }
         ;
         AdminActionItemOpenPageCtrl.prototype.init = function () {

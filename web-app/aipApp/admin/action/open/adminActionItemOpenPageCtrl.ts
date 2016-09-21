@@ -66,6 +66,7 @@ module AIP {
                 // });
             } );
 
+            /*
              $scope.$watch("[vm.templateSelect]" , (value) => {
                 if (value[0] === false) {
                     $timeout( () => {
@@ -80,6 +81,7 @@ module AIP {
                     }, 500);
                 }
              })
+             */
         };
 
         init() {
