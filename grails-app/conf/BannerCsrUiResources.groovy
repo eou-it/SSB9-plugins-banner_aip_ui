@@ -20,9 +20,9 @@ modules = {
         resource url: [plugin: 'banner-csr-ui', file: 'node_modules/angular-aria/angular-aria.js']
         resource url: [plugin: 'banner-csr-ui', file: 'node_modules/angular-ui-bootstrap/dist/ui-bootstrap-tpls.js']
         resource url: [plugin: 'banner-csr-ui', file: 'node_modules/moment/min/moment.min.js']
-        //resource url: [plugin: 'banner-csr-ui', file: 'node_modules/ckeditor/ckeditor.js']
+        resource url: [plugin: 'banner-csr-ui', file: 'node_modules/ckeditor/ckeditor.js']
         resource url: [plugin: 'banner-csr-ui', file: 'bower_components/ng-ckeditor/ng-ckeditor.min.js']
-        resource url: [plugin: 'banner-csr-ui', file: 'bower_components/ng-ckeditor/ng-ckeditor.js']
+       // resource url: [plugin: 'banner-csr-ui', file: 'bower_components/ng-ckeditor/ng-ckeditor.js']
 //        resource url:[plugin: 'banner-csr', file: 'bower_components/angular-common/build/angular-common.js']
     }
 
