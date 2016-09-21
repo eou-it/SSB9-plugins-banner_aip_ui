@@ -10,7 +10,6 @@
     </g:if>
     <meta name="menuEndPoint" content="${g.createLink(controller: 'selfServiceMenu', action: 'data')}"/>
     <meta name="menuBaseURL" content="${createLink(uri: '/ssb')}" />
-    <ckeditor:resources/>
     <script type="text/javascript">
         <g:i18n_aip_setup/>
         <g:aipVersion/>
