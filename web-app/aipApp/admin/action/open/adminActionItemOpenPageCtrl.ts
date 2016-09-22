@@ -292,5 +292,4 @@ module AIP {
     }
 
 }
-
 register("bannerAIP").controller("AdminActionItemOpenPageCtrl", AIP.AdminActionItemOpenPageCtrl);
