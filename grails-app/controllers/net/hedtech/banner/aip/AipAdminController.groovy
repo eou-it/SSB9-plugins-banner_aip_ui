@@ -19,6 +19,7 @@ class AipAdminController {
     def actionItemService
     def actionItemTemplateService
     def actionItemDetailService
+    def actionItemDetailCompositeService
 
 
     def folders() {
@@ -389,33 +390,35 @@ class AipAdminController {
     def updateActionItemDetailWithTemplate () {
         def jsonObj = request.JSON
         def templateId = jsonObj.templateId.toInteger()
-        def actionItemDetailId = jsonObj.actionItemDetailId.toInteger()
+        def actionItemId = jsonObj.actionItemId.toInteger()
         def actionItemDetailText= jsonObj.actionItemContent
         def user = SecurityContextHolder?.context?.authentication?.principal
         if (!user.pidm) {
             response.sendError( 403 )
             return
         }
-        if(!actionItemDetailId) {
+        if(!actionItemId) {
             response.sendError( 403 )
             return
         }
 
         def aipUser = AipControllerUtils.getPersonForAip( params, user.pidm )
-        ActionItemDetail actionItemDetail = actionItemDetailService.listActionItemDetailById(actionItemDetailId)
-        actionItemDetail.actionItemTemplateId = templateId
-        actionItemDetail.activityDate = new Date()
-        actionItemDetail.userId = (String)aipUser.bannerId
-        actionItemDetail.text = actionItemDetailText
+        ActionItemDetail aid =  actionItemDetailService.listActionItemDetailById( actionItemId)
+        aid.actionItemId = actionItemId
+        aid.actionItemTemplateId = templateId
+        aid.userId = aipUser.bannerId
+        aid.activityDate = new Date()
+        aid.text = actionItemDetailText
 
-        actionItemDetailService.update(actionItemDetail)
+        ActionItemDetail newAid = actionItemDetailService.createOrUpdate(aid)
 
         def success = false
         def errors = []
-        ActionItemDetail newActionItemDetail = actionItemDetailService.listActionItemDetailById(actionItemDetailId)
+//        ActionItemDetail newActionItemDetail = actionItemDetailService.listActionItemDetailById(actionItemId)
+
         //todo: add new method to service for action item detail to retreive an action item by detail id and action item id
-        ActionItemReadOnly actionItemRO = actionItemReadOnlyService.getActionItemROById( newActionItemDetail.actionItemId )
-        if (newActionItemDetail) {
+        ActionItemReadOnly actionItemRO = actionItemReadOnlyService.getActionItemROById( newAid.actionItemId )
+        if (newAid) {
             response.status = 200
             success = true
         }

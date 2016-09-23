@@ -749,7 +749,7 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
     }
 
     @Test
-    void testUpdateActionItemDetail() {
+    void updateActionItemDetailWithTemplate() {
         def admin = PersonUtility.getPerson( "CSRSTU002" ) // role: student
         assertNotNull admin
 
@@ -760,7 +760,7 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
 
         def requestObj = [:]
         requestObj.templateId=1
-        requestObj.actionItemDetailId=1
+        requestObj.actionItemId=1
 
         controller.request.method = "POST"
         controller.request.json = requestObj
@@ -773,4 +773,5 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
         assertEquals 1, answer.actionItem.actionItemTemplateId
         println answer
     }
+
 }
