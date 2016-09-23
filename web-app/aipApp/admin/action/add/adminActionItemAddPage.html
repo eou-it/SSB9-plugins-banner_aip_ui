@@ -68,13 +68,16 @@
     </div>
     <div class="actionItemControl">
         <div class="row">
-            <div class="col-sm-2 col-xs-6 actionItemButton">
-                <button type="button" class="btn btn-default" ng-click="vm.cancel()">{{"aip.common.cancel"|i18n_aip}}</button>
-            </div>
-            <div class="col-sm-2 col-xs-6 actionItemButton">
-                <button type="button" class="btn btn-primary" ng-disabled="!vm.validateInput()" ng-click="vm.save()">
-                    {{"aip.common.saveandreturn"|i18n_aip}}
-                </button>
+            <div class="actionItemElement col-xs-12 col-sm-8">
+                <div class="col-sm-4 offset-sm-8 col-xs-12 actionItemButton">
+                    <span>
+                        <button type="button" class="btn btn-default" ng-click="vm.cancel()">{{"aip.common.cancel"|i18n_aip}}</button>
+                    </span>
+                    <span>
+                        <button type="button" class="btn btn-primary" ng-disabled="!vm.validateInput()" ng-click="vm.save()">
+                        {{"aip.common.saveandreturn"|i18n_aip}}</button>
+                    </span>
+                </div>
             </div>
         </div>
     </div>

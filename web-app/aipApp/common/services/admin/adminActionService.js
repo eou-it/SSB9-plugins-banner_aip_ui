@@ -93,13 +93,13 @@ var AIP;
             });
             return request;
         };
-        AdminActionService.prototype.saveActionItemTemplate = function (templateId, actionItemDetailId, actionItemContent) {
+        AdminActionService.prototype.saveActionItemTemplate = function (templateId, actionItemId, actionItemContent) {
             var request = this.$http({
                 method: "POST",
                 url: this.ENDPOINT.admin.saveActionItemTemplate,
                 data: {
                     templateId: templateId,
-                    actionItemDetailId: actionItemDetailId,
+                    actionItemId: actionItemId,
                     actionItemContent: actionItemContent
                 }
             });
