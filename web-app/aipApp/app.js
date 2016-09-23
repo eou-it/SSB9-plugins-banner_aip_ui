@@ -362,7 +362,6 @@ var bannerAIPApp = angular.module("bannerAIP", [
                 var editor = event.editor,
                         element = editor.element;
 
-                console.log(editor);
                     // Customize the editor configurations on "configLoaded" event,
                     // which is fired after the configuration file loading and
                     // execution. This makes it possible to change the
@@ -388,6 +387,7 @@ var bannerAIPApp = angular.module("bannerAIP", [
                          { name: 'tools', items: [ 'Maximize' ] },
                          '/',
                          { name: 'basicstyles', items: [ 'Bold', 'Italic', 'Strike', '-', 'RemoveFormat' ] },
+                         { name: 'colors', items: [ 'TextColor', 'BGColor' ] },
                          { name: 'paragraph', items: [ 'NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote' ] },
                          { name: 'styles', items: [ 'Styles', 'Format' ] },
                          { name: 'about', items: [ 'About','A11YBtn' ] }
