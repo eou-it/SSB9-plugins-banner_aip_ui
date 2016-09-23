@@ -77,18 +77,18 @@
     margin-bottom: 15px;
     height: 5em;
     .actionItemButton {
-      text-align: center;
-      padding-left: 0;
-      margin-left: 0px;
-      button {
-        width: 100%;
-        max-width: 200px;
+      float: right;
+      span {
+        padding-left: 24px;
+        button {
+          min-width: 100px;
+        }
       }
     }
   }
   @media (min-width:769px) {
     .actionItemControl {
-      margin-left: 33.33%
+
     }
     .actionItemButton {
       margin-left: 10px;
