@@ -5,14 +5,13 @@
 declare var register;
 declare var Notification: any;
 declare var notifications: any;
-declare var CKEDITOR: any;
-declare var ckInstance: any;
+declare var CKEDITOR;
 
 module AIP {
 
     export class AdminActionItemOpenPageCtrl{
         $inject = ["$scope", "$q", "$state", "$filter", "$sce", "$window", "$templateRequest", "$templateCache", "$compile",
-            "$timeout", "$interpolate", "SpinnerService", "AdminActionService", "APP_ROOT"];
+            "$timeout", "$interpolate", "SpinnerService", "AdminActionService", "APP_ROOT", "CKEDITORCONFIG"];
         adminActionService: AIP.AdminActionService;
         spinnerService: AIP.SpinnerService;
         $q: ng.IQService;
@@ -26,17 +25,17 @@ module AIP {
         $timeout;
         $interpolate;
         actionItem;
-        scope;
+        $scope;
         APP_ROOT;
+        ckEditorConfig;
         templates;
         templateSelect: boolean;
         selectedTemplate;
-        updatedContent;
         saving;
         constructor($scope, $q:ng.IQService, $state, $filter, $sce, $window, $templateRequest, $templateCache, $compile,
-                    $timeout, $interpolate, SpinnerService, AdminActionService, APP_ROOT) {
+                    $timeout, $interpolate, SpinnerService, AdminActionService, APP_ROOT, CKEDITORCONFIG) {
             $scope.vm = this;
-            this.scope = $scope;
+            this.$scope = $scope;
             this.$q = $q;
             this.$state = $state;
             this.$filter = $filter;
@@ -50,23 +49,38 @@ module AIP {
             this.adminActionService = AdminActionService;
             this.spinnerService = SpinnerService;
             this.APP_ROOT = APP_ROOT;
+            this.ckEditorConfig = CKEDITORCONFIG;
             this.actionItem = {};
             this.templateSelect = false;
             this.templates = [];
             this.selectedTemplate;
             this.saving = false;
-            this.updatedContent;
             this.init();
-            angular.element($window).bind('resize', function() {
+            angular.element( $window ).bind( 'resize', function () {
                 // $scope.onResize();
-                if(!$scope.$root.$$phase) {
+                if (!$scope.$root.$$phase) {
                     $scope.$apply();
                 }
                 // $scope.$evalAsync(() => {
                 //     $scope.$apply();
                 // });
-            });
-        }
+            } );
+
+             $scope.$watch("[vm.templateSelect]" , (value) => {
+                if (value[0] === false) {
+                    $timeout( () => {
+                        var editor = CKEDITOR.instances["templateContent"];
+                        if (editor) {
+                            CKEDITOR.destroy(true);
+                            //console.log( editor );
+                        }
+                     editor = CKEDITOR.instances["templateContent"];
+                        console.log("watch");
+                        console.log( editor );
+                    }, 500);
+                }
+             })
+        };
 
         init() {
             this.spinnerService.showSpinner( true );
@@ -79,14 +93,6 @@ module AIP {
             this.$q.all( promises ).then( () => {
                 //TODO:: turn off the spinner
                 this.spinnerService.showSpinner( false );
-                // var actionItemFolder:any = $("#actionItemTemplate");
-                // if(actionItemFolder) {
-                //     actionItemFolder.select2({
-                //         width: "25em",
-                //         minimumResultsForSearch: Infinity,
-                //         placeholderOption: "first"
-                //     });
-                // }
             } );
         }
 
@@ -130,25 +136,27 @@ module AIP {
             return {height: containerHeight};
         }
         openOverviewPanel() {
+            var deferred = this.$q.defer();
             this.adminActionService.getActionItemDetail(this.$state.params.data)
                 .then((response:AIP.IActionItemOpenResponse) => {
                     this.actionItem = response.data.actionItem;
                     this.selectedTemplate = this.actionItem.actionItemTemplateId;
-
+                    deferred.resolve(this.openPanel("overview"));
                 }, (err) => {
                     console.log(err);
                 });
-            return this.openPanel("overview");
+            return deferred.promise;
         }
         openContentPanel() {
             var deferred = this.$q.defer();
             this.adminActionService.getActionItemTemplates()
                 .then((response) => {
                     this.templates = response.data;
+                    deferred.resolve(this.openPanel("content"));
                 }, (error) => {
                     console.log(error);
                 });
-            return this.openPanel("content");
+            return deferred.promise;
         }
         openPanel(panelName) {
             var deferred=this.$q.defer();
@@ -166,13 +174,10 @@ module AIP {
             var templateUrl = this.$sce.getTrustedResourceUrl(url);
             this.$templateRequest(templateUrl)
                 .then((template) => {
-                    var compiled = this.$compile(template)(this.scope);
+                    var compiled = this.$compile(template)(this.$scope);
                     deferred.resolve(compiled);
                     if(panelName === "overview") {
-                        this.$timeout(()=> {
-                            //change page title
-                            $("#title-panel").children()[0].innerHTML = this.actionItem.actionItemName
-                        }, 0)
+                        $("#title-panel").children()[0].innerHTML = this.actionItem.actionItemName;
                     }
                 }, (error) => {
                     console.log(error);
@@ -202,13 +207,15 @@ module AIP {
             }
         }
 
-        loadReadOnlyContent() {
-            var actionItemHtmlText = this.$sce.trustAsHtml(this.actionItem.actionItemContent);
-            return actionItemHtmlText;
+        trustActionItemContent = function() {
+            this.actionItem.actionItemContent = this.$filter("html")(this.$sce.trustAsHtml(this.actionItem.actionItemContent));
+            return this.actionItem.actionItemContent;
         }
 
-        selectTemplate() {
 
+        selectTemplate() {
+            this.trustActionItemContent();
+           // console.log(this.ckEditorConfig);
             this.templateSelect = true;
             this.$timeout(() => {
                 var actionItemTemplate:any = $("#actionItemTemplate");
@@ -219,7 +226,6 @@ module AIP {
                     });
                 }
                 $(".actionItemContent").height($(".actionItemElement").height() - $(".xe-tab-nav").height());
-                CKEDITOR.instances['templateContent'].setData( this.$sce.trustAsHtml(this.actionItem.actionItemContent) );
             }, 500);
         }
         cancel(option) {
@@ -239,24 +245,7 @@ module AIP {
         }
         saveTemplate() {
             this.saving = true;
-            // this.adminActionService.saveActionItemTemplate(this.selectedTemplate, this.actionItem.actionItemId)
-            //console.log(this.actionItem.actionItemContent);
-            //this.updatedContent = CKEDITOR.instances['templateContent'].getData();
-
-            this.updatedContent = this.$filter("trusted")( this.$sce.trustAsHtml(CKEDITOR.instances['templateContent'].getData()) ).toString();
-            this.actionItem.actionItemContent = this.updatedContent.toString();
-
-            /*
-            try {
-                CKEDITOR.instances['templateContent'].destroy(true);
-            } catch (e) { }
-            CKEDITOR.replace('templateContent');
-            */
-
-            console.log("trusted");
-            console.log(CKEDITOR.instances['templateContent']);
-
-            this.adminActionService.saveActionItemTemplate(this.selectedTemplate, this.actionItem.actionItemId, this.updatedContent)
+            this.adminActionService.saveActionItemTemplate(this.selectedTemplate, this.actionItem.actionItemId, this.actionItem.actionItemContent)
                 .then((response:any) => {
                     this.saving = false;
                     var notiParams = {};

@@ -14,12 +14,23 @@
     .actionItemInfoRow {
       height: inherit;
       .actionItemElement {
-        height: inherit;
+        height: 100%;
         color: #4F585F;
-        padding-bottom: 30px;
+        padding-bottom: 20px;
         .h2-container {
           margin-top: 20px;
           margin-bottom: 10px;
+        }
+        .activity {
+          margin-top: 30px;
+          border-left: 2px solid #C0C0C0;
+          height: 100%;
+        }
+        @media (max-width:768px) {
+          .activity {
+            margin-top: 0px;
+            border-left: none;
+          }
         }
         .dividerContainer {
           padding: 16px;
@@ -27,6 +38,7 @@
             border-right: 2px solid #C0C0C0;
             height: 100%;
           }
+
         }
         hr {
           border-top: solid 1px #c0c0c0;
@@ -36,13 +48,13 @@
             padding: 0;
 
             #openActionItemContent {
-
               .actionItemContentNoInfo {
-
                 .contentText {
                   padding-top: 1.5em;
                 }
-                .control {
+              }
+              .control {
+                .h2-container {
                   button.edit {
                     float: right;
                     color: #206E9F;
@@ -59,13 +71,8 @@
                 }
                 .control {
                   //position: absolute;
-                  bottom: 24px;
-                  width: 100%;
-                  button.edit {
-                    float: right;
-                    color: #206E9F;
-                    border: none;
-                  }
+                  //bottom: 24px;
+                 // width: 100%;
                   .templateButton {
                     float: right;
                     span {

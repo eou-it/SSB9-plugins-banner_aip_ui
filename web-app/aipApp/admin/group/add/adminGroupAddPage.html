@@ -65,8 +65,12 @@
             </div>
             <div class="groupElement col-xs-12 col-sm-8">
                 <div class="row">
+                    <!--
                     <textarea ck-editor id="groupDesc" ng-required="true" aria-required="true" name="groupDesc"
                               ng-model="vm.groupInfo.description"></textarea>
+                              -->
+                     <textarea id="groupDesc" ng-required="true" aria-required="true" name="groupDesc" ckeditor="ckEditorConfig"
+                               ng-model="vm.groupInfo.description"></textarea>
                 </div>
             </div>
         </div>

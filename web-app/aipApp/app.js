@@ -13,11 +13,12 @@ var bannerAIPApp = angular.module("bannerAIP", [
     "ui.bootstrap",
     "ngAria",
     "I18nAIP",
-    "SCEAIP",
     "ngAnimate",
     "xe-ui-components",
     "bannerAIPUI",
-    "ngRoute"
+    "ngRoute",
+    "SCEAIP",
+    "ngCkeditor"
     //"xe-ui-components"
     ])
 
@@ -134,6 +135,35 @@ var bannerAIPApp = angular.module("bannerAIP", [
                 ofLabel: "of"
             })
 
+     .constant("CKEDITORCONFIG",
+                {
+                    toolbar: 'full',
+                    toolbar_full: [
+                        { name: 'document', items: [ 'Source', '-', 'NewPage', 'Preview', '-', 'Templates' ] },
+                        { name: 'clipboard', items: [ 'Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo' ] },
+                        { name: 'editing', items: [ 'Find', 'Replace', '-', 'SelectAll', '-', 'SpellChecker', 'Scayt', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock' ] },
+                        { name: 'basicstyles',
+                            items: [ 'Bold', 'Italic', 'Strike', 'Underline' ] },
+                        { name: 'paragraph', items: [ 'BulletedList', 'NumberedList', 'Blockquote' ] },
+                        { name: 'links', items: [ 'Link', 'Unlink', 'Anchor' ] },
+                        { name: 'tools', items: [ 'Maximize', 'ShowBlocks', '-', 'About' ] },
+                        '/',
+                        { name: 'styles', items: [ 'Format', 'FontSize', 'TextColor', 'PasteText', 'PasteFromWord', 'RemoveFormat' ] },
+                        { name: 'insert', items: [ 'Image', 'Table', 'HorizontalRule', 'SpecialChar', 'PageBreak' ] },
+
+                    ],
+                    disableNativeSpellChecker: false,
+                    uiColor: '#FAFAFA',
+                    height: '400px',
+                    width: '100%',
+                    pasteFromWordRemoveFontStyles: true,
+                    pasteFromWordRemoveStyles: true,
+                    allowedContent: true,
+                    fullPage: true,
+                    toolbarCanCollapse: true,
+                    toolbarStartupExpanded: true
+                })
+
 //provider-injector
     .config(["$stateProvider", "$urlRouterProvider", "$locationProvider",  "$httpProvider",
         "PAGES", "APP_ROOT", "APP_ABS_PATH",
@@ -166,10 +196,11 @@ var bannerAIPApp = angular.module("bannerAIP", [
     ])
 
 //instance-injector
-    .run(["$rootScope", "$state", "$stateParams", "$filter","$sce", "$templateCache", "BreadcrumbService",
+    .run(["$rootScope", "$state", "$stateParams", "$filter","$sce", "$templateCache","BreadcrumbService",
         function($rootScope, $state, $stateParams, $filter, $sce, $templateCache, BreadcrumService) {
             $rootScope.$state = $state;
             $rootScope.$stateParams = $stateParams;
+
             //when state successfully changed, update breadcrumbs
             $rootScope.$on("$stateChangeSuccess", function(event, toState, toParams, fromState, fromParams) {
                 $state.previous = fromState;
@@ -207,6 +238,7 @@ var bannerAIPApp = angular.module("bannerAIP", [
             $.i18n.prop("aip.common.overview");
             $.i18n.prop("aip.common.table.action.items");
             $.i18n.prop("aip.common.order.action.items");
+            $.i18n.prop("aip.common.block.processes");
             $.i18n.prop("aip.common.saveandreturn");
             $.i18n.prop("aip.common.add.group.jaws");
             $.i18n.prop("aip.common.open.group.jaws");
@@ -324,6 +356,45 @@ var bannerAIPApp = angular.module("bannerAIP", [
                     </div> \
                 </div>'
             );
+
+            CKEDITOR.on( 'instanceCreated', function( event ) {
+
+                var editor = event.editor,
+                        element = editor.element;
+
+                console.log(editor);
+                    // Customize the editor configurations on "configLoaded" event,
+                    // which is fired after the configuration file loading and
+                    // execution. This makes it possible to change the
+                    // configurations before the editor initialization takes place.
+                    editor.on( 'configLoaded', function() {
+                        // Remove unnecessary plugins to make the editor simpler.
+                        editor.config.removePlugins = 'flash,forms,iframe,newpage,smiley';
+                        var helpLabel = $.i18n.prop("aip.ckeditor.keyhelp");
+
+                        editor.ui.addButton( 'A11YBtn', {
+                            label: helpLabel,
+                            command: 'a11yHelp',
+                            toolbar: 'about'
+                        } );
+
+                        // Rearrange the layout of the toolbar.
+                        editor.config.toolbar = [
+                         { name: 'document', items: [ 'Source' ] },
+                         { name: 'clipboard', items: [ 'Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo' ] },
+                         { name: 'editing', items: [ 'Scayt' ] },
+                         { name: 'links', items: [ 'Link', 'Unlink', 'Anchor' ] },
+                         { name: 'insert', items: [ 'Image', 'Table', 'HorizontalRule', 'SpecialChar' ] },
+                         { name: 'tools', items: [ 'Maximize' ] },
+                         '/',
+                         { name: 'basicstyles', items: [ 'Bold', 'Italic', 'Strike', '-', 'RemoveFormat' ] },
+                         { name: 'paragraph', items: [ 'NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote' ] },
+                         { name: 'styles', items: [ 'Styles', 'Format' ] },
+                         { name: 'about', items: [ 'About','A11YBtn' ] }
+                         ];
+                    });
+            });
+
     }]
 );
 
