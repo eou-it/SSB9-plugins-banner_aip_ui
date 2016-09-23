@@ -445,13 +445,13 @@ aip-list .aip-list-container  {
     height:5em;
 }
     .actionItemAddContainer .actionItemControl .actionItemButton  {
-    text-align:center;
-    padding-right:0;
-    margin-right:0px;
+    float:left;
 }
-      .actionItemAddContainer .actionItemControl .actionItemButton button  {
-    width:100%;
-    max-width:200px;
+      .actionItemAddContainer .actionItemControl .actionItemButton span  {
+    padding-right:24px;
+}
+        .actionItemAddContainer .actionItemControl .actionItemButton span button  {
+    min-width:100px;
 }
   
 
@@ -679,9 +679,6 @@ xe-tab-panel h3  {
 }
 }
 @media (min-width: 769px) {
-    .actionItemAddContainer .actionItemControl  {
-    margin-right:33.33%;
-}
     .actionItemAddContainer .actionItemButton  {
     margin-right:10px;
 }
