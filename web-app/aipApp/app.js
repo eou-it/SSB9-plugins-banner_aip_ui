@@ -362,6 +362,7 @@ var bannerAIPApp = angular.module("bannerAIP", [
                 var editor = event.editor,
                         element = editor.element;
 
+                console.log(editor);
                     // Customize the editor configurations on "configLoaded" event,
                     // which is fired after the configuration file loading and
                     // execution. This makes it possible to change the
@@ -444,5 +445,5 @@ var bannerAIPUI = angular.module("bannerAIPUI", [])
 // Override common components
 angular.module("templates/tabNav.html", []).run(["$templateCache", function($templateCache) {
     $templateCache.put("templates/tabNav.html",
-        "<div class=\"xe-tab-container\"><ul class=\"xe-tab-nav\" role=\"tablist\"><li tabindex=\"-1\" ng-repeat=\"tab in tabnav.tabs\" ng-click=\"tabnav.activate(tab)\" ng-class=\"{active: tab.active}\" aria-controls=\"{{'xe-tab-panel' ($index+1)}}\"><a ui-sref=\"{{ tab.state && tab.state || '#' }}\" href=\"#\" id=\"{{'xe-tab'+ ($index+1)}}\" title=\"{{tab.heading}}\" ng-if=\"tab.state\">{{tab.heading}} <span></span></a> <a role=\"tab\" aria-selected=\"{{tab.active}}\" href=\"javascript:void(0)\;\" id=\"{{'xe-tab'+ ($index+1)}}\" title=\"{{tab.heading}}\" ng-if=\"!tab.state\">{{tab.heading}} <span></span></a></li></ul><div class=\"xe-tab-content\" role=\"presentation\"><ng-transclude></ng-transclude></div></div>");
+            "<div class=\"xe-tab-container\" role=\"presentation\"><ul class=\"xe-tab-nav\" role=\"tablist\"><li ng-repeat=\"tab in tabnav.tabs\" ng-click=\"tabnav.activate(tab)\" ng-class=\"{active: tab.active}\" ng-repeat-complete aria-controls=\"{{'xe-tab-panel'+ ($index+1)}}\" aria-selected=\"{{tab.active}}\" tabindex=\"-1\"><a ui-sref=\"{{ tab.state && tab.state || '#' }}\" href=\"#\" id=\"{{'xe-tab'+ ($index+1)}}\" title=\"{{tab.heading}}\" ng-if=\"tab.state\">{{tab.heading}} <span></span></a> <a href=\"javascript:void(0)\;\" role=\"tab\" id=\"{{'xe-tab'+ ($index+1)}}\" title=\"{{tab.heading}}\" ng-if=\"!tab.state\" aria-selected=\"{{tab.active}}\">{{tab.heading}} <span></span></a></li></ul><div class=\"xe-tab-content\" role=\"presentation\"><ng-transclude></ng-transclude></div></div>");
 }]);
