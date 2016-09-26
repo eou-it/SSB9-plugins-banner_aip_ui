@@ -137,6 +137,7 @@ module AIP {
                     $(".xe-tab-nav").height();
             return {height: containerHeight};
         }
+
         openOverviewPanel() {
             var deferred = this.$q.defer();
             this.adminActionService.getActionItemDetail(this.$state.params.data)
@@ -155,6 +156,7 @@ module AIP {
                 .then((response) => {
                     this.templates = response.data;
                     deferred.resolve(this.openPanel("content"));
+                    console.log(this.templates);
                 }, (error) => {
                     console.log(error);
                 });
@@ -231,13 +233,23 @@ module AIP {
             }, 500);
         }
         cancel(option) {
-            switch(option) {
-                case "content":
-                    this.templateSelect = false;
-                    break;
-                default:
-                    break;
-            }
+            var deferred = this.$q.defer();
+            this.adminActionService.getActionItemDetail(this.$state.params.data)
+                .then((response:AIP.IActionItemOpenResponse) => {
+                    this.actionItem = response.data.actionItem;
+                    this.selectedTemplate = this.actionItem.actionItemTemplateId;
+                    switch(option) {
+                        case "content":
+                            this.templateSelect = false;
+                            break;
+                        default:
+                            break;
+                    }
+                    deferred.resolve(this.openPanel("overview"));
+                }, (err) => {
+                    console.log(err);
+                });
+            return deferred.promise;
         }
         saveValidate() {
             if (this.selectedTemplate && !this.saving) {

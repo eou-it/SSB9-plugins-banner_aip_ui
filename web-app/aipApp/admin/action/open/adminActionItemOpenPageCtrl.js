@@ -132,6 +132,7 @@ var AIP;
                 .then(function (response) {
                 _this.templates = response.data;
                 deferred.resolve(_this.openPanel("content"));
+                console.log(_this.templates);
             }, function (error) {
                 console.log(error);
             });
@@ -206,13 +207,24 @@ var AIP;
             }, 500);
         };
         AdminActionItemOpenPageCtrl.prototype.cancel = function (option) {
-            switch (option) {
-                case "content":
-                    this.templateSelect = false;
-                    break;
-                default:
-                    break;
-            }
+            var _this = this;
+            var deferred = this.$q.defer();
+            this.adminActionService.getActionItemDetail(this.$state.params.data)
+                .then(function (response) {
+                _this.actionItem = response.data.actionItem;
+                _this.selectedTemplate = _this.actionItem.actionItemTemplateId;
+                switch (option) {
+                    case "content":
+                        _this.templateSelect = false;
+                        break;
+                    default:
+                        break;
+                }
+                deferred.resolve(_this.openPanel("overview"));
+            }, function (err) {
+                console.log(err);
+            });
+            return deferred.promise;
         };
         AdminActionItemOpenPageCtrl.prototype.saveValidate = function () {
             if (this.selectedTemplate && !this.saving) {
