@@ -54,10 +54,9 @@
             <div class="row">
                 <label for="templateContent" class="titleValue" id="template-content">{{"aip.admin.action.open.tab.content.templateContent"|i18n_aip}}</label>
             </div>
-            testing123
             <div class="row">
                 <textarea id="templateContent" ng-required="true" aria-required="true" name="templateContent" ckeditor="ckEditorConfig"
-                          ng-model="vm.updatedContent"></textarea>
+                          ng-model="vm.actionItem.actionItemContent"></textarea>
             </div>
         </div>
         <div class="control row">
@@ -98,7 +97,7 @@
                 <div class="col-xs-12 col-sm-12">
                     <h2>{{'aip.admin.action.open.tab.content'|i18n_aip}}</h2>
                     <div ng-if="!vm.isNoContent()">
-                        <span ng-bind-html="vm.updatedContent|html"></span>
+                        <span ng-bind-html="vm.actionItem.actionItemContent|html"></span>
                     </div>
                     <div ng-if="vm.isNoContent()">
                         <span>{{'aip.admin.action.open.tab.content.noContent'|i18n_aip}}</span>

@@ -55,7 +55,6 @@ module AIP {
             this.templateSelect = false;
             this.templates = [];
             this.selectedTemplate;
-            this.updatedContent;
             this.saving = false;
             this.init();
             angular.element( $window ).bind( 'resize', function () {
@@ -145,8 +144,10 @@ module AIP {
             this.adminActionService.getActionItemDetail(this.$state.params.data)
                 .then((response:AIP.IActionItemOpenResponse) => {
                     this.actionItem = response.data.actionItem;
-                    this.updatedContent = angular.copy(this.actionItem.actionItemContent);
                     this.selectedTemplate = this.actionItem.actionItemTemplateId;
+                    if (this.templateSelect) {
+                        this.selectTemplate();
+                    }
                     deferred.resolve(this.openPanel("overview"));
                 }, (err) => {
                     console.log(err);
@@ -229,13 +230,13 @@ module AIP {
         }
 
         trustActionItemContent = function() {
-            //this.updatedContent = this.$filter("html")(this.$sce.trustAsHtml(this.actionItem.actionItemContent));
-            //return myActionItemContent;
+            this.actionItem.actionItemContent = this.$filter("html")(this.$sce.trustAsHtml(this.actionItem.actionItemContent));
+            return this.actionItem.actionItemContent;
         }
 
         selectTemplate() {
-           /* this.trustActionItemContent();*/
             this.templateSelect = true;
+            this.trustActionItemContent();
             this.$timeout(() => {
                 var actionItemTemplate:any = $("#actionItemTemplate");
                 if(actionItemTemplate) {
@@ -244,16 +245,14 @@ module AIP {
                         minimumResultsForSearch: Infinity
                     });
                 }
-                /*
-                if ( $("#actionItemTemplate > option").val() == 1) {
-                    $("#actionItemTemplate > option" ).attr('selected', 'selected');
-                }
-                */
                 $(".actionItemContent").height($(".actionItemElement").height() - $(".xe-tab-nav").height());
                 //TODO: find better and proper way to set defalut value in SELECT2 - current one is just dom object hack.
                 //action item selected temlate
                 if (this.selectedTemplate) {
-                    $(".select2-container.actionItemSelect .select2-chosen")[0].innerHTML = this.actionItem.actionItemTemplateName;
+                    console.log(this.templates);
+                    if (this.templates[0].sourceInd == "B") {
+                        $(".select2-container.actionItemSelect .select2-chosen")[0].innerHTML = this.actionItem.actionItemTemplateName + " (" + this.$filter("i18n_aip")("aip.common.baseline") + ")";
+                    }
                 }
             }, 500);
         }
