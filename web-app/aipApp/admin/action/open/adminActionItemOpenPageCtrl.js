@@ -131,8 +131,8 @@ var AIP;
             this.adminActionService.getActionItemTemplates()
                 .then(function (response) {
                 _this.templates = response.data;
+                _this.selectedTemplate = _this.templates[0].id;
                 deferred.resolve(_this.openPanel("content"));
-                console.log(_this.templates);
             }, function (error) {
                 console.log(error);
             });
@@ -192,8 +192,8 @@ var AIP;
             }
         };
         AdminActionItemOpenPageCtrl.prototype.selectTemplate = function () {
+            var _this = this;
             this.trustActionItemContent();
-            // console.log(this.ckEditorConfig);
             this.templateSelect = true;
             this.$timeout(function () {
                 var actionItemTemplate = $("#actionItemTemplate");
@@ -203,7 +203,17 @@ var AIP;
                         minimumResultsForSearch: Infinity
                     });
                 }
+                /*
+                if ( $("#actionItemTemplate > option").val() == 1) {
+                    $("#actionItemTemplate > option" ).attr('selected', 'selected');
+                }
+                */
                 $(".actionItemContent").height($(".actionItemElement").height() - $(".xe-tab-nav").height());
+                //TODO: find better and proper way to set defalut value in SELECT2 - current one is just dom object hack.
+                //action item selected temlate
+                if (_this.selectedTemplate) {
+                    $(".select2-container.actionItemSelect .select2-chosen")[0].innerHTML = _this.actionItem.actionItemTemplateName;
+                }
             }, 500);
         };
         AdminActionItemOpenPageCtrl.prototype.cancel = function (option) {

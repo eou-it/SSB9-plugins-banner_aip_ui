@@ -361,8 +361,6 @@ var bannerAIPApp = angular.module("bannerAIP", [
 
                 var editor = event.editor,
                         element = editor.element;
-
-                console.log(editor);
                     // Customize the editor configurations on "configLoaded" event,
                     // which is fired after the configuration file loading and
                     // execution. This makes it possible to change the

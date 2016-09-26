@@ -155,8 +155,8 @@ module AIP {
             this.adminActionService.getActionItemTemplates()
                 .then((response) => {
                     this.templates = response.data;
+                    this.selectedTemplate = this.templates[0].id;
                     deferred.resolve(this.openPanel("content"));
-                    console.log(this.templates);
                 }, (error) => {
                     console.log(error);
                 });
@@ -216,10 +216,8 @@ module AIP {
             return this.actionItem.actionItemContent;
         }
 
-
         selectTemplate() {
             this.trustActionItemContent();
-           // console.log(this.ckEditorConfig);
             this.templateSelect = true;
             this.$timeout(() => {
                 var actionItemTemplate:any = $("#actionItemTemplate");
@@ -229,7 +227,17 @@ module AIP {
                         minimumResultsForSearch: Infinity
                     });
                 }
+                /*
+                if ( $("#actionItemTemplate > option").val() == 1) {
+                    $("#actionItemTemplate > option" ).attr('selected', 'selected');
+                }
+                */
                 $(".actionItemContent").height($(".actionItemElement").height() - $(".xe-tab-nav").height());
+                //TODO: find better and proper way to set defalut value in SELECT2 - current one is just dom object hack.
+                //action item selected temlate
+                if (this.selectedTemplate) {
+                    $(".select2-container.actionItemSelect .select2-chosen")[0].innerHTML = this.actionItem.actionItemTemplateName;
+                }
             }, 500);
         }
         cancel(option) {
