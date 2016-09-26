@@ -131,7 +131,6 @@ var AIP;
             this.adminActionService.getActionItemTemplates()
                 .then(function (response) {
                 _this.templates = response.data;
-                _this.selectedTemplate = _this.templates[0].id;
                 deferred.resolve(_this.openPanel("content"));
             }, function (error) {
                 console.log(error);

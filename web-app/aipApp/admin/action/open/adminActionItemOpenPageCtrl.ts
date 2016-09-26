@@ -155,7 +155,6 @@ module AIP {
             this.adminActionService.getActionItemTemplates()
                 .then((response) => {
                     this.templates = response.data;
-                    this.selectedTemplate = this.templates[0].id;
                     deferred.resolve(this.openPanel("content"));
                 }, (error) => {
                     console.log(error);
