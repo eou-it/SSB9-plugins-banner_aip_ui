@@ -221,6 +221,8 @@ var bannerAIPApp = angular.module("bannerAIP", [
             //TODO:: use array and parse array in taglib
             $.i18n.prop("aip.welcome");
             $.i18n.prop("aip.welcome.text");
+            $.i18n.prop("aip.common.baseline");
+            $.i18n.prop("aip.common.local");
             $.i18n.prop("aip.common.title");
             $.i18n.prop("aip.common.status");
             $.i18n.prop("aip.common.folder");

@@ -8,8 +8,8 @@ var AIP;
             this.$inject = ["$scope", "$q", "$state", "$filter", "$sce", "$window", "$templateRequest", "$templateCache", "$compile",
                 "$timeout", "$interpolate", "SpinnerService", "AdminActionService", "APP_ROOT", "CKEDITORCONFIG"];
             this.trustActionItemContent = function () {
-                this.actionItem.actionItemContent = this.$filter("html")(this.$sce.trustAsHtml(this.actionItem.actionItemContent));
-                return this.actionItem.actionItemContent;
+                //this.updatedContent = this.$filter("html")(this.$sce.trustAsHtml(this.actionItem.actionItemContent));
+                //return myActionItemContent;
             };
             $scope.vm = this;
             this.$scope = $scope;
@@ -31,6 +31,7 @@ var AIP;
             this.templateSelect = false;
             this.templates = [];
             this.selectedTemplate;
+            this.updatedContent;
             this.saving = false;
             this.init();
             angular.element($window).bind('resize', function () {
@@ -118,6 +119,7 @@ var AIP;
             this.adminActionService.getActionItemDetail(this.$state.params.data)
                 .then(function (response) {
                 _this.actionItem = response.data.actionItem;
+                _this.updatedContent = angular.copy(_this.actionItem.actionItemContent);
                 _this.selectedTemplate = _this.actionItem.actionItemTemplateId;
                 deferred.resolve(_this.openPanel("overview"));
             }, function (err) {
@@ -190,9 +192,23 @@ var AIP;
                 }
             }
         };
+        AdminActionItemOpenPageCtrl.prototype.isNoTemplateSelected = function () {
+            if (this.templateSelect) {
+                if (!this.selectedTemplate) {
+                    return true;
+                }
+                else {
+                    return false;
+                }
+            }
+        };
+        AdminActionItemOpenPageCtrl.prototype.isBaselineTempalte = function () {
+            if (this.templates) {
+            }
+        };
         AdminActionItemOpenPageCtrl.prototype.selectTemplate = function () {
             var _this = this;
-            this.trustActionItemContent();
+            /* this.trustActionItemContent();*/
             this.templateSelect = true;
             this.$timeout(function () {
                 var actionItemTemplate = $("#actionItemTemplate");
@@ -265,27 +281,6 @@ var AIP;
             }, function (err) {
                 console.log(err);
                 _this.saving = false;
-            });
-        };
-        AdminActionItemOpenPageCtrl.prototype.saveActionItemContent = function () {
-            var _this = this;
-            this.adminActionService.updateActionItemContent(this.actionItem)
-                .then(function (response) {
-                var notiParams = {};
-                if (response.data.success) {
-                    notiParams = {
-                        notiType: "saveSuccess",
-                        data: response.data
-                    };
-                    _this.$state.go("admin-action-open", { noti: notiParams, data: response.data.newActionItem.id });
-                }
-                else {
-                    //this.saveErrorCallback(response.data.message); //todo: add callback error on actionitem open page
-                    console.log("error:");
-                }
-            }, function (err) {
-                //TODO:: handle error call
-                console.log(err);
             });
         };
         return AdminActionItemOpenPageCtrl;
