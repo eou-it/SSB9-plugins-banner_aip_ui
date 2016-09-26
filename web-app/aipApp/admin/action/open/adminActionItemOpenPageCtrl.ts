@@ -32,6 +32,7 @@ module AIP {
         templateSelect: boolean;
         selectedTemplate;
         saving;
+        updatedContent;
         constructor($scope, $q:ng.IQService, $state, $filter, $sce, $window, $templateRequest, $templateCache, $compile,
                     $timeout, $interpolate, SpinnerService, AdminActionService, APP_ROOT, CKEDITORCONFIG) {
             $scope.vm = this;
@@ -54,6 +55,7 @@ module AIP {
             this.templateSelect = false;
             this.templates = [];
             this.selectedTemplate;
+            this.updatedContent;
             this.saving = false;
             this.init();
             angular.element( $window ).bind( 'resize', function () {
@@ -143,6 +145,7 @@ module AIP {
             this.adminActionService.getActionItemDetail(this.$state.params.data)
                 .then((response:AIP.IActionItemOpenResponse) => {
                     this.actionItem = response.data.actionItem;
+                    this.updatedContent = angular.copy(this.actionItem.actionItemContent);
                     this.selectedTemplate = this.actionItem.actionItemTemplateId;
                     deferred.resolve(this.openPanel("overview"));
                 }, (err) => {
@@ -155,7 +158,8 @@ module AIP {
             this.adminActionService.getActionItemTemplates()
                 .then((response) => {
                     this.templates = response.data;
-                    this.selectedTemplate = this.templates[0].id;
+                   // console.log(this.templates);
+                    //this.selectedTemplate = this.templates[0].id;
                     deferred.resolve(this.openPanel("content"));
                 }, (error) => {
                     console.log(error);
@@ -210,14 +214,29 @@ module AIP {
                 }
             }
         }
+        isNoTemplateSelected() {
+            if(this.templateSelect) {
+                if (!this.selectedTemplate) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+        }
+
+        isBaselineTempalte() {
+            if (this.templates) {
+
+            }
+        }
 
         trustActionItemContent = function() {
-            this.actionItem.actionItemContent = this.$filter("html")(this.$sce.trustAsHtml(this.actionItem.actionItemContent));
-            return this.actionItem.actionItemContent;
+            //this.updatedContent = this.$filter("html")(this.$sce.trustAsHtml(this.actionItem.actionItemContent));
+            //return myActionItemContent;
         }
 
         selectTemplate() {
-            this.trustActionItemContent();
+           /* this.trustActionItemContent();*/
             this.templateSelect = true;
             this.$timeout(() => {
                 var actionItemTemplate:any = $("#actionItemTemplate");
@@ -289,6 +308,7 @@ module AIP {
                     this.saving=false;
                 });
         }
+        /*
         saveActionItemContent() {
             this.adminActionService.updateActionItemContent(this.actionItem)
                 .then((response:AIP.IActionItemSaveResponse) => {
@@ -308,8 +328,10 @@ module AIP {
                     console.log(err);
                 });
         }
+       */
 
     }
+
 
 }
 register("bannerAIP").controller("AdminActionItemOpenPageCtrl", AIP.AdminActionItemOpenPageCtrl);
