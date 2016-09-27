@@ -516,6 +516,11 @@ aip-list .aip-list-container  {
     margin-top:20px;
     margin-bottom:20px;
 }
+            .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .contentPreview  {
+    margin:20px 0;
+    padding:20px;
+    border:1px solid #c0c0c0;
+}
             .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .control .templateButton  {
     float:left;
 }

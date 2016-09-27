@@ -153,7 +153,6 @@ var bannerAIPApp = angular.module("bannerAIP", [
 
                     ],
                     disableNativeSpellChecker: false,
-                    uiColor: '#FAFAFA',
                     height: '400px',
                     width: '100%',
                     pasteFromWordRemoveFontStyles: true,
@@ -251,6 +250,7 @@ var bannerAIPApp = angular.module("bannerAIP", [
             $.i18n.prop("aip.placeholder.nogroups");
             $.i18n.prop("aip.placeholder.noitems");
             $.i18n.prop("aip.common.text.template");
+            $.i18n.prop("aip.common.text.content");
 
             $.i18n.prop("aip.admin.landing");
 
@@ -360,7 +360,6 @@ var bannerAIPApp = angular.module("bannerAIP", [
             );
 
             CKEDITOR.on( 'instanceCreated', function( event ) {
-
                 var editor = event.editor,
                         element = editor.element;
                     // Customize the editor configurations on "configLoaded" event,

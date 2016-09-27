@@ -69,12 +69,18 @@
                   margin-top: 20px;
                   margin-bottom: 20px;
                 }
+                .contentPreview {
+                  margin: 20px 0;
+                  padding: 20px;
+                  border: 1px solid #c0c0c0;
+                }
                 .control {
                   //position: absolute;
                   //bottom: 24px;
                  // width: 100%;
                   .templateButton {
                     float: right;
+                    margin-bottom: 20px;
                     span {
                       padding-left: 24px;
                       button {
