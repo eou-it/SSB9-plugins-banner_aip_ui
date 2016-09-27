@@ -270,6 +270,7 @@ var AIP;
                     _this.handleNotification(notiParams);
                     _this.templateSelect = false;
                     _this.actionItem = response.data.actionItem;
+                    _this.trustActionItemContent();
                     _this.openContentPanel();
                 }
                 else {

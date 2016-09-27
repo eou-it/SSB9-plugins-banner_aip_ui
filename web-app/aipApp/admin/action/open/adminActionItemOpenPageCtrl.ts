@@ -292,6 +292,7 @@ module AIP {
                         this.handleNotification( notiParams );
                         this.templateSelect =  false;
                         this.actionItem = response.data.actionItem;
+                        this.trustActionItemContent();
                         this.openContentPanel();
                     } else {
                         //this.saveErrorCallback(response.data.message); //todo: add callback error on actionitem open page
