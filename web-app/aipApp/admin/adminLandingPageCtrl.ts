@@ -18,6 +18,12 @@ module AIP {
         init() {
             this.landingItem = [
                 {
+                    title:"aip.admin.status",
+                    icon: "icon-newDocument",
+                    click:"admin-status-list",
+                    description:"aip.admin.status.description"
+                },
+                {
                     title:"aip.admin.action",
                     icon: "icon-check-SO",
                     click:"admin-action-list",

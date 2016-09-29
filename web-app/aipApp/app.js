@@ -92,6 +92,15 @@ var bannerAIPApp = angular.module("bannerAIP", [
 
             }
         },
+        "admin-status-list": {
+            url: "/status",
+            templateUrl: "admin/status/list/adminStatusListPage.html",
+            //controller: "AdminGroupListPageCtrl",
+            breadcrumb: {
+                label: "aip.admin.status",
+                url: "/aip/admin#/status"
+            }
+        },
 
         "list": {
             url: "/list",
@@ -299,6 +308,9 @@ var bannerAIPApp = angular.module("bannerAIP", [
             $.i18n.prop("aip.admin.action.open.tab.content.templateSelect");
             $.i18n.prop("aip.admin.action.open.tab.content.templateContent");
 
+            $.i18n.prop("aip.admin.status");
+            $.i18n.prop("aip.admin.status.description");
+
             $.i18n.prop("aip.admin.selectable.action.items");
             $.i18n.prop("aip.admin.selectable.groups");
 
@@ -377,7 +389,10 @@ var bannerAIPApp = angular.module("bannerAIP", [
                             toolbar: 'about'
                         } );
 
-                        // Rearrange the layout of the toolbar.
+                        editor.config.height='30em',
+                        editor.config.width='100%',
+
+                            // Rearrange the layout of the toolbar.
                         editor.config.toolbar = [
                          { name: 'document', items: [ 'Source' ] },
                          { name: 'clipboard', items: [ 'Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo' ] },

@@ -58,28 +58,19 @@
     }
   }
   .groupControl {
-    position: relative;
+    /*position: relative;*/
     width: 100%;
     bottom: 10px;
     margin-bottom: 15px;
     height: 5em;
     .groupButton {
       text-align: center;
-      padding-left: 0;
-      margin-left: 0px;
+
       button {
         width: 100%;
         max-width: 200px;
       }
     }
   }
-  @media (min-width:769px) {
-    .groupControl {
-      margin-left: 33.33%
-    }
-    .groupButton {
-      margin-left: 10px;
-    }
 
-  }
 }

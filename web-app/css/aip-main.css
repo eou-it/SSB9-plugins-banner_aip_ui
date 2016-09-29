@@ -100,44 +100,45 @@ aip-list .aip-list-container {
 
 .AIP-landing-container {
   padding: 16px; }
-  .AIP-landing-container .clearfix:before, .AIP-landing-container .clearfix:after {
-    content: " ";
-    display: table; }
-  .AIP-landing-container .clearfix:after {
-    clear: both; }
-  .AIP-landing-container aip-landing-item .ladingItem-container {
-    background-color: #ffffff;
-    font-size: 1.5em;
-    border-radius: 4px;
-    padding: 8px;
-    margin: 8px;
-    cursor: pointer; }
-    .AIP-landing-container aip-landing-item .ladingItem-container:hover {
-      background-color: #ffffff; }
-    .AIP-landing-container aip-landing-item .ladingItem-container .landing-icon {
-      padding: 16px;
-      max-width: 90px; }
-      .AIP-landing-container aip-landing-item .ladingItem-container .landing-icon .well {
-        background-color: transparent;
-        border: none;
-        box-shadow: none; }
-      .AIP-landing-container aip-landing-item .ladingItem-container .landing-icon .icon {
-        font-size: 3em;
-        color: #206E9F; }
-    .AIP-landing-container aip-landing-item .ladingItem-container .landing-context {
-      padding: 8px 24px;
-      border-left: 2px solid #EDF2F7;
-      border-right: none; }
-      .AIP-landing-container aip-landing-item .ladingItem-container .landing-context .landing-title {
-        font-weight: bold;
-        padding-bottom: 16px; }
-  @media screen and (max-width: 480px) {
-    .AIP-landing-container aip-landing-item .ladingItem-container {
-      margin-left: 8px;
-      margin-right: 8px; }
-      .AIP-landing-container aip-landing-item .ladingItem-container .landing-icon {
-        padding: 16px 8px; } }
 
+.landingItem-container {
+  background-color: #ffffff;
+  font-size: 1.5em;
+  border-radius: 4px;
+  padding: 10px;
+  margin: 10px;
+  cursor: pointer; }
+  .landingItem-container:hover {
+    background-color: #ffffff; }
+  .landingItem-container .landing-icon {
+    padding: 30px 15px;
+    max-width: 90px;
+    margin: 0;
+    height: auto; }
+    .landingItem-container .landing-icon .well {
+      background-color: transparent;
+      border: none;
+      box-shadow: none; }
+    .landingItem-container .landing-icon .icon {
+      font-size: 3em;
+      color: #206E9F; }
+  .landingItem-container .landing-context {
+    padding: 8px 24px;
+    border-left: 2px solid #EDF2F7;
+    border-right: none;
+    height: 100%; }
+    .landingItem-container .landing-context .landing-title {
+      font-weight: bold;
+      padding-bottom: 16px; }
+    .landingItem-container .landing-context .landing-description {
+      min-height: 70px; }
+
+@media screen and (max-width: 480px) {
+  .ladingItem-container {
+    margin-left: 8px;
+    margin-right: 8px; }
+    .ladingItem-container .landing-icon {
+      padding: 16px 8px; } }
 .aip-item-detail-container {
   height: inherit; }
   .aip-item-detail-container .detail-content {
@@ -221,23 +222,16 @@ aip-list .aip-list-container {
           width: auto;
           border: 1px solid rgba(0, 0, 0, 0.15); }
   .groupAddContainer .groupControl {
-    position: relative;
+    /*position: relative;*/
     width: 100%;
     bottom: 10px;
     margin-bottom: 15px;
     height: 5em; }
     .groupAddContainer .groupControl .groupButton {
-      text-align: center;
-      padding-left: 0;
-      margin-left: 0px; }
+      text-align: center; }
       .groupAddContainer .groupControl .groupButton button {
         width: 100%;
         max-width: 200px; }
-  @media (min-width: 769px) {
-    .groupAddContainer .groupControl {
-      margin-left: 33.33%; }
-    .groupAddContainer .groupButton {
-      margin-left: 10px; } }
 
 .groupListContainer {
   overflow-y: auto;
@@ -436,6 +430,40 @@ aip-list .aip-list-container {
     border: none; }
   .actionItemOpenContainer .actionItemElement xe-tab-nav .xe-tab-content {
     padding: 4px 0; } }
+.statusListContainer {
+  overflow-y: auto;
+  font-size: 14px; }
+  .statusListContainer .statusListTable #statusDataTableSearch {
+    display: none; }
+  .statusListContainer .row {
+    margin-right: 0;
+    margin-left: 0; }
+  .statusListContainer .control {
+    float: right;
+    padding-top: 8px; }
+  .statusListContainer .statusListTable {
+    overflow: auto; }
+    .statusListContainer .statusListTable .table-container {
+      margin-top: 8px; }
+
+.statusOpenContainer {
+  padding: 0;
+  margin: 0;
+  background-color: #ffffff; }
+  .statusOpenContainer .row {
+    margin-left: 0;
+    margin-right: 0; }
+  .statusOpenContainer .statusInfo {
+    margin-bottom: 20px; }
+    .statusOpenContainer .statusInfo .statusInfoRow {
+      margin-bottom: 16px; }
+      .statusOpenContainer .statusInfo .statusInfoRow .statusElement {
+        padding-right: 8px;
+        padding-left: 8px;
+        margin-bottom: 8px; }
+        .statusOpenContainer .statusInfo .statusInfoRow .statusElement .statusDetail {
+          border-right: 1px solid #444444; }
+
 #username {
   padding-right: 0.5em; }
 
