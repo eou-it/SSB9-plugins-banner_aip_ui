@@ -1,29 +1,22 @@
 .AIP-landing-container {
   padding: 16px;
-  .clearfix {
-    &:before,
-    &:after {
-      content: " ";
-      display: table;
-    }
-    &:after {
-      clear: both;
-    }
-  }
-  aip-landing-item {
-    .ladingItem-container {
+}
+
+  .landingItem-container {
       background-color: #ffffff;
       font-size: 1.5em;
       border-radius: 4px;
-      padding: 8px;
-      margin: 8px;
+      padding: 10px;
+      margin: 10px;
       cursor: pointer;
       &:hover {
         background-color: #ffffff;
       }
       .landing-icon {
-        padding: 16px;
+        padding: 30px 15px;
         max-width: 90px;
+        margin: 0;
+        height:auto;
         .well {
           background-color: transparent;
           border: none;
@@ -38,14 +31,19 @@
         padding: 8px 24px;
         border-left: 2px solid #EDF2F7;
         border-right: none;
+        height: 100%;
         .landing-title {
           font-weight: bold;
           padding-bottom: 16px;
         }
         .landing-description {
+          min-height: 70px;
         }
       }
     }
+
+
+
     @media screen and (max-width:480px) {
       .ladingItem-container {
         margin-left: 8px;
@@ -55,5 +53,4 @@
         }
       }
     }
-  }
-}
+
