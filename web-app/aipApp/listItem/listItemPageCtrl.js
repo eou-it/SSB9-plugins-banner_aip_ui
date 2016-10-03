@@ -176,6 +176,11 @@ var AIP;
         ListItemPageCtrl.prototype.resetSelection = function () {
             this.selectedData = undefined;
         };
+        ListItemPageCtrl.prototype.getCustomPage = function (id) {
+            var custumPageId = id || "ActionItemPolicy"; //TODO: get id from selectedData (later)
+            var request = this.itemListViewService.getPagebuilderPage(custumPageId);
+            return request;
+        };
         return ListItemPageCtrl;
     }());
     AIP.ListItemPageCtrl = ListItemPageCtrl;

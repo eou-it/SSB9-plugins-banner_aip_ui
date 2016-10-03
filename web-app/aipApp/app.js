@@ -5,6 +5,13 @@ var aipAppRoot = "/" + extensibilityInfo.application + "/plugins/" +
     window.aipApp.fileSystemName + "/aipApp/";
 var aipAppAbsPath = window.location.protocol + "//" + window.location.host + Application.getApplicationPath() + "/";
 
+
+// required global variables for PageBuilder render
+var params = {};
+var rootWebApp = aipAppAbsPath.replace("/ssb/","/");
+var resourceBase = rootWebApp+'internal/';
+
+
 var bannerAIPApp = angular.module("bannerAIP", [
     "ngResource",
     "ngSanitize",
@@ -18,7 +25,9 @@ var bannerAIPApp = angular.module("bannerAIP", [
     "bannerAIPUI",
     "ngRoute",
     "SCEAIP",
-    "ngCkeditor"
+    "ngCkeditor",
+    // "BannerOnAngular",
+    // "pbrun.directives"
     //"xe-ui-components"
     ])
 
@@ -446,3 +455,18 @@ angular.module("templates/tabNav.html", []).run(["$templateCache", function($tem
     $templateCache.put("templates/tabNav.html",
         "<div class=\"xe-tab-container\" role=\"presentation\"><ul class=\"xe-tab-nav\" role=\"tablist\"><li ng-repeat=\"tab in tabnav.tabs\" ng-click=\"tabnav.activate(tab)\" ng-class=\"{active: tab.active}\" ng-repeat-complete role=\"tab\" aria-controls=\"{{'xe-tab-panel'+ ($index+1)}}\" aria-selected=\"{{tab.active}}\"><a ui-sref=\"{{ tab.state && tab.state || '#' }}\" href=\"#\" id=\"{{'xe-tab'+ ($index+1)}}\" title=\"{{tab.heading}}\" ng-if=\"tab.state\">{{tab.heading}} <span></span></a> <a href=\"javascript:void(0)\;\" id=\"{{'xe-tab'+ ($index+1)}}\" title=\"{{tab.heading}}\" ng-if=\"!tab.state\">{{tab.heading}} <span></span></a></li></ul><div class=\"xe-tab-content\" role=\"presentation\"><ng-transclude></ng-transclude></div></div>");
 }]);
+
+
+angular.module("BannerOnAngular")
+//set application root url
+    .constant('APP_ROOT', aipAppRoot)
+    .constant('APP_PATH', Application.getApplicationPath())
+    .constant("APP_ABS_PATH", aipAppAbsPath)
+
+    .config(['$provide', 'APP_ROOT', function($provide, APP_ROOT) {
+        $provide.decorator("pagebuilderPageDirective", function($delegate) {
+            var directive = $delegate[0];
+            directive.templateUrl = APP_ROOT + "common/directives/pagebuilder/template/aip-pagebuilder.html";
+            return $delegate;
+        });
+    }]);

@@ -210,6 +210,11 @@ module AIP {
         resetSelection() {
             this.selectedData = undefined;
         }
+        getCustomPage(id) {
+            var custumPageId = id || "ActionItemPolicy"; //TODO: get id from selectedData (later)
+            var request = this.itemListViewService.getPagebuilderPage(custumPageId);
+            return request;
+        }
 
     }
 }

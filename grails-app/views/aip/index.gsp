@@ -12,6 +12,8 @@
     <meta name="menuBaseURL" content="${createLink(uri: '/ssb')}" />
     <ckeditor:resources/>
     <script type="text/javascript">
+        var pageControllers = {};
+
         <g:i18n_aip_setup/>
         <g:aipVersion/>
         <g:if env="development">

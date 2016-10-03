@@ -9,7 +9,8 @@ var AIPUI;
             this.scope = {
                 data: "=",
                 next: "&",
-                tolist: "&"
+                tolist: "&",
+                custompage: "&"
             };
         }
         AIPItemDetailDirective.prototype.compile = function () {
