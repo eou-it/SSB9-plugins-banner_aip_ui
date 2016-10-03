@@ -170,8 +170,8 @@ module AIP {
                 throw new Error("Group does not exist with ID ");
             }
             var selectionType = itemId===null ? "group":"actionItem";
-            var titleNode = this.actionItems[groupId].items.filter((item) => {
-                return item.id === itemId;
+            var titleNode = this.actionItems.filter((item) => {
+                return item.groupId === groupId;
             });
             this.itemListViewService.getDetailInformation(groupId, selectionType, index.item===null?null:itemId).then((response:ISelectedData) => {
                 this.selectedData = response;
@@ -187,11 +187,14 @@ module AIP {
             });
             if(selectedGroup.length!==-1) {
                 index.group = this.actionItems.indexOf(selectedGroup[0]);
-                var selectedItem = this.actionItems[groupId].items.filter((item) => {
-                    return item.id === itemId;
+                // var selectedItem = this.actionItems[groupId].items.filter((item) => {
+                //     return item.id === itemId;
+                // });
+                var selectedItem = this.actionItems.filter((item) => {
+                    return item.groupId === groupId;
                 });
                 if(selectedItem.length!==-1) {
-                    index.item = this.actionItems[groupId].items.indexOf(selectedItem[0]);
+                    index.item = this.actionItems.indexOf(selectedItem[0]);
                 }
             }
             return index;

@@ -31,7 +31,7 @@ var AIP;
                 data: { type: selectType, groupId: groupId, actionItemId: actionItemId }
             })
                 .then(function (response) {
-                var data = response.data[0];
+                var data = response.data;
                 return {
                     type: selectType,
                     groupId: groupId,

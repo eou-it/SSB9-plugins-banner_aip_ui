@@ -76,7 +76,7 @@ module AIP {
                 data: {type:selectType, groupId: groupId, actionItemId:actionItemId}
             })
                 .then((response:any) => {
-                    var data = response.data[0];
+                    var data = response.data;
                     return {
                         type: selectType,
                         groupId: groupId,
