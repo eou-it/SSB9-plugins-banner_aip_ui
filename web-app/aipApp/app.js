@@ -26,8 +26,8 @@ var bannerAIPApp = angular.module("bannerAIP", [
     "ngRoute",
     "SCEAIP",
     "ngCkeditor",
-    // "BannerOnAngular",
-    // "pbrun.directives"
+    "BannerOnAngular",
+    "pbrun.directives"
     //"xe-ui-components"
     ])
 

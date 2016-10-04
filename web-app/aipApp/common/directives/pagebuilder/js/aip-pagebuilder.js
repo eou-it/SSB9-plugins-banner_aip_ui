@@ -18,7 +18,7 @@ var PB;
             var self = this;
             attrs.$observe('content', function (tpl) {
                 var me = self;
-                self.ItemListViewService.getPagebuilderPage("PageModel3")
+                self.ItemListViewService.getPagebuilderPage("ActionItemPolicy")
                     .then(function (val) {
                     element.children().empty();
                     var tempElement = angular.element(val.html);
@@ -37,6 +37,7 @@ var PB;
                     // angular.module("BannerOnAngular").controller("CustomPageController_"+val.pageName, eval("CustomPageController_"+val.pageName));
                     angular.module("BannerOnAngular").requires.push('ngResource', 'ngGrid', 'ui', 'pbrun.directives', 'ngSanitize', 'xe-ui-components');
                     angular.bootstrap(bodyContent, ["BannerOnAngular"]);
+                    element.empty();
                     element.append(bodyContent);
                     //me.$compile(element)(scope)
                 });

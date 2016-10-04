@@ -26,6 +26,7 @@ class AipPageBuilderController {
             if (data && compiledView && compiledJSCode)
                 html = compileService.assembleFinalPage(compiledView, compiledJSCode)
             def output = new StringWriter()
+            groovyPagesTemplateEngine.clearPageCache()
             groovyPagesTemplateEngine.createTemplate(compiledView, 'test').make().writeTo(output)
             model = ['html': output.toString(), 'pageName':pageName, 'script': compiledJSCode.toString()]
         }
