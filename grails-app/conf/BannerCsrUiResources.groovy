@@ -30,6 +30,8 @@ modules = {
        // resource url: [plugin: 'banner-csr-ui', file: 'node_modules/ckeditor/ckeditor.js']
 
        // resource url: [plugin: 'banner-csr-ui', file: 'bower_components/ng-ckeditor/ng-ckeditor.js']
+        //resource url: [plugin: 'banner-csr-ui', file: 'bower_components/ng-ckeditor/libs/ckeditor/ckeditor.js']
+        resource url: [plugin: 'banner-csr-ui', file: 'bower_components/ng-ckeditor/ng-ckeditor.min.js']
 //        resource url:[plugin: 'banner-csr', file: 'bower_components/angular-common/build/angular-common.js']
     }
 
@@ -75,6 +77,7 @@ modules = {
         resource url:[plugin: 'banner-csr-ui', file: 'aipApp/admin/action/list/adminActionListPageCtrl.js']
         resource url:[plugin: 'banner-csr-ui', file: 'aipApp/admin/action/add/adminActionItemAddPageCtrl.js']
         resource url:[plugin: 'banner-csr-ui', file: 'aipApp/admin/action/open/adminActionItemOpenPageCtrl.js']
+        resource url:[plugin: 'banner-csr-ui', file: 'aipApp/admin/status/list/adminStatusListPageCtrl.js']
         resource url:[plugin: 'banner-csr-ui', file: 'aipApp/listItem/listItemPageCtrl.js']
         resource url:[plugin: 'banner-csr-ui', file: 'aipApp/listItem/itemConfirm/itemConfirmCtrl.js']
         resource url:[plugin: 'banner-csr-ui', file: 'aipApp/common/services/admin/adminGroupService.js']

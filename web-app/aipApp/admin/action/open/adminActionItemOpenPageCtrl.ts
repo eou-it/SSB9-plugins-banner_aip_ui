@@ -32,6 +32,7 @@ module AIP {
         templateSelect: boolean;
         selectedTemplate;
         saving;
+        templateSource;
         constructor($scope, $q:ng.IQService, $state, $filter, $sce, $window, $templateRequest, $templateCache, $compile,
                     $timeout, $interpolate, SpinnerService, AdminActionService, APP_ROOT, CKEDITORCONFIG) {
             $scope.vm = this;
@@ -54,6 +55,7 @@ module AIP {
             this.templateSelect = false;
             this.templates = [];
             this.selectedTemplate;
+            this.templateSource;
             this.saving = false;
             this.init();
             angular.element( $window ).bind( 'resize', function () {
@@ -65,23 +67,6 @@ module AIP {
                 //     $scope.$apply();
                 // });
             } );
-
-            /*
-             $scope.$watch("[vm.templateSelect]" , (value) => {
-                if (value[0] === false) {
-                    $timeout( () => {
-                        var editor = CKEDITOR.instances["templateContent"];
-                        if (editor) {
-                            CKEDITOR.destroy(true);
-                            //console.log( editor );
-                        }
-                     editor = CKEDITOR.instances["templateContent"];
-                        console.log("watch");
-                        console.log( editor );
-                    }, 500);
-                }
-             })
-             */
         };
 
         init() {
@@ -128,21 +113,28 @@ module AIP {
                 $("#breadcrumb-panel").height() -
                 $("#title-panel").height() -
                 $("#header-main-section").height() -
-                $(".xe-tab-container").height() -
-                $("#outerFooter").height() - 30;
-            return {"height": containerHeight};
+                $(".xe-tab-nav").height() -
+                $("#outerFooter").height() - 75;
+            return {"min-height": containerHeight};
         }
         getTemplateContentHeight() {
             var containerHeight = $($(".xe-tab-container")[0]).height() -
                     $(".xe-tab-nav").height();
             return {height: containerHeight};
         }
+
         openOverviewPanel() {
             var deferred = this.$q.defer();
             this.adminActionService.getActionItemDetail(this.$state.params.data)
                 .then((response:AIP.IActionItemOpenResponse) => {
                     this.actionItem = response.data.actionItem;
                     this.selectedTemplate = this.actionItem.actionItemTemplateId;
+                    if (this.templateSelect) {
+                        this.trustActionItemContent();
+                        this.selectTemplate();
+                    } else {
+                        this.trustActionItemContent();
+                    }
                     deferred.resolve(this.openPanel("overview"));
                 }, (err) => {
                     console.log(err);
@@ -155,6 +147,7 @@ module AIP {
                 .then((response) => {
                     this.templates = response.data;
                     deferred.resolve(this.openPanel("content"));
+                    this.getTemplateSource();
                 }, (error) => {
                     console.log(error);
                 });
@@ -208,16 +201,38 @@ module AIP {
                 }
             }
         }
+        isNoTemplateSelected() {
+            if(this.templateSelect) {
+                if (!this.selectedTemplate) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+        }
+
+        getTemplateSource() {
+            if (this.templates) {
+                if (this.templates[0].sourceInd == 'B') {
+                    this.templateSource = this.$filter("i18n_aip")("aip.common.baseline");
+                }
+                else  {
+                    this.templateSource = this.$filter("i18n_aip")("aip.common.local");
+                }
+            }
+            return this.templateSource;
+        }
+
+        trustAsHtml = function(string) {
+            return this.$sce.trustAsHtml(string);
+        }
 
         trustActionItemContent = function() {
-            this.actionItem.actionItemContent = this.$filter("html")(this.$sce.trustAsHtml(this.actionItem.actionItemContent));
+            this.actionItem.actionItemContent = this.$sce.trustAsHtml(this.$filter("html")(this.actionItem.actionItemContent)).toString();
             return this.actionItem.actionItemContent;
         }
 
-
         selectTemplate() {
-            this.trustActionItemContent();
-           // console.log(this.ckEditorConfig);
             this.templateSelect = true;
             this.$timeout(() => {
                 var actionItemTemplate:any = $("#actionItemTemplate");
@@ -228,16 +243,34 @@ module AIP {
                     });
                 }
                 $(".actionItemContent").height($(".actionItemElement").height() - $(".xe-tab-nav").height());
+                //TODO: find better and proper way to set defalut value in SELECT2 - current one is just dom object hack.
+                //action item selected temlate
+                if (this.selectedTemplate) {
+                    if (this.templates[0].sourceInd == "B") {
+                        $(".select2-container.actionItemSelect .select2-chosen")[0].innerHTML = this.actionItem.actionItemTemplateName + " (" + this.$filter("i18n_aip")("aip.common.baseline") + ")";
+                    }
+                }
             }, 500);
         }
         cancel(option) {
-            switch(option) {
-                case "content":
-                    this.templateSelect = false;
-                    break;
-                default:
-                    break;
-            }
+            var deferred = this.$q.defer();
+            this.adminActionService.getActionItemDetail(this.$state.params.data)
+                .then((response:AIP.IActionItemOpenResponse) => {
+                    this.actionItem = response.data.actionItem;
+                    this.selectedTemplate = this.actionItem.actionItemTemplateId;
+                    this.trustActionItemContent();
+                    switch(option) {
+                        case "content":
+                            this.templateSelect = false;
+                            break;
+                        default:
+                            break;
+                    }
+                    deferred.resolve(this.openPanel("overview"));
+                }, (err) => {
+                    console.log(err);
+                });
+            return deferred.promise;
         }
         saveValidate() {
             if (this.selectedTemplate && !this.saving) {
@@ -259,6 +292,7 @@ module AIP {
                         this.handleNotification( notiParams );
                         this.templateSelect =  false;
                         this.actionItem = response.data.actionItem;
+                        this.trustActionItemContent();
                         this.openContentPanel();
                     } else {
                         //this.saveErrorCallback(response.data.message); //todo: add callback error on actionitem open page
@@ -269,27 +303,8 @@ module AIP {
                     this.saving=false;
                 });
         }
-        saveActionItemContent() {
-            this.adminActionService.updateActionItemContent(this.actionItem)
-                .then((response:AIP.IActionItemSaveResponse) => {
-                    var notiParams = {};
-                    if(response.data.success) {
-                        notiParams = {
-                            notiType: "saveSuccess",
-                            data: response.data
-                        };
-                        this.$state.go("admin-action-open", {noti: notiParams, data: response.data.newActionItem.id});
-                    } else {
-                        //this.saveErrorCallback(response.data.message); //todo: add callback error on actionitem open page
-                        console.log("error:");
-                    }
-                }, (err) => {
-                    //TODO:: handle error call
-                    console.log(err);
-                });
-        }
-
     }
+
 
 }
 register("bannerAIP").controller("AdminActionItemOpenPageCtrl", AIP.AdminActionItemOpenPageCtrl);

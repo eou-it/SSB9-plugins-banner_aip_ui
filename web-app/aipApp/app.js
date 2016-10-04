@@ -101,6 +101,15 @@ var bannerAIPApp = angular.module("bannerAIP", [
 
             }
         },
+        "admin-status-list": {
+            url: "/status",
+            templateUrl: "admin/status/list/adminStatusListPage.html",
+            //controller: "AdminGroupListPageCtrl",
+            breadcrumb: {
+                label: "aip.admin.status",
+                url: "/aip/admin#/status"
+            }
+        },
 
         "list": {
             url: "/list",
@@ -162,7 +171,6 @@ var bannerAIPApp = angular.module("bannerAIP", [
 
                     ],
                     disableNativeSpellChecker: false,
-                    uiColor: '#FAFAFA',
                     height: '400px',
                     width: '100%',
                     pasteFromWordRemoveFontStyles: true,
@@ -230,6 +238,8 @@ var bannerAIPApp = angular.module("bannerAIP", [
             //TODO:: use array and parse array in taglib
             $.i18n.prop("aip.welcome");
             $.i18n.prop("aip.welcome.text");
+            $.i18n.prop("aip.common.baseline");
+            $.i18n.prop("aip.common.local");
             $.i18n.prop("aip.common.title");
             $.i18n.prop("aip.common.status");
             $.i18n.prop("aip.common.folder");
@@ -258,6 +268,7 @@ var bannerAIPApp = angular.module("bannerAIP", [
             $.i18n.prop("aip.placeholder.nogroups");
             $.i18n.prop("aip.placeholder.noitems");
             $.i18n.prop("aip.common.text.template");
+            $.i18n.prop("aip.common.text.content");
 
             $.i18n.prop("aip.admin.landing");
 
@@ -305,6 +316,9 @@ var bannerAIPApp = angular.module("bannerAIP", [
             $.i18n.prop("aip.admin.action.open.tab.content.edit");
             $.i18n.prop("aip.admin.action.open.tab.content.templateSelect");
             $.i18n.prop("aip.admin.action.open.tab.content.templateContent");
+
+            $.i18n.prop("aip.admin.status");
+            $.i18n.prop("aip.admin.status.description");
 
             $.i18n.prop("aip.admin.selectable.action.items");
             $.i18n.prop("aip.admin.selectable.groups");
@@ -367,11 +381,8 @@ var bannerAIPApp = angular.module("bannerAIP", [
             );
 
             CKEDITOR.on( 'instanceCreated', function( event ) {
-
                 var editor = event.editor,
                         element = editor.element;
-
-                console.log(editor);
                     // Customize the editor configurations on "configLoaded" event,
                     // which is fired after the configuration file loading and
                     // execution. This makes it possible to change the
@@ -387,7 +398,10 @@ var bannerAIPApp = angular.module("bannerAIP", [
                             toolbar: 'about'
                         } );
 
-                        // Rearrange the layout of the toolbar.
+                        editor.config.height='30em',
+                        editor.config.width='100%',
+
+                            // Rearrange the layout of the toolbar.
                         editor.config.toolbar = [
                          { name: 'document', items: [ 'Source' ] },
                          { name: 'clipboard', items: [ 'Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo' ] },
@@ -397,6 +411,7 @@ var bannerAIPApp = angular.module("bannerAIP", [
                          { name: 'tools', items: [ 'Maximize' ] },
                          '/',
                          { name: 'basicstyles', items: [ 'Bold', 'Italic', 'Strike', '-', 'RemoveFormat' ] },
+                         { name: 'colors', items: [ 'TextColor', 'BGColor' ] },
                          { name: 'paragraph', items: [ 'NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote' ] },
                          { name: 'styles', items: [ 'Styles', 'Format' ] },
                          { name: 'about', items: [ 'About','A11YBtn' ] }
@@ -453,7 +468,7 @@ var bannerAIPUI = angular.module("bannerAIPUI", [])
 // Override common components
 angular.module("templates/tabNav.html", []).run(["$templateCache", function($templateCache) {
     $templateCache.put("templates/tabNav.html",
-        "<div class=\"xe-tab-container\" role=\"presentation\"><ul class=\"xe-tab-nav\" role=\"tablist\"><li ng-repeat=\"tab in tabnav.tabs\" ng-click=\"tabnav.activate(tab)\" ng-class=\"{active: tab.active}\" ng-repeat-complete role=\"tab\" aria-controls=\"{{'xe-tab-panel'+ ($index+1)}}\" aria-selected=\"{{tab.active}}\"><a ui-sref=\"{{ tab.state && tab.state || '#' }}\" href=\"#\" id=\"{{'xe-tab'+ ($index+1)}}\" title=\"{{tab.heading}}\" ng-if=\"tab.state\">{{tab.heading}} <span></span></a> <a href=\"javascript:void(0)\;\" id=\"{{'xe-tab'+ ($index+1)}}\" title=\"{{tab.heading}}\" ng-if=\"!tab.state\">{{tab.heading}} <span></span></a></li></ul><div class=\"xe-tab-content\" role=\"presentation\"><ng-transclude></ng-transclude></div></div>");
+            "<div class=\"xe-tab-container\" role=\"presentation\"><ul class=\"xe-tab-nav\" role=\"tablist\"><li ng-repeat=\"tab in tabnav.tabs\" ng-click=\"tabnav.activate(tab)\" ng-class=\"{active: tab.active}\" ng-repeat-complete aria-controls=\"{{'xe-tab-panel'+ ($index+1)}}\" aria-selected=\"{{tab.active}}\" tabindex=\"-1\"><a ui-sref=\"{{ tab.state && tab.state || '#' }}\" href=\"#\" id=\"{{'xe-tab'+ ($index+1)}}\" title=\"{{tab.heading}}\" ng-if=\"tab.state\">{{tab.heading}} <span></span></a> <a href=\"javascript:void(0)\;\" role=\"tab\" id=\"{{'xe-tab'+ ($index+1)}}\" title=\"{{tab.heading}}\" ng-if=\"!tab.state\" aria-selected=\"{{tab.active}}\">{{tab.heading}} <span></span></a></li></ul><div class=\"xe-tab-content\" role=\"presentation\"><ng-transclude></ng-transclude></div></div>");
 }]);
 
 

@@ -63,12 +63,8 @@
                 <label for="groupDesc" class="titleValue" id="groupAdd-description">{{"aip.common.group.description"|i18n_aip}}
                     {{"aip.character.astrick"|i18n_aip}}</label>
             </div>
-            <div class="groupElement col-xs-12 col-sm-8">
+            <div class="groupElement col-xs-12 col-sm-12">
                 <div class="row">
-                    <!--
-                    <textarea ck-editor id="groupDesc" ng-required="true" aria-required="true" name="groupDesc"
-                              ng-model="vm.groupInfo.description"></textarea>
-                              -->
                      <textarea id="groupDesc" ng-required="true" aria-required="true" name="groupDesc" ckeditor="ckEditorConfig"
                                ng-model="vm.groupInfo.description"></textarea>
                 </div>
@@ -77,10 +73,10 @@
     </div>
     <div class="groupControl">
         <div class="row">
-            <div class="col-sm-2 col-xs-6 groupButton">
+            <div class="col-sm-offset-8 col-xs-6 col-sm-2 groupButton">
                 <button type="button" class="btn btn-default" ng-click="vm.cancel()">{{"aip.common.cancel"|i18n_aip}}</button>
             </div>
-            <div class="col-sm-2 col-xs-6 groupButton">
+            <div class="col-xs-6 col-sm-2 groupButton">
                 <button type="button" class="btn btn-primary" ng-disabled="!vm.validateInput()" ng-click="vm.save()">
                     {{"aip.common.saveandreturn"|i18n_aip}}
                 </button>

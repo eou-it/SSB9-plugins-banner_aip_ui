@@ -122,47 +122,47 @@ aip-list .aip-list-container  {
 .AIP-landing-container  {
     padding:16px;
 }
-  .AIP-landing-container .clearfix:before, .AIP-landing-container .clearfix:after  {
-    content:" ";
-    display:table;
-}
-  .AIP-landing-container .clearfix:after  {
-    clear:both;
-}
-  .AIP-landing-container aip-landing-item .ladingItem-container  {
+
+.landingItem-container  {
     background-color:#ffffff;
     font-size:1.5em;
     border-radius:4px;
-    padding:8px;
-    margin:8px;
+    padding:10px;
+    margin:10px;
     cursor:pointer;
 }
-    .AIP-landing-container aip-landing-item .ladingItem-container:hover  {
+  .landingItem-container:hover  {
     background-color:#ffffff;
 }
-    .AIP-landing-container aip-landing-item .ladingItem-container .landing-icon  {
-    padding:16px;
+  .landingItem-container .landing-icon  {
+    padding:30px 15px;
     max-width:90px;
+    margin:0;
+    height:auto;
 }
-      .AIP-landing-container aip-landing-item .ladingItem-container .landing-icon .well  {
+    .landingItem-container .landing-icon .well  {
     background-color:transparent;
     border:none;
     box-shadow:none;
 }
-      .AIP-landing-container aip-landing-item .ladingItem-container .landing-icon .icon  {
+    .landingItem-container .landing-icon .icon  {
     font-size:3em;
     color:#206E9F;
 }
-    .AIP-landing-container aip-landing-item .ladingItem-container .landing-context  {
+  .landingItem-container .landing-context  {
     padding:8px 24px;
     border-right:2px solid #EDF2F7;
     border-left:none;
+    height:100%;
 }
-      .AIP-landing-container aip-landing-item .ladingItem-container .landing-context .landing-title  {
+    .landingItem-container .landing-context .landing-title  {
     font-weight:bold;
     padding-bottom:16px;
 }
-  
+    .landingItem-container .landing-context .landing-description  {
+    min-height:70px;
+}
+
 
 .aip-item-detail-container  {
     height:inherit;
@@ -516,8 +516,14 @@ aip-list .aip-list-container  {
     margin-top:20px;
     margin-bottom:20px;
 }
+            .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .contentPreview  {
+    margin:20px 0;
+    padding:20px;
+    border:1px solid #c0c0c0;
+}
             .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .control .templateButton  {
     float:left;
+    margin-bottom:20px;
 }
               .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .control .templateButton span  {
     padding-right:24px;
@@ -526,6 +532,52 @@ aip-list .aip-list-container  {
     min-width:100px;
 }
 
+
+.statusListContainer  {
+    overflow-y:auto;
+    font-size:14px;
+}
+  .statusListContainer .statusListTable #statusDataTableSearch  {
+    display:none;
+}
+  .statusListContainer .row  {
+    margin-left:0;
+    margin-right:0;
+}
+  .statusListContainer .control  {
+    float:left;
+    padding-top:8px;
+}
+  .statusListContainer .statusListTable  {
+    overflow:auto;
+}
+    .statusListContainer .statusListTable .table-container  {
+    margin-top:8px;
+}
+
+.statusOpenContainer  {
+    padding:0;
+    margin:0;
+    background-color:#ffffff;
+}
+  .statusOpenContainer .row  {
+    margin-right:0;
+    margin-left:0;
+}
+  .statusOpenContainer .statusInfo  {
+    margin-bottom:20px;
+}
+    .statusOpenContainer .statusInfo .statusInfoRow  {
+    margin-bottom:16px;
+}
+      .statusOpenContainer .statusInfo .statusInfoRow .statusElement  {
+    padding-left:8px;
+    padding-right:8px;
+    margin-bottom:8px;
+}
+        .statusOpenContainer .statusInfo .statusInfoRow .statusElement .statusDetail  {
+    border-left:1px solid #444444;
+}
 
 #username  {
     padding-left:0.5em;
@@ -553,6 +605,10 @@ a:focus, div:focus, input:focus, span:focus, i:focus, button:focus, .breadcrumbB
     outline:0;
     box-shadow:0 0 2px 3px #78aeda, 0 0 2px #78aeda inset;
     border-radius:2px;
+}
+
+label  {
+    margin-bottom:10px;
 }
 
 .progressbar-container  {
@@ -657,11 +713,11 @@ xe-tab-panel h3  {
 }
 }
 @media screen and (max-width: 480px) {
-    .AIP-landing-container aip-landing-item .ladingItem-container  {
+  .ladingItem-container  {
     margin-right:8px;
     margin-left:8px;
 }
-      .AIP-landing-container aip-landing-item .ladingItem-container .landing-icon  {
+    .ladingItem-container .landing-icon  {
     padding:16px 8px;
 }
 }

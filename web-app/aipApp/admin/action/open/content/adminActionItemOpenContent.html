@@ -4,7 +4,7 @@
             <div class="row">
 
                 <div class="col-xs-10 col-sm-8">
-                    <h2>{{'aip.admin.action.open.tab.template'|i18n_aip}}</h2>
+                    <h2>{{'aip.common.text.template'|i18n_aip}}</h2>
                     {{'aip.admin.action.open.tab.content.noItem1'|i18n_aip}} <br />
                     {{'aip.admin.action.open.tab.content.noItem2'|i18n_aip}}
                </div>
@@ -19,18 +19,6 @@
                 </div>
 
             </div>
-
-            <div class="row">
-                <div class="col-xs-12 col-sm-12">
-                    <h2>{{'aip.admin.action.open.tab.content'|i18n_aip}}</h2>
-                    <div ng-if="!vm.isNoContent()">
-                        <span ng-bind-html="vm.actionItem.actionItemContent | html"></span>
-                    </div>
-                    <div ng-if="vm.isNoContent()">
-                        <span>{{'aip.admin.action.open.tab.content.noContent'|i18n_aip}}</span>
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
     <div class="actionItemContent row" ng-if="!vm.isNoTemplate() && vm.templateSelect">
@@ -40,19 +28,20 @@
             </div>
             <div class="row">
                 <select id="actionItemTemplate" class="actionItemSelect" xe-data="" aria-label="Template" required aria-required="true" ng-model="vm.selectedTemplate">
-                    <option ng-repeat="item in vm.templates" value="{{item.id}}">{{item.title}}</option>
+                    <option ng-repeat="item in vm.templates" value="{{item.id}}">{{item.title}}
+                        ({{vm.templateSource}})</option>
                 </select>
             </div>
 
         </div>
 
-        <div class="contentContainer">
+        <div class="contentContainer" ng-if="!vm.isNoTemplateSelected()">
             <div class="row">
-                <label for="templateContent" class="titleValue" id="template-content">{{"aip.admin.action.open.tab.content.templateContent"|i18n_aip}}</label>
+                <label for="templateContent" class="titleValue" id="template-content">{{vm.actionItem.actionItemTemplateName}} {{"aip.common.text.content"|i18n_aip}}</label>
             </div>
-
             <div class="row">
-                <textarea id="templateContent" ng-required="true" aria-required="true" name="templateContent" ckeditor="ckEditorConfig" ng-model="vm.actionItem.actionItemContent"></textarea>
+                <textarea id="templateContent" ng-required="true" aria-required="true" name="templateContent" ckeditor="ckEditorConfig"
+                          ng-model="vm.actionItem.actionItemContent"></textarea>
             </div>
         </div>
         <div class="control row">
@@ -69,11 +58,12 @@
 
         </div>
     </div>
+
     <div class="actionItemContent row" ng-if="!vm.isNoTemplate() && vm.actionItem.actionItemTemplateId && !vm.templateSelect">
-        <div class="contentText">
+        <div class="contentContainer">
             <div class="row">
                 <div class="col-xs-10 col-sm-8">
-                    <h2>{{'aip.admin.action.open.tab.template'|i18n_aip}}</h2>
+                    <h2>{{'aip.common.text.template'|i18n_aip}}</h2>
                 </div>
                 <div class="control col-xs-2 col-sm-4">
                     <div class="h2-container">
@@ -86,14 +76,14 @@
             </div>
             <div class="row">
                 <div class="col-xs-12 col-sm-8">
-                    {{vm.actionItem.actionItemTemplateName||"action item template placeholder text"}}
+                    {{vm.actionItem.actionItemTemplateName||"action item template placeholder text"}} ({{vm.templateSource}})</span>
                 </div>
             </div>
             <div class="row">
                 <div class="col-xs-12 col-sm-12">
-                    <h2>{{'aip.admin.action.open.tab.content'|i18n_aip}}</h2>
+                    <h2>{{vm.actionItem.actionItemTemplateName}} {{"aip.common.text.content"|i18n_aip}}</h2>
                     <div ng-if="!vm.isNoContent()">
-                        <span ng-bind-html="vm.actionItem.actionItemContent | html"></span>
+                        <div class="contentPreview" data-ng-bind-html="vm.trustAsHtml(vm.actionItem.actionItemContent)"></div>
                     </div>
                     <div ng-if="vm.isNoContent()">
                         <span>{{'aip.admin.action.open.tab.content.noContent'|i18n_aip}}</span>
