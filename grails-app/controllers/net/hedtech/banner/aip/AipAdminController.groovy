@@ -364,9 +364,9 @@ class AipAdminController {
         def actionItemStatusHeadings = [
                 [name: "actionItemStatusId", title: "id", options: [visible: false, isSortable: true]],
                 [name: "actionItemStatus", title: MessageUtility.message( "aip.common.status" ), options: [visible: true, isSortable: true, ascending: paramObj.sortAscending], width: 0],
-                [name: "actionItemStatusSystemRequired", title: MessageUtility.message( "aip.common.system.required" ), options: [visible: true, isSortable: true, ascending: paramObj.sortAscending], width: 0],
-                [name: "actionItemBlockedProcess", title: MessageUtility.message( "aip.common.activity.date" ), options: [visible: true, isSortable: true, ascending: paramObj.sortAscending], width: 0],
-                [name: "actionItemStatusActive", title: MessageUtility.message( "aip.common.last.updated.by" ), options: [visible: true, isSortable: true, ascending: paramObj.sortAscending], width: 0],
+                [name: "actionItemBlockedProcess", title: MessageUtility.message( "aip.common.block.process" ), options: [visible: true, isSortable: true, ascending: paramObj.sortAscending], width: 0],
+                [name: "actionItemSystemRequired", title: MessageUtility.message( "aip.common.system.required" ), options: [visible: true, isSortable: true, ascending: paramObj.sortAscending], width: 0],
+                [name: "actionItemStatusUserId", title: MessageUtility.message( "aip.common.last.updated.by" ), options: [visible: true, isSortable: true, ascending: paramObj.sortAscending], width: 0],
                 [name: "actionItemStatusActivityDate", title: MessageUtility.message( "aip.common.activity.date" ), options: [visible: true, isSortable: true, ascending: paramObj.sortAscending], width: 0]
         ]
 

@@ -18,12 +18,6 @@ var AIP;
                 //$scope.onResize();
                 $scope.$apply();
             });
-            /*
-             $scope.$watch("[vm.groupDetailResponse, vm.groupInfo]" , (newVal, oldVal) => {
-             if(!$scope.$$phase) {
-             $scope.apply();
-             }
-             });*/
             angular.element($window).bind('resize', function () {
                 //$scope.onResize();
                 $scope.$apply();
@@ -36,14 +30,14 @@ var AIP;
                 actionItemStatus: 3,
                 actionItemBlockedProcess: 3,
                 actionItemSystemRequired: 3,
-                actionItemActive: 3
+                actionItemLastUpdatedBy: 3,
+                actionItemActivityDate: 3
             };
             this.mobileSize = angular.element("body").width() > 768 ? false : true;
             this.searchConfig = {
-                id: "groupDataTableSearch",
+                id: "statusDataTableSearch",
                 delay: 300,
-                //todo:change this out for message property
-                ariaLabel: "Search for any action Items",
+                ariaLabel: this.$filter("i18n_aip")("aip.list.grid.search.status"),
                 searchString: "",
                 maxlength: 200,
                 minimumCharacters: 1
@@ -59,8 +53,8 @@ var AIP;
                     }
                 }, {
                     name: "actionItemStatus",
-                    title: this.$filter("i18n_aip")("aip.list.grid.groupTitle"),
-                    ariaLabel: this.$filter("i18n_aip")("aip.list.grid.groupTitle"),
+                    title: this.$filter("i18n_aip")("aip.list.grid.status"),
+                    ariaLabel: this.$filter("i18n_aip")("aip.list.grid.status"),
                     width: "100px",
                     options: {
                         sortable: true,
@@ -70,18 +64,8 @@ var AIP;
                     }
                 }, {
                     name: "actionItemStatusBlockedProcess",
-                    title: this.$filter("i18n_aip")("aip.list.grid.folder"),
-                    ariaLabel: this.$filter("i18n_aip")("aip.list.grid.folder"),
-                    width: "100px",
-                    options: {
-                        sortable: true,
-                        visible: true,
-                        columnShowHide: false
-                    }
-                }, {
-                    name: "actionItemStatusSystemRequired",
-                    title: this.$filter("i18n_aip")("aip.list.grid.status"),
-                    ariaLabel: this.$filter("i18n_aip")("aip.list.grid.status"),
+                    title: this.$filter("i18n_aip")("aip.list.grid.blockedProcess"),
+                    ariaLabel: this.$filter("i18n_aip")("aip.list.grid.blockedProcess"),
                     width: "100px",
                     options: {
                         sortable: true,
@@ -89,7 +73,17 @@ var AIP;
                         columnShowHide: true
                     }
                 }, {
-                    name: "actionItemStatusActive",
+                    name: "actionItemStatusSystemRequired",
+                    title: this.$filter("i18n_aip")("aip.list.grid.systemRequired"),
+                    ariaLabel: this.$filter("i18n_aip")("aip.list.grid.systemRequired"),
+                    width: "100px",
+                    options: {
+                        sortable: true,
+                        visible: true,
+                        columnShowHide: true
+                    }
+                }, {
+                    name: "actionItemStatusUserId",
                     title: this.$filter("i18n_aip")("aip.list.grid.lastUpdated"),
                     ariaLabel: this.$filter("i18n_aip")("aip.list.grid.lastUpdated"),
                     width: "100px",
@@ -110,24 +104,27 @@ var AIP;
                     }
                 }];
         };
-        AdminStatusListPageCtrl.prototype.add = function () {
-            this.$state.go("admin-group-add");
+        AdminStatusListPageCtrl.prototype.getIndicatorVal = function () {
         };
-        AdminStatusListPageCtrl.prototype.open = function () {
-            var _this = this;
-            this.adminActionStatusService.getGroupDetail(this.$state.params.status).then(function (response) {
-                if (response.group) {
-                    _this.$state.go("admin-group-open", { data: response.group });
-                }
-                else {
+        /*
+        add() {
+            this.$state.go("admin-group-add");
+        }
+
+        open() {
+            this.adminActionStatusService.getGroupDetail(this.$state.params.status).then((response) => {
+                if(response.group) {
+                    this.$state.go("admin-group-open", {data: response.group});
+                } else {
                     //todo: output error in notification center?
                     console.log("fail");
                 }
-            }, function (err) {
+            }, (err) => {
                 //TODO:: handle error call
                 console.log(err);
             });
-        };
+        }
+        */
         AdminStatusListPageCtrl.prototype.getHeight = function () {
             var containerHeight = $(document).height() -
                 $("#breadcrumb-panel").height() -
@@ -153,8 +150,8 @@ var AIP;
         };
         AdminStatusListPageCtrl.prototype.selectRecord = function (data) {
             this.selectedRecord = data;
-            this.adminActionStatusService.enableGroupOpen(data.id);
-            this.$state.params.grp = data.id;
+            //this.adminActionStatusService.enableGroupOpen(data.id);
+            //this.$state.params.grp = data.id;
         };
         AdminStatusListPageCtrl.prototype.refreshGrid = function () {
         };

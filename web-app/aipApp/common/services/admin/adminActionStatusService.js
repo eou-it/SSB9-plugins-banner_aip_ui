@@ -14,7 +14,7 @@ var AIP;
         AdminActionStatusService.prototype.fetchData = function (query) {
             var deferred = this.$q.defer();
             var realMax = parseInt(query.max) - parseInt(query.offset);
-            var url = this.ENDPOINT.admin.actionItemStatus + "?" +
+            var url = this.ENDPOINT.admin.actionItemStatus +
                 '?searchString=' + (query.searchString || '') +
                 '&sortColumnName=' + (query.sortColumnName || 'actionItemStatus') +
                 '&ascending=' + (query.ascending.toString() || "") +
@@ -31,43 +31,6 @@ var AIP;
             return deferred.promise;
         };
         ;
-        /*
-        getFolder() {
-            var request = this.$http({
-                method: "GET",
-                url: this.ENDPOINT.admin.folders
-            });
-            return request;
-        };
-        getStatus() {
-            var request = this.$http({
-                method: "GET",
-                url: this.ENDPOINT.admin.actionItemStatus
-            });
-            return request;
-        }
-        */
-        AdminActionStatusService.prototype.saveActionItem = function (actionItemStatus) {
-            var params = {
-                actionItemStatus: actionItemStatus.actionItemStatus,
-                actionItemBlockedProcess: actionItemStatus.actionItemStatusBlockedProcess,
-                actionItemSystemRequired: actionItemStatus.actionItemSystemRequired,
-                actionItemActive: actionItemStatus.actionItemActive
-            };
-            var request = this.$http({
-                method: "POST",
-                data: params,
-                url: this.ENDPOINT.admin.createActionItem
-            });
-            return request;
-        };
-        AdminActionStatusService.prototype.getActionItemStatusDetail = function (actionItemStatusId) {
-            var request = this.$http({
-                method: "GET",
-                url: this.ENDPOINT.admin.openActionItemStatus + "?actionItemStatusId=" + actionItemStatusId.toString()
-            });
-            return request;
-        };
         AdminActionStatusService.$inject = ["$http", "$q", "$filter", "ENDPOINT"];
         return AdminActionStatusService;
     }());

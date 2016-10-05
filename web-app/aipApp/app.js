@@ -239,6 +239,8 @@ var bannerAIPApp = angular.module("bannerAIP", [
             $.i18n.prop("aip.common.activity");
             $.i18n.prop("aip.common.activity.date");
             $.i18n.prop("aip.common.last.updated.by");
+            $.i18n.prop("aip.common.block.process");
+            $.i18n.prop("aip.common.system.required");
             $.i18n.prop("aip.common.save");
             $.i18n.prop("aip.common.cancel");
             $.i18n.prop("aip.common.next");
@@ -259,7 +261,8 @@ var bannerAIPApp = angular.module("bannerAIP", [
             $.i18n.prop("aip.placeholder.nogroups");
             $.i18n.prop("aip.placeholder.noitems");
             $.i18n.prop("aip.common.text.template");
-            $.i18n.prop("aip.common.text.content");
+            $.i18n.prop("aip.common.text.yes");
+            $.i18n.prop("aip.common.text.no");
 
             $.i18n.prop("aip.admin.landing");
 
@@ -320,6 +323,12 @@ var bannerAIPApp = angular.module("bannerAIP", [
             $.i18n.prop("aip.list.grid.status");
             $.i18n.prop("aip.list.grid.lastUpdated");
             $.i18n.prop("aip.list.grid.activityDate");
+            $.i18n.prop("aip.list.grid.blockedProcess");
+            $.i18n.prop("aip.list.grid.systemRequired");
+
+            $.i18n.prop("aip.list.grid.search.status");
+            $.i18n.prop("aip.list.grid.search.actionItem");
+            $.i18n.prop("aip.list.grid.search.group");
 
             $.i18n.prop("aip.status.active");
             $.i18n.prop("aip.status.inactive");

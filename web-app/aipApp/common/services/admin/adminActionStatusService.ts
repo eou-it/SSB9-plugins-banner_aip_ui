@@ -17,7 +17,7 @@ module AIP {
         actionItemStatusId: number;
         actionItemStatus: string;
         actionItemStatusActivityDate: Date,
-        actionItemUserId: string;
+        actionItemStatusUserId: string;
         actionItemStatusBlockedProcess: string;
         actionItemStatusActive: string;
         actionItemStatusSystemRequired: string;
@@ -46,6 +46,7 @@ module AIP {
         folderId: number;
         description: string;
     }
+    /*
     export interface IActionItemStatusSaveResponse {
         data: {
             success: boolean;
@@ -60,10 +61,11 @@ module AIP {
             actionItem: IActionItemStatus;
         };
     }
+    */
     interface IAdminActionStatusService {
         fetchData(query:IActionItemStatusListQuery):ng.IPromise<IActionItemStatusFetchResponse>;
-        saveActionItem(actionItemStatus: IActionItemStatusParam): ng.IHttpPromise<IActionItemStatusSaveResponse>;
-        getActionItemStatusDetail(actionItemStatusId:number): ng.IHttpPromise<IActionItemStatusOpenResponse>;
+        //saveActionItem(actionItemStatus: IActionItemStatusParam): ng.IHttpPromise<IActionItemStatusSaveResponse>;
+       // getActionItemStatusDetail(actionItemStatusId:number): ng.IHttpPromise<IActionItemStatusOpenResponse>;
     }
 
     export class AdminActionStatusService implements IAdminActionStatusService{
@@ -82,7 +84,7 @@ module AIP {
         fetchData (query:IActionItemStatusListQuery) {
             var deferred = this.$q.defer();
             var realMax = parseInt(query.max) - parseInt(query.offset);
-            var url = this.ENDPOINT.admin.actionItemStatus + "?" +
+            var url = this.ENDPOINT.admin.actionItemStatus +
                 '?searchString=' + (query.searchString || '') +
                 '&sortColumnName=' + (query.sortColumnName || 'actionItemStatus') +
                 '&ascending=' + (query.ascending.toString() || "") +
@@ -99,6 +101,7 @@ module AIP {
 
             return deferred.promise;
         };
+
         /*
         getFolder() {
             var request = this.$http({
@@ -115,6 +118,7 @@ module AIP {
             return request;
         }
         */
+        /*
         saveActionItem(actionItemStatus) {
             var params = {
                 actionItemStatus: actionItemStatus.actionItemStatus,
@@ -138,7 +142,7 @@ module AIP {
             });
             return request;
         }
-
+        */
     }
 }
 

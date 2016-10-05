@@ -38,12 +38,6 @@ module AIP {
                 $scope.$apply();
             });
 
-            /*
-             $scope.$watch("[vm.groupDetailResponse, vm.groupInfo]" , (newVal, oldVal) => {
-             if(!$scope.$$phase) {
-             $scope.apply();
-             }
-             });*/
             angular.element($window).bind('resize', function() {
                 //$scope.onResize();
                 $scope.$apply();
@@ -57,14 +51,14 @@ module AIP {
                 actionItemStatus: 3,
                 actionItemBlockedProcess: 3,
                 actionItemSystemRequired: 3,
-                actionItemActive: 3
+                actionItemLastUpdatedBy: 3,
+                actionItemActivityDate: 3
             };
             this.mobileSize = angular.element("body").width()>768?false:true;
             this.searchConfig = {
-                id: "groupDataTableSearch",
+                id: "statusDataTableSearch",
                 delay: 300,
-                //todo:change this out for message property
-                ariaLabel: "Search for any action Items",
+                ariaLabel: this.$filter("i18n_aip")("aip.list.grid.search.status"),
                 searchString: "",
                 maxlength: 200,
                 minimumCharacters: 1
@@ -80,8 +74,8 @@ module AIP {
                 }
             }, {
                 name: "actionItemStatus",
-                title: this.$filter("i18n_aip")("aip.list.grid.groupTitle"),
-                ariaLabel: this.$filter("i18n_aip")("aip.list.grid.groupTitle"),
+                title: this.$filter("i18n_aip")("aip.list.grid.status"),
+                ariaLabel: this.$filter("i18n_aip")("aip.list.grid.status"),
                 width: "100px",
                 options: {
                     sortable: true,
@@ -91,18 +85,8 @@ module AIP {
                 }
             }, {
                 name: "actionItemStatusBlockedProcess",
-                title: this.$filter("i18n_aip")("aip.list.grid.folder"),
-                ariaLabel: this.$filter("i18n_aip")("aip.list.grid.folder"),
-                width: "100px",
-                options: {
-                    sortable: true,
-                    visible: true,
-                    columnShowHide: false
-                }
-            }, {
-                name: "actionItemStatusSystemRequired",
-                title: this.$filter("i18n_aip")("aip.list.grid.status"),
-                ariaLabel: this.$filter("i18n_aip")("aip.list.grid.status"),
+                title: this.$filter("i18n_aip")("aip.list.grid.blockedProcess"),
+                ariaLabel: this.$filter("i18n_aip")("aip.list.grid.blockedProcess"),
                 width: "100px",
                 options: {
                     sortable: true,
@@ -110,7 +94,17 @@ module AIP {
                     columnShowHide: true
                 }
             }, {
-                name: "actionItemStatusActive",
+                name: "actionItemStatusSystemRequired",
+                title: this.$filter("i18n_aip")("aip.list.grid.systemRequired"),
+                ariaLabel: this.$filter("i18n_aip")("aip.list.grid.systemRequired"),
+                width: "100px",
+                options: {
+                    sortable: true,
+                    visible: true,
+                    columnShowHide: true
+                }
+            }, {
+                name: "actionItemStatusUserId",
                 title: this.$filter("i18n_aip")("aip.list.grid.lastUpdated"),
                 ariaLabel: this.$filter("i18n_aip")("aip.list.grid.lastUpdated"),
                 width: "100px",
@@ -131,7 +125,11 @@ module AIP {
                 }
             }];
         }
+        getIndicatorVal() {
 
+        }
+
+        /*
         add() {
             this.$state.go("admin-group-add");
         }
@@ -149,6 +147,7 @@ module AIP {
                 console.log(err);
             });
         }
+        */
 
         getHeight() {
             var containerHeight = $(document).height() -
@@ -176,8 +175,8 @@ module AIP {
         }
         selectRecord(data) {
             this.selectedRecord = data;
-            this.adminActionStatusService.enableGroupOpen(data.id);
-            this.$state.params.grp = data.id;
+            //this.adminActionStatusService.enableGroupOpen(data.id);
+            //this.$state.params.grp = data.id;
         }
         refreshGrid() {
 
