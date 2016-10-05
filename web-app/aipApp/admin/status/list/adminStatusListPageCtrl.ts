@@ -1,5 +1,5 @@
 //<reference path="../../../../typings/tsd.d.ts"/>
-///<reference path="../../../common/services/admin/adminGroupService.ts"/>
+///<reference path="../../../common/services/admin/adminActionStatusService.ts"/>
 
 declare var register: any;
 declare var Notification: any;
@@ -8,7 +8,7 @@ declare var notifications: any;
 module AIP {
     export class AdminStatusListPageCtrl {
         $inject = ["$scope", "$state", "$window", "$filter", "$q", "ENDPOINT", "PAGINATIONCONFIG",
-            "AdminGroupService"];
+            "AdminActionStatusService"];
         $state;
         $filter;
         $q: ng.IQService;
@@ -20,18 +20,18 @@ module AIP {
         searchConfig;
         mobileConfig;
         mobileSize;
-        adminGroupService;
+        adminActionStatusService;
         selectedRecord;
 
         constructor($scope, $state, $window, $filter, $q, ENDPOINT, PAGINATIONCONFIG,
-                    AdminGroupService) {
+                    AdminActionStatusService) {
             $scope.vm = this;
             this.$state = $state;
             this.$filter = $filter;
             this.$q = $q;
             this.endPoint = ENDPOINT;   //ENDPOINT.admin.actionList
             this.paginationConfig = PAGINATIONCONFIG;
-            this.adminGroupService = AdminGroupService;
+            this.adminActionStatusService = AdminActionStatusService;
             this.init();
             angular.element($window).bind('resize', function() {
                 //$scope.onResize();
@@ -54,11 +54,10 @@ module AIP {
             this.gridData = {};
             this.draggableColumnNames=[];
             this.mobileConfig = {
-                groupTitle: 3,
-                folderName: 3,
-                groupStatus: 3,
-                groupmUserId: 3,
-                groupActivityDate: 3
+                actionItemStatus: 3,
+                actionItemBlockedProcess: 3,
+                actionItemSystemRequired: 3,
+                actionItemActive: 3
             };
             this.mobileSize = angular.element("body").width()>768?false:true;
             this.searchConfig = {
@@ -71,7 +70,7 @@ module AIP {
                 minimumCharacters: 1
             };
             this.header = [{
-                name: "groupId",
+                name: "actionItemStatusId",
                 title: "id",
                 width: "0px",
                 options: {
@@ -80,7 +79,7 @@ module AIP {
                     columnShowHide: false
                 }
             }, {
-                name: "groupTitle",
+                name: "actionItemStatus",
                 title: this.$filter("i18n_aip")("aip.list.grid.groupTitle"),
                 ariaLabel: this.$filter("i18n_aip")("aip.list.grid.groupTitle"),
                 width: "100px",
@@ -91,7 +90,7 @@ module AIP {
                     columnShowHide: false
                 }
             }, {
-                name: "folderName",
+                name: "actionItemStatusBlockedProcess",
                 title: this.$filter("i18n_aip")("aip.list.grid.folder"),
                 ariaLabel: this.$filter("i18n_aip")("aip.list.grid.folder"),
                 width: "100px",
@@ -101,7 +100,7 @@ module AIP {
                     columnShowHide: false
                 }
             }, {
-                name: "groupStatus",
+                name: "actionItemStatusSystemRequired",
                 title: this.$filter("i18n_aip")("aip.list.grid.status"),
                 ariaLabel: this.$filter("i18n_aip")("aip.list.grid.status"),
                 width: "100px",
@@ -111,7 +110,7 @@ module AIP {
                     columnShowHide: true
                 }
             }, {
-                name: "groupUserId",
+                name: "actionItemStatusActive",
                 title: this.$filter("i18n_aip")("aip.list.grid.lastUpdated"),
                 ariaLabel: this.$filter("i18n_aip")("aip.list.grid.lastUpdated"),
                 width: "100px",
@@ -121,7 +120,7 @@ module AIP {
                     columnShowHide: true
                 }
             }, {
-                name: "groupActivityDate",
+                name: "actionItemStatusActivityDate",
                 title: this.$filter("i18n_aip")("aip.list.grid.activityDate"),
                 ariaLabel: this.$filter("i18n_aip")("aip.list.grid.activityDate"),
                 width: "100px",
@@ -138,7 +137,7 @@ module AIP {
         }
 
         open() {
-            this.adminGroupService.getGroupDetail(this.$state.params.grp).then((response) => {
+            this.adminActionStatusService.getGroupDetail(this.$state.params.status).then((response) => {
                 if(response.group) {
                     this.$state.go("admin-group-open", {data: response.group});
                 } else {
@@ -164,7 +163,7 @@ module AIP {
 
         fetchData(query) {
             var deferred = this.$q.defer();
-            this.adminGroupService.fetchData(query)
+            this.adminActionStatusService.fetchData(query)
                 .then((response) => {
                     // this.gridData = response;
                     // this.gridData.header = this.header;
@@ -177,7 +176,7 @@ module AIP {
         }
         selectRecord(data) {
             this.selectedRecord = data;
-            this.adminGroupService.enableGroupOpen(data.id);
+            this.adminActionStatusService.enableGroupOpen(data.id);
             this.$state.params.grp = data.id;
         }
         refreshGrid() {

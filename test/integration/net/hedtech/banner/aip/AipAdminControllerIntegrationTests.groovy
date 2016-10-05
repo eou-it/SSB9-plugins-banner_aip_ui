@@ -29,6 +29,7 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
     def actionItemGroupService
     def actionItemReadOnlyService
     def actionItemTemplateService
+    def actionItemStatusService
 
     def VALID_FOLDER_NAME = "My Folder"
     def VALID_FOLDER_DESCRIPTION = "My Folder"
@@ -650,6 +651,28 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
         controller.params.offset=0
 
         controller.actionItemList()
+        def answer = JSON.parse( controller.response.contentAsString )
+
+        assertEquals 200, controller.response.status
+        // TODO: verify something
+    }
+
+    @Test
+    void testSortAipActionItemStatusAsStudent() {
+        def admin = PersonUtility.getPerson( "CSRSTU002" ) // role: student
+        assertNotNull admin
+
+        def auth = selfServiceBannerAuthenticationProvider.authenticate(
+                new UsernamePasswordAuthenticationToken( admin.bannerId, '111111' ) )
+        SecurityContextHolder.getContext().setAuthentication( auth )
+
+        controller.params.filterName="%"
+        controller.params.sortColumn="actionItemStatus"
+        controller.params.sortAscending=true
+        controller.params.max=20
+        controller.params.offset=0
+
+        controller.actionItemStatusList()
         def answer = JSON.parse( controller.response.contentAsString )
 
         assertEquals 200, controller.response.status
