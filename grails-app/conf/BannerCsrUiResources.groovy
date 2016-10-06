@@ -70,6 +70,7 @@ modules = {
         resource url:[plugin: 'banner-csr-ui', file: 'aipApp/listItem/itemConfirm/itemConfirmCtrl.js']
         resource url:[plugin: 'banner-csr-ui', file: 'aipApp/common/services/admin/adminGroupService.js']
         resource url:[plugin: 'banner-csr-ui', file: 'aipApp/common/services/admin/adminActionService.js']
+        resource url:[plugin: 'banner-csr-ui', file: 'aipApp/common/services/admin/adminActionStatusService.js']
         resource url:[plugin: 'banner-csr-ui', file: 'aipApp/common/services/itemListViewService.js']
         resource url:[plugin: 'banner-csr-ui', file: 'aipApp/common/services/breadcrumbService.js']
         resource url:[plugin: 'banner-csr-ui', file: 'aipApp/common/services/userService.js']

@@ -64,8 +64,7 @@ module AIP {
             this.searchConfig = {
                 id: "groupDataTableSearch",
                 delay: 300,
-                //todo:change this out for message property
-                ariaLabel: "Search for any action Items",
+                ariaLabel: this.$filter("i18n_aip")("aip.list.grid.search.group"),
                 searchString: "",
                 maxlength: 200,
                 minimumCharacters: 1

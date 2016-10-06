@@ -1,5 +1,5 @@
 //<reference path="../../../../typings/tsd.d.ts"/>
-///<reference path="../../../common/services/admin/adminGroupService.ts"/>
+///<reference path="../../../common/services/admin/adminActionStatusService.ts"/>
 
 declare var register: any;
 declare var Notification: any;
@@ -8,7 +8,7 @@ declare var notifications: any;
 module AIP {
     export class AdminStatusListPageCtrl {
         $inject = ["$scope", "$state", "$window", "$filter", "$q", "ENDPOINT", "PAGINATIONCONFIG",
-            "AdminGroupService"];
+            "AdminActionStatusService"];
         $state;
         $filter;
         $q: ng.IQService;
@@ -20,30 +20,24 @@ module AIP {
         searchConfig;
         mobileConfig;
         mobileSize;
-        adminGroupService;
+        adminActionStatusService;
         selectedRecord;
 
         constructor($scope, $state, $window, $filter, $q, ENDPOINT, PAGINATIONCONFIG,
-                    AdminGroupService) {
+                    AdminActionStatusService) {
             $scope.vm = this;
             this.$state = $state;
             this.$filter = $filter;
             this.$q = $q;
             this.endPoint = ENDPOINT;   //ENDPOINT.admin.actionList
             this.paginationConfig = PAGINATIONCONFIG;
-            this.adminGroupService = AdminGroupService;
+            this.adminActionStatusService = AdminActionStatusService;
             this.init();
             angular.element($window).bind('resize', function() {
                 //$scope.onResize();
                 $scope.$apply();
             });
 
-            /*
-             $scope.$watch("[vm.groupDetailResponse, vm.groupInfo]" , (newVal, oldVal) => {
-             if(!$scope.$$phase) {
-             $scope.apply();
-             }
-             });*/
             angular.element($window).bind('resize', function() {
                 //$scope.onResize();
                 $scope.$apply();
@@ -54,24 +48,23 @@ module AIP {
             this.gridData = {};
             this.draggableColumnNames=[];
             this.mobileConfig = {
-                groupTitle: 3,
-                folderName: 3,
-                groupStatus: 3,
-                groupmUserId: 3,
-                groupActivityDate: 3
+                actionItemStatus: 3,
+                actionItemBlockedProcess: 3,
+                actionItemSystemRequired: 3,
+                actionItemLastUpdatedBy: 3,
+                actionItemActivityDate: 3
             };
             this.mobileSize = angular.element("body").width()>768?false:true;
             this.searchConfig = {
-                id: "groupDataTableSearch",
+                id: "statusDataTableSearch",
                 delay: 300,
-                //todo:change this out for message property
-                ariaLabel: "Search for any action Items",
+                ariaLabel: this.$filter("i18n_aip")("aip.list.grid.search.status"),
                 searchString: "",
                 maxlength: 200,
                 minimumCharacters: 1
             };
             this.header = [{
-                name: "groupId",
+                name: "actionItemStatusId",
                 title: "id",
                 width: "0px",
                 options: {
@@ -80,9 +73,9 @@ module AIP {
                     columnShowHide: false
                 }
             }, {
-                name: "groupTitle",
-                title: this.$filter("i18n_aip")("aip.list.grid.groupTitle"),
-                ariaLabel: this.$filter("i18n_aip")("aip.list.grid.groupTitle"),
+                name: "actionItemStatus",
+                title: this.$filter("i18n_aip")("aip.list.grid.status"),
+                ariaLabel: this.$filter("i18n_aip")("aip.list.grid.status"),
                 width: "100px",
                 options: {
                     sortable: true,
@@ -91,19 +84,9 @@ module AIP {
                     columnShowHide: false
                 }
             }, {
-                name: "folderName",
-                title: this.$filter("i18n_aip")("aip.list.grid.folder"),
-                ariaLabel: this.$filter("i18n_aip")("aip.list.grid.folder"),
-                width: "100px",
-                options: {
-                    sortable: true,
-                    visible: true,
-                    columnShowHide: false
-                }
-            }, {
-                name: "groupStatus",
-                title: this.$filter("i18n_aip")("aip.list.grid.status"),
-                ariaLabel: this.$filter("i18n_aip")("aip.list.grid.status"),
+                name: "actionItemStatusBlockedProcess",
+                title: this.$filter("i18n_aip")("aip.list.grid.blockedProcess"),
+                ariaLabel: this.$filter("i18n_aip")("aip.list.grid.blockedProcess"),
                 width: "100px",
                 options: {
                     sortable: true,
@@ -111,7 +94,17 @@ module AIP {
                     columnShowHide: true
                 }
             }, {
-                name: "groupUserId",
+                name: "actionItemStatusSystemRequired",
+                title: this.$filter("i18n_aip")("aip.list.grid.systemRequired"),
+                ariaLabel: this.$filter("i18n_aip")("aip.list.grid.systemRequired"),
+                width: "100px",
+                options: {
+                    sortable: true,
+                    visible: true,
+                    columnShowHide: true
+                }
+            }, {
+                name: "actionItemStatusUserId",
                 title: this.$filter("i18n_aip")("aip.list.grid.lastUpdated"),
                 ariaLabel: this.$filter("i18n_aip")("aip.list.grid.lastUpdated"),
                 width: "100px",
@@ -121,7 +114,7 @@ module AIP {
                     columnShowHide: true
                 }
             }, {
-                name: "groupActivityDate",
+                name: "actionItemStatusActivityDate",
                 title: this.$filter("i18n_aip")("aip.list.grid.activityDate"),
                 ariaLabel: this.$filter("i18n_aip")("aip.list.grid.activityDate"),
                 width: "100px",
@@ -132,13 +125,17 @@ module AIP {
                 }
             }];
         }
+        getIndicatorVal() {
 
+        }
+
+        /*
         add() {
             this.$state.go("admin-group-add");
         }
 
         open() {
-            this.adminGroupService.getGroupDetail(this.$state.params.grp).then((response) => {
+            this.adminActionStatusService.getGroupDetail(this.$state.params.status).then((response) => {
                 if(response.group) {
                     this.$state.go("admin-group-open", {data: response.group});
                 } else {
@@ -150,6 +147,7 @@ module AIP {
                 console.log(err);
             });
         }
+        */
 
         getHeight() {
             var containerHeight = $(document).height() -
@@ -164,7 +162,7 @@ module AIP {
 
         fetchData(query) {
             var deferred = this.$q.defer();
-            this.adminGroupService.fetchData(query)
+            this.adminActionStatusService.fetchData(query)
                 .then((response) => {
                     // this.gridData = response;
                     // this.gridData.header = this.header;
@@ -177,8 +175,8 @@ module AIP {
         }
         selectRecord(data) {
             this.selectedRecord = data;
-            this.adminGroupService.enableGroupOpen(data.id);
-            this.$state.params.grp = data.id;
+            //this.adminActionStatusService.enableGroupOpen(data.id);
+            //this.$state.params.grp = data.id;
         }
         refreshGrid() {
 

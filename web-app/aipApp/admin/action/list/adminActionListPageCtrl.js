@@ -33,7 +33,7 @@ var AIP;
             this.searchConfig = {
                 id: "actionItemDataTableSearch",
                 delay: 300,
-                ariaLabel: "Search for any action Items",
+                ariaLabel: this.$filter("i18n_aip")("aip.list.grid.search.actionItem"),
                 searchString: "",
                 maxlength: 200,
                 minimumCharacters: 1

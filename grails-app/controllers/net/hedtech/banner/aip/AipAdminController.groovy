@@ -20,6 +20,7 @@ class AipAdminController {
     def actionItemTemplateService
     def actionItemDetailService
     def actionItemDetailCompositeService
+    def actionItemStatusService
 
 
     def folders() {
@@ -345,6 +346,31 @@ class AipAdminController {
         ]
 
         results.header = groupHeadings
+
+        render results as JSON
+    }
+
+    def actionItemStatusList() {
+
+        def paramObj = [filterName   : params.searchString ?: "%",
+                        sortColumn   : params.sortColumnName ?: "id",
+                        sortAscending: params.ascending ? params.ascending.toBoolean() : false,
+                        max          : params.max.toInteger(),
+                        offset       : params.offset ? params.offset.toInteger() : 0]
+
+        def results = actionItemStatusService.listActionItemsPageSort( paramObj )
+        response.status = 200
+
+        def actionItemStatusHeadings = [
+                [name: "actionItemStatusId", title: "id", options: [visible: false, isSortable: true]],
+                [name: "actionItemStatus", title: MessageUtility.message( "aip.common.status" ), options: [visible: true, isSortable: true, ascending: paramObj.sortAscending], width: 0],
+                [name: "actionItemBlockedProcess", title: MessageUtility.message( "aip.common.block.process" ), options: [visible: true, isSortable: true, ascending: paramObj.sortAscending], width: 0],
+                [name: "actionItemSystemRequired", title: MessageUtility.message( "aip.common.system.required" ), options: [visible: true, isSortable: true, ascending: paramObj.sortAscending], width: 0],
+                [name: "actionItemStatusUserId", title: MessageUtility.message( "aip.common.last.updated.by" ), options: [visible: true, isSortable: true, ascending: paramObj.sortAscending], width: 0],
+                [name: "actionItemStatusActivityDate", title: MessageUtility.message( "aip.common.activity.date" ), options: [visible: true, isSortable: true, ascending: paramObj.sortAscending], width: 0]
+        ]
+
+        results.header = actionItemStatusHeadings
 
         render results as JSON
     }

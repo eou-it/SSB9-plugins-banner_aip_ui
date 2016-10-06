@@ -29,6 +29,8 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
     def actionItemGroupService
     def actionItemReadOnlyService
     def actionItemTemplateService
+    def actionItemStatusService
+    def actionItemService
 
     def VALID_FOLDER_NAME = "My Folder"
     def VALID_FOLDER_DESCRIPTION = "My Folder"
@@ -656,6 +658,35 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
         // TODO: verify something
     }
 
+    @Test
+    void testSortAipActionItemStatusAsStudent() {
+        def admin = PersonUtility.getPerson( "CSRSTU002" ) // role: student
+        assertNotNull admin
+
+        def auth = selfServiceBannerAuthenticationProvider.authenticate(
+                new UsernamePasswordAuthenticationToken( admin.bannerId, '111111' ) )
+        SecurityContextHolder.getContext().setAuthentication( auth )
+
+        controller.params.filterName="%"
+        controller.params.sortColumn="actionItemStatus"
+        controller.params.sortAscending=true
+        controller.params.max=20
+        controller.params.offset=0
+
+        controller.actionItemStatusList()
+        def answer = JSON.parse( controller.response.contentAsString )
+
+        /*
+        answer.result.each {
+            def person = PersonUtility.getPerson( it.actionItemStatusUserId )
+            println person.fullName
+        }
+
+        */
+        assertEquals 200, controller.response.status
+        // TODO: verify something
+    }
+
 
     @Test
     void testSortAipGroupAsStudent() {
@@ -757,21 +788,25 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
                 new UsernamePasswordAuthenticationToken( admin.bannerId, '111111' ) )
         SecurityContextHolder.getContext().setAuthentication( auth )
 
+        List<ActionItemTemplate> templates = actionItemTemplateService.listActionItemTemplates()
+        def actionItemTemplate = templates.id[0]
+
+        List<ActionItem> actionItems = actionItemService.listActionItems()
+        def actionItem = actionItems.id[0]
 
         def requestObj = [:]
-        requestObj.templateId=1
-        requestObj.actionItemId=1
+        requestObj.templateId=actionItemTemplate
+        requestObj.actionItemId=actionItem
 
         controller.request.method = "POST"
         controller.request.json = requestObj
-
 
         controller.updateActionItemDetailWithTemplate()
         def answer = JSON.parse( controller.response.contentAsString )
 
         assertEquals 200, controller.response.status
-        assertEquals 1, answer.actionItem.actionItemTemplateId
-        println answer
+        assertEquals actionItemTemplate, answer.actionItem.actionItemTemplateId
+
     }
 
 }

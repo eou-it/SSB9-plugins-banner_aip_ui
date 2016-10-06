@@ -20,7 +20,7 @@
                 table-id="dataTableAdminStatusList"
                 header="vm.header"
                 fetch="vm.fetchData(query)"
-                end-point="vm.adminGroupListEnd"
+                end-point="vm.adminStatusEnd"
                 content="vm.gridData.row"
                 results-found="vm.records"
                 toolbar="true"
@@ -35,6 +35,14 @@
                 draggable-column-names="vm.draggableColumnNames"
                 continuous-scrolling="vm.mobileSize"
                 continuous-scroll-parent="adminStatusListPage">
+                <xe-cell-markup column-name="actionItemStatusBlockedProcess">
+                    <span ng-if="row.actionItemStatusBlockedProcess === 'Y'" class="icon icon-success-CF icon-green" aria-label="{{'aip.common.text.yes'|i18n_aip}}"></span>
+                    <span ng-if="row.actionItemStatusBlockedProcess === 'N'" class="icon icon-info" aria-label="{{'aip.common.text.no'|i18n_aip}}"></span>
+                </xe-cell-markup>
+                <xe-cell-markup column-name="actionItemStatusSystemRequired">
+                    <span  ng-if="row.actionItemStatusSystemRequired === 'Y'" class="icon icon-success-CF icon-green" aria-label="{{'aip.common.text.yes'|i18n_aip}}"></span>
+                    <span  ng-if="row.actionItemStatusSystemRequired === 'N'" class="icon icon-info" aria-label="{{'aip.common.text.no'|i18n_aip}}"></span>
+                </xe-cell-markup>
         </xe-table-grid>
     </div>
 </div>
