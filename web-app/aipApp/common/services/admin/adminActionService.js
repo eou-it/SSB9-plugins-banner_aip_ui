@@ -48,7 +48,7 @@ var AIP;
         AdminActionService.prototype.getStatus = function () {
             var request = this.$http({
                 method: "GET",
-                url: this.ENDPOINT.admin.actionItemStatus
+                url: this.ENDPOINT.admin.actionItemStatuses
             });
             return request;
         };

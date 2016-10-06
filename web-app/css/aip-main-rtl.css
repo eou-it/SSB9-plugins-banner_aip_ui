@@ -273,7 +273,6 @@ aip-list .aip-list-container  {
     border:1px solid rgba(0, 0, 0, 0.15);
 }
   .groupAddContainer .groupControl  {
-    position:relative;
     width:100%;
     bottom:10px;
     margin-bottom:15px;
@@ -281,14 +280,11 @@ aip-list .aip-list-container  {
 }
     .groupAddContainer .groupControl .groupButton  {
     text-align:center;
-    padding-right:0;
-    margin-right:0px;
 }
       .groupAddContainer .groupControl .groupButton button  {
     width:100%;
     max-width:200px;
 }
-  
 
 .groupListContainer  {
     overflow-y:auto;
@@ -698,6 +694,10 @@ xe-tab-panel h3  {
 .cke_button_icon.cke_button__a11ybtn_icon  {
     display:none;
 }
+
+.icon-green  {
+    color:#008000;
+}
 /*** Media Query Section ***/
 @media screen and (max-width: 768px) {
     aip-list .aip-list-container .header .list-item .title .badge  {
@@ -719,14 +719,6 @@ xe-tab-panel h3  {
 }
     .ladingItem-container .landing-icon  {
     padding:16px 8px;
-}
-}
-@media (min-width: 769px) {
-    .groupAddContainer .groupControl  {
-    margin-right:33.33%;
-}
-    .groupAddContainer .groupButton  {
-    margin-right:10px;
 }
 }
 @media screen and (max-width: 768px) {

@@ -17,6 +17,7 @@
     </div>
     <div class="statusListTable" ng-style="vm.getHeight()">
         <xe-table-grid
+                caption="{{'aip.admin.status.rules'|i18n_aip}}"
                 table-id="dataTableAdminStatusList"
                 header="vm.header"
                 fetch="vm.fetchData(query)"
