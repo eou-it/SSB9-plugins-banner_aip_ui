@@ -1,6 +1,7 @@
 ///<reference path="../../../typings/tsd.d.ts"/>
 
 declare var register;
+declare var params;
 
 module AIP {
 
@@ -27,23 +28,22 @@ module AIP {
         state: string;
         title: string;
     }
-    export interface IUserItem {
-        groupId: number|string;
-        header:string[];
-        name: string;
+    export interface IGroup {
+        id: number| string;
+        title: string;
         dscParams?:string[];
         items: IActionItem[];
-        info: {
-            description: string;
-            title: string;
-        }
+    }
+    export interface IUserItem {
+        groups: IGroup[],
+        header:string[];
     }
     interface IActionItemResponse {
-        data: IUserItem[];
+        data: IUserItem;
     }
 
     interface IItemListViewService {
-        getActionItems(userInfo):void;
+        getActionItems(userInfo):ng.IPromise<IUserItem>;
         confirmItem(id:string|number):void;
         getDetailInformation(groupId: number|string, type:string, id:number|string);
     }
@@ -78,14 +78,15 @@ module AIP {
                 data: {type:selectType, groupId: groupId, actionItemId:actionItemId}
             })
                 .then((response:any) => {
-                    var data = response.data;
+                    var data = (selectType==="group") ? response.data[0] : response.data;
                     return {
                         type: selectType,
                         groupId: groupId,
                         info: {
                             content: data.text,
                             type: "doc",
-                            id: data.actionItemId||data.groupId,
+                            id: data.actionItemId,
+                            templateId: data.actionItemTemplateId,
                             detailId: data.id
                         }
                     };
@@ -108,6 +109,7 @@ module AIP {
                         dataType: 'script',
                         success: function() {
                             angular.module("BannerOnAngular").controller("CustomPageController_"+data.pageName, eval("CustomPageController_"+data.pageName));
+                            params = {action: "page", controller: "customPage", id: data.pageName};
                             defer.resolve(data);
 
                         },

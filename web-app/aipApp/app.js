@@ -343,6 +343,8 @@ var bannerAIPApp = angular.module("bannerAIP", [
             $.i18n.prop("aip.user.list.header.description.registration");
             $.i18n.prop("aip.user.list.header.title.graduation");
             $.i18n.prop("aip.user.list.header.description.graduation");
+            $.i18n.prop("aip.user.detail.noTemplate");
+
 
             $.i18n.prop("aip.user.detail.button.proceed");
             $.i18n.prop("aip.user.detail.button.confirm");

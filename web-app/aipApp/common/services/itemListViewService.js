@@ -32,14 +32,15 @@ var AIP;
                 data: { type: selectType, groupId: groupId, actionItemId: actionItemId }
             })
                 .then(function (response) {
-                var data = response.data;
+                var data = (selectType === "group") ? response.data[0] : response.data;
                 return {
                     type: selectType,
                     groupId: groupId,
                     info: {
                         content: data.text,
                         type: "doc",
-                        id: data.actionItemId || data.groupId,
+                        id: data.actionItemId,
+                        templateId: data.actionItemTemplateId,
                         detailId: data.id
                     }
                 };
@@ -62,6 +63,7 @@ var AIP;
                     dataType: 'script',
                     success: function () {
                         angular.module("BannerOnAngular").controller("CustomPageController_" + data.pageName, eval("CustomPageController_" + data.pageName));
+                        params = { action: "page", controller: "customPage", id: data.pageName };
                         defer.resolve(data);
                     },
                     async: true

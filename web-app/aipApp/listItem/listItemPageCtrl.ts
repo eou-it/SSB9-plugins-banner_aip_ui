@@ -10,7 +10,7 @@ module AIP {
     interface IListItemPageCtrl {
         itemListViewService: AIP.ItemListViewService;
         userService: AIP.UserService;
-        actionItems: IUserItem[];
+        actionItems: IUserItem;
         selectedData: ISelectedData;
         initialOpenGroup: number;
         getInitialSelection(): number;
@@ -30,7 +30,7 @@ module AIP {
             "$window", "$q"];
         itemListViewService:AIP.ItemListViewService;
         userService:AIP.UserService;
-        actionItems:IUserItem[];
+        actionItems:IUserItem;
         initialOpenGroup;
         spinnerService;
         userName;
@@ -68,8 +68,8 @@ module AIP {
             this.userService.getUserInfo().then((userData) => {
                 var userInfo = userData;
                 this.userName = userData.fullName;
-                this.itemListViewService.getActionItems(userInfo).then((actionItems) => {
-                    angular.forEach(actionItems, (group) => {
+                this.itemListViewService.getActionItems(userInfo).then((actionItems:IUserItem) => {
+                    angular.forEach(actionItems.groups, (group) => {
                         angular.forEach(group.items, (item) => {
                             item.state = item.state==="Completed"?
                                 "aip.status.complete":
@@ -77,8 +77,8 @@ module AIP {
                         });
                     });
                     this.actionItems = actionItems;
-                    angular.forEach(this.actionItems, (item) => {
-                        item.dscParams = this.getParams(item.info.title, userInfo);
+                    angular.forEach(this.actionItems.groups, (item) => {
+                        item.dscParams = this.getParams(item.title, userInfo);
                     });
                 }).finally(() => {
                     this.spinnerService.showSpinner(false);
@@ -95,7 +95,7 @@ module AIP {
         }
         getInitialSelection() {
             var defaultSelection= 0;
-            if(this.actionItems.length > 1) {
+            if(this.actionItems.groups.length > 1) {
                 defaultSelection = -1;
             }
             return defaultSelection;
@@ -170,31 +170,34 @@ module AIP {
                 throw new Error("Group does not exist with ID ");
             }
             var selectionType = itemId===null ? "group":"actionItem";
-            var titleNode = this.actionItems.filter((item) => {
-                return item.groupId === groupId;
+            var group = this.actionItems.groups.filter((item) => {
+                return item.id === groupId;
+            });
+            var actionItem = group[0].items.filter((item) => {
+                return item.id === itemId;
             });
             this.itemListViewService.getDetailInformation(groupId, selectionType, index.item===null?null:itemId).then((response:ISelectedData) => {
                 this.selectedData = response;
-                this.selectedData.info.title= titleNode[0].name;
+                this.selectedData.info.title= actionItem[0].title;
                 defer.resolve();
             })
             return defer.promise;
         }
         getIndex(groupId, itemId) {
             var index = {group:-1, item:null};
-            var selectedGroup = this.actionItems.filter((group) => {
-                return group.groupId === groupId;
+            var selectedGroup = this.actionItems.groups.filter((group) => {
+                return group.id === groupId;
             });
             if(selectedGroup.length!==-1) {
-                index.group = this.actionItems.indexOf(selectedGroup[0]);
+                index.group = this.actionItems.groups.indexOf(selectedGroup[0]);
                 // var selectedItem = this.actionItems[groupId].items.filter((item) => {
                 //     return item.id === itemId;
                 // });
-                var selectedItem = this.actionItems.filter((item) => {
-                    return item.groupId === groupId;
+                var selectedItem = this.actionItems.groups.filter((item) => {
+                    return item.id === groupId;
                 });
                 if(selectedItem.length!==-1) {
-                    index.item = this.actionItems.indexOf(selectedItem[0]);
+                    index.item = this.actionItems.groups.indexOf(selectedItem[0]);
                 }
             }
             return index;

@@ -4,6 +4,8 @@ declare var register;
 //var CustomPageController;
 declare var CustomPageController;
 
+declare var params;
+
 module PB {
     export class PageBuilderPage {
         static $inject = ["$compile", "ItemListViewService"]

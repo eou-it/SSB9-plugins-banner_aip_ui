@@ -32,7 +32,7 @@ var AIPUI;
             $scope.selectItem = function (group, row, evt) {
                 this.resetSelection();
                 this.addSelection(evt.currentTarget);
-                $scope.click({ groupId: group.groupId, itemId: row.id }).then(function () {
+                $scope.click({ groupId: group.id, itemId: row.id }).then(function () {
                     setTimeout(function () {
                         $scope.changeFocus(".detail")
                             , 100;

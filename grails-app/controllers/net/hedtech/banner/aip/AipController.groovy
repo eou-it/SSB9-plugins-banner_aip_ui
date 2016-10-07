@@ -117,7 +117,8 @@ class AipController {
                 def groupItem = [
                         id         : group.groupId,
                         title      : group.groupTitle,
-                        description: groupDesc
+                        description: groupDesc,
+                        header : ["title", "state", "description"]
 
                 ]
                 userGroupInfo << groupItem
@@ -125,10 +126,7 @@ class AipController {
         }
 
         def myItems = [
-                name   : userGroupInfo.title,
-                groupId: userGroupInfo.id,
-                info   : getActionGroupDescription( "registration" ),
-                header : ["title", "state", "description"]
+                groups : userGroupInfo
         ]
 
         def items = []
@@ -136,17 +134,16 @@ class AipController {
             actionItems?.each { item ->
                 def actionItem = [
                         id         : item.id,
-                        name       : item.title,
-                        state      : item.status,
                         title      : item.title,
+                        state      : item.status,
                         description: item.description
                 ]
                 items << actionItem
             }
-            myItems.items = items
-            itemsList << myItems
+            myItems.groups[0].items = items
+//            itemsList << myItems
         }
-        render itemsList as JSON
+        render myItems as JSON
     }
 
     // Return login user's information
