@@ -31,6 +31,7 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
     def actionItemTemplateService
     def actionItemStatusService
     def actionItemService
+    def preferredNameService
 
     def VALID_FOLDER_NAME = "My Folder"
     def VALID_FOLDER_DESCRIPTION = "My Folder"
@@ -676,13 +677,37 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
         controller.actionItemStatusList()
         def answer = JSON.parse( controller.response.contentAsString )
 
-        /*
         answer.result.each {
             def person = PersonUtility.getPerson( it.actionItemStatusUserId )
-            println person.fullName
+
+            /*
+            if (person) {
+                println person
+                def params = [pidm:person.pidm, usage:'DEFAULT']
+                def preferredName = preferredNameService.getPreferredName(params);
+                println "full name: " + person.fullName
+                println "preferred name: " +preferredName
+
+            } else {
+                println "no person record for" +  it.actionItemStatusUserId
+            }*/
+
+
         }
 
-        */
+        def testpn = PersonUtility.getPerson( '207001837' )
+        if (testpn) {
+            println testpn
+            def params = [pidm:testpn.pidm, usage:'DEFAULT']
+            def preferredName = preferredNameService.getPreferredName(params);
+            println "full name: " + testpn.fullName
+            println "preferred name: " +preferredName
+
+        } else {
+            println "no person record"
+        }
+
+
         assertEquals 200, controller.response.status
         // TODO: verify something
     }

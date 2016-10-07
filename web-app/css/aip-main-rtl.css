@@ -698,6 +698,10 @@ xe-tab-panel h3  {
 .icon-green  {
     color:#008000;
 }
+
+.offscreen  {
+    visibility:hidden;
+}
 /*** Media Query Section ***/
 @media screen and (max-width: 768px) {
     aip-list .aip-list-container .header .list-item .title .badge  {
