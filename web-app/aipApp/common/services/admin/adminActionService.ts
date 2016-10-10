@@ -122,7 +122,7 @@ module AIP {
         fetchData (query:IActionItemListQuery) {
             var deferred = this.$q.defer();
             var realMax = parseInt(query.max) - parseInt(query.offset);
-            var url = this.ENDPOINT.admin.actionItemList + "?" +
+            var url = this.ENDPOINT.admin.actionItemList +
                 '?searchString=' + (query.searchString || '') +
                 '&sortColumnName=' + (query.sortColumnName || 'actionItemName') +
                 '&ascending=' + (query.ascending.toString() || "") +
@@ -149,7 +149,7 @@ module AIP {
         getStatus() {
             var request = this.$http({
                 method: "GET",
-                url: this.ENDPOINT.admin.actionItemStatus
+                url: this.ENDPOINT.admin.actionItemStatuses
             });
             return request;
         }

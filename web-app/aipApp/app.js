@@ -134,7 +134,8 @@ var bannerAIPApp = angular.module("bannerAIP", [
             // actionList: aipAppAbsPath + "aip/adminActionLists",
 
             actionItemList: aipAppAbsPath + "aipAdmin/actionItemList",
-            actionItemStatus: aipAppAbsPath + "aipAdmin/adminActionItemStatus",
+            actionItemStatuses: aipAppAbsPath + "aipAdmin/adminActionItemStatus",
+            actionItemStatus: aipAppAbsPath + "aipAdmin/actionItemStatusList",
             createActionItem: aipAppAbsPath + "aipAdmin/addActionItem",
             editActionItemContent: aipAppAbsPath + "aipAdmin/editActionItemContent",
             openActionItem: aipAppAbsPath + "aipAdmin/openActionItem",
@@ -248,7 +249,12 @@ var bannerAIPApp = angular.module("bannerAIP", [
             $.i18n.prop("aip.common.activity");
             $.i18n.prop("aip.common.activity.date");
             $.i18n.prop("aip.common.last.updated.by");
+            $.i18n.prop("aip.common.block.process");
+            $.i18n.prop("aip.common.block.process.indicator.is");
+            $.i18n.prop("aip.common.system.required");
+            $.i18n.prop("aip.common.system.required.indicator.is");
             $.i18n.prop("aip.common.save");
+            $.i18n.prop("aip.common.save.successful");
             $.i18n.prop("aip.common.cancel");
             $.i18n.prop("aip.common.next");
             $.i18n.prop("aip.common.add");
@@ -268,7 +274,8 @@ var bannerAIPApp = angular.module("bannerAIP", [
             $.i18n.prop("aip.placeholder.nogroups");
             $.i18n.prop("aip.placeholder.noitems");
             $.i18n.prop("aip.common.text.template");
-            $.i18n.prop("aip.common.text.content");
+            $.i18n.prop("aip.common.text.yes");
+            $.i18n.prop("aip.common.text.no");
 
             $.i18n.prop("aip.admin.landing");
 
@@ -322,6 +329,7 @@ var bannerAIPApp = angular.module("bannerAIP", [
 
             $.i18n.prop("aip.admin.selectable.action.items");
             $.i18n.prop("aip.admin.selectable.groups");
+            $.i18n.prop("aip.admin.status.rules");
 
             $.i18n.prop("aip.list.grid.groupTitle");
             $.i18n.prop("aip.list.grid.itemTitle");
@@ -329,6 +337,12 @@ var bannerAIPApp = angular.module("bannerAIP", [
             $.i18n.prop("aip.list.grid.status");
             $.i18n.prop("aip.list.grid.lastUpdated");
             $.i18n.prop("aip.list.grid.activityDate");
+            $.i18n.prop("aip.list.grid.blockedProcess");
+            $.i18n.prop("aip.list.grid.systemRequired");
+
+            $.i18n.prop("aip.list.grid.search.status");
+            $.i18n.prop("aip.list.grid.search.actionItem");
+            $.i18n.prop("aip.list.grid.search.group");
 
             $.i18n.prop("aip.status.active");
             $.i18n.prop("aip.status.inactive");
@@ -468,9 +482,15 @@ var bannerAIPUI = angular.module("bannerAIPUI", [])
 
 
 // Override common components
+/*tab navigation*/
 angular.module("templates/tabNav.html", []).run(["$templateCache", function($templateCache) {
     $templateCache.put("templates/tabNav.html",
             "<div class=\"xe-tab-container\" role=\"presentation\"><ul class=\"xe-tab-nav\" role=\"tablist\"><li ng-repeat=\"tab in tabnav.tabs\" ng-click=\"tabnav.activate(tab)\" ng-class=\"{active: tab.active}\" ng-repeat-complete aria-controls=\"{{'xe-tab-panel'+ ($index+1)}}\" aria-selected=\"{{tab.active}}\" tabindex=\"-1\"><a ui-sref=\"{{ tab.state && tab.state || '#' }}\" href=\"#\" id=\"{{'xe-tab'+ ($index+1)}}\" title=\"{{tab.heading}}\" ng-if=\"tab.state\">{{tab.heading}} <span></span></a> <a href=\"javascript:void(0)\;\" role=\"tab\" id=\"{{'xe-tab'+ ($index+1)}}\" title=\"{{tab.heading}}\" ng-if=\"!tab.state\" aria-selected=\"{{tab.active}}\">{{tab.heading}} <span></span></a></li></ul><div class=\"xe-tab-content\" role=\"presentation\"><ng-transclude></ng-transclude></div></div>");
+}]);
+/*grid*/
+angular.module("templates/dataTable.html", []).run(["$templateCache", function($templateCache) {
+    $templateCache.put("templates/dataTable.html",
+            "<div id=\"{{tableId}}\" class=\"table-container\" ng-class=\"{'fixed-height': !!height, 'noToolbar': noCaptionAndToolbar, 'no-data': !resultsFound, 'empty': emptyTableMsg}\" browser-detect role=\"grid\" aria-labelledby=\"gridCaption\" ng-cloak><div class=\"caption\" ng-if=\"::!noCaptionBar\" xe-section=\"{{xeSection + 'CaptionBar'}}\"><table class=\"data-table\" role=\"presentaion\"><caption ng-class=\"{'search-opened': hideContainer}\"><span id=\"gridCaption\" class=\"caption-container font-semibold\" ng-if=\"::!nocaption\" ng-bind=\"::caption\" xe-field=\"caption\"></span><div class=\"toolbar\" ng-if=\"toolbar\"><xe-toolbar></xe-toolbar><xe-column-filter></xe-column-filter><span role=\"search\" title=\"{{'search.shortcut.label' | xei18n}}\" ng-if=\"::!nosearch\"><xe-search value=\"searchConfig.searchString\" place-holder=\"{{'search.label' | xei18n}}\" on-change=\"fetchSpecial(query)\" on-focus=\"onSearchFocus({event: event})\" on-blur=\"onSearchBlur({event: event})\" search-config=\"searchConfig\" loading-data=\"loadingData\"></xe-search></span></div></caption></table></div><div class=\"hr-scrollable-content\"><div class=\"thead\"><table class=\"data-table\" ng-style=\"headerPadding\" role=\"presentaion\"><thead role=\"rowgroup\"><tr role=\"row\"><th class=\"font-semibold width-animate {{::heading.name}}\" ng-repeat=\"heading in header\" ng-class=\"{'sortable': heading.options.sortable, 'ascending': sortArray[heading.name].ascending, 'decending': sortArray[heading.name].decending}\" ng-if=\"heading.options.visible === true\" ng-style=\"{'width': heading.dynamicWidth + 'px'}\" data-name=\"{{::heading.name}}\" ng-click=\"onSort({heading: heading}); sortOnHeading(heading, $index);\" role=\"columnheader\" aria-sort=\"{{sortArray[heading.name].ascending ? ('dataTable.sort.ascending.label' | xei18n) : (sortArray[heading.name].decending ? ('dataTable.sort.descending.label' | xei18n) : 'none')}}\" drag-drop=\"handleDrop\" tabindex=\"0\" xe-field=\"{{::heading.name}}\" xe-heading-injector><div class=\"data\" title=\"{{heading.label}}\"><span ng-show=\"::heading.options.titleVisible !== false\" aria-hidden=\"false\" ng-bind=\"::heading.title\"></span><label id=\"${{'headingAria' + $index}}\" class=\"sr-only\" ng-bind=\"(heading.options.sortable ? ('dataTable.sortable.label' | xei18n) : '')\"></label></div></th></tr></thead></table></div><div class=\"tbody\" ng-style=\"::{'height': height}\" continuous-scroll=\"nextPage()\" scroll-parent=\"{{::continuousScrollParent}}\" aria-labelledby=\"msg\" tabindex=\"{{(!resultsFound || emptyTableMsg) ? 0 : ''}}\" resize><div id=\"msg\" ng-bind=\"emptyTableMsg? emptyTableMsg : ((!resultsFound && !loadingData) ? noDataMsg : '')\"></div><table class=\"data-table\" ng-class=\"::mobileLayout ? 'mobileLayout' : 'noMobileLayout'\" role=\"presentaion\"><thead role=\"presentaion\" aria-hidden=\"true\"><tr><th class=\"font-semibold {{::heading.name}}\" ng-repeat=\"heading in header\" ng-class=\"{'sortable': heading.options.sortable, 'ascending': sortArray[heading.name].ascending, 'decending': sortArray[heading.name].decending}\" ng-if=\"heading.options.visible === true\" ng-style=\"{'width': heading.dynamicWidth + 'px'}\" data-name=\"{{::heading.name}}\" xe-field=\"{{::heading.name}}\" xe-heading-injector tab-index><div class=\"data\"><span ng-show=\"::heading.options.titleVisible !== false\" ng-bind=\"::heading.title\"></span></div></th></tr></thead><tbody role=\"rowgroup\"><tr ng-repeat=\"row in content\" ng-click=\"onRowClick({data:row,index:$index})\" ng-dblclick=\"onRowDoubleClick({data:row,index:$index})\" xe-row-injector tabindex=\"-1\" role=\"row\"><td class=\"width-animate\" ng-repeat=\"heading in header\" ng-class=\"{'align-right': heading.options.actionOrStatus, 'sortable': heading.options.sortable}\" ng-if=\"heading.options.visible === true\" data-name=\"{{::heading.name}}\" data-title=\"{{::(heading.title && heading.options.titleVisible !== false) ? heading.title + ':' : ''}}\" attain-mobile-layout=\"{{mobileLayout[heading.name]}}\" xe-field=\"{{::heading.name}}\" xe-cell-injector tab-index role=\"gridcell\" ng-cloak>{{getObjectValue(row, heading.name)}}</td></tr></tbody></table></div></div><div class=\"tfoot\" ng-transclude></div><xe-pagination model=\"content\" results-found=\"resultsFound\" ng-show=\"showPagination\" search-string=\"searchConfig.searchString\"></xe-pagination><div ng-show=\"loadingData\" class=\"load-indicator\"><div class=\"spinner\"><div class=\"bounce1\"></div><div class=\"bounce2\"></div><div class=\"bounce3\"></div></div></div></div>");
 }]);
 
 
