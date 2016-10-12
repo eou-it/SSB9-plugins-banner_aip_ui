@@ -417,12 +417,6 @@ var bannerAIPApp = angular.module("bannerAIP", [
                         editor.config.height='30em',
                         editor.config.width='100%',
 
-                       editor.config.font_style = {
-                                    element:        'p',
-                                    styles:         { 'font-family': '#(family)' },
-                                    overrides:      [ { element: 'font', attributes: { 'face': 'OpenSans', 'size':'14px' } } ]
-                                };
-
                             // Rearrange the layout of the toolbar.
                         editor.config.toolbar = [
                          { name: 'document', items: [ 'Source' ] },
@@ -435,7 +429,7 @@ var bannerAIPApp = angular.module("bannerAIP", [
                          { name: 'basicstyles', items: [ 'Bold', 'Italic', 'Strike', '-', 'RemoveFormat' ] },
                          { name: 'colors', items: [ 'TextColor', 'BGColor' ] },
                          { name: 'paragraph', items: [ 'NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote' ] },
-                         { name: 'styles' },
+                         { name: 'styles', items: [ 'Format', 'Font', 'FontSize', 'TextColor', 'PasteText', 'PasteFromWord', 'RemoveFormat' ] },
                          { name: 'about', items: [ 'About','A11YBtn' ] }
                          ];
                     });
