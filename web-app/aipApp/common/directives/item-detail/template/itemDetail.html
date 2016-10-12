@@ -21,19 +21,6 @@
                 </button>
             </div>
             <!--action item-->
-            <div class="row actionItemTwoButton" ng-if="data.type!=='group'">
-                <!--TODO::add 'Agree' and 'Deny' buttons with detail information-->
-                <div class="col-sm-8 col-sm-offset-2 col-xs-12 buttonDiv">
-                    <button type="button" class="btn btn-default" ng-click="agree(data.info.id)">
-                        {{"aip.user.detail.button.confirm"|i18n_aip}}
-                    </button>
-                </div> 
-                <div class="col-sm-8 col-sm-offset-2 col-xs-12 buttonDiv">
-                    <button type="button" class="btn btn-default" ng-click="notAgree(data.info.id)">
-                        {{"aip.user.detail.button.deny"|i18n_aip}}
-                    </button>
-                </div>
-            </div>
         </div>
         <div class="detail-nav hidden-sm hidden-md hidden-lg visible-xs-12" ng-if="data.type!=='group'">
             <div class="row btn-group">
