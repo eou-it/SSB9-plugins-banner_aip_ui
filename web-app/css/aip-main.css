@@ -177,6 +177,12 @@ aip-list .aip-list-container {
       .aip-item-detail-container .detail-content .detail-nav .btn-group {
         width: 100%; }
 
+.pb-detail.pb-radio.pb-item {
+  display: flex; }
+
+.pb-detail.pb-item.pb-radiolabel {
+  margin: 20px 30px 20px 0px; }
+
 .groupAddContainer {
   padding: 8px 0; }
   .groupAddContainer .row {
