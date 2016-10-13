@@ -495,8 +495,6 @@ aip-list .aip-list-container {
     #content .viewContainer {
       padding: 0 8px;
       overflow: auto; } }
-#breadcrumbHeader .breadcrumbButton {
-  font-size: 0.8em; }
 #breadcrumbHeader a.breadcrumbButton.leaf-breadcrumb {
   text-decoration: none;
   cursor: default; }

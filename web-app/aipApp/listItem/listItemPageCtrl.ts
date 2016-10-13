@@ -216,11 +216,17 @@ module AIP {
         resetSelection() {
             this.selectedData = undefined;
         }
-        getCustomPage(id) {
-            var custumPageId = id || "ActionItemPolicy"; //TODO: get id from selectedData (later)
-            var request = this.itemListViewService.getPagebuilderPage(custumPageId);
-            return request;
+        /*
+        getCustomPage(id,actionItemId) {
+            var defer = this.$q.defer();
+            var customPageId = id || "ActionItemPolicy"; //TODO: get id from selectedData (later)
+            var actionItemId = actionItemId || "3";
+            var request = this.itemListViewService.getPagebuilderPage(customPageId,actionItemId ).then( (response:any) => {
+                defer.resolve();
+            });
+            return defer.promise;
         }
+        */
 
     }
 }
