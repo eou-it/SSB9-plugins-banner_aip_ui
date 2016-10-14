@@ -7,7 +7,8 @@ var PB;
             this.transclude = true;
             this.replace = true;
             this.scope = {
-                content: "@"
+                content: "@",
+                aid: "@"
             };
             this.$compile = $compile;
             this.ItemListViewService = ItemListViewService;
@@ -16,9 +17,9 @@ var PB;
         };
         PageBuilderPage.prototype.link = function (scope, element, attrs) {
             var self = this;
-            attrs.$observe('content', function (tpl) {
+            attrs.$observe('aid', function (tpl) {
                 var me = self;
-                self.ItemListViewService.getPagebuilderPage("ActionItemPolicy")
+                self.ItemListViewService.getPagebuilderPage("ActionItemPolicy", attrs.aid)
                     .then(function (val) {
                     element.children().empty();
                     var tempElement = angular.element(val.html);

@@ -49,7 +49,7 @@ var AIP;
             });
             return request;
         };
-        ItemListViewService.prototype.getPagebuilderPage = function (id) {
+        ItemListViewService.prototype.getPagebuilderPage = function (id, actionItemId) {
             var _this = this;
             var defer = this.$q.defer();
             var request = this.$http({
@@ -59,31 +59,15 @@ var AIP;
                 .then(function (response) {
                 var data = response.data;
                 $.ajax({
-                    url: _this.APP_PATH + "/aipPageBuilder/pageScript?id=" + id,
+                    url: _this.APP_PATH + "/aipPageBuilder/pageScript?id=" + id + "&actionItemId:" + actionItemId,
                     dataType: 'script',
                     success: function () {
                         angular.module("BannerOnAngular").controller("CustomPageController_" + data.pageName, eval("CustomPageController_" + data.pageName));
-                        params = { action: "page", controller: "customPage", id: data.pageName };
+                        params = { action: "page", controller: "customPage", id: data.pageName, actionItemId: actionItemId };
                         defer.resolve(data);
                     },
                     async: true
                 });
-                // this.$http({
-                //     url: this.APP_PATH + "/aipPageBuilder/pageScript?id=" + id,
-                //     method: "GET"
-                // }).then((script:any)=> {
-                //     //CustomPageController ===>
-                //     angular.module("BannerOnAngular").controller("CustomPageController_" + script.data.pageName, eval(script.data.script));
-                //     defer.resolve(response.data);
-                // });
-                // defer.resolve(data);
-                //this.$http({
-                //    method: "GET",
-                //    url: this.APP_PATH + "/aipPageBuilder/pageScript"
-                //})
-                //    .then((response:any) => {
-                //        defer.resolve(data);
-                //});
             }, function (err) {
                 throw new Error(err);
             });
