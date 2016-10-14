@@ -2,6 +2,9 @@ $badge-color: #FFCDAA;
 $badge-border-color: #FD9F5E;
 $banner-color: #557287;
 $border-color: #A4C6E4;
+$heading-background: #ECECEC;
+$top-background: #EFF4F8;
+$progressbar-color: #FFD079;
 
 aip-list {
   .aip-list-container {
@@ -25,7 +28,7 @@ aip-list {
       border: 0;
     }
     .panel-heading {
-      background-color:transparent;
+      background-color:$heading-background;
       border: none;
       padding: 0;
       .panel-title {
@@ -39,14 +42,23 @@ aip-list {
           color: black;
         }
         .item-group {
-          padding: 0;
+          padding: 16px 8px 8px 8px;
           margin: 2px;
+          .row.instruction {
+            border-top: solid 1px $border-color;
+            padding: 8px 0 8px 0;
+            span {
+              text-decoration: underline;
+              color: $banner-color;
+            }
+          }
           .group-toggle-indicator {
+            float: right;
             padding-right: 8px;
           }
           .group-title {
             white-space: nowrap;
-            padding: 0 0 8px 0;
+            padding: 0 0 16px 0;
             .group-title-text {
               font-size: 1em;
               padding-right: 8px;
@@ -64,18 +76,23 @@ aip-list {
             //float: right;
           }
           .group-progress {
-            padding: 0 8px;
+            padding: 0;
             .progress {
-              border-radius: 16px;
+              border-radius: 0;
+              border: solid 2px $border-color;
+              background-color: white;
+
               .progress-bar {
-                border-radius: 16px;
+                border-radius: 0;
+                background-color: $progressbar-color;
+                box-shadow: none;
                 span {
-                  text-align: center;
+                  color: $banner-color;
+                  text-align: right;
                   position: absolute;
                   left: 0;
-                  right: 0;
+                  right: 1.5em;
                   width: auto;
-                  color: #272727;
                   white-space: nowrap;
                 }
               }
