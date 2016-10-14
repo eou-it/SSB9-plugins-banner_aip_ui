@@ -9,7 +9,7 @@ var aipAppAbsPath = window.location.protocol + "//" + window.location.host + App
 // required global variables for PageBuilder render
 var params = {};
 var rootWebApp = aipAppAbsPath.replace("/ssb/","/");
-var resourceBase = rootWebApp+'internal/';
+var resourceBase = rootWebApp+'internalPb/';
 
 
 var bannerAIPApp = angular.module("bannerAIP", [

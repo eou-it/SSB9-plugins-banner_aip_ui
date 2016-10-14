@@ -106,7 +106,7 @@ aip-list .aip-list-container  {
       aip-list .aip-list-container .list-body-container .list-body .list-item .cell.title  {
     padding-right:10px;
 }
-        aip-list .aip-list-container .list-body-container .list-body .list-item .cell.title h3  {
+        aip-list .aip-list-container .list-body-container .list-body .list-item .cell.title h3, aip-list .aip-list-container .list-body-container .list-body .list-item .cell.title h4  {
     font-weight:bold;
     font-size:1.5em;
     word-wrap:break-word;
@@ -200,8 +200,8 @@ aip-list .aip-list-container  {
     .aip-item-detail-container .detail-content .detail-title  {
     padding-bottom:16px;
 }
-      .aip-item-detail-container .detail-content .detail-title span  {
-    border-bottom:1px solid black;
+      .aip-item-detail-container .detail-content .detail-title h4  {
+    font-size:1.5em;
 }
     .aip-item-detail-container .detail-content .detail  {
     padding-bottom:24px;
@@ -743,7 +743,7 @@ h3  {
 
 h4  {
     color:#4F585F;
-    font-size:1.1em;
+    font-size:1.15em;
     font-family:"OpenSans-semibold";
     margin:5px 0;
 }
