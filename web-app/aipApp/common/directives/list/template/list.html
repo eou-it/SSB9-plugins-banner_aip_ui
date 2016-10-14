@@ -1,28 +1,28 @@
-<uib-accordion-group class="aip-list-container" role="group" is-open="isOpen">
-    <uib-accordion-heading>
+<uib-accordion-group class="aip-list-container" role="group" is-open="isOpen" aria-label="  ">
+    <uib-accordion-heading id="heading-{{itemgroup.id}}">
         <div class="item-group row">
             <div class="row">
                 <div class="group-title col-sm-12 col-xs-12">
-                    <span class="group-title-text" tabindex="-1" ng-click="openGroup(itemgroup.id)">{{itemgroup.title|i18n_aip}}</span>
-                    <i class="group-toggle-indicator fa" ng-class="{'fa-caret-up':isOpen, 'fa-caret-down':!isOpen}"></i>
-                    <div class="badge" ng-if="!isOpen">
+                    <h2 aria-label="{{itemgroup.title}} {{completedItem().length}} of {{itemgroup.items.length}} completed" id="h2-{{itemgroup.id}}" class="group-title-text" tabindex="-1"
+                        ng-click="openGroup(itemgroup.id)" aria-expanded="{{isOpen}}">{{itemgroup.title|i18n_aip}}
+                    <span class="badge" ng-if="!isOpen" aria-label="{{completedItem().length}} of {{itemgroup.items.length}} completed">
                         {{completedItem().length + "/" + itemgroup.items.length}}
-                    </div>
+                    </span>
+                    <i role="presentation" class="group-toggle-indicator fa" ng-class="{'fa-caret-up':isOpen, 'fa-caret-down':!isOpen}"></i>
+                    </h2>
                 </div>
             </div>
             <div class="row">
                 <div class="group-progress col-sm-12" ng-if="isOpen">
-                    <uib-progressbar aria-labelledby="progressbar" ng-class="{'normal':completedItem().length+1>data.length/2}" max="itemgroup.items.length" value="completedItem().length">
+                    <uib-progressbar ng-class="{'normal':completedItem().length+1>data.length/2}" max="itemgroup.items.length" value="completedItem().length">
                         <span id="progressbar">{{completedItem().length}} of {{itemgroup.items.length}}</span>
                     </uib-progressbar>
                 </div>
             </div>
             <div class="row instruction">
                 <div class="group-title-icon col-sm-1 col-xs-1">
-                    <span role="button" aria-label="Show group description" ng-focus="focusing($event)" tabindex="0" href="javascript:void(0);" ng-click="displayGroupInfo(itemgroup.groupId, $event)"
-                       title="Show group description">Instructions
-
-                    </span>
+                    <span class="group-instructions" role="button" ng-focus="focusing($event)" tabindex="0" href="javascript:void(0);"
+                          ng-click="displayGroupInfo(itemgroup.groupId, $event)" aria-label="Group Instruction">Instructions</span>
                 </div>
             </div>
         </div>

@@ -23,7 +23,7 @@ aip-list .aip-list-container {
       box-shadow: 0 0 2px 3px #78aeda, 0 0 2px #78aeda inset;
       border-radius: 2px; }
     aip-list .aip-list-container .panel-heading .panel-title .accordion-toggle {
-      color: black; }
+      color: #000000; }
     aip-list .aip-list-container .panel-heading .panel-title .item-group {
       padding: 16px 8px 8px 8px;
       margin: 2px; }
@@ -32,7 +32,7 @@ aip-list .aip-list-container {
         padding: 8px 0 8px 0; }
         aip-list .aip-list-container .panel-heading .panel-title .item-group .row.instruction span {
           text-decoration: underline;
-          color: #557287; }
+          color: #206E9f; }
       aip-list .aip-list-container .panel-heading .panel-title .item-group .group-toggle-indicator {
         float: right;
         padding-right: 8px; }
@@ -46,6 +46,8 @@ aip-list .aip-list-container {
       aip-list .aip-list-container .panel-heading .panel-title .item-group .group-title-icon {
         padding-right: 0;
         padding-left: 0; }
+      aip-list .aip-list-container .panel-heading .panel-title .item-group .badge {
+        margin-left: 5px; }
       aip-list .aip-list-container .panel-heading .panel-title .item-group .group-progress {
         padding: 0; }
         aip-list .aip-list-container .panel-heading .panel-title .item-group .group-progress .progress {
@@ -57,7 +59,7 @@ aip-list .aip-list-container {
             background-color: #FFD079;
             box-shadow: none; }
             aip-list .aip-list-container .panel-heading .panel-title .item-group .group-progress .progress .progress-bar span {
-              color: #557287;
+              color: #103750;
               text-align: right;
               position: absolute;
               left: 0;
@@ -76,16 +78,22 @@ aip-list .aip-list-container {
         background-color: #eaeef1; }
       aip-list .aip-list-container .list-body-container .list-body .list-item .aipReadmore {
         word-break: normal; }
-      aip-list .aip-list-container .list-body-container .list-body .list-item .cell.title h3 {
-        font-weight: bold;
-        font-size: 1.3em;
-        word-wrap: break-word;
-        margin: 0;
-        line-height: 1.8em;
-        display: inline;
-        border-bottom: solid 1px #000000;
-        padding-bottom: 3px;
-        padding-right: 10px; }
+      aip-list .aip-list-container .list-body-container .list-body .list-item .cell.title {
+        padding-left: 10px; }
+        aip-list .aip-list-container .list-body-container .list-body .list-item .cell.title h3 {
+          font-weight: bold;
+          font-size: 1.5em;
+          word-wrap: break-word;
+          margin: 0;
+          /*line-height: 1.8em;*/
+          color: #206E9f;
+          display: inline;
+          /*border-bottom: solid 1px #206E9f;*/
+          text-decoration: underline;
+          font-family: "OpenSans-regular";
+          padding-bottom: 3px;
+          padding-right: 10px;
+          padding-left: 0; }
       aip-list .aip-list-container .list-body-container .list-body .list-item .cell.state {
         padding: 0; }
         aip-list .aip-list-container .list-body-container .list-body .list-item .cell.state span:first-letter {
@@ -101,8 +109,10 @@ aip-list .aip-list-container {
         border-bottom: 1px solid #A4C6E4;
         padding: 24px 8px 16px 8px; }
   @media screen and (max-width: 768px) {
-    aip-list .aip-list-container .header .list-item .title .badge {
-      float: right; }
+    aip-list .aip-list-container .header .list-item .title {
+      padding-left: 0; }
+      aip-list .aip-list-container .header .list-item .title .badge {
+        float: right; }
     aip-list .aip-list-container .list-body .list-item .badge {
       float: right; } }
   @media screen and (max-width: 480px) {
@@ -585,19 +595,46 @@ label {
 .offscreen {
   visibility: hidden; }
 
+/*bootstrap overrides*/
 h2 {
   color: #4F585F;
-  font-size: 1.25em;
-  font-family: "OpenSans-semibold"; }
+  font-size: 1.5em;
+  font-family: "OpenSans-semibold";
+  margin: 5px 0; }
 
 h3 {
   color: #4F585F;
-  font-size: 1em;
-  font-family: "OpenSans-semibold"; }
+  font-size: 1.5em;
+  font-family: "OpenSans-semibold";
+  margin: 5px 0; }
 
 h3 {
   color: #4F585F;
-  font-size: .85em;
-  font-family: "OpenSans-semibold"; }
+  font-size: 1.15em;
+  font-family: "OpenSans-semibold";
+  margin: 5px 0; }
+
+h4 {
+  color: #4F585F;
+  font-size: 1.1em;
+  font-family: "OpenSans-semibold";
+  margin: 5px 0; }
+
+.btn-primary.disabled,
+.btn-primary[disabled],
+fieldset[disabled] .btn-primary,
+.btn-primary.disabled:hover,
+.btn-primary[disabled]:hover,
+fieldset[disabled] .btn-primary:hover,
+.btn-primary.disabled:focus,
+.btn-primary[disabled]:focus,
+fieldset[disabled] .btn-primary:focus,
+.btn-primary.disabled:active,
+.btn-primary[disabled]:active,
+fieldset[disabled] .btn-primary:active,
+.btn-primary.disabled.active,
+.btn-primary[disabled].active,
+fieldset[disabled] .btn-primary.active, .btn-primary {
+  background-color: #275c8a; }
 
 /*# sourceMappingURL=aip-main.css.map */

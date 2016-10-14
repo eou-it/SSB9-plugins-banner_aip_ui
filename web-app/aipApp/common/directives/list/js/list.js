@@ -12,7 +12,7 @@ var AIPUI;
                 showgroupinfo: "&",
                 opengroup: "=",
                 togglegroup: "&",
-                selectedFocus: "="
+                selectedFocus: "&"
             };
         }
         AIPListDirective.prototype.compile = function () {
@@ -72,14 +72,16 @@ var AIPUI;
                 if (target.className === "accordion-toggle") {
                     $scope.selectedFocus = "header";
                 }
-                else if (target.className === "group-info fa fa-info-circle") {
+                if (target.className === "group-instructions") {
                     $scope.selectedFocus = "description";
-                    //    $(".aip-list-container .item-group .group-title-text").attr("aria-hidden", "true");
-                    //    $(".aip-list-container .item-group uib-progressbar").attr("aria-hidden", "true");
-                    //    $(".aip-list-container .item-group i").attr("aria-hidden", "false");
-                    //} else {
-                    $scope.selectedFocus = undefined;
                 }
+                /*
+                if ($scope.selectedFocus === "header") {
+                    $(".row.instruction" ).removeAttr("aria-hidden" );
+                } else if ($scope.selectedFocus === "description") {
+                    $(".row.instruction" ).attr("aria-hidden", "false");
+                }
+                */
             };
         };
         return AIPListDirective;

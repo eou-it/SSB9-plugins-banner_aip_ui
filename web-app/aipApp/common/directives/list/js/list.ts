@@ -18,7 +18,7 @@ module AIPUI {
                 showgroupinfo: "&",
                 opengroup: "=",
                 togglegroup: "&",
-                selectedFocus: "="
+                selectedFocus: "&"
             }
         }
         compile() {
@@ -30,6 +30,7 @@ module AIPUI {
             } else {
                 scope.isOpen = false;
             }
+
         }
         controller($scope) {
             $scope.getStyle = function(key) {
@@ -45,6 +46,7 @@ module AIPUI {
                     })
                 });
             }
+
             $scope.openGroup = function(groupId) {
                 //TODO::Expand/Collapse group event
                 this.resetSelection();
@@ -77,17 +79,20 @@ module AIPUI {
                 var target = evt.target;
                 if(target.className === "accordion-toggle") {
                     $scope.selectedFocus = "header";
-                    //$(".aip-list-container .item-group .group-title-text").attr("aria-hidden", "false");
-                    //$(".aip-list-container .item-group uib-progressbar").attr("aria-hidden", "false");
-                    //$(".aip-list-container .item-group i").attr("aria-hidden", "true");
-                } else if(target.className === "group-info fa fa-info-circle") {
-                    $scope.selectedFocus = "description";
-                //    $(".aip-list-container .item-group .group-title-text").attr("aria-hidden", "true");
-                //    $(".aip-list-container .item-group uib-progressbar").attr("aria-hidden", "true");
-                //    $(".aip-list-container .item-group i").attr("aria-hidden", "false");
-                //} else {
-                    $scope.selectedFocus = undefined;
                 }
+                if(target.className === "group-instructions") {
+                    $scope.selectedFocus = "description";
+                }
+
+                /*
+                if ($scope.selectedFocus === "header") {
+                    $(".row.instruction" ).removeAttr("aria-hidden" );
+                } else if ($scope.selectedFocus === "description") {
+                    $(".row.instruction" ).attr("aria-hidden", "false");
+                }
+                */
+
+
             }
         }
     }
