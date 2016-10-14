@@ -33,7 +33,7 @@
     <div class="row">
         <div class="list-body-container box">
             <div id="group-{{itemgroup.id}}" class="list-body" role="list">
-                <div id="item-{{itemgroup.id}}-{{row.id}}" aria-labelledby="group-{{itemgroup.id}}"
+                <div id="item-{{itemgroup.id}}-{{row.id}}"
                      class="row list-item" ng-repeat="row in itemgroup.items" ng-click="selectItem(itemgroup, row, $event)" role="listitem">
                     <div ng-repeat="key in itemgroup.header" class="{{getStyle(key)}}">
                         <h3 ng-if="key==='title'">{{row[key]|i18n_aip}}</h3>
