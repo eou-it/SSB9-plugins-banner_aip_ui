@@ -20,7 +20,7 @@ aip-list .aip-list-container  {
     border:0;
 }
   aip-list .aip-list-container .panel-heading  {
-    background-color:transparent;
+    background-color:#ECECEC;
     border:none;
     padding:0;
 }
@@ -30,18 +30,27 @@ aip-list .aip-list-container  {
     border-radius:2px;
 }
     aip-list .aip-list-container .panel-heading .panel-title .accordion-toggle  {
-    color:black;
+    color:#000000;
 }
     aip-list .aip-list-container .panel-heading .panel-title .item-group  {
-    padding:0;
+    padding:16px 8px 8px 8px;
     margin:2px;
 }
+      aip-list .aip-list-container .panel-heading .panel-title .item-group .row.instruction  {
+    border-top:solid 1px #A4C6E4;
+    padding:8px 0 8px 0;
+}
+        aip-list .aip-list-container .panel-heading .panel-title .item-group .row.instruction span  {
+    text-decoration:underline;
+    color:#206E9f;
+}
       aip-list .aip-list-container .panel-heading .panel-title .item-group .group-toggle-indicator  {
+    float:left;
     padding-left:8px;
 }
       aip-list .aip-list-container .panel-heading .panel-title .item-group .group-title  {
     white-space:nowrap;
-    padding:0 0 8px 0;
+    padding:0 0 16px 0;
 }
         aip-list .aip-list-container .panel-heading .panel-title .item-group .group-title .group-title-text  {
     font-size:1em;
@@ -52,22 +61,29 @@ aip-list .aip-list-container  {
     padding-left:0;
     padding-right:0;
 }
+      aip-list .aip-list-container .panel-heading .panel-title .item-group .badge  {
+    margin-right:5px;
+}
       aip-list .aip-list-container .panel-heading .panel-title .item-group .group-progress  {
-    padding:0 8px;
+    padding:0;
 }
         aip-list .aip-list-container .panel-heading .panel-title .item-group .group-progress .progress  {
     border-radius:0;
+    border:solid 2px #A4C6E4;
+    background-color:white;
 }
           aip-list .aip-list-container .panel-heading .panel-title .item-group .group-progress .progress .progress-bar  {
-    border-radius:0px;
+    border-radius:0;
+    background-color:#FFD079;
+    box-shadow:none;
 }
             aip-list .aip-list-container .panel-heading .panel-title .item-group .group-progress .progress .progress-bar span  {
+    color:#103750;
     text-align:left;
     position:absolute;
     right:0;
     left:1.5em;
     width:auto;
-    color:#272727;
     white-space:nowrap;
 }
           aip-list .aip-list-container .panel-heading .panel-title .item-group .group-progress .progress.normal .progress-bar span  {
@@ -87,16 +103,21 @@ aip-list .aip-list-container  {
       aip-list .aip-list-container .list-body-container .list-body .list-item .aipReadmore  {
     word-break:normal;
 }
-      aip-list .aip-list-container .list-body-container .list-body .list-item .cell.title h3  {
+      aip-list .aip-list-container .list-body-container .list-body .list-item .cell.title  {
+    padding-right:10px;
+}
+        aip-list .aip-list-container .list-body-container .list-body .list-item .cell.title h3  {
     font-weight:bold;
-    font-size:1.3em;
+    font-size:1.5em;
     word-wrap:break-word;
     margin:0;
-    line-height:1.8em;
+    color:#206E9f;
     display:inline;
-    border-bottom:solid 1px #000000;
+    text-decoration:underline;
+    font-family:"OpenSans-regular";
     padding-bottom:3px;
     padding-left:10px;
+    padding-right:0;
 }
       aip-list .aip-list-container .list-body-container .list-body .list-item .cell.state  {
     padding:0;
@@ -597,9 +618,6 @@ aip-list .aip-list-container  {
 
 
 
-#breadcrumbHeader .breadcrumbButton  {
-    font-size:0.8em;
-}
 #breadcrumbHeader a.breadcrumbButton.leaf-breadcrumb  {
     text-decoration:none;
     cursor:default;
@@ -655,6 +673,7 @@ label  {
     .viewContainer .listActionItem .welcome .username  {
     font-size:2em;
     font-weight:bold;
+    color:#557287;
 }
   .viewContainer .listActionItem .welcometext  {
     font-size:1.5em;
@@ -700,26 +719,58 @@ label  {
     visibility:hidden;
 }
 
+/*bootstrap overrides*/
 h2  {
     color:#4F585F;
-    font-size:1.25em;
+    font-size:1.5em;
     font-family:"OpenSans-semibold";
+    margin:5px 0;
 }
 
 h3  {
     color:#4F585F;
-    font-size:1em;
+    font-size:1.5em;
     font-family:"OpenSans-semibold";
+    margin:5px 0;
 }
 
 h3  {
     color:#4F585F;
-    font-size:.85em;
+    font-size:1.15em;
     font-family:"OpenSans-semibold";
+    margin:5px 0;
+}
+
+h4  {
+    color:#4F585F;
+    font-size:1.1em;
+    font-family:"OpenSans-semibold";
+    margin:5px 0;
+}
+
+.btn-primary.disabled,
+.btn-primary[disabled],
+fieldset[disabled] .btn-primary,
+.btn-primary.disabled:hover,
+.btn-primary[disabled]:hover,
+fieldset[disabled] .btn-primary:hover,
+.btn-primary.disabled:focus,
+.btn-primary[disabled]:focus,
+fieldset[disabled] .btn-primary:focus,
+.btn-primary.disabled:active,
+.btn-primary[disabled]:active,
+fieldset[disabled] .btn-primary:active,
+.btn-primary.disabled.active,
+.btn-primary[disabled].active,
+fieldset[disabled] .btn-primary.active, .btn-primary  {
+    background-color:#275c8a;
 }
 /*** Media Query Section ***/
 @media screen and (max-width: 768px) {
-    aip-list .aip-list-container .header .list-item .title .badge  {
+    aip-list .aip-list-container .header .list-item .title  {
+    padding-right:0;
+}
+      aip-list .aip-list-container .header .list-item .title .badge  {
     float:left;
 }
     aip-list .aip-list-container .list-body .list-item .badge  {

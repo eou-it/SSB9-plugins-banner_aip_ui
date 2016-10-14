@@ -276,6 +276,8 @@ var bannerAIPApp = angular.module("bannerAIP", [
             $.i18n.prop("aip.common.text.template");
             $.i18n.prop("aip.common.text.yes");
             $.i18n.prop("aip.common.text.no");
+            $.i18n.prop("aip.common.text.completed");
+            $.i18n.prop("aip.common.text.group.instructions");
 
             $.i18n.prop("aip.admin.landing");
 

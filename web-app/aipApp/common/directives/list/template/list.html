@@ -3,9 +3,11 @@
         <div class="item-group row">
             <div class="row">
                 <div class="group-title col-sm-12 col-xs-12">
-                    <h2 aria-label="{{itemgroup.title}} {{completedItem().length}} of {{itemgroup.items.length}} completed" id="h2-{{itemgroup.id}}" class="group-title-text" tabindex="-1"
+                    <h2
+                            aria-label="{{itemgroup.title}} {{completedItem().length}} of {{itemgroup.items.length}} {{'aip.common.text.completed'|i18n_aip}}"
+                        id="h2-{{itemgroup.id}}" class="group-title-text" tabindex="-1"
                         ng-click="openGroup(itemgroup.id)" aria-expanded="{{isOpen}}">{{itemgroup.title|i18n_aip}}
-                    <span class="badge" ng-if="!isOpen" aria-label="{{completedItem().length}} of {{itemgroup.items.length}} completed">
+                    <span class="badge" ng-if="!isOpen" aria-label="{{completedItem().length}} of {{itemgroup.items.length}} {{'aip.common.text.completed'|i18n_aip}}">
                         {{completedItem().length + "/" + itemgroup.items.length}}
                     </span>
                     <i role="presentation" class="group-toggle-indicator fa" ng-class="{'fa-caret-up':isOpen, 'fa-caret-down':!isOpen}"></i>
@@ -22,7 +24,8 @@
             <div class="row instruction">
                 <div class="group-title-icon col-sm-1 col-xs-1">
                     <span class="group-instructions" role="link" ng-focus="focusing($event)" tabindex="0" href="javascript:void(0);"
-                          ng-click="displayGroupInfo(itemgroup.groupId, $event)" aria-label="Group Instruction">Instructions</span>
+                          ng-click="displayGroupInfo(itemgroup.groupId, $event)" aria-label="{{'aip.common.text.group.instructions'|i18n_aip}}">
+                        Instructions</span>
                 </div>
             </div>
         </div>
