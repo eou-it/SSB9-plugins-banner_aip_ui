@@ -48,6 +48,9 @@ aip-list .aip-list-container {
         padding-left: 0; }
       aip-list .aip-list-container .panel-heading .panel-title .item-group .badge {
         margin-left: 5px; }
+      aip-list .aip-list-container .panel-heading .panel-title .item-group .group-instructions {
+        text-decoration: underline;
+        color: #206E9f; }
       aip-list .aip-list-container .panel-heading .panel-title .item-group .group-progress {
         padding: 0; }
         aip-list .aip-list-container .panel-heading .panel-title .item-group .group-progress .progress {
