@@ -183,9 +183,9 @@ var bannerAIPApp = angular.module("bannerAIP", [
                 })
 
 //provider-injector
-    .config(["$stateProvider", "$urlRouterProvider", "$locationProvider",  "$httpProvider",
+    .config(["$stateProvider", "$urlRouterProvider", "$locationProvider",  "$httpProvider", "$windowProvider",
         "PAGES", "APP_ROOT", "APP_ABS_PATH",
-        function($stateProvider, $urlRouteProvider, $locationProvider, $httpProvider,
+        function($stateProvider, $urlRouteProvider, $locationProvider, $httpProvider, $windowProvider,
                  PAGES, APP_ROOT, APP_ABS_PATH) {
             $urlRouteProvider.otherwise("/list");
             angular.forEach(PAGES, function(item, state) {
@@ -193,7 +193,7 @@ var bannerAIPApp = angular.module("bannerAIP", [
                     url: item.url,
                     templateUrl: APP_ROOT + item.templateUrl,
                     controller: item.controller,
-                    params: {noti:undefined, data:undefined},
+                    params: {noti:undefined, data:undefined, saved:undefined},
                     onEnter: function($stateParams, $filter) {
                         this.data.breadcrumbs.url = item.breadcrumb.url;
                         this.data.breadcrumbs.title = item.breadcrumb.label;
@@ -203,6 +203,7 @@ var bannerAIPApp = angular.module("bannerAIP", [
                     }
                 })
             });
+
             // Prevent using cache for GET method for IE cache issue
             if (!$httpProvider.defaults.headers.get) {
                 $httpProvider.defaults.headers.get = {};
@@ -210,6 +211,7 @@ var bannerAIPApp = angular.module("bannerAIP", [
             $httpProvider.defaults.headers.get['If-Modified-Since'] = 'Mon, 26 Jul 1997 05:00:00 GMT';
             $httpProvider.defaults.headers.get['Cache-Control'] = 'no-cache';
             $httpProvider.defaults.headers.get['Parama'] = 'no-cache';
+
         }
     ])
 
@@ -221,16 +223,18 @@ var bannerAIPApp = angular.module("bannerAIP", [
 
             //when state successfully changed, update breadcrumbs
             $rootScope.$on("$stateChangeSuccess", function(event, toState, toParams, fromState, fromParams) {
-                $state.previous = fromState;
+                $state.fprevious = fromState;
                 $state.previousParams = fromParams;
                 BreadcrumService.updateBreadcrumb(toState.data.breadcrumbs);
             });
             $rootScope.$on("$stateChangeStart", function(event, toState, toParams, fromState, fromParams) {
-
+                //console.log("state change start");
             });
             $rootScope.$on("$stateNotFound", function(err) {
 
             });
+
+
             // $templateCache.put('adminActionItemOpenOverview.html', '<div class="actionItemElement actionItemDetail col-xs-12 col-sm-8"><h3>{{"aip.list.grid.itemTitle"|i18n_aip}}</h3><p class="openActionItemTitle">{{vm.actionItem.title}}</p><h3>{{"aip.common.folder"|i18n_aip}}</h3></div><div class="hidden-xs col-sm-1 dividerContainer" ng-style="vm.getSaparatorHeight()"><div class="divider"></div></div><div class="actionItemElement col-xs-12 col-sm-3"><h3>{{"aip.common.activity"|i18n_aip}}</h3><hr /><div class="actionItemElement"><h4>{{"aip.common.last.updated.by"|i18n_aip}}</h4><p class="openActionItemLastUpdatedBy">{{vm.actionItem.creatorId}}</p></div><hr /><div class="actionItemElement"> <h4>{{"aip.common.activity.date"|i18n_aip}}</h4><p class="openActionItemActivityDate">{{vm.actionItem.activityDate}}</p></div></div>');
 
 
@@ -398,6 +402,7 @@ var bannerAIPApp = angular.module("bannerAIP", [
                 </div>'
             );
 
+
             CKEDITOR.on( 'instanceCreated', function( event ) {
                 var editor = event.editor,
                         element = editor.element;
@@ -501,11 +506,15 @@ angular.module("BannerOnAngular")
     .constant('APP_ROOT', aipAppRoot)
     .constant('APP_PATH', Application.getApplicationPath())
     .constant("APP_ABS_PATH", aipAppAbsPath)
+    .constant("params", params)
 
-    .config(['$provide', 'APP_ROOT', function($provide, APP_ROOT) {
+    .config(['$provide', 'APP_ROOT','params', function($provide, APP_ROOT, params) {
         $provide.decorator("pagebuilderPageDirective", function($delegate) {
             var directive = $delegate[0];
             directive.templateUrl = APP_ROOT + "common/directives/pagebuilder/template/aip-pagebuilder.html";
             return $delegate;
         });
+        params.saved=false;
     }]);
+
+

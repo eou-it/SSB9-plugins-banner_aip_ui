@@ -3,6 +3,9 @@
 ///<reference path="../common/services/userService.ts"/>
 
 declare var register;
+declare var notifications;
+declare var Notification;
+declare var Notifications;
 
 module AIP {
 
@@ -23,11 +26,11 @@ module AIP {
         selectItem(groupId: number|string, itemId:number|string): void;
         toggleDetail(state:{idx:number|string, open:boolean}):void;
         resetSelection():void;
+        saveErrorCallback(message: string): void;
     }
 
     export class ListItemPageCtrl implements IListItemPageCtrl{
-        $inject = ["$scope", "$state", "ItemListViewService", "AIPUserService", "SpinnerService", "$timeout",
-            "$window", "$q"];
+        $inject = ["$scope", "$state", "ItemListViewService", "AIPUserService", "SpinnerService", "$timeout","$window", "$q"];
         itemListViewService:AIP.ItemListViewService;
         userService:AIP.UserService;
         actionItems:IUserItem;
@@ -39,6 +42,7 @@ module AIP {
         $state;
         $q;
 
+
         constructor($scope, $state, ItemListViewService, AIPUserService, SpinnerService, $timeout, $window, $q) {
             $scope.vm = this;
             this.$state = $state;
@@ -47,6 +51,8 @@ module AIP {
             this.spinnerService = SpinnerService;
             this.$timeout = $timeout;
             this.$q = $q;
+            $window;
+
             this.initialOpenGroup = -1;
             $scope.$watch(
                 "vm.detailView", function(newVal, oldVal) {
@@ -56,11 +62,23 @@ module AIP {
                 }
             );
 
-            //when resize the window, reapply all changes in the scope - reapply height of container
-            angular.element($window).bind('resize', function() {
-                //$scope.onResize();
-                $scope.$apply();
+            notifications.on('add', function (event) {
+                console.log("notification added");
+               // console.log(event);
+                $scope.vm.init();
+
+
+                /*
+                setTimeout(function(){
+                    var actionItem = params.actionItemId;
+                    var focusElem= $("div[id*='item'][id$=actionItem]");
+                    console.log(focusElem);
+                    focusElem.focus();
+                }, 1000);
+                */
+
             });
+
             this.init();
         }
         init() {
@@ -92,6 +110,7 @@ module AIP {
                     }
                 });
             });
+
         }
         getInitialSelection() {
             var defaultSelection= 0;
@@ -150,15 +169,30 @@ module AIP {
             return {height: containerHeight};
         }
         nextItem(groupId, itemId) {
+            /*
+            console.log("action item listctrl");
+            console.log(this.actionItems);
+            console.log("index listctrl");
+            */
+            console.log(groupId);
             var index = this.getIndex(groupId, itemId);
+           // console.log(index);
             if(index.group === -1) {
                 throw new Error("Group does not exist with ID ");
             }
-            if(this.actionItems[index.group].items.length-1 <= index.item) {
-                var firstItemId = this.actionItems[groupId].items[0].id;
+            /*
+            console.log(this.actionItems.groups[0].items );
+            console.log("length");
+            console.log(this.actionItems.groups[index.group].items.length);
+            console.log(index.item);
+            */
+
+            if( (this.actionItems.groups[index.group].items.length)-1 <= index.item) {
+                var firstItemId = this.actionItems.groups[groupId].items[0].id;
+                console.log(firstItemId);
                 this.selectItem(groupId, firstItemId);
             } else {
-                var nextItemId = this.actionItems[groupId].items[index.item+1].id;
+                var nextItemId = this.actionItems.groups[groupId].items[index.item+1].id;
                 this.selectItem(groupId, nextItemId);
             }
         }
@@ -176,6 +210,8 @@ module AIP {
             var actionItem = group[0].items.filter((item) => {
                 return item.id === itemId;
             });
+
+
             this.itemListViewService.getDetailInformation(groupId, selectionType, index.item===null?null:itemId).then((response:ISelectedData) => {
                 this.selectedData = response;
                 this.selectedData.info.title= actionItem[0].title;
@@ -216,6 +252,17 @@ module AIP {
         resetSelection() {
             this.selectedData = undefined;
         }
+
+        saveErrorCallback(message) {
+            var n = new Notification({
+                message: message,
+                type: "error",
+                flash: true
+            });
+            notifications.addNotification(n);
+
+        }
+
         /*
         getCustomPage(id,actionItemId) {
             var defer = this.$q.defer();

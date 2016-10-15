@@ -5,8 +5,7 @@ var AIP;
 (function (AIP) {
     var ListItemPageCtrl = (function () {
         function ListItemPageCtrl($scope, $state, ItemListViewService, AIPUserService, SpinnerService, $timeout, $window, $q) {
-            this.$inject = ["$scope", "$state", "ItemListViewService", "AIPUserService", "SpinnerService", "$timeout",
-                "$window", "$q"];
+            this.$inject = ["$scope", "$state", "ItemListViewService", "AIPUserService", "SpinnerService", "$timeout", "$window", "$q"];
             $scope.vm = this;
             this.$state = $state;
             this.itemListViewService = ItemListViewService;
@@ -14,16 +13,25 @@ var AIP;
             this.spinnerService = SpinnerService;
             this.$timeout = $timeout;
             this.$q = $q;
+            $window;
             this.initialOpenGroup = -1;
             $scope.$watch("vm.detailView", function (newVal, oldVal) {
                 if (!$scope.$$phase) {
                     $scope.apply();
                 }
             });
-            //when resize the window, reapply all changes in the scope - reapply height of container
-            angular.element($window).bind('resize', function () {
-                //$scope.onResize();
-                $scope.$apply();
+            notifications.on('add', function (event) {
+                console.log("notification added");
+                // console.log(event);
+                $scope.vm.init();
+                /*
+                setTimeout(function(){
+                    var actionItem = params.actionItemId;
+                    var focusElem= $("div[id*='item'][id$=actionItem]");
+                    console.log(focusElem);
+                    focusElem.focus();
+                }, 1000);
+                */
             });
             this.init();
         }
@@ -114,16 +122,30 @@ var AIP;
             return { height: containerHeight };
         };
         ListItemPageCtrl.prototype.nextItem = function (groupId, itemId) {
+            /*
+            console.log("action item listctrl");
+            console.log(this.actionItems);
+            console.log("index listctrl");
+            */
+            console.log(groupId);
             var index = this.getIndex(groupId, itemId);
+            // console.log(index);
             if (index.group === -1) {
                 throw new Error("Group does not exist with ID ");
             }
-            if (this.actionItems[index.group].items.length - 1 <= index.item) {
-                var firstItemId = this.actionItems[groupId].items[0].id;
+            /*
+            console.log(this.actionItems.groups[0].items );
+            console.log("length");
+            console.log(this.actionItems.groups[index.group].items.length);
+            console.log(index.item);
+            */
+            if ((this.actionItems.groups[index.group].items.length) - 1 <= index.item) {
+                var firstItemId = this.actionItems.groups[groupId].items[0].id;
+                console.log(firstItemId);
                 this.selectItem(groupId, firstItemId);
             }
             else {
-                var nextItemId = this.actionItems[groupId].items[index.item + 1].id;
+                var nextItemId = this.actionItems.groups[groupId].items[index.item + 1].id;
                 this.selectItem(groupId, nextItemId);
             }
         };
@@ -181,6 +203,14 @@ var AIP;
         };
         ListItemPageCtrl.prototype.resetSelection = function () {
             this.selectedData = undefined;
+        };
+        ListItemPageCtrl.prototype.saveErrorCallback = function (message) {
+            var n = new Notification({
+                message: message,
+                type: "error",
+                flash: true
+            });
+            notifications.addNotification(n);
         };
         return ListItemPageCtrl;
     }());
