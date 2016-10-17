@@ -3,16 +3,19 @@
 var AIP;
 (function (AIP) {
     var AdminStatusListPageCtrl = (function () {
-        function AdminStatusListPageCtrl($scope, $state, $window, $filter, $q, ENDPOINT, PAGINATIONCONFIG, AdminActionStatusService) {
-            this.$inject = ["$scope", "$state", "$window", "$filter", "$q", "ENDPOINT", "PAGINATIONCONFIG",
-                "AdminActionStatusService"];
+        function AdminStatusListPageCtrl($scope, $state, $window, $filter, $q, $uibModal, ENDPOINT, PAGINATIONCONFIG, AdminActionStatusService, APP_ROOT) {
+            this.$inject = ["$scope", "$state", "$window", "$filter", "$q", "$uibModal",
+                "ENDPOINT", "PAGINATIONCONFIG", "AdminActionStatusService", "APP_ROOT"];
             $scope.vm = this;
             this.$state = $state;
             this.$filter = $filter;
             this.$q = $q;
+            this.$uibModal = $uibModal;
             this.endPoint = ENDPOINT; //ENDPOINT.admin.actionList
             this.paginationConfig = PAGINATIONCONFIG;
             this.adminActionStatusService = AdminActionStatusService;
+            this.APP_ROOT = APP_ROOT;
+            this.modalInstance;
             this.init();
             angular.element($window).bind('resize', function () {
                 //$scope.onResize();
@@ -105,6 +108,12 @@ var AIP;
                 }];
         };
         AdminStatusListPageCtrl.prototype.getIndicatorVal = function () {
+        };
+        AdminStatusListPageCtrl.prototype.goAddPage = function () {
+            this.modalInstance = this.$uibModal.open({
+                templateUrl: this.APP_ROOT + "admin/status/list/add/statusAddTemplate.html",
+                controller: "StatusAddModalCtrl"
+            });
         };
         /*
         add() {

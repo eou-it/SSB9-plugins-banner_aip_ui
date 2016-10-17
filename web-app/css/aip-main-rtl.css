@@ -20,7 +20,7 @@ aip-list .aip-list-container  {
     border:0;
 }
   aip-list .aip-list-container .panel-heading  {
-    background-color:transparent;
+    background-color:#ECECEC;
     border:none;
     padding:0;
 }
@@ -33,15 +33,24 @@ aip-list .aip-list-container  {
     color:black;
 }
     aip-list .aip-list-container .panel-heading .panel-title .item-group  {
-    padding:0;
+    padding:16px 8px 8px 8px;
     margin:2px;
 }
+      aip-list .aip-list-container .panel-heading .panel-title .item-group .row.instruction  {
+    border-top:solid 1px #A4C6E4;
+    padding:8px 0 8px 0;
+}
+        aip-list .aip-list-container .panel-heading .panel-title .item-group .row.instruction span  {
+    text-decoration:underline;
+    color:#557287;
+}
       aip-list .aip-list-container .panel-heading .panel-title .item-group .group-toggle-indicator  {
+    float:left;
     padding-left:8px;
 }
       aip-list .aip-list-container .panel-heading .panel-title .item-group .group-title  {
     white-space:nowrap;
-    padding:0 0 8px 0;
+    padding:0 0 16px 0;
 }
         aip-list .aip-list-container .panel-heading .panel-title .item-group .group-title .group-title-text  {
     font-size:1em;
@@ -53,21 +62,25 @@ aip-list .aip-list-container  {
     padding-right:0;
 }
       aip-list .aip-list-container .panel-heading .panel-title .item-group .group-progress  {
-    padding:0 8px;
+    padding:0;
 }
         aip-list .aip-list-container .panel-heading .panel-title .item-group .group-progress .progress  {
     border-radius:0;
+    border:solid 2px #A4C6E4;
+    background-color:white;
 }
           aip-list .aip-list-container .panel-heading .panel-title .item-group .group-progress .progress .progress-bar  {
-    border-radius:0px;
+    border-radius:0;
+    background-color:#FFD079;
+    box-shadow:none;
 }
             aip-list .aip-list-container .panel-heading .panel-title .item-group .group-progress .progress .progress-bar span  {
+    color:#557287;
     text-align:left;
     position:absolute;
     right:0;
     left:1.5em;
     width:auto;
-    color:#272727;
     white-space:nowrap;
 }
           aip-list .aip-list-container .panel-heading .panel-title .item-group .group-progress .progress.normal .progress-bar span  {
@@ -597,9 +610,6 @@ aip-list .aip-list-container  {
 
 
 
-#breadcrumbHeader .breadcrumbButton  {
-    font-size:0.8em;
-}
 #breadcrumbHeader a.breadcrumbButton.leaf-breadcrumb  {
     text-decoration:none;
     cursor:default;
@@ -655,6 +665,7 @@ label  {
     .viewContainer .listActionItem .welcome .username  {
     font-size:2em;
     font-weight:bold;
+    color:#557287;
 }
   .viewContainer .listActionItem .welcometext  {
     font-size:1.5em;

@@ -1,0 +1,29 @@
+<div class="modal-header">
+    <h3 class="modal-title" id="modal-status-add-title">Add Acion Item Status</h3>
+    <button type="button" ng-click="vm.closeDialog()">
+        <i class="fa fa-times" aria-hidden="true"></i>
+    </button>
+</div>
+<div class="modal-body" id="modal-status-add-body">
+    <div class="modal-body-content">
+        <div class="row">
+            <label>
+                Action Item Status
+            </label>
+        </div>
+        <div class="row">
+            <input class="" type="text" ng-model="vm.statusModel.title">
+        </div>
+        <div class="row">
+            <label>
+                <input type="checkbox" ng-model="vm.statusModel.prevent">
+                Block Process
+            </label>
+        </div>
+    </div>
+    <div class="modal-control">
+        <button type="button" class="btn btn-default" ng-click="vm.statusSave()">
+            SAVE
+        </button>
+    </div>
+</div>
