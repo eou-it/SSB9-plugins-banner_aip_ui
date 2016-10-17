@@ -1,6 +1,7 @@
 ///<reference path="../../../typings/tsd.d.ts"/>
 
 declare var register;
+declare var params;
 
 module AIP {
 
@@ -27,33 +28,34 @@ module AIP {
         state: string;
         title: string;
     }
-    export interface IUserItem {
-        groupId: number|string;
-        header:string[];
-        name: string;
+    export interface IGroup {
+        id: number| string;
+        title: string;
         dscParams?:string[];
         items: IActionItem[];
-        info: {
-            description: string;
-            title: string;
-        }
+    }
+    export interface IUserItem {
+        groups: IGroup[],
+        header:string[];
     }
     interface IActionItemResponse {
-        data: IUserItem[];
+        data: IUserItem;
     }
 
     interface IItemListViewService {
-        getActionItems(userInfo):void;
+        getActionItems(userInfo):ng.IPromise<IUserItem>;
         confirmItem(id:string|number):void;
         getDetailInformation(groupId: number|string, type:string, id:number|string);
     }
 
     export class ItemListViewService implements IItemListViewService{
-        static $inject=["$http", "APP_PATH"];
+        static $inject=["$http", "$q", "APP_PATH"];
         $http: ng.IHttpService;
+        $q: ng.IQService;
         APP_PATH;
-        constructor($http:ng.IHttpService, APP_PATH) {
+        constructor($http:ng.IHttpService, $q:ng.IQService, APP_PATH) {
             this.$http = $http;
+            this.$q = $q;
             this.APP_PATH = APP_PATH;
         }
         getActionItems(userInfo) {
@@ -76,14 +78,15 @@ module AIP {
                 data: {type:selectType, groupId: groupId, actionItemId:actionItemId}
             })
                 .then((response:any) => {
-                    var data = response.data;
+                    var data = (selectType==="group") ? response.data[0] : response.data;
                     return {
                         type: selectType,
                         groupId: groupId,
                         info: {
                             content: data.text,
                             type: "doc",
-                            id: data.actionItemId||data.groupId,
+                            id: data.actionItemId,
+                            templateId: data.actionItemTemplateId,
                             detailId: data.id
                         }
                     };
@@ -92,6 +95,31 @@ module AIP {
                 })
             return request;
         }
+
+        getPagebuilderPage(id:any, actionItemId:any) {
+            var defer = this.$q.defer();
+            var request = this.$http({
+                method: "GET",
+                url: this.APP_PATH + "/aipPageBuilder/page?id=" + id
+            })
+                .then((response:any) => {
+                    var data = response.data;
+                    $.ajax({
+                        url: this.APP_PATH + "/aipPageBuilder/pageScript?id=" + id + "&actionItemId:" + actionItemId,
+                        dataType: 'script',
+                        success: function() {
+                            angular.module("BannerOnAngular").controller("CustomPageController_"+data.pageName, eval("CustomPageController_"+data.pageName));
+                            params = {action: "page", controller: "customPage", id: data.pageName, actionItemId: actionItemId};
+                            defer.resolve(data);
+                        },
+                        async: true
+                    });
+                }, (err) => {
+                    throw new Error(err);
+                })
+            return defer.promise;
+        }
+
         confirmItem(id) {
             //TODO: update datbase
             //angular.forEach(this.userItems, (item) => {

@@ -17,7 +17,8 @@ module AIPUI {
             this.scope = {
                 data: "=",
                 next: "&",
-                tolist: "&"
+                tolist: "&",
+                custompage: "&"
             }
         }
         compile() {

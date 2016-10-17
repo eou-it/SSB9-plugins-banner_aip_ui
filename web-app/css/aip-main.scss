@@ -58,7 +58,7 @@
 }
 #breadcrumbHeader {
   .breadcrumbButton {
-    font-size: 0.8em;
+    //font-size: 0.8em;
   }
   a.breadcrumbButton.leaf-breadcrumb {
     text-decoration:none;
@@ -120,6 +120,7 @@ label {
       .username {
         font-size: 2em;
         font-weight: bold;
+        color: #557287;
       }
     }
     .welcometext {
@@ -160,18 +161,6 @@ label {
   }
 }
 
-xe-tab-panel {
-  h2 {
-    color: #4F585F;
-    font-size: 1.25em;
-    font-family:"OpenSans-semibold";
-  }
-  h3 {
-    color: #4F585F;
-    font-size: 1em;
-    font-family:"OpenSans-semibold";
-  }
-}
 .cke_button_label.cke_button__a11ybtn_label {
   display: inline !important;
 }
@@ -184,4 +173,22 @@ xe-tab-panel {
 .offscreen {
   visibility: hidden;
 }
+
+h2 {
+  color: #4F585F;
+  font-size: 1.25em;
+  font-family:"OpenSans-semibold";
+}
+h3 {
+  color: #4F585F;
+  font-size: 1em;
+  font-family:"OpenSans-semibold";
+}
+h3 {
+  color: #4F585F;
+  font-size: .85em;
+  font-family:"OpenSans-semibold";
+}
+
+
 

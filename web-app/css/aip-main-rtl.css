@@ -56,16 +56,16 @@ aip-list .aip-list-container  {
     padding:0 8px;
 }
         aip-list .aip-list-container .panel-heading .panel-title .item-group .group-progress .progress  {
-    border-radius:16px;
+    border-radius:0;
 }
           aip-list .aip-list-container .panel-heading .panel-title .item-group .group-progress .progress .progress-bar  {
-    border-radius:16px;
+    border-radius:0px;
 }
             aip-list .aip-list-container .panel-heading .panel-title .item-group .group-progress .progress .progress-bar span  {
-    text-align:center;
+    text-align:left;
     position:absolute;
     right:0;
-    left:0;
+    left:1.5em;
     width:auto;
     color:#272727;
     white-space:nowrap;
@@ -170,7 +170,7 @@ aip-list .aip-list-container  {
   .aip-item-detail-container .detail-content  {
     height:inherit;
     border:1px solid #A4C6E4;
-    padding:16px;
+    padding:0px 16px 16px 16px;
     overflow-y:scroll;
 }
     .aip-item-detail-container .detail-content hr  {
@@ -180,11 +180,11 @@ aip-list .aip-list-container  {
     padding-bottom:16px;
 }
       .aip-item-detail-container .detail-content .detail-title span  {
-    font-size:1.5em;
     border-bottom:1px solid black;
 }
     .aip-item-detail-container .detail-content .detail  {
     padding-bottom:24px;
+    font-size:1.4em;
 }
       .aip-item-detail-container .detail-content .detail pre  {
     border:none;
@@ -212,6 +212,14 @@ aip-list .aip-list-container  {
 }
       .aip-item-detail-container .detail-content .detail-nav .btn-group  {
     width:100%;
+}
+
+.pb-detail.pb-radio.pb-item  {
+    display:flex;
+}
+
+.pb-detail.pb-item.pb-radiolabel  {
+    margin:20px 0px 20px 30px;
 }
 
 .groupAddContainer  {
@@ -676,17 +684,6 @@ label  {
     position:fixed;
 }
 
-xe-tab-panel h2  {
-    color:#4F585F;
-    font-size:1.25em;
-    font-family:"OpenSans-semibold";
-}
-xe-tab-panel h3  {
-    color:#4F585F;
-    font-size:1em;
-    font-family:"OpenSans-semibold";
-}
-
 .cke_button_label.cke_button__a11ybtn_label  {
     display:inline !important;
 }
@@ -701,6 +698,24 @@ xe-tab-panel h3  {
 
 .offscreen  {
     visibility:hidden;
+}
+
+h2  {
+    color:#4F585F;
+    font-size:1.25em;
+    font-family:"OpenSans-semibold";
+}
+
+h3  {
+    color:#4F585F;
+    font-size:1em;
+    font-family:"OpenSans-semibold";
+}
+
+h3  {
+    color:#4F585F;
+    font-size:.85em;
+    font-family:"OpenSans-semibold";
 }
 /*** Media Query Section ***/
 @media screen and (max-width: 768px) {

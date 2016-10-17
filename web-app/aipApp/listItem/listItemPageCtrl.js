@@ -34,7 +34,7 @@ var AIP;
                 var userInfo = userData;
                 _this.userName = userData.fullName;
                 _this.itemListViewService.getActionItems(userInfo).then(function (actionItems) {
-                    angular.forEach(actionItems, function (group) {
+                    angular.forEach(actionItems.groups, function (group) {
                         angular.forEach(group.items, function (item) {
                             item.state = item.state === "Completed" ?
                                 "aip.status.complete" :
@@ -42,8 +42,8 @@ var AIP;
                         });
                     });
                     _this.actionItems = actionItems;
-                    angular.forEach(_this.actionItems, function (item) {
-                        item.dscParams = _this.getParams(item.info.title, userInfo);
+                    angular.forEach(_this.actionItems.groups, function (item) {
+                        item.dscParams = _this.getParams(item.title, userInfo);
                     });
                 }).finally(function () {
                     _this.spinnerService.showSpinner(false);
@@ -60,7 +60,7 @@ var AIP;
         };
         ListItemPageCtrl.prototype.getInitialSelection = function () {
             var defaultSelection = 0;
-            if (this.actionItems.length > 1) {
+            if (this.actionItems.groups.length > 1) {
                 defaultSelection = -1;
             }
             return defaultSelection;
@@ -135,31 +135,34 @@ var AIP;
                 throw new Error("Group does not exist with ID ");
             }
             var selectionType = itemId === null ? "group" : "actionItem";
-            var titleNode = this.actionItems.filter(function (item) {
-                return item.groupId === groupId;
+            var group = this.actionItems.groups.filter(function (item) {
+                return item.id === groupId;
+            });
+            var actionItem = group[0].items.filter(function (item) {
+                return item.id === itemId;
             });
             this.itemListViewService.getDetailInformation(groupId, selectionType, index.item === null ? null : itemId).then(function (response) {
                 _this.selectedData = response;
-                _this.selectedData.info.title = titleNode[0].name;
+                _this.selectedData.info.title = actionItem[0].title;
                 defer.resolve();
             });
             return defer.promise;
         };
         ListItemPageCtrl.prototype.getIndex = function (groupId, itemId) {
             var index = { group: -1, item: null };
-            var selectedGroup = this.actionItems.filter(function (group) {
-                return group.groupId === groupId;
+            var selectedGroup = this.actionItems.groups.filter(function (group) {
+                return group.id === groupId;
             });
             if (selectedGroup.length !== -1) {
-                index.group = this.actionItems.indexOf(selectedGroup[0]);
+                index.group = this.actionItems.groups.indexOf(selectedGroup[0]);
                 // var selectedItem = this.actionItems[groupId].items.filter((item) => {
                 //     return item.id === itemId;
                 // });
-                var selectedItem = this.actionItems.filter(function (item) {
-                    return item.groupId === groupId;
+                var selectedItem = this.actionItems.groups.filter(function (item) {
+                    return item.id === groupId;
                 });
                 if (selectedItem.length !== -1) {
-                    index.item = this.actionItems.indexOf(selectedItem[0]);
+                    index.item = this.actionItems.groups.indexOf(selectedItem[0]);
                 }
             }
             return index;

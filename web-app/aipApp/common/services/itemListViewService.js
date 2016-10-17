@@ -7,8 +7,9 @@ var AIP;
         SelectionType[SelectionType["ActionItem"] = 1] = "ActionItem";
     })(SelectionType || (SelectionType = {}));
     var ItemListViewService = (function () {
-        function ItemListViewService($http, APP_PATH) {
+        function ItemListViewService($http, $q, APP_PATH) {
             this.$http = $http;
+            this.$q = $q;
             this.APP_PATH = APP_PATH;
         }
         ItemListViewService.prototype.getActionItems = function (userInfo) {
@@ -31,14 +32,15 @@ var AIP;
                 data: { type: selectType, groupId: groupId, actionItemId: actionItemId }
             })
                 .then(function (response) {
-                var data = response.data;
+                var data = (selectType === "group") ? response.data[0] : response.data;
                 return {
                     type: selectType,
                     groupId: groupId,
                     info: {
                         content: data.text,
                         type: "doc",
-                        id: data.actionItemId || data.groupId,
+                        id: data.actionItemId,
+                        templateId: data.actionItemTemplateId,
                         detailId: data.id
                     }
                 };
@@ -46,6 +48,30 @@ var AIP;
                 throw new Error(err);
             });
             return request;
+        };
+        ItemListViewService.prototype.getPagebuilderPage = function (id, actionItemId) {
+            var _this = this;
+            var defer = this.$q.defer();
+            var request = this.$http({
+                method: "GET",
+                url: this.APP_PATH + "/aipPageBuilder/page?id=" + id
+            })
+                .then(function (response) {
+                var data = response.data;
+                $.ajax({
+                    url: _this.APP_PATH + "/aipPageBuilder/pageScript?id=" + id + "&actionItemId:" + actionItemId,
+                    dataType: 'script',
+                    success: function () {
+                        angular.module("BannerOnAngular").controller("CustomPageController_" + data.pageName, eval("CustomPageController_" + data.pageName));
+                        params = { action: "page", controller: "customPage", id: data.pageName, actionItemId: actionItemId };
+                        defer.resolve(data);
+                    },
+                    async: true
+                });
+            }, function (err) {
+                throw new Error(err);
+            });
+            return defer.promise;
         };
         ItemListViewService.prototype.confirmItem = function (id) {
             //TODO: update datbase
@@ -57,7 +83,7 @@ var AIP;
             //    });
             //});
         };
-        ItemListViewService.$inject = ["$http", "APP_PATH"];
+        ItemListViewService.$inject = ["$http", "$q", "APP_PATH"];
         return ItemListViewService;
     }());
     AIP.ItemListViewService = ItemListViewService;
