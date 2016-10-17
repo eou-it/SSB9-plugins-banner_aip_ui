@@ -2,26 +2,31 @@ declare var register: any;
 
 module AIP {
     export class ItemInformCtrl {
-        $inject = ["$scope", "$uibModalInstance", "AdminActionStatusService", "ENDPOINT", "APP_ROOT"];
+        $inject = ["$scope", "$uibModalInstance", "$window", "AdminActionStatusService", "ENDPOINT", "APP_ROOT"];
         $uibModalInstance;
+        $window;
         ENDPOINT;
         APP_ROOT;
 
-        constructor($scope, $uibModalInstance, ENDPOINT, APP_ROOT) {
+        constructor($scope, $uibModalInstance, $window, ENDPOINT, APP_ROOT) {
             $scope.vm = this;
             this.$uibModalInstance = $uibModalInstance;
+            this.$window = $window
             this.ENDPOINT = ENDPOINT;
             this.APP_ROOT = APP_ROOT;
 
         }
+
         goAhead() {
-            console.log("goAhead Clicked");
+            this.$uibModalInstance.close();
         }
+
         goBack() {
-                    console.log("goBack Clicked");
-                }
+            this.$window.history.back()
+        }
+
         closeDialog() {
-            this.$uibModalInstance.dismiss('cancel');
+            this.$uibModalInstance.dismiss( 'cancel' );
         }
     }
 }

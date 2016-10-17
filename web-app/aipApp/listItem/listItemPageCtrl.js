@@ -4,9 +4,9 @@
 var AIP;
 (function (AIP) {
     var ListItemPageCtrl = (function () {
-        function ListItemPageCtrl($scope, $state, ItemListViewService, AIPUserService, SpinnerService, $timeout, $window, $q) {
+        function ListItemPageCtrl($scope, $state, ItemListViewService, AIPUserService, SpinnerService, $timeout, $window, $q, $uibModal, APP_ROOT) {
             this.$inject = ["$scope", "$state", "ItemListViewService", "AIPUserService", "SpinnerService", "$timeout",
-                "$window", "$q"];
+                "$window", "$q", "$uibModal", , "APP_ROOT"];
             $scope.vm = this;
             this.$state = $state;
             this.itemListViewService = ItemListViewService;
@@ -14,6 +14,9 @@ var AIP;
             this.spinnerService = SpinnerService;
             this.$timeout = $timeout;
             this.$q = $q;
+            this.$uibModal = $uibModal;
+            this.APP_ROOT = APP_ROOT;
+            this.modalInstance;
             this.initialOpenGroup = -1;
             $scope.$watch("vm.detailView", function (newVal, oldVal) {
                 if (!$scope.$$phase) {
@@ -29,6 +32,7 @@ var AIP;
         }
         ListItemPageCtrl.prototype.init = function () {
             var _this = this;
+            this.informModal(this.$state.params['inform']);
             this.spinnerService.showSpinner(true);
             this.userService.getUserInfo().then(function (userData) {
                 var userInfo = userData;
@@ -182,8 +186,16 @@ var AIP;
         ListItemPageCtrl.prototype.resetSelection = function () {
             this.selectedData = undefined;
         };
+        ListItemPageCtrl.prototype.informModal = function (show) {
+            if (show) {
+                this.modalInstance = this.$uibModal.open({
+                    templateUrl: this.APP_ROOT + "listItem/itemInform/itemInformTemplate.html",
+                    controller: "ItemInformCtrl"
+                });
+            }
+        };
         return ListItemPageCtrl;
-    }());
+    })();
     AIP.ListItemPageCtrl = ListItemPageCtrl;
 })(AIP || (AIP = {}));
 register("bannerAIP").controller("ListItemPageCtrl", AIP.ListItemPageCtrl);

@@ -70,7 +70,7 @@ module AIP {
             this.init();
         }
         init() {
-            this.informModal()
+            this.informModal(this.$state.params['inform'])
             this.spinnerService.showSpinner(true);
             this.userService.getUserInfo().then((userData) => {
                 var userInfo = userData;
@@ -224,12 +224,13 @@ module AIP {
             this.selectedData = undefined;
         }
 
-        informModal() {
-            console.log("inform")
-            this.modalInstance = this.$uibModal.open( {
-                templateUrl: this.APP_ROOT + "listItem/itemInform/itemInformTemplate.html",
-                controller: "ItemInformCtrl"
-            } );
+        informModal(show) {
+            if (show) {
+                this.modalInstance = this.$uibModal.open( {
+                    templateUrl: this.APP_ROOT + "listItem/itemInform/itemInformTemplate.html",
+                    controller: "ItemInformCtrl"
+                } );
+            }
         }
 
         /*

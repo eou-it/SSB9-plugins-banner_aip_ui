@@ -119,8 +119,19 @@ var bannerAIPApp = angular.module("bannerAIP", [
                 label: "aip.user.actionItem.list",
                 url: "/aip/list#/list"
             }
+        },
+
+        "informedList": {
+            url: "/informedList",
+            templateUrl: "listItem/listItemPage.html",
+            controller: "ListItemPageCtrl",
+            breadcrumb: {
+                label: "aip.user.actionItem.list",
+                url: "/aip/list#/list"
+            },
+            inform: true
         }
-    })
+    } )
 //constant for endpoint
     .constant("ENDPOINT", {
         admin: {
@@ -193,7 +204,7 @@ var bannerAIPApp = angular.module("bannerAIP", [
                     url: item.url,
                     templateUrl: APP_ROOT + item.templateUrl,
                     controller: item.controller,
-                    params: {noti:undefined, data:undefined},
+                    params: {noti:undefined, data:undefined, inform: item.inform},
                     onEnter: function($stateParams, $filter) {
                         this.data.breadcrumbs.url = item.breadcrumb.url;
                         this.data.breadcrumbs.title = item.breadcrumb.label;
