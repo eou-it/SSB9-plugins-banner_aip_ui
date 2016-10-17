@@ -30,7 +30,7 @@ aip-list .aip-list-container  {
     border-radius:2px;
 }
     aip-list .aip-list-container .panel-heading .panel-title .accordion-toggle  {
-    color:black;
+    color:#000000;
 }
     aip-list .aip-list-container .panel-heading .panel-title .item-group  {
     padding:16px 8px 8px 8px;
@@ -42,7 +42,7 @@ aip-list .aip-list-container  {
 }
         aip-list .aip-list-container .panel-heading .panel-title .item-group .row.instruction span  {
     text-decoration:underline;
-    color:#557287;
+    color:#206E9f;
 }
       aip-list .aip-list-container .panel-heading .panel-title .item-group .group-toggle-indicator  {
     float:left;
@@ -61,6 +61,13 @@ aip-list .aip-list-container  {
     padding-left:0;
     padding-right:0;
 }
+      aip-list .aip-list-container .panel-heading .panel-title .item-group .badge  {
+    margin-right:5px;
+}
+      aip-list .aip-list-container .panel-heading .panel-title .item-group .group-instructions  {
+    text-decoration:underline;
+    color:#206E9f;
+}
       aip-list .aip-list-container .panel-heading .panel-title .item-group .group-progress  {
     padding:0;
 }
@@ -75,7 +82,7 @@ aip-list .aip-list-container  {
     box-shadow:none;
 }
             aip-list .aip-list-container .panel-heading .panel-title .item-group .group-progress .progress .progress-bar span  {
-    color:#557287;
+    color:#103750;
     text-align:left;
     position:absolute;
     right:0;
@@ -100,16 +107,21 @@ aip-list .aip-list-container  {
       aip-list .aip-list-container .list-body-container .list-body .list-item .aipReadmore  {
     word-break:normal;
 }
-      aip-list .aip-list-container .list-body-container .list-body .list-item .cell.title h3  {
+      aip-list .aip-list-container .list-body-container .list-body .list-item .cell.title  {
+    padding-right:10px;
+}
+        aip-list .aip-list-container .list-body-container .list-body .list-item .cell.title h3, aip-list .aip-list-container .list-body-container .list-body .list-item .cell.title h4  {
     font-weight:bold;
-    font-size:1.3em;
+    font-size:1.5em;
     word-wrap:break-word;
     margin:0;
-    line-height:1.8em;
+    color:#206E9f;
     display:inline;
-    border-bottom:solid 1px #000000;
+    text-decoration:underline;
+    font-family:"OpenSans-regular";
     padding-bottom:3px;
     padding-left:10px;
+    padding-right:0;
 }
       aip-list .aip-list-container .list-body-container .list-body .list-item .cell.state  {
     padding:0;
@@ -192,8 +204,8 @@ aip-list .aip-list-container  {
     .aip-item-detail-container .detail-content .detail-title  {
     padding-bottom:16px;
 }
-      .aip-item-detail-container .detail-content .detail-title span  {
-    border-bottom:1px solid black;
+      .aip-item-detail-container .detail-content .detail-title h4  {
+    font-size:1.5em;
 }
     .aip-item-detail-container .detail-content .detail  {
     padding-bottom:24px;
@@ -755,26 +767,58 @@ label  {
     visibility:hidden;
 }
 
+/*bootstrap overrides*/
 h2  {
     color:#4F585F;
-    font-size:1.25em;
+    font-size:1.5em;
     font-family:"OpenSans-semibold";
+    margin:5px 0;
 }
 
 h3  {
     color:#4F585F;
-    font-size:1em;
+    font-size:1.5em;
     font-family:"OpenSans-semibold";
+    margin:5px 0;
 }
 
 h3  {
     color:#4F585F;
-    font-size:.85em;
+    font-size:1.15em;
     font-family:"OpenSans-semibold";
+    margin:5px 0;
+}
+
+h4  {
+    color:#4F585F;
+    font-size:1.15em;
+    font-family:"OpenSans-semibold";
+    margin:5px 0;
+}
+
+.btn-primary.disabled,
+.btn-primary[disabled],
+fieldset[disabled] .btn-primary,
+.btn-primary.disabled:hover,
+.btn-primary[disabled]:hover,
+fieldset[disabled] .btn-primary:hover,
+.btn-primary.disabled:focus,
+.btn-primary[disabled]:focus,
+fieldset[disabled] .btn-primary:focus,
+.btn-primary.disabled:active,
+.btn-primary[disabled]:active,
+fieldset[disabled] .btn-primary:active,
+.btn-primary.disabled.active,
+.btn-primary[disabled].active,
+fieldset[disabled] .btn-primary.active, .btn-primary  {
+    background-color:#275c8a;
 }
 /*** Media Query Section ***/
 @media screen and (max-width: 768px) {
-    aip-list .aip-list-container .header .list-item .title .badge  {
+    aip-list .aip-list-container .header .list-item .title  {
+    padding-right:0;
+}
+      aip-list .aip-list-container .header .list-item .title .badge  {
     float:left;
 }
     aip-list .aip-list-container .list-body .list-item .badge  {
