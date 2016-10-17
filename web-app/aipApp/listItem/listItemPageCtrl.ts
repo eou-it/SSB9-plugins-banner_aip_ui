@@ -42,7 +42,6 @@ module AIP {
         $state;
         $q;
 
-
         constructor($scope, $state, ItemListViewService, AIPUserService, SpinnerService, $timeout, $window, $q) {
             $scope.vm = this;
             this.$state = $state;
@@ -62,11 +61,10 @@ module AIP {
                 }
             );
 
-
-
             notifications.on('add', function (e) {
                 if (params.saved==true) {
-                    $scope.vm.init();
+                    //$scope.vm.init();
+                    $scope.vm.refreshList();
                 };
             });
 
@@ -103,24 +101,49 @@ module AIP {
                         this.itemListViewService.getDetailInformation(this.initialOpenGroup, "group", null)
                             .then((response:ISelectedData) => {
                                 this.selectedData = response;
-                            } ).finally( () => {
-
-                            setTimeout(() => {
-
-                                if (params.saved==true) {
-
-                                    this.nextItem( params.groupId, params.actionItemId );
-                                   // this.$scope.tolist();
-                                }
-
-                            }, 400);
                         });
                     };
-
                 });
             });
 
         }
+
+        refreshList() {
+            this.spinnerService.showSpinner(true);
+            this.userService.getUserInfo().then( ( userData ) => {
+                var userInfo = userData;
+                this.userName = userData.fullName;
+                this.itemListViewService.getActionItems( userInfo ).then( ( actionItems:IUserItem ) => {
+                    angular.forEach( actionItems.groups, ( group ) => {
+                        angular.forEach( group.items, ( item ) => {
+                            item.state = item.state
+                            /*todo: can probably drop the message properties for these status since it's coming from the db*/
+                            /*
+                             ==="Completed"?
+                             "aip.status.complete":
+                             "aip.status.pending";
+                             */
+                        } );
+                    } );
+                    this.actionItems = actionItems;
+                    angular.forEach( this.actionItems.groups, ( item ) => {
+                        item.dscParams = this.getParams( item.title, userInfo );
+                    } );
+
+                   // this.resetSelection();
+                } ).finally(() => {
+                    this.spinnerService.showSpinner( false );
+                    console.log(this.selectedData);
+
+                    setTimeout(function() {
+                        $("#item-"+params.groupId+"-"+params.actionItemId).focus()
+                            , 100
+                    })
+                })
+            } )
+        }
+
+
         getInitialSelection() {
             var defaultSelection= 0;
             if(this.actionItems.groups.length > 1) {
@@ -134,6 +157,7 @@ module AIP {
             //TODO:: get selected row action item detail information
             //TODO:: display action item detail information
         }
+
         styleFunction(key) {
             var returnClass = "";
             switch (key) {
@@ -178,24 +202,22 @@ module AIP {
             return {height: containerHeight};
         }
         nextItem(groupId, itemId) {
-
             var index = this.getIndex(groupId, itemId);
             if(index.group === -1) {
                 throw new Error("Group does not exist with ID ");
             }
 
-            console.log(groupId);
-            console.log(itemId);
-
-            console.log(this.actionItems.groups[index.group].items.length-1);
-            console.log(index.item);
-
-            if( (this.actionItems.groups[index.group].items.length)-1 <= index.item) {
-                var firstItemId = this.actionItems.groups[groupId].items[0].id;
-                this.selectItem(groupId, firstItemId);
-            } else {
+            if ( index.item > -1 ){
+                if( (this.actionItems.groups[index.group].items.length)-1 > index.item) {
+                   index.item ++;
+                } else {
+                   index.item = 0;
+                }
                 var nextItemId = this.actionItems.groups[index.group].items[index.item].id;
                 this.selectItem(groupId, nextItemId);
+            } else {
+                var firstItemId = this.actionItems.groups[index.group].items[0].id;
+                this.selectItem(groupId, firstItemId);
             }
         }
 
@@ -215,8 +237,7 @@ module AIP {
 
             this.itemListViewService.getDetailInformation(groupId, selectionType, index.item===null?null:itemId).then((response:ISelectedData) => {
                 this.selectedData = response;
-                console.log("selectedData");
-                console.log(this.selectedData);
+
                 this.selectedData.info.title= actionItem[0].title;
                 defer.resolve();
             })
@@ -229,15 +250,12 @@ module AIP {
             });
 
 
-
             if(selectedGroup.length!==-1) {
                 index.group = this.actionItems.groups.indexOf(selectedGroup[0]);
 
                 var groupItems = this.actionItems.groups[index.group].items;
-                console.log(groupItems);
 
                 var selectedItem = groupItems.filter( (item) => {
-                    console.log(item)
                     return item.id == itemId;
                 });
 

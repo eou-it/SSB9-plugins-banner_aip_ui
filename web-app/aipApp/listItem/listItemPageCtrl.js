@@ -22,7 +22,8 @@ var AIP;
             });
             notifications.on('add', function (e) {
                 if (params.saved == true) {
-                    $scope.vm.init();
+                    //$scope.vm.init();
+                    $scope.vm.refreshList();
                 }
                 ;
             });
@@ -58,15 +59,42 @@ var AIP;
                         _this.itemListViewService.getDetailInformation(_this.initialOpenGroup, "group", null)
                             .then(function (response) {
                             _this.selectedData = response;
-                        }).finally(function () {
-                            setTimeout(function () {
-                                if (params.saved == true) {
-                                    _this.nextItem(params.groupId, params.actionItemId);
-                                }
-                            }, 400);
                         });
                     }
                     ;
+                });
+            });
+        };
+        ListItemPageCtrl.prototype.refreshList = function () {
+            var _this = this;
+            this.spinnerService.showSpinner(true);
+            this.userService.getUserInfo().then(function (userData) {
+                var userInfo = userData;
+                _this.userName = userData.fullName;
+                _this.itemListViewService.getActionItems(userInfo).then(function (actionItems) {
+                    angular.forEach(actionItems.groups, function (group) {
+                        angular.forEach(group.items, function (item) {
+                            item.state = item.state;
+                            /*todo: can probably drop the message properties for these status since it's coming from the db*/
+                            /*
+                             ==="Completed"?
+                             "aip.status.complete":
+                             "aip.status.pending";
+                             */
+                        });
+                    });
+                    _this.actionItems = actionItems;
+                    angular.forEach(_this.actionItems.groups, function (item) {
+                        item.dscParams = _this.getParams(item.title, userInfo);
+                    });
+                    // this.resetSelection();
+                }).finally(function () {
+                    _this.spinnerService.showSpinner(false);
+                    console.log(_this.selectedData);
+                    setTimeout(function () {
+                        $("#item-" + params.groupId + "-" + params.actionItemId).focus()
+                            , 100;
+                    });
                 });
             });
         };
@@ -130,17 +158,19 @@ var AIP;
             if (index.group === -1) {
                 throw new Error("Group does not exist with ID ");
             }
-            console.log(groupId);
-            console.log(itemId);
-            console.log(this.actionItems.groups[index.group].items.length - 1);
-            console.log(index.item);
-            if ((this.actionItems.groups[index.group].items.length) - 1 <= index.item) {
-                var firstItemId = this.actionItems.groups[groupId].items[0].id;
-                this.selectItem(groupId, firstItemId);
-            }
-            else {
+            if (index.item > -1) {
+                if ((this.actionItems.groups[index.group].items.length) - 1 > index.item) {
+                    index.item++;
+                }
+                else {
+                    index.item = 0;
+                }
                 var nextItemId = this.actionItems.groups[index.group].items[index.item].id;
                 this.selectItem(groupId, nextItemId);
+            }
+            else {
+                var firstItemId = this.actionItems.groups[index.group].items[0].id;
+                this.selectItem(groupId, firstItemId);
             }
         };
         ListItemPageCtrl.prototype.selectItem = function (groupId, itemId) {
@@ -159,8 +189,6 @@ var AIP;
             });
             this.itemListViewService.getDetailInformation(groupId, selectionType, index.item === null ? null : itemId).then(function (response) {
                 _this.selectedData = response;
-                console.log("selectedData");
-                console.log(_this.selectedData);
                 _this.selectedData.info.title = actionItem[0].title;
                 defer.resolve();
             });
@@ -174,9 +202,7 @@ var AIP;
             if (selectedGroup.length !== -1) {
                 index.group = this.actionItems.groups.indexOf(selectedGroup[0]);
                 var groupItems = this.actionItems.groups[index.group].items;
-                console.log(groupItems);
                 var selectedItem = groupItems.filter(function (item) {
-                    console.log(item);
                     return item.id == itemId;
                 });
                 if (groupItems.length !== -1) {
