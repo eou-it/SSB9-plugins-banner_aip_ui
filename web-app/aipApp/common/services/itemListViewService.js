@@ -49,7 +49,7 @@ var AIP;
             });
             return request;
         };
-        ItemListViewService.prototype.getPagebuilderPage = function (id, actionItemId) {
+        ItemListViewService.prototype.getPagebuilderPage = function (id, actionItemId, groupId) {
             var _this = this;
             var defer = this.$q.defer();
             var request = this.$http({
@@ -59,11 +59,11 @@ var AIP;
                 .then(function (response) {
                 var data = response.data;
                 $.ajax({
-                    url: _this.APP_PATH + "/aipPageBuilder/pageScript?id=" + id + "&actionItemId:" + actionItemId,
+                    url: _this.APP_PATH + "/aipPageBuilder/pageScript?id=" + id + "&actionItemId=" + actionItemId + "&groupId=" + groupId,
                     dataType: 'script',
                     success: function () {
                         angular.module("BannerOnAngular").controller("CustomPageController_" + data.pageName, eval("CustomPageController_" + data.pageName));
-                        params = { action: "page", controller: "customPage", id: data.pageName, actionItemId: actionItemId, saved: false };
+                        params = { action: "page", controller: "customPage", id: data.pageName, actionItemId: actionItemId, groupId: groupId, saved: false };
                         defer.resolve(data);
                     },
                     async: true

@@ -24,7 +24,7 @@ var AIPUI;
                 // console.log("data from item detail")
                 // console.log(this.data);
                 //this.data.info.id=111;
-                $scope.next({ groupId: this.data.groupId, itemId: this.data.info.id });
+                $scope.next({ groupId: this.data.info.detailId, itemId: this.data.info.id });
             };
             $scope.getState = function (id) {
                 $scope.itemstate(id);

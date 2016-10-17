@@ -96,7 +96,7 @@ module AIP {
             return request;
         }
 
-        getPagebuilderPage(id:any, actionItemId:any) {
+        getPagebuilderPage(id:any, actionItemId:any, groupId:any) {
             var defer = this.$q.defer();
             var request = this.$http({
                 method: "GET",
@@ -105,11 +105,11 @@ module AIP {
                 .then((response:any) => {
                     var data = response.data;
                     $.ajax({
-                        url: this.APP_PATH + "/aipPageBuilder/pageScript?id=" + id + "&actionItemId:" + actionItemId,
+                        url: this.APP_PATH + "/aipPageBuilder/pageScript?id=" + id + "&actionItemId=" + actionItemId + "&groupId=" + groupId,
                         dataType: 'script',
                         success: function() {
                             angular.module("BannerOnAngular").controller("CustomPageController_"+data.pageName, eval("CustomPageController_"+data.pageName));
-                            params = {action: "page", controller: "customPage", id: data.pageName, actionItemId: actionItemId, saved:false};
+                            params = {action: "page", controller: "customPage", id: data.pageName, actionItemId: actionItemId, groupId:groupId, saved:false};
                             defer.resolve(data);
                         },
                         async: true

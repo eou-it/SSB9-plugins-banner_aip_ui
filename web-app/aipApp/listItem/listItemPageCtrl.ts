@@ -62,21 +62,12 @@ module AIP {
                 }
             );
 
-            notifications.on('add', function (event) {
-                console.log("notification added");
-               // console.log(event);
-                $scope.vm.init();
 
 
-                /*
-                setTimeout(function(){
-                    var actionItem = params.actionItemId;
-                    var focusElem= $("div[id*='item'][id$=actionItem]");
-                    console.log(focusElem);
-                    focusElem.focus();
-                }, 1000);
-                */
-
+            notifications.on('add', function (e) {
+                if (params.saved==true) {
+                    $scope.vm.init();
+                };
             });
 
             this.init();
@@ -104,14 +95,28 @@ module AIP {
                     });
                 }).finally(() => {
                     this.spinnerService.showSpinner(false);
+
                     this.initialOpenGroup = this.getInitialSelection();
+
                     //this.selectedData = {type: SelectionType.Group};
                     if(this.initialOpenGroup !==-1) {
                         this.itemListViewService.getDetailInformation(this.initialOpenGroup, "group", null)
                             .then((response:ISelectedData) => {
                                 this.selectedData = response;
-                            });
-                    }
+                            } ).finally( () => {
+
+                            setTimeout(() => {
+
+                                if (params.saved==true) {
+
+                                    this.nextItem( params.groupId, params.actionItemId );
+                                   // this.$scope.tolist();
+                                }
+
+                            }, 400);
+                        });
+                    };
+
                 });
             });
 
@@ -173,30 +178,23 @@ module AIP {
             return {height: containerHeight};
         }
         nextItem(groupId, itemId) {
-            /*
-            console.log("action item listctrl");
-            console.log(this.actionItems);
-            console.log("index listctrl");
-            */
-            console.log(groupId);
+
             var index = this.getIndex(groupId, itemId);
-           // console.log(index);
             if(index.group === -1) {
                 throw new Error("Group does not exist with ID ");
             }
-            /*
-            console.log(this.actionItems.groups[0].items );
-            console.log("length");
-            console.log(this.actionItems.groups[index.group].items.length);
+
+            console.log(groupId);
+            console.log(itemId);
+
+            console.log(this.actionItems.groups[index.group].items.length-1);
             console.log(index.item);
-            */
 
             if( (this.actionItems.groups[index.group].items.length)-1 <= index.item) {
                 var firstItemId = this.actionItems.groups[groupId].items[0].id;
-                console.log(firstItemId);
                 this.selectItem(groupId, firstItemId);
             } else {
-                var nextItemId = this.actionItems.groups[groupId].items[index.item+1].id;
+                var nextItemId = this.actionItems.groups[index.group].items[index.item].id;
                 this.selectItem(groupId, nextItemId);
             }
         }
@@ -209,15 +207,16 @@ module AIP {
             }
             var selectionType = itemId===null ? "group":"actionItem";
             var group = this.actionItems.groups.filter((item) => {
-                return item.id === groupId;
+                return item.id == groupId;
             });
-            var actionItem = group[0].items.filter((item) => {
-                return item.id === itemId;
+            var actionItem = this.actionItems.groups[0].items.filter((item) => {
+                return item.id == itemId;
             });
-
 
             this.itemListViewService.getDetailInformation(groupId, selectionType, index.item===null?null:itemId).then((response:ISelectedData) => {
                 this.selectedData = response;
+                console.log("selectedData");
+                console.log(this.selectedData);
                 this.selectedData.info.title= actionItem[0].title;
                 defer.resolve();
             })
@@ -226,19 +225,26 @@ module AIP {
         getIndex(groupId, itemId) {
             var index = {group:-1, item:null};
             var selectedGroup = this.actionItems.groups.filter((group) => {
-                return group.id === groupId;
+                return group.id == groupId;
             });
+
+
+
             if(selectedGroup.length!==-1) {
                 index.group = this.actionItems.groups.indexOf(selectedGroup[0]);
-                // var selectedItem = this.actionItems[groupId].items.filter((item) => {
-                //     return item.id === itemId;
-                // });
-                var selectedItem = this.actionItems.groups.filter((item) => {
-                    return item.id === groupId;
+
+                var groupItems = this.actionItems.groups[index.group].items;
+                console.log(groupItems);
+
+                var selectedItem = groupItems.filter( (item) => {
+                    console.log(item)
+                    return item.id == itemId;
                 });
-                if(selectedItem.length!==-1) {
-                    index.item = this.actionItems.groups.indexOf(selectedItem[0]);
+
+                if (groupItems.length!==-1) {
+                    index.item = groupItems.indexOf(selectedItem[0]);
                 }
+
             }
             return index;
         }
