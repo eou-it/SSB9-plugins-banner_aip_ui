@@ -1,7 +1,7 @@
 <div class="aip-item-detail-container">
     <div class="detail-content">
         <div class="detail-title" ng-if="!data.info.templateId">
-            <span>{{data.info.title||"Action item detail title placeholder"}}</span>
+            <h4>{{data.info.title||"Action item detail title placeholder"}}</h4>
         </div>
         <div class="detail" tabindex="-1">
             <!--TODO:: text goes here-->
@@ -11,7 +11,7 @@
                 {{"aip.user.detail.noTemplate"|i18n_aip}}
             </div>
             <pagebuilder-page ng-if="data.type === 'actionItem' && data.info.templateId" content="{{data.info.templateId}}"
-                              aid="{{data.info.id}}"></pagebuilder-page>
+                              aid="{{data.info.id}}" gid="{{data.groupId}}"></pagebuilder-page>
         </div>
         <hr/>
         <div class="control">

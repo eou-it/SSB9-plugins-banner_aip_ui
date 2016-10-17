@@ -5,6 +5,12 @@ $border-color: #A4C6E4;
 $heading-background: #ECECEC;
 $top-background: #EFF4F8;
 $progressbar-color: #FFD079;
+$progressbar-text: #103750;
+$link-color: #206E9f;
+$accordion-toggle: #000000;
+$outline: #78aeda;
+$badge-text: #3a3737;
+$cell-text: #A4C6E4;
 
 aip-list {
   .aip-list-container {
@@ -35,11 +41,11 @@ aip-list {
         a:focus {
           .item-group {
             outline:0;
-            box-shadow: 0 0 2px 3px #78aeda, 0 0 2px #78aeda inset; border-radius: 2px;
+            box-shadow: 0 0 2px 3px $outline, 0 0 2px $outline inset; border-radius: 2px;
           }
         }
         .accordion-toggle {
-          color: black;
+          color: $accordion-toggle;
         }
         .item-group {
           padding: 16px 8px 8px 8px;
@@ -49,7 +55,7 @@ aip-list {
             padding: 8px 0 8px 0;
             span {
               text-decoration: underline;
-              color: $banner-color;
+              color: $link-color;
             }
           }
           .group-toggle-indicator {
@@ -74,6 +80,11 @@ aip-list {
           }
           .badge {
             //float: right;
+            margin-left: 5px;
+          }
+          .group-instructions {
+            text-decoration: underline;
+            color: $link-color;
           }
           .group-progress {
             padding: 0;
@@ -87,7 +98,7 @@ aip-list {
                 background-color: $progressbar-color;
                 box-shadow: none;
                 span {
-                  color: $banner-color;
+                  color: $progressbar-text;
                   text-align: right;
                   position: absolute;
                   left: 0;
@@ -111,7 +122,7 @@ aip-list {
     }
     .list-body-container {
       .list-body {
-        border: 1px solid #A4C6E4;
+        border: 1px solid $cell-text;
         padding: 0 0 8px 0;
         .list-item {
           padding: 16px 8px 0 8px;
@@ -130,16 +141,21 @@ aip-list {
             //mso-hyphenate: auto;
           }
           .cell.title {
-            h3 {
+            padding-left: 10px;
+            h3,h4 {
               font-weight: bold;
-              font-size: 1.3em;
+              font-size: 1.5em;
               word-wrap: break-word;
               margin: 0;
-              line-height: 1.8em;
+              /*line-height: 1.8em;*/
+              color: $link-color;
               display: inline;
-              border-bottom: solid 1px #000000;
+              /*border-bottom: solid 1px #206E9f;*/
+              text-decoration: underline;
+              font-family:"OpenSans-regular";
               padding-bottom: 3px;
               padding-right: 10px;
+              padding-left: 0;
             }
           }
           .cell.state {
@@ -150,7 +166,7 @@ aip-list {
           }
           .badge {
             border-radius: 4px;
-            color: #3a3737;
+            color: $badge-text;
             margin-right: 8px;
             //padding: 7px 10px;
             float: right;
@@ -158,7 +174,7 @@ aip-list {
           }
           .cell.description {
             font-size: 1.3em;
-            border-bottom: 1px solid #A4C6E4;
+            border-bottom: 1px solid $cell-text;
             padding: 24px 8px 16px 8px;
           }
         }
@@ -169,6 +185,7 @@ aip-list {
       .header {
         .list-item {
           .title {
+            padding-left: 0;
             .badge {
               float: right;
             }

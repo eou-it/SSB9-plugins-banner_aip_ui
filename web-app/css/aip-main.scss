@@ -174,21 +174,50 @@ label {
 .offscreen {
   visibility: hidden;
 }
-
+/*bootstrap overrides*/
 h2 {
   color: #4F585F;
-  font-size: 1.25em;
+  font-size: 1.5em;
   font-family:"OpenSans-semibold";
+  margin: 5px 0;
 }
 h3 {
   color: #4F585F;
-  font-size: 1em;
+  font-size: 1.5em;
   font-family:"OpenSans-semibold";
+  margin: 5px 0;
+
 }
 h3 {
   color: #4F585F;
-  font-size: .85em;
+  font-size: 1.15em;
   font-family:"OpenSans-semibold";
+  margin: 5px 0;
+
+}
+h4 {
+  color: #4F585F;
+  font-size: 1.15em;
+  font-family:"OpenSans-semibold";
+  margin: 5px 0;
+}
+
+.btn-primary.disabled,
+.btn-primary[disabled],
+fieldset[disabled] .btn-primary,
+.btn-primary.disabled:hover,
+.btn-primary[disabled]:hover,
+fieldset[disabled] .btn-primary:hover,
+.btn-primary.disabled:focus,
+.btn-primary[disabled]:focus,
+fieldset[disabled] .btn-primary:focus,
+.btn-primary.disabled:active,
+.btn-primary[disabled]:active,
+fieldset[disabled] .btn-primary:active,
+.btn-primary.disabled.active,
+.btn-primary[disabled].active,
+fieldset[disabled] .btn-primary.active, .btn-primary {
+  background-color: #275c8a;
 }
 
 
