@@ -27,7 +27,7 @@ module AIP {
 
     export class ListItemPageCtrl implements IListItemPageCtrl{
         $inject = ["$scope", "$state", "ItemListViewService", "AIPUserService", "SpinnerService", "$timeout",
-            "$window", "$q"];
+            "$window", "$q", "APP_PATH"];
         itemListViewService:AIP.ItemListViewService;
         userService:AIP.UserService;
         actionItems:IUserItem;
@@ -36,17 +36,22 @@ module AIP {
         userName;
         selectedData: ISelectedData;
         $timeout;
+        $window;
         $state;
         $q;
+        APP_PATH;
 
-        constructor($scope, $state, ItemListViewService, AIPUserService, SpinnerService, $timeout, $window, $q) {
+        constructor($scope, $state, ItemListViewService, AIPUserService, SpinnerService, $timeout, $window, $q, APP_PATH) {
             $scope.vm = this;
+            console.log($scope.vm)
             this.$state = $state;
             this.itemListViewService = ItemListViewService;
             this.userService = AIPUserService;
             this.spinnerService = SpinnerService;
             this.$timeout = $timeout;
+            this.$window = $window;                                                                                     a
             this.$q = $q;
+            this.APP_PATH = APP_PATH;
             this.initialOpenGroup = -1;
             $scope.$watch(
                 "vm.detailView", function(newVal, oldVal) {
@@ -64,6 +69,18 @@ module AIP {
             this.init();
         }
         init() {
+            // FIXME: popup modal. if ok, clear modal. if go back, return
+            if (this.$state.params['notify']) {
+                var r = confirm("blocked");
+                if (r == true) {
+                    // FIXME: should be able to remove all "APP_PATH" from file when modal is implemented
+                    var landingUrl = this.APP_PATH + "/aip/list";
+                    // FIXME: just clear modal here
+                    this.$window.open( landingUrl, "_self" );
+                } else {
+                    this.$window.history.back();
+                }
+            }
             this.spinnerService.showSpinner(true);
             this.userService.getUserInfo().then((userData) => {
                 var userInfo = userData;
