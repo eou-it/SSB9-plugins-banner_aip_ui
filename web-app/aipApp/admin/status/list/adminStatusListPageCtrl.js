@@ -129,7 +129,7 @@ var AIP;
                         flash: true
                     });
                     notifications.addNotification(n);
-                    _this.$scope.refreshGrid(true);
+                    _this.$scope.refreshGrid(true); //use scope to call grid directive's function
                 }
                 else {
                 }

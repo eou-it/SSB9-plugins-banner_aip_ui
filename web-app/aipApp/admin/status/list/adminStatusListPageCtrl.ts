@@ -154,7 +154,7 @@ module AIP {
                         flash: true
                     });
                     notifications.addNotification(n);
-                    this.$scope.refreshGrid(true);
+                    this.$scope.refreshGrid(true);  //use scope to call grid directive's function
                     // this.refreshGrid(true);
                 } else {
                     //TODO:: send error notification
