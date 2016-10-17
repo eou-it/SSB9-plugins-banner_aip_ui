@@ -89,9 +89,12 @@ module AIP {
                 this.itemListViewService.getActionItems(userInfo).then((actionItems:IUserItem) => {
                     angular.forEach(actionItems.groups, (group) => {
                         angular.forEach(group.items, (item) => {
-                            item.state = item.state==="Completed"?
+                            item.state = item.state
+                            /*
+                            ==="Completed"?
                                 "aip.status.complete":
                                 "aip.status.pending";
+                           */
                         });
                     });
                     this.actionItems = actionItems;

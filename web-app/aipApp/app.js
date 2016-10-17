@@ -155,6 +155,7 @@ var bannerAIPApp = angular.module("bannerAIP", [
             })
 
      .constant("CKEDITORCONFIG",
+             /*todo: this config actually doesn't load but needs to be cleaned up when minify ng-ckeditor build issues are resolved*/
                 {
                     toolbar: 'full',
                     toolbar_full: [
@@ -354,6 +355,7 @@ var bannerAIPApp = angular.module("bannerAIP", [
             $.i18n.prop("aip.status.inactive");
             $.i18n.prop("aip.status.pending");
             $.i18n.prop("aip.status.complete");
+            $.i18n.prop("aip.status.rejected");
 
             $.i18n.prop("aip.character.astrick");
             $.i18n.prop("aip.ckeditor.keyhelp");

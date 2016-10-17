@@ -44,9 +44,12 @@ var AIP;
                 _this.itemListViewService.getActionItems(userInfo).then(function (actionItems) {
                     angular.forEach(actionItems.groups, function (group) {
                         angular.forEach(group.items, function (item) {
-                            item.state = item.state === "Completed" ?
-                                "aip.status.complete" :
+                            item.state = item.state;
+                            /*
+                            ==="Completed"?
+                                "aip.status.complete":
                                 "aip.status.pending";
+                           */
                         });
                     });
                     _this.actionItems = actionItems;
