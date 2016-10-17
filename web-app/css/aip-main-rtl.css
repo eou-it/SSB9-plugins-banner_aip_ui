@@ -596,6 +596,50 @@ aip-list .aip-list-container  {
     border-left:1px solid #444444;
 }
 
+.addStatus .modal-dialog  {
+    width:320px;
+}
+  .addStatus .modal-dialog .modal-content  {
+    padding:8px;
+}
+  .addStatus .modal-dialog .modal-header  {
+    padding:8px;
+    min-height:2.5em;
+}
+    .addStatus .modal-dialog .modal-header .modal-title  {
+    float:right;
+    font-size:1em;
+    font-weight:bold;
+}
+    .addStatus .modal-dialog .modal-header .statusAddClose  {
+    float:left;
+    border:none;
+    background-color:transparent;
+    padding:0;
+}
+  .addStatus .modal-dialog .modal-body  {
+    padding:0;
+}
+    .addStatus .modal-dialog .modal-body .modal-body-content  {
+    padding:8px 8px 0 8px;
+}
+      .addStatus .modal-dialog .modal-body .modal-body-content .row  {
+    margin-left:0;
+    margin-right:0;
+}
+      .addStatus .modal-dialog .modal-body .modal-body-content .row.blockProcess  {
+    padding:16px;
+}
+        .addStatus .modal-dialog .modal-body .modal-body-content .row.blockProcess input  {
+    margin-left:8px;
+}
+    .addStatus .modal-dialog .modal-body .modal-control button  {
+    width:100%;
+    border:none;
+    border-top:1px solid #cccccc;
+    color:#557287;
+}
+
 #username  {
     padding-left:0.5em;
 }

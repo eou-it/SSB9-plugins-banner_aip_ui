@@ -1,0 +1,47 @@
+.addStatus {
+  .modal-dialog {
+    width: 320px;
+    .modal-content {
+      padding: 8px;
+    }
+    .modal-header {
+      padding: 8px;
+      min-height: 2.5em;
+      .modal-title {
+        float: left;
+        font-size: 1em;
+        font-weight: bold;
+      }
+      .statusAddClose {
+        float: right;
+        border: none;
+        background-color: transparent;
+        padding: 0;
+      }
+    }
+    .modal-body {
+      padding: 0;
+      .modal-body-content {
+        padding: 8px 8px 0 8px;
+        .row {
+          margin-right: 0;
+          margin-left: 0;
+        }
+        .row.blockProcess {
+          padding: 16px;
+          input {
+            margin-right: 8px;
+          }
+        }
+      }
+      .modal-control {
+        button {
+          width: 100%;
+          border: none;
+          border-top: 1px solid #cccccc;
+          color: #557287;
+        }
+      }
+    }
+  }
+}

@@ -7,6 +7,7 @@ var AIP;
             this.$inject = ["$scope", "$state", "$window", "$filter", "$q", "$uibModal",
                 "ENDPOINT", "PAGINATIONCONFIG", "AdminActionStatusService", "APP_ROOT"];
             $scope.vm = this;
+            this.$scope = $scope;
             this.$state = $state;
             this.$filter = $filter;
             this.$q = $q;
@@ -110,9 +111,30 @@ var AIP;
         AdminStatusListPageCtrl.prototype.getIndicatorVal = function () {
         };
         AdminStatusListPageCtrl.prototype.goAddPage = function () {
+            var _this = this;
             this.modalInstance = this.$uibModal.open({
                 templateUrl: this.APP_ROOT + "admin/status/list/add/statusAddTemplate.html",
-                controller: "StatusAddModalCtrl"
+                controller: "StatusAddModalCtrl",
+                controllerAs: "$ctrl",
+                size: "sm",
+                windowClass: "addStatus"
+            });
+            this.modalInstance.result.then(function (result) {
+                console.log(result);
+                if (result.success) {
+                    //TODO:: send notification and refresh grid
+                    var n = new Notification({
+                        message: _this.$filter("i18n_aip")("aip.common.save.successful"),
+                        type: "success",
+                        flash: true
+                    });
+                    notifications.addNotification(n);
+                    _this.$scope.refreshGrid(true);
+                }
+                else {
+                }
+            }, function (error) {
+                console.log(error);
             });
         };
         /*
@@ -161,8 +183,6 @@ var AIP;
             this.selectedRecord = data;
             //this.adminActionStatusService.enableGroupOpen(data.id);
             //this.$state.params.grp = data.id;
-        };
-        AdminStatusListPageCtrl.prototype.refreshGrid = function () {
         };
         return AdminStatusListPageCtrl;
     }());

@@ -9,6 +9,7 @@ module AIP {
     export class AdminStatusListPageCtrl {
         $inject = ["$scope", "$state", "$window", "$filter", "$q", "$uibModal",
             "ENDPOINT", "PAGINATIONCONFIG", "AdminActionStatusService", "APP_ROOT"];
+        $scope;
         $state;
         $filter;
         $q: ng.IQService;
@@ -29,6 +30,7 @@ module AIP {
         constructor($scope, $state, $window, $filter, $q, $uibModal, ENDPOINT, PAGINATIONCONFIG,
                     AdminActionStatusService, APP_ROOT) {
             $scope.vm = this;
+            this.$scope = $scope;
             this.$state = $state;
             this.$filter = $filter;
             this.$q = $q;
@@ -137,7 +139,28 @@ module AIP {
         goAddPage() {
             this.modalInstance = this.$uibModal.open({
                 templateUrl: this.APP_ROOT + "admin/status/list/add/statusAddTemplate.html",
-                controller: "StatusAddModalCtrl"
+                controller: "StatusAddModalCtrl",
+                controllerAs: "$ctrl",
+                size: "sm",
+                windowClass: "addStatus"
+            });
+            this.modalInstance.result.then((result) => {
+                console.log(result);
+                if(result.success) {
+                    //TODO:: send notification and refresh grid
+                    var n = new Notification({
+                        message: this.$filter("i18n_aip")("aip.common.save.successful"), //+
+                        type: "success",
+                        flash: true
+                    });
+                    notifications.addNotification(n);
+                    this.$scope.refreshGrid(true);
+                    // this.refreshGrid(true);
+                } else {
+                    //TODO:: send error notification
+                }
+            }, (error) => {
+                console.log(error);
             });
         }
 
@@ -190,9 +213,9 @@ module AIP {
             //this.adminActionStatusService.enableGroupOpen(data.id);
             //this.$state.params.grp = data.id;
         }
-        refreshGrid() {
-
-        }
+        // refreshGrid() {
+        //     console.log("Refresh");
+        // }
     }
 }
 

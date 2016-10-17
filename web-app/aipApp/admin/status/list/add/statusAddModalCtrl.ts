@@ -9,6 +9,7 @@ module AIP {
         $uibModalInstance,
         adminActionStatusService;
         APP_ROOT;
+        statusModel;
 
         constructor($scope, $uibModalInstance, ENDPOINT, AdminActionStatusService, ENDPOINT, APP_ROOT) {
             $scope.vm = this;
@@ -16,14 +17,30 @@ module AIP {
             this.endPoint = ENDPOINT;   //ENDPOINT.admin.actionList
             this.adminActionStatusService = AdminActionStatusService;
             this.APP_ROOT = APP_ROOT;
-            this.modalInstance;
-
+            this.statusModel = {
+                title: "",
+                block: false
+            };
         }
         statusSave() {
             console.log("save click");
+            this.adminActionStatusService.saveStatus(this.statusModel)
+                .then((response) => {
+                    console.log(response.data);
+                    this.$uibModalInstance.close(response.data);
+                }, (error) => {
+                    console.log(error);
+                    this.$uibModalInstance.dismiss(error);
+                });
         }
         closeDialog() {
             this.$uibModalInstance.dismiss('cancel');
+        }
+        validate() {
+            if (this.statusModel.title.length===0) {
+                return false;
+            }
+            return true;
         }
     }
 }
