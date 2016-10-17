@@ -82,6 +82,10 @@ aip-list {
             //float: right;
             margin-left: 5px;
           }
+          .group-instructions {
+            text-decoration: underline;
+            color: $link-color;
+          }
           .group-progress {
             padding: 0;
             .progress {
