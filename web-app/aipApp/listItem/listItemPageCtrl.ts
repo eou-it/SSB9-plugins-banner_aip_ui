@@ -90,6 +90,7 @@ module AIP {
                     angular.forEach(actionItems.groups, (group) => {
                         angular.forEach(group.items, (item) => {
                             item.state = item.state
+                            /*todo: can probably drop the message properties for these status since it's coming from the db*/
                             /*
                             ==="Completed"?
                                 "aip.status.complete":
