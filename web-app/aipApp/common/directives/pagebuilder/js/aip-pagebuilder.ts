@@ -31,7 +31,8 @@ module PB {
             this.replace=true;
             this.scope = {
                 content:"@",
-                aid: "@"
+                aid: "@",
+                gid: "@"
             }
             this.$compile = $compile;
             this.ItemListViewService = ItemListViewService;
@@ -44,7 +45,7 @@ module PB {
 
             attrs.$observe('aid', (tpl)  => {
                 var me = self;
-                self.ItemListViewService.getPagebuilderPage("ActionItemPolicy", attrs.aid)
+                self.ItemListViewService.getPagebuilderPage("ActionItemPolicy", attrs.aid, attrs.gid)
                     .then((val) => {
                         element.children().empty();
                         var tempElement = angular.element(val.html);
