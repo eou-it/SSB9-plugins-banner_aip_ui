@@ -74,7 +74,7 @@ var AIP;
                     options: {
                         sortable: true,
                         visible: true,
-                        columnShowHide: true
+                        columnShowHide: false
                     }
                 }, {
                     name: "actionItemStatusSystemRequired",
