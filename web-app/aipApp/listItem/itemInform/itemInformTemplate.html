@@ -1,23 +1,26 @@
 <div class="modal-header">
-    <h3 class="modal-title" id="modal-list-inform-title">Why you are here</h3>
-    <button type="button" ng-click="vm.closeDialog()">
-        <i class="fa fa-times" aria-hidden="true"></i>
-    </button>
+    <h3 class="modal-title" id="modal-list-inform-title">{{"aip.inform.list.title"|i18n_aip}}</h3>
 </div>
 <div class="modal-body" id="modal-list-inform-body">
     <div class="modal-body-content">
         <div class="row">
             <label>
-                you are here because
+                {{"aip.inform.list.notice"|i18n_aip}}
             </label>
         </div>
     </div>
+    <div>
+        <span class="font-semibold">{{"aip.inform.list.continue.message.1"|i18n_aip}} </span>{{"aip.inform.list.continue.message.2"|i18n_aip}}
+    </div>
+    <div>
+        <span class="font-semibold">{{"aip.inform.list.cancel.message.1"|i18n_aip}} </span>{{"aip.inform.list.cancel.message.2"|i18n_aip}}
+    </div>
     <div class="modal-control">
-        <button type="button" class="btn btn-default" ng-click="vm.goAhead()">
-            go ahead
-        </button>
         <button type="button" class="btn btn-default" ng-click="vm.goBack()">
-            go back
+            {{"aip.inform.list.cancel.button"|i18n_aip}}
+        </button>
+        <button type="button" class="btn btn-default" ng-click="vm.goAhead()">
+            {{"aip.inform.list.continue.button"|i18n_aip}}
         </button>
     </div>
-</div
+</div>

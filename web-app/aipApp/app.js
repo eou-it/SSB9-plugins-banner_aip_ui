@@ -289,7 +289,14 @@ var bannerAIPApp = angular.module("bannerAIP", [
             $.i18n.prop("aip.common.text.no");
             $.i18n.prop("aip.common.text.completed");
             $.i18n.prop("aip.common.text.group.instructions");
-
+            $.i18n.prop("aip.inform.list.title");
+            $.i18n.prop("aip.inform.list.notice");
+            $.i18n.prop("aip.inform.list.continue.message.1");
+            $.i18n.prop("aip.inform.list.continue.message.2");
+            $.i18n.prop("aip.inform.list.continue.button");
+            $.i18n.prop("aip.inform.list.cancel.message.1");
+            $.i18n.prop("aip.inform.list.cancel.message.2");
+            $.i18n.prop("aip.inform.list.cancel.button");
             $.i18n.prop("aip.admin.landing");
 
             $.i18n.prop("aip.admin.maxLength");
