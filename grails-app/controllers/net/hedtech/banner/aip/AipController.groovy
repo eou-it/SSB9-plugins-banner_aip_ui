@@ -118,7 +118,7 @@ class AipController {
                         id         : group.groupId,
                         title      : group.groupTitle,
                         description: groupDesc,
-                        header : ["title", "state", "description"]
+                        header : ["title", "state","completedDate","description"]
 
                 ]
                 userGroupInfo << groupItem
@@ -136,7 +136,8 @@ class AipController {
                         id         : item.id,
                         title      : item.title,
                         state      : item.status,
-                        description: item.description
+                        description: item.description,
+                        completedDate: item.completedDate
                 ]
                 items << actionItem
             }
