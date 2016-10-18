@@ -3,11 +3,11 @@
 var AIP;
 (function (AIP) {
     var StatusAddModalCtrl = (function () {
-        function StatusAddModalCtrl($scope, $uibModalInstance, ENDPOINT, AdminActionStatusService, ENDPOINT, APP_ROOT) {
+        function StatusAddModalCtrl($scope, $uibModalInstance, ENDPOINT, AdminActionStatusService, APP_ROOT) {
             this.$inject = ["$scope", "$uibModalInstance", "AdminActionStatusService", "ENDPOINT", "APP_ROOT"];
             $scope.vm = this;
             this.$uibModalInstance = $uibModalInstance;
-            this.endPoint = ENDPOINT; //ENDPOINT.admin.actionList
+            this.ENDPOINT = ENDPOINT; //ENDPOINT.admin.actionList
             this.adminActionStatusService = AdminActionStatusService;
             this.APP_ROOT = APP_ROOT;
             this.statusModel = {
@@ -17,7 +17,6 @@ var AIP;
         }
         StatusAddModalCtrl.prototype.statusSave = function () {
             var _this = this;
-            console.log("save click");
             this.adminActionStatusService.saveStatus(this.statusModel)
                 .then(function (response) {
                 console.log(response.data);

@@ -6,15 +6,16 @@ declare var register: any;
 module AIP {
     export class StatusAddModalCtrl {
         $inject = ["$scope", "$uibModalInstance", "AdminActionStatusService", "ENDPOINT", "APP_ROOT"];
-        $uibModalInstance,
+        $uibModalInstance;
         adminActionStatusService;
         APP_ROOT;
         statusModel;
+        ENDPOINT;
 
-        constructor($scope, $uibModalInstance, ENDPOINT, AdminActionStatusService, ENDPOINT, APP_ROOT) {
+        constructor($scope, $uibModalInstance, ENDPOINT, AdminActionStatusService, APP_ROOT) {
             $scope.vm = this;
             this.$uibModalInstance = $uibModalInstance;
-            this.endPoint = ENDPOINT;   //ENDPOINT.admin.actionList
+            this.ENDPOINT = ENDPOINT;   //ENDPOINT.admin.actionList
             this.adminActionStatusService = AdminActionStatusService;
             this.APP_ROOT = APP_ROOT;
             this.statusModel = {
@@ -23,7 +24,6 @@ module AIP {
             };
         }
         statusSave() {
-            console.log("save click");
             this.adminActionStatusService.saveStatus(this.statusModel)
                 .then((response) => {
                     console.log(response.data);
