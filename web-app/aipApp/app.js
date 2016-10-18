@@ -119,6 +119,17 @@ var bannerAIPApp = angular.module("bannerAIP", [
                 label: "aip.user.actionItem.list",
                 url: "/aip/list#/list"
             }
+        },
+
+        "informedList": {
+            url: "/informedList",
+            templateUrl: "listItem/listItemPage.html",
+            controller: "ListItemPageCtrl",
+            breadcrumb: {
+                label: "aip.user.actionItem.list",
+                url: "/aip/list#/list"
+            },
+            inform: true
         }
     })
 //constant for endpoint
@@ -132,7 +143,6 @@ var bannerAIPApp = angular.module("bannerAIP", [
             createGroup: aipAppAbsPath + "aipAdmin/createGroup",
             openGroup: aipAppAbsPath + "aipAdmin/openGroup",
             // actionList: aipAppAbsPath + "aip/adminActionLists",
-
             actionItemList: aipAppAbsPath + "aipAdmin/actionItemList",
             actionItemStatuses: aipAppAbsPath + "aipAdmin/adminActionItemStatus",
             actionItemStatus: aipAppAbsPath + "aipAdmin/actionItemStatusList",
@@ -140,7 +150,8 @@ var bannerAIPApp = angular.module("bannerAIP", [
             editActionItemContent: aipAppAbsPath + "aipAdmin/editActionItemContent",
             openActionItem: aipAppAbsPath + "aipAdmin/openActionItem",
             actionItemTemplateList: aipAppAbsPath + "aipAdmin/actionItemTemplateList",
-            saveActionItemTemplate: aipAppAbsPath + "aipAdmin/updateActionItemDetailWithTemplate"
+            saveActionItemTemplate: aipAppAbsPath + "aipAdmin/updateActionItemDetailWithTemplate",
+            statusSave: aipAppAbsPath + "aipAdmin/statusSave"
         }
     })
     .constant("PAGINATIONCONFIG",
@@ -194,7 +205,7 @@ var bannerAIPApp = angular.module("bannerAIP", [
                     url: item.url,
                     templateUrl: APP_ROOT + item.templateUrl,
                     controller: item.controller,
-                    params: {noti:undefined, data:undefined, saved:undefined},
+                    params: {noti:undefined, data:undefined, inform: item.inform, saved:undefined},
                     onEnter: function($stateParams, $filter) {
                         this.data.breadcrumbs.url = item.breadcrumb.url;
                         this.data.breadcrumbs.title = item.breadcrumb.label;
@@ -286,6 +297,14 @@ var bannerAIPApp = angular.module("bannerAIP", [
             $.i18n.prop("aip.common.text.date.completed");
 
 
+            $.i18n.prop("aip.inform.list.title");
+            $.i18n.prop("aip.inform.list.notice");
+            $.i18n.prop("aip.inform.list.continue.message.1");
+            $.i18n.prop("aip.inform.list.continue.message.2");
+            $.i18n.prop("aip.inform.list.continue.button");
+            $.i18n.prop("aip.inform.list.cancel.message.1");
+            $.i18n.prop("aip.inform.list.cancel.message.2");
+            $.i18n.prop("aip.inform.list.cancel.button");
             $.i18n.prop("aip.admin.landing");
 
             $.i18n.prop("aip.admin.maxLength");
@@ -335,6 +354,9 @@ var bannerAIPApp = angular.module("bannerAIP", [
 
             $.i18n.prop("aip.admin.status");
             $.i18n.prop("aip.admin.status.description");
+            $.i18n.prop("aip.admin.status.add");
+            $.i18n.prop("aip.admin.status.actionItemStatus");
+            $.i18n.prop("aip.admin.status.block");
 
             $.i18n.prop("aip.admin.selectable.action.items");
             $.i18n.prop("aip.admin.selectable.groups");

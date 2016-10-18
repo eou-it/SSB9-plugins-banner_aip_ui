@@ -33,6 +33,13 @@ class AipController {
 
 
     @Secured(['ROLE_SELFSERVICE-FACULTY_BAN_DEFAULT_M', 'ROLE_SELFSERVICE-STUDENT_BAN_DEFAULT_M'])
+    def informedList() {
+        def model = [fragment: "/informedList"]
+        render( model: model, view: "index" )
+    }
+
+
+    @Secured(['ROLE_SELFSERVICE-FACULTY_BAN_DEFAULT_M', 'ROLE_SELFSERVICE-STUDENT_BAN_DEFAULT_M'])
     def admin() {
         def model = [fragment: "/landing"]
         render( model: model, view: "index" )

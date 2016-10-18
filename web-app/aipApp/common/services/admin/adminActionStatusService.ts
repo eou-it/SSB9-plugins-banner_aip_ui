@@ -100,7 +100,15 @@ module AIP {
             })
 
             return deferred.promise;
-        };
+        }
+        saveStatus (status:{title:string, block:boolean}) {
+            var request = this.$http({
+                method: "POST",
+                url: this.ENDPOINT.admin.statusSave,
+                data: status
+            });
+            return request;
+        }
 
         /*
         getFolder() {
