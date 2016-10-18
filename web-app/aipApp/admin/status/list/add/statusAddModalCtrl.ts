@@ -13,6 +13,7 @@ module AIP {
         APP_ROOT;
         statusModel;
         ENDPOINT;
+        errorMessage:any;
 
         constructor($scope, $uibModalInstance, ENDPOINT, AdminActionStatusService, APP_ROOT) {
             $scope.vm = this;
@@ -24,6 +25,7 @@ module AIP {
                 title: "",
                 block: false
             };
+            this.errorMessage = {};
         }
         statusSave() {
             this.adminActionStatusService.saveStatus(this.statusModel)
@@ -32,7 +34,7 @@ module AIP {
                         console.log( response.data );
                         this.$uibModalInstance.close( response.data );
                     } else {
-                        this.$uibModalInstance.dismiss();
+                        //this.$uibModalInstance.dismiss();
                         this.saveErrorCallback(response.data.message)
                     }
                 }, (error) => {
@@ -44,10 +46,17 @@ module AIP {
             this.$uibModalInstance.dismiss('cancel');
         }
         validate() {
-            if (this.statusModel.title.length===0) {
-                return false;
+            if (this.statusModel.title.length===0 || this.statusModel.title.length > 30) {
+                delete this.errorMessage.title;
+            } else {
+                delete this.errorMessage.title;
             }
-            return true;
+
+            if(Object.keys(this.errorMessage).length>0) {
+                return false;
+            } else {
+                return true;
+            }
         }
         saveErrorCallback(message) {
             var n = new Notification({

@@ -14,6 +14,7 @@ var AIP;
                 title: "",
                 block: false
             };
+            this.errorMessage = {};
         }
         StatusAddModalCtrl.prototype.statusSave = function () {
             var _this = this;
@@ -24,7 +25,7 @@ var AIP;
                     _this.$uibModalInstance.close(response.data);
                 }
                 else {
-                    _this.$uibModalInstance.dismiss();
+                    //this.$uibModalInstance.dismiss();
                     _this.saveErrorCallback(response.data.message);
                 }
             }, function (error) {
@@ -36,10 +37,18 @@ var AIP;
             this.$uibModalInstance.dismiss('cancel');
         };
         StatusAddModalCtrl.prototype.validate = function () {
-            if (this.statusModel.title.length === 0) {
+            if (this.statusModel.title.length === 0 || this.statusModel.title.length > 30) {
+                delete this.errorMessage.title;
+            }
+            else {
+                delete this.errorMessage.title;
+            }
+            if (Object.keys(this.errorMessage).length > 0) {
                 return false;
             }
-            return true;
+            else {
+                return true;
+            }
         };
         StatusAddModalCtrl.prototype.saveErrorCallback = function (message) {
             var n = new Notification({
