@@ -81,6 +81,7 @@ modules = {
         resource url:[plugin: 'banner-csr-ui', file: 'aipApp/admin/status/list/add/statusAddModalCtrl.js']
         resource url:[plugin: 'banner-csr-ui', file: 'aipApp/listItem/listItemPageCtrl.js']
         resource url:[plugin: 'banner-csr-ui', file: 'aipApp/listItem/itemConfirm/itemConfirmCtrl.js']
+        resource url:[plugin: 'banner-csr-ui', file: 'aipApp/listItem/itemInform/itemInformCtrl.js']
         resource url:[plugin: 'banner-csr-ui', file: 'aipApp/common/services/admin/adminGroupService.js']
         resource url:[plugin: 'banner-csr-ui', file: 'aipApp/common/services/admin/adminActionService.js']
         resource url:[plugin: 'banner-csr-ui', file: 'aipApp/common/services/admin/adminActionStatusService.js']

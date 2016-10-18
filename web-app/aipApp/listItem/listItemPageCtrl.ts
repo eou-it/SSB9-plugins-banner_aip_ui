@@ -30,10 +30,12 @@ module AIP {
     }
 
     export class ListItemPageCtrl implements IListItemPageCtrl{
-        $inject = ["$scope", "$state", "ItemListViewService", "AIPUserService", "SpinnerService", "$timeout","$window", "$q"];
+
+        $inject = ["$scope", "$state", "ItemListViewService", "AIPUserService", "SpinnerService", "$timeout", "$q", "$uibModal", , "APP_ROOT"];
         itemListViewService:AIP.ItemListViewService;
         userService:AIP.UserService;
         actionItems:IUserItem;
+        $uibModal;
         initialOpenGroup;
         spinnerService;
         userName;
@@ -41,8 +43,10 @@ module AIP {
         $timeout;
         $state;
         $q;
+        APP_ROOT;
+        modalInstance;
 
-        constructor($scope, $state, ItemListViewService, AIPUserService, SpinnerService, $timeout, $window, $q) {
+        constructor($scope, $state, ItemListViewService, AIPUserService, SpinnerService, $timeout, $q, $uibModal, APP_ROOT) {
             $scope.vm = this;
             this.$state = $state;
             this.itemListViewService = ItemListViewService;
@@ -50,7 +54,9 @@ module AIP {
             this.spinnerService = SpinnerService;
             this.$timeout = $timeout;
             this.$q = $q;
-            $window;
+            this.$uibModal = $uibModal;
+            this.APP_ROOT = APP_ROOT;
+            this.modalInstance;
 
             this.initialOpenGroup = -1;
             $scope.$watch(
@@ -71,6 +77,7 @@ module AIP {
             this.init();
         }
         init() {
+            this.informModal(this.$state.params['inform'])
             this.spinnerService.showSpinner(true);
             this.userService.getUserInfo().then((userData) => {
                 var userInfo = userData;
@@ -281,18 +288,27 @@ module AIP {
             this.selectedData = undefined;
         }
 
-        saveErrorCallback(message) {
-            var n = new Notification({
+        informModal( show ) {
+            if (show) {
+                this.modalInstance = this.$uibModal.open( {
+                    templateUrl: this.APP_ROOT + "listItem/itemInform/itemInformTemplate.html",
+                    controller: "ItemInformCtrl"
+                } );
+            }
+        }
+
+        saveErrorCallback( message ) {
+            var n = new Notification( {
                 message: message,
                 type: "error",
                 flash: true
-            });
-            notifications.addNotification(n);
+            } );
+            notifications.addNotification( n );
 
         }
 
         /*
-        getCustomPage(id,actionItemId) {
+         getCustomPage(id,actionItemId) {
             var defer = this.$q.defer();
             var customPageId = id || "ActionItemPolicy"; //TODO: get id from selectedData (later)
             var actionItemId = actionItemId || "3";
