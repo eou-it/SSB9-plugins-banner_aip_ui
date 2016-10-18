@@ -3,16 +3,20 @@
 var AIP;
 (function (AIP) {
     var AdminStatusListPageCtrl = (function () {
-        function AdminStatusListPageCtrl($scope, $state, $window, $filter, $q, ENDPOINT, PAGINATIONCONFIG, AdminActionStatusService) {
-            this.$inject = ["$scope", "$state", "$window", "$filter", "$q", "ENDPOINT", "PAGINATIONCONFIG",
-                "AdminActionStatusService"];
+        function AdminStatusListPageCtrl($scope, $state, $window, $filter, $q, $uibModal, ENDPOINT, PAGINATIONCONFIG, AdminActionStatusService, APP_ROOT) {
+            this.$inject = ["$scope", "$state", "$window", "$filter", "$q", "$uibModal",
+                "ENDPOINT", "PAGINATIONCONFIG", "AdminActionStatusService", "APP_ROOT"];
             $scope.vm = this;
+            this.$scope = $scope;
             this.$state = $state;
             this.$filter = $filter;
             this.$q = $q;
+            this.$uibModal = $uibModal;
             this.endPoint = ENDPOINT; //ENDPOINT.admin.actionList
             this.paginationConfig = PAGINATIONCONFIG;
             this.adminActionStatusService = AdminActionStatusService;
+            this.APP_ROOT = APP_ROOT;
+            this.modalInstance;
             this.init();
             angular.element($window).bind('resize', function () {
                 //$scope.onResize();
@@ -106,6 +110,33 @@ var AIP;
         };
         AdminStatusListPageCtrl.prototype.getIndicatorVal = function () {
         };
+        AdminStatusListPageCtrl.prototype.goAddPage = function () {
+            var _this = this;
+            this.modalInstance = this.$uibModal.open({
+                templateUrl: this.APP_ROOT + "admin/status/list/add/statusAddTemplate.html",
+                controller: "StatusAddModalCtrl",
+                controllerAs: "$ctrl",
+                size: "sm",
+                windowClass: "addStatus"
+            });
+            this.modalInstance.result.then(function (result) {
+                console.log(result);
+                if (result.success) {
+                    //TODO:: send notification and refresh grid
+                    var n = new Notification({
+                        message: _this.$filter("i18n_aip")("aip.common.save.successful"),
+                        type: "success",
+                        flash: true
+                    });
+                    notifications.addNotification(n);
+                    _this.$scope.refreshGrid(true); //use scope to call grid directive's function
+                }
+                else {
+                }
+            }, function (error) {
+                console.log(error);
+            });
+        };
         /*
         add() {
             this.$state.go("admin-group-add");
@@ -152,8 +183,6 @@ var AIP;
             this.selectedRecord = data;
             //this.adminActionStatusService.enableGroupOpen(data.id);
             //this.$state.params.grp = data.id;
-        };
-        AdminStatusListPageCtrl.prototype.refreshGrid = function () {
         };
         return AdminStatusListPageCtrl;
     }());

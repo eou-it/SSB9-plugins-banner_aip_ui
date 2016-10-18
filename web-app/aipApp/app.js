@@ -140,7 +140,9 @@ var bannerAIPApp = angular.module("bannerAIP", [
             editActionItemContent: aipAppAbsPath + "aipAdmin/editActionItemContent",
             openActionItem: aipAppAbsPath + "aipAdmin/openActionItem",
             actionItemTemplateList: aipAppAbsPath + "aipAdmin/actionItemTemplateList",
-            saveActionItemTemplate: aipAppAbsPath + "aipAdmin/updateActionItemDetailWithTemplate"
+            saveActionItemTemplate: aipAppAbsPath + "aipAdmin/updateActionItemDetailWithTemplate",
+
+            statusSave: aipAppAbsPath + "aipAdmin/statusSave"
         }
     })
     .constant("PAGINATIONCONFIG",
@@ -333,6 +335,9 @@ var bannerAIPApp = angular.module("bannerAIP", [
 
             $.i18n.prop("aip.admin.status");
             $.i18n.prop("aip.admin.status.description");
+            $.i18n.prop("aip.admin.status.add");
+            $.i18n.prop("aip.admin.status.actionItemStatus");
+            $.i18n.prop("aip.admin.status.block");
 
             $.i18n.prop("aip.admin.selectable.action.items");
             $.i18n.prop("aip.admin.selectable.groups");

@@ -457,4 +457,44 @@ class AipAdminController {
 
         render model as JSON
     }
+
+    def statusSave() {
+        def jsonObj = request.JSON
+        def statusTitle = jsonObj.title
+        def isBlock = jsonObj.block
+        def user = SecurityContextHolder?.context?.authentication?.principal
+        if (!user.pidm) {
+            response.sendError( 403 )
+            return
+        }
+        def aipUser = AipControllerUtils.getPersonForAip( params, user.pidm )
+
+        def status = new ActionItemStatus()
+        status.actionItemStatus = statusTitle
+        status.actionItemStatusActive = "N"
+        status.actionItemStatusBlockedProcess = isBlock?"Y":"N"
+        status.actionItemStatusActivityDate = new Date()
+        status.actionItemStatusUserId = aipUser.bannerId
+        status.actionItemStatusSystemRequired = "N"
+        status.actionItemStatusVersion = null
+        status.actionItemStatusDataOrigin = null
+
+
+        ActionItemStatus newStatus = actionItemStatusService.create(status);
+
+        def success = false
+        def errors = []
+        //TODO:: save status
+
+        if (newStatus) {
+            response.status = 200
+            success = true
+        }
+        def model = [
+                success: success,
+                errors: errors,
+                status: newStatus
+        ]
+        render model as JSON
+    }
 }

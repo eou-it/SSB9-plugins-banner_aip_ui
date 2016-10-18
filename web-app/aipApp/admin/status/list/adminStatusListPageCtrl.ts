@@ -7,11 +7,13 @@ declare var notifications: any;
 
 module AIP {
     export class AdminStatusListPageCtrl {
-        $inject = ["$scope", "$state", "$window", "$filter", "$q", "ENDPOINT", "PAGINATIONCONFIG",
-            "AdminActionStatusService"];
+        $inject = ["$scope", "$state", "$window", "$filter", "$q", "$uibModal",
+            "ENDPOINT", "PAGINATIONCONFIG", "AdminActionStatusService", "APP_ROOT"];
+        $scope;
         $state;
         $filter;
         $q: ng.IQService;
+        $uibModal;
         endPoint;
         paginationConfig;
         draggableColumnNames;
@@ -22,16 +24,22 @@ module AIP {
         mobileSize;
         adminActionStatusService;
         selectedRecord;
+        APP_ROOT;
+        modalInstance;
 
-        constructor($scope, $state, $window, $filter, $q, ENDPOINT, PAGINATIONCONFIG,
-                    AdminActionStatusService) {
+        constructor($scope, $state, $window, $filter, $q, $uibModal, ENDPOINT, PAGINATIONCONFIG,
+                    AdminActionStatusService, APP_ROOT) {
             $scope.vm = this;
+            this.$scope = $scope;
             this.$state = $state;
             this.$filter = $filter;
             this.$q = $q;
+            this.$uibModal = $uibModal;
             this.endPoint = ENDPOINT;   //ENDPOINT.admin.actionList
             this.paginationConfig = PAGINATIONCONFIG;
             this.adminActionStatusService = AdminActionStatusService;
+            this.APP_ROOT = APP_ROOT;
+            this.modalInstance;
             this.init();
             angular.element($window).bind('resize', function() {
                 //$scope.onResize();
@@ -42,7 +50,6 @@ module AIP {
                 //$scope.onResize();
                 $scope.$apply();
             });
-
         }
         init() {
             this.gridData = {};
@@ -129,6 +136,34 @@ module AIP {
 
         }
 
+        goAddPage() {
+            this.modalInstance = this.$uibModal.open({
+                templateUrl: this.APP_ROOT + "admin/status/list/add/statusAddTemplate.html",
+                controller: "StatusAddModalCtrl",
+                controllerAs: "$ctrl",
+                size: "sm",
+                windowClass: "addStatus"
+            });
+            this.modalInstance.result.then((result) => {
+                console.log(result);
+                if(result.success) {
+                    //TODO:: send notification and refresh grid
+                    var n = new Notification({
+                        message: this.$filter("i18n_aip")("aip.common.save.successful"), //+
+                        type: "success",
+                        flash: true
+                    });
+                    notifications.addNotification(n);
+                    this.$scope.refreshGrid(true);  //use scope to call grid directive's function
+                    // this.refreshGrid(true);
+                } else {
+                    //TODO:: send error notification
+                }
+            }, (error) => {
+                console.log(error);
+            });
+        }
+
         /*
         add() {
             this.$state.go("admin-group-add");
@@ -178,9 +213,9 @@ module AIP {
             //this.adminActionStatusService.enableGroupOpen(data.id);
             //this.$state.params.grp = data.id;
         }
-        refreshGrid() {
-
-        }
+        // refreshGrid() {
+        //     console.log("Refresh");
+        // }
     }
 }
 

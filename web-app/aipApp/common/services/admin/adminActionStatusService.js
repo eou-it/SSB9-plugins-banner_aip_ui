@@ -30,7 +30,14 @@ var AIP;
             });
             return deferred.promise;
         };
-        ;
+        AdminActionStatusService.prototype.saveStatus = function (status) {
+            var request = this.$http({
+                method: "POST",
+                url: this.ENDPOINT.admin.statusSave,
+                data: status
+            });
+            return request;
+        };
         AdminActionStatusService.$inject = ["$http", "$q", "$filter", "ENDPOINT"];
         return AdminActionStatusService;
     }());
