@@ -27,6 +27,7 @@ module AIP {
         name: string;
         state: string;
         title: string;
+        completedDate: string;
     }
     export interface IGroup {
         id: number| string;

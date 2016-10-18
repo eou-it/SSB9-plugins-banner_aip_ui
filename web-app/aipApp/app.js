@@ -131,7 +131,7 @@ var bannerAIPApp = angular.module("bannerAIP", [
             },
             inform: true
         }
-    } )
+    })
 //constant for endpoint
     .constant("ENDPOINT", {
         admin: {
@@ -143,7 +143,6 @@ var bannerAIPApp = angular.module("bannerAIP", [
             createGroup: aipAppAbsPath + "aipAdmin/createGroup",
             openGroup: aipAppAbsPath + "aipAdmin/openGroup",
             // actionList: aipAppAbsPath + "aip/adminActionLists",
-
             actionItemList: aipAppAbsPath + "aipAdmin/actionItemList",
             actionItemStatuses: aipAppAbsPath + "aipAdmin/adminActionItemStatus",
             actionItemStatus: aipAppAbsPath + "aipAdmin/actionItemStatusList",
@@ -152,7 +151,6 @@ var bannerAIPApp = angular.module("bannerAIP", [
             openActionItem: aipAppAbsPath + "aipAdmin/openActionItem",
             actionItemTemplateList: aipAppAbsPath + "aipAdmin/actionItemTemplateList",
             saveActionItemTemplate: aipAppAbsPath + "aipAdmin/updateActionItemDetailWithTemplate",
-
             statusSave: aipAppAbsPath + "aipAdmin/statusSave"
         }
     })
@@ -296,6 +294,9 @@ var bannerAIPApp = angular.module("bannerAIP", [
             $.i18n.prop("aip.common.text.no");
             $.i18n.prop("aip.common.text.completed");
             $.i18n.prop("aip.common.text.group.instructions");
+            $.i18n.prop("aip.common.text.date.completed");
+
+
             $.i18n.prop("aip.inform.list.title");
             $.i18n.prop("aip.inform.list.notice");
             $.i18n.prop("aip.inform.list.continue.message.1");

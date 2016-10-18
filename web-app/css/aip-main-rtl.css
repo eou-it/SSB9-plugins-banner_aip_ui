@@ -136,6 +136,11 @@ aip-list .aip-list-container  {
     float:left;
     width:100%;
 }
+      aip-list .aip-list-container .list-body-container .list-body .list-item .cell.completedDate  {
+    font-size:1.3em;
+    border-bottom:none;
+    padding:5px 8px;
+}
       aip-list .aip-list-container .list-body-container .list-body .list-item .cell.description  {
     font-size:1.3em;
     border-bottom:1px solid #A4C6E4;
