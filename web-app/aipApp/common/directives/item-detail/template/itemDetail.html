@@ -11,7 +11,7 @@
                 {{"aip.user.detail.noTemplate"|i18n_aip}}
             </div>
             <pagebuilder-page ng-if="data.type === 'actionItem' && data.info.templateId" content="{{data.info.templateId}}"
-                              aid="{{data.info.id}}"></pagebuilder-page>
+                              aid="{{data.info.id}}" gid="{{data.groupId}}"></pagebuilder-page>
         </div>
         <hr/>
         <div class="control">

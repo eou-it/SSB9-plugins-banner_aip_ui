@@ -4,9 +4,8 @@
 var AIP;
 (function (AIP) {
     var ListItemPageCtrl = (function () {
-        function ListItemPageCtrl($scope, $state, ItemListViewService, AIPUserService, SpinnerService, $timeout, $window, $q, $uibModal, APP_ROOT) {
-            this.$inject = ["$scope", "$state", "ItemListViewService", "AIPUserService", "SpinnerService", "$timeout",
-                "$window", "$q", "$uibModal", , "APP_ROOT"];
+        function ListItemPageCtrl($scope, $state, ItemListViewService, AIPUserService, SpinnerService, $timeout, $q, $uibModal, APP_ROOT) {
+            this.$inject = ["$scope", "$state", "ItemListViewService", "AIPUserService", "SpinnerService", "$timeout", "$q", "$uibModal", , "APP_ROOT"];
             $scope.vm = this;
             this.$state = $state;
             this.itemListViewService = ItemListViewService;
@@ -23,10 +22,12 @@ var AIP;
                     $scope.apply();
                 }
             });
-            //when resize the window, reapply all changes in the scope - reapply height of container
-            angular.element($window).bind('resize', function () {
-                //$scope.onResize();
-                $scope.$apply();
+            notifications.on('add', function (e) {
+                if (params.saved == true) {
+                    //$scope.vm.init();
+                    $scope.vm.refreshList();
+                }
+                ;
             });
             this.init();
         }
@@ -40,9 +41,13 @@ var AIP;
                 _this.itemListViewService.getActionItems(userInfo).then(function (actionItems) {
                     angular.forEach(actionItems.groups, function (group) {
                         angular.forEach(group.items, function (item) {
-                            item.state = item.state === "Completed" ?
-                                "aip.status.complete" :
+                            item.state = item.state;
+                            /*todo: can probably drop the message properties for these status since it's coming from the db*/
+                            /*
+                            ==="Completed"?
+                                "aip.status.complete":
                                 "aip.status.pending";
+                           */
                         });
                     });
                     _this.actionItems = actionItems;
@@ -59,6 +64,40 @@ var AIP;
                             _this.selectedData = response;
                         });
                     }
+                    ;
+                });
+            });
+        };
+        ListItemPageCtrl.prototype.refreshList = function () {
+            var _this = this;
+            this.spinnerService.showSpinner(true);
+            this.userService.getUserInfo().then(function (userData) {
+                var userInfo = userData;
+                _this.userName = userData.fullName;
+                _this.itemListViewService.getActionItems(userInfo).then(function (actionItems) {
+                    angular.forEach(actionItems.groups, function (group) {
+                        angular.forEach(group.items, function (item) {
+                            item.state = item.state;
+                            /*todo: can probably drop the message properties for these status since it's coming from the db*/
+                            /*
+                             ==="Completed"?
+                             "aip.status.complete":
+                             "aip.status.pending";
+                             */
+                        });
+                    });
+                    _this.actionItems = actionItems;
+                    angular.forEach(_this.actionItems.groups, function (item) {
+                        item.dscParams = _this.getParams(item.title, userInfo);
+                    });
+                    // this.resetSelection();
+                }).finally(function () {
+                    _this.spinnerService.showSpinner(false);
+                    console.log(_this.selectedData);
+                    setTimeout(function () {
+                        $("#item-" + params.groupId + "-" + params.actionItemId).focus()
+                            , 100;
+                    });
                 });
             });
         };
@@ -122,13 +161,19 @@ var AIP;
             if (index.group === -1) {
                 throw new Error("Group does not exist with ID ");
             }
-            if (this.actionItems[index.group].items.length - 1 <= index.item) {
-                var firstItemId = this.actionItems[groupId].items[0].id;
-                this.selectItem(groupId, firstItemId);
+            if (index.item > -1) {
+                if ((this.actionItems.groups[index.group].items.length) - 1 > index.item) {
+                    index.item++;
+                }
+                else {
+                    index.item = 0;
+                }
+                var nextItemId = this.actionItems.groups[index.group].items[index.item].id;
+                this.selectItem(groupId, nextItemId);
             }
             else {
-                var nextItemId = this.actionItems[groupId].items[index.item + 1].id;
-                this.selectItem(groupId, nextItemId);
+                var firstItemId = this.actionItems.groups[index.group].items[0].id;
+                this.selectItem(groupId, firstItemId);
             }
         };
         ListItemPageCtrl.prototype.selectItem = function (groupId, itemId) {
@@ -140,10 +185,10 @@ var AIP;
             }
             var selectionType = itemId === null ? "group" : "actionItem";
             var group = this.actionItems.groups.filter(function (item) {
-                return item.id === groupId;
+                return item.id == groupId;
             });
-            var actionItem = group[0].items.filter(function (item) {
-                return item.id === itemId;
+            var actionItem = this.actionItems.groups[0].items.filter(function (item) {
+                return item.id == itemId;
             });
             this.itemListViewService.getDetailInformation(groupId, selectionType, index.item === null ? null : itemId).then(function (response) {
                 _this.selectedData = response;
@@ -155,18 +200,16 @@ var AIP;
         ListItemPageCtrl.prototype.getIndex = function (groupId, itemId) {
             var index = { group: -1, item: null };
             var selectedGroup = this.actionItems.groups.filter(function (group) {
-                return group.id === groupId;
+                return group.id == groupId;
             });
             if (selectedGroup.length !== -1) {
                 index.group = this.actionItems.groups.indexOf(selectedGroup[0]);
-                // var selectedItem = this.actionItems[groupId].items.filter((item) => {
-                //     return item.id === itemId;
-                // });
-                var selectedItem = this.actionItems.groups.filter(function (item) {
-                    return item.id === groupId;
+                var groupItems = this.actionItems.groups[index.group].items;
+                var selectedItem = groupItems.filter(function (item) {
+                    return item.id == itemId;
                 });
-                if (selectedItem.length !== -1) {
-                    index.item = this.actionItems.groups.indexOf(selectedItem[0]);
+                if (groupItems.length !== -1) {
+                    index.item = groupItems.indexOf(selectedItem[0]);
                 }
             }
             return index;
@@ -193,6 +236,14 @@ var AIP;
                     controller: "ItemInformCtrl"
                 });
             }
+        };
+        ListItemPageCtrl.prototype.saveErrorCallback = function (message) {
+            var n = new Notification({
+                message: message,
+                type: "error",
+                flash: true
+            });
+            notifications.addNotification(n);
         };
         return ListItemPageCtrl;
     })();

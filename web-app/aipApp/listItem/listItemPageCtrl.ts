@@ -3,6 +3,9 @@
 ///<reference path="../common/services/userService.ts"/>
 
 declare var register;
+declare var notifications;
+declare var Notification;
+declare var Notifications;
 
 module AIP {
 
@@ -23,11 +26,12 @@ module AIP {
         selectItem(groupId: number|string, itemId:number|string): void;
         toggleDetail(state:{idx:number|string, open:boolean}):void;
         resetSelection():void;
+        saveErrorCallback(message: string): void;
     }
 
     export class ListItemPageCtrl implements IListItemPageCtrl{
-        $inject = ["$scope", "$state", "ItemListViewService", "AIPUserService", "SpinnerService", "$timeout",
-            "$window", "$q", "$uibModal", , "APP_ROOT"];
+
+        $inject = ["$scope", "$state", "ItemListViewService", "AIPUserService", "SpinnerService", "$timeout", "$q", "$uibModal", , "APP_ROOT"];
         itemListViewService:AIP.ItemListViewService;
         userService:AIP.UserService;
         actionItems:IUserItem;
@@ -42,7 +46,7 @@ module AIP {
         APP_ROOT;
         modalInstance;
 
-        constructor($scope, $state, ItemListViewService, AIPUserService, SpinnerService, $timeout, $window, $q, $uibModal, APP_ROOT) {
+        constructor($scope, $state, ItemListViewService, AIPUserService, SpinnerService, $timeout, $q, $uibModal, APP_ROOT) {
             $scope.vm = this;
             this.$state = $state;
             this.itemListViewService = ItemListViewService;
@@ -53,6 +57,7 @@ module AIP {
             this.$uibModal = $uibModal;
             this.APP_ROOT = APP_ROOT;
             this.modalInstance;
+
             this.initialOpenGroup = -1;
             $scope.$watch(
                 "vm.detailView", function(newVal, oldVal) {
@@ -62,11 +67,13 @@ module AIP {
                 }
             );
 
-            //when resize the window, reapply all changes in the scope - reapply height of container
-            angular.element($window).bind('resize', function() {
-                //$scope.onResize();
-                $scope.$apply();
+            notifications.on('add', function (e) {
+                if (params.saved==true) {
+                    //$scope.vm.init();
+                    $scope.vm.refreshList();
+                };
             });
+
             this.init();
         }
         init() {
@@ -78,9 +85,13 @@ module AIP {
                 this.itemListViewService.getActionItems(userInfo).then((actionItems:IUserItem) => {
                     angular.forEach(actionItems.groups, (group) => {
                         angular.forEach(group.items, (item) => {
-                            item.state = item.state==="Completed"?
+                            item.state = item.state
+                            /*todo: can probably drop the message properties for these status since it's coming from the db*/
+                            /*
+                            ==="Completed"?
                                 "aip.status.complete":
                                 "aip.status.pending";
+                           */
                         });
                     });
                     this.actionItems = actionItems;
@@ -89,17 +100,57 @@ module AIP {
                     });
                 }).finally(() => {
                     this.spinnerService.showSpinner(false);
+
                     this.initialOpenGroup = this.getInitialSelection();
+
                     //this.selectedData = {type: SelectionType.Group};
                     if(this.initialOpenGroup !==-1) {
                         this.itemListViewService.getDetailInformation(this.initialOpenGroup, "group", null)
                             .then((response:ISelectedData) => {
                                 this.selectedData = response;
-                            });
-                    }
+                        });
+                    };
                 });
             });
+
         }
+
+        refreshList() {
+            this.spinnerService.showSpinner(true);
+            this.userService.getUserInfo().then( ( userData ) => {
+                var userInfo = userData;
+                this.userName = userData.fullName;
+                this.itemListViewService.getActionItems( userInfo ).then( ( actionItems:IUserItem ) => {
+                    angular.forEach( actionItems.groups, ( group ) => {
+                        angular.forEach( group.items, ( item ) => {
+                            item.state = item.state
+                            /*todo: can probably drop the message properties for these status since it's coming from the db*/
+                            /*
+                             ==="Completed"?
+                             "aip.status.complete":
+                             "aip.status.pending";
+                             */
+                        } );
+                    } );
+                    this.actionItems = actionItems;
+                    angular.forEach( this.actionItems.groups, ( item ) => {
+                        item.dscParams = this.getParams( item.title, userInfo );
+                    } );
+
+                   // this.resetSelection();
+                } ).finally(() => {
+                    this.spinnerService.showSpinner( false );
+                    console.log(this.selectedData);
+
+                    setTimeout(function() {
+                        $("#item-"+params.groupId+"-"+params.actionItemId).focus()
+                            , 100
+                    })
+                })
+            } )
+        }
+
+
         getInitialSelection() {
             var defaultSelection= 0;
             if(this.actionItems.groups.length > 1) {
@@ -113,6 +164,7 @@ module AIP {
             //TODO:: get selected row action item detail information
             //TODO:: display action item detail information
         }
+
         styleFunction(key) {
             var returnClass = "";
             switch (key) {
@@ -161,12 +213,18 @@ module AIP {
             if(index.group === -1) {
                 throw new Error("Group does not exist with ID ");
             }
-            if(this.actionItems[index.group].items.length-1 <= index.item) {
-                var firstItemId = this.actionItems[groupId].items[0].id;
-                this.selectItem(groupId, firstItemId);
-            } else {
-                var nextItemId = this.actionItems[groupId].items[index.item+1].id;
+
+            if ( index.item > -1 ){
+                if( (this.actionItems.groups[index.group].items.length)-1 > index.item) {
+                   index.item ++;
+                } else {
+                   index.item = 0;
+                }
+                var nextItemId = this.actionItems.groups[index.group].items[index.item].id;
                 this.selectItem(groupId, nextItemId);
+            } else {
+                var firstItemId = this.actionItems.groups[index.group].items[0].id;
+                this.selectItem(groupId, firstItemId);
             }
         }
 
@@ -178,13 +236,15 @@ module AIP {
             }
             var selectionType = itemId===null ? "group":"actionItem";
             var group = this.actionItems.groups.filter((item) => {
-                return item.id === groupId;
+                return item.id == groupId;
             });
-            var actionItem = group[0].items.filter((item) => {
-                return item.id === itemId;
+            var actionItem = this.actionItems.groups[0].items.filter((item) => {
+                return item.id == itemId;
             });
+
             this.itemListViewService.getDetailInformation(groupId, selectionType, index.item===null?null:itemId).then((response:ISelectedData) => {
                 this.selectedData = response;
+
                 this.selectedData.info.title= actionItem[0].title;
                 defer.resolve();
             })
@@ -193,19 +253,23 @@ module AIP {
         getIndex(groupId, itemId) {
             var index = {group:-1, item:null};
             var selectedGroup = this.actionItems.groups.filter((group) => {
-                return group.id === groupId;
+                return group.id == groupId;
             });
+
+
             if(selectedGroup.length!==-1) {
                 index.group = this.actionItems.groups.indexOf(selectedGroup[0]);
-                // var selectedItem = this.actionItems[groupId].items.filter((item) => {
-                //     return item.id === itemId;
-                // });
-                var selectedItem = this.actionItems.groups.filter((item) => {
-                    return item.id === groupId;
+
+                var groupItems = this.actionItems.groups[index.group].items;
+
+                var selectedItem = groupItems.filter( (item) => {
+                    return item.id == itemId;
                 });
-                if(selectedItem.length!==-1) {
-                    index.item = this.actionItems.groups.indexOf(selectedItem[0]);
+
+                if (groupItems.length!==-1) {
+                    index.item = groupItems.indexOf(selectedItem[0]);
                 }
+
             }
             return index;
         }
@@ -224,13 +288,23 @@ module AIP {
             this.selectedData = undefined;
         }
 
-        informModal(show) {
+        informModal( show ) {
             if (show) {
                 this.modalInstance = this.$uibModal.open( {
                     templateUrl: this.APP_ROOT + "listItem/itemInform/itemInformTemplate.html",
                     controller: "ItemInformCtrl"
                 } );
             }
+        }
+
+        saveErrorCallback( message ) {
+            var n = new Notification( {
+                message: message,
+                type: "error",
+                flash: true
+            } );
+            notifications.addNotification( n );
+
         }
 
         /*

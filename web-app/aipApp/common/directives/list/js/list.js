@@ -54,7 +54,7 @@ var AIPUI;
             };
             $scope.completedItem = function () {
                 var items = $scope.itemgroup.items.filter(function (_item) {
-                    return _item.state === "aip.status.complete";
+                    return _item.state === "Completed";
                 });
                 return items;
             };
