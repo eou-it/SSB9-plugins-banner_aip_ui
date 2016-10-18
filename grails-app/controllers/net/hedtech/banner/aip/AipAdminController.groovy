@@ -473,7 +473,7 @@ class AipAdminController {
         ActionItemStatus status = new ActionItemStatus()
 
         status.actionItemStatus = statusTitle
-        status.actionItemStatusActive = "N"
+        status.actionItemStatusActive = "Y"
         status.actionItemStatusBlockedProcess = isBlock?"Y":"N"
         status.actionItemStatusActivityDate = new Date()
         status.actionItemStatusUserId = aipUser.bannerId
