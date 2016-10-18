@@ -252,7 +252,7 @@ class AipAdminController {
             }
         }
 
-        response.status = 200
+       // response.status = 200
 
         def model = [
                 success: success,
@@ -469,7 +469,9 @@ class AipAdminController {
         }
         def aipUser = AipControllerUtils.getPersonForAip( params, user.pidm )
 
-        def status = new ActionItemStatus()
+
+        ActionItemStatus status = new ActionItemStatus()
+
         status.actionItemStatus = statusTitle
         status.actionItemStatusActive = "N"
         status.actionItemStatusBlockedProcess = isBlock?"Y":"N"
@@ -479,20 +481,24 @@ class AipAdminController {
         status.actionItemStatusVersion = null
         status.actionItemStatusDataOrigin = null
 
-
-        ActionItemStatus newStatus = actionItemStatusService.create(status);
-
+        ActionItemStatus newStatus
         def success = false
-        def errors = []
-        //TODO:: save status
+        def message
 
-        if (newStatus) {
+        try {
+            newStatus = actionItemStatusService.create(status);
             response.status = 200
             success = true
+        } catch (ApplicationException e) {
+            println e.defaultMessage
+            //fixme: this needs to be set to point to default message. wasn't finding it so used status unique until we have time to debug.
+            message = MessageUtility.message( "actionItemStatus.status.unique" )
         }
+
+
         def model = [
                 success: success,
-                errors: errors,
+                message : message,
                 status: newStatus
         ]
         render model as JSON

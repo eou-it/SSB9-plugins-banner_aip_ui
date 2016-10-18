@@ -19,8 +19,14 @@ var AIP;
             var _this = this;
             this.adminActionStatusService.saveStatus(this.statusModel)
                 .then(function (response) {
-                console.log(response.data);
-                _this.$uibModalInstance.close(response.data);
+                if (response.data.success) {
+                    console.log(response.data);
+                    _this.$uibModalInstance.close(response.data);
+                }
+                else {
+                    _this.$uibModalInstance.dismiss();
+                    _this.saveErrorCallback(response.data.message);
+                }
             }, function (error) {
                 console.log(error);
                 _this.$uibModalInstance.dismiss(error);
@@ -34,6 +40,14 @@ var AIP;
                 return false;
             }
             return true;
+        };
+        StatusAddModalCtrl.prototype.saveErrorCallback = function (message) {
+            var n = new Notification({
+                message: message,
+                type: "error",
+                flash: true
+            });
+            notifications.addNotification(n);
         };
         return StatusAddModalCtrl;
     }());

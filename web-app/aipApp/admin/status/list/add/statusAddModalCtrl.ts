@@ -2,6 +2,8 @@
 ///<reference path="../../../../common/services/admin/adminActionStatusService.ts"/>
 
 declare var register: any;
+declare var Notification: any;
+declare var notifications: any;
 
 module AIP {
     export class StatusAddModalCtrl {
@@ -26,8 +28,13 @@ module AIP {
         statusSave() {
             this.adminActionStatusService.saveStatus(this.statusModel)
                 .then((response) => {
-                    console.log(response.data);
-                    this.$uibModalInstance.close(response.data);
+                    if(response.data.success) {
+                        console.log( response.data );
+                        this.$uibModalInstance.close( response.data );
+                    } else {
+                        this.$uibModalInstance.dismiss();
+                        this.saveErrorCallback(response.data.message)
+                    }
                 }, (error) => {
                     console.log(error);
                     this.$uibModalInstance.dismiss(error);
@@ -41,6 +48,14 @@ module AIP {
                 return false;
             }
             return true;
+        }
+        saveErrorCallback(message) {
+            var n = new Notification({
+                message: message,
+                type: "error",
+                flash: true
+            });
+            notifications.addNotification(n);
         }
     }
 }
