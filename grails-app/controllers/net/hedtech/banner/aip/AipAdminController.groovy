@@ -469,6 +469,8 @@ class AipAdminController {
         }
         def aipUser = AipControllerUtils.getPersonForAip( params, user.pidm )
 
+        println aipUser
+
 
         ActionItemStatus status = new ActionItemStatus()
 
