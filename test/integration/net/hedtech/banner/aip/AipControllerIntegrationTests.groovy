@@ -86,7 +86,9 @@ class AipControllerIntegrationTests extends BaseIntegrationTestCase {
         controller.actionItems()
         assertEquals 200, controller.response.status
         def answer = JSON.parse( controller.response.contentAsString )
-        assertEquals( 1, answer.items.size() )
+        //TODO:: for now, it return one hardcoded group. When group assign done, fix this
+        assertEquals( 1, answer.groups.size() )
+        assertTrue(answer.groups.items.size()>0)
     }
 
 
@@ -130,7 +132,8 @@ class AipControllerIntegrationTests extends BaseIntegrationTestCase {
         controller.actionItems()
         assertEquals 200, controller.response.status
         def answer = JSON.parse( controller.response.contentAsString )
-        assertEquals( 0, answer.items.size() )
+        //TODO:: it will always 1 group (hardcoded) and gorup has no item for this user
+        assertNull(answer.groups[0].items)
     }
 
 
