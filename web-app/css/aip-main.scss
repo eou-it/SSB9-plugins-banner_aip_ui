@@ -168,7 +168,12 @@ label {
     width: 320px;
   }
   .modal-lg {
-    width: 345px;
+    width: 320px;
+  }
+  @media (min-width: 410px) {
+    .modal-lg {
+      width: 400px;
+    }
   }
   .modal-dialog {
     .modal-content {
