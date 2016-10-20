@@ -142,7 +142,7 @@ module AIP {
                 controller: "StatusAddModalCtrl",
                 controllerAs: "$ctrl",
                 size: "sm",
-                windowClass: "addStatus"
+                windowClass: "aip-modal"
             });
             this.modalInstance.result.then((result) => {
                 console.log(result);

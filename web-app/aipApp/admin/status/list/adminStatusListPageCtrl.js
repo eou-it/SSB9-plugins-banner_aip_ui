@@ -117,7 +117,7 @@ var AIP;
                 controller: "StatusAddModalCtrl",
                 controllerAs: "$ctrl",
                 size: "sm",
-                windowClass: "addStatus"
+                windowClass: "aip-modal"
             });
             this.modalInstance.result.then(function (result) {
                 console.log(result);
@@ -185,7 +185,7 @@ var AIP;
             //this.$state.params.grp = data.id;
         };
         return AdminStatusListPageCtrl;
-    }());
+    })();
     AIP.AdminStatusListPageCtrl = AdminStatusListPageCtrl;
 })(AIP || (AIP = {}));
 register("bannerAIP").controller("AdminStatusListPageCtrl", AIP.AdminStatusListPageCtrl);

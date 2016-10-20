@@ -292,7 +292,10 @@ module AIP {
             if (show) {
                 this.modalInstance = this.$uibModal.open( {
                     templateUrl: this.APP_ROOT + "listItem/itemInform/itemInformTemplate.html",
-                    controller: "ItemInformCtrl"
+                    controller: "ItemInformCtrl",
+                    controllerAs: "$ctrl",
+                    size: "lg",
+                    windowClass: "aip-modal"
                 } );
             }
         }

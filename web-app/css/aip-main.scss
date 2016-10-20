@@ -8,6 +8,7 @@
 @import '../aipApp/admin/action/open/adminActionItemOpenPage';
 @import '../aipApp/admin/status/list/adminStatusListPage';
 @import '../aipApp/admin/status/list/add/statusAddModal';
+@import '../aipApp/listItem/itemInform/itemInformModal';
 
 
 #breadcrumb-panel {
@@ -161,7 +162,66 @@ label {
     }
   }
 }
-
+// modal
+.aip-modal {
+  .modal-sm {
+    width: 320px;
+  }
+  .modal-lg {
+    width: 385px;
+  }
+  .modal-dialog {
+    .modal-content {
+      padding: 8px;
+    }
+    .modal-header {
+      padding: 8px;
+      min-height: 2.5em;
+      .modal-title {
+        float: left;
+        font-size: 1em;
+        font-weight: bold;
+      }
+      .modal-close {
+        float: right;
+        border: none;
+        background-color: transparent;
+        padding: 0;
+      }
+    }
+    .modal-body {
+      padding: 0;
+      .modal-body-info {
+        padding: 0px 0px 8px 0px;
+        .modal-info-bold {
+          font-family: "OpenSans-bold";
+        }
+        .row {
+          margin-right: 8px;
+          margin-left: 8px;
+        }
+        label {
+          margin-bottom: 0px;
+        }
+      }
+      .modal-body-content {
+        padding: 8px 8px 0px 8px;
+        .row {
+          margin-right: 0;
+          margin-left: 0;
+        }
+      }
+      .modal-control {
+        button {
+          width: 100%;
+          border: none;
+          border-top: 1px solid #cccccc;
+          color: #557287;
+        }
+      }
+    }
+  }
+}
 .cke_button_label.cke_button__a11ybtn_label {
   display: inline !important;
 }

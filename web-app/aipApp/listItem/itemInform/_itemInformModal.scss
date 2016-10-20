@@ -1,0 +1,23 @@
+.aip-modal {
+  .modal-dialog {
+    .modal-body {
+      .modal-body-content {
+        .row.blockProcess {
+          padding: 16px;
+          input {
+            margin-right: 8px;
+          }
+        }
+      }
+      .modal-control {
+        .btn-back {
+          width: 50%;
+          float: left;
+        }
+        .btn-forward {
+          width: 50%
+        }
+      }
+    }
+  }
+}
