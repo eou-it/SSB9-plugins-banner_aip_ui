@@ -233,7 +233,10 @@ var AIP;
             if (show) {
                 this.modalInstance = this.$uibModal.open({
                     templateUrl: this.APP_ROOT + "listItem/itemInform/itemInformTemplate.html",
-                    controller: "ItemInformCtrl"
+                    controller: "ItemInformCtrl",
+                    controllerAs: "$ctrl",
+                    size: "lg",
+                    windowClass: "aip-modal"
                 });
             }
         };
@@ -246,7 +249,7 @@ var AIP;
             notifications.addNotification(n);
         };
         return ListItemPageCtrl;
-    }());
+    })();
     AIP.ListItemPageCtrl = ListItemPageCtrl;
 })(AIP || (AIP = {}));
 register("bannerAIP").controller("ListItemPageCtrl", AIP.ListItemPageCtrl);
