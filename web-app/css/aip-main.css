@@ -442,7 +442,24 @@ aip-list .aip-list-container {
             color: #206E9F;
             border: none; }
           .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent {
-            padding: 16px; }
+            padding: 16px;
+            /*
+            .control {
+              //position: absolute;
+              //bottom: 24px;
+             // width: 100%;
+              .templateButton {
+                float: right;
+                margin-bottom: 20px;
+                span {
+                  padding-left: 24px;
+                  button {
+                    min-width: 100px;
+                  }
+                }
+              }
+            }
+            */ }
             .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .contentContainer {
               margin-top: 20px;
               margin-bottom: 20px; }
@@ -450,13 +467,17 @@ aip-list .aip-list-container {
               margin: 20px 0;
               padding: 20px;
               border: 1px solid #c0c0c0; }
-            .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .control .templateButton {
-              float: right;
-              margin-bottom: 20px; }
-              .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .control .templateButton span {
-                padding-left: 24px; }
-                .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .control .templateButton span button {
-                  min-width: 100px; }
+            .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .groupControl {
+              /*position: relative;*/
+              width: 100%;
+              bottom: 10px;
+              margin-bottom: 15px;
+              height: 5em; }
+              .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .groupControl .groupButton {
+                text-align: center; }
+                .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .groupControl .groupButton button {
+                  width: 100%;
+                  max-width: 200px; }
 
 @media screen and (max-width: 768px) {
   .actionItemOpenContainer .row {

@@ -282,6 +282,9 @@ var AIP;
                 _this.saving = false;
             });
         };
+        AdminActionItemOpenPageCtrl.prototype.addRule = function () {
+            console.log("add rule!");
+        };
         return AdminActionItemOpenPageCtrl;
     }());
     AIP.AdminActionItemOpenPageCtrl = AdminActionItemOpenPageCtrl;

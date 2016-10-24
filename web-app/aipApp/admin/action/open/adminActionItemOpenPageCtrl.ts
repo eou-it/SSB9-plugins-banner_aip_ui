@@ -303,6 +303,10 @@ module AIP {
                     this.saving=false;
                 });
         }
+
+        addRule() {
+            console.log("add rule!");
+        }
     }
 
 

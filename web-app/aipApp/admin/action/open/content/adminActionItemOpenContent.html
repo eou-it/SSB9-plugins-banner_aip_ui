@@ -24,7 +24,7 @@
     <div class="actionItemContent row" ng-if="!vm.isNoTemplate() && vm.templateSelect">
         <div class="contentContainer">
             <div class="row input-actionItem">
-                <label for="actionItemTemplate" class="templateSelect required" id="actionItemTemplateSelector">{{"aip.admin.action.open.tab.content.templateSelect"|i18n_aip}}</label>
+                <label for="actionItemTemplate" class="templateSelect required" id="actionItemTemplateSelector">{{'aip.admin.action.open.tab.content.templateContent'|i18n_aip}}</label>
             </div>
             <div class="row">
                 <select id="actionItemTemplate" class="actionItemSelect" xe-data="" aria-label="Template" required aria-required="true" ng-model="vm.selectedTemplate">
@@ -37,26 +37,85 @@
 
         <div class="contentContainer" ng-if="!vm.isNoTemplateSelected()">
             <div class="row">
-                <label for="templateContent" class="titleValue" id="template-content">{{vm.actionItem.actionItemTemplateName}} {{"aip.common.text.content"|i18n_aip}}</label>
+                <label for="templateContent" class="titleValue" id="template-content">{{vm.actionItem.actionItemTemplateName}} {{'aip.common.text.content'|i18n_aip}}</label>
             </div>
             <div class="row">
                 <textarea id="templateContent" ng-required="true" aria-required="true" name="templateContent" ckeditor="ckEditorConfig"
                           ng-model="vm.actionItem.actionItemContent"></textarea>
             </div>
+
+            <div class="contentPreview">
+
+                <div class="row">
+
+
+                    <div class="table-responsive">
+                        <table class="table">
+                            <caption>
+                                <p>{{'aip.admin.status.rules.table.caption'|i18n_aip}}</p>
+                                <p>{{'aip.admin.status.rules.table.instructions'|i18n_aip}}</p>
+                                <p>{{'aip.admin.status.rules.table.instructions.text'|i18n_aip}}</p>
+                            </caption>
+
+                            <tr>
+                                <th>{{'aip.admin.status.rules.table.header.textLabel'|i18n_aip}}</th>
+                                <th>{{'aip.admin.status.rules.table.header.status'|i18n_aip}}</th>
+                            </tr>
+
+                            <tr>
+                                <td></td>
+                                <td></td>
+                            </tr>
+
+                        </table>
+                    </div>
+
+                    <div class="row">
+                        <button type="button" class="btn btn-default" ng-click="vm.addRule()">
+                            <span class="icon icon-add-CO"></span>
+                            <span class="button-text hidden-sm-down">{{'aip.common.add.new'|i18n_aip}}</span>
+                        </button>
+                    </div>
+
+
+
+                </div>
+
+
+
+            </div>
+
         </div>
+        <!--
         <div class="control row">
             <div class="col-sm-3 offset-sm-9 col-xs-12 templateButton">
                 <span>
-                    <button name="Cancel" type="button" class="btn btn-default" ng-click="vm.cancel('content')">{{"aip.common.cancel"|i18n_aip}}</button>
+                    <button name="Cancel" type="button" class="btn btn-default" ng-click="vm.cancel('content')">{{'aip.common.cancel'|i18n_aip}}</button>
                 </span>
                 <span>
                     <button name="Save" type="button" class="btn btn-primary" ng-click="vm.saveTemplate()" ng-disabled="!vm.saveValidate()">
-                        {{"aip.common.saveandreturn"|i18n_aip}}
+                        {{'aip.common.saveandreturn'|i18n_aip}}
                     </button>
                 </span>
             </div>
 
         </div>
+        -->
+
+        <div class="groupControl">
+            <div class="row">
+                <div class="col-sm-offset-8 col-xs-6 col-sm-2 groupButton">
+                    <button type="button" class="btn btn-default" ng-click="vm.cancel('content')">{{"aip.common.cancel"|i18n_aip}}</button>
+                </div>
+                <div class="col-xs-6 col-sm-2 groupButton">
+                    <button type="button" class="btn btn-primary" ng-disabled="!vm.saveValidate()" ng-click="vm.saveTemplate()">
+                        {{"aip.common.saveandreturn"|i18n_aip}}
+                    </button>
+                </div>
+            </div>
+        </div>
+
+
     </div>
 
     <div class="actionItemContent row" ng-if="!vm.isNoTemplate() && vm.actionItem.actionItemTemplateId && !vm.templateSelect">
@@ -76,18 +135,29 @@
             </div>
             <div class="row">
                 <div class="col-xs-12 col-sm-8">
-                    {{vm.actionItem.actionItemTemplateName||"action item template placeholder text"}} ({{vm.templateSource}})</span>
+                    {{vm.actionItem.actionItemTemplateName||'aip.admin.action.open.tab.content.templateContent'|i18n_aip}} ({{vm.templateSource}})</span>
                 </div>
             </div>
             <div class="row">
                 <div class="col-xs-12 col-sm-12">
-                    <h2>{{vm.actionItem.actionItemTemplateName}} {{"aip.common.text.content"|i18n_aip}}</h2>
+                    <h2>{{vm.actionItem.actionItemTemplateName}} {{'aip.common.text.content'|i18n_aip}}</h2>
                     <div ng-if="!vm.isNoContent()">
                         <div class="contentPreview" data-ng-bind-html="vm.trustAsHtml(vm.actionItem.actionItemContent)"></div>
                     </div>
                     <div ng-if="vm.isNoContent()">
                         <span>{{'aip.admin.action.open.tab.content.noContent'|i18n_aip}}</span>
                     </div>
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="col-xs-12 col-sm-12">
+                    <h2>{{'aip.common.text.statusRules'|i18n_aip}}</h2>
+
+                    <div class="contentContainer">
+                    </div>
+
                 </div>
             </div>
 

@@ -290,6 +290,8 @@ var bannerAIPApp = angular.module("bannerAIP", [
             $.i18n.prop("aip.placeholder.nogroups");
             $.i18n.prop("aip.placeholder.noitems");
             $.i18n.prop("aip.common.text.template");
+            $.i18n.prop("aip.common.text.content");
+            $.i18n.prop("aip.common.text.statusRules");
             $.i18n.prop("aip.common.text.yes");
             $.i18n.prop("aip.common.text.no");
             $.i18n.prop("aip.common.text.completed");
@@ -358,10 +360,16 @@ var bannerAIPApp = angular.module("bannerAIP", [
             $.i18n.prop("aip.admin.status.actionItemStatus");
             $.i18n.prop("aip.admin.status.block");
 
-            $.i18n.prop("aip.admin.selectable.action.items");
-            $.i18n.prop("aip.admin.selectable.groups");
             $.i18n.prop("aip.admin.status.rules");
 
+            $.i18n.prop("aip.admin.status.rules.table.caption");
+            $.i18n.prop("aip.admin.status.rules.table.instructions");
+            $.i18n.prop("aip.admin.status.rules.table.instructions.text");
+            $.i18n.prop("aip.admin.status.rules.table.header.textLabel");
+            $.i18n.prop("aip.admin.status.rules.table.header.status");
+
+            $.i18n.prop("aip.admin.selectable.action.items");
+            $.i18n.prop("aip.admin.selectable.groups");
             $.i18n.prop("aip.list.grid.groupTitle");
             $.i18n.prop("aip.list.grid.itemTitle");
             $.i18n.prop("aip.list.grid.folder");

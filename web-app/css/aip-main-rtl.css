@@ -558,15 +558,18 @@ aip-list .aip-list-container  {
     padding:20px;
     border:1px solid #c0c0c0;
 }
-            .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .control .templateButton  {
-    float:left;
-    margin-bottom:20px;
+            .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .groupControl  {
+    width:100%;
+    bottom:10px;
+    margin-bottom:15px;
+    height:5em;
 }
-              .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .control .templateButton span  {
-    padding-right:24px;
+              .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .groupControl .groupButton  {
+    text-align:center;
 }
-                .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .control .templateButton span button  {
-    min-width:100px;
+                .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .groupControl .groupButton button  {
+    width:100%;
+    max-width:200px;
 }
 
 
@@ -740,8 +743,9 @@ label  {
     width:320px;
 }
 .aip-modal .modal-lg  {
-    width:385px;
+    width:320px;
 }
+
 .aip-modal .modal-dialog .modal-content  {
     padding:8px;
 }
@@ -930,5 +934,10 @@ fieldset[disabled] .btn-primary.active, .btn-primary  {
     #content .viewContainer  {
     padding:0 8px;
     overflow:auto;
+}
+}
+@media (min-width: 410px) {
+  .aip-modal .modal-lg  {
+    width:400px;
 }
 }
