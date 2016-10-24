@@ -432,8 +432,8 @@ class AipAdminController {
         ActionItemDetail aid =  actionItemDetailService.listActionItemDetailById( actionItemId)
         aid.actionItemId = actionItemId
         aid.actionItemTemplateId = templateId
-        aid.userId = aipUser.bannerId
-        aid.activityDate = new Date()
+        aid.lastModifiedby = aipUser.bannerId
+        aid.lastModified = new Date()
         aid.text = actionItemDetailText
 
         ActionItemDetail newAid = actionItemDetailService.createOrUpdate(aid)

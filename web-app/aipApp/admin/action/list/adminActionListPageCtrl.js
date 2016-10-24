@@ -27,7 +27,7 @@ var AIP;
                 folderName: 3,
                 actionItemStatus: 3,
                 actionItemUserId: 3,
-                actionItemActivityDate: 3
+                actionItemCompositeDate: 3
             };
             this.mobileSize = angular.element("body").width() > 768 ? false : true;
             this.searchConfig = {
@@ -89,7 +89,7 @@ var AIP;
                         columnShowHide: true
                     }
                 }, {
-                    name: "actionItemActivityDate",
+                    name: "actionItemCompositeDate",
                     title: this.$filter("i18n_aip")("aip.list.grid.activityDate"),
                     ariaLabel: this.$filter("i18n_aip")("aip.list.grid.activityDate"),
                     width: "100px",
@@ -140,7 +140,7 @@ var AIP;
             this.$state.go("admin-action-open", { data: this.selectedRecord.id });
         };
         return AdminActionListPageCtrl;
-    }());
+    })();
     AIP.AdminActionListPageCtrl = AdminActionListPageCtrl;
 })(AIP || (AIP = {}));
 register("bannerAIP").controller("AdminActionListPageCtrl", AIP.AdminActionListPageCtrl);

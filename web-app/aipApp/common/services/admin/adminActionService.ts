@@ -16,6 +16,7 @@ module AIP {
     interface IActionItem {
         actionItemId: number;
         actionItemActivityDate: Date,
+        actionItemCompositeDate: Date,
         actionItemCreateDate: Date,
         actionItemCreatorId: string;
         actionItemDesc: string;
