@@ -55,7 +55,7 @@ module AIP {
                 folderName: 3,
                 actionItemStatus: 3,
                 actionItemUserId: 3,
-                actionItemActivityDate: 3
+                actionItemCompositeDate: 3
             };
             this.mobileSize = angular.element("body").width()>768?false:true;
             this.searchConfig = {
@@ -117,7 +117,7 @@ module AIP {
                     columnShowHide: true
                 }
             }, {
-                name: "actionItemActivityDate",
+                name: "actionItemCompositeDate",
                 title: this.$filter("i18n_aip")("aip.list.grid.activityDate"),
                 ariaLabel: this.$filter("i18n_aip")("aip.list.grid.activityDate"),
                 width: "100px",
