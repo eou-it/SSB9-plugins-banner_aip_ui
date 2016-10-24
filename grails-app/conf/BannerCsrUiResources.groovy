@@ -25,7 +25,7 @@ modules = {
         resource url: [plugin: 'banner-csr-ui', file: 'node_modules/angular-translate/dist/angular-translate.js']
         resource url: [plugin: 'banner-csr-ui', file: 'node_modules/angular-resource/angular-resource.js']
         resource url: [plugin: 'banner-csr-ui', file: 'node_modules/angular-aria/angular-aria.js']
-        resource url: [plugin: 'banner-csr-ui', file: 'node_modules/angular-ui-bootstrap/dist/ui-bootstrap-tpls.js']
+
         resource url: [plugin: 'banner-csr-ui', file: 'node_modules/moment/min/moment.min.js']
        // resource url: [plugin: 'banner-csr-ui', file: 'node_modules/ckeditor/ckeditor.js']
 
@@ -64,6 +64,7 @@ modules = {
         resource url:[plugin: 'banner-csr-ui', file: 'aipApp/common/filters/i18n-filter.js']
         resource url:[plugin: 'banner-csr-ui', file: 'aipApp/common/filters/html-filter.js']
         resource url:[plugin: 'banner-csr-ui', file: 'aipApp/utils/register.js']
+        resource url: [plugin: 'banner-csr-ui', file: 'node_modules/angular-ui-bootstrap/dist/ui-bootstrap-tpls.js']
     }
     'bannerAIPApp' {
         dependsOn 'bannerAIPUtils'
