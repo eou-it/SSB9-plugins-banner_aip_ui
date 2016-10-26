@@ -47,42 +47,8 @@
             <div class="contentPreview">
 
                 <div class="row">
-
-
-                    <div class="table-responsive">
-                        <table class="table">
-                            <caption>
-                                <p>{{'aip.admin.status.rules.table.caption'|i18n_aip}}</p>
-                                <p>{{'aip.admin.status.rules.table.instructions'|i18n_aip}}</p>
-                                <p>{{'aip.admin.status.rules.table.instructions.text'|i18n_aip}}</p>
-                            </caption>
-
-                            <tr>
-                                <th>{{'aip.admin.status.rules.table.header.textLabel'|i18n_aip}}</th>
-                                <th>{{'aip.admin.status.rules.table.header.status'|i18n_aip}}</th>
-                            </tr>
-
-                            <tr>
-                                <td></td>
-                                <td></td>
-                            </tr>
-
-                        </table>
-                    </div>
-
-                    <div class="row">
-                        <button type="button" class="btn btn-default" ng-click="vm.addRule()">
-                            <span class="icon icon-add-CO"></span>
-                            <span class="button-text hidden-sm-down">{{'aip.common.add.new'|i18n_aip}}</span>
-                        </button>
-                    </div>
-
-
-
+                    <aip-status-rule data="vm.getStatus"></aip-status-rule>
                 </div>
-
-
-
             </div>
 
         </div>

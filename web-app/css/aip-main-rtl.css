@@ -558,6 +558,12 @@ aip-list .aip-list-container  {
     padding:20px;
     border:1px solid #c0c0c0;
 }
+            .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent caption  {
+    text-align:right;
+}
+            .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent caption > .caption-label  {
+    font-family:"OpenSans-semibold";
+}
             .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .groupControl  {
     width:100%;
     bottom:10px;

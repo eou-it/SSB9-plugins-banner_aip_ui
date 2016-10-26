@@ -14,7 +14,7 @@ var AIP;
         AdminActionStatusService.prototype.fetchData = function (query) {
             var deferred = this.$q.defer();
             var realMax = parseInt(query.max) - parseInt(query.offset);
-            var url = this.ENDPOINT.admin.actionItemStatus +
+            var url = this.ENDPOINT.admin.actionItemStatusGrid +
                 '?searchString=' + (query.searchString || '') +
                 '&sortColumnName=' + (query.sortColumnName || 'actionItemStatus') +
                 '&ascending=' + (query.ascending.toString() || "") +
@@ -35,6 +35,13 @@ var AIP;
                 method: "POST",
                 url: this.ENDPOINT.admin.statusSave,
                 data: status
+            });
+            return request;
+        };
+        AdminActionStatusService.prototype.getStatus = function () {
+            var request = this.$http({
+                method: "GET",
+                url: this.ENDPOINT.admin.actionItemStatusList
             });
             return request;
         };

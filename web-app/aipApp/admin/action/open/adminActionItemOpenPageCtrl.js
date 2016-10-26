@@ -1,12 +1,13 @@
 ///<reference path="../../../../typings/tsd.d.ts"/>
 ///<reference path="../../../common/services/admin/adminActionService.ts"/>
+///<reference path="../../../common/services/admin/adminActionStatusService.ts"/>
 ///<reference path="../../../common/services/spinnerService.ts"/>
 var AIP;
 (function (AIP) {
     var AdminActionItemOpenPageCtrl = (function () {
-        function AdminActionItemOpenPageCtrl($scope, $q, $state, $filter, $sce, $window, $templateRequest, $templateCache, $compile, $timeout, $interpolate, SpinnerService, AdminActionService, APP_ROOT, CKEDITORCONFIG) {
+        function AdminActionItemOpenPageCtrl($scope, $q, $state, $filter, $sce, $window, $templateRequest, $templateCache, $compile, $timeout, $interpolate, SpinnerService, AdminActionService, AdminActionStatusService, APP_ROOT, CKEDITORCONFIG) {
             this.$inject = ["$scope", "$q", "$state", "$filter", "$sce", "$window", "$templateRequest", "$templateCache", "$compile",
-                "$timeout", "$interpolate", "SpinnerService", "AdminActionService", "APP_ROOT", "CKEDITORCONFIG"];
+                "$timeout", "$interpolate", "SpinnerService", "AdminActionService", "AdminActionStatusService", "APP_ROOT", "CKEDITORCONFIG"];
             this.trustAsHtml = function (string) {
                 return this.$sce.trustAsHtml(string);
             };
@@ -27,12 +28,14 @@ var AIP;
             this.$timeout = $timeout;
             this.$interpolate = $interpolate;
             this.adminActionService = AdminActionService;
+            this.adminActionStatusService = AdminActionStatusService;
             this.spinnerService = SpinnerService;
             this.APP_ROOT = APP_ROOT;
             this.ckEditorConfig = CKEDITORCONFIG;
             this.actionItem = {};
             this.templateSelect = false;
             this.templates = [];
+            this.statuses = [];
             this.selectedTemplate;
             this.templateSource;
             this.saving = false;
@@ -283,7 +286,17 @@ var AIP;
             });
         };
         AdminActionItemOpenPageCtrl.prototype.addRule = function () {
-            console.log("add rule!");
+            var _this = this;
+            var deferred = this.$q.defer();
+            this.adminActionStatusService.getStatus()
+                .then(function (response) {
+                _this.statuses = response.data;
+                console.log(_this.statuses);
+                deferred.resolve(_this.openPanel("content"));
+            }, function (error) {
+                console.log(error);
+            });
+            return deferred.promise;
         };
         return AdminActionItemOpenPageCtrl;
     }());

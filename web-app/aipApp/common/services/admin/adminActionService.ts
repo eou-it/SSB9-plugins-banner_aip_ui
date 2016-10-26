@@ -150,7 +150,7 @@ module AIP {
         getStatus() {
             var request = this.$http({
                 method: "GET",
-                url: this.ENDPOINT.admin.actionItemStatuses
+                url: this.ENDPOINT.admin.adminActionItemStatus
             });
             return request;
         }

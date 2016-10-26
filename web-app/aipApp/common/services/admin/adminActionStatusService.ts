@@ -13,7 +13,7 @@ module AIP {
         offset: string;
         max: string;
     }
-    interface IActionItemStatus {
+    export interface IActionItemStatus {
         actionItemStatusId: number;
         actionItemStatus: string;
         actionItemStatusActivityDate: Date,
@@ -84,7 +84,7 @@ module AIP {
         fetchData (query:IActionItemStatusListQuery) {
             var deferred = this.$q.defer();
             var realMax = parseInt(query.max) - parseInt(query.offset);
-            var url = this.ENDPOINT.admin.actionItemStatus +
+            var url = this.ENDPOINT.admin.actionItemStatusGrid +
                 '?searchString=' + (query.searchString || '') +
                 '&sortColumnName=' + (query.sortColumnName || 'actionItemStatus') +
                 '&ascending=' + (query.ascending.toString() || "") +
@@ -110,6 +110,15 @@ module AIP {
             return request;
         }
 
+
+        getStatus() {
+            var request = this.$http({
+                method: "GET",
+                url: this.ENDPOINT.admin.actionItemStatusList
+            });
+            return request;
+        }
+
         /*
         getFolder() {
             var request = this.$http({
@@ -118,13 +127,7 @@ module AIP {
             });
             return request;
         };
-        getStatus() {
-            var request = this.$http({
-                method: "GET",
-                url: this.ENDPOINT.admin.actionItemStatus
-            });
-            return request;
-        }
+
         */
         /*
         saveActionItem(actionItemStatus) {

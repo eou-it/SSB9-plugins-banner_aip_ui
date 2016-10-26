@@ -1,5 +1,6 @@
 ///<reference path="../../../../typings/tsd.d.ts"/>
 ///<reference path="../../../common/services/admin/adminActionService.ts"/>
+///<reference path="../../../common/services/admin/adminActionStatusService.ts"/>
 ///<reference path="../../../common/services/spinnerService.ts"/>
 
 declare var register;
@@ -11,8 +12,9 @@ module AIP {
 
     export class AdminActionItemOpenPageCtrl{
         $inject = ["$scope", "$q", "$state", "$filter", "$sce", "$window", "$templateRequest", "$templateCache", "$compile",
-            "$timeout", "$interpolate", "SpinnerService", "AdminActionService", "APP_ROOT", "CKEDITORCONFIG"];
+            "$timeout", "$interpolate", "SpinnerService", "AdminActionService", "AdminActionStatusService", "APP_ROOT", "CKEDITORCONFIG"];
         adminActionService: AIP.AdminActionService;
+        adminActionStatusService: AIP.AdminActionStatusService;
         spinnerService: AIP.SpinnerService;
         $q: ng.IQService;
         $state;
@@ -30,11 +32,13 @@ module AIP {
         ckEditorConfig;
         templates;
         templateSelect: boolean;
+        statuses;
         selectedTemplate;
         saving;
         templateSource;
+
         constructor($scope, $q:ng.IQService, $state, $filter, $sce, $window, $templateRequest, $templateCache, $compile,
-                    $timeout, $interpolate, SpinnerService, AdminActionService, APP_ROOT, CKEDITORCONFIG) {
+                    $timeout, $interpolate, SpinnerService, AdminActionService, AdminActionStatusService, APP_ROOT, CKEDITORCONFIG) {
             $scope.vm = this;
             this.$scope = $scope;
             this.$q = $q;
@@ -48,12 +52,14 @@ module AIP {
             this.$timeout = $timeout;
             this.$interpolate = $interpolate;
             this.adminActionService = AdminActionService;
+            this.adminActionStatusService = AdminActionStatusService;
             this.spinnerService = SpinnerService;
             this.APP_ROOT = APP_ROOT;
             this.ckEditorConfig = CKEDITORCONFIG;
             this.actionItem = {};
             this.templateSelect = false;
             this.templates = [];
+            this.statuses = [];
             this.selectedTemplate;
             this.templateSource;
             this.saving = false;
@@ -305,7 +311,16 @@ module AIP {
         }
 
         addRule() {
-            console.log("add rule!");
+            var deferred = this.$q.defer();
+            this.adminActionStatusService.getStatus()
+                .then((response) => {
+                    this.statuses = response.data;
+                    console.log(this.statuses);
+                    deferred.resolve(this.openPanel("content"));
+                }, (error) => {
+                    console.log(error);
+                });
+            return deferred.promise;
         }
     }
 

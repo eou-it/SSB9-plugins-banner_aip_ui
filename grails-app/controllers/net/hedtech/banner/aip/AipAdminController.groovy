@@ -350,7 +350,7 @@ class AipAdminController {
         render results as JSON
     }
 
-    def actionItemStatusList() {
+    def actionItemStatusGridList() {
 
         def paramObj = [filterName   : params.searchString ?: "%",
                         sortColumn   : params.sortColumnName ?: "id",
@@ -375,6 +375,11 @@ class AipAdminController {
         render results as JSON
     }
 
+
+    def actionItemStatusList() {
+        def templates = actionItemStatusService.listActionItemStatuses()
+        render templates as JSON
+    }
 
     def actionItemTemplateList() {
         def templates = actionItemTemplateService.listActionItemTemplates()

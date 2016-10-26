@@ -674,7 +674,7 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
         controller.params.max=20
         controller.params.offset=0
 
-        controller.actionItemStatusList()
+        controller.actionItemStatusGridList()
         def answer = JSON.parse( controller.response.contentAsString )
 
         answer.result.each {
@@ -802,6 +802,15 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
         def answer = JSON.parse( controller.response.contentAsString )
         assertEquals( templates.size(), answer.size() )
         assertEquals( templates[0].id, answer[0].id )
+    }
+
+    @Test
+    void testActionItemStatusList() {
+        List<ActionItemStatus> statuses = actionItemStatusService.listActionItemStatuses()
+        controller.actionItemStatusList()
+        def answer = JSON.parse( controller.response.contentAsString )
+        assertEquals( statuses.size(), answer.size() )
+        assertEquals( statuses[0].actionItemStatusId, answer[0].actionItemStatusId )
     }
 
     @Test

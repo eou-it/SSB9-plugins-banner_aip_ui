@@ -1,0 +1,45 @@
+<div class="table-responsive">
+    <table class="table">
+        <caption>
+            <p class="caption-label">{{'aip.admin.status.rules.table.caption'|i18n_aip}}</p>
+            <p>{{'aip.admin.status.rules.table.instructions.template'|i18n_aip}}</p>
+            <p><span class="icon icon-info-CO" role="presentation"></span> {{'aip.admin.status.rules.table.instructions.block'|i18n_aip}}</p>
+        </caption>
+
+        <tr>
+            <th>{{'aip.admin.status.rules.table.header.choices'|i18n_aip}}</th>
+            <th>{{'aip.admin.status.rules.table.header.ruleApplied'|i18n_aip}}</th>
+        </tr>
+        <tbody ng-repeat="item in inputs">
+            <tr>
+                <td>
+                    <div class="form-inline">
+                        <div class="form-group">
+                            <label>{{'aip.admin.status.rules.table.form.label'|i18n_aip}}</label>
+                            <input type="text" class="form-control" ng-model="item.value">
+                        </div>
+                    </div>
+                </td>
+
+                <td>
+                    <div class="form-inline">
+                        <div class="form-group">
+                            <label>{{'aip.admin.status.rules.table.form.value'|i18n_aip}}</label>
+                            <select id="actionItemStatus" class="actionItemSelect" xe-data="" aria-label="Status" required aria-required="true"
+                                    ng-model="vm.actionItemInfo.status">
+                                <option ng-repeat="item in vm.status" value="{{item.id}}">{{item.value|i18n_aip}}</option>
+                            </select>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+
+    </table>
+    <div class="row">
+        <button type="button" class="btn btn-default" ng-click="addRule()">
+            <span class="icon icon-add-CO" role="presentation"></span>
+            <span class="button-text hidden-sm-down">{{'aip.common.add'|i18n_aip}}</span>
+        </button>
+    </div>
+</div>

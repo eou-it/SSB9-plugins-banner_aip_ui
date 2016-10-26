@@ -74,6 +74,12 @@
                   padding: 20px;
                   border: 1px solid #c0c0c0;
                 }
+                caption {
+                  text-align: left;
+                }
+                caption > .caption-label {
+                  font-family:"OpenSans-semibold";
+                }
                 /*
                 .control {
                   //position: absolute;

@@ -95,6 +95,8 @@ modules = {
         resource url:[plugin: 'banner-csr-ui', file: 'aipApp/common/directives/readmore/js/readmore.js']
         resource url:[plugin: 'banner-csr-ui', file: 'aipApp/common/directives/item-detail/js/itemDetail.js']
         resource url:[plugin: 'banner-csr-ui', file: 'aipApp/common/directives/admin/group-detail/js/groupDetail.js']
+        resource url:[plugin: 'banner-csr-ui', file: 'aipApp/common/directives/admin/status-rule/js/statusRule.js']
+
         resource url:[plugin: 'banner-csr-ui', file: 'aipApp/common/utils/spinnerCtrl.js']
         resource url:[plugin: 'banner-csr-ui', file: 'aipApp/common/directives/pagebuilder/js/aip-pagebuilder.js']
     }
