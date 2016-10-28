@@ -1,5 +1,11 @@
 .aip-modal {
   .modal-dialog {
+    .modal-header {
+      border-bottom: none;
+      .modal-close {
+        display: none;
+      }
+    }
     .modal-body {
       .modal-body-content {
         .row.blockProcess {
@@ -14,8 +20,18 @@
           width: 50%;
           float: left;
         }
+        .btn-divide {
+          content: '';
+          display: inline-block;
+          width: 1px;
+          height: 23px;
+          bottom: 5px;
+          background: #86BDDE;
+          position: absolute;
+
+        }
         .btn-forward {
-          width: 50%
+          width: 50%;
         }
       }
     }

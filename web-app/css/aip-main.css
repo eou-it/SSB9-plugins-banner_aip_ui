@@ -526,6 +526,10 @@ aip-list .aip-list-container {
   .aip-modal .modal-dialog .modal-header .row.blockProcess input {
     margin-right: 8px; }
 
+.aip-modal .modal-dialog .modal-header {
+  border-bottom: none; }
+  .aip-modal .modal-dialog .modal-header .modal-close {
+    display: none; }
 .aip-modal .modal-dialog .modal-body .modal-body-content .row.blockProcess {
   padding: 16px; }
   .aip-modal .modal-dialog .modal-body .modal-body-content .row.blockProcess input {
@@ -533,6 +537,14 @@ aip-list .aip-list-container {
 .aip-modal .modal-dialog .modal-body .modal-control .btn-back {
   width: 50%;
   float: left; }
+.aip-modal .modal-dialog .modal-body .modal-control .btn-divide {
+  content: '';
+  display: inline-block;
+  width: 1px;
+  height: 23px;
+  bottom: 5px;
+  background: #86BDDE;
+  position: absolute; }
 .aip-modal .modal-dialog .modal-body .modal-control .btn-forward {
   width: 50%; }
 
@@ -665,11 +677,13 @@ label {
     .aip-modal .modal-dialog .modal-body .modal-body-content .row {
       margin-right: 0;
       margin-left: 0; }
-  .aip-modal .modal-dialog .modal-body .modal-control button {
-    width: 100%;
-    border: none;
-    border-top: 1px solid #cccccc;
-    color: #557287; }
+  .aip-modal .modal-dialog .modal-body .modal-control {
+    border-top: 1px solid #1F6E9F; }
+    .aip-modal .modal-dialog .modal-body .modal-control button {
+      font-size: 18px;
+      color: #1F6E9F;
+      width: 100%;
+      border: none; }
 
 .cke_button_label.cke_button__a11ybtn_label {
   display: inline !important; }
