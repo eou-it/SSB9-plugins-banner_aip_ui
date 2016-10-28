@@ -270,6 +270,9 @@ var bannerAIPApp = angular.module("bannerAIP", [
             $.i18n.prop("aip.common.system.required");
             $.i18n.prop("aip.common.system.required.indicator.is");
             $.i18n.prop("aip.common.save");
+            $.i18n.prop("aip.common.save.modal");
+            $.i18n.prop("aip.common.cancel.modal");
+            $.i18n.prop("aip.common.continue.modal");
             $.i18n.prop("aip.common.save.successful");
             $.i18n.prop("aip.common.cancel");
             $.i18n.prop("aip.common.next");

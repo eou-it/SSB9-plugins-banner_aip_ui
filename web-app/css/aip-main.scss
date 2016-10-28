@@ -217,11 +217,12 @@ label {
         }
       }
       .modal-control {
+        border-top: 1px solid #1F6E9F;
         button {
+          font-size: 18px;
+          color: #1F6E9F;
           width: 100%;
           border: none;
-          border-top: 1px solid #cccccc;
-          color: #557287;
         }
       }
     }
