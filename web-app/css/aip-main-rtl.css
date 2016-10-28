@@ -497,6 +497,9 @@ aip-list .aip-list-container  {
     background-color:#ffffff;
     height:100%;
 }
+  .actionItemOpenContainer label  {
+    font-family:"OpenSans-semibold";
+}
   .actionItemOpenContainer label.required:after  {
     content:" *";
 }
@@ -558,11 +561,15 @@ aip-list .aip-list-container  {
     padding:20px;
     border:1px solid #c0c0c0;
 }
-            .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent caption  {
-    text-align:right;
+            .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .status-rules .row .headings  {
+    font-size:1.2em;
 }
-            .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent caption > .caption-label  {
+              .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .status-rules .row .headings .heading-label  {
     font-family:"OpenSans-semibold";
+}
+            .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .add-link  {
+    font-family:"OpenSans-semibold";
+    margin-right:10px;
 }
             .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .groupControl  {
     width:100%;

@@ -363,14 +363,15 @@ var bannerAIPApp = angular.module("bannerAIP", [
 
             $.i18n.prop("aip.admin.status.rules");
 
-            $.i18n.prop("aip.admin.status.rules.table.caption");
+            $.i18n.prop("aip.admin.status.rules.table.heading");
             $.i18n.prop("aip.admin.status.rules.table.instructions.template");
             $.i18n.prop("aip.admin.status.rules.table.instructions.block");
             $.i18n.prop("aip.admin.status.rules.table.instructions.block.link");
-            $.i18n.prop("aip.admin.status.rules.table.header.choices");
-            $.i18n.prop("aip.admin.status.rules.table.header.ruleApplied");
+            $.i18n.prop("aip.admin.status.rules.table.header.responseOptionText");
+            $.i18n.prop("aip.admin.status.rules.table.header.status");
             $.i18n.prop("aip.admin.status.rules.table.form.label");
             $.i18n.prop("aip.admin.status.rules.table.form.value");
+            $.i18n.prop("aip.admin.status.rules.table.form.add");
 
 
             $.i18n.prop("aip.admin.selectable.action.items");

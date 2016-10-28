@@ -15,9 +15,13 @@ var AIPUI;
         };
         AIPStatusRuleDirective.prototype.link = function (scope, elem, attr, ctrl, transclude) {
             transclude(scope, function (clone) {
+                scope.init();
             });
         };
         AIPStatusRuleDirective.prototype.controller = function ($scope) {
+            $scope.init = function () {
+                $scope.addRule();
+            };
             $scope.inputs = [];
             $scope.addRule = function () {
                 $scope.inputs.push({});
@@ -26,16 +30,6 @@ var AIPUI;
             $scope.getState = function (id) {
                 //$scope.itemstate(id)
             };
-            /*
-             $scope.returnlist = function() {
-             $scope.tolist();
-             }
-             */
-            /*
-             $scope.nextitem = function() {
-             $scope.next({groupId:this.data.groupId, itemId:this.data.info.id});
-             }
-             */
         };
         return AIPStatusRuleDirective;
     }());

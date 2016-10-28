@@ -24,9 +24,15 @@ module AIPUI {
         link(scope, elem, attr, ctrl, transclude) {
             transclude(scope, (clone) => {
 
+                scope.init();
+
             });
         }
         controller($scope) {
+
+            $scope.init = function(){
+                $scope.addRule();
+            }
             $scope.inputs = [];
 
             $scope.addRule=function(){
@@ -36,16 +42,6 @@ module AIPUI {
             $scope.getState = function(id) {
                 //$scope.itemstate(id)
             }
-            /*
-             $scope.returnlist = function() {
-             $scope.tolist();
-             }
-             */
-            /*
-             $scope.nextitem = function() {
-             $scope.next({groupId:this.data.groupId, itemId:this.data.info.id});
-             }
-             */
         }
 
     }

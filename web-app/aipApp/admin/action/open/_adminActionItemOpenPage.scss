@@ -1,7 +1,15 @@
+$border-color: #C0C0C0;
+$text-color: #4F585F;
+$button-color: #206E9F;
+$background-color: #ffffff;
+
 .actionItemOpenContainer {
-  border: 1px solid #C8D4DE;
-  background-color: #ffffff;
+  border: 1px solid $border-color;
+  background-color: $background-color;
   height:100%;
+  label {
+    font-family: "OpenSans-semibold";
+  }
   label.required:after {
     content: " *";
   }
@@ -15,7 +23,7 @@
       height: inherit;
       .actionItemElement {
         height: 100%;
-        color: #4F585F;
+        color: $text-color;
         padding-bottom: 20px;
         .h2-container {
           margin-top: 20px;
@@ -23,7 +31,7 @@
         }
         .activity {
           margin-top: 30px;
-          border-left: 2px solid #C0C0C0;
+          border-left: 2px solid $border-color;
           height: 100%;
         }
         @media (max-width:768px) {
@@ -35,13 +43,13 @@
         .dividerContainer {
           padding: 16px;
           .divider {
-            border-right: 2px solid #C0C0C0;
+            border-right: 2px solid $border-color;
             height: 100%;
           }
 
         }
         hr {
-          border-top: solid 1px #c0c0c0;
+          border-top: solid 1px $border-color;
         }
         xe-tab-panel {
           .xe-tab-container {
@@ -57,7 +65,7 @@
                 .h2-container {
                   button.edit {
                     float: right;
-                    color: #206E9F;
+                    color: $button-color;
                     border: none;
                   }
                 }
@@ -72,31 +80,35 @@
                 .contentPreview {
                   margin: 20px 0;
                   padding: 20px;
-                  border: 1px solid #c0c0c0;
+                  border: 1px solid $border-color;
                 }
-                caption {
-                  text-align: left;
-                }
-                caption > .caption-label {
-                  font-family:"OpenSans-semibold";
-                }
-                /*
-                .control {
-                  //position: absolute;
-                  //bottom: 24px;
-                 // width: 100%;
-                  .templateButton {
-                    float: right;
-                    margin-bottom: 20px;
-                    span {
-                      padding-left: 24px;
-                      button {
-                        min-width: 100px;
+                .status-rules {
+                  .row {
+                    .headings {
+                      font-size: 1em;
+                      .heading-label{
+                        font-family: "OpenSans-semibold";
+                      }
+                      .heading-instructions {
+                        margin: 0 0 20px 15px;
                       }
                     }
                   }
+                  .status-response {
+                    padding: 10px 0px;
+                    border-bottom: 1px solid $border-color;
+
+                    @media screen and (max-width: 768px) {
+                      .response-field {
+                        margin-bottom: 10px;
+                      }
+                    }
+                  }
+                  .add-link {
+                    font-family: "OpenSans-semibold";
+                    margin: 20px 0 0 15px;
+                  }
                 }
-                */
                 .groupControl {
                   /*position: relative;*/
                   width: 100%;

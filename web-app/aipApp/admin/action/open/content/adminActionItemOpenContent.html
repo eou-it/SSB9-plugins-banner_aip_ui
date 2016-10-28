@@ -44,13 +44,12 @@
                           ng-model="vm.actionItem.actionItemContent"></textarea>
             </div>
 
-            <div class="contentPreview">
+            <div class="contentContainer">
 
                 <div class="row">
                     <aip-status-rule data="vm.getStatus"></aip-status-rule>
                 </div>
             </div>
-
         </div>
         <!--
         <div class="control row">
@@ -80,8 +79,6 @@
                 </div>
             </div>
         </div>
-
-
     </div>
 
     <div class="actionItemContent row" ng-if="!vm.isNoTemplate() && vm.actionItem.actionItemTemplateId && !vm.templateSelect">
@@ -116,14 +113,11 @@
                 </div>
             </div>
 
-
             <div class="row">
                 <div class="col-xs-12 col-sm-12">
                     <h2>{{'aip.common.text.statusRules'|i18n_aip}}</h2>
-
                     <div class="contentContainer">
                     </div>
-
                 </div>
             </div>
 
