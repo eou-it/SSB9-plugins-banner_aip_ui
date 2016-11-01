@@ -185,7 +185,7 @@ var AIP;
             //this.$state.params.grp = data.id;
         };
         return AdminStatusListPageCtrl;
-    }());
+    })();
     AIP.AdminStatusListPageCtrl = AdminStatusListPageCtrl;
 })(AIP || (AIP = {}));
 register("bannerAIP").controller("AdminStatusListPageCtrl", AIP.AdminStatusListPageCtrl);
