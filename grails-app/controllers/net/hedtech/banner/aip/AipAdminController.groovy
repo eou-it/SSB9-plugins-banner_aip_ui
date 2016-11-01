@@ -21,6 +21,8 @@ class AipAdminController {
     def actionItemDetailService
     def actionItemDetailCompositeService
     def actionItemStatusService
+    def actionItemStatusRuleService
+    def actionItemStatusRuleReadOnlyService
 
 
     def folders() {
@@ -509,5 +511,42 @@ class AipAdminController {
                 status: newStatus
         ]
         render model as JSON
+    }
+
+    def actionItemStatusRule() {
+        def actionItemStatusRules = actionItemStatusRuleReadOnlyService.listActionItemStatusRulesRO()
+        render actionItemStatusRules as JSON
+    }
+
+    def actionItemStatusRuleById() {
+        def jsonObj = request.JSON
+        ActionItemStatusRuleReadOnly actionItemStatusRuleRO = actionItemStatusRuleReadOnlyService.getActionItemStatusRuleROById(jsonObj.id)
+        render actionItemStatusRuleRO as JSON
+    }
+
+    def actionItemStatusRulesByActionItemId() {
+        def jsonObj = request.JSON
+        List<ActionItemStatusRuleReadOnly> actionItemStatusRuleReadOnlies = actionItemStatusRuleReadOnlyService.getActionItemStatusRuleROByActinItemId(jsonObj.actionItemId)
+        render actionItemStatusRuleReadOnlies as JSON
+    }
+
+    def updateActionItemStatusRule() {
+        def jsonObj = request.JSON
+
+        def user = SecurityContextHolder?.context?.authentication?.principal
+        if (!user.pidm) {
+            response.sendError( 403 )
+            return
+        }
+        def aipUser = AipControllerUtils.getPersonForAip( params, user.pidm )
+        List<ActionItemStatusRule> actionItemStatusRules = actionItemStatusRuleService.getActionItemStatusRuleActionItemId(jsonObj.id)
+        try {
+            actionItemStatusRules.each { rule ->
+                //TODO:: do update each action item status rule
+            }
+        } catch (Exception e) {
+            org.codehaus.groovy.runtime.StackTraceUtils.sanitize( e ).printStackTrace()
+            throw e
+        }
     }
 }
