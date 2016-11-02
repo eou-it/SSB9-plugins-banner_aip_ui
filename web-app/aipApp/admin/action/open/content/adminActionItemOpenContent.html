@@ -32,7 +32,6 @@
                         ({{vm.templateSource}})</option>
                 </select>
             </div>
-
         </div>
 
         <div class="contentContainer" ng-if="!vm.isNoTemplateSelected()">
@@ -45,34 +44,18 @@
             </div>
 
             <div class="contentContainer">
-
                 <div class="row">
                     <aip-status-rule data="vm.getStatus"></aip-status-rule>
                 </div>
             </div>
         </div>
-        <!--
-        <div class="control row">
-            <div class="col-sm-3 offset-sm-9 col-xs-12 templateButton">
-                <span>
-                    <button name="Cancel" type="button" class="btn btn-default" ng-click="vm.cancel('content')">{{'aip.common.cancel'|i18n_aip}}</button>
-                </span>
-                <span>
-                    <button name="Save" type="button" class="btn btn-primary" ng-click="vm.saveTemplate()" ng-disabled="!vm.saveValidate()">
-                        {{'aip.common.saveandreturn'|i18n_aip}}
-                    </button>
-                </span>
-            </div>
 
-        </div>
-        -->
-
-        <div class="groupControl">
+        <div class="actionControl">
             <div class="row">
-                <div class="col-sm-offset-8 col-xs-6 col-sm-2 groupButton">
+                <div class="col-sm-offset-8 col-xs-6 col-sm-2 actionButton">
                     <button type="button" class="btn btn-default" ng-click="vm.cancel('content')">{{"aip.common.cancel"|i18n_aip}}</button>
                 </div>
-                <div class="col-xs-6 col-sm-2 groupButton">
+                <div class="col-xs-6 col-sm-2 actionButton">
                     <button type="button" class="btn btn-primary" ng-disabled="!vm.saveValidate()" ng-click="vm.saveTemplate()">
                         {{"aip.common.saveandreturn"|i18n_aip}}
                     </button>
