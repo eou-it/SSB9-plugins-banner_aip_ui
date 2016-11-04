@@ -515,18 +515,23 @@ class AipAdminController {
 
     def actionItemStatusRule() {
         def actionItemStatusRules = actionItemStatusRuleReadOnlyService.listActionItemStatusRulesRO()
-        render actionItemStatusRules as JSON
+        List<ActionItemStatusRuleReadOnly> actionItemStatusRuleReadOnlies2 = actionItemStatusRuleReadOnlyService.listActionItemStatusRulesRO()
+        def model = [
+                success: "",
+                message : "",
+                status: actionItemStatusRuleReadOnlies2
+        ]
+        render model
+//        render actionItemStatusRules as JSON
     }
 
     def actionItemStatusRuleById() {
-        def jsonObj = request.JSON
-        ActionItemStatusRuleReadOnly actionItemStatusRuleRO = actionItemStatusRuleReadOnlyService.getActionItemStatusRuleROById(jsonObj.id)
+        def actionItemStatusRuleRO = actionItemStatusRuleReadOnlyService.getActionItemStatusRuleROById(params.id)
         render actionItemStatusRuleRO as JSON
     }
 
     def actionItemStatusRulesByActionItemId() {
-        def jsonObj = request.JSON
-        List<ActionItemStatusRuleReadOnly> actionItemStatusRuleReadOnlies = actionItemStatusRuleReadOnlyService.getActionItemStatusRuleROByActinItemId(jsonObj.actionItemId)
+        def actionItemStatusRuleReadOnlies = actionItemStatusRuleReadOnlyService.getActionItemStatusRuleROByActionItemId(params.actionItemId)
         render actionItemStatusRuleReadOnlies as JSON
     }
 
@@ -538,15 +543,39 @@ class AipAdminController {
             response.sendError( 403 )
             return
         }
+        def success = false
+        def message
+
+        def inputRules = jsonObj.rules
+        def tempRuleIdList = inputRules.statusRuleId
         def aipUser = AipControllerUtils.getPersonForAip( params, user.pidm )
         List<ActionItemStatusRule> actionItemStatusRules = actionItemStatusRuleService.getActionItemStatusRuleActionItemId(jsonObj.id)
+        def existingRuleId = actionItemStatusRules.id
+        def deleteRules = actionItemStatusRules.findAll({it ->
+            !tempRuleIdList.cotains(it)
+        })
         try {
-            actionItemStatusRules.each { rule ->
-                //TODO:: do update each action item status rule
-            }
-        } catch (Exception e) {
-            org.codehaus.groovy.runtime.StackTraceUtils.sanitize( e ).printStackTrace()
-            throw e
+            //update&create
+            ActionItemStatusRule.createOrUpdate(inputRules, false) //list of domain objects to be updated or created
+
+            //delete
+            ActionItemStatusRule.delete(deleteRules, false) //list of ids to be deleted
+
+            response.status = 200
+            success = true
+
+        } catch (ApplicationException e) {
+            message = "Boom!"
         }
+
+        List<ActionItemStatusRule> updatedActionItemStatusRules = actionItemStatusRuleService.getActionItemStatusRuleActionItemId(jsonObj.id)
+        def model = [
+                success: success,
+                message : message,
+                rules: updatedActionItemStatusRules
+        ]
+
+        render model as JSON
+
     }
 }

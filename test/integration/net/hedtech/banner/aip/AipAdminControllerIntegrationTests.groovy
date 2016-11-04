@@ -32,6 +32,7 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
     def actionItemStatusService
     def actionItemService
     def preferredNameService
+    def actionItemStatusRuleReadOnlyService
 
     def VALID_FOLDER_NAME = "My Folder"
     def VALID_FOLDER_DESCRIPTION = "My Folder"
@@ -864,6 +865,57 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
         assertEquals 200, controller.response.status
         assertNotNull answer.status
         assertNotNull answer.status.id
+
+    }
+
+    @Test
+    void testActionItemStatusRule() {
+        def admin = PersonUtility.getPerson( "CSRADM001" ) // role: admin
+        assertNotNull admin
+
+        def auth = selfServiceBannerAuthenticationProvider.authenticate(
+                new UsernamePasswordAuthenticationToken( admin.bannerId, '111111' ) )
+        SecurityContextHolder.getContext().setAuthentication( auth )
+        List<ActionItemStatusRuleReadOnly> actionItemStatusRules = actionItemStatusRuleReadOnlyService.listActionItemStatusRulesRO()
+        controller.actionItemStatusRule()
+        def answer = JSON.parse(controller.response.contentAsString)
+        assertEquals(actionItemStatusRules.size(), answer.size())
+        assertEquals(actionItemStatusRules[0].statusRuleId. answer[0].statusRuleId)
+    }
+
+    @Test
+    void testActionItemStatusRuleById() {
+        def admin = PersonUtility.getPerson( "BCMADMIN" ) // role: admin
+        assertNotNull admin
+
+        def auth = selfServiceBannerAuthenticationProvider.authenticate(
+                new UsernamePasswordAuthenticationToken( admin.bannerId, '111111' ) )
+        SecurityContextHolder.getContext().setAuthentication( auth )
+        List<ActionItemStatusRuleReadOnly> actionItemStatusRules = actionItemStatusRuleReadOnlyService.listActionItemStatusRulesRO()
+        controller.params.id= actionItemStatusRules[0].statusRuleId
+
+        controller.actionItemStatusRuleById()
+        def answer = JSON.parse( controller.response.contentAsString )
+        assertEquals( factionItemStatusRules[0], answer )
+    }
+
+    @Test
+    void testActionItemStatusRuleByActionItemId() {
+        def admin = PersonUtility.getPerson( "BCMADMIN" ) // role: admin
+        assertNotNull admin
+
+        def auth = selfServiceBannerAuthenticationProvider.authenticate(
+                new UsernamePasswordAuthenticationToken( admin.bannerId, '111111' ) )
+        SecurityContextHolder.getContext().setAuthentication( auth )
+        List<ActionItemStatusRuleReadOnly> actionItemStatusRules = actionItemStatusRuleReadOnlyService.listActionItemStatusRulesRO()
+        List<ActionItemStatusRuleReadOnly> statusRules = actionItemStatusRuleReadOnlyService.getActionItemStatusRuleROByActionItemId(actionItemStatusRules[0].statusRuleActionItemId)
+        controller.params.actionItemId= actionItemStatusRules[0].statusRuleActionItemId
+        controller.actionItemStatusRulesByActionItemId()
+        def answer = JSON.parse(controller.response.contentAsString)
+        assertEquals(answer, statusRules)
+    }
+    @Test
+    void testUpdateActionItemStatusRule() {
 
     }
 
