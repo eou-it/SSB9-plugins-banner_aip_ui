@@ -15,7 +15,7 @@ class AipAdminController {
     def communicationFolderService
     def groupFolderReadOnlyService
     def actionItemGroupService
-    def actionItemReadOnlyService
+    def actionItemReadOnlyServiceß
     def actionItemService
     def actionItemTemplateService
     def actionItemDetailService
@@ -515,14 +515,7 @@ class AipAdminController {
 
     def actionItemStatusRule() {
         def actionItemStatusRules = actionItemStatusRuleReadOnlyService.listActionItemStatusRulesRO()
-        List<ActionItemStatusRuleReadOnly> actionItemStatusRuleReadOnlies2 = actionItemStatusRuleReadOnlyService.listActionItemStatusRulesRO()
-        def model = [
-                success: "",
-                message : "",
-                status: actionItemStatusRuleReadOnlies2
-        ]
-        render model
-//        render actionItemStatusRules as JSON
+        render actionItemStatusRules as JSON
     }
 
     def actionItemStatusRuleById() {

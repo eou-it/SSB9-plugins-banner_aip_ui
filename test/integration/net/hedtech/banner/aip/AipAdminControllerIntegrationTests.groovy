@@ -880,7 +880,7 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
         controller.actionItemStatusRule()
         def answer = JSON.parse(controller.response.contentAsString)
         assertEquals(actionItemStatusRules.size(), answer.size())
-        assertEquals(actionItemStatusRules[0].statusRuleId. answer[0].statusRuleId)
+        assertEquals(actionItemStatusRules[0].statusRuleId, answer[0].statusRuleId)
     }
 
     @Test
@@ -896,7 +896,7 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
 
         controller.actionItemStatusRuleById()
         def answer = JSON.parse( controller.response.contentAsString )
-        assertEquals( factionItemStatusRules[0], answer )
+        assertEquals( actionItemStatusRules[0].statusRuleId, answer.statusRuleId )
     }
 
     @Test
@@ -912,7 +912,8 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
         controller.params.actionItemId= actionItemStatusRules[0].statusRuleActionItemId
         controller.actionItemStatusRulesByActionItemId()
         def answer = JSON.parse(controller.response.contentAsString)
-        assertEquals(answer, statusRules)
+        assertEquals(answer.size(), statusRules.size())
+        assertEquals(actionItemStatusRules[0].statusRuleId, answer[0].statusRuleId)
     }
     @Test
     void testUpdateActionItemStatusRule() {
