@@ -15,10 +15,11 @@ module AIP {
     }
     interface IActionItem {
         actionItemId: number;
-        actionItemActivityDate: Date,
-        actionItemCompositeDate: Date,
-        actionItemCreateDate: Date,
+        actionItemActivityDate: Date;
+        actionItemCompositeDate: Date;
+        actionItemCreateDate: Date;
         actionItemCreatorId: string;
+        actionItemLastUserId: string;
         actionItemDesc: string;
         actionItemName: string;
         actionItemStatus: string|number;
@@ -27,8 +28,8 @@ module AIP {
     }
     interface IActionItem2 {
         id: number;
-        activityDate: Date,
-        createDate: Date,
+        activityDate: Date;
+        createDate: Date;
         creatorId: string;
         description: string;
         title: string;

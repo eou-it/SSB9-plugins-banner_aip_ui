@@ -281,7 +281,8 @@ class AipAdminController {
                 [name: "actionItemStatus", title: MessageUtility.message( "aip.common.status" ), options: [visible: true, isSortable: true, ascending: paramObj.sortAscending], width: 0],
                 [name: "folderName", title: MessageUtility.message( "aip.common.folder" ), options: [visible: true, isSortable: true, ascending: paramObj.sortAscending], width: 0],
                 [name: "actionItemActivityDate", title: MessageUtility.message( "aip.common.activity.date" ), options: [visible: true, isSortable: true, ascending: paramObj.sortAscending], width: 0],
-                [name: "actioncdItemUserId", title: MessageUtility.message( "aip.common.last.updated.by" ), options: [visible: true, isSortable: true, ascending: paramObj.sortAscending], width: 0]
+                [name: "actionItemLastUserId", title: MessageUtility.message( "aip.common.last.updated.by" ), options: [visible: true, isSortable:
+                        true, ascending: paramObj.sortAscending], width: 0]
         ]
 
         results.header = actionItemHeadings
