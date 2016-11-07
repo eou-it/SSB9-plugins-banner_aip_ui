@@ -916,8 +916,136 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
         assertEquals(actionItemStatusRules[0].statusRuleId, answer[0].statusRuleId)
     }
     @Test
-    void testUpdateActionItemStatusRule() {
+    void testUpdateActionItemStatusRuleOrderChange() {
+        def admin = PersonUtility.getPerson( "BCMADMIN" ) // role: admin
+        assertNotNull admin
 
+        def auth = selfServiceBannerAuthenticationProvider.authenticate(
+                new UsernamePasswordAuthenticationToken( admin.bannerId, '111111' ) )
+        SecurityContextHolder.getContext().setAuthentication( auth )
+
+        //TODO:: set parameter for this test
+        def actionItemId = 1
+        List<ActionItemStatusRuleReadOnly> statusRules = actionItemStatusRuleReadOnlyService.getActionItemStatusRuleROByActionItemId(actionItemId)
+
+        def rules = [
+                [
+                        statusRuleId: statusRules[0].statusRuleId,
+                        statusRuleSeqOrder: statusRules[1].statusRuleSeqOrder,
+                        statusRuleLabelText: statusRules[0].statusRuleLabelText
+                ],
+                [
+                        statusRuleId: statusRules[1].statusRuleId,
+                        statusRuleSeqOrder: statusRules[0].statusRuleSeqOrder,
+                        statusRuleLabelText: statusRules[1].statusRuleLabelText
+                ]
+        ]
+        def requestObj = [:]
+        requestObj.actionItemId = actionItemId
+        requestObj.rules = rules
+        controller.request.method = "POST"
+        controller.request.json = requestObj
+        controller.updateActionItemStatusRule()
+        def answer = JSON.parse(controller.response.contentAsString).rules
+
+        def status0 = answer.find{it->
+            it.id == statusRules[0].statusRuleId
+        }
+        def status1 = answer.find{it->
+            it.id == statusRules[1].statusRuleId
+        }
+
+        assertEquals(status0.seqOrder, statusRules[1].statusRuleSeqOrder)
+        assertEquals(status1.seqOrder, statusRules[0].statusRuleSeqOrder)
     }
 
+    @Test
+    void testUpdateActionItemStatusRuleRemoveRule() {
+        def admin = PersonUtility.getPerson( "BCMADMIN" ) // role: admin
+        assertNotNull admin
+
+        def auth = selfServiceBannerAuthenticationProvider.authenticate(
+                new UsernamePasswordAuthenticationToken( admin.bannerId, '111111' ) )
+        SecurityContextHolder.getContext().setAuthentication( auth )
+
+        def actionItemId = 1
+        List<ActionItemStatusRuleReadOnly> statusRules = actionItemStatusRuleReadOnlyService.getActionItemStatusRuleROByActionItemId(actionItemId)
+
+        def rules = [
+                [
+                        statusRuleId: statusRules[0].statusRuleId,
+                        statusRuleSeqOrder: statusRules[0].statusRuleSeqOrder,
+                        statusRuleLabelText: statusRules[0].statusRuleLabelText
+                ]
+        ]
+        def requestObj = [:]
+        requestObj.actionItemId = actionItemId
+        requestObj.rules = rules
+        controller.request.method = "POST"
+        controller.request.json = requestObj
+        controller.updateActionItemStatusRule()
+        def answer = JSON.parse(controller.response.contentAsString)
+
+        assertEquals(statusRules[0].statusRuleId, answer.rules[0].id )
+        assertEquals(answer.rules.size(), 1)
+    }
+
+    @Test
+    void testUpdateActionItemStatusRuleAddRule() {
+        def admin = PersonUtility.getPerson( "BCMADMIN" ) // role: admin
+        assertNotNull admin
+
+        def auth = selfServiceBannerAuthenticationProvider.authenticate(
+                new UsernamePasswordAuthenticationToken( admin.bannerId, '111111' ) )
+        SecurityContextHolder.getContext().setAuthentication( auth )
+
+        def actionItemId = 1
+        List<ActionItemStatusRuleReadOnly> statusRules = actionItemStatusRuleReadOnlyService.getActionItemStatusRuleROByActionItemId(actionItemId)
+
+        def rules = [
+                [
+                        statusRuleId: statusRules[0].statusRuleId,
+                        statusRuleSeqOrder: statusRules[0].statusRuleSeqOrder,
+                        statusRuleLabelText: statusRules[0].statusRuleLabelText
+                ],
+                [
+                        statusRuleSeqOrder: statusRules[0].statusRuleSeqOrder+1,
+                        statusRuleLabelText: "Test add rule"
+                ],
+                [
+                        statusRuleId: statusRules[1].statusRuleId,
+                        statusRuleSeqOrder: statusRules[0].statusRuleSeqOrder + 2,
+                        statusRuleLabelText: statusRules[1].statusRuleLabelText
+                ]
+        ]
+        def requestObj = [:]
+        requestObj.actionItemId = actionItemId
+        requestObj.rules = rules
+        controller.request.method = "POST"
+        controller.request.json = requestObj
+        controller.updateActionItemStatusRule()
+        def answer = JSON.parse(controller.response.contentAsString).rules
+
+        def status0 = answer.find{it->
+            it.statusRuleId == statusRules[0].statusRuleId
+        }
+        def status1 = answer.find{it->
+            it.statusRuleId == statusRules[1].statusRuleId
+        }
+
+        def statusNew = answer.find{it->
+            it.seqOrder == statusRules[0].statusRuleId + 1
+        }
+        assertEquals(aswer.size(), 3)
+
+        assertEquals(status0.seqOrder, statusRules[0].statusRuleSeqOrder )
+        assertEquals(status0.id, statusRules[0].statusRuleId)
+
+        assertEquals(status1.seqOrder, statusRules[1].statusRuleSeqOrder + 1 )
+        assertEquals(status1.id, statusRules[1].statusRuleId)
+
+        assertEquals(statusNew.labelText, "Test add rule")
+
+
+    }
 }

@@ -540,28 +540,51 @@ class AipAdminController {
         def message
 
         def inputRules = jsonObj.rules
-        def tempRuleIdList = inputRules.statusRuleId
+        List<Long> tempRuleIdList = inputRules.statusRuleId.toList()
         def aipUser = AipControllerUtils.getPersonForAip( params, user.pidm )
-        List<ActionItemStatusRule> actionItemStatusRules = actionItemStatusRuleService.getActionItemStatusRuleActionItemId(jsonObj.id)
+        List<ActionItemStatusRule> actionItemStatusRules = actionItemStatusRuleService.getActionItemStatusRuleByActionItemId(jsonObj.actionItemId)
         def existingRuleId = actionItemStatusRules.id
-        def deleteRules = actionItemStatusRules.findAll({it ->
-            !tempRuleIdList.cotains(it)
-        })
+        def deleteRules = existingRuleId - tempRuleIdList
+
         try {
             //update&create
-            ActionItemStatusRule.createOrUpdate(inputRules, false) //list of domain objects to be updated or created
+            List<ActionItemStatusRule> ruleList = []
+            inputRules.each{ rule ->
+                def statusRule
+                if (rule.statusRuleId) {
+                    statusRule = ActionItemStatusRule.get(rule.statusRuleId)
+                    statusRule.seqOrder = rule.statusRuleSeqOrder
+                    statusRule.labelText = rule.statusRuleLabelText
+                    statusRule.actionItemId = jsonObj.actionItemId
+                    statusRule.userId= aipUser.bannerId
+                    statusRule.activityDate = new Date()
+                }
+                else {
+                    statusRule = new ActionItemStatusRule(
+                            seqOrder: rule.statusRuleSeqOrder,
+                            labelText: rule.statusRuleLabelText,
+                            actionItemId: jsonObj.actionItemId,
+                            userId: aipUser.bannerId,
+                            activityDate: new Date()
+                    )
+                }
+                ruleList.push(statusRule)
+            }
+            actionItemStatusRuleService.createOrUpdate(ruleList) //list of domain objects to be updated or created
 
             //delete
-            ActionItemStatusRule.delete(deleteRules, false) //list of ids to be deleted
+            actionItemStatusRuleService.delete(deleteRules) //list of ids to be deleted
 
             response.status = 200
             success = true
 
         } catch (ApplicationException e) {
-            message = "Boom!"
+            println e.defaultMessage
+            //fixme: add more detailed exception catch and handle correctly
+            message = "Something happened"
         }
 
-        List<ActionItemStatusRule> updatedActionItemStatusRules = actionItemStatusRuleService.getActionItemStatusRuleActionItemId(jsonObj.id)
+        List<ActionItemStatusRule> updatedActionItemStatusRules = actionItemStatusRuleService.getActionItemStatusRuleByActionItemId(jsonObj.actionItemId)
         def model = [
                 success: success,
                 message : message,
