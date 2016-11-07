@@ -54,7 +54,7 @@ module AIP {
                 actionItemName: 3,
                 folderName: 3,
                 actionItemStatus: 3,
-                actionItemUserId: 3,
+                actionItemLastUserId: 3,
                 actionItemCompositeDate: 3
             };
             this.mobileSize = angular.element("body").width()>768?false:true;
@@ -107,7 +107,7 @@ module AIP {
                     columnShowHide: true
                 }
             }, {
-                name: "actionItemUserId",
+                name: "actionItemLastUserId",
                 title: this.$filter("i18n_aip")("aip.list.grid.lastUpdated"),
                 ariaLabel: this.$filter("i18n_aip")("aip.list.grid.lastUpdated"),
                 width: "100px",
