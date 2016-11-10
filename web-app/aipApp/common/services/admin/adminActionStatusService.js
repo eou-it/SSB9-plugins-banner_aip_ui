@@ -47,7 +47,7 @@ var AIP;
         };
         AdminActionStatusService.$inject = ["$http", "$q", "$filter", "ENDPOINT"];
         return AdminActionStatusService;
-    })();
+    }());
     AIP.AdminActionStatusService = AdminActionStatusService;
 })(AIP || (AIP = {}));
 register("bannerAIP").service("AdminActionStatusService", AIP.AdminActionStatusService);

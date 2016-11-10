@@ -15,7 +15,7 @@ class AipAdminController {
     def communicationFolderService
     def groupFolderReadOnlyService
     def actionItemGroupService
-    def actionItemReadOnlyServiceß
+    def actionItemReadOnlyService
     def actionItemService
     def actionItemTemplateService
     def actionItemDetailService
