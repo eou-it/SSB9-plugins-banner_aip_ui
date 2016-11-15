@@ -520,12 +520,14 @@ class AipAdminController {
     }
 
     def actionItemStatusRuleById() {
-        def actionItemStatusRuleRO = actionItemStatusRuleReadOnlyService.getActionItemStatusRuleROById(params.id)
+        def id = Long.parseLong(params.id)
+        def actionItemStatusRuleRO = actionItemStatusRuleReadOnlyService.getActionItemStatusRuleROById(id)
         render actionItemStatusRuleRO as JSON
     }
 
     def actionItemStatusRulesByActionItemId() {
-        def actionItemStatusRuleReadOnlies = actionItemStatusRuleReadOnlyService.getActionItemStatusRuleROByActionItemId(params.actionItemId)
+        def actionItemId = Long.parseLong(params.actionItemId)
+        def actionItemStatusRuleReadOnlies = actionItemStatusRuleReadOnlyService.getActionItemStatusRuleROByActionItemId(actionItemId)
         render actionItemStatusRuleReadOnlies as JSON
     }
 
@@ -556,6 +558,7 @@ class AipAdminController {
                     statusRule = ActionItemStatusRule.get(rule.statusRuleId)
                     statusRule.seqOrder = rule.statusRuleSeqOrder
                     statusRule.labelText = rule.statusRuleLabelText
+                    statusRule.actionItemStatusId = rule.statusId
                     statusRule.actionItemId = jsonObj.actionItemId
                     statusRule.userId= aipUser.bannerId
                     statusRule.activityDate = new Date()
@@ -565,16 +568,17 @@ class AipAdminController {
                             seqOrder: rule.statusRuleSeqOrder,
                             labelText: rule.statusRuleLabelText,
                             actionItemId: jsonObj.actionItemId,
+                            actionItemStatusId: rule.statusId,
                             userId: aipUser.bannerId,
                             activityDate: new Date()
                     )
                 }
                 ruleList.push(statusRule)
             }
-            actionItemStatusRuleService.createOrUpdate(ruleList) //list of domain objects to be updated or created
-
             //delete
             actionItemStatusRuleService.delete(deleteRules) //list of ids to be deleted
+
+            actionItemStatusRuleService.createOrUpdate(ruleList) //list of domain objects to be updated or created
 
             response.status = 200
             success = true

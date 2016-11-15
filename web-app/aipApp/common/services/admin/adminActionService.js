@@ -36,7 +36,6 @@ var AIP;
             });
             return deferred.promise;
         };
-        ;
         AdminActionService.prototype.getFolder = function () {
             var request = this.$http({
                 method: "GET",
@@ -44,7 +43,6 @@ var AIP;
             });
             return request;
         };
-        ;
         AdminActionService.prototype.getStatus = function () {
             var request = this.$http({
                 method: "GET",
@@ -101,6 +99,17 @@ var AIP;
                     templateId: templateId,
                     actionItemId: actionItemId,
                     actionItemContent: actionItemContent
+                }
+            });
+            return request;
+        };
+        AdminActionService.prototype.updateActionItemStatusRule = function (rules, actionItemId) {
+            var request = this.$http({
+                method: "POST",
+                url: this.ENDPOINT.admin.updateActionItemStatusRule,
+                data: {
+                    rules: rules,
+                    actionItemId: actionItemId
                 }
             });
             return request;

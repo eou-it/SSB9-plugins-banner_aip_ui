@@ -140,14 +140,14 @@ module AIP {
             })
 
             return deferred.promise;
-        };
+        }
         getFolder() {
             var request = this.$http({
                 method: "GET",
                 url: this.ENDPOINT.admin.folders
             });
             return request;
-        };
+        }
         getStatus() {
             var request = this.$http({
                 method: "GET",
@@ -205,6 +205,17 @@ module AIP {
                     templateId: templateId,
                     actionItemId: actionItemId,
                     actionItemContent: actionItemContent
+                }
+            });
+            return request;
+        }
+        updateActionItemStatusRule(rules, actionItemId) {
+            var request = this.$http({
+                method: "POST",
+                url: this.ENDPOINT.admin.updateActionItemStatusRule,
+                data: {
+                    rules: rules,
+                    actionItemId: actionItemId
                 }
             });
             return request;

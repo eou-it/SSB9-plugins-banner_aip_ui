@@ -111,10 +111,10 @@ module AIP {
         }
 
 
-        getStatus() {
+        getRules(actionItemId) {
             var request = this.$http({
                 method: "GET",
-                url: this.ENDPOINT.admin.actionItemStatusList
+                url: this.ENDPOINT.admin.rulesByActionItem + "?actionItemId=" + actionItemId
             });
             return request;
         }

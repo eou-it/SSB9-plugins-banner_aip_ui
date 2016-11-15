@@ -38,10 +38,10 @@ var AIP;
             });
             return request;
         };
-        AdminActionStatusService.prototype.getStatus = function () {
+        AdminActionStatusService.prototype.getRules = function (actionItemId) {
             var request = this.$http({
                 method: "GET",
-                url: this.ENDPOINT.admin.actionItemStatusList
+                url: this.ENDPOINT.admin.rulesByActionItem + "?actionItemId=" + actionItemId
             });
             return request;
         };

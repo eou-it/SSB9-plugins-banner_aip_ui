@@ -33,6 +33,7 @@ module AIP {
         templates;
         templateSelect: boolean;
         statuses;
+        rules;
         selectedTemplate;
         saving;
         templateSource;
@@ -60,6 +61,7 @@ module AIP {
             this.templateSelect = false;
             this.templates = [];
             this.statuses = [];
+            this.rules = [];
             this.selectedTemplate;
             this.templateSource;
             this.saving = false;
@@ -83,6 +85,8 @@ module AIP {
             if (this.$state.params.noti) {
                 this.handleNotification( this.$state.params.noti );
             }
+            promises.push(this.getStatus());
+            promises.push(this.getRules());
             this.$q.all( promises ).then( () => {
                 //TODO:: turn off the spinner
                 this.spinnerService.showSpinner( false );
@@ -91,7 +95,7 @@ module AIP {
 
         handleNotification(noti) {
             if(noti.notiType === "saveSuccess") {
-                var data = noti.data.newActionItem;
+                // var data = noti.data.newActionItem||noti.data.actionItem;
                 var n = new Notification({
                     message: this.$filter("i18n_aip")("aip.admin.action.add.success"), //+
                     type: "success",
@@ -214,6 +218,8 @@ module AIP {
                 } else {
                     return false;
                 }
+            } else {
+                return true;
             }
         }
 
@@ -285,19 +291,56 @@ module AIP {
             return false;
         }
         saveTemplate() {
+            //TODO:: implement to save rules
+            var allDefer = [];
             this.saving = true;
-            this.adminActionService.saveActionItemTemplate(this.selectedTemplate, this.actionItem.actionItemId, this.actionItem.actionItemContent)
+            allDefer.push(this.adminActionService.saveActionItemTemplate(this.selectedTemplate, this.actionItem.actionItemId, this.actionItem.actionItemContent)
                 .then((response:any) => {
+                    console.log(response);
+                    if(response.data.success) {
+                        return {success: true, type: "template", data: response.data.actionItem};
+                    } else {
+                        return {success: false};
+                    }
+                }, (err) => {
+                    console.log(err);
+                    return {success: false};
+                }));
+            // set seq order in rule array with it's index
+            angular.forEach(this.rules, (item) => {
+                item.statusRuleSeqOrder = this.rules.indexOf(item)
+                item.statusId = item.status.actionItemStatusId;
+            });
+            allDefer.push(this.adminActionService.updateActionItemStatusRule(this.rules, this.$state.params.data)
+                .then((response: any) => {
+                    console.log(response);
+                    if(response.data.success) {
+                        return {success: true};
+                    } else {
+                        return {success: false};
+                    }
+                }, (err)=> {
+                    console.log(err);
+                    return {success: false};
+                }));
+            this.$q.all(allDefer)
+                .then((response)=> {
                     this.saving = false;
                     var notiParams = {};
-                    if(response.data.success) {
+                    var errorItem = response.filter((item)=>{
+                        return item.success === false;
+                    });
+                    var newData = response.filter((item) => {
+                        return item.type && item.type="template";
+                    });
+                    if(errorItem.length === 0) {
                         notiParams = {
                             notiType: "saveSuccess",
-                            data: response.data
+                            data: newData[0].data
                         };
                         this.handleNotification( notiParams );
                         this.templateSelect =  false;
-                        this.actionItem = response.data.actionItem;
+                        this.actionItem = newData[0].data;
                         this.trustActionItemContent();
                         this.openContentPanel();
                     } else {
@@ -310,13 +353,32 @@ module AIP {
                 });
         }
 
-        addRule() {
+        getRules() {
+            this.adminActionStatusService.getRules(this.$state.params.data)
+                .then((response) => {
+                    this.rules = response.data;
+                    angular.forEach(this.rules, (item) => {
+                        item["status"] = {
+                            actionItemStatus: item.statusName,
+                            actionItemStatusId: item.statusId
+                        }
+                    });
+                    this.rules.sort((a, b) => {
+                        return a.statusRuleSeqOrder - b.statusRuleSeqOrder;
+                    });
+                }, (err) => {
+                    console.log("error:" + err);
+            });
+        }
+
+        getStatus() {
             var deferred = this.$q.defer();
-            this.adminActionStatusService.getStatus()
+            this.adminActionService.getStatus()
                 .then((response) => {
                     this.statuses = response.data;
                     console.log(this.statuses);
-                    deferred.resolve(this.openPanel("content"));
+                    deferred.resolve();
+                    // deferred.resolve(this.openPanel("content"));
                 }, (error) => {
                     console.log(error);
                 });

@@ -932,12 +932,14 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
                 [
                         statusRuleId: statusRules[0].statusRuleId,
                         statusRuleSeqOrder: statusRules[1].statusRuleSeqOrder,
-                        statusRuleLabelText: statusRules[0].statusRuleLabelText
+                        statusRuleLabelText: statusRules[0].statusRuleLabelText,
+                        statusId: statusRules[0].statusId
                 ],
                 [
                         statusRuleId: statusRules[1].statusRuleId,
                         statusRuleSeqOrder: statusRules[0].statusRuleSeqOrder,
-                        statusRuleLabelText: statusRules[1].statusRuleLabelText
+                        statusRuleLabelText: statusRules[1].statusRuleLabelText,
+                        statusId: statusRules[0].statusId
                 ]
         ]
         def requestObj = [:]
@@ -975,7 +977,8 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
                 [
                         statusRuleId: statusRules[0].statusRuleId,
                         statusRuleSeqOrder: statusRules[0].statusRuleSeqOrder,
-                        statusRuleLabelText: statusRules[0].statusRuleLabelText
+                        statusRuleLabelText: statusRules[0].statusRuleLabelText,
+                        statusId: statusRules[0].statusId
                 ]
         ]
         def requestObj = [:]
@@ -1006,16 +1009,20 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
                 [
                         statusRuleId: statusRules[0].statusRuleId,
                         statusRuleSeqOrder: statusRules[0].statusRuleSeqOrder,
-                        statusRuleLabelText: statusRules[0].statusRuleLabelText
+                        statusRuleLabelText: statusRules[0].statusRuleLabelText,
+                        statusId: statusRules[0].statusId
+
                 ],
                 [
                         statusRuleSeqOrder: statusRules[0].statusRuleSeqOrder+1,
-                        statusRuleLabelText: "Test add rule"
+                        statusRuleLabelText: "Test add rule",
+                        statusId: statusRules[0].statusId
                 ],
                 [
                         statusRuleId: statusRules[1].statusRuleId,
                         statusRuleSeqOrder: statusRules[0].statusRuleSeqOrder + 2,
-                        statusRuleLabelText: statusRules[1].statusRuleLabelText
+                        statusRuleLabelText: statusRules[1].statusRuleLabelText,
+                        statusId: statusRules[0].statusId
                 ]
         ]
         def requestObj = [:]
