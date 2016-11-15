@@ -144,7 +144,7 @@ var bannerAIPApp = angular.module("bannerAIP", [
             openGroup: aipAppAbsPath + "aipAdmin/openGroup",
             // actionList: aipAppAbsPath + "aip/adminActionLists",
             actionItemList: aipAppAbsPath + "aipAdmin/actionItemList",
-            adminActionItemStatus: aipAppAbsPath + "aipAdmin/adminActionItemStatus", //todo: replace with future lookup table and rename
+            adminActionItemStatus: aipAppAbsPath + "aipAdmin/actionItemStatusList", //todo: replace with future lookup table and rename
             actionItemStatusList: aipAppAbsPath + "aipAdmin/actionItemStatusList", //simple list of statuses
             actionItemStatusGrid: aipAppAbsPath + "aipAdmin/actionItemStatusGridList", //filterable list for grid functionality
             createActionItem: aipAppAbsPath + "aipAdmin/addActionItem",
@@ -152,7 +152,9 @@ var bannerAIPApp = angular.module("bannerAIP", [
             openActionItem: aipAppAbsPath + "aipAdmin/openActionItem",
             actionItemTemplateList: aipAppAbsPath + "aipAdmin/actionItemTemplateList",
             saveActionItemTemplate: aipAppAbsPath + "aipAdmin/updateActionItemDetailWithTemplate",
-            statusSave: aipAppAbsPath + "aipAdmin/statusSave"
+            statusSave: aipAppAbsPath + "aipAdmin/statusSave",
+            rulesByActionItem: aipAppAbsPath + "aipAdmin/actionItemStatusRulesByActionItemId",
+            updateActionItemStatusRule: aipAppAbsPath + "aipAdmin/updateActionItemStatusRule"
         }
     })
     .constant("PAGINATIONCONFIG",
@@ -301,6 +303,8 @@ var bannerAIPApp = angular.module("bannerAIP", [
             $.i18n.prop("aip.common.text.completed");
             $.i18n.prop("aip.common.text.group.instructions");
             $.i18n.prop("aip.common.text.date.completed");
+            $.i18n.prop("aip.common.text.date");
+            $.i18n.prop("aip.common.text.colon");
 
 
             $.i18n.prop("aip.inform.list.title");

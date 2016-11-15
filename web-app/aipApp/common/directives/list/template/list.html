@@ -36,13 +36,17 @@
                 <div id="item-{{itemgroup.id}}-{{row.id}}"
                      class="row list-item" ng-repeat="row in itemgroup.items" ng-click="selectItem(itemgroup, row, $event)" role="listitem">
                     <div ng-repeat="key in itemgroup.header" class="{{getStyle(key)}}">
+
                         <h3 ng-if="key==='title'">{{row[key]|i18n_aip}}</h3>
-                        <span ng-if="key==='state'" ng-class="{'badge pending':key==='state'&&row[key]==='Pending',
+                           <span ng-if="key==='state'">
+                            <span ng-class="{'badge pending':key==='state'&&row[key]==='Pending',
                             'badge approved':key==='state'&&row[key]==='Completed', 'badge rejected':key==='state'&&row[key]==='Rejected' }">
                             {{row[key]|i18n_aip}}
+                            </span>
                         </span>
-                        <span class="completedDate" ng-if="key==='completedDate'&&row[key]!==null"
-                        ><span class="data-label">{{'aip.common.text.date.completed'|i18n_aip}}</span> {{row[key]}}</span>
+                        <span class="completedDate" ng-if="key==='completedDate'&&row[key]!==null">
+                            <span class="data-label">{{'aip.common.text.date'|i18n_aip}} {{row['state']}} {{'aip.common.text.colon'|i18n_aip}}</span>
+                            {{row[key]}}</span>
                         <aip-readmore class="aipReadmore" ng-if="key==='description'">{{row[key]}}</aip-readmore>
                     </div>
                 </div>

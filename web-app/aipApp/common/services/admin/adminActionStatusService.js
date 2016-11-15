@@ -38,16 +38,16 @@ var AIP;
             });
             return request;
         };
-        AdminActionStatusService.prototype.getStatus = function () {
+        AdminActionStatusService.prototype.getRules = function (actionItemId) {
             var request = this.$http({
                 method: "GET",
-                url: this.ENDPOINT.admin.actionItemStatusList
+                url: this.ENDPOINT.admin.rulesByActionItem + "?actionItemId=" + actionItemId
             });
             return request;
         };
         AdminActionStatusService.$inject = ["$http", "$q", "$filter", "ENDPOINT"];
         return AdminActionStatusService;
-    })();
+    }());
     AIP.AdminActionStatusService = AdminActionStatusService;
 })(AIP || (AIP = {}));
 register("bannerAIP").service("AdminActionStatusService", AIP.AdminActionStatusService);

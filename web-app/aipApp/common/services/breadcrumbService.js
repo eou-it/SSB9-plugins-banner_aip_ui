@@ -48,7 +48,7 @@ var AIP;
             var breadcrumbI18 = {};
             angular.forEach(this.breadcrumbs, function (value, key) {
                 breadcrumbI18[_this.$filter('i18n_aip')(key)] = value;
-            });
+            }, this.breadcrumbs);
             var updatedHeaderAttributes = {
                 "pageTitle": this.$filter('i18n_aip')(title),
                 "breadcrumb": breadcrumbI18

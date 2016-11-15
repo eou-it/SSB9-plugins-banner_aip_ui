@@ -140,7 +140,7 @@ var AIP;
             this.$state.go("admin-action-open", { data: this.selectedRecord.id });
         };
         return AdminActionListPageCtrl;
-    })();
+    }());
     AIP.AdminActionListPageCtrl = AdminActionListPageCtrl;
 })(AIP || (AIP = {}));
 register("bannerAIP").controller("AdminActionListPageCtrl", AIP.AdminActionListPageCtrl);

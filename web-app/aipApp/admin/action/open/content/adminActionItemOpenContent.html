@@ -27,7 +27,7 @@
                 <label for="actionItemTemplate" class="templateSelect required" id="actionItemTemplateSelector">{{'aip.admin.action.open.tab.content.templateContent'|i18n_aip}}</label>
             </div>
             <div class="row">
-                <select id="actionItemTemplate" class="actionItemSelect" xe-data="" aria-label="Template" required aria-required="true" ng-model="vm.selectedTemplate">
+                <select id="actionItemTemplate" class="actionItemSelect" xe-data="" aria-label="Template" required aria-required="true" ng-model="vm.selectedTemplate" ng-change="vm.getRules()">
                     <option ng-repeat="item in vm.templates" value="{{item.id}}">{{item.title}}
                         ({{vm.templateSource}})</option>
                 </select>
@@ -47,7 +47,7 @@
             <div class="contentContainer">
 
                 <div class="row">
-                    <aip-status-rule data="vm.getStatus"></aip-status-rule>
+                    <aip-status-rule rules="vm.rules" status="vm.statuses"></aip-status-rule>
                 </div>
             </div>
         </div>

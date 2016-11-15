@@ -7,8 +7,8 @@
         </div>
     </div>
 
-    <div class="status-response row" ng-repeat="item in inputs">
-        <div class="response-field col-sm-8">
+    <div class="status-response row" ng-repeat="item in rules">
+        <div class="response-field col-sm-7">
             <div class="row">
                 <div class="col-sm-12">
                     <label for="response-{{$index+1}}">{{'aip.admin.status.rules.table.header.responseOptionText'|i18n_aip}}</label>
@@ -16,12 +16,12 @@
             </div>
             <div class="row">
                 <div class="col-sm-12">
-                    <input id="response-{{$index+1}}" type="text" class="form-control" ng-model="item.value">
+                    <input name="ResponseOptionText-{{$index+1}}" id="response-{{$index+1}}" type="text" class="form-control" ng-model="item.statusRuleLabelText">
                 </div>
             </div>
         </div>
 
-        <div class="response-field col-sm-4">
+        <div class="response-field col-sm-3">
             <div class="row">
                 <div class="col-sm-12">
                     <label for="status-{{$index+1}}">{{'aip.admin.status.rules.table.header.status'|i18n_aip}}</label>
@@ -29,19 +29,57 @@
             </div>
             <div class="row">
                 <div class="col-sm-12">
-                    <select id="status-{{$index+1}}" class="actionItemSelect" xe-data="" aria-label="Status" required aria-required="true"
-                            ng-model="vm.actionItemInfo.status">
-                        <option ng-repeat="item in vm.status" value="{{item.id}}">{{item.value|i18n_aip}}</option>
+                    <!--<select name="Status-{{$index+1}}" id="status-{{$index+1}}" class="actionItemSelect" xe-data="" aria-label="Status" required-->
+                            <!--aria-required="true" ng-model="item.statusId">-->
+                        <!--<option ng-repeat="statusItem in status"-->
+                                <!--ng-selected="item.statusId == statusItem.actionItemStatusId"-->
+                                <!--value="{{statusItem.actionItemStatusId}}">-->
+                            <!--{{item.statusName!==""?item.statusName:statusItem.actionItemStatus}}-->
+                        <!--</option>-->
+                    <!--</select>-->
+                    <select name="Status-{{$index+1}}" id="status-{{index+1}}" class="actionItemSelect" xe-data="" aria-label="Status" required aria-required="true"
+                            ng-model="item.status"
+                            ng-options="statusItem as statusItem.actionItemStatus for statusItem in status track by statusItem.actionItemStatusId">
                     </select>
                 </div>
             </div>
         </div>
-    </div>
 
-    <div class="row">
+        <div class="record-controls col-sm-1">
+            <div class="row">
+                <div class="col-sm-12">
+                    <button name="SortAsc" type="button" class="btn btn-default sort" ng-click="moveUp(item)" aria-label="" ng-disabled="isFirst(item)">
+                        <span class="icon icon-arrowTop-C" role="presentation"
+                              aria-label="{{'aip.admin.status.rules.table.form.sort-asc'|i18n_aip}}"></span>
+                    </button>
+                </div>
+            </div>
+            <div class="row clear">
+                <div class="col-sm-12">
+                    <button name="SortDesc" type="button" class="btn btn-default sort" ng-click="moveDown(item)" aria-label="" ng-disabled="isLast(item)">
+                        <span class="icon icon-arrowBottom-C" role="presentation"
+                          aria-label="{{'aip.admin.status.rules.table.form.sort-desc'|i18n_aip}}"></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="record-controls col-sm-1">
+            <div class="row">
+                <div class="col-sm-12">
+                    <button name="Delete" type="button" class="btn btn-default delete" ng-click="removeRule(item)" aria-label="">
+                        <span class="icon icon-delete-CO" role="presentation"
+                              aria-label="{{'aip.admin.status.rules.table.form.delete'|i18n_aip}}"></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="row clear">
         <div class="add-link col-sm-12">
             <a href="javascript:void(0);" ng-click="addRule()">
-                <span class="icon icon-add-CO" role="presentation"></span>
+                <span class="icon icon-add-CO" role="presentation" aria-label="{{'aip.admin.status.rules.table.form.add'|i18n_aip}}"></span>
                 <span>{{'aip.admin.status.rules.table.form.add'|i18n_aip}}</span>
             </a>
         </div>

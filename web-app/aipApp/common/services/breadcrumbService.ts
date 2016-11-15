@@ -60,7 +60,7 @@ module AIP {
             var breadcrumbI18 = {};
             angular.forEach(this.breadcrumbs, (value, key) => {
                 breadcrumbI18[this.$filter('i18n_aip')(key)] = value;
-            });
+            }, this.breadcrumbs);
 
 
             var updatedHeaderAttributes = {
