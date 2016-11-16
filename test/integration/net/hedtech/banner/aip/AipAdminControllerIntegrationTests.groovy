@@ -698,12 +698,8 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
 
         def testpn = PersonUtility.getPerson( '207001837' )
         if (testpn) {
-            println testpn
             def params = [pidm:testpn.pidm, usage:'DEFAULT']
             def preferredName = preferredNameService.getPreferredName(params);
-            println "full name: " + testpn.fullName
-            println "preferred name: " +preferredName
-
         } else {
             println "no person record"
         }
@@ -908,8 +904,9 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
                 new UsernamePasswordAuthenticationToken( admin.bannerId, '111111' ) )
         SecurityContextHolder.getContext().setAuthentication( auth )
         List<ActionItemStatusRuleReadOnly> actionItemStatusRules = actionItemStatusRuleReadOnlyService.listActionItemStatusRulesRO()
-        List<ActionItemStatusRuleReadOnly> statusRules = actionItemStatusRuleReadOnlyService.getActionItemStatusRuleROByActionItemId(actionItemStatusRules[0].statusRuleActionItemId)
-        controller.params.actionItemId= actionItemStatusRules[0].statusRuleActionItemId
+        List<ActionItemStatusRuleReadOnly> statusRules =
+                actionItemStatusRuleReadOnlyService.getActionItemStatusRulesROByActionItemId( actionItemStatusRules[0].statusRuleActionItemId )
+        controller.params.actionItemId = actionItemStatusRules[0].statusRuleActionItemId
         controller.actionItemStatusRulesByActionItemId()
         def answer = JSON.parse(controller.response.contentAsString)
         assertEquals(answer.size(), statusRules.size())
@@ -924,9 +921,26 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
                 new UsernamePasswordAuthenticationToken( admin.bannerId, '111111' ) )
         SecurityContextHolder.getContext().setAuthentication( auth )
 
+        List <ActionItemStatusRuleReadOnly> probeList = actionItemStatusRuleReadOnlyService.listActionItemStatusRulesRO(  )
+
+        // make lists of ids and duplicate ids. Set last dup as an id we know has at least two entries
+        def actionItemIdToUse = 0
+        def foundIds = []
+        def foundDups = []
+        probeList.each { it ->
+            def thisId = it.statusRuleActionItemId
+            if (thisId in foundIds) {
+                actionItemIdToUse = thisId
+                foundDups.add( thisId )
+            }
+            foundIds.add( thisId )
+        }
+
         //TODO:: set parameter for this test
-        def actionItemId = 1
-        List<ActionItemStatusRuleReadOnly> statusRules = actionItemStatusRuleReadOnlyService.getActionItemStatusRuleROByActionItemId(actionItemId)
+
+        assertTrue actionItemIdToUse != 0
+        List<ActionItemStatusRuleReadOnly> statusRules =
+                actionItemStatusRuleReadOnlyService.getActionItemStatusRulesROByActionItemId(actionItemIdToUse)
 
         def rules = [
                 [
@@ -943,7 +957,7 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
                 ]
         ]
         def requestObj = [:]
-        requestObj.actionItemId = actionItemId
+        requestObj.actionItemId = actionItemIdToUse
         requestObj.rules = rules
         controller.request.method = "POST"
         controller.request.json = requestObj
@@ -971,7 +985,7 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
         SecurityContextHolder.getContext().setAuthentication( auth )
 
         def actionItemId = 1
-        List<ActionItemStatusRuleReadOnly> statusRules = actionItemStatusRuleReadOnlyService.getActionItemStatusRuleROByActionItemId(actionItemId)
+        List<ActionItemStatusRuleReadOnly> statusRules = actionItemStatusRuleReadOnlyService.getActionItemStatusRulesROByActionItemId(actionItemId)
 
         def rules = [
                 [
@@ -1002,8 +1016,22 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
                 new UsernamePasswordAuthenticationToken( admin.bannerId, '111111' ) )
         SecurityContextHolder.getContext().setAuthentication( auth )
 
-        def actionItemId = 1
-        List<ActionItemStatusRuleReadOnly> statusRules = actionItemStatusRuleReadOnlyService.getActionItemStatusRuleROByActionItemId(actionItemId)
+        List<ActionItemStatusRuleReadOnly> probeList = actionItemStatusRuleReadOnlyService.listActionItemStatusRulesRO()
+
+        // make lists of ids and duplicate ids. Set last dup as an id we know has at least two entries
+        def actionItemIdToUse = 0
+        def foundIds = []
+        def foundDups = []
+        probeList.each { it ->
+            def thisId = it.statusRuleActionItemId
+            if (thisId in foundIds) {
+                actionItemIdToUse = thisId
+                foundDups.add( thisId )
+            }
+            foundIds.add( thisId )
+        }
+
+        List<ActionItemStatusRuleReadOnly> statusRules = actionItemStatusRuleReadOnlyService.getActionItemStatusRulesROByActionItemId( actionItemIdToUse )
 
         def rules = [
                 [
@@ -1026,7 +1054,7 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
                 ]
         ]
         def requestObj = [:]
-        requestObj.actionItemId = actionItemId
+        requestObj.actionItemId = actionItemIdToUse
         requestObj.rules = rules
         controller.request.method = "POST"
         controller.request.json = requestObj
@@ -1034,16 +1062,16 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
         def answer = JSON.parse(controller.response.contentAsString).rules
 
         def status0 = answer.find{it->
-            it.statusRuleId == statusRules[0].statusRuleId
+            it.id == statusRules[0].statusRuleId
         }
         def status1 = answer.find{it->
-            it.statusRuleId == statusRules[1].statusRuleId
+            it.id == statusRules[1].statusRuleId
         }
 
         def statusNew = answer.find{it->
-            it.seqOrder == statusRules[0].statusRuleId + 1
+            it.seqOrder == statusRules[0].statusRuleSeqOrder + 1
         }
-        assertEquals(aswer.size(), 3)
+        assertEquals(answer.size(), 3)
 
         assertEquals(status0.seqOrder, statusRules[0].statusRuleSeqOrder )
         assertEquals(status0.id, statusRules[0].statusRuleId)
