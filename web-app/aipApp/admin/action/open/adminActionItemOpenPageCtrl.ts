@@ -376,7 +376,6 @@ module AIP {
             this.adminActionService.getStatus()
                 .then((response) => {
                     this.statuses = response.data;
-                    console.log(this.statuses);
                     deferred.resolve();
                     // deferred.resolve(this.openPanel("content"));
                 }, (error) => {

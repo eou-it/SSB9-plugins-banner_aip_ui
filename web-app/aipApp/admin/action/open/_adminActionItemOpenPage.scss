@@ -76,6 +76,43 @@ $background-color: #ffffff;
                 .contentContainer {
                   margin-top: 20px;
                   margin-bottom: 20px;
+                  .noResponses {
+                    font-size: 1.2em;
+                    font-weight: bold;
+                    padding: 8px;
+                  }
+                  table.ruleListReadOnly {
+                    width: 100%;
+                    caption {
+                      border:1px solid #DDDDDD;
+                      border-bottom:none;
+                      text-align: left;
+                      font-weight: bolder;
+                      line-height:3em;
+                      font-size: 1.2em;
+                      padding: 0 8px;
+                    }
+                    tr {
+                      height: 3em;
+                      border: solid 1px;
+                      border-color: inherit;
+                    }
+                    th, td {
+                      padding: 8px;
+                    }
+                    thead {
+                      th {
+                        font-weight: bold;
+                        +.ruleStatus {
+                          border-left: solid 1px;
+                          border-color: inherit;
+                        }
+                        +.ruleLabelText {
+                          width: 60%;
+                        }
+                      }
+                    }
+                  }
                 }
                 .contentPreview {
                   margin: 20px 0;
@@ -146,19 +183,85 @@ $background-color: #ffffff;
 
 @media screen and (max-width:768px) {
   .actionItemOpenContainer {
-    .row {
-      margin-right:0;
-      margin-left:0;
-    }
-    .actionItemElement {
-      .h2-container {
-        button {
-          border: none;
+    .actionItemInfo {
+      .actionItemInfoRow {
+        .row {
+          margin-right: 0;
+          margin-left: 0;
         }
-      }
-      xe-tab-nav {
-        .xe-tab-content {
-          padding: 4px 0;
+        .actionItemElement {
+          padding-right: 0;
+          padding-left: 0;
+          .h2-container {
+            button {
+              border: none;
+            }
+          }
+          xe-tab-nav {
+            .xe-tab-content {
+              padding: 4px 0;
+              margin-bottom:30px;
+            }
+          }
+          xe-tab-panel {
+            .xe-tab-container {
+              #openActionItemContent {
+                .actionItemContent {
+                  padding: 0;
+                  .contentContainer {
+                    margin-top: 0;
+                    margin-bottom: 0;
+                    .contentPreview {
+                      padding: 8px;
+                    }
+                    table.ruleListReadOnly {
+                      border: 0;
+                      caption {
+                        border: 0;
+                        padding: 0;
+                        line-height: 2em;
+                      }
+                      thead {
+                        display: none;
+                      }
+                      tr {
+                        margin-bottom: 10px;
+                        display: block;
+                        border: none;
+                        height: auto;
+                      }
+                      td {
+                        display: table;
+                        border: 0;
+                        width: 100%;
+                        text-indent:8px;
+                        .labels {
+                          text-indent: 0;
+                        }
+                      }
+                      td:first-child {
+                        border-top: 1px solid;
+                        border-color: #C0C0C0;
+                      }
+                      td:last-child {
+                        border-bottom: 0;
+                        display: none;
+                      }
+                      td:before {
+                        display: table-row;
+                        width: 100%;
+                        content: attr(data-label);
+                        font-size:1.1em;
+                        font-weight: bold;
+                        padding-right: 8px;
+                        text-indent:0;
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
         }
       }
     }
