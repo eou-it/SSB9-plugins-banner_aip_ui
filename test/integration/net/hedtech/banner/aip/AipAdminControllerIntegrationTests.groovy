@@ -26,18 +26,27 @@ import org.springframework.security.core.context.SecurityContextHolder
  */
 class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
     def selfServiceBannerAuthenticationProvider
+
     def actionItemGroupService
+
     def actionItemReadOnlyService
+
     def actionItemTemplateService
+
     def actionItemStatusService
+
     def actionItemService
+
     def preferredNameService
+
     def actionItemStatusRuleReadOnlyService
 
     def VALID_FOLDER_NAME = "My Folder"
+
     def VALID_FOLDER_DESCRIPTION = "My Folder"
 
     def INVALID_FOLDER_NAME = "My Folder".padLeft( 1021 )
+
     def INVALID_FOLDER_DESCRIPTION = "My Folder".padLeft( 4001 )
 
 
@@ -48,6 +57,7 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
         super.setUp()
         controller = new AipAdminController()
     }
+
 
     @After
     public void tearDown() {
@@ -65,11 +75,12 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
         SecurityContextHolder.getContext().setAuthentication( auth )
 
         controller.folders()
-        def folder =  JSON.parse( controller.response.contentAsString )
+        def folder = JSON.parse( controller.response.contentAsString )
         assertNotNull( folder )
         // TODO: get a better handle on testdata and exact test
-        assertTrue( folder.size() > 15)
+        assertTrue( folder.size() > 15 )
     }
+
 
     @Test
     void testFoldersEntryPointAsAdmin() {
@@ -80,10 +91,10 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
         SecurityContextHolder.getContext().setAuthentication( auth )
 
         controller.folders()
-        def folder =  JSON.parse(controller.response.contentAsString )
+        def folder = JSON.parse( controller.response.contentAsString )
         assertNotNull( folder )
         // TODO: get a better handle on testdata and exact test
-        assertTrue( folder.size() > 15)
+        assertTrue( folder.size() > 15 )
     }
 
     // using student. Fail on security?
@@ -99,9 +110,10 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
         def answer = JSON.parse( controller.response.contentAsString )
 
         assertFalse( answer.success )
-        assertTrue( answer.newFolder.equals(null) )
+        assertTrue( answer.newFolder.equals( null ) )
         assertEquals( "Operation Not Permitted", answer.message )
     }
+
 
     @Test
     void testAddFolderEntryPointAsAdmin() {
@@ -110,7 +122,7 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
         def auth = selfServiceBannerAuthenticationProvider.authenticate(
                 new UsernamePasswordAuthenticationToken( person.bannerId, '111111' ) )
         SecurityContextHolder.getContext().setAuthentication( auth )
-        controller.addFolder(VALID_FOLDER_NAME, VALID_FOLDER_DESCRIPTION)
+        controller.addFolder( VALID_FOLDER_NAME, VALID_FOLDER_DESCRIPTION )
         def answer = JSON.parse( controller.response.contentAsString )
         // TODO: verify something
         //TODO: fix BCMADMIN test in general app
@@ -130,7 +142,7 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
                 new UsernamePasswordAuthenticationToken( admin.bannerId, '111111' ) )
         SecurityContextHolder.getContext().setAuthentication( auth )
 
-        def folderId = CommunicationFolder.fetchByName('AIPGeneral').id
+        def folderId = CommunicationFolder.fetchByName( 'AIPGeneral' ).id
 
         def requestObj = [:]
         requestObj.groupTitle = "test1a2b" // Make sure title and folder create unique pair
@@ -147,6 +159,7 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
         assertNotNull( answer.group )
         assertTrue( answer.message.equals( null ) )
     }
+
 
     @Test
     void testCreateActionGroupTitleFolderIdDuplicateConstraint() {
@@ -199,8 +212,8 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
 
         controller.createGroup()
         def answer = JSON.parse( controller.response.contentAsString )
-        assertEquals( "Save failed. The Title can not be null or empty.", answer.message)
-        assertEquals( false, answer.success)
+        assertEquals( "Save failed. The Title can not be null or empty.", answer.message )
+        assertEquals( false, answer.success )
     }
 
 
@@ -227,8 +240,8 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
 
         controller.createGroup()
         def answer = JSON.parse( controller.response.contentAsString )
-        assertEquals( "Save failed. The Title can not be null or empty.", answer.message)
-        assertEquals( false, answer.success)
+        assertEquals( "Save failed. The Title can not be null or empty.", answer.message )
+        assertEquals( false, answer.success )
     }
 
 
@@ -479,7 +492,7 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
                 new UsernamePasswordAuthenticationToken( admin.bannerId, '111111' ) )
         SecurityContextHolder.getContext().setAuthentication( auth )
 
-        def ai = ActionItem.fetchActionItems(  )[7]
+        def ai = ActionItem.fetchActionItems()[7]
 
         def requestObj = [:]
         requestObj.status = 'Pending'
@@ -545,7 +558,6 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
         assertEquals( true, answer.success )
         assertEquals( actionItemGroupTitle, answer.group?.groupTitle )
     }
-
 
     // FIXME: security. Is student Authorized?
     @Test
@@ -634,9 +646,10 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
         controller.request.method = "POST"
         controller.request.json = requestObj
 
-        controller.openGroup( )
+        controller.openGroup()
         assertEquals 403, controller.response.status
     }
+
 
     @Test
     void testSortAipActionItemsAsStudent() {
@@ -647,11 +660,11 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
                 new UsernamePasswordAuthenticationToken( admin.bannerId, '111111' ) )
         SecurityContextHolder.getContext().setAuthentication( auth )
 
-        controller.params.filterName="%"
-        controller.params.sortColumn="actionItemName"
-        controller.params.sortAscending=true
-        controller.params.max=20
-        controller.params.offset=0
+        controller.params.filterName = "%"
+        controller.params.sortColumn = "actionItemName"
+        controller.params.sortAscending = true
+        controller.params.max = 20
+        controller.params.offset = 0
 
         controller.actionItemList()
         def answer = JSON.parse( controller.response.contentAsString )
@@ -659,6 +672,7 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
         assertEquals 200, controller.response.status
         // TODO: verify something
     }
+
 
     @Test
     void testSortAipActionItemStatusAsStudent() {
@@ -669,11 +683,11 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
                 new UsernamePasswordAuthenticationToken( admin.bannerId, '111111' ) )
         SecurityContextHolder.getContext().setAuthentication( auth )
 
-        controller.params.filterName="%"
-        controller.params.sortColumn="actionItemStatus"
-        controller.params.sortAscending=true
-        controller.params.max=20
-        controller.params.offset=0
+        controller.params.filterName = "%"
+        controller.params.sortColumn = "actionItemStatus"
+        controller.params.sortAscending = true
+        controller.params.max = 20
+        controller.params.offset = 0
 
         controller.actionItemStatusGridList()
         def answer = JSON.parse( controller.response.contentAsString )
@@ -698,8 +712,8 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
 
         def testpn = PersonUtility.getPerson( '207001837' )
         if (testpn) {
-            def params = [pidm:testpn.pidm, usage:'DEFAULT']
-            def preferredName = preferredNameService.getPreferredName(params);
+            def params = [pidm: testpn.pidm, usage: 'DEFAULT']
+            def preferredName = preferredNameService.getPreferredName( params );
         } else {
             println "no person record"
         }
@@ -720,11 +734,11 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
         SecurityContextHolder.getContext().setAuthentication( auth )
 
         def requestObj = [:]
-        requestObj.filterName="%"
-        requestObj.sortColumn="groupTitle"
-        requestObj.sortAscending=true
-        requestObj.max=20
-        requestObj.offset=0
+        requestObj.filterName = "%"
+        requestObj.sortColumn = "groupTitle"
+        requestObj.sortAscending = true
+        requestObj.max = 20
+        requestObj.offset = 0
 
         controller.request.method = "POST"
         controller.request.json = requestObj
@@ -745,7 +759,7 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
                 new UsernamePasswordAuthenticationToken( admin.bannerId, '111111' ) )
         SecurityContextHolder.getContext().setAuthentication( auth )
 
-        ActionItemReadOnly myActionItem = actionItemReadOnlyService.listActionItemRO(  )[6]
+        ActionItemReadOnly myActionItem = actionItemReadOnlyService.listActionItemRO()[6]
 
         controller.params.actionItemId = myActionItem.actionItemId
 
@@ -801,6 +815,7 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
         assertEquals( templates[0].id, answer[0].id )
     }
 
+
     @Test
     void testActionItemStatusList() {
         List<ActionItemStatus> statuses = actionItemStatusService.listActionItemStatuses()
@@ -809,6 +824,7 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
         assertEquals( statuses.size(), answer.size() )
         assertEquals( statuses[0].actionItemStatusId, answer[0].actionItemStatusId )
     }
+
 
     @Test
     void testUpdateActionItemDetailWithTemplate() {
@@ -826,8 +842,8 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
         def actionItem = actionItems.id[0]
 
         def requestObj = [:]
-        requestObj.templateId=actionItemTemplate
-        requestObj.actionItemId=actionItem
+        requestObj.templateId = actionItemTemplate
+        requestObj.actionItemId = actionItem
 
         controller.request.method = "POST"
         controller.request.json = requestObj
@@ -838,6 +854,8 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
         assertEquals 200, controller.response.status
         assertEquals actionItemTemplate, answer.actionItem.actionItemTemplateId
     }
+
+
     @Test
     void testStatusSave() {
         def admin = PersonUtility.getPerson( "CSRSTU002" ) // role: student
@@ -864,6 +882,7 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
 
     }
 
+
     @Test
     void testActionItemStatusRule() {
         def admin = PersonUtility.getPerson( "CSRADM001" ) // role: admin
@@ -874,10 +893,11 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
         SecurityContextHolder.getContext().setAuthentication( auth )
         List<ActionItemStatusRuleReadOnly> actionItemStatusRules = actionItemStatusRuleReadOnlyService.listActionItemStatusRulesRO()
         controller.actionItemStatusRule()
-        def answer = JSON.parse(controller.response.contentAsString)
-        assertEquals(actionItemStatusRules.size(), answer.size())
-        assertEquals(actionItemStatusRules[0].statusRuleId, answer[0].statusRuleId)
+        def answer = JSON.parse( controller.response.contentAsString )
+        assertEquals( actionItemStatusRules.size(), answer.size() )
+        assertEquals( actionItemStatusRules[0].statusRuleId, answer[0].statusRuleId )
     }
+
 
     @Test
     void testActionItemStatusRuleById() {
@@ -888,12 +908,13 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
                 new UsernamePasswordAuthenticationToken( admin.bannerId, '111111' ) )
         SecurityContextHolder.getContext().setAuthentication( auth )
         List<ActionItemStatusRuleReadOnly> actionItemStatusRules = actionItemStatusRuleReadOnlyService.listActionItemStatusRulesRO()
-        controller.params.id= actionItemStatusRules[0].statusRuleId
+        controller.params.id = actionItemStatusRules[0].statusRuleId
 
         controller.actionItemStatusRuleById()
         def answer = JSON.parse( controller.response.contentAsString )
         assertEquals( actionItemStatusRules[0].statusRuleId, answer.statusRuleId )
     }
+
 
     @Test
     void testActionItemStatusRuleByActionItemId() {
@@ -908,10 +929,12 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
                 actionItemStatusRuleReadOnlyService.getActionItemStatusRulesROByActionItemId( actionItemStatusRules[0].statusRuleActionItemId )
         controller.params.actionItemId = actionItemStatusRules[0].statusRuleActionItemId
         controller.actionItemStatusRulesByActionItemId()
-        def answer = JSON.parse(controller.response.contentAsString)
-        assertEquals(answer.size(), statusRules.size())
-        assertEquals(actionItemStatusRules[0].statusRuleId, answer[0].statusRuleId)
+        def answer = JSON.parse( controller.response.contentAsString )
+        assertEquals( answer.size(), statusRules.size() )
+        assertEquals( actionItemStatusRules[0].statusRuleId, answer[0].statusRuleId )
     }
+
+
     @Test
     void testUpdateActionItemStatusRuleOrderChange() {
         def admin = PersonUtility.getPerson( "BCMADMIN" ) // role: admin
@@ -921,7 +944,7 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
                 new UsernamePasswordAuthenticationToken( admin.bannerId, '111111' ) )
         SecurityContextHolder.getContext().setAuthentication( auth )
 
-        List <ActionItemStatusRuleReadOnly> probeList = actionItemStatusRuleReadOnlyService.listActionItemStatusRulesRO(  )
+        List<ActionItemStatusRuleReadOnly> probeList = actionItemStatusRuleReadOnlyService.listActionItemStatusRulesRO()
 
         // make lists of ids and duplicate ids. Set last dup as an id we know has at least two entries
         def actionItemIdToUse = 0
@@ -940,20 +963,20 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
 
         assertTrue actionItemIdToUse != 0
         List<ActionItemStatusRuleReadOnly> statusRules =
-                actionItemStatusRuleReadOnlyService.getActionItemStatusRulesROByActionItemId(actionItemIdToUse)
+                actionItemStatusRuleReadOnlyService.getActionItemStatusRulesROByActionItemId( actionItemIdToUse )
 
         def rules = [
                 [
-                        statusRuleId: statusRules[0].statusRuleId,
-                        statusRuleSeqOrder: statusRules[1].statusRuleSeqOrder,
+                        statusRuleId       : statusRules[0].statusRuleId,
+                        statusRuleSeqOrder : statusRules[1].statusRuleSeqOrder,
                         statusRuleLabelText: statusRules[0].statusRuleLabelText,
-                        statusId: statusRules[0].statusId
+                        statusId           : statusRules[0].statusId
                 ],
                 [
-                        statusRuleId: statusRules[1].statusRuleId,
-                        statusRuleSeqOrder: statusRules[0].statusRuleSeqOrder,
+                        statusRuleId       : statusRules[1].statusRuleId,
+                        statusRuleSeqOrder : statusRules[0].statusRuleSeqOrder,
                         statusRuleLabelText: statusRules[1].statusRuleLabelText,
-                        statusId: statusRules[0].statusId
+                        statusId           : statusRules[0].statusId
                 ]
         ]
         def requestObj = [:]
@@ -962,18 +985,19 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
         controller.request.method = "POST"
         controller.request.json = requestObj
         controller.updateActionItemStatusRule()
-        def answer = JSON.parse(controller.response.contentAsString).rules
+        def answer = JSON.parse( controller.response.contentAsString ).rules
 
-        def status0 = answer.find{it->
+        def status0 = answer.find { it ->
             it.id == statusRules[0].statusRuleId
         }
-        def status1 = answer.find{it->
+        def status1 = answer.find { it ->
             it.id == statusRules[1].statusRuleId
         }
 
-        assertEquals(status0.seqOrder, statusRules[1].statusRuleSeqOrder)
-        assertEquals(status1.seqOrder, statusRules[0].statusRuleSeqOrder)
+        assertEquals( status0.seqOrder, statusRules[1].statusRuleSeqOrder )
+        assertEquals( status1.seqOrder, statusRules[0].statusRuleSeqOrder )
     }
+
 
     @Test
     void testUpdateActionItemStatusRuleRemoveRule() {
@@ -985,14 +1009,14 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
         SecurityContextHolder.getContext().setAuthentication( auth )
 
         def actionItemId = 1
-        List<ActionItemStatusRuleReadOnly> statusRules = actionItemStatusRuleReadOnlyService.getActionItemStatusRulesROByActionItemId(actionItemId)
+        List<ActionItemStatusRuleReadOnly> statusRules = actionItemStatusRuleReadOnlyService.getActionItemStatusRulesROByActionItemId( actionItemId )
 
         def rules = [
                 [
-                        statusRuleId: statusRules[0].statusRuleId,
-                        statusRuleSeqOrder: statusRules[0].statusRuleSeqOrder,
+                        statusRuleId       : statusRules[0].statusRuleId,
+                        statusRuleSeqOrder : statusRules[0].statusRuleSeqOrder,
                         statusRuleLabelText: statusRules[0].statusRuleLabelText,
-                        statusId: statusRules[0].statusId
+                        statusId           : statusRules[0].statusId
                 ]
         ]
         def requestObj = [:]
@@ -1001,11 +1025,12 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
         controller.request.method = "POST"
         controller.request.json = requestObj
         controller.updateActionItemStatusRule()
-        def answer = JSON.parse(controller.response.contentAsString)
+        def answer = JSON.parse( controller.response.contentAsString )
 
-        assertEquals(statusRules[0].statusRuleId, answer.rules[0].id )
-        assertEquals(answer.rules.size(), 1)
+        assertEquals( statusRules[0].statusRuleId, answer.rules[0].id )
+        assertEquals( answer.rules.size(), 1 )
     }
+
 
     @Test
     void testUpdateActionItemStatusRuleAddRule() {
@@ -1035,22 +1060,22 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
 
         def rules = [
                 [
-                        statusRuleId: statusRules[0].statusRuleId,
-                        statusRuleSeqOrder: statusRules[0].statusRuleSeqOrder,
+                        statusRuleId       : statusRules[0].statusRuleId,
+                        statusRuleSeqOrder : statusRules[0].statusRuleSeqOrder,
                         statusRuleLabelText: statusRules[0].statusRuleLabelText,
-                        statusId: statusRules[0].statusId
+                        statusId           : statusRules[0].statusId
 
                 ],
                 [
-                        statusRuleSeqOrder: statusRules[0].statusRuleSeqOrder+1,
+                        statusRuleSeqOrder : statusRules[0].statusRuleSeqOrder + 1,
                         statusRuleLabelText: "Test add rule",
-                        statusId: statusRules[0].statusId
+                        statusId           : statusRules[0].statusId
                 ],
                 [
-                        statusRuleId: statusRules[1].statusRuleId,
-                        statusRuleSeqOrder: statusRules[0].statusRuleSeqOrder + 2,
+                        statusRuleId       : statusRules[1].statusRuleId,
+                        statusRuleSeqOrder : statusRules[0].statusRuleSeqOrder + 2,
                         statusRuleLabelText: statusRules[1].statusRuleLabelText,
-                        statusId: statusRules[0].statusId
+                        statusId           : statusRules[0].statusId
                 ]
         ]
         def requestObj = [:]
@@ -1059,28 +1084,26 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
         controller.request.method = "POST"
         controller.request.json = requestObj
         controller.updateActionItemStatusRule()
-        def answer = JSON.parse(controller.response.contentAsString).rules
+        def answer = JSON.parse( controller.response.contentAsString ).rules
 
-        def status0 = answer.find{it->
+        def status0 = answer.find { it ->
             it.id == statusRules[0].statusRuleId
         }
-        def status1 = answer.find{it->
+        def status1 = answer.find { it ->
             it.id == statusRules[1].statusRuleId
         }
 
-        def statusNew = answer.find{it->
+        def statusNew = answer.find { it ->
             it.seqOrder == statusRules[0].statusRuleSeqOrder + 1
         }
-        assertEquals(answer.size(), 3)
+        assertEquals( answer.size(), 3 )
 
-        assertEquals(status0.seqOrder, statusRules[0].statusRuleSeqOrder )
-        assertEquals(status0.id, statusRules[0].statusRuleId)
+        assertEquals( status0.seqOrder, statusRules[0].statusRuleSeqOrder )
+        assertEquals( status0.id, statusRules[0].statusRuleId )
 
-        assertEquals(status1.seqOrder, statusRules[1].statusRuleSeqOrder + 1 )
-        assertEquals(status1.id, statusRules[1].statusRuleId)
+        assertEquals( status1.seqOrder, statusRules[1].statusRuleSeqOrder + 1 )
+        assertEquals( status1.id, statusRules[1].statusRuleId )
 
-        assertEquals(statusNew.labelText, "Test add rule")
-
-
+        assertEquals( statusNew.labelText, "Test add rule" )
     }
 }

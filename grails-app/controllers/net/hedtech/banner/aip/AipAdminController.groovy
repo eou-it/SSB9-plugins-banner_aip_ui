@@ -12,16 +12,27 @@ import java.text.MessageFormat
 class AipAdminController {
 
     static defaultAction = "folders"
+
     def communicationFolderService
+
     def groupFolderReadOnlyService
+
     def actionItemGroupService
+
     def actionItemReadOnlyService
+
     def actionItemService
+
     def actionItemTemplateService
+
     def actionItemDetailService
+
     def actionItemDetailCompositeService
+
     def actionItemStatusService
+
     def actionItemStatusRuleService
+
     def actionItemStatusRuleReadOnlyService
 
 
@@ -254,7 +265,7 @@ class AipAdminController {
             }
         }
 
-       // response.status = 200
+        // response.status = 200
 
         def model = [
                 success: success,
@@ -284,7 +295,7 @@ class AipAdminController {
                 [name: "folderName", title: MessageUtility.message( "aip.common.folder" ), options: [visible: true, isSortable: true, ascending: paramObj.sortAscending], width: 0],
                 [name: "actionItemActivityDate", title: MessageUtility.message( "aip.common.activity.date" ), options: [visible: true, isSortable: true, ascending: paramObj.sortAscending], width: 0],
                 [name: "actionItemLastUserId", title: MessageUtility.message( "aip.common.last.updated.by" ), options: [visible: true, isSortable:
-                        true, ascending: paramObj.sortAscending], width: 0]
+                        true, ascending                                                                                        : paramObj.sortAscending], width: 0]
         ]
 
         results.header = actionItemHeadings
@@ -353,6 +364,7 @@ class AipAdminController {
         render results as JSON
     }
 
+
     def actionItemStatusGridList() {
 
         def paramObj = [filterName   : params.searchString ?: "%",
@@ -383,6 +395,7 @@ class AipAdminController {
         def templates = actionItemStatusService.listActionItemStatuses()
         render templates as JSON
     }
+
 
     def actionItemTemplateList() {
         def templates = actionItemTemplateService.listActionItemTemplates()
@@ -421,30 +434,31 @@ class AipAdminController {
         }
     }
 
-    def updateActionItemDetailWithTemplate () {
+
+    def updateActionItemDetailWithTemplate() {
         def jsonObj = request.JSON
         def templateId = jsonObj.templateId.toInteger()
         def actionItemId = jsonObj.actionItemId.toInteger()
-        def actionItemDetailText= jsonObj.actionItemContent
+        def actionItemDetailText = jsonObj.actionItemContent
         def user = SecurityContextHolder?.context?.authentication?.principal
         if (!user.pidm) {
             response.sendError( 403 )
             return
         }
-        if(!actionItemId) {
+        if (!actionItemId) {
             response.sendError( 403 )
             return
         }
 
         def aipUser = AipControllerUtils.getPersonForAip( params, user.pidm )
-        ActionItemDetail aid =  actionItemDetailService.listActionItemDetailById( actionItemId)
+        ActionItemDetail aid = actionItemDetailService.listActionItemDetailById( actionItemId )
         aid.actionItemId = actionItemId
         aid.actionItemTemplateId = templateId
         aid.lastModifiedby = aipUser.bannerId
         aid.lastModified = new Date()
         aid.text = actionItemDetailText
 
-        ActionItemDetail newAid = actionItemDetailService.createOrUpdate(aid)
+        ActionItemDetail newAid = actionItemDetailService.createOrUpdate( aid )
 
         def success = false
         def errors = []
@@ -466,6 +480,7 @@ class AipAdminController {
         render model as JSON
     }
 
+
     def statusSave() {
         def jsonObj = request.JSON
         def statusTitle = jsonObj.title
@@ -477,14 +492,11 @@ class AipAdminController {
         }
         def aipUser = AipControllerUtils.getPersonForAip( params, user.pidm )
 
-        println aipUser
-
-
         ActionItemStatus status = new ActionItemStatus()
 
         status.actionItemStatus = statusTitle
         status.actionItemStatusActive = "Y"
-        status.actionItemStatusBlockedProcess = isBlock?"Y":"N"
+        status.actionItemStatusBlockedProcess = isBlock ? "Y" : "N"
         status.actionItemStatusActivityDate = new Date()
         status.actionItemStatusUserId = aipUser.bannerId
         status.actionItemStatusSystemRequired = "N"
@@ -496,7 +508,7 @@ class AipAdminController {
         def message
 
         try {
-            newStatus = actionItemStatusService.create(status);
+            newStatus = actionItemStatusService.create( status );
             response.status = 200
             success = true
         } catch (ApplicationException e) {
@@ -508,28 +520,32 @@ class AipAdminController {
 
         def model = [
                 success: success,
-                message : message,
-                status: newStatus
+                message: message,
+                status : newStatus
         ]
         render model as JSON
     }
+
 
     def actionItemStatusRule() {
         def actionItemStatusRules = actionItemStatusRuleReadOnlyService.listActionItemStatusRulesRO()
         render actionItemStatusRules as JSON
     }
 
+
     def actionItemStatusRuleById() {
         def id = params.id
-        def actionItemStatusRuleRO = actionItemStatusRuleReadOnlyService.getActionItemStatusRuleROById(id)
+        def actionItemStatusRuleRO = actionItemStatusRuleReadOnlyService.getActionItemStatusRuleROById( id )
         render actionItemStatusRuleRO as JSON
     }
 
+
     def actionItemStatusRulesByActionItemId() {
         def actionItemId = params.actionItemId
-        def actionItemStatusRuleReadOnlies = actionItemStatusRuleReadOnlyService.getActionItemStatusRulesROByActionItemId(actionItemId)
+        def actionItemStatusRuleReadOnlies = actionItemStatusRuleReadOnlyService.getActionItemStatusRulesROByActionItemId( actionItemId )
         render actionItemStatusRuleReadOnlies as JSON
     }
+
 
     def updateActionItemStatusRule() {
         def jsonObj = request.JSON
@@ -545,25 +561,24 @@ class AipAdminController {
         def inputRules = jsonObj.rules
         List<Long> tempRuleIdList = inputRules.statusRuleId.toList()
         def aipUser = AipControllerUtils.getPersonForAip( params, user.pidm )
-        List<ActionItemStatusRule> actionItemStatusRules = actionItemStatusRuleService.getActionItemStatusRuleByActionItemId(jsonObj.actionItemId)
+        List<ActionItemStatusRule> actionItemStatusRules = actionItemStatusRuleService.getActionItemStatusRuleByActionItemId( jsonObj.actionItemId )
         def existingRuleId = actionItemStatusRules.id
         def deleteRules = existingRuleId - tempRuleIdList
 
         try {
             //update&create
             List<ActionItemStatusRule> ruleList = []
-            inputRules.each{ rule ->
+            inputRules.each { rule ->
                 def statusRule
                 if (rule.statusRuleId) {
-                    statusRule = ActionItemStatusRule.get(rule.statusRuleId)
+                    statusRule = ActionItemStatusRule.get( rule.statusRuleId )
                     statusRule.seqOrder = rule.statusRuleSeqOrder
                     statusRule.labelText = rule.statusRuleLabelText
                     statusRule.actionItemStatusId = rule.statusId
                     statusRule.actionItemId = jsonObj.actionItemId
-                    statusRule.userId= aipUser.bannerId
+                    statusRule.userId = aipUser.bannerId
                     statusRule.activityDate = new Date()
-                }
-                else {
+                } else {
                     statusRule = new ActionItemStatusRule(
                             seqOrder: rule.statusRuleSeqOrder,
                             labelText: rule.statusRuleLabelText,
@@ -573,12 +588,12 @@ class AipAdminController {
                             activityDate: new Date()
                     )
                 }
-                ruleList.push(statusRule)
+                ruleList.push( statusRule )
             }
             //delete
-            actionItemStatusRuleService.delete(deleteRules) //list of ids to be deleted
+            actionItemStatusRuleService.delete( deleteRules ) //list of ids to be deleted
 
-            actionItemStatusRuleService.createOrUpdate(ruleList) //list of domain objects to be updated or created
+            actionItemStatusRuleService.createOrUpdate( ruleList ) //list of domain objects to be updated or created
 
             response.status = 200
             success = true
@@ -589,11 +604,11 @@ class AipAdminController {
             message = "Something happened"
         }
 
-        List<ActionItemStatusRule> updatedActionItemStatusRules = actionItemStatusRuleService.getActionItemStatusRuleByActionItemId(jsonObj.actionItemId)
+        List<ActionItemStatusRule> updatedActionItemStatusRules = actionItemStatusRuleService.getActionItemStatusRuleByActionItemId( jsonObj.actionItemId )
         def model = [
                 success: success,
-                message : message,
-                rules: updatedActionItemStatusRules
+                message: message,
+                rules  : updatedActionItemStatusRules
         ]
 
         render model as JSON
