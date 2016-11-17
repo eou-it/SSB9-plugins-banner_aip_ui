@@ -324,14 +324,14 @@ module AIP {
                     return {success: false};
                 }));
             this.$q.all(allDefer)
-                .then((response)=> {
+                .then((response:any)=> {
                     this.saving = false;
                     var notiParams = {};
                     var errorItem = response.filter((item)=>{
                         return item.success === false;
                     });
                     var newData = response.filter((item) => {
-                        return item.type && item.type="template";
+                        return item.type && item.type === "template";
                     });
                     if(errorItem.length === 0) {
                         notiParams = {

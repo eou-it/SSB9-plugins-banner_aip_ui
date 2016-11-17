@@ -308,8 +308,7 @@ var AIP;
                     return item.success === false;
                 });
                 var newData = response.filter(function (item) {
-                    return item.type && item.type;
-                    "template";
+                    return item.type && item.type === "template";
                 });
                 if (errorItem.length === 0) {
                     notiParams = {
