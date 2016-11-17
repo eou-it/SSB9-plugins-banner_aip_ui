@@ -19,7 +19,7 @@ module AIP {
     }
 
     export class AdminActionItemAddPageCtrl implements IAdminActionItemAddPageCtrl{
-        $inject = ["$scope", "$q", "$state", "$filter", "SpinnerService", "AdminActionService" ];
+        $inject = ["$scope", "$q", "$state", "$filter", "$timeout", "SpinnerService", "AdminActionService" ];
         status: [AIP.IStatus];
         folders: [AIP.IFolder];
         actionItemInfo: AIP.IActionItemParam|any;
@@ -29,12 +29,14 @@ module AIP {
         $q: ng.IQService;
         $state;
         $filter;
-        constructor($scope:IActionItemAddPageScope, $q:ng.IQService, $state, $filter,
+        $timeout;
+        constructor($scope:IActionItemAddPageScope, $q:ng.IQService, $state, $filter, $timeout,
                     SpinnerService:AIP.SpinnerService, AdminActionService:AIP.AdminActionService) {
             $scope.vm = this;
             this.$q = $q;
             this.$state = $state;
             this.$filter = $filter;
+            this.$timeout = $timeout;
             this.spinnerService = SpinnerService;
             this.adminActionService = AdminActionService;
             this.errorMessage = {};
@@ -50,14 +52,13 @@ module AIP {
                     .then((response: AIP.IActionItemStatusResponse) => {
                         this.status = response.data;
                         var actionItemStatus:any = $("#actionItemStatus");
-                        this.actionItemInfo.status = this.status[0].id;
-                        actionItemStatus.select2({
-                            width: "25em",
-                            minimumResultsForSearch: Infinity,
-                            // placeholderOption: "first"
-                        });
-                        //TODO: find better and proper way to set defalut value in SELECT2 - current one is just dom object hack.
-                        $(".actionItemStatus .select2-container.actionItemSelect .select2-chosen")[0].innerHTML = this.$filter("i18n_aip")(this.status[0].value);
+                        this.actionItemInfo.status = this.status[0];
+                        this.$timeout(()=> {
+                            actionItemStatus.select2({
+                                width: "25em",
+                                minimumResultsForSearch: Infinity
+                            });
+                        }, 50);
                     })
             );
             allPromises.push(
@@ -65,11 +66,13 @@ module AIP {
                     .then((response:AIP.IActionItemFolderResponse) => {
                         this.folders = response.data;
                         var actionItemFolder:any = $("#actionItemFolder");
-                        actionItemFolder.select2( {
-                            width: "25em",
-                            minimumResultsForSearch:Infinity,
-                            placeholderOption: "first"
-                        });
+                        this.actionItemInfo.folder = this.folders[0];
+                        this.$timeout(() => {
+                            actionItemFolder.select2( {
+                                width: "25em",
+                                minimumResultsForSearch:Infinity
+                            });
+                        }, 50);
                     })
             );
             this.$q.all(allPromises).then(() => {

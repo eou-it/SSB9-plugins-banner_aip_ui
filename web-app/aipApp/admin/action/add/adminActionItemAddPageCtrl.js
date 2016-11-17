@@ -4,12 +4,13 @@
 var AIP;
 (function (AIP) {
     var AdminActionItemAddPageCtrl = (function () {
-        function AdminActionItemAddPageCtrl($scope, $q, $state, $filter, SpinnerService, AdminActionService) {
-            this.$inject = ["$scope", "$q", "$state", "$filter", "SpinnerService", "AdminActionService"];
+        function AdminActionItemAddPageCtrl($scope, $q, $state, $filter, $timeout, SpinnerService, AdminActionService) {
+            this.$inject = ["$scope", "$q", "$state", "$filter", "$timeout", "SpinnerService", "AdminActionService"];
             $scope.vm = this;
             this.$q = $q;
             this.$state = $state;
             this.$filter = $filter;
+            this.$timeout = $timeout;
             this.spinnerService = SpinnerService;
             this.adminActionService = AdminActionService;
             this.errorMessage = {};
@@ -24,23 +25,25 @@ var AIP;
                 .then(function (response) {
                 _this.status = response.data;
                 var actionItemStatus = $("#actionItemStatus");
-                _this.actionItemInfo.status = _this.status[0].id;
-                actionItemStatus.select2({
-                    width: "25em",
-                    minimumResultsForSearch: Infinity
-                });
-                //TODO: find better and proper way to set defalut value in SELECT2 - current one is just dom object hack.
-                $(".actionItemStatus .select2-container.actionItemSelect .select2-chosen")[0].innerHTML = _this.$filter("i18n_aip")(_this.status[0].value);
+                _this.actionItemInfo.status = _this.status[0];
+                _this.$timeout(function () {
+                    actionItemStatus.select2({
+                        width: "25em",
+                        minimumResultsForSearch: Infinity
+                    });
+                }, 50);
             }));
             allPromises.push(this.adminActionService.getFolder()
                 .then(function (response) {
                 _this.folders = response.data;
                 var actionItemFolder = $("#actionItemFolder");
-                actionItemFolder.select2({
-                    width: "25em",
-                    minimumResultsForSearch: Infinity,
-                    placeholderOption: "first"
-                });
+                _this.actionItemInfo.folder = _this.folders[0];
+                _this.$timeout(function () {
+                    actionItemFolder.select2({
+                        width: "25em",
+                        minimumResultsForSearch: Infinity
+                    });
+                }, 50);
             }));
             this.$q.all(allPromises).then(function () {
                 _this.spinnerService.showSpinner(false);

@@ -27,10 +27,9 @@
             </div>
             <div class="actionItemElement col-xs-12 col-sm-5">
                 <div class="row">
-                    <select id="actionItemFolder" class="actionItemSelect" xe-data="" aria-label="Folder" ng-required="true" aria-required="true"
-                            ng-model="vm.actionItemInfo.folder">
-                        <option selected="selected" value="">{{"aip.common.select.folder.default"|i18n_aip}}</option>
-                        <option ng-repeat="item in vm.folders" value="{{item.id}}">{{item.name}}</option>
+                    <select id="actionItemFolder" class="actionItemSelect" xe-data="" aria-label="Folder" required aria-required="true"
+                            ng-model="vm.actionItemInfo.folder"
+                            ng-options="item as item.name for item in vm.folders track by item.id">
                     </select>
                 </div>
             </div>
@@ -43,8 +42,8 @@
             <div class="actionItemElement col-xs-12 col-sm-5">
                 <div class="row">
                     <select id="actionItemStatus" class="actionItemSelect" xe-data="" aria-label="Status" required aria-required="true"
-                            ng-model="vm.actionItemInfo.status">
-                        <option ng-repeat="item in vm.status" value="{{item.id}}">{{item.value|i18n_aip}}</option>
+                            ng-model="vm.actionItemInfo.status"
+                            ng-options="item as item.value for item in vm.status track by item.id">
                     </select>
                 </div>
             </div>

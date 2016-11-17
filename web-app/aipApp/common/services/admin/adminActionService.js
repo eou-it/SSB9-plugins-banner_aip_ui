@@ -4,12 +4,6 @@
 ///<reference path="../../../../typings/tsd.d.ts"/>
 var AIP;
 (function (AIP) {
-    var ActionItemStatus;
-    (function (ActionItemStatus) {
-        ActionItemStatus[ActionItemStatus["Pending"] = 0] = "Pending";
-        ActionItemStatus[ActionItemStatus["Active"] = 1] = "Active";
-        ActionItemStatus[ActionItemStatus["Inactive"] = 2] = "Inactive";
-    })(ActionItemStatus || (ActionItemStatus = {}));
     var AdminActionService = (function () {
         function AdminActionService($http, $q, $filter, ENDPOINT) {
             this.$http = $http;
@@ -53,9 +47,9 @@ var AIP;
         AdminActionService.prototype.saveActionItem = function (actionItem) {
             var params = {
                 title: actionItem.title,
-                folderId: parseInt(actionItem.folder),
+                folderId: parseInt(actionItem.folder.id),
                 description: actionItem.description,
-                status: ActionItemStatus[actionItem.status]
+                status: actionItem.status.value
             };
             var request = this.$http({
                 method: "POST",
