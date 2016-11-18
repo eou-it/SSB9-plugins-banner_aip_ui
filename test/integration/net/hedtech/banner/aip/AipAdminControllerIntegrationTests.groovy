@@ -1008,8 +1008,22 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
                 new UsernamePasswordAuthenticationToken( admin.bannerId, '111111' ) )
         SecurityContextHolder.getContext().setAuthentication( auth )
 
-        def actionItemId = 1
-        List<ActionItemStatusRuleReadOnly> statusRules = actionItemStatusRuleReadOnlyService.getActionItemStatusRulesROByActionItemId( actionItemId )
+        List<ActionItemStatusRuleReadOnly> probeList = actionItemStatusRuleReadOnlyService.listActionItemStatusRulesRO()
+
+        // make lists of ids and duplicate ids. Set last dup as an id we know has at least two entries
+        def actionItemIdToUse = 0
+        def foundIds = []
+        def foundDups = []
+        probeList.each { it ->
+            def thisId = it.statusRuleActionItemId
+            if (thisId in foundIds) {
+                actionItemIdToUse = thisId
+                foundDups.add( thisId )
+            }
+            foundIds.add( thisId )
+        }
+
+        List<ActionItemStatusRuleReadOnly> statusRules = actionItemStatusRuleReadOnlyService.getActionItemStatusRulesROByActionItemId( actionItemIdToUse )
 
         def rules = [
                 [
@@ -1020,7 +1034,7 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
                 ]
         ]
         def requestObj = [:]
-        requestObj.actionItemId = actionItemId
+        requestObj.actionItemId = actionItemIdToUse
         requestObj.rules = rules
         controller.request.method = "POST"
         controller.request.json = requestObj
