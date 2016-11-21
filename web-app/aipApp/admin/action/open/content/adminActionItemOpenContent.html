@@ -103,37 +103,7 @@
             <div class="row">
                 <div class="col-xs-12 col-sm-12">
                     <h2>{{'aip.common.text.statusRules'|i18n_aip}}</h2>
-                    <div class="contentContainer">
-                        <!--<div class="ruleListReadOnly">-->
-                            <!--<div class="row">-->
-                                <!--<div class="col-xs-12 col-sm-12">-->
-                                    <!--<span>{{'aip.admin.status.rules.table.heading'|i18n_aip}}</span>-->
-                                <!--</div>-->
-                            <!--</div>-->
-                            <!--<div class="row">-->
-                                <!--<div class="col-xs-12 col-sm-8">-->
-                                    <!--<span>{{'aip.admin.status.rules.table.header.responseOptionText'|i18n_aip}}</span>-->
-                                <!--</div>-->
-                                <!--<dic class="col-xs-12 col-sm-4">-->
-                                    <!--<span>{{'aip.admin.status.rules.table.header.status'|i18n_aip}}</span>-->
-                                <!--</dic>-->
-                            <!--</div>-->
-                            <!--<div class="row" ng-repeat="rule in vm.rules">-->
-                                <!--<div class="col-xs-12 col-sm-8">-->
-                                    <!--<span>{{rule.statusRuleLabelText}}</span>-->
-                                <!--</div>-->
-                                <!--<div class="col-xs-12 col-sm-2">-->
-                                    <!--<span class="labels" ng-class="{'rejected':rule.statusBlockProcessInd==='Y', 'approved':rule.statusBlockProcessInd==='N'}">-->
-                                            <!--{{rule.statusName}}-->
-                                    <!--</span>-->
-                                <!--</div>-->
-                                <!--<div class="col-xs-12 col-sm-2">-->
-                                    <!--<span>{{(rule.statusBlockProcessInd=="Y"?"aip.admin.status.rules.table.blockText.block":"aip.admin.status.rules.table.blockText.unblock")|i18n_aip}}</span>-->
-                                <!--</div>-->
-                            <!--</div>-->
-                        <!--</div>-->
-
-
+                    <div class="contentContainer" ng-if="vm.rules.length>0">
                         <table class="ruleListReadOnly">
                             <caption aria-label="Action Item Response Options">{{'aip.admin.status.rules.table.caption'|i18n_aip}}</caption>
                             <thead>

@@ -26,7 +26,7 @@ var AIPUI;
             $scope.addRule = function () {
                 $scope.rules.push({
                     statusName: "",
-                    statusId: $scope.status[0].actionItemStatusId
+                    status: $scope.status[0]
                 });
                 console.log($scope.rules);
             };

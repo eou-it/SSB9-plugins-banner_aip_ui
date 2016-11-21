@@ -119,6 +119,14 @@ module AIP {
             return request;
         }
 
+        getRuleStatus() {
+            var request = this.$http({
+                method: "GET",
+                url: this.ENDPOINT.admin.actionItemStatusList
+            });
+            return request;
+        }
+
         /*
         getFolder() {
             var request = this.$http({
