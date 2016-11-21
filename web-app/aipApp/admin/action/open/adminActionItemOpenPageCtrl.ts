@@ -373,10 +373,9 @@ module AIP {
 
         getStatus() {
             var deferred = this.$q.defer();
-            this.adminActionService.getStatus()
+            this.adminActionStatusService.getRuleStatus()
                 .then((response) => {
                     this.statuses = response.data;
-                    console.log(this.statuses);
                     deferred.resolve();
                     // deferred.resolve(this.openPanel("content"));
                 }, (error) => {

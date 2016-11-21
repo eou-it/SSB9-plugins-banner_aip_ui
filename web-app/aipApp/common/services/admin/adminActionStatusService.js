@@ -45,6 +45,13 @@ var AIP;
             });
             return request;
         };
+        AdminActionStatusService.prototype.getRuleStatus = function () {
+            var request = this.$http({
+                method: "GET",
+                url: this.ENDPOINT.admin.actionItemStatusList
+            });
+            return request;
+        };
         AdminActionStatusService.$inject = ["$http", "$q", "$filter", "ENDPOINT"];
         return AdminActionStatusService;
     }());

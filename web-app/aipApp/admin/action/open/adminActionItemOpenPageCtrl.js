@@ -351,10 +351,9 @@ var AIP;
         AdminActionItemOpenPageCtrl.prototype.getStatus = function () {
             var _this = this;
             var deferred = this.$q.defer();
-            this.adminActionService.getStatus()
+            this.adminActionStatusService.getRuleStatus()
                 .then(function (response) {
                 _this.statuses = response.data;
-                console.log(_this.statuses);
                 deferred.resolve();
                 // deferred.resolve(this.openPanel("content"));
             }, function (error) {

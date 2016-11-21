@@ -1,8 +1,9 @@
 <div id="openActionItemContent">
+
+    <!--content view with no template-->
     <div class="actionItemContentNoInfo row" ng-if="vm.isNoTemplate()">
         <div class="contentText">
             <div class="row">
-
                 <div class="col-xs-10 col-sm-8">
                     <h2>{{'aip.common.text.template'|i18n_aip}}</h2>
                     {{'aip.admin.action.open.tab.content.noItem1'|i18n_aip}} <br />
@@ -17,10 +18,11 @@
                         </button>
                     </div>
                 </div>
-
             </div>
         </div>
     </div>
+
+    <!--content view without select template-->
     <div class="actionItemContent row" ng-if="!vm.isNoTemplate() && vm.templateSelect">
         <div class="contentContainer">
             <div class="row input-actionItem">
@@ -32,9 +34,9 @@
                         ({{vm.templateSource}})</option>
                 </select>
             </div>
-
         </div>
 
+        <!-- edit view -->
         <div class="contentContainer" ng-if="!vm.isNoTemplateSelected()">
             <div class="row">
                 <label for="templateContent" class="titleValue" id="template-content">{{vm.actionItem.actionItemTemplateName}} {{'aip.common.text.content'|i18n_aip}}</label>
@@ -51,22 +53,6 @@
                 </div>
             </div>
         </div>
-        <!--
-        <div class="control row">
-            <div class="col-sm-3 offset-sm-9 col-xs-12 templateButton">
-                <span>
-                    <button name="Cancel" type="button" class="btn btn-default" ng-click="vm.cancel('content')">{{'aip.common.cancel'|i18n_aip}}</button>
-                </span>
-                <span>
-                    <button name="Save" type="button" class="btn btn-primary" ng-click="vm.saveTemplate()" ng-disabled="!vm.saveValidate()">
-                        {{'aip.common.saveandreturn'|i18n_aip}}
-                    </button>
-                </span>
-            </div>
-
-        </div>
-        -->
-
         <div class="groupControl">
             <div class="row">
                 <div class="col-sm-offset-8 col-xs-6 col-sm-2 groupButton">
@@ -81,6 +67,7 @@
         </div>
     </div>
 
+    <!--read only content-->
     <div class="actionItemContent row" ng-if="!vm.isNoTemplate() && vm.actionItem.actionItemTemplateId && !vm.templateSelect">
         <div class="contentContainer">
             <div class="row">
@@ -116,11 +103,36 @@
             <div class="row">
                 <div class="col-xs-12 col-sm-12">
                     <h2>{{'aip.common.text.statusRules'|i18n_aip}}</h2>
-                    <div class="contentContainer">
+                    <div class="contentContainer" ng-if="vm.rules.length>0">
+                        <table class="ruleListReadOnly">
+                            <caption aria-label="Action Item Response Options">{{'aip.admin.status.rules.table.caption'|i18n_aip}}</caption>
+                            <thead>
+                                <th class="ruleLabelText">{{'aip.admin.status.rules.table.header.responseOptionText'|i18n_aip}}</th>
+                                <th class="ruleStatus">{{'aip.admin.status.rules.table.header.status'|i18n_aip}}</th>
+                                <th aria-hidden></th>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="rule in vm.rules">
+                                    <td data-label="{{'aip.admin.status.rules.table.header.responseOptionText'|i18n_aip}}">{{rule.statusRuleLabelText}}</td>
+                                    <td data-label="{{'aip.admin.status.rules.table.header.status'|i18n_aip}}">
+                                        <span class="labels" ng-class="{'rejected':rule.statusBlockProcessInd==='Y', 'approved':rule.statusBlockProcessInd==='N'}">
+                                            {{rule.statusName}}
+                                        </span>
+                                    </td>
+                                    <td>
+                                        {{(rule.statusBlockProcessInd=="Y"?"aip.admin.status.rules.table.blockText.block":"aip.admin.status.rules.table.blockText.unblock")|i18n_aip}}
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="contentContainer" ng-if="vm.rules.length===0">
+                        <div class="noResponses">
+                            {{"aip.admin.status.rules.noREsponses"|i18n_aip}}
+                        </div>
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
 </div>
