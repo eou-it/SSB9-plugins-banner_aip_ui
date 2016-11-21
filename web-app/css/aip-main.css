@@ -418,6 +418,8 @@ aip-list .aip-list-container {
     font-family: "OpenSans-semibold"; }
   .actionItemOpenContainer label.required:after {
     content: " *"; }
+  .actionItemOpenContainer a {
+    color: #275c8a; }
   .actionItemOpenContainer .row {
     margin-right: 0;
     margin-left: 0; }

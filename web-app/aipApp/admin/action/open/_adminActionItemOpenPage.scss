@@ -2,6 +2,7 @@ $border-color: #C0C0C0;
 $text-color: #4F585F;
 $button-color: #206E9F;
 $background-color: #ffffff;
+$link-color: #275c8a;
 
 .actionItemOpenContainer {
   border: 1px solid $border-color;
@@ -12,6 +13,9 @@ $background-color: #ffffff;
   }
   label.required:after {
     content: " *";
+  }
+  a {
+    color: $link-color;
   }
   .row {
     margin-right: 0;
