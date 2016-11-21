@@ -113,9 +113,9 @@ module AIP {
             var containerHeight = $(document).height() -
                 $("#breadcrumb-panel").height() -
                 $("#title-panel").height() -
-                $("#header-main-section").height() -
+                $("#header-main-section").height() +
+                $(".status-rules").height() + 250
                 // $("#outerFooter").height() - 30;
-                30;
             return {"min-height": containerHeight};
         }
         getSeparatorHeight() {

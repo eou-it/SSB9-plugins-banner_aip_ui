@@ -34,7 +34,6 @@ module AIPUI {
 
             $scope.init = function(){
                 // $scope.addRule();
-                console.log("rest");
             }
 
             $scope.addRule=function(){
@@ -44,7 +43,6 @@ module AIPUI {
                         status: $scope.status[0]
                     }
                 );
-                console.log($scope.rules)
             }
             $scope.getState = function(id) {
                 //$scope.itemstate(id)
