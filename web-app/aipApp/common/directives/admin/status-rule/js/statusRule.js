@@ -22,6 +22,7 @@ var AIPUI;
         AIPStatusRuleDirective.prototype.controller = function ($scope) {
             $scope.init = function () {
                 // $scope.addRule();
+                console.log("rest");
             };
             $scope.addRule = function () {
                 $scope.rules.push({

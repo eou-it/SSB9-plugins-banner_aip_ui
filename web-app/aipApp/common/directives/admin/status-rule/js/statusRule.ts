@@ -34,6 +34,7 @@ module AIPUI {
 
             $scope.init = function(){
                 // $scope.addRule();
+                console.log("rest");
             }
 
             $scope.addRule=function(){

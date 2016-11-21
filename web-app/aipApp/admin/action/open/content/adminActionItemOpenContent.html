@@ -59,7 +59,7 @@
                     <button name="Cancel" type="button" class="btn btn-default" ng-click="vm.cancel('content')">{{"aip.common.cancel"|i18n_aip}}</button>
                 </div>
                 <div class="col-xs-6 col-sm-2 groupButton">
-                    <button type="button" name="Save" class="btn btn-primary" ng-disabled="!vm.saveValidate()" ng-click="vm.saveTemplate()">
+                    <button type="button" name="Save" class="btn btn-primary" ng-disabled="!vm.validateActionItemRule()" ng-click="vm.saveTemplate()">
                         {{"aip.common.saveandreturn"|i18n_aip}}
                     </button>
                 </div>
