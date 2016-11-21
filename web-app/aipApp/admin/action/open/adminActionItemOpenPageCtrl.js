@@ -354,7 +354,6 @@ var AIP;
             this.adminActionService.getStatus()
                 .then(function (response) {
                 _this.statuses = response.data;
-                console.log(_this.statuses);
                 deferred.resolve();
                 // deferred.resolve(this.openPanel("content"));
             }, function (error) {

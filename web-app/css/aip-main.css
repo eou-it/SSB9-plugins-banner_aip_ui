@@ -163,12 +163,24 @@ aip-list .aip-list-container {
     .landingItem-container .landing-context .landing-description {
       min-height: 70px; }
 
-@media screen and (max-width: 480px) {
-  .ladingItem-container {
+@media screen and (max-width: 768px) {
+  .landingItem-container {
+    padding: 0;
     margin-left: 8px;
     margin-right: 8px; }
-    .ladingItem-container .landing-icon {
-      padding: 16px 8px; } }
+    .landingItem-container .landing-icon {
+      padding: 16px; } }
+@media screen and (max-width: 480px) {
+  .landingItem-container {
+    padding: 0;
+    margin-left: 8px;
+    margin-right: 8px; }
+    .landingItem-container .landing-icon {
+      padding: 16px 8px; }
+    .landingItem-container .landing-context .landing-title {
+      padding: 8px; }
+    .landingItem-container .landing-context .landing-description {
+      padding: 8px; } }
 .aip-item-detail-container {
   height: inherit; }
   .aip-item-detail-container .detail-content {
@@ -448,6 +460,33 @@ aip-list .aip-list-container {
             .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .contentContainer {
               margin-top: 20px;
               margin-bottom: 20px; }
+              .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .contentContainer .noResponses {
+                font-size: 1.2em;
+                font-weight: bold;
+                padding: 8px; }
+              .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .contentContainer table.ruleListReadOnly {
+                width: 100%; }
+                .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .contentContainer table.ruleListReadOnly caption {
+                  border: 1px solid #DDDDDD;
+                  border-bottom: none;
+                  text-align: left;
+                  font-weight: bolder;
+                  line-height: 3em;
+                  font-size: 1.2em;
+                  padding: 0 8px; }
+                .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .contentContainer table.ruleListReadOnly tr {
+                  height: 3em;
+                  border: solid 1px;
+                  border-color: inherit; }
+                .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .contentContainer table.ruleListReadOnly th, .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .contentContainer table.ruleListReadOnly td {
+                  padding: 8px; }
+                .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .contentContainer table.ruleListReadOnly thead th {
+                  font-weight: bold; }
+                  .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .contentContainer table.ruleListReadOnly thead th + .ruleStatus {
+                    border-left: solid 1px;
+                    border-color: inherit; }
+                  .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .contentContainer table.ruleListReadOnly thead th + .ruleLabelText {
+                    width: 60%; }
             .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .contentPreview {
               margin: 20px 0;
               padding: 20px;
@@ -486,13 +525,58 @@ aip-list .aip-list-container {
                   max-width: 200px; }
 
 @media screen and (max-width: 768px) {
-  .actionItemOpenContainer .row {
+  .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .row {
     margin-right: 0;
     margin-left: 0; }
-  .actionItemOpenContainer .actionItemElement .h2-container button {
-    border: none; }
-  .actionItemOpenContainer .actionItemElement xe-tab-nav .xe-tab-content {
-    padding: 4px 0; } }
+  .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement {
+    padding-right: 0;
+    padding-left: 0; }
+    .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement .h2-container button {
+      border: none; }
+    .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-nav .xe-tab-content {
+      padding: 4px 0;
+      margin-bottom: 30px; }
+    .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent {
+      padding: 0; }
+      .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .contentContainer {
+        margin-top: 0;
+        margin-bottom: 0; }
+        .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .contentContainer .contentPreview {
+          padding: 8px; }
+        .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .contentContainer table.ruleListReadOnly {
+          border: 0; }
+          .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .contentContainer table.ruleListReadOnly caption {
+            border: 0;
+            padding: 0;
+            line-height: 2em; }
+          .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .contentContainer table.ruleListReadOnly thead {
+            display: none; }
+          .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .contentContainer table.ruleListReadOnly tr {
+            margin-bottom: 10px;
+            display: block;
+            border: none;
+            height: auto; }
+          .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .contentContainer table.ruleListReadOnly td {
+            display: table;
+            border: 0;
+            width: 100%;
+            text-indent: 8px; }
+            .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .contentContainer table.ruleListReadOnly td .labels {
+              text-indent: 0; }
+          .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .contentContainer table.ruleListReadOnly td:first-child {
+            border-top: 1px solid;
+            border-color: #C0C0C0; }
+          .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .contentContainer table.ruleListReadOnly td:last-child {
+            border-bottom: 0;
+            display: none; }
+          .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .contentContainer table.ruleListReadOnly td:before {
+            display: table-row;
+            width: 100%;
+            content: attr(data-label);
+            font-size: 1.1em;
+            font-weight: bold;
+            padding-right: 8px;
+            text-indent: 0; } }
 .statusListContainer {
   overflow-y: auto;
   font-size: 14px; }
