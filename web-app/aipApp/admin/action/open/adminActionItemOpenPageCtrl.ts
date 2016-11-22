@@ -248,6 +248,9 @@ module AIP {
             this.templateSelect = true;
             this.$timeout(() => {
                 var actionItemTemplate:any = $("#actionItemTemplate");
+                if (this.actionItem.actionItemTemplateId || this.actionItem.actionItemTemplateId !== null || typeof this.actionItem.actionItemTemplateId !== 'undefined'  ) {
+                    $("#actionItemTemplate > option:selected").remove();
+                }
                 /*
                 if(actionItemTemplate) {
                     actionItemTemplate.select2({
@@ -261,7 +264,9 @@ module AIP {
                 //action item selected temlate
                 if (this.selectedTemplate) {
                     if (this.templates[0].sourceInd == "B") {
+                        /*
                         $(".select2-container.actionItemSelect .select2-chosen")[0].innerHTML = this.actionItem.actionItemTemplateName + " (" + this.$filter("i18n_aip")("aip.common.baseline") + ")";
+                        */
                     }
                 }
             }, 500);
@@ -292,7 +297,6 @@ module AIP {
             this.saving = true;
             allDefer.push(this.adminActionService.saveActionItemTemplate(this.selectedTemplate, this.actionItem.actionItemId, this.actionItem.actionItemContent)
                 .then((response:any) => {
-                    console.log(response);
                     if(response.data.success) {
                         return {success: true, type: "template", data: response.data.actionItem};
                     } else {
@@ -309,7 +313,6 @@ module AIP {
             });
             allDefer.push(this.adminActionService.updateActionItemStatusRule(this.rules, this.$state.params.data)
                 .then((response: any) => {
-                    console.log(response);
                     if(response.data.success) {
                         return {success: true};
                     } else {

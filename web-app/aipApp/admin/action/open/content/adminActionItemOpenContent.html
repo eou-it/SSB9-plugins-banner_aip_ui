@@ -29,11 +29,15 @@
                 <label for="actionItemTemplate" class="templateSelect required" id="actionItemTemplateSelector">{{'aip.admin.action.open.tab.content.templateSelect'|i18n_aip}}</label>
             </div>
             <div class="row">
-                <select id="actionItemTemplate" class="actionItemSelect" xe-data="" required aria-required="true" ng-model="vm.selectedTemplate" ng-change="vm.getRules()">
-                    <option selected="selected" disabled selected value="">{{"aip.admin.action.open.tab.content.templatePlaceholder"|i18n_aip}}</option>
-                    <option ng-repeat="item in vm.templates" value="{{item.id}}">{{item.title}}
-                        ({{vm.templateSource}})</option>
-                </select>
+                <div class="col-sm-4">
+                    <select id="actionItemTemplate" class="actionItemSelect form-control" xe-data="" required aria-required="true" ng-model="vm.selectedTemplate" ng-change="vm.getRules()">
+                        <option selected="selected" disabled selected value="">{{"aip.admin.action.open.tab.content.templatePlaceholder"|i18n_aip}}</option>
+                        <option ng-repeat="item in vm.templates" value="{{item.id}}">{{item.title}}
+                            ({{vm.templateSource}})</option>
+                    </select>
+
+                </div>
+
             </div>
         </div>
 
@@ -86,7 +90,8 @@
             </div>
             <div class="row">
                 <div class="col-xs-12 col-sm-8">
-                    {{vm.actionItem.actionItemTemplateName||'aip.admin.action.open.tab.content.templateContent'|i18n_aip}} ({{vm.templateSource}})</span>
+                    <div class="templateText">
+                    {{vm.actionItem.actionItemTemplateName||'aip.admin.action.open.tab.content.templateContent'|i18n_aip}} ({{vm.templateSource}})</div>
                 </div>
             </div>
             <div class="row">

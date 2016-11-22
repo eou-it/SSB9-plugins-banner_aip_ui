@@ -221,6 +221,9 @@ var AIP;
             this.templateSelect = true;
             this.$timeout(function () {
                 var actionItemTemplate = $("#actionItemTemplate");
+                if (_this.actionItem.actionItemTemplateId || _this.actionItem.actionItemTemplateId !== null || typeof _this.actionItem.actionItemTemplateId !== 'undefined') {
+                    $("#actionItemTemplate > option:selected").remove();
+                }
                 /*
                 if(actionItemTemplate) {
                     actionItemTemplate.select2({
@@ -234,7 +237,6 @@ var AIP;
                 //action item selected temlate
                 if (_this.selectedTemplate) {
                     if (_this.templates[0].sourceInd == "B") {
-                        $(".select2-container.actionItemSelect .select2-chosen")[0].innerHTML = _this.actionItem.actionItemTemplateName + " (" + _this.$filter("i18n_aip")("aip.common.baseline") + ")";
                     }
                 }
             }, 500);
@@ -267,7 +269,6 @@ var AIP;
             this.saving = true;
             allDefer.push(this.adminActionService.saveActionItemTemplate(this.selectedTemplate, this.actionItem.actionItemId, this.actionItem.actionItemContent)
                 .then(function (response) {
-                console.log(response);
                 if (response.data.success) {
                     return { success: true, type: "template", data: response.data.actionItem };
                 }
@@ -285,7 +286,6 @@ var AIP;
             });
             allDefer.push(this.adminActionService.updateActionItemStatusRule(this.rules, this.$state.params.data)
                 .then(function (response) {
-                console.log(response);
                 if (response.data.success) {
                     return { success: true };
                 }
@@ -375,7 +375,7 @@ var AIP;
             return false;
         };
         return AdminActionItemOpenPageCtrl;
-    })();
+    }());
     AIP.AdminActionItemOpenPageCtrl = AdminActionItemOpenPageCtrl;
 })(AIP || (AIP = {}));
 register("bannerAIP").controller("AdminActionItemOpenPageCtrl", AIP.AdminActionItemOpenPageCtrl);

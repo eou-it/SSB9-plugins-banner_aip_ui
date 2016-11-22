@@ -76,14 +76,15 @@ $link-color: #275c8a;
               }
               .actionItemContent {
                 padding: 16px;
-
                 .contentContainer {
-                  margin-top: 20px;
-                  margin-bottom: 20px;
+                  margin: 10px 0 10px 0;
                   .noResponses {
                     font-size: 1.2em;
                     font-weight: bold;
                     padding: 8px;
+                  }
+                  .templateText {
+                    margin-bottom: 20px;
                   }
                   table.ruleListReadOnly {
                     width: 100%;
@@ -119,8 +120,9 @@ $link-color: #275c8a;
                   }
                 }
                 .contentPreview {
-                  margin: 20px 0;
-                  padding: 5px;
+                  margin: 15px 0 20px 0;
+                  padding: 10px 10px 15px 10px;
+                  border-bottom: 1px solid $border-color;
                 }
                 .status-rules {
                   .row {
@@ -213,9 +215,10 @@ $link-color: #275c8a;
                   padding: 0;
                   .contentContainer {
                     margin-top: 0;
-                    margin-bottom: 0;
+                    margin-bottom: 0px;
                     .contentPreview {
                       padding: 8px;
+                      border-bottom: 1px solid $border-color;
                     }
                     table.ruleListReadOnly {
                       border: 0;
