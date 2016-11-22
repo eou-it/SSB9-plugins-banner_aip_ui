@@ -26,12 +26,11 @@
     <div class="actionItemContent row" ng-if="!vm.isNoTemplate() && vm.templateSelect">
         <div class="contentContainer">
             <div class="row input-actionItem">
-                <label for="actionItemTemplate" class="templateSelect required" id="actionItemTemplateSelector">{{'aip.admin.action.open.tab.content.templateContent'|i18n_aip}}</label>
+                <label for="actionItemTemplate" class="templateSelect required" id="actionItemTemplateSelector">{{'aip.admin.action.open.tab.content.templateSelect'|i18n_aip}}</label>
             </div>
             <div class="row">
-                <select id="actionItemTemplate" class="actionItemSelect" xe-data="" aria-label="Template" required aria-required="true" ng-model="vm.selectedTemplate" ng-change="vm.getRules()" data-placeholder="{{'aip.admin.action.open.tab.content.templatePlaceholder'|i18n_aip}}">
-
-                    <option selected="selected" value="">{{"aip.admin.action.open.tab.content.templatePlaceholder"|i18n_aip}}</option>
+                <select id="actionItemTemplate" class="actionItemSelect" xe-data="" required aria-required="true" ng-model="vm.selectedTemplate" ng-change="vm.getRules()">
+                    <option selected="selected" disabled selected value="">{{"aip.admin.action.open.tab.content.templatePlaceholder"|i18n_aip}}</option>
                     <option ng-repeat="item in vm.templates" value="{{item.id}}">{{item.title}}
                         ({{vm.templateSource}})</option>
                 </select>
@@ -107,7 +106,7 @@
                     <h2>{{'aip.admin.status.rules.table.heading'|i18n_aip}}</h2>
                     <div class="contentContainer" ng-if="vm.rules.length>0">
                         <table class="ruleListReadOnly">
-                            <caption aria-label="Action Item Response Options">{{'aip.admin.status.rules.table.heading'|i18n_aip}}</caption>
+                            <caption aria-label="Action Item Response Options">{{'aip.admin.status.rules.table.caption'|i18n_aip}}</caption>
                             <thead>
                                 <th class="ruleLabelText">{{'aip.admin.status.rules.table.header.responseOptionText'|i18n_aip}}</th>
                                 <th class="ruleStatus">{{'aip.admin.status.rules.table.header.status'|i18n_aip}}</th>

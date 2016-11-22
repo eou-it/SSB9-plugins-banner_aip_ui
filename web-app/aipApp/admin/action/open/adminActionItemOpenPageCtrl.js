@@ -221,13 +221,14 @@ var AIP;
             this.templateSelect = true;
             this.$timeout(function () {
                 var actionItemTemplate = $("#actionItemTemplate");
-                if (actionItemTemplate) {
+                /*
+                if(actionItemTemplate) {
                     actionItemTemplate.select2({
                         width: "25em",
                         minimumResultsForSearch: Infinity,
-                        placeholderOption: 'first'
+                        placeholderOption:'first'
                     });
-                }
+                }*/
                 $(".actionItemContent").height($(".actionItemElement").height() - $(".xe-tab-nav").height());
                 //TODO: find better and proper way to set defalut value in SELECT2 - current one is just dom object hack.
                 //action item selected temlate
