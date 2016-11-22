@@ -520,9 +520,9 @@ aip-list .aip-list-container {
               bottom: 10px;
               margin-bottom: 15px;
               height: 5em; }
-              .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .actionControl .actionButton {
+              .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .actionControl .groupButton {
                 text-align: center; }
-                .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .actionControl .actionButton button {
+                .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .actionControl .groupButton button {
                   width: 100%;
                   max-width: 200px; }
 

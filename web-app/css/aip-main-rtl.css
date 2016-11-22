@@ -504,6 +504,9 @@ aip-list .aip-list-container  {
   .actionItemOpenContainer label.required:after  {
     content:" *";
 }
+  .actionItemOpenContainer a  {
+    color:#275c8a;
+}
   .actionItemOpenContainer .row  {
     margin-left:0;
     margin-right:0;
@@ -626,10 +629,10 @@ aip-list .aip-list-container  {
     margin-bottom:15px;
     height:5em;
 }
-              .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .actionControl .actionButton  {
+              .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .actionControl .groupButton  {
     text-align:center;
 }
-                .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .actionControl .actionButton button  {
+                .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .actionControl .groupButton button  {
     width:100%;
     max-width:200px;
 }
