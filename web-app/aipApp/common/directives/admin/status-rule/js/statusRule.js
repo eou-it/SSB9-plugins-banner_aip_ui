@@ -28,7 +28,6 @@ var AIPUI;
                     statusName: "",
                     status: $scope.status[0]
                 });
-                console.log($scope.rules);
             };
             $scope.getState = function (id) {
                 //$scope.itemstate(id)

@@ -87,9 +87,9 @@ var AIP;
             var containerHeight = $(document).height() -
                 $("#breadcrumb-panel").height() -
                 $("#title-panel").height() -
-                $("#header-main-section").height() -
-                // $("#outerFooter").height() - 30;
-                30;
+                $("#header-main-section").height() +
+                $(".status-rules").height() + 250;
+            // $("#outerFooter").height() - 30;
             return { "min-height": containerHeight };
         };
         AdminActionItemOpenPageCtrl.prototype.getSeparatorHeight = function () {
@@ -258,12 +258,6 @@ var AIP;
             });
             return deferred.promise;
         };
-        AdminActionItemOpenPageCtrl.prototype.saveValidate = function () {
-            if (this.selectedTemplate && !this.saving) {
-                return true;
-            }
-            return false;
-        };
         AdminActionItemOpenPageCtrl.prototype.saveTemplate = function () {
             var _this = this;
             //TODO:: implement to save rules
@@ -360,6 +354,23 @@ var AIP;
                 console.log(error);
             });
             return deferred.promise;
+        };
+        AdminActionItemOpenPageCtrl.prototype.validateActionItemRule = function () {
+            if (this.selectedTemplate && !this.saving) {
+                if (this.rules.length === 0) {
+                    return true;
+                }
+                else {
+                    var invalidRule = this.rules.filter(function (item) {
+                        return !item.statusRuleLabelText || item.statusRuleLabelText === "" || !item.status || !item.status.actionItemStatusId;
+                    });
+                    if (invalidRule.length === 0) {
+                        return true;
+                    }
+                    return false;
+                }
+            }
+            return false;
         };
         return AdminActionItemOpenPageCtrl;
     }());

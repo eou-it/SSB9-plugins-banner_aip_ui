@@ -29,14 +29,6 @@
             </div>
             <div class="row">
                 <div class="col-sm-12">
-                    <!--<select name="Status-{{$index+1}}" id="status-{{$index+1}}" class="actionItemSelect" xe-data="" aria-label="Status" required-->
-                            <!--aria-required="true" ng-model="item.statusId">-->
-                        <!--<option ng-repeat="statusItem in status"-->
-                                <!--ng-selected="item.statusId == statusItem.actionItemStatusId"-->
-                                <!--value="{{statusItem.actionItemStatusId}}">-->
-                            <!--{{item.statusName!==""?item.statusName:statusItem.actionItemStatus}}-->
-                        <!--</option>-->
-                    <!--</select>-->
                     <select name="Status-{{$index+1}}" id="status-{{index+1}}" class="actionItemSelect" xe-data="" aria-label="Status" required aria-required="true"
                             ng-model="item.status"
                             ng-options="statusItem as statusItem.actionItemStatus for statusItem in status track by statusItem.actionItemStatusId">
@@ -48,17 +40,15 @@
         <div class="record-controls col-sm-1">
             <div class="row">
                 <div class="col-sm-12">
-                    <button name="SortAsc" type="button" class="btn btn-default sort" ng-click="moveUp(item)" aria-label="" ng-disabled="isFirst(item)">
-                        <span class="icon icon-arrowTop-C" role="presentation"
-                              aria-label="{{'aip.admin.status.rules.table.form.sort-asc'|i18n_aip}}"></span>
+                    <button name="SortAsc" type="button" class="btn btn-default sort" ng-click="moveUp(item)" aria-label="Move up" ng-disabled="isFirst(item)">
+                        <span class="icon icon-arrowTop-C"></span>
                     </button>
                 </div>
             </div>
             <div class="row clear">
                 <div class="col-sm-12">
-                    <button name="SortDesc" type="button" class="btn btn-default sort" ng-click="moveDown(item)" aria-label="" ng-disabled="isLast(item)">
-                        <span class="icon icon-arrowBottom-C" role="presentation"
-                          aria-label="{{'aip.admin.status.rules.table.form.sort-desc'|i18n_aip}}"></span>
+                    <button name="SortDesc" type="button" class="btn btn-default sort" ng-click="moveDown(item)" aria-label="Move down" ng-disabled="isLast(item)">
+                        <span class="icon icon-arrowBottom-C"></span>
                     </button>
                 </div>
             </div>
@@ -67,7 +57,7 @@
         <div class="record-controls col-sm-1">
             <div class="row">
                 <div class="col-sm-12">
-                    <button name="Delete" type="button" class="btn btn-default delete" ng-click="removeRule(item)" aria-label="">
+                    <button name="Delete" type="button" class="btn btn-default delete" ng-click="removeRule(item)" aria-label="Remove Response Option">
                         <span class="icon icon-delete-CO" role="presentation"
                               aria-label="{{'aip.admin.status.rules.table.form.delete'|i18n_aip}}"></span>
                     </button>
@@ -79,7 +69,7 @@
     <div class="row clear">
         <div class="add-link col-sm-12">
             <a href="javascript:void(0);" ng-click="addRule()">
-                <span class="icon icon-add-CO" role="presentation" aria-label="{{'aip.admin.status.rules.table.form.add'|i18n_aip}}"></span>
+                <span class="icon icon-add-CO" role="presentation" aria-label="Add Response Option"></span>
                 <span>{{'aip.admin.status.rules.table.form.add'|i18n_aip}}</span>
             </a>
         </div>

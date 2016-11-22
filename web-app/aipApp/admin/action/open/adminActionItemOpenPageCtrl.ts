@@ -113,9 +113,9 @@ module AIP {
             var containerHeight = $(document).height() -
                 $("#breadcrumb-panel").height() -
                 $("#title-panel").height() -
-                $("#header-main-section").height() -
+                $("#header-main-section").height() +
+                $(".status-rules").height() + 250
                 // $("#outerFooter").height() - 30;
-                30;
             return {"min-height": containerHeight};
         }
         getSeparatorHeight() {
@@ -284,12 +284,6 @@ module AIP {
                 });
             return deferred.promise;
         }
-        saveValidate() {
-            if (this.selectedTemplate && !this.saving) {
-                return true;
-            }
-            return false;
-        }
         saveTemplate() {
             //TODO:: implement to save rules
             var allDefer = [];
@@ -382,6 +376,22 @@ module AIP {
                     console.log(error);
                 });
             return deferred.promise;
+        }
+        validateActionItemRule() {
+            if (this.selectedTemplate && !this.saving) {
+                if (this.rules.length === 0) {
+                    return true;
+                } else {
+                    var invalidRule = this.rules.filter((item) => {
+                        return !item.statusRuleLabelText || item.statusRuleLabelText==="" || !item.status || !item.status.actionItemStatusId;
+                    });
+                    if (invalidRule.length===0) {
+                        return true;
+                    }
+                    return false;
+                }
+            }
+            return false;
         }
     }
 
