@@ -158,6 +158,11 @@ module AIP {
                     this.templates = response.data;
                     deferred.resolve(this.openPanel("content"));
                     this.getTemplateSource();
+
+                    if (this.templateSelect) {
+                        this.selectTemplate();
+                    }
+
                 }, (error) => {
                     console.log(error);
                 });
@@ -248,8 +253,14 @@ module AIP {
             this.templateSelect = true;
             this.$timeout(() => {
                 var actionItemTemplate:any = $("#actionItemTemplate");
-                if (this.actionItem.actionItemTemplateId || this.actionItem.actionItemTemplateId !== null || typeof this.actionItem.actionItemTemplateId !== 'undefined'  ) {
-                    $("#actionItemTemplate > option:selected").remove();
+                if (this.actionItem.actionItemTemplateId && actionItemTemplate ) {
+
+                    console.log($("#actionItemTemplate > option:selected" ).val());
+
+                    if ( $("#actionItemTemplate > option:selected" ).val() !== this.actionItem.actionItemTemplateId.toString() ) {
+                        $("#actionItemTemplate > option:selected").remove();
+                    }
+
                 }
                 /*
                 if(actionItemTemplate) {
@@ -314,6 +325,7 @@ module AIP {
             allDefer.push(this.adminActionService.updateActionItemStatusRule(this.rules, this.$state.params.data)
                 .then((response: any) => {
                     if(response.data.success) {
+                        this.getRules();
                         return {success: true};
                     } else {
                         return {success: false};

@@ -134,6 +134,9 @@ var AIP;
                 _this.templates = response.data;
                 deferred.resolve(_this.openPanel("content"));
                 _this.getTemplateSource();
+                if (_this.templateSelect) {
+                    _this.selectTemplate();
+                }
             }, function (error) {
                 console.log(error);
             });
@@ -221,8 +224,11 @@ var AIP;
             this.templateSelect = true;
             this.$timeout(function () {
                 var actionItemTemplate = $("#actionItemTemplate");
-                if (_this.actionItem.actionItemTemplateId || _this.actionItem.actionItemTemplateId !== null || typeof _this.actionItem.actionItemTemplateId !== 'undefined') {
-                    $("#actionItemTemplate > option:selected").remove();
+                if (_this.actionItem.actionItemTemplateId && actionItemTemplate) {
+                    console.log($("#actionItemTemplate > option:selected").val());
+                    if ($("#actionItemTemplate > option:selected").val() !== _this.actionItem.actionItemTemplateId.toString()) {
+                        $("#actionItemTemplate > option:selected").remove();
+                    }
                 }
                 /*
                 if(actionItemTemplate) {
@@ -287,6 +293,7 @@ var AIP;
             allDefer.push(this.adminActionService.updateActionItemStatusRule(this.rules, this.$state.params.data)
                 .then(function (response) {
                 if (response.data.success) {
+                    _this.getRules();
                     return { success: true };
                 }
                 else {
@@ -375,7 +382,7 @@ var AIP;
             return false;
         };
         return AdminActionItemOpenPageCtrl;
-    }());
+    })();
     AIP.AdminActionItemOpenPageCtrl = AdminActionItemOpenPageCtrl;
 })(AIP || (AIP = {}));
 register("bannerAIP").controller("AdminActionItemOpenPageCtrl", AIP.AdminActionItemOpenPageCtrl);
