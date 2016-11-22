@@ -29,7 +29,9 @@
                 <label for="actionItemTemplate" class="templateSelect required" id="actionItemTemplateSelector">{{'aip.admin.action.open.tab.content.templateContent'|i18n_aip}}</label>
             </div>
             <div class="row">
-                <select id="actionItemTemplate" class="actionItemSelect" xe-data="" aria-label="Template" required aria-required="true" ng-model="vm.selectedTemplate" ng-change="vm.getRules()">
+                <select id="actionItemTemplate" class="actionItemSelect" xe-data="" aria-label="Template" required aria-required="true" ng-model="vm.selectedTemplate" ng-change="vm.getRules()" data-placeholder="Select">
+
+                    <option selected="selected" value="">{{"aip.admin.action.open.tab.content.templatePlaceholder"|i18n_aip}}</option>
                     <option ng-repeat="item in vm.templates" value="{{item.id}}">{{item.title}}
                         ({{vm.templateSource}})</option>
                 </select>
@@ -53,7 +55,7 @@
                 </div>
             </div>
         </div>
-        <div class="groupControl">
+        <div class="actionControl">
             <div class="row">
                 <div class="col-sm-offset-8 col-xs-6 col-sm-2 groupButton">
                     <button name="Cancel" type="button" class="btn btn-default" ng-click="vm.cancel('content')">{{"aip.common.cancel"|i18n_aip}}</button>
@@ -105,7 +107,7 @@
                     <h2>{{'aip.common.text.statusRules'|i18n_aip}}</h2>
                     <div class="contentContainer" ng-if="vm.rules.length>0">
                         <table class="ruleListReadOnly">
-                            <caption aria-label="Action Item Response Options">{{'aip.admin.status.rules.table.caption'|i18n_aip}}</caption>
+                            <caption aria-label="Action Item Response Options">{{'aip.admin.status.rules.table.heading'|i18n_aip}}</caption>
                             <thead>
                                 <th class="ruleLabelText">{{'aip.admin.status.rules.table.header.responseOptionText'|i18n_aip}}</th>
                                 <th class="ruleStatus">{{'aip.admin.status.rules.table.header.status'|i18n_aip}}</th>

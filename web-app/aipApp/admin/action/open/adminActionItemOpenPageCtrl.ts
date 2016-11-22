@@ -251,7 +251,8 @@ module AIP {
                 if(actionItemTemplate) {
                     actionItemTemplate.select2({
                         width: "25em",
-                        minimumResultsForSearch: Infinity
+                        minimumResultsForSearch: Infinity,
+                        placeholderOption:'first'
                     });
                 }
                 $(".actionItemContent").height($(".actionItemElement").height() - $(".xe-tab-nav").height());
@@ -394,7 +395,6 @@ module AIP {
             return false;
         }
     }
-
 
 }
 register("bannerAIP").controller("AdminActionItemOpenPageCtrl", AIP.AdminActionItemOpenPageCtrl);

@@ -30,7 +30,7 @@ $link-color: #275c8a;
         color: $text-color;
         padding-bottom: 20px;
         .h2-container {
-          margin-top: 20px;
+          margin-top: 0px;
           margin-bottom: 10px;
         }
         .activity {
@@ -88,7 +88,7 @@ $link-color: #275c8a;
                   table.ruleListReadOnly {
                     width: 100%;
                     caption {
-                      border:1px solid #DDDDDD;
+                      border: 0 none ;
                       border-bottom:none;
                       text-align: left;
                       font-weight: bolder;
@@ -99,7 +99,7 @@ $link-color: #275c8a;
                     tr {
                       height: 3em;
                       border: solid 1px;
-                      border-color: inherit;
+                      border-color: $border-color;;
                     }
                     th, td {
                       padding: 8px;
@@ -120,8 +120,7 @@ $link-color: #275c8a;
                 }
                 .contentPreview {
                   margin: 20px 0;
-                  padding: 20px;
-                  border: 1px solid $border-color;
+                  padding: 5px;
                 }
                 .status-rules {
                   .row {
@@ -161,7 +160,7 @@ $link-color: #275c8a;
                     margin: 20px 0 0 15px;
                   }
                 }
-                .actionControl {
+                .groupControl {
                   /*position: relative;*/
                   width: 100%;
                   bottom: 10px;
@@ -239,13 +238,13 @@ $link-color: #275c8a;
                         border: 0;
                         width: 100%;
                         text-indent:8px;
+                        border-color: $border-color;
                         .labels {
                           text-indent: 0;
                         }
                       }
                       td:first-child {
                         border-top: 1px solid;
-                        border-color: #C0C0C0;
                       }
                       td:last-child {
                         border-bottom: 0;
