@@ -22,29 +22,53 @@ var AIPUI;
         AIPStatusRuleDirective.prototype.controller = function ($scope) {
             $scope.init = function () {
                 // $scope.addRule();
-                console.log("rest");
             };
-            $scope.addRule = function () {
+            $scope.addRule = function ($event) {
                 $scope.rules.push({
                     statusName: "",
                     status: $scope.status[0]
                 });
-                console.log($scope.rules);
+                var btnTarget = "input#reponse-" + $scope.rules.length;
+                console.log($event);
+                setTimeout(function () {
+                    $(btnTarget).focus();
+                }, 500);
             };
             $scope.getState = function (id) {
                 //$scope.itemstate(id)
             };
-            $scope.moveUp = function (item) {
+            $scope.moveUp = function (item, $event) {
+                var idx = $scope.rules.indexOf(item);
                 if (!$scope.isFirst(item)) {
-                    var idx = $scope.rules.indexOf(item);
                     var temp = $scope.rules[idx - 1];
                     $scope.rules[idx - 1] = item;
                     $scope.rules[idx] = temp;
                 }
+                var btnTarget = "#order-down-1";
+                if (idx == 1) {
+                    setTimeout(function () {
+                        $(btnTarget).focus();
+                    }, 500);
+                }
+                else {
+                    btnTarget = "#order-up-" + idx;
+                    setTimeout(function () {
+                        console.log(btnTarget);
+                        $(btnTarget).focus();
+                    }, 500);
+                }
+                //$scope.setFocus($event, first);
             };
-            $scope.moveDown = function (item) {
+            $scope.moveDown = function (item, $event) {
+                var idx = $scope.rules.indexOf(item);
+                var pos = idx + 1;
+                if (pos == $scope.rules.length - 1) {
+                    var btnTarget = "#order-up-" + $scope.rules.length;
+                    setTimeout(function () {
+                        $(btnTarget).focus();
+                    }, 500);
+                }
                 if (!$scope.isLast(item)) {
-                    var idx = $scope.rules.indexOf(item);
                     var temp = $scope.rules[idx + 1];
                     $scope.rules[idx + 1] = item;
                     $scope.rules[idx] = temp;
@@ -62,15 +86,26 @@ var AIPUI;
                 }
                 return false;
             };
-            $scope.removeRule = function (item) {
+            $scope.removeRule = function (item, $event) {
                 var idx = $scope.rules.indexOf(item);
+                var btnTarget;
+                if (idx == 0) {
+                    btnTarget = "#delete-" + 1;
+                }
+                else {
+                    var futureLen = $scope.rules.length - 1;
+                    btnTarget = "#delete-" + futureLen;
+                }
                 if (idx > -1) {
                     $scope.rules.splice(idx, 1);
+                    setTimeout(function () {
+                        $(btnTarget).focus();
+                    }, 500);
                 }
             };
         };
         return AIPStatusRuleDirective;
-    }());
+    })();
     AIPUI.AIPStatusRuleDirective = AIPStatusRuleDirective;
 })(AIPUI || (AIPUI = {}));
 register("bannerAIPUI").directive("aipStatusRule", AIPUI.AIPStatusRuleDirective);

@@ -256,6 +256,7 @@ var bannerAIPApp = angular.module("bannerAIP", [
             //expose message.properties values for taglib
             //TODO:: find better way to handle this.
             //TODO:: use array and parse array in taglib
+
             $.i18n.prop("aip.welcome");
             $.i18n.prop("aip.welcome.text");
             $.i18n.prop("aip.common.baseline");
@@ -361,7 +362,7 @@ var bannerAIPApp = angular.module("bannerAIP", [
             $.i18n.prop("aip.admin.action.open.tab.content.edit");
             $.i18n.prop("aip.admin.action.open.tab.content.templateSelect");
             $.i18n.prop("aip.admin.action.open.tab.content.templateContent");
-
+            $.i18n.prop("aip.admin.action.open.tab.content.templatePlaceholder");
             $.i18n.prop("aip.admin.status");
             $.i18n.prop("aip.admin.status.description");
             $.i18n.prop("aip.admin.status.add");
@@ -376,6 +377,7 @@ var bannerAIPApp = angular.module("bannerAIP", [
             $.i18n.prop("aip.admin.status.rules.table.instructions.block.link");
             $.i18n.prop("aip.admin.status.rules.table.header.responseOptionText");
             $.i18n.prop("aip.admin.status.rules.table.header.status");
+            $.i18n.prop("aip.admin.status.rules.table.header.blocks");
             $.i18n.prop("aip.admin.status.rules.table.form.label");
             $.i18n.prop("aip.admin.status.rules.table.form.value");
             $.i18n.prop("aip.admin.status.rules.table.form.add");
@@ -422,6 +424,7 @@ var bannerAIPApp = angular.module("bannerAIP", [
             $.i18n.prop("aip.user.detail.button.return");
 
             $.i18n.prop("aip.operation.not.permitted");
+
 
             $templateCache.put("adminActionItemOpenOverview.html",
                 '<div class="actionItemElement actionItemDetail col-xs-12 col-sm-8"> \

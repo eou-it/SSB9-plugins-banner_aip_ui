@@ -26,13 +26,16 @@
     <div class="actionItemContent row" ng-if="!vm.isNoTemplate() && vm.templateSelect">
         <div class="contentContainer">
             <div class="row input-actionItem">
-                <label for="actionItemTemplate" class="templateSelect required" id="actionItemTemplateSelector">{{'aip.admin.action.open.tab.content.templateContent'|i18n_aip}}</label>
+                <label for="actionItemTemplate" class="templateSelect required" id="actionItemTemplateSelector">{{'aip.admin.action.open.tab.content.templateSelect'|i18n_aip}} {{'aip.character.astrick'|i18n_aip}}</label>
             </div>
             <div class="row">
-                <select id="actionItemTemplate" class="actionItemSelect" xe-data="" aria-label="Template" required aria-required="true" ng-model="vm.selectedTemplate" ng-change="vm.getRules()">
-                    <option ng-repeat="item in vm.templates" value="{{item.id}}">{{item.title}}
-                        ({{vm.templateSource}})</option>
-                </select>
+                <div class="col-sm-4">
+                    <select id="actionItemTemplate" class="actionItemSelect form-control" xe-data="" required aria-required="true" ng-model="vm.selectedTemplate" ng-change="vm.getRules()">
+                        <option selected="selected" disabled selected value="">{{"aip.admin.action.open.tab.content.templatePlaceholder"|i18n_aip}}</option>
+                        <option ng-repeat="item in vm.templates" value="{{item.id}}">{{item.title}}
+                            ({{vm.templateSource}})</option>
+                    </select>
+                </div>
             </div>
         </div>
 
@@ -42,8 +45,7 @@
                 <label for="templateContent" class="titleValue" id="template-content">{{vm.actionItem.actionItemTemplateName}} {{'aip.common.text.content'|i18n_aip}}</label>
             </div>
             <div class="row">
-                <textarea id="templateContent" ng-required="true" aria-required="true" name="templateContent" ckeditor="ckEditorConfig"
-                          ng-model="vm.actionItem.actionItemContent"></textarea>
+                <textarea id="templateContent" ng-required="true" aria-required="true" name="templateContent" ckeditor="ckEditorConfig" ng-model="vm.actionItem.actionItemContent"></textarea>
             </div>
 
             <div class="contentContainer">
@@ -53,12 +55,12 @@
                 </div>
             </div>
         </div>
-        <div class="groupControl">
+        <div class="actionControl">
             <div class="row">
-                <div class="col-sm-offset-8 col-xs-6 col-sm-2 groupButton">
+                <div class="col-sm-offset-8 col-xs-6 col-sm-2 actionButton">
                     <button name="Cancel" type="button" class="btn btn-default" ng-click="vm.cancel('content')">{{"aip.common.cancel"|i18n_aip}}</button>
                 </div>
-                <div class="col-xs-6 col-sm-2 groupButton">
+                <div class="col-xs-6 col-sm-2 actionButton">
                     <button type="button" name="Save" class="btn btn-primary" ng-disabled="!vm.validateActionItemRule()" ng-click="vm.saveTemplate()">
                         {{"aip.common.saveandreturn"|i18n_aip}}
                     </button>
@@ -85,7 +87,8 @@
             </div>
             <div class="row">
                 <div class="col-xs-12 col-sm-8">
-                    {{vm.actionItem.actionItemTemplateName||'aip.admin.action.open.tab.content.templateContent'|i18n_aip}} ({{vm.templateSource}})</span>
+                    <div class="templateText">
+                    {{vm.actionItem.actionItemTemplateName||'aip.admin.action.open.tab.content.templateContent'|i18n_aip}} ({{vm.templateSource}})</div>
                 </div>
             </div>
             <div class="row">
@@ -102,18 +105,18 @@
 
             <div class="row">
                 <div class="col-xs-12 col-sm-12">
-                    <h2>{{'aip.common.text.statusRules'|i18n_aip}}</h2>
+                    <h2>{{'aip.admin.status.rules.table.heading'|i18n_aip}}</h2>
                     <div class="contentContainer" ng-if="vm.rules.length>0">
                         <table class="ruleListReadOnly">
                             <caption aria-label="Action Item Response Options">{{'aip.admin.status.rules.table.caption'|i18n_aip}}</caption>
                             <thead>
                                 <th class="ruleLabelText">{{'aip.admin.status.rules.table.header.responseOptionText'|i18n_aip}}</th>
                                 <th class="ruleStatus">{{'aip.admin.status.rules.table.header.status'|i18n_aip}}</th>
-                                <th aria-hidden></th>
+                                <td aria-label="{{'aip.admin.status.rules.table.header.blocks'|i18n_aip}}"></td>
                             </thead>
                             <tbody>
                                 <tr ng-repeat="rule in vm.rules">
-                                    <td data-label="{{'aip.admin.status.rules.table.header.responseOptionText'|i18n_aip}}">{{rule.statusRuleLabelText}}</td>
+                                    <td data-label="{{'aip.admin.status.rules.table.header.responseOptionText'|i18n_aip}}" data-ng-bind-html="vm.trustAsHtml(rule.statusRuleLabelText)"></td>
                                     <td data-label="{{'aip.admin.status.rules.table.header.status'|i18n_aip}}">
                                         <span class="labels" ng-class="{'rejected':rule.statusBlockProcessInd==='Y', 'approved':rule.statusBlockProcessInd==='N'}">
                                             {{rule.statusName}}

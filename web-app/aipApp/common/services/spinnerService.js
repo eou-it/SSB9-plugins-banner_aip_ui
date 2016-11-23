@@ -13,7 +13,7 @@ var AIP;
         };
         SpinnerService.$inject = [];
         return SpinnerService;
-    }());
+    })();
     AIP.SpinnerService = SpinnerService;
 })(AIP || (AIP = {}));
 register("bannerAIP").service("SpinnerService", AIP.SpinnerService);

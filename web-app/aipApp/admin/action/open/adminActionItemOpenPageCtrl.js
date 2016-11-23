@@ -15,6 +15,10 @@ var AIP;
                 this.actionItem.actionItemContent = this.$sce.trustAsHtml(this.$filter("html")(this.actionItem.actionItemContent)).toString();
                 return this.actionItem.actionItemContent;
             };
+            this.trustActionItemRules = function (statusRuleLabelText) {
+                this.rules.statusRuleLabelText = this.$sce.trustAsHtml(this.$filter("html")(this.rules.statusRuleLabelText)).toString();
+                return this.rules.statusRuleLabelText;
+            };
             $scope.vm = this;
             this.$scope = $scope;
             this.$q = $q;
@@ -87,9 +91,9 @@ var AIP;
             var containerHeight = $(document).height() -
                 $("#breadcrumb-panel").height() -
                 $("#title-panel").height() -
-                $("#header-main-section").height() -
-                // $("#outerFooter").height() - 30;
-                30;
+                $("#header-main-section").height() +
+                $(".status-rules").height() + 250;
+            // $("#outerFooter").height() - 30;
             return { "min-height": containerHeight };
         };
         AdminActionItemOpenPageCtrl.prototype.getSeparatorHeight = function () {
@@ -134,6 +138,9 @@ var AIP;
                 _this.templates = response.data;
                 deferred.resolve(_this.openPanel("content"));
                 _this.getTemplateSource();
+                if (_this.templateSelect) {
+                    _this.selectTemplate();
+                }
             }, function (error) {
                 console.log(error);
             });
@@ -221,18 +228,24 @@ var AIP;
             this.templateSelect = true;
             this.$timeout(function () {
                 var actionItemTemplate = $("#actionItemTemplate");
-                if (actionItemTemplate) {
+                if (_this.actionItem.actionItemTemplateId && actionItemTemplate) {
+                    if ($("#actionItemTemplate > option:selected").val() !== _this.actionItem.actionItemTemplateId.toString()) {
+                        $("#actionItemTemplate > option:selected").remove();
+                    }
+                }
+                /*
+                if(actionItemTemplate) {
                     actionItemTemplate.select2({
                         width: "25em",
-                        minimumResultsForSearch: Infinity
+                        minimumResultsForSearch: Infinity,
+                        placeholderOption:'first'
                     });
-                }
+                }*/
                 $(".actionItemContent").height($(".actionItemElement").height() - $(".xe-tab-nav").height());
                 //TODO: find better and proper way to set defalut value in SELECT2 - current one is just dom object hack.
                 //action item selected temlate
                 if (_this.selectedTemplate) {
                     if (_this.templates[0].sourceInd == "B") {
-                        $(".select2-container.actionItemSelect .select2-chosen")[0].innerHTML = _this.actionItem.actionItemTemplateName + " (" + _this.$filter("i18n_aip")("aip.common.baseline") + ")";
                     }
                 }
             }, 500);
@@ -265,7 +278,6 @@ var AIP;
             this.saving = true;
             allDefer.push(this.adminActionService.saveActionItemTemplate(this.selectedTemplate, this.actionItem.actionItemId, this.actionItem.actionItemContent)
                 .then(function (response) {
-                console.log(response);
                 if (response.data.success) {
                     return { success: true, type: "template", data: response.data.actionItem };
                 }
@@ -283,8 +295,8 @@ var AIP;
             });
             allDefer.push(this.adminActionService.updateActionItemStatusRule(this.rules, this.$state.params.data)
                 .then(function (response) {
-                console.log(response);
                 if (response.data.success) {
+                    _this.getRules();
                     return { success: true };
                 }
                 else {
@@ -330,6 +342,8 @@ var AIP;
                 .then(function (response) {
                 _this.rules = response.data;
                 angular.forEach(_this.rules, function (item) {
+                    //item.statusRuleLabelText = this.trustActionItemRules(item.statusRuleLabelText);
+                    item.statusRuleLabelText = _this.$sce.trustAsHtml(_this.$filter("html")(item.statusRuleLabelText)).toString();
                     item["status"] = {
                         actionItemStatus: item.statusName,
                         actionItemStatusId: item.statusId
@@ -348,6 +362,12 @@ var AIP;
             this.adminActionStatusService.getRuleStatus()
                 .then(function (response) {
                 _this.statuses = response.data;
+                angular.forEach(_this.statuses, function (item) {
+                    if (item.actionItemStatusActive == "N" || item.actionItemStatusDefault == 'Y') {
+                        var index = _this.statuses.indexOf(item);
+                        _this.statuses.splice(index, 1);
+                    }
+                });
                 deferred.resolve();
                 // deferred.resolve(this.openPanel("content"));
             }, function (error) {
@@ -373,7 +393,7 @@ var AIP;
             return false;
         };
         return AdminActionItemOpenPageCtrl;
-    }());
+    })();
     AIP.AdminActionItemOpenPageCtrl = AdminActionItemOpenPageCtrl;
 })(AIP || (AIP = {}));
 register("bannerAIP").controller("AdminActionItemOpenPageCtrl", AIP.AdminActionItemOpenPageCtrl);

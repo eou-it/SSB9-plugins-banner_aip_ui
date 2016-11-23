@@ -11,9 +11,11 @@ $link-color: #275c8a;
   label {
     font-family: "OpenSans-semibold";
   }
+  /* moved to message properties
   label.required:after {
     content: " *";
   }
+  */
   a {
     color: $link-color;
   }
@@ -30,7 +32,7 @@ $link-color: #275c8a;
         color: $text-color;
         padding-bottom: 20px;
         .h2-container {
-          margin-top: 20px;
+          margin-top: 0px;
           margin-bottom: 10px;
         }
         .activity {
@@ -76,19 +78,20 @@ $link-color: #275c8a;
               }
               .actionItemContent {
                 padding: 16px;
-
                 .contentContainer {
-                  margin-top: 20px;
-                  margin-bottom: 20px;
+                  margin: 10px 0 10px 0;
                   .noResponses {
                     font-size: 1.2em;
                     font-weight: bold;
                     padding: 8px;
                   }
+                  .templateText {
+                    margin-bottom: 20px;
+                  }
                   table.ruleListReadOnly {
                     width: 100%;
                     caption {
-                      border:1px solid #DDDDDD;
+                      border: 0 none ;
                       border-bottom:none;
                       text-align: left;
                       font-weight: bolder;
@@ -99,7 +102,7 @@ $link-color: #275c8a;
                     tr {
                       height: 3em;
                       border: solid 1px;
-                      border-color: inherit;
+                      border-color: $border-color;;
                     }
                     th, td {
                       padding: 8px;
@@ -119,9 +122,9 @@ $link-color: #275c8a;
                   }
                 }
                 .contentPreview {
-                  margin: 20px 0;
-                  padding: 20px;
-                  border: 1px solid $border-color;
+                  margin: 15px 0 20px 0;
+                  padding: 10px 10px 15px 10px;
+                  border-bottom: 1px solid $border-color;
                 }
                 .status-rules {
                   .row {
@@ -214,9 +217,10 @@ $link-color: #275c8a;
                   padding: 0;
                   .contentContainer {
                     margin-top: 0;
-                    margin-bottom: 0;
+                    margin-bottom: 0px;
                     .contentPreview {
                       padding: 8px;
+                      border-bottom: 1px solid $border-color;
                     }
                     table.ruleListReadOnly {
                       border: 0;
@@ -239,13 +243,13 @@ $link-color: #275c8a;
                         border: 0;
                         width: 100%;
                         text-indent:8px;
+                        border-color: $border-color;
                         .labels {
                           text-indent: 0;
                         }
                       }
                       td:first-child {
                         border-top: 1px solid;
-                        border-color: #C0C0C0;
                       }
                       td:last-child {
                         border-bottom: 0;

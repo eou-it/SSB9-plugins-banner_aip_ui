@@ -98,6 +98,7 @@ var AIP;
             return request;
         };
         AdminActionService.prototype.updateActionItemStatusRule = function (rules, actionItemId) {
+            console.log(rules);
             var request = this.$http({
                 method: "POST",
                 url: this.ENDPOINT.admin.updateActionItemStatusRule,

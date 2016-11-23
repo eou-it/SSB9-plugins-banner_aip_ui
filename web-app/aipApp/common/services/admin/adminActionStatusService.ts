@@ -20,6 +20,7 @@ module AIP {
         actionItemStatusUserId: string;
         actionItemStatusBlockedProcess: string;
         actionItemStatusActive: string;
+        actionItemStatusDefault: string;
         actionItemStatusSystemRequired: string;
     }
     export interface IActionItemStatusHeader {

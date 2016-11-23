@@ -392,8 +392,8 @@ class AipAdminController {
 
 
     def actionItemStatusList() {
-        def templates = actionItemStatusService.listActionItemStatuses()
-        render templates as JSON
+        def statuses = actionItemStatusService.listActionItemStatuses()
+        render statuses as JSON
     }
 
 

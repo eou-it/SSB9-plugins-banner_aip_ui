@@ -107,6 +107,32 @@ class CsrTagLib {
         }
         out << '};\n'
 
+        /*
+        out << '$.i18n.prop('
+        if (keys) {
+            def javaScriptProperties = []
+            keys.sort().each {
+                String msg = "${g.message( code: it )}"
+                // Assume the key was not found.  Look to see if it exists in the bundle
+                if (msg == it) {
+                    def value = DateAndDecimalUtils.properties( RequestContextUtils.getLocale( request ) )[it]
+                    if (value) {
+                        msg = value
+                    }
+                }
+                if (msg && it != msg) {
+                    msg = encodeHTML( msg )
+                    javaScriptProperties << "\"$it\": \"$msg\""
+                }
+            }
+            out << javaScriptProperties.join( "," )
+        }
+        out << ');\n'
+        */
+
+
+
+
         ///////////////////
         //TODO:: delete below test code
 
