@@ -11,9 +11,11 @@ $link-color: #275c8a;
   label {
     font-family: "OpenSans-semibold";
   }
+  /* moved to message properties
   label.required:after {
     content: " *";
   }
+  */
   a {
     color: $link-color;
   }

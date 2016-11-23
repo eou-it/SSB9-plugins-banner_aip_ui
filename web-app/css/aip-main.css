@@ -413,11 +413,14 @@ aip-list .aip-list-container {
 .actionItemOpenContainer {
   border: 1px solid #C0C0C0;
   background-color: #ffffff;
-  height: 100%; }
+  height: 100%;
+  /* moved to message prop
+  label.required:after {
+    content: " *";
+  }
+  */ }
   .actionItemOpenContainer label {
     font-family: "OpenSans-semibold"; }
-  .actionItemOpenContainer label.required:after {
-    content: " *"; }
   .actionItemOpenContainer a {
     color: #275c8a; }
   .actionItemOpenContainer .row {

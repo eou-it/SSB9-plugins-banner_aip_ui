@@ -26,7 +26,7 @@
     <div class="actionItemContent row" ng-if="!vm.isNoTemplate() && vm.templateSelect">
         <div class="contentContainer">
             <div class="row input-actionItem">
-                <label for="actionItemTemplate" class="templateSelect required" id="actionItemTemplateSelector">{{'aip.admin.action.open.tab.content.templateSelect'|i18n_aip}}</label>
+                <label for="actionItemTemplate" class="templateSelect required" id="actionItemTemplateSelector">{{'aip.admin.action.open.tab.content.templateSelect'|i18n_aip}} {{'aip.character.astrick'|i18n_aip}}</label>
             </div>
             <div class="row">
                 <div class="col-sm-4">
@@ -35,9 +35,7 @@
                         <option ng-repeat="item in vm.templates" value="{{item.id}}">{{item.title}}
                             ({{vm.templateSource}})</option>
                     </select>
-
                 </div>
-
             </div>
         </div>
 
