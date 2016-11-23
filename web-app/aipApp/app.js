@@ -377,6 +377,7 @@ var bannerAIPApp = angular.module("bannerAIP", [
             $.i18n.prop("aip.admin.status.rules.table.instructions.block.link");
             $.i18n.prop("aip.admin.status.rules.table.header.responseOptionText");
             $.i18n.prop("aip.admin.status.rules.table.header.status");
+            $.i18n.prop("aip.admin.status.rules.table.header.blocks");
             $.i18n.prop("aip.admin.status.rules.table.form.label");
             $.i18n.prop("aip.admin.status.rules.table.form.value");
             $.i18n.prop("aip.admin.status.rules.table.form.add");
