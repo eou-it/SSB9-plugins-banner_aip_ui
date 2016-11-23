@@ -15,6 +15,10 @@ var AIP;
                 this.actionItem.actionItemContent = this.$sce.trustAsHtml(this.$filter("html")(this.actionItem.actionItemContent)).toString();
                 return this.actionItem.actionItemContent;
             };
+            this.trustActionItemRules = function (statusRuleLabelText) {
+                this.rules.statusRuleLabelText = this.$sce.trustAsHtml(this.$filter("html")(this.rules.statusRuleLabelText)).toString();
+                return this.rules.statusRuleLabelText;
+            };
             $scope.vm = this;
             this.$scope = $scope;
             this.$q = $q;
@@ -339,6 +343,8 @@ var AIP;
                 .then(function (response) {
                 _this.rules = response.data;
                 angular.forEach(_this.rules, function (item) {
+                    //item.statusRuleLabelText = this.trustActionItemRules(item.statusRuleLabelText);
+                    item.statusRuleLabelText = _this.$sce.trustAsHtml(_this.$filter("html")(item.statusRuleLabelText)).toString();
                     item["status"] = {
                         actionItemStatus: item.statusName,
                         actionItemStatusId: item.statusId
@@ -360,11 +366,9 @@ var AIP;
                 angular.forEach(_this.statuses, function (item) {
                     if (item.actionItemStatusActive == "N") {
                         var index = _this.statuses.indexOf(item);
-                        console.log(index);
                         _this.statuses.splice(index, 1);
                     }
                 });
-                console.log(_this.statuses);
                 deferred.resolve();
                 // deferred.resolve(this.openPanel("content"));
             }, function (error) {
@@ -390,7 +394,7 @@ var AIP;
             return false;
         };
         return AdminActionItemOpenPageCtrl;
-    })();
+    }());
     AIP.AdminActionItemOpenPageCtrl = AdminActionItemOpenPageCtrl;
 })(AIP || (AIP = {}));
 register("bannerAIP").controller("AdminActionItemOpenPageCtrl", AIP.AdminActionItemOpenPageCtrl);

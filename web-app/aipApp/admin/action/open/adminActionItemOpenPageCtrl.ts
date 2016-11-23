@@ -249,6 +249,12 @@ module AIP {
             return this.actionItem.actionItemContent;
         }
 
+        trustActionItemRules = function(statusRuleLabelText) {
+            this.rules.statusRuleLabelText = this.$sce.trustAsHtml(this.$filter("html")(this.rules.statusRuleLabelText)).toString();
+            return this.rules.statusRuleLabelText;
+        }
+
+
         selectTemplate() {
             this.templateSelect = true;
             this.$timeout(() => {
@@ -369,6 +375,8 @@ module AIP {
                 .then((response) => {
                     this.rules = response.data;
                     angular.forEach(this.rules, (item) => {
+                        //item.statusRuleLabelText = this.trustActionItemRules(item.statusRuleLabelText);
+                        item.statusRuleLabelText = this.$sce.trustAsHtml(this.$filter("html")(item.statusRuleLabelText)).toString();
                         item["status"] = {
                             actionItemStatus: item.statusName,
                             actionItemStatusId: item.statusId
@@ -391,12 +399,9 @@ module AIP {
                     angular.forEach(this.statuses, (item) => {
                         if (item.actionItemStatusActive == "N") {
                             var index = this.statuses.indexOf(item);
-                            console.log(index);
                             this.statuses.splice(index, 1);
                         }
                     });
-
-                    console.log(this.statuses);
                     deferred.resolve();
                     // deferred.resolve(this.openPanel("content"));
                 }, (error) => {

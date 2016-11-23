@@ -47,8 +47,7 @@
                 <label for="templateContent" class="titleValue" id="template-content">{{vm.actionItem.actionItemTemplateName}} {{'aip.common.text.content'|i18n_aip}}</label>
             </div>
             <div class="row">
-                <textarea id="templateContent" ng-required="true" aria-required="true" name="templateContent" ckeditor="ckEditorConfig"
-                          ng-model="vm.actionItem.actionItemContent"></textarea>
+                <textarea id="templateContent" ng-required="true" aria-required="true" name="templateContent" ckeditor="ckEditorConfig" ng-model="vm.actionItem.actionItemContent"></textarea>
             </div>
 
             <div class="contentContainer">
@@ -119,7 +118,7 @@
                             </thead>
                             <tbody>
                                 <tr ng-repeat="rule in vm.rules">
-                                    <td data-label="{{'aip.admin.status.rules.table.header.responseOptionText'|i18n_aip}}">{{rule.statusRuleLabelText}}</td>
+                                    <td data-label="{{'aip.admin.status.rules.table.header.responseOptionText'|i18n_aip}}" data-ng-bind-html="vm.trustAsHtml(rule.statusRuleLabelText)"></td>
                                     <td data-label="{{'aip.admin.status.rules.table.header.status'|i18n_aip}}">
                                         <span class="labels" ng-class="{'rejected':rule.statusBlockProcessInd==='Y', 'approved':rule.statusBlockProcessInd==='N'}">
                                             {{rule.statusName}}
