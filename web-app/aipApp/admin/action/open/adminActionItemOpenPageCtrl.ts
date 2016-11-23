@@ -261,8 +261,6 @@ module AIP {
                 var actionItemTemplate:any = $("#actionItemTemplate");
                 if (this.actionItem.actionItemTemplateId && actionItemTemplate ) {
 
-                    console.log($("#actionItemTemplate > option:selected" ).val());
-
                     if ( $("#actionItemTemplate > option:selected" ).val() !== this.actionItem.actionItemTemplateId.toString() ) {
                         $("#actionItemTemplate > option:selected").remove();
                     }

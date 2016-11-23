@@ -229,7 +229,6 @@ var AIP;
             this.$timeout(function () {
                 var actionItemTemplate = $("#actionItemTemplate");
                 if (_this.actionItem.actionItemTemplateId && actionItemTemplate) {
-                    console.log($("#actionItemTemplate > option:selected").val());
                     if ($("#actionItemTemplate > option:selected").val() !== _this.actionItem.actionItemTemplateId.toString()) {
                         $("#actionItemTemplate > option:selected").remove();
                     }
@@ -394,7 +393,7 @@ var AIP;
             return false;
         };
         return AdminActionItemOpenPageCtrl;
-    }());
+    })();
     AIP.AdminActionItemOpenPageCtrl = AdminActionItemOpenPageCtrl;
 })(AIP || (AIP = {}));
 register("bannerAIP").controller("AdminActionItemOpenPageCtrl", AIP.AdminActionItemOpenPageCtrl);

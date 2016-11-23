@@ -53,6 +53,9 @@ module AIPUI {
                     var temp = $scope.rules[idx - 1];
                     $scope.rules[idx - 1] = item;
                     $scope.rules[idx] = temp;
+                   // var elemId = idx + 1
+                   // $("#sort-"+elemId).focus();
+
                 }
             }
             $scope.moveDown = function(item) {

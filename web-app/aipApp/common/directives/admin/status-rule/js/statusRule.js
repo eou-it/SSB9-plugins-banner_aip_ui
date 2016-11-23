@@ -68,7 +68,7 @@ var AIPUI;
             };
         };
         return AIPStatusRuleDirective;
-    }());
+    })();
     AIPUI.AIPStatusRuleDirective = AIPStatusRuleDirective;
 })(AIPUI || (AIPUI = {}));
 register("bannerAIPUI").directive("aipStatusRule", AIPUI.AIPStatusRuleDirective);
