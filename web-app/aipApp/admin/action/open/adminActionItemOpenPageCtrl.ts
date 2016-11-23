@@ -387,6 +387,16 @@ module AIP {
             this.adminActionStatusService.getRuleStatus()
                 .then((response) => {
                     this.statuses = response.data;
+
+                    angular.forEach(this.statuses, (item) => {
+                        if (item.actionItemStatusActive == "N") {
+                            var index = this.statuses.indexOf(item);
+                            console.log(index);
+                            this.statuses.splice(index, 1);
+                        }
+                    });
+
+                    console.log(this.statuses);
                     deferred.resolve();
                     // deferred.resolve(this.openPanel("content"));
                 }, (error) => {
