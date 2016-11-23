@@ -27,7 +27,7 @@ class AipAdminController {
 
     def actionItemDetailService
 
-    def actionItemDetailCompositeService
+    def actionItemCompositeService
 
     def actionItemStatusService
 
@@ -542,7 +542,7 @@ class AipAdminController {
 
     def actionItemStatusRulesByActionItemId() {
         def actionItemId = params.actionItemId
-        def actionItemStatusRuleReadOnlies = actionItemStatusRuleReadOnlyService.getActionItemStatusRulesROByActionItemId( Long.parseLong(actionItemId))
+        def actionItemStatusRuleReadOnlies = actionItemStatusRuleReadOnlyService.getActionItemStatusRulesROByActionItemId( actionItemId )
         render actionItemStatusRuleReadOnlies as JSON
     }
 
@@ -613,5 +613,54 @@ class AipAdminController {
 
         render model as JSON
 
+    }
+
+
+    def updateActionItemDetailsAndStatusRules() {
+        def jsonObj = request.JSON
+
+        def user = SecurityContextHolder?.context?.authentication?.principal
+        if (!user.pidm) {
+            response.sendError( 403 )
+            return
+        }
+        def aipUser = AipControllerUtils.getPersonForAip( params, user.pidm )
+        def inputRules = jsonObj.rules
+        def templateId = jsonObj.templateId.toInteger()
+        def actionItemId = jsonObj.actionItemId.toInteger()
+        def actionItemDetailText = jsonObj.actionItemContent
+
+        def message
+        def success = false
+        def model
+        try {
+            Map actionItemInfo = actionItemCompositeService.updateDetailsAndStatusRules( aipUser, inputRules, templateId, actionItemId,
+                    actionItemDetailText )
+
+            if (actionItemInfo['actionItemRO'] && actionItemInfo['statusRules']) {
+                success = true
+            }
+            model = [
+                    success   : success,
+                    message   : message,
+                    actionItem: actionItemInfo['actionItemRO'],
+                    rules     : actionItemInfo['statusRules']
+            ]
+        } catch (ApplicationException ae) {
+            model = [
+                    success   : success,
+                    message   : MessageUtility.message( ae.getDefaultMessage() ),
+                    actionItem: "",
+                    rules     : ""
+            ]
+        } catch (Exception e) {
+            model = [
+                    success   : success,
+                    message   : message,
+                    actionItem: "",
+                    rules     : ""
+            ]
+        }
+        render model as JSON
     }
 }

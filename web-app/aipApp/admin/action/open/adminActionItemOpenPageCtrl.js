@@ -263,29 +263,16 @@ var AIP;
             //TODO:: implement to save rules
             var allDefer = [];
             this.saving = true;
-            allDefer.push(this.adminActionService.saveActionItemTemplate(this.selectedTemplate, this.actionItem.actionItemId, this.actionItem.actionItemContent)
-                .then(function (response) {
-                console.log(response);
-                if (response.data.success) {
-                    return { success: true, type: "template", data: response.data.actionItem };
-                }
-                else {
-                    return { success: false };
-                }
-            }, function (err) {
-                console.log(err);
-                return { success: false };
-            }));
             // set seq order in rule array with it's index
             angular.forEach(this.rules, function (item) {
                 item.statusRuleSeqOrder = _this.rules.indexOf(item);
                 item.statusId = item.status.actionItemStatusId;
             });
-            allDefer.push(this.adminActionService.updateActionItemStatusRule(this.rules, this.$state.params.data)
+            allDefer.push(this.adminActionService.updateActionItemDetailsAndStatusRules(this.selectedTemplate, this.actionItem.actionItemId, this.actionItem.actionItemContent, this.rules)
                 .then(function (response) {
                 console.log(response);
                 if (response.data.success) {
-                    return { success: true };
+                    return { success: true, type: "template", data: response.data.actionItem };
                 }
                 else {
                     return { success: false };
@@ -373,7 +360,7 @@ var AIP;
             return false;
         };
         return AdminActionItemOpenPageCtrl;
-    }());
+    })();
     AIP.AdminActionItemOpenPageCtrl = AdminActionItemOpenPageCtrl;
 })(AIP || (AIP = {}));
 register("bannerAIP").controller("AdminActionItemOpenPageCtrl", AIP.AdminActionItemOpenPageCtrl);

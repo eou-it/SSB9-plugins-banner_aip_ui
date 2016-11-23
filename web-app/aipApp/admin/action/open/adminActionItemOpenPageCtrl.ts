@@ -284,67 +284,56 @@ module AIP {
                 });
             return deferred.promise;
         }
+
         saveTemplate() {
             //TODO:: implement to save rules
             var allDefer = [];
             this.saving = true;
-            allDefer.push(this.adminActionService.saveActionItemTemplate(this.selectedTemplate, this.actionItem.actionItemId, this.actionItem.actionItemContent)
-                .then((response:any) => {
-                    console.log(response);
-                    if(response.data.success) {
-                        return {success: true, type: "template", data: response.data.actionItem};
-                    } else {
-                        return {success: false};
-                    }
-                }, (err) => {
-                    console.log(err);
-                    return {success: false};
-                }));
             // set seq order in rule array with it's index
-            angular.forEach(this.rules, (item) => {
-                item.statusRuleSeqOrder = this.rules.indexOf(item)
+            angular.forEach( this.rules, ( item ) => {
+                item.statusRuleSeqOrder = this.rules.indexOf( item )
                 item.statusId = item.status.actionItemStatusId;
-            });
-            allDefer.push(this.adminActionService.updateActionItemStatusRule(this.rules, this.$state.params.data)
-                .then((response: any) => {
-                    console.log(response);
-                    if(response.data.success) {
-                        return {success: true};
-                    } else {
+            } );
+            allDefer.push( this.adminActionService.updateActionItemDetailsAndStatusRules( this.selectedTemplate, this.actionItem.actionItemId, this.actionItem.actionItemContent, this.rules )
+                    .then( ( response:any ) => {
+                        console.log( response );
+                        if (response.data.success) {
+                            return {success: true, type: "template", data: response.data.actionItem};
+                        } else {
+                            return {success: false};
+                        }
+                    }, ( err )=> {
+                        console.log( err );
                         return {success: false};
-                    }
-                }, (err)=> {
-                    console.log(err);
-                    return {success: false};
-                }));
-            this.$q.all(allDefer)
-                .then((response:any)=> {
+                    } ) );
+            this.$q.all( allDefer )
+                .then( ( response:any )=> {
                     this.saving = false;
                     var notiParams = {};
-                    var errorItem = response.filter((item)=>{
+                    var errorItem = response.filter( ( item )=> {
                         return item.success === false;
-                    });
-                    var newData = response.filter((item) => {
+                    } );
+                    var newData = response.filter( ( item ) => {
                         return item.type && item.type === "template";
-                    });
-                    if(errorItem.length === 0) {
+                    } );
+                    if (errorItem.length === 0) {
                         notiParams = {
                             notiType: "saveSuccess",
                             data: newData[0].data
                         };
                         this.handleNotification( notiParams );
-                        this.templateSelect =  false;
+                        this.templateSelect = false;
                         this.actionItem = newData[0].data;
                         this.trustActionItemContent();
                         this.openContentPanel();
                     } else {
                         //this.saveErrorCallback(response.data.message); //todo: add callback error on actionitem open page
-                        console.log("error:");
+                        console.log( "error:" );
                     }
-                }, (err) => {
-                    console.log(err);
-                    this.saving=false;
-                });
+                }, ( err ) => {
+                    console.log( err );
+                    this.saving = false;
+                } );
         }
 
         getRules() {
