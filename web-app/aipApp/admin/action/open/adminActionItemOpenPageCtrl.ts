@@ -395,7 +395,7 @@ module AIP {
                     this.statuses = response.data;
 
                     angular.forEach(this.statuses, (item) => {
-                        if (item.actionItemStatusActive == "N") {
+                        if (item.actionItemStatusActive == "N" || item.actionItemStatusDefault == 'Y' ) {
                             var index = this.statuses.indexOf(item);
                             this.statuses.splice(index, 1);
                         }

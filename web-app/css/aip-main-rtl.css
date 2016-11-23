@@ -557,13 +557,15 @@ aip-list .aip-list-container  {
     padding:16px;
 }
             .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .contentContainer  {
-    margin-top:20px;
-    margin-bottom:20px;
+    margin:10px 0 10px 0;
 }
               .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .contentContainer .noResponses  {
     font-size:1.2em;
     font-weight:bold;
     padding:8px;
+}
+              .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .contentContainer .templateText  {
+    margin-bottom:20px;
 }
               .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .contentContainer table.ruleListReadOnly  {
     width:100%;
@@ -596,8 +598,9 @@ aip-list .aip-list-container  {
     width:60%;
 }
             .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .contentPreview  {
-    margin:20px 0;
-    padding:5px;
+    margin:15px 0 20px 0;
+    padding:10px 10px 15px 10px;
+    border-bottom:1px solid #C0C0C0;
 }
             .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .status-rules .row .headings  {
     font-size:1em;
@@ -622,16 +625,16 @@ aip-list .aip-list-container  {
     font-family:"OpenSans-semibold";
     margin:20px 15px 0 0;
 }
-            .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .groupControl  {
+            .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .actionControl  {
     width:100%;
     bottom:10px;
     margin-bottom:15px;
     height:5em;
 }
-              .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .groupControl .groupButton  {
+              .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .actionControl .actionButton  {
     text-align:center;
 }
-                .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .groupControl .groupButton button  {
+                .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .actionControl .actionButton button  {
     width:100%;
     max-width:200px;
 }
@@ -1025,10 +1028,11 @@ fieldset[disabled] .btn-primary.active, .btn-primary  {
 }
       .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .contentContainer  {
     margin-top:0;
-    margin-bottom:0;
+    margin-bottom:0px;
 }
         .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .contentContainer .contentPreview  {
     padding:8px;
+    border-bottom:1px solid #C0C0C0;
 }
         .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .contentContainer table.ruleListReadOnly  {
     border:0;

@@ -363,7 +363,7 @@ var AIP;
                 .then(function (response) {
                 _this.statuses = response.data;
                 angular.forEach(_this.statuses, function (item) {
-                    if (item.actionItemStatusActive == "N") {
+                    if (item.actionItemStatusActive == "N" || item.actionItemStatusDefault == 'Y') {
                         var index = _this.statuses.indexOf(item);
                         _this.statuses.splice(index, 1);
                     }
