@@ -3,6 +3,7 @@
 @import '../aipApp/common/directives/item-detail/css/itemDetail';
 @import '../aipApp/admin/group/add/adminGroupAddPage';
 @import '../aipApp/admin/group/list/adminGroupListPage';
+@import '../aipApp/admin/group/order/adminGroupOrderPage';
 @import '../aipApp/admin/action/list/adminActionListPage';
 @import '../aipApp/admin/action/add/adminActionItemAddPage';
 @import '../aipApp/admin/action/open/adminActionItemOpenPage';
@@ -285,6 +286,71 @@ fieldset[disabled] .btn-primary:active,
 fieldset[disabled] .btn-primary.active, .btn-primary {
   background-color: #275c8a;
 }
+
+
+/* draggable targets */
+[data-draggable="target"] {
+  float: left;
+  list-style-type: none;
+  width: 100%;
+  height: 13em;
+  overflow-y: auto;
+  margin: 0 0.5em 0.5em 0;
+  padding: 0.5em;
+  border: 2px solid #888;
+  border-radius: 0.2em;
+  background: #fefefe;
+  color: #555; }
+
+/* drop target state */
+[data-draggable="target"][aria-dropeffect="move"] {
+  border-color: #68b;
+  background: #fff; }
+
+/* drop target focus and dragover state */
+[data-draggable="target"][aria-dropeffect="move"]:focus,
+[data-draggable="target"][aria-dropeffect="move"].dragover {
+  outline: none;
+  box-shadow: 0 0 0 1px #fff, 0 0 0 3px #68b; }
+
+/* draggable items */
+[data-draggable="item"] {
+  display: block;
+  list-style-type: none;
+  border: 1px solid #bfbfbf;
+  margin: 0 0 2px 0;
+  padding: 0.2em 0.4em;
+  border-radius: 0.2em;
+  cursor: pointer;
+  line-height: 2em; }
+
+/* items focus state */
+[data-draggable="item"]:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px #68b, inset 0 0 0 1px #ddd; }
+
+/* items grabbed state */
+[data-draggable="item"][aria-grabbed="true"] {
+  background: #8ad;
+  color: #fff; }
+
+ol.available > li > button, ol.available > li > span.glyphicon-minus-sign {
+  display: none; }
+
+ol.available > li > span.glyphicon-plus-sign, ol.available > li > span.glyphicon-chevron-right {
+  float: right;
+  padding-right: 15px;
+  padding-top: 5px; }
+
+ol.selected-group > li > span.glyphicon-plus-sign {
+  display: none; }
+
+ol.selected-group > li {
+  padding-right: 10px; }
+
+ol.selected-group > li > button {
+  float: right;
+  margin-right: 5px; }
 
 
 
