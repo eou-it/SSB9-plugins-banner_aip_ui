@@ -27,6 +27,8 @@ import org.springframework.security.core.context.SecurityContextHolder
 class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
     def selfServiceBannerAuthenticationProvider
 
+    def actionItemDetailService
+
     def actionItemGroupService
 
     def actionItemReadOnlyService
@@ -1119,5 +1121,166 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
         assertEquals( status1.id, statusRules[1].statusRuleId )
 
         assertEquals( statusNew.labelText, "Test add rule" )
+    }
+
+
+    // *** Composite Service Tests --- Save template and status rules ***
+    @Test
+    void updateActionItemDetailsAndStatusRules() { // Uses Composite Service for both details and rules
+        def admin = PersonUtility.getPerson( "CSRSTU002" ) // role: student
+        assertNotNull admin
+
+        def auth = selfServiceBannerAuthenticationProvider.authenticate(
+                new UsernamePasswordAuthenticationToken( admin.bannerId, '111111' ) )
+        SecurityContextHolder.getContext().setAuthentication( auth )
+
+        List<ActionItemTemplate> templates = actionItemTemplateService.listActionItemTemplates()
+        def actionItemTemplate = templates.id[0]
+
+        List<ActionItemStatusRuleReadOnly> probeList = actionItemStatusRuleReadOnlyService.listActionItemStatusRulesRO()
+
+        // make lists of ids and duplicate ids. Set last dup as an id we know has at least two entries
+        def actionItemIdToUse = 0
+        def foundIds = []
+        def foundDups = []
+        probeList.each { it ->
+            def thisId = it.statusRuleActionItemId
+            if (thisId in foundIds) {
+                actionItemIdToUse = thisId
+                foundDups.add( thisId )
+            }
+            foundIds.add( thisId )
+        }
+
+        def requestObj = [:]
+        requestObj.templateId = actionItemTemplate
+        requestObj.actionItemId = actionItemIdToUse
+
+        List<ActionItemStatusRuleReadOnly> statusRules = actionItemStatusRuleReadOnlyService.getActionItemStatusRulesROByActionItemId( actionItemIdToUse )
+
+        def rules = [
+                [
+                        statusRuleId       : statusRules[0].statusRuleId,
+                        statusRuleSeqOrder : statusRules[0].statusRuleSeqOrder,
+                        statusRuleLabelText: statusRules[0].statusRuleLabelText,
+                        statusId           : statusRules[0].statusId
+
+                ],
+                [
+                        statusRuleSeqOrder : statusRules[0].statusRuleSeqOrder + 1,
+                        statusRuleLabelText: "Test add rule",
+                        statusId           : statusRules[0].statusId
+                ],
+                [
+                        statusRuleId       : statusRules[1].statusRuleId,
+                        statusRuleSeqOrder : statusRules[0].statusRuleSeqOrder + 2,
+                        statusRuleLabelText: statusRules[1].statusRuleLabelText,
+                        statusId           : statusRules[0].statusId
+                ]
+        ]
+
+        requestObj.rules = rules
+
+        controller.request.method = "POST"
+        controller.request.json = requestObj
+
+        controller.updateActionItemDetailsAndStatusRules()
+        def answer = JSON.parse( controller.response.contentAsString ).rules
+
+        def status0 = answer.find { it ->
+            it.id == statusRules[0].statusRuleId
+        }
+        def status1 = answer.find { it ->
+            it.id == statusRules[1].statusRuleId
+        }
+
+        def statusNew = answer.find { it ->
+            it.seqOrder == statusRules[0].statusRuleSeqOrder + 1
+        }
+        assertEquals( answer.size(), 3 )
+
+        assertEquals( status0.seqOrder, statusRules[0].statusRuleSeqOrder )
+        assertEquals( status0.id, statusRules[0].statusRuleId )
+
+        assertEquals( status1.seqOrder, statusRules[1].statusRuleSeqOrder + 1 )
+        assertEquals( status1.id, statusRules[1].statusRuleId )
+
+        assertEquals( statusNew.labelText, "Test add rule" )
+    }
+
+    // Verify transactional. Rules fails, Details rolls back
+    @Test
+    void updateActionItemDetailsButStatusRulesFails() { // Uses Composite Service for both details and rules
+        def admin = PersonUtility.getPerson( "CSRSTU002" ) // role: student
+        assertNotNull admin
+
+        def auth = selfServiceBannerAuthenticationProvider.authenticate(
+                new UsernamePasswordAuthenticationToken( admin.bannerId, '111111' ) )
+        SecurityContextHolder.getContext().setAuthentication( auth )
+
+        List<ActionItemTemplate> templates = actionItemTemplateService.listActionItemTemplates()
+        def actionItemTemplate = templates.id[0]
+
+        List<ActionItemStatusRuleReadOnly> probeList = actionItemStatusRuleReadOnlyService.listActionItemStatusRulesRO()
+
+        // make lists of ids and duplicate ids. Set last dup as an id we know has at least two entries
+        def actionItemIdToUse = 0
+        def foundIds = []
+        def foundDups = []
+        probeList.each { it ->
+            def thisId = it.statusRuleActionItemId
+            if (thisId in foundIds) {
+                actionItemIdToUse = thisId
+                foundDups.add( thisId )
+            }
+            foundIds.add( thisId )
+        }
+
+        def requestObj = [:]
+        requestObj.templateId = actionItemTemplate
+        requestObj.actionItemId = actionItemIdToUse
+
+        // look at detail. verify our change was actually a change
+        ActionItemDetail originalAid = actionItemDetailService.listActionItemDetailById( actionItemIdToUse )
+        def originalTemplateId = originalAid.actionItemTemplateId
+
+        // should start as null, attempt change to '1'
+        assertNull( originalTemplateId )
+        assertNotEquals( originalTemplateId,  actionItemTemplate)
+
+        List<ActionItemStatusRuleReadOnly> statusRules = actionItemStatusRuleReadOnlyService.getActionItemStatusRulesROByActionItemId( actionItemIdToUse )
+
+        def rules = [
+                [
+                        statusRuleId       : statusRules[0].statusRuleId,
+                        statusRuleSeqOrder : statusRules[0].statusRuleSeqOrder,
+                        statusRuleLabelText: null,
+                        statusId           : statusRules[0].statusId
+
+                ],
+                [
+                        statusRuleSeqOrder : statusRules[0].statusRuleSeqOrder + 1,
+                        statusRuleLabelText: "Test add rule",
+                        statusId           : statusRules[0].statusId
+                ],
+                [
+                        statusRuleId       : statusRules[1].statusRuleId,
+                        // TODO: ? set this to +1 to duplicate SeqOrder and entry was persisted. also 'w' went in as '119'. defect?
+                        statusRuleSeqOrder : statusRules[0].statusRuleSeqOrder + 2,
+                        statusRuleLabelText: statusRules[1].statusRuleLabelText,
+                        statusId           : statusRules[0].statusId
+                ]
+        ]
+
+        requestObj.rules = rules
+
+        controller.request.method = "POST"
+        controller.request.json = requestObj
+
+        controller.updateActionItemDetailsAndStatusRules()
+        def answer = JSON.parse( controller.response.contentAsString )
+
+        assertEquals( false, answer.success)
+        assertEquals( "Save failed. The Action Item Label can not be null or empty.", answer.message )
     }
 }
