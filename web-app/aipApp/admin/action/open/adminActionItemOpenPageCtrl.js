@@ -252,6 +252,7 @@ var AIP;
         };
         AdminActionItemOpenPageCtrl.prototype.cancel = function (option) {
             var _this = this;
+            this.init();
             var deferred = this.$q.defer();
             this.adminActionService.getActionItemDetail(this.$state.params.data)
                 .then(function (response) {
@@ -393,7 +394,7 @@ var AIP;
             return false;
         };
         return AdminActionItemOpenPageCtrl;
-    }());
+    })();
     AIP.AdminActionItemOpenPageCtrl = AdminActionItemOpenPageCtrl;
 })(AIP || (AIP = {}));
 register("bannerAIP").controller("AdminActionItemOpenPageCtrl", AIP.AdminActionItemOpenPageCtrl);
