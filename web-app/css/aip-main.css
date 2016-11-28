@@ -581,7 +581,7 @@ ol.selected-group > li > button {
                 margin-top: 30px; } }
             .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .status-rules .add-link {
               font-family: "OpenSans-semibold";
-              margin: 20px 0 0 15px; }
+              margin: 20px 0 20px 15px; }
             .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .actionControl {
               /*position: relative;*/
               width: 100%;
