@@ -23,11 +23,13 @@ var AIP;
                 }
             });
             notifications.on('add', function (e) {
-                if (params.saved == true) {
-                    //$scope.vm.init();
-                    $scope.vm.refreshList();
-                }
-                ;
+                setTimeout(function (e) {
+                    if (params.saved == true) {
+                        //$scope.vm.init();
+                        $scope.vm.refreshList();
+                    }
+                    ;
+                }, 500);
             });
             this.init();
         }
@@ -249,7 +251,7 @@ var AIP;
             notifications.addNotification(n);
         };
         return ListItemPageCtrl;
-    }());
+    })();
     AIP.ListItemPageCtrl = ListItemPageCtrl;
 })(AIP || (AIP = {}));
 register("bannerAIP").controller("ListItemPageCtrl", AIP.ListItemPageCtrl);
