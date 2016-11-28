@@ -41,6 +41,11 @@
                                 <div class="row">
                                     <div class="col-sm-6">
                                         <h2>Available Items</h2>
+                                        <uib-accordion close-others="oneAtATime">
+                                            <uib-accordion-group class="aip-list-container" role="group" is-open="true">
+                                                <uib-accordion-heading id="heading-folder1">
+                                                    <h3>Folder 1</h3>
+                                                </uib-accordion-heading>
                                         <ol data-draggable="target" class="available">
                                             <li data-draggable="item"><span class='glyphicon glyphicon-minus-sign' aria-hidden='true'></span>
                                                 Drug and Alcohol Policy <span class='glyphicon glyphicon-plus-sign' aria-hidden='true'></span></li>
@@ -53,6 +58,29 @@
                                                 <span class='glyphicon glyphicon-minus-sign' aria-hidden='true'></span> Graduation Checklist
                                                 <span class='glyphicon glyphicon-plus-sign' aria-hidden='true'></span></li>
                                         </ol>
+                                                </uib-accordion-group>
+                                            </uib-accordion>
+
+
+                                        <uib-accordion-group class="aip-list-container" role="group" is-open="true">
+                                        <uib-accordion-heading id="heading-folder1">
+                                            <h3>Folder 2</h3>
+                                        </uib-accordion-heading>
+                                        <ol data-draggable="target" class="available">
+                                            <li data-draggable="item"><span class='glyphicon glyphicon-minus-sign' aria-hidden='true'></span>
+                                                Testing 123 <span class='glyphicon glyphicon-plus-sign' aria-hidden='true'></span></li>
+                                            <li data-draggable="item"><span class='glyphicon glyphicon-minus-sign' aria-hidden='true'></span>
+                                                Update my information <span class='glyphicon glyphicon-plus-sign' aria-hidden='true'></span></li>
+                                            <li data-draggable="item">
+                                                <span class='glyphicon glyphicon-minus-sign' aria-hidden='true'></span>
+                                                Register for classes <span class='glyphicon glyphicon-plus-sign' aria-hidden='true'></span></li>
+                                            <li data-draggable="item">
+                                                <span class='glyphicon glyphicon-minus-sign' aria-hidden='true'></span> My Checklist
+                                                <span class='glyphicon glyphicon-plus-sign' aria-hidden='true'></span></li>
+                                        </ol>
+                                        </uib-accordion-group>
+                                        </uib-accordion>
+                                        </uib-accordion>
                                     </div>
                                     <div class="col-sm-6">
                                         <h2>My Group of Items</h2>
