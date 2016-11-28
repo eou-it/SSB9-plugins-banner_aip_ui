@@ -68,10 +68,13 @@ module AIP {
             );
 
             notifications.on('add', function (e) {
-                if (params.saved==true) {
-                    //$scope.vm.init();
-                    $scope.vm.refreshList();
-                };
+                setTimeout(function(e) {
+                    if (params.saved==true) {
+                        //$scope.vm.init();
+                        $scope.vm.refreshList();
+                    };
+
+                }, 500);
             });
 
             this.init();
