@@ -542,7 +542,7 @@ class AipAdminController {
 
     def actionItemStatusRulesByActionItemId() {
         def actionItemId = params.actionItemId
-        def actionItemStatusRuleReadOnlies = actionItemStatusRuleReadOnlyService.getActionItemStatusRulesROByActionItemId( Long.parseLong(actionItemId))
+        def actionItemStatusRuleReadOnlies = actionItemStatusRuleReadOnlyService.getActionItemStatusRulesROByActionItemId( actionItemId )
         render actionItemStatusRuleReadOnlies as JSON
     }
 
