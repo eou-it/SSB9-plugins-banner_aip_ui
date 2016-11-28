@@ -287,12 +287,14 @@ module AIP {
             }, 500);
         }
         cancel(option) {
+            this.init();
             var deferred = this.$q.defer();
             this.adminActionService.getActionItemDetail(this.$state.params.data)
                 .then((response:AIP.IActionItemOpenResponse) => {
                     this.actionItem = response.data.actionItem;
                     this.selectedTemplate = this.actionItem.actionItemTemplateId;
                     this.trustActionItemContent();
+
                     switch(option) {
                         case "content":
                             this.templateSelect = false;
