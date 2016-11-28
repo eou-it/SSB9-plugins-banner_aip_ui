@@ -28,9 +28,8 @@ var AIPUI;
                     statusName: "",
                     status: $scope.status[0]
                 });
-                var btnTarget = "input#reponse-" + $scope.rules.length;
-                console.log($event);
                 setTimeout(function () {
+                    var btnTarget = $("input#response-" + $scope.rules.length);
                     $(btnTarget).focus();
                 }, 500);
             };
@@ -53,7 +52,6 @@ var AIPUI;
                 else {
                     btnTarget = "#order-up-" + idx;
                     setTimeout(function () {
-                        console.log(btnTarget);
                         $(btnTarget).focus();
                     }, 500);
                 }

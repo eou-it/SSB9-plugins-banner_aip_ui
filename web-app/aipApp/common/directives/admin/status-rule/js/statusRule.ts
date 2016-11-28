@@ -43,12 +43,10 @@ module AIPUI {
                         statusName: "",
                         status: $scope.status[0]
                     }
-                );
-                var btnTarget = "input#reponse-" + $scope.rules.length;
-
-                console.log($event);
+                )
 
                 setTimeout(() => {
+                    var btnTarget = $("input#response-"+$scope.rules.length) /*+ $scope.rules.length*/;
                     $(btnTarget).focus();
                 }, 500);
 
@@ -74,7 +72,6 @@ module AIPUI {
                 } else {
                     btnTarget = "#order-up-" + idx;
                     setTimeout(() => {
-                        console.log (btnTarget);
                         $(btnTarget).focus();
                     }, 500);
                 }
@@ -86,6 +83,7 @@ module AIPUI {
 
                 if (pos == $scope.rules.length -1) {
                     var btnTarget = "#order-up-" + $scope.rules.length;
+
                     setTimeout(() => {
                         $(btnTarget).focus();
                     }, 500);

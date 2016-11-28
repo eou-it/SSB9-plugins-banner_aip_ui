@@ -393,7 +393,7 @@ var AIP;
             return false;
         };
         return AdminActionItemOpenPageCtrl;
-    })();
+    }());
     AIP.AdminActionItemOpenPageCtrl = AdminActionItemOpenPageCtrl;
 })(AIP || (AIP = {}));
 register("bannerAIP").controller("AdminActionItemOpenPageCtrl", AIP.AdminActionItemOpenPageCtrl);

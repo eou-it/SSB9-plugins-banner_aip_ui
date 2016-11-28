@@ -37,7 +37,7 @@ var AIP;
             this.$state.go("list");
         };
         return ItemConfirmCtrl;
-    }());
+    })();
     AIP.ItemConfirmCtrl = ItemConfirmCtrl;
 })(AIP || (AIP = {}));
 register("bannerAIP").controller("ItemConfirmCtrl", AIP.ItemConfirmCtrl);
