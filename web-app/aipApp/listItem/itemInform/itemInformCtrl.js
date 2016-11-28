@@ -19,7 +19,7 @@ var AIP;
             this.$uibModalInstance.dismiss('cancel');
         };
         return ItemInformCtrl;
-    }());
+    })();
     AIP.ItemInformCtrl = ItemInformCtrl;
 })(AIP || (AIP = {}));
 register("bannerAIP").controller("ItemInformCtrl", AIP.ItemInformCtrl);
