@@ -40,7 +40,7 @@
                         <h3 ng-if="key==='title'">{{row[key]|i18n_aip}}</h3>
                            <span ng-if="key==='state'">
                             <span ng-class="{'badge pending':key==='state'&&row[key]==='Pending',
-                            'badge approved':key==='state'&&row[key]==='Completed', 'badge rejected':key==='state'&&row[key]==='Rejected' }">
+                            'badge approved':key==='state'&&row[key]==='Completed'||(key==='state'&&row[key]!=='Completed'&&row[key]!=='Rejected'&&row[key]!=='Pending'), 'badge rejected':key==='state'&&row[key]==='Rejected'}">
                             {{row[key]|i18n_aip}}
                             </span>
                         </span>
