@@ -425,6 +425,8 @@ var bannerAIPApp = angular.module("bannerAIP", [
 
             $.i18n.prop("aip.operation.not.permitted");
 
+            $.i18n.prop("progressbar.stats");
+
 
             $templateCache.put("adminActionItemOpenOverview.html",
                 '<div class="actionItemElement actionItemDetail col-xs-12 col-sm-8"> \
