@@ -32,9 +32,7 @@ class CsrTagLib {
     def i18n_aip_setup = { attrs ->
 
         Set keys = []
-        def map = [:]
         grailsApplication.mainContext.getBean( 'messageSource' ).getMergedPluginProperties( LocaleContextHolder.getLocale() ).properties.each { key ->
-            map.put key.key, key.value
             if (key.key.startsWith("aip.")){
                 keys.add( key.key )
             }
