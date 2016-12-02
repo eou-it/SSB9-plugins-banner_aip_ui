@@ -19,7 +19,6 @@ var bannerAIPApp = angular.module("bannerAIP", [
     "extensibility",
     "ui.bootstrap",
     "ngAria",
-    "I18nAIP",
     "ngAnimate",
     "xe-ui-components",
     "bannerAIPUI",
@@ -27,6 +26,7 @@ var bannerAIPApp = angular.module("bannerAIP", [
     "SCEAIP",
     "ngCkeditor",
     "BannerOnAngular",
+    "I18nAIP",
     "pbrun.directives"
     //"xe-ui-components"
     ])
@@ -256,177 +256,9 @@ var bannerAIPApp = angular.module("bannerAIP", [
             //expose message.properties values for taglib
             //TODO:: find better way to handle this.
             //TODO:: use array and parse array in taglib
+            // FIXME: refactor code to namespace to aip.*
 
-            $.i18n.prop("aip.welcome");
-            $.i18n.prop("aip.welcome.text");
-            $.i18n.prop("aip.common.baseline");
-            $.i18n.prop("aip.common.local");
-            $.i18n.prop("aip.common.title");
-            $.i18n.prop("aip.common.status");
-            $.i18n.prop("aip.common.folder");
-            $.i18n.prop("aip.common.group.description");
-            $.i18n.prop("aip.common.description");
-            $.i18n.prop("aip.common.activity");
-            $.i18n.prop("aip.common.activity.date");
-            $.i18n.prop("aip.common.last.updated.by");
-            $.i18n.prop("aip.common.block.process");
-            $.i18n.prop("aip.common.block.process.indicator.is");
-            $.i18n.prop("aip.common.system.required");
-            $.i18n.prop("aip.common.system.required.indicator.is");
-            $.i18n.prop("aip.common.save");
-            $.i18n.prop("aip.common.save.modal");
-            $.i18n.prop("aip.common.cancel.modal");
-            $.i18n.prop("aip.common.continue.modal");
-            $.i18n.prop("aip.common.save.successful");
-            $.i18n.prop("aip.common.cancel");
-            $.i18n.prop("aip.common.next");
-            $.i18n.prop("aip.common.add");
-            $.i18n.prop("aip.common.add.new");
-            $.i18n.prop("aip.common.open");
-            $.i18n.prop("aip.common.overview");
-            $.i18n.prop("aip.common.table.action.items");
-            $.i18n.prop("aip.common.order.action.items");
-            $.i18n.prop("aip.common.block.processes");
-            $.i18n.prop("aip.common.saveandreturn");
-            $.i18n.prop("aip.common.add.group.jaws");
-            $.i18n.prop("aip.common.open.group.jaws");
-            $.i18n.prop("aip.common.no.results.found");
-            $.i18n.prop("aip.common.results.found");
-            $.i18n.prop("aip.common.select.folder.default");
-            $.i18n.prop("aip.common.plainText");
-            $.i18n.prop("aip.placeholder.nogroups");
-            $.i18n.prop("aip.placeholder.noitems");
-            $.i18n.prop("aip.common.text.template");
-            $.i18n.prop("aip.common.text.content");
-            $.i18n.prop("aip.common.text.statusRules");
-            $.i18n.prop("aip.common.text.yes");
-            $.i18n.prop("aip.common.text.no");
-            $.i18n.prop("aip.common.text.completed");
-            $.i18n.prop("aip.common.text.group.instructions");
-            $.i18n.prop("aip.common.text.date.completed");
-            $.i18n.prop("aip.common.text.date");
-            $.i18n.prop("aip.common.text.colon");
-
-
-            $.i18n.prop("aip.inform.list.title");
-            $.i18n.prop("aip.inform.list.notice");
-            $.i18n.prop("aip.inform.list.continue.message.1");
-            $.i18n.prop("aip.inform.list.continue.message.2");
-            $.i18n.prop("aip.inform.list.continue.button");
-            $.i18n.prop("aip.inform.list.cancel.message.1");
-            $.i18n.prop("aip.inform.list.cancel.message.2");
-            $.i18n.prop("aip.inform.list.cancel.button");
-            $.i18n.prop("aip.admin.landing");
-
-            $.i18n.prop("aip.admin.maxLength");
-            $.i18n.prop("aip.admin.error.exceedMax");
-
-            $.i18n.prop("aip.admin.group");
-            $.i18n.prop("aip.admin.group.description");
-            $.i18n.prop("aip.admin.group.add");
-            $.i18n.prop("aip.admin.group.open");
-            $.i18n.prop("aip.admin.group.add.maxLength");
-            $.i18n.prop("aip.admin.group.error.exceedMax");
-
-            $.i18n.prop("aip.admin.group.add.status.default");
-            $.i18n.prop("aip.admin.group.add.folder.default");
-            $.i18n.prop("aip.admin.group.add.defaultFolder");
-            $.i18n.prop("aip.admin.group.add.success");
-            $.i18n.prop("aip.admin.group.add.error.blank");
-            $.i18n.prop("aip.admin.group.add.error.noStatus");
-            $.i18n.prop("aip.admin.group.add.error.noFolder");
-            $.i18n.prop("aip.admin.group.add.error.noTitle");
-            $.i18n.prop("aip.admin.group.add.error.noDesc");
-            $.i18n.prop("aip.admin.group.add.maxLength");
-            $.i18n.prop("aip.admin.group.error.exceedMax");
-            $.i18n.prop("aip.admin.group.add.folder.default");
-
-            $.i18n.prop("aip.admin.action");
-            $.i18n.prop("aip.admin.action.description");
-            $.i18n.prop("aip.admin.action.actionItem.title");
-
-            $.i18n.prop("aip.admin.action.add.actionItem");
-            $.i18n.prop("aip.admin.action.add.error.exceedMax");
-            $.i18n.prop("aip.admin.action.add.maxLength");
-            $.i18n.prop("aip.admin.action.add.description.placeholder");
-            $.i18n.prop("aip.admin.action.open");
-            $.i18n.prop("actionItem.title.unique");
-            $.i18n.prop("aip.admin.action.add.success");
-            $.i18n.prop("aip.admin.action.add.jaws");
-            $.i18n.prop("aip.admin.action.open.jaws");
-            $.i18n.prop("aip.admin.action.open.tab.content");
-            $.i18n.prop("aip.admin.action.open.tab.template");
-            $.i18n.prop("aip.admin.action.open.tab.content.noItem1");
-            $.i18n.prop("aip.admin.action.open.tab.content.noItem2");
-            $.i18n.prop("aip.admin.action.open.tab.content.noContent");
-            $.i18n.prop("aip.admin.action.open.tab.content.edit");
-            $.i18n.prop("aip.admin.action.open.tab.content.templateSelect");
-            $.i18n.prop("aip.admin.action.open.tab.content.templateContent");
-            $.i18n.prop("aip.admin.action.open.tab.content.templatePlaceholder");
-            $.i18n.prop("aip.admin.status");
-            $.i18n.prop("aip.admin.status.description");
-            $.i18n.prop("aip.admin.status.add");
-            $.i18n.prop("aip.admin.status.actionItemStatus");
-            $.i18n.prop("aip.admin.status.block");
-
-            $.i18n.prop("aip.admin.status.rules");
-
-            $.i18n.prop("aip.admin.status.rules.table.heading");
-            $.i18n.prop("aip.admin.status.rules.table.instructions.template");
-            $.i18n.prop("aip.admin.status.rules.table.instructions.block");
-            $.i18n.prop("aip.admin.status.rules.table.instructions.block.link");
-            $.i18n.prop("aip.admin.status.rules.table.header.responseOptionText");
-            $.i18n.prop("aip.admin.status.rules.table.header.status");
-            $.i18n.prop("aip.admin.status.rules.table.header.blocks");
-            $.i18n.prop("aip.admin.status.rules.table.form.label");
-            $.i18n.prop("aip.admin.status.rules.table.form.value");
-            $.i18n.prop("aip.admin.status.rules.table.form.add");
-            $.i18n.prop("aip.admin.status.rules.table.blockText.block");
-            $.i18n.prop("aip.admin.status.rules.table.blockText.unblock");
-            $.i18n.prop("aip.admin.status.rules.noREsponses");
-            $.i18n.prop("aip.admin.status.rules.table.caption");
-
-            $.i18n.prop("aip.admin.selectable.action.items");
-            $.i18n.prop("aip.admin.selectable.groups");
-            $.i18n.prop("aip.list.grid.groupTitle");
-            $.i18n.prop("aip.list.grid.itemTitle");
-            $.i18n.prop("aip.list.grid.folder");
-            $.i18n.prop("aip.list.grid.status");
-            $.i18n.prop("aip.list.grid.lastUpdated");
-            $.i18n.prop("aip.list.grid.activityDate");
-            $.i18n.prop("aip.list.grid.blockedProcess");
-            $.i18n.prop("aip.list.grid.systemRequired");
-
-            $.i18n.prop("aip.list.grid.search.status");
-            $.i18n.prop("aip.list.grid.search.actionItem");
-            $.i18n.prop("aip.list.grid.search.group");
-
-            $.i18n.prop("aip.status.active");
-            $.i18n.prop("aip.status.inactive");
-            $.i18n.prop("aip.status.pending");
-            $.i18n.prop("aip.status.complete");
-            $.i18n.prop("aip.status.rejected");
-
-            $.i18n.prop("aip.character.astrick");
-            $.i18n.prop("aip.ckeditor.keyhelp");
-
-            $.i18n.prop("aip.user.actionItem.list");
-            $.i18n.prop("aip.user.list.header.title.registration");
-            $.i18n.prop("aip.user.list.header.description.registration");
-            $.i18n.prop("aip.user.list.header.title.graduation");
-            $.i18n.prop("aip.user.list.header.description.graduation");
-            $.i18n.prop("aip.user.detail.noTemplate");
-
-
-            $.i18n.prop("aip.user.detail.button.proceed");
-            $.i18n.prop("aip.user.detail.button.confirm");
-            $.i18n.prop("aip.user.detail.button.deny");
-            $.i18n.prop("aip.user.detail.button.return");
-
-            $.i18n.prop("aip.operation.not.permitted");
-
-            $.i18n.prop("progressbar.stats");
-
+            $.i18n.prop("actionItem.title.unique.error");
 
             $templateCache.put("adminActionItemOpenOverview.html",
                 '<div class="actionItemElement actionItemDetail col-xs-12 col-sm-8"> \
