@@ -1,11 +1,11 @@
-<uib-accordion-group class="aip-list-container" is-open="isOpen" aria-label="  ">
-    <uib-accordion-heading id="heading-{{itemgroup.id}}">
+<uib-accordion-group class="aip-list-container" role="tablist" is-open="isOpen">
+    <uib-accordion-heading id="heading-{{itemgroup.id}}" role="tab" aria-label="group-title-heading">
         <div class="item-group row">
             <div class="row">
                 <div class="group-title col-sm-12 col-xs-12">
                     <div aria-label="{{itemgroup.title}} {{completedItem().length}} of {{itemgroup.items.length}} {{'aip.common.text.completed'|i18n_aip}}"
                         id="h2-{{itemgroup.id}}" class="group-title-text" tabindex="-1"
-                        ng-click="openGroup(itemgroup.id)" aria-expanded="{{isOpen}}"><h2 class="group-title-text">{{itemgroup.title|i18n_aip}}</h2>
+                        ng-click="openGroup(itemgroup.id)" aria-expanded="{{isOpen}}"><h2 id="group-title-heading" class="group-title-text">{{itemgroup.title|i18n_aip}}</h2>
                     <span class="badge" ng-if="!isOpen" aria-label="{{completedItem().length}} of {{itemgroup.items.length}} {{'aip.common.text.completed'|i18n_aip}}">
                         {{completedItem().length + "/" + itemgroup.items.length}}
                     </span>
@@ -30,10 +30,10 @@
         </div>
     </uib-accordion-heading>
     <div class="row">
-        <div class="list-body-container box" role="group">
-            <div id="group-{{itemgroup.id}}" class="list-body" role="list">
+        <div class="list-body-container box">
+            <div id="group-{{itemgroup.id}}" class="list-body" role="tabpanel" aria-labelledby="group-title-heading">
                 <div id="item-{{itemgroup.id}}-{{row.id}}"
-                     class="row list-item" ng-repeat="row in itemgroup.items" ng-click="selectItem(itemgroup, row, $event)" role="listitem">
+                     class="row list-item" ng-repeat="row in itemgroup.items" ng-click="selectItem(itemgroup, row, $event)">
                     <div ng-repeat="key in itemgroup.header" class="{{getStyle(key)}}">
 
                         <h3 ng-if="key==='title'">{{row[key]|i18n_aip}}</h3>
