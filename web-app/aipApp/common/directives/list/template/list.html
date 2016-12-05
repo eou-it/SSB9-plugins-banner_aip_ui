@@ -1,17 +1,16 @@
-<uib-accordion-group class="aip-list-container" role="group" is-open="isOpen" aria-label="  ">
+<uib-accordion-group class="aip-list-container" is-open="isOpen" aria-label="  ">
     <uib-accordion-heading id="heading-{{itemgroup.id}}">
         <div class="item-group row">
             <div class="row">
                 <div class="group-title col-sm-12 col-xs-12">
-                    <h2
-                            aria-label="{{itemgroup.title}} {{completedItem().length}} of {{itemgroup.items.length}} {{'aip.common.text.completed'|i18n_aip}}"
+                    <div aria-label="{{itemgroup.title}} {{completedItem().length}} of {{itemgroup.items.length}} {{'aip.common.text.completed'|i18n_aip}}"
                         id="h2-{{itemgroup.id}}" class="group-title-text" tabindex="-1"
-                        ng-click="openGroup(itemgroup.id)" aria-expanded="{{isOpen}}">{{itemgroup.title|i18n_aip}}
+                        ng-click="openGroup(itemgroup.id)" aria-expanded="{{isOpen}}"><h2 class="group-title-text">{{itemgroup.title|i18n_aip}}</h2>
                     <span class="badge" ng-if="!isOpen" aria-label="{{completedItem().length}} of {{itemgroup.items.length}} {{'aip.common.text.completed'|i18n_aip}}">
                         {{completedItem().length + "/" + itemgroup.items.length}}
                     </span>
                     <i role="presentation" class="group-toggle-indicator fa" ng-class="{'fa-caret-up':isOpen, 'fa-caret-down':!isOpen}"></i>
-                    </h2>
+                    </div>
                 </div>
             </div>
             <div class="row">
@@ -31,7 +30,7 @@
         </div>
     </uib-accordion-heading>
     <div class="row">
-        <div class="list-body-container box">
+        <div class="list-body-container box" role="group">
             <div id="group-{{itemgroup.id}}" class="list-body" role="list">
                 <div id="item-{{itemgroup.id}}-{{row.id}}"
                      class="row list-item" ng-repeat="row in itemgroup.items" ng-click="selectItem(itemgroup, row, $event)" role="listitem">

@@ -85,7 +85,7 @@ var AIP;
         };
         ItemListViewService.$inject = ["$http", "$q", "APP_PATH"];
         return ItemListViewService;
-    }());
+    })();
     AIP.ItemListViewService = ItemListViewService;
 })(AIP || (AIP = {}));
 register("bannerAIP").service("ItemListViewService", AIP.ItemListViewService);
