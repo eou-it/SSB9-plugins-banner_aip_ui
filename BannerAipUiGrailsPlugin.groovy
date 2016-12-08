@@ -1,4 +1,4 @@
-class BannerCsrUiGrailsPlugin {
+class BannerAipUiGrailsPlugin {
 
     String groupId = "net.hedtech"
     // the plugin version
@@ -11,7 +11,7 @@ class BannerCsrUiGrailsPlugin {
     ]
 
     // TODO Fill in these fields
-    def title = "Ellucian CSR Plugin" // Headline display name of the plugin
+    def title = "Ellucian AIP Plugin" // Headline display name of the plugin
     def author = "Your name"
     def authorEmail = ""
     def description = '''\

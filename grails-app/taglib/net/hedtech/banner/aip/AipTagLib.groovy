@@ -1,4 +1,4 @@
-package net.hedtech.banner.csr
+package net.hedtech.banner.aip
 
 import grails.converters.JSON
 import net.hedtech.banner.i18n.DateAndDecimalUtils
@@ -6,7 +6,7 @@ import org.springframework.context.i18n.LocaleContextHolder
 import org.springframework.web.servlet.support.RequestContextUtils
 
 
-class CsrTagLib {
+class AipTagLib {
 
     def resourceService
 
@@ -63,7 +63,7 @@ class CsrTagLib {
         ///////////////////
         //TODO:: delete below test code
         /*
-        def plugin = grailsApplication.mainContext.pluginManager.getGrailsPlugin( "banner-csr-ui" )
+        def plugin = grailsApplication.mainContext.pluginManager.getGrailsPlugin( "banner-aip-ui" )
         def source = grailsApplication.mainContext.getBean('messageSource')
 
         out << 'window.i18n_aip_bundle = "'
@@ -81,7 +81,7 @@ class CsrTagLib {
 
 
     def aipVersion = { attrs ->
-        def plugin = grailsApplication.mainContext.pluginManager.getGrailsPlugin("banner-csr-ui")
+        def plugin = grailsApplication.mainContext.pluginManager.getGrailsPlugin("banner-aip-ui")
         def map = [
                 name: plugin.getName(),
                 version: plugin.getVersion(),

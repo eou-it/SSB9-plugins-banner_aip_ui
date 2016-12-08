@@ -6,17 +6,17 @@
 var BreadCrumbAndPageTitle = {draw: function(obj) {
 }};
 
-describe("CSR User service", function() {
+describe("AIP User service", function() {
     var $rootScope, $injector,$httpBackend, userService;
 
     beforeEach(function() {
         //inject dependencies into module
-        module("bannercsr");
-        inject(function(_$rootScope_, _$injector_, _$httpBackend_, CSRUserService) {
+        module("banneraip");
+        inject(function(_$rootScope_, _$injector_, _$httpBackend_, AIPUserService) {
             $rootScope = _$rootScope_;
             $httpBackend = _$httpBackend_;
             $injector = _$injector_;
-            userService = CSRUserService;
+            userService = AIPUserService;
             // Mock http request
             $httpBackend.when("GET", "/aip/checkActionItem").respond({isActionItem: true});
             // bypass common-components' defect code

@@ -12,7 +12,7 @@ describe("Config routing", function() {
         state = "list";
     beforeEach(function() {
         //inject dependencies into module
-        module("bannercsr");
+        module("banneraip");
         inject(function(_$rootScope_, _$state_, _$injector_, $templateCache, _$location_, _$httpBackend_) {
             $rootScope = _$rootScope_;
             $state = _$state_;
@@ -21,8 +21,8 @@ describe("Config routing", function() {
             $injector = _$injector_;
 
 
-            $templateCache.put("../plugins/banner-csr-ui-1.0/csrApp/listItem/itemConfirm/itemConfirmPage.html", "");
-            $templateCache.put("../plugins/banner-csr-ui-1.0/csrApp/listItem/listItemPage.html", "");
+            $templateCache.put("../plugins/banner-aip-ui-1.0/aipApp/listItem/itemConfirm/itemConfirmPage.html", "");
+            $templateCache.put("../plugins/banner-aip-ui-1.0/aipApp/listItem/listItemPage.html", "");
 
             // Mock http request
             $httpBackend.when("GET", "aip/checkActionItem")

@@ -8,7 +8,7 @@
  NOR USED FOR ANY PURPOSE OTHER THAN THAT WHICH IT IS SPECIFICALLY PROVIDED
  WITHOUT THE WRITTEN PERMISSION OF THE SAID COMPANY
  ****************************************************************************** */
-package net.hedtech.banner.csr
+package net.hedtech.banner.aip
 
 import net.hedtech.banner.aip.AipAdminController
 import net.hedtech.banner.testing.BaseIntegrationTestCase
@@ -18,12 +18,12 @@ import org.junit.Ignore
 import org.junit.Test
 
 /**
- * CsrTagLibIntegrationTests.
+ * AipTagLibIntegrationTests.
  *
  * Date: 6/1/2016
  * Time: 9:52 AM
  */
-class CsrTagLibIntegrationTests extends BaseIntegrationTestCase {
+class AipTagLibIntegrationTests extends BaseIntegrationTestCase {
 
     @Before
     public void setUp() {
@@ -40,7 +40,7 @@ class CsrTagLibIntegrationTests extends BaseIntegrationTestCase {
         logout()
     }
 
-    def lib = new CsrTagLib()
+    def lib = new AipTagLib()
 
     // private or utility?
     @Test
@@ -70,7 +70,7 @@ class CsrTagLibIntegrationTests extends BaseIntegrationTestCase {
         def answer = lib.aipVersion().toString()
         assertTrue answer.contains( 'window.aipApp' )
         assertTrue answer.contains( 'fileSystemName' )
-        assertTrue answer.contains( 'bannerCsrUi' )
+        assertTrue answer.contains( 'bannerAipUi' )
         // TODO: add version and name
     }
 

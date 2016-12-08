@@ -256,7 +256,7 @@ class AipController {
         render model as JSON
     }
 
-    // It might be better in service in banner_csr.git, not in controller since this shouldn't be able to access from front-end
+    // It might be better in service in banner_aip.git, not in controller since this shouldn't be able to access from front-end
     // It might not be needed depends on query style on user items
     def getItemInfo( type ) {
         //TODO: change whatever it needed
@@ -289,7 +289,7 @@ class AipController {
         return item
     }
 
-    // It might be better in service banner_csr.git, not in controller since this shouldn't be able to access from front-end
+    // It might be better in service banner_aip.git, not in controller since this shouldn't be able to access from front-end
     // It might not be needed depends on query style on user items
     def getActionGroupDescription( type ) {
         //TODO: change whatever it needed

@@ -78,7 +78,7 @@ var AIP;
             //angular.forEach(this.userItems, (item) => {
             //    angular.forEach(item.items, (_item) => {
             //        if(_item.id == id) {
-            //            _item.state = "csr.user.list.item.state.complete";
+            //            _item.state = "aip.user.list.item.state.complete";
             //        }
             //    });
             //});
