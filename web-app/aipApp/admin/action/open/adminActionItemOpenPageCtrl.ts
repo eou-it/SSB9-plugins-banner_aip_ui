@@ -168,6 +168,25 @@ module AIP {
                 });
             return deferred.promise;
         }
+        openBlockPanel() {
+            this.openPanel("block");
+            /*var deferred = this.$q.defer();
+            this.adminActionService.getActionItemTemplates()
+                .then((response) => {
+                    this.templates = response.data;
+                    deferred.resolve(this.openPanel("content"));
+                    this.getTemplateSource();
+
+                    if (this.templateSelect) {
+                        this.selectTemplate();
+                    }
+
+                }, (error) => {
+                    console.log(error);
+                });
+            return deferred.promise;
+            */
+        }
         openPanel(panelName) {
             var deferred=this.$q.defer();
             var url = "";
@@ -177,6 +196,9 @@ module AIP {
                     break;
                 case "content":
                     url = this.APP_ROOT + "admin/action/open/content/adminActionItemOpenContent.html";
+                    break;
+                case "block":
+                    url = this.APP_ROOT + "admin/action/open/content/adminActionItemBlock.html";
                     break;
                 default:
                     break;

@@ -146,6 +146,25 @@ var AIP;
             });
             return deferred.promise;
         };
+        AdminActionItemOpenPageCtrl.prototype.openBlockPanel = function () {
+            this.openPanel("block");
+            /*var deferred = this.$q.defer();
+            this.adminActionService.getActionItemTemplates()
+                .then((response) => {
+                    this.templates = response.data;
+                    deferred.resolve(this.openPanel("content"));
+                    this.getTemplateSource();
+
+                    if (this.templateSelect) {
+                        this.selectTemplate();
+                    }
+
+                }, (error) => {
+                    console.log(error);
+                });
+            return deferred.promise;
+            */
+        };
         AdminActionItemOpenPageCtrl.prototype.openPanel = function (panelName) {
             var _this = this;
             var deferred = this.$q.defer();
@@ -156,6 +175,9 @@ var AIP;
                     break;
                 case "content":
                     url = this.APP_ROOT + "admin/action/open/content/adminActionItemOpenContent.html";
+                    break;
+                case "block":
+                    url = this.APP_ROOT + "admin/action/open/content/adminActionItemBlock.html";
                     break;
                 default:
                     break;
@@ -394,7 +416,7 @@ var AIP;
             return false;
         };
         return AdminActionItemOpenPageCtrl;
-    }());
+    })();
     AIP.AdminActionItemOpenPageCtrl = AdminActionItemOpenPageCtrl;
 })(AIP || (AIP = {}));
 register("bannerAIP").controller("AdminActionItemOpenPageCtrl", AIP.AdminActionItemOpenPageCtrl);
