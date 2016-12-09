@@ -202,6 +202,9 @@ var bannerAIPApp = angular.module("bannerAIP", [
         "PAGES", "APP_ROOT", "APP_ABS_PATH",
         function($stateProvider, $urlRouteProvider, $locationProvider, $httpProvider, $windowProvider,
                  PAGES, APP_ROOT, APP_ABS_PATH) {
+// TODO: should this be HTML5 in HashBang mode with a base defined in the HTML?
+            $locationProvider.html5Mode(false);
+            $locationProvider.hashPrefix('');
             $urlRouteProvider.otherwise("/list");
             angular.forEach(PAGES, function(item, state) {
                 $stateProvider.state(state, {
