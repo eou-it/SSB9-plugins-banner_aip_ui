@@ -31,6 +31,7 @@ module AIP {
         APP_ROOT;
         ckEditorConfig;
         templates;
+        blocks;
         templateSelect: boolean;
         statuses;
         rules;
@@ -60,6 +61,7 @@ module AIP {
             this.actionItem = {};
             this.templateSelect = false;
             this.templates = [];
+            this.blocks = [];
             this.statuses = [];
             this.rules = [];
             this.selectedTemplate;
@@ -169,23 +171,15 @@ module AIP {
             return deferred.promise;
         }
         openBlockPanel() {
-            this.openPanel("block");
-            /*var deferred = this.$q.defer();
-            this.adminActionService.getActionItemTemplates()
+            var deferred = this.$q.defer();
+            this.adminActionService.getActionItemBlocks()
                 .then((response) => {
-                    this.templates = response.data;
-                    deferred.resolve(this.openPanel("content"));
-                    this.getTemplateSource();
-
-                    if (this.templateSelect) {
-                        this.selectTemplate();
-                    }
-
+                    this.blocks = response.data;
+                    deferred.resolve(this.openPanel("block"));
                 }, (error) => {
                     console.log(error);
                 });
             return deferred.promise;
-            */
         }
         openPanel(panelName) {
             var deferred=this.$q.defer();
@@ -198,7 +192,7 @@ module AIP {
                     url = this.APP_ROOT + "admin/action/open/content/adminActionItemOpenContent.html";
                     break;
                 case "block":
-                    url = this.APP_ROOT + "admin/action/open/content/adminActionItemBlock.html";
+                    url = this.APP_ROOT + "admin/action/open/block/adminActionItemBlock.html";
                     break;
                 default:
                     break;

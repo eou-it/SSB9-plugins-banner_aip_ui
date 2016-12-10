@@ -39,6 +39,7 @@ var AIP;
             this.actionItem = {};
             this.templateSelect = false;
             this.templates = [];
+            this.blocks = [];
             this.statuses = [];
             this.rules = [];
             this.selectedTemplate;
@@ -147,23 +148,16 @@ var AIP;
             return deferred.promise;
         };
         AdminActionItemOpenPageCtrl.prototype.openBlockPanel = function () {
-            this.openPanel("block");
-            /*var deferred = this.$q.defer();
-            this.adminActionService.getActionItemTemplates()
-                .then((response) => {
-                    this.templates = response.data;
-                    deferred.resolve(this.openPanel("content"));
-                    this.getTemplateSource();
-
-                    if (this.templateSelect) {
-                        this.selectTemplate();
-                    }
-
-                }, (error) => {
-                    console.log(error);
-                });
+            var _this = this;
+            var deferred = this.$q.defer();
+            this.adminActionService.getActionItemBlocks()
+                .then(function (response) {
+                _this.blocks = response.data;
+                deferred.resolve(_this.openPanel("block"));
+            }, function (error) {
+                console.log(error);
+            });
             return deferred.promise;
-            */
         };
         AdminActionItemOpenPageCtrl.prototype.openPanel = function (panelName) {
             var _this = this;
@@ -177,7 +171,7 @@ var AIP;
                     url = this.APP_ROOT + "admin/action/open/content/adminActionItemOpenContent.html";
                     break;
                 case "block":
-                    url = this.APP_ROOT + "admin/action/open/content/adminActionItemBlock.html";
+                    url = this.APP_ROOT + "admin/action/open/block/adminActionItemBlock.html";
                     break;
                 default:
                     break;

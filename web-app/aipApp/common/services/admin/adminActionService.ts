@@ -193,6 +193,13 @@ module AIP {
             });
             return request;
         }
+        getActionItemBlocks() {
+            var request = this.$http({
+                method: "GET",
+                url: this.ENDPOINT.admin.actionItemTemplateList
+            });
+            return request;
+        }
         saveActionItemTemplate(templateId, actionItemId, actionItemContent) {
             var request = this.$http({
                 method: "POST",

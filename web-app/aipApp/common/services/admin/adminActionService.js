@@ -85,6 +85,13 @@ var AIP;
             });
             return request;
         };
+        AdminActionService.prototype.getActionItemBlocks = function () {
+            var request = this.$http({
+                method: "GET",
+                url: this.ENDPOINT.admin.actionItemTemplateList
+            });
+            return request;
+        };
         AdminActionService.prototype.saveActionItemTemplate = function (templateId, actionItemId, actionItemContent) {
             var request = this.$http({
                 method: "POST",
