@@ -154,7 +154,8 @@ var bannerAIPApp = angular.module("bannerAIP", [
             saveActionItemTemplate: aipAppAbsPath + "aipAdmin/updateActionItemDetailWithTemplate",
             statusSave: aipAppAbsPath + "aipAdmin/statusSave",
             rulesByActionItem: aipAppAbsPath + "aipAdmin/actionItemStatusRulesByActionItemId",
-            updateActionItemStatusRule: aipAppAbsPath + "aipAdmin/updateActionItemStatusRule"
+            updateActionItemStatusRule: aipAppAbsPath + "aipAdmin/updateActionItemStatusRule",
+            blockedProcessList: aipAppAbsPath + "aipAdmin/blockedProcessList"
         }
     })
     .constant("PAGINATIONCONFIG",
@@ -377,6 +378,11 @@ var bannerAIPUI = angular.module("bannerAIPUI", [])
         $provide.decorator("aipStatusRuleDirective", function($delegate) {
             var directive = $delegate[0];
             directive.templateUrl = APP_ROOT + "common/directives/admin/status-rule/template/statusRule.html";
+            return $delegate;
+        });
+        $provide.decorator("aipBlockedProcessDirective", function($delegate) {
+            var directive = $delegate[0];
+            directive.templateUrl = APP_ROOT + "common/directives/admin/blockedProcess/template/blockedProcess.html";
             return $delegate;
         });
     }]

@@ -695,7 +695,7 @@ ol.selected-group > li > button  {
             
             .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .status-rules .add-link  {
     font-family:"OpenSans-semibold";
-    margin:20px 15px 0 0;
+    margin:20px 15px 20px 0;
 }
             .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .actionControl  {
     width:100%;
@@ -711,6 +711,37 @@ ol.selected-group > li > button  {
     max-width:200px;
 }
 
+
+#actionItemBlockProcess  {
+    padding:16px 0;
+}
+  #actionItemBlockProcess button.iconButton  {
+    border:none;
+    background-color:transparent;
+    color:#206E9F;
+}
+    #actionItemBlockProcess button.iconButton .icon  {
+    float:right;
+    font-size:0.5em;
+    line-height:2.5em;
+}
+    #actionItemBlockProcess button.iconButton .iconText  {
+    float:left;
+}
+  #actionItemBlockProcess .row.blockedItem  {
+    padding:16px 0;
+}
+  #actionItemBlockProcess .row.blockedUrl  {
+    padding:8px 0;
+}
+  #actionItemBlockProcess .actionItemBlockReadOnly .blockedProcessTitle  {
+    font-weight:bold;
+}
+  #actionItemBlockProcess .actionItemBlockReadOnly .control button  {
+    color:#206E9F;
+    float:left;
+    border:none;
+}
 
 .statusListContainer  {
     overflow-y:auto;
@@ -1016,7 +1047,7 @@ fieldset[disabled] .btn-primary.active, .btn-primary  {
     float:right;
     list-style-type:none;
     width:100%;
-    height:13em;
+    height:16em;
     overflow-y:auto;
     margin:0 0 0.5em 0.5em;
     padding:0.5em;

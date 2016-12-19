@@ -1,5 +1,81 @@
-<div id="openActionItemContent">
-   <p>{{"aip.admin.block.no.processes.blocked"|i18n_aip}} <br />
-       {{"aip.admin.block.select.edit"|i18n_aip}}
-   </p>
+<div id="actionItemBlockProcess" ng-controller="AdminActionItemBlockCtrl">
+
+    <!--Read-Only View-->
+    <div class="actionItemBlockReadOnly row" ng-if="!vm.editMode">
+        <div class="contentText">
+            <div class="row">
+                <div class="col-xs-10 col-sm-8">
+                    <h2>{{'Blocked Process(es)'|i18n_aip}}</h2>
+                    <div ng-if="vm.isEmpty(vm.blockedProcess)">
+                        {{"aip.admin.block.no.processes.blocked"|i18n_aip}} <br />
+                        {{"aip.admin.block.select.edit"|i18n_aip}}
+                    </div>
+                    <div ng-if="!vm.isEmpty(vm.blockedProcess)">
+                        <div class="row blockedItem" ng-repeat="(key, value) in vm.blockedProcess">
+                            <div class="col-xs-12 col-sm-4">
+                                <span class="blockedProcessTitle">{{value.i18n}}</span>
+                            </div>
+                            <div class="col-xs-12 col-sm-8">
+                                <!--<div class="row blockedUrl" ng-repeat="url in value.urls">-->
+                                    <!--<span>{{url}}</span>-->
+                                <!--</div>-->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="control col-xs-2 col-sm-4">
+                    <div class="h2-container">
+                        <button name="Edit" type="button" class="btn btn-default edit" ng-click="vm.enterEditMode()" aria-label="">
+                            <span class="icon icon-edit-CO"></span>
+                            <span class="button-text hidden-sm-down">{{'aip.admin.action.open.tab.content.edit'|i18n_aip}}</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--Edit View-->
+    <div class="actionItemBlockEditMode row" ng-if="vm.editMode">
+        <div class="contentText">
+            <div class="row">
+                <div class="col-xs-10 col-sm-8">
+                    <h2>{{'Blocked Process(es)'|i18n_aip}}</h2>
+                </div>
+            </div>
+            <div class="row blockedItem" ng-repeat="item in vm.blockedProcess">
+                <aip-blocked-process
+                        currentitem="item"
+                        selected="vm.blockedProcess"
+                        all="vm.allBlockProcessList">
+                </aip-blocked-process>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 xol-sm-12">
+                    <button type="button" class="iconButton" aria-label="Add new item" ng-click="vm.addNewItem()">
+                        <div class="icon icon-add"></div>
+                        <div class="iconText"> Block Another Processes</div>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="actionControl">
+            <div class="row">
+                <div class="col-xs-1 col-sm-8">
+                </div>
+                <div class="col-xs-11 col-sm-4">
+                    <div class="col-xs-6 col-sm-6 actionButton">
+                        <button name="Cancel" type="button" class="btn btn-default" ng-click="vm.cancel()">{{"Cancel"|i18n_aip}}</button>
+                    </div>
+                    <div class="col-xs-6 col-sm-6 actionButton">
+                        <button type="button" name="Save" class="btn btn-primary" ng-disabled="!vm.validateActionBlockProcess()" ng-click="vm.saveBlocks()">
+                            {{"Save"|i18n_aip}}
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
 </div>

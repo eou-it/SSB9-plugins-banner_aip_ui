@@ -648,6 +648,29 @@ ol.selected-group > li > button {
             font-weight: bold;
             padding-right: 8px;
             text-indent: 0; } }
+#actionItemBlockProcess {
+  padding: 16px 0; }
+  #actionItemBlockProcess button.iconButton {
+    border: none;
+    background-color: transparent;
+    color: #206E9F; }
+    #actionItemBlockProcess button.iconButton .icon {
+      float: left;
+      font-size: 0.5em;
+      line-height: 2.5em; }
+    #actionItemBlockProcess button.iconButton .iconText {
+      float: right; }
+  #actionItemBlockProcess .row.blockedItem {
+    padding: 16px 0; }
+  #actionItemBlockProcess .row.blockedUrl {
+    padding: 8px 0; }
+  #actionItemBlockProcess .actionItemBlockReadOnly .blockedProcessTitle {
+    font-weight: bold; }
+  #actionItemBlockProcess .actionItemBlockReadOnly .control button {
+    color: #206E9F;
+    float: right;
+    border: none; }
+
 .statusListContainer {
   overflow-y: auto;
   font-size: 14px; }

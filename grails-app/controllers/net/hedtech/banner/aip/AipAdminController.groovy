@@ -663,4 +663,80 @@ class AipAdminController {
         }
         render model as JSON
     }
+
+    def blockedProcessList() {
+
+        def success = false
+        def message = ""
+        def blockedList = []
+
+        if (!params.actionItemId) {
+            //rerun all as list
+            try {
+                //TODO: get all blocked list from the service
+                blockedList = [
+                            [
+                                    code: "resisterForClass",
+                                    i18n:"Register for Classes",
+                                    urls: [
+                                            "url1",
+                                            "url2"
+                                    ]
+                            ]
+                        ,
+                            [
+                                    code: "degreeEvaluation",
+                                    i18n: "Degree Evaluation",
+                                    urls: [
+                                            "url3",
+                                            "url4"
+                                    ]
+                            ]
+                ]
+                response.status = 200
+                success = true
+            } catch(Exception e) {
+                println e.defaultMessage
+                //fixme: this needs to be set to point to default message. wasn't finding it so used status unique until we have time to debug.
+                message = MessageUtility.message( "Something happened" )
+            }
+        } else {
+            def actionItemId = params.actionItemId
+            try {
+                //TODO: get blocked list by actionitem id from the service
+
+                blockedList = [
+                        [
+                                code: "resisterForClass",
+                                i18n:"Register for Classes",
+                                urls: [
+                                        "url1",
+                                        "url2"
+                                ]
+                        ]
+//                        ,
+//                        [
+//                                code: "degreeEvaluation",
+//                                i18n: "Degree Evaluation",
+//                                urls: [
+//                                        "url3",
+//                                        "url4"
+//                                ]
+//                        ]
+                ]
+                response.status = 200
+                success = true
+            } catch(Exception e) {
+                println e.defaultMessage
+                //fixme: this needs to be set to point to default message. wasn't finding it so used status unique until we have time to debug.
+                message = MessageUtility.message( "Something happened" )
+            }
+        }
+        def model = [
+                success: success,
+                message: message,
+                blockedProcesses: blockedList
+        ]
+        render model as JSON
+    }
 }

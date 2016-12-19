@@ -151,6 +151,15 @@ module AIP {
             });
             return request;
         }
+        getBlockedProcess(actionItemId?) {
+            var url = actionItemId ? this.ENDPOINT.admin.blockedProcessList + "?actionItemId=" + actionItemId :
+                this.ENDPOINT.admin.blockedProcessList;
+            var request = this.$http({
+                method: "GET",
+                url: url
+            });
+            return request;
+        }
         saveActionItem(actionItem) {
             var params = {
                 title: actionItem.title,

@@ -1,0 +1,41 @@
+$button-color: #206E9F;
+
+
+#actionItemBlockProcess {
+  padding: 16px 0;
+  button.iconButton {
+    border: none;
+    background-color: transparent;
+    color: $button-color;
+
+    .icon {
+      float: left;
+      font-size:0.5em;
+      line-height:2.5em;
+    }
+    .iconText {
+      float: right;
+    }
+  }
+
+  .row.blockedItem {
+    padding: 16px 0;
+  }
+  .row.blockedUrl {
+    padding: 8px 0;
+  }
+
+  .actionItemBlockReadOnly {
+    .blockedProcessTitle {
+      font-weight: bold;
+    }
+
+    .control {
+      button {
+        color: $button-color;
+        float: right;
+        border: none;
+      }
+    }
+  }
+}

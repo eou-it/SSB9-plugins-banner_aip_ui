@@ -79,6 +79,7 @@ modules = {
         resource url:[plugin: 'banner-aip-ui', file: 'aipApp/admin/action/list/adminActionListPageCtrl.js']
         resource url:[plugin: 'banner-aip-ui', file: 'aipApp/admin/action/add/adminActionItemAddPageCtrl.js']
         resource url:[plugin: 'banner-aip-ui', file: 'aipApp/admin/action/open/adminActionItemOpenPageCtrl.js']
+        resource url:[plugin: 'banner-aip-ui', file: 'aipApp/admin/action/open/block/adminActionItemBlockProcessCtrl.js']
         resource url:[plugin: 'banner-aip-ui', file: 'aipApp/admin/status/list/adminStatusListPageCtrl.js']
         resource url:[plugin: 'banner-aip-ui', file: 'aipApp/admin/status/list/add/statusAddModalCtrl.js']
         resource url:[plugin: 'banner-aip-ui', file: 'aipApp/listItem/listItemPageCtrl.js']
@@ -97,6 +98,7 @@ modules = {
         resource url:[plugin: 'banner-aip-ui', file: 'aipApp/common/directives/item-detail/js/itemDetail.js']
         resource url:[plugin: 'banner-aip-ui', file: 'aipApp/common/directives/admin/group-detail/js/groupDetail.js']
         resource url:[plugin: 'banner-aip-ui', file: 'aipApp/common/directives/admin/status-rule/js/statusRule.js']
+        resource url:[plugin: 'banner-aip-ui', file: 'aipApp/common/directives/admin/blockedProcess/js/blockedProcess.js']
 
         resource url:[plugin: 'banner-aip-ui', file: 'aipApp/common/utils/spinnerCtrl.js']
         resource url:[plugin: 'banner-aip-ui', file: 'aipApp/common/directives/pagebuilder/js/aip-pagebuilder.js']
