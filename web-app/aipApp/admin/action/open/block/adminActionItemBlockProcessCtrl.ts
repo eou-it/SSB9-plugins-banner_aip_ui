@@ -105,9 +105,20 @@ module AIP {
         }
 
         addNewItem() {
-            this.blockedProcess.push(this.allBlockProcessList[0]);
+            var available = this.getAvailable();
+            if(available.length > 0) {
+                this.blockedProcess.push(available[0]);
+            }
         }
 
+        getAvailable() {
+            var available = this.allBlockProcessList.filter((item) => {
+                if (this.blockedProcess.indexOf(item) === -1 && this.alreadyGenerated.indexOf(item) === -1) {
+                    return item;
+                }
+            });
+            return available;
+        }
         isEmpty(obj) {
             if (Object.keys(obj).length===0) {
                 return true;

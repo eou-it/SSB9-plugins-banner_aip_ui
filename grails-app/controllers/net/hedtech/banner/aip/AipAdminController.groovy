@@ -1,6 +1,7 @@
 package net.hedtech.banner.aip
 
 import grails.converters.JSON
+import groovy.json.JsonSlurper
 import net.hedtech.banner.MessageUtility
 import net.hedtech.banner.exceptions.ApplicationException
 import net.hedtech.banner.general.communication.folder.CommunicationFolder
@@ -34,6 +35,8 @@ class AipAdminController {
     def actionItemStatusRuleService
 
     def actionItemStatusRuleReadOnlyService
+
+    def actionItemBlockedProcessService
 
 
     def folders() {
@@ -669,30 +672,21 @@ class AipAdminController {
         def success = false
         def message = ""
         def blockedList = []
-
+        def jsonSlurper = new JsonSlurper()
         if (!params.actionItemId) {
             //rerun all as list
             try {
                 //TODO: get all blocked list from the service
-                blockedList = [
-                            [
-                                    code: "resisterForClass",
-                                    i18n:"Register for Classes",
-                                    urls: [
-                                            "url1",
-                                            "url2"
-                                    ]
-                            ]
-                        ,
-                            [
-                                    code: "degreeEvaluation",
-                                    i18n: "Degree Evaluation",
-                                    urls: [
-                                            "url3",
-                                            "url4"
-                                    ]
-                            ]
-                ]
+                def tempBlockedList = actionItemBlockedProcessService.listBlockedProcessesByType()
+                tempBlockedList.each { item ->
+                    def value = jsonSlurper.parseText(item.value.replaceAll("[\n\r]",""))
+                    def block = [
+                            id: item.id,
+                            name: item.name,
+                            value: value.aipBlock
+                    ]
+                    blockedList.push(block)
+                }
                 response.status = 200
                 success = true
             } catch(Exception e) {
@@ -704,26 +698,17 @@ class AipAdminController {
             def actionItemId = params.actionItemId
             try {
                 //TODO: get blocked list by actionitem id from the service
+                def tempBlockedList = actionItemBlockedProcessService.listBlockedProcessByActionItemId(Long.parseLong(actionItemId))
+                tempBlockedList.each { item ->
+                    def value = jsonSlurper.parseText(item.value.replaceAll("[\n\r]",""))
+                    def block = [
+                            id: item.id,
+                            name: item.name,
+                            value: value.aipBlock
+                    ]
+                    blockedList.push(block)
+                }
 
-                blockedList = [
-                        [
-                                code: "resisterForClass",
-                                i18n:"Register for Classes",
-                                urls: [
-                                        "url1",
-                                        "url2"
-                                ]
-                        ]
-//                        ,
-//                        [
-//                                code: "degreeEvaluation",
-//                                i18n: "Degree Evaluation",
-//                                urls: [
-//                                        "url3",
-//                                        "url4"
-//                                ]
-//                        ]
-                ]
                 response.status = 200
                 success = true
             } catch(Exception e) {

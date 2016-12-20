@@ -59,7 +59,11 @@ module AIP {
         draw(title: string) {
             var breadcrumbI18 = {};
             angular.forEach(this.breadcrumbs, (value, key) => {
-                breadcrumbI18[this.$filter('i18n_aip')(key)] = value;
+                if(Object.keys(this.breadcrumbs).indexOf(key)===Object.keys(this.breadcrumbs).length-1) {
+                    breadcrumbI18[_this.$filter('i18n_aip')(key)] = "";
+                } else {
+                    breadcrumbI18[_this.$filter('i18n_aip')(key)] = value;
+                }
             }, this.breadcrumbs);
 
 

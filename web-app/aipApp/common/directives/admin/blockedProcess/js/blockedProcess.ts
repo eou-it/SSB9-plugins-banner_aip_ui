@@ -19,6 +19,7 @@ module AIPUI {
             this.scope = {
                 currentitem: "=",
                 selected: "=",
+                generated: "=",
                 all: "="
             }
         }
@@ -36,18 +37,18 @@ module AIPUI {
         controller($scope) {
 
             $scope.init = function(){
-                var available = this.availableItems();
-                $scope.current = available[0];
+                $scope.current = getCurrent();
+                $scope.generated.push($scope.current);
             }
 
             $scope.availableItems = function() {
                 var available = [];
                 available.push(getCurrent());
-                var selected = $scope.selected.map((item) => {
-                    return item.code;
+                var generated = $scope.generated.map((item) => {
+                    return item.name;
                 });
                 angular.forEach($scope.all, item => {
-                    if(selected.indexOf(item.code)===-1) {
+                    if(generated.indexOf(item.name)===-1) {
                         available.push(item);
                     }
                 });
@@ -60,14 +61,15 @@ module AIPUI {
             }
             $scope.getCurrentUrls = function() {
                 var current = getCurrent();
-                return current.urls;
+                return current.value.urls;
             }
             $scope.remove = function() {
                 $scope.selected.splice($scope.selected.indexOf($scope.currentitem),1);
+                $scope.generated.splice($scope.generated.indexOf($scope.currenitem),1);
             }
             var getCurrent = function() {
                 var current = $scope.all.filter((item) => {
-                    if(item.code === $scope.currentitem.code) {
+                    if(item.name === $scope.currentitem.name) {
                         return item;
                     }
                 });
