@@ -199,11 +199,11 @@ var bannerAIPApp = angular.module("bannerAIP", [
                 })
 
 //provider-injector
-    .config(["$stateProvider", "$urlRouterProvider", "$locationProvider",  "$httpProvider", "$windowProvider", "$qProvider", "PAGES", "APP_ROOT", "APP_ABS_PATH",
-        function($stateProvider, $urlRouteProvider, $locationProvider, $httpProvider, $windowProvider, $qProvider,
+    .config(["$stateProvider", "$urlRouterProvider", "$locationProvider",  "$httpProvider", "$windowProvider", "PAGES", "APP_ROOT", "APP_ABS_PATH",
+        function($stateProvider, $urlRouteProvider, $locationProvider, $httpProvider, $windowProvider,
                  PAGES, APP_ROOT, APP_ABS_PATH) {
 // TODO: should this be HTML5 in HashBang mode with a base defined in the HTML?
-            $qProvider.errorOnUnhandledRejections(false);
+            //$qProvider.errorOnUnhandledRejections(false);
             $locationProvider.html5Mode(false);
             $locationProvider.hashPrefix('');
             $urlRouteProvider.otherwise("/list");
