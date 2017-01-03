@@ -37,7 +37,7 @@ module AIPUI {
         controller($scope) {
 
             $scope.init = function(){
-                // $scope.current = $scope.getCurrent();
+                $scope.current = $scope.getCurrent();
                 $scope.generated.push($scope.currentitem);
                 $scope.urls = $scope.getCurrentUrls();
             }
@@ -58,19 +58,26 @@ module AIPUI {
             //     }
             //     return available;
             // }
-            $scope.updateCurrent = function(item) {
-                console.log(item);
-                /*$scope.remove() //remove current item item from selected list
-                $scope.selected.push(item);   //add newly selected item to selected list
-                $scope.currentitem = item;*/
+            $scope.updateCurrent = function() {
+                $scope.remove() //remove current item item from selected list
+                $scope.selected.push($scope.currentitem);   //add newly selected item to selected list
+                // $scope.generated.push($scope.currentitem);
+                // $scope.current = $scope.currentitem;
             }
             $scope.getCurrentUrls = function() {
                 var current = $scope.getCurrent();
                 return current.value.urls;
             }
             $scope.remove = function() {
-                $scope.selected.splice($scope.selected.indexOf($scope.currentitem),1);
-                $scope.generated.splice($scope.generated.indexOf($scope.currentitem),1);
+                var selected = $scope.selected.filter((item) => {
+                    return item.name === $scope.current.name;
+                });
+                $scope.selected.splice($scope.selected.indexOf(selected[0]),1);
+
+                var generated = $scope.generated.filter((item) => {
+                    return item.name === $scope.current.name;
+                });
+                $scope.generated.splice($scope.generated.indexOf(generated[0]),1);
             }
             $scope.getCurrent = function() {
                 var current = $scope.all.filter((item) => {

@@ -4,11 +4,17 @@ angular.module('bannerAIP').
 filter('blockProcessItemFilter', function () {
     return function (input, current, generated) {
         var notGenerated = input.filter((item) => {
-            if(generated.indexOf(item)===-1) {
+            var isGenerated = generated.filter((_item) => {
+                return _item.name===item.name;}
+                );
+            if(isGenerated.length===0) {
                 return item;
             }
         });
-        if(notGenerated.indexOf(current)===-1) {
+        var isCurrent = notGenerated.filter((_item) => {
+            return _item.name===current.name;}
+            );
+        if(isCurrent.length===0) {
             notGenerated.unshift(current);
         }
         return notGenerated;
