@@ -26,6 +26,7 @@ module AIP {
         errorMessage:any;
         adminActionService:AIP.AdminActionService;
         spinnerService:AIP.SpinnerService;
+        saving: boolean;
         $q: ng.IQService;
         $state;
         $filter;
@@ -39,6 +40,7 @@ module AIP {
             this.$timeout = $timeout;
             this.spinnerService = SpinnerService;
             this.adminActionService = AdminActionService;
+            this.saving = false;
             this.errorMessage = {};
             this.init();
         }
@@ -80,6 +82,9 @@ module AIP {
             });
         }
         validateInput() {
+            if(this.saving) {
+                return false;
+            }
             if(!this.actionItemInfo.title || this.actionItemInfo.title === null || this.actionItemInfo.title === "" || this.actionItemInfo.title.length > 300) {
                 this.errorMessage.title = "invalid title";
             } else {
@@ -105,8 +110,10 @@ module AIP {
             this.$state.go("admin-action-list");
         }
         save() {
+            this.saving = true;
             this.adminActionService.saveActionItem(this.actionItemInfo)
                 .then((response:AIP.IActionItemSaveResponse) => {
+                    this.saving = false;
                     var notiParams = {};
                     if(response.data.success) {
                         notiParams = {
@@ -118,6 +125,7 @@ module AIP {
                         this.saveErrorCallback(response.data.message);
                     }
                 }, (err) => {
+                    this.saving = false;
                     //TODO:: handle error call
                     console.log(err);
                 });

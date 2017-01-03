@@ -112,12 +112,17 @@ module AIP {
         }
 
         getAvailable() {
-            var available = this.allBlockProcessList.filter((item) => {
-                if (this.blockedProcess.indexOf(item) === -1 && this.alreadyGenerated.indexOf(item) === -1) {
+            return this.allBlockProcessList.filter((item) => {
+                var blocked = this.blockedProcess.filter((_item) => {
+                    return _item.name === item.name;
+                });
+                var generated = this.alreadyGenerated.filter((_item) => {
+                    return _item.name === item.name;
+                });
+                if (blocked.length === 0 && generated.length === 0) {
                     return item;
                 }
             });
-            return available;
         }
         isEmpty(obj) {
             if (Object.keys(obj).length===0) {

@@ -30,6 +30,7 @@ module AIP {
         folders: AIP.IFolder[];
         groupInfo: IGroupSelect;
         errorMessage;
+        saving: boolean;
         adminGroupService: AIP.AdminGroupService;
         spinnerService: AIP.SpinnerService;
         $q: ng.IQService;
@@ -45,6 +46,7 @@ module AIP {
             this.ckEditorConfig = CKEDITORCONFIG
             this.adminGroupService = AdminGroupService;
             this.spinnerService = SpinnerService;
+            this.saving = false;
             this.errorMessage = {};
             this.errorMessage = {};
             $scope.$watch(
@@ -95,8 +97,10 @@ module AIP {
             });
         }
         save() {
+            this.saving = true;
             this.adminGroupService.saveGroup(this.groupInfo)
                 .then((response:IAddGroupResponse) => {
+                    this.saving = false;
                     var notiParams = {};
                     if(response.success) {
                         notiParams = {
@@ -108,6 +112,7 @@ module AIP {
                         this.saveErrorCallback(response.invalidField, response.errors);
                     }
                 }, (err) => {
+                    this.saving = false;
                     //TODO:: handle error call
                     console.log(err);
                 });
@@ -116,6 +121,9 @@ module AIP {
             this.$state.go("admin-group-list");
         }
         validateInput() {
+            if(this.saving) {
+                return false;
+            }
             if(!this.groupInfo.title || this.groupInfo.title === null || this.groupInfo.title === "" || this.groupInfo.title.length > 60) {
                 this.errorMessage.title = "invalid title";
             } else {
