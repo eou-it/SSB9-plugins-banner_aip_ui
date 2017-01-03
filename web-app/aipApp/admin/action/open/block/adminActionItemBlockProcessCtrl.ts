@@ -113,7 +113,13 @@ module AIP {
 
         getAvailable() {
             return this.allBlockProcessList.filter((item) => {
-                if (this.blockedProcess.indexOf(item) === -1 && this.alreadyGenerated.indexOf(item) === -1) {
+                var blocked = this.blockedProcess.filter((_item) => {
+                    return _item.name === item.name;
+                });
+                var generated = this.alreadyGenerated.filter((_item) => {
+                    return _item.name === item.name;
+                });
+                if (blocked.length === 0 && generated.length === 0) {
                     return item;
                 }
             });

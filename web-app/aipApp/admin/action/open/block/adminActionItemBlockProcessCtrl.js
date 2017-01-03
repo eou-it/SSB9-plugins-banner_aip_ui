@@ -95,7 +95,13 @@ var AIP;
         AdminActionItemBlockCtrl.prototype.getAvailable = function () {
             var _this = this;
             return this.allBlockProcessList.filter(function (item) {
-                if (_this.blockedProcess.indexOf(item) === -1 && _this.alreadyGenerated.indexOf(item) === -1) {
+                var blocked = _this.blockedProcess.filter(function (_item) {
+                    return _item.name === item.name;
+                });
+                var generated = _this.alreadyGenerated.filter(function (_item) {
+                    return _item.name === item.name;
+                });
+                if (blocked.length === 0 && generated.length === 0) {
                     return item;
                 }
             });

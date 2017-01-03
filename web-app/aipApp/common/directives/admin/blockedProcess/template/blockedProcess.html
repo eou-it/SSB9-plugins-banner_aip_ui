@@ -1,17 +1,17 @@
 <div class="blocked-process">
-    <div class="col-xs-12 col-sm-4">
+    <div class="col-xs-11 col-sm-11">
         <select class="" xe-data="" aria-label="Blocked process" required aria-required="true"
                 ng-options="item as item.value.processNamei18n|i18n_aip for item in all | blockProcessItemFilter:currentitem:generated track by item.name"
                 ng-model="currentitem"
                 ng-change="updateCurrent()">
         </select>
     </div>
-    <div class="col-xs-11 col-sm-7">
+    <!--<div class="col-xs-11 col-sm-7">-->
         <!--<div class="row blockedUrl" ng-repeat="url in urls">-->
         <!--<span>URL: </span>-->
         <!--<span>{{url}}</span>-->
         <!--</div>-->
-    </div>
+    <!--</div>-->
     <div class="col-xs-1 col-sm-1">
         <button type="button" class="iconButton icon-delete-CO" aria-label="Remove item" ng-click="remove()"></button>
     </div>
