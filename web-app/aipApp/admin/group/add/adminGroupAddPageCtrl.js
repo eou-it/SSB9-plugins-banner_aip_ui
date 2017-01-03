@@ -76,7 +76,7 @@ var AIP;
                     _this.$state.go("admin-group-open", { noti: notiParams, data: response.group });
                 }
                 else {
-                    _this.saveErrorCallback(response.invalidField, response.errors);
+                    _this.saveErrorCallback(response.invalidField, response.errors, response.message);
                 }
             }, function (err) {
                 _this.saving = false;
@@ -116,7 +116,7 @@ var AIP;
                 return true;
             }
         };
-        AdminGroupAddPageCtrl.prototype.saveErrorCallback = function (invalidFields, errors) {
+        AdminGroupAddPageCtrl.prototype.saveErrorCallback = function (invalidFields, errors, message) {
             var _this = this;
             //todo: iterate through errors given back through contraints
             /*
@@ -124,7 +124,7 @@ var AIP;
                 message += (e[i]);
             });
             */
-            var message = this.$filter("i18n_aip")("aip.admin.group.add.error.blank");
+            var message = this.$filter("i18n_aip")(message || "aip.admin.group.add.error.blank");
             if (errors != null) {
                 message = errors[0];
             }

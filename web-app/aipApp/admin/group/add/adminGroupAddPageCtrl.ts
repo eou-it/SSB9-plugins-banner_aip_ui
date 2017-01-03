@@ -109,7 +109,7 @@ module AIP {
                         };
                         this.$state.go("admin-group-open", {noti: notiParams, data: response.group});
                     } else {
-                        this.saveErrorCallback(response.invalidField, response.errors);
+                        this.saveErrorCallback(response.invalidField, response.errors, response.message);
                     }
                 }, (err) => {
                     this.saving = false;
@@ -151,14 +151,14 @@ module AIP {
             return this.groupInfo.description;
         }
 
-        saveErrorCallback(invalidFields, errors) {
+        saveErrorCallback(invalidFields, errors, message) {
            //todo: iterate through errors given back through contraints
             /*
             errors.forEach( function(e, i) {
                 message += (e[i]);
             });
             */
-            var message = this.$filter("i18n_aip")("aip.admin.group.add.error.blank")
+            var message = this.$filter("i18n_aip")(message||"aip.admin.group.add.error.blank")
             if (errors != null) {
                 message = errors[0]
             }
