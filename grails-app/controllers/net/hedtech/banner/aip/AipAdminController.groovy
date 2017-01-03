@@ -676,7 +676,6 @@ class AipAdminController {
         if (!params.actionItemId) {
             //rerun all as list
             try {
-                //TODO: get all blocked list from the service
                 def tempBlockedList = actionItemBlockedProcessService.listBlockedProcessesByType()
                 tempBlockedList.each { item ->
                     def value = jsonSlurper.parseText(item.value.replaceAll("[\n\r]",""))
@@ -697,7 +696,6 @@ class AipAdminController {
         } else {
             def actionItemId = params.actionItemId
             try {
-                //TODO: get blocked list by actionitem id from the service
                 def tempBlockedList = actionItemBlockedProcessService.listBlockedProcessByActionItemId(Long.parseLong(actionItemId))
                 tempBlockedList.each { item ->
                     def value = jsonSlurper.parseText(item.value.replaceAll("[\n\r]",""))

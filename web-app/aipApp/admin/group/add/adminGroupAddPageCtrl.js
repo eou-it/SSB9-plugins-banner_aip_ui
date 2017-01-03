@@ -17,6 +17,7 @@ var AIP;
             this.ckEditorConfig = CKEDITORCONFIG;
             this.adminGroupService = AdminGroupService;
             this.spinnerService = SpinnerService;
+            this.saving = false;
             this.errorMessage = {};
             this.errorMessage = {};
             $scope.$watch("[vm.status, vm.folders, vm.groupInfo.folder, vm.groupInfo.status, vm.groupInfo.description]", function (newVal, oldVal) {
@@ -41,7 +42,7 @@ var AIP;
                 groupStatus
                     .select2({
                     width: "25em",
-                    minimumResultsForSearch: Infinity
+                    minimumResultsForSearch: Infinity,
                 });
                 //TODO: find better and proper way to set defalut value in SELECT2 - current one is just dom object hack.
                 $(".groupStatus .select2-container.groupSelect .select2-chosen")[0].innerHTML = _this.$filter("i18n_aip")(_this.status[0].value);
@@ -62,8 +63,10 @@ var AIP;
         };
         AdminGroupAddPageCtrl.prototype.save = function () {
             var _this = this;
+            this.saving = true;
             this.adminGroupService.saveGroup(this.groupInfo)
                 .then(function (response) {
+                _this.saving = false;
                 var notiParams = {};
                 if (response.success) {
                     notiParams = {
@@ -76,6 +79,7 @@ var AIP;
                     _this.saveErrorCallback(response.invalidField, response.errors);
                 }
             }, function (err) {
+                _this.saving = false;
                 //TODO:: handle error call
                 console.log(err);
             });
@@ -84,6 +88,9 @@ var AIP;
             this.$state.go("admin-group-list");
         };
         AdminGroupAddPageCtrl.prototype.validateInput = function () {
+            if (this.saving) {
+                return false;
+            }
             if (!this.groupInfo.title || this.groupInfo.title === null || this.groupInfo.title === "" || this.groupInfo.title.length > 60) {
                 this.errorMessage.title = "invalid title";
             }
@@ -143,7 +150,7 @@ var AIP;
             notifications.addNotification(n);
         };
         return AdminGroupAddPageCtrl;
-    })();
+    }());
     AIP.AdminGroupAddPageCtrl = AdminGroupAddPageCtrl;
 })(AIP || (AIP = {}));
 register("bannerAIP").controller("AdminGroupAddPageCtrl", AIP.AdminGroupAddPageCtrl);

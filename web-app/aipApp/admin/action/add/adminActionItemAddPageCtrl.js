@@ -13,6 +13,7 @@ var AIP;
             this.$timeout = $timeout;
             this.spinnerService = SpinnerService;
             this.adminActionService = AdminActionService;
+            this.saving = false;
             this.errorMessage = {};
             this.init();
         }
@@ -50,6 +51,9 @@ var AIP;
             });
         };
         AdminActionItemAddPageCtrl.prototype.validateInput = function () {
+            if (this.saving) {
+                return false;
+            }
             if (!this.actionItemInfo.title || this.actionItemInfo.title === null || this.actionItemInfo.title === "" || this.actionItemInfo.title.length > 300) {
                 this.errorMessage.title = "invalid title";
             }
@@ -80,8 +84,10 @@ var AIP;
         };
         AdminActionItemAddPageCtrl.prototype.save = function () {
             var _this = this;
+            this.saving = true;
             this.adminActionService.saveActionItem(this.actionItemInfo)
                 .then(function (response) {
+                _this.saving = false;
                 var notiParams = {};
                 if (response.data.success) {
                     notiParams = {
@@ -94,6 +100,7 @@ var AIP;
                     _this.saveErrorCallback(response.data.message);
                 }
             }, function (err) {
+                _this.saving = false;
                 //TODO:: handle error call
                 console.log(err);
             });

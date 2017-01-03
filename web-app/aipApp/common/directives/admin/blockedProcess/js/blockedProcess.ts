@@ -37,37 +37,42 @@ module AIPUI {
         controller($scope) {
 
             $scope.init = function(){
-                $scope.current = getCurrent();
-                $scope.generated.push($scope.current);
+                // $scope.current = $scope.getCurrent();
+                $scope.generated.push($scope.currentitem);
+                $scope.urls = $scope.getCurrentUrls();
             }
 
-            $scope.availableItems = function() {
-                var available = [];
-                available.push(getCurrent());
-                var generated = $scope.generated.map((item) => {
-                    return item.name;
-                });
-                angular.forEach($scope.all, item => {
-                    if(generated.indexOf(item.name)===-1) {
-                        available.push(item);
-                    }
-                });
-                return available;
-            }
-            $scope.updateCurrent = function() {
-                $scope.remove() //remove current item item from selected list
-                $scope.selected.push($scope.current);   //add newly selected item to selected list
-                $scope.currentitem = $scope.current;
+            // $scope.availableItems = function() {
+            //     var available = [];
+            //     // available.push($scope.getCurrent());
+            //     var generated = $scope.generated.map((item) => {
+            //         return item.name;
+            //     });
+            //     angular.forEach($scope.all, item => {
+            //         if(generated.indexOf(item.name)===-1 && available.indexOf(item.name)===-1) {
+            //             available.push(item);
+            //         }
+            //     });
+            //     if(available.indexOf($scope.currentitem)===-1) {
+            //         available.unshift($scope.currentitem);
+            //     }
+            //     return available;
+            // }
+            $scope.updateCurrent = function(item) {
+                console.log(item);
+                /*$scope.remove() //remove current item item from selected list
+                $scope.selected.push(item);   //add newly selected item to selected list
+                $scope.currentitem = item;*/
             }
             $scope.getCurrentUrls = function() {
-                var current = getCurrent();
+                var current = $scope.getCurrent();
                 return current.value.urls;
             }
             $scope.remove = function() {
                 $scope.selected.splice($scope.selected.indexOf($scope.currentitem),1);
-                $scope.generated.splice($scope.generated.indexOf($scope.currenitem),1);
+                $scope.generated.splice($scope.generated.indexOf($scope.currentitem),1);
             }
-            var getCurrent = function() {
+            $scope.getCurrent = function() {
                 var current = $scope.all.filter((item) => {
                     if(item.name === $scope.currentitem.name) {
                         return item;

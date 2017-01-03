@@ -256,6 +256,9 @@ aip-list .aip-list-container {
         .groupAddContainer .groupInfo .groupInfoRow .groupElement [lang='ar'] .titleValue.supplement {
           left: 8px;
           right: auto; }
+        .groupAddContainer .groupInfo .groupInfoRow .groupElement [lang='ar-sa'] .titleValue.supplement {
+          left: 8px;
+          right: auto; }
       .groupAddContainer .groupInfo .groupInfoRow .groupElement.input-group {
         width: 100%; }
         .groupAddContainer .groupInfo .groupInfoRow .groupElement.input-group .groupTitle {
@@ -441,6 +444,9 @@ ol.selected-group > li > button {
           position: relative;
           padding: 0 24px; }
         .actionItemAddContainer .actionItemInfo .actionItemInfoRow .actionItemElement [lang='ar'] .titleValue.supplement {
+          left: 8px;
+          right: auto; }
+        .actionItemAddContainer .actionItemInfo .actionItemInfoRow .actionItemElement [lang='ar-sa'] .titleValue.supplement {
           left: 8px;
           right: auto; }
         .actionItemAddContainer .actionItemInfo .actionItemInfoRow .actionItemElement textArea {

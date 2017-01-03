@@ -297,6 +297,10 @@ aip-list .aip-list-container  {
     right:8px;
     left:auto;
 }
+        .groupAddContainer .groupInfo .groupInfoRow .groupElement [lang='ar-sa'] .titleValue.supplement  {
+    right:8px;
+    left:auto;
+}
       .groupAddContainer .groupInfo .groupInfoRow .groupElement.input-group  {
     width:100%;
 }
@@ -527,6 +531,10 @@ ol.selected-group > li > button  {
     padding:0 24px;
 }
         .actionItemAddContainer .actionItemInfo .actionItemInfoRow .actionItemElement [lang='ar'] .titleValue.supplement  {
+    right:8px;
+    left:auto;
+}
+        .actionItemAddContainer .actionItemInfo .actionItemInfoRow .actionItemElement [lang='ar-sa'] .titleValue.supplement  {
     right:8px;
     left:auto;
 }
