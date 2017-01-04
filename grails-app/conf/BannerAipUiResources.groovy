@@ -54,8 +54,8 @@ modules = {
     'bannerAIPUIRTL' {
         dependsOn 'bannerAIPUI'
         //dependsOn 'bannerSelfServiceCommonRTL, extensibilityAngularRTL, common-components, common-components-rtl'
-        dependsOn 'bannerSelfServiceCommonRTL, extensibilityAngularRTL, commonComponents, commonComponentsRTL, bannerSelfServiceAngular'
-        resource url:[plugin: 'banner-ui-ss', file: 'bootstrap/css/bootstrap-rtl.css']
+        dependsOn 'bannerSelfServiceCommonRTL, extensibilityAngularRTL, commonComponentsRTL, bootstrapRTL'
+//        resource url:[plugin: 'banner-ui-ss', file: 'bootstrap/css/bootstrap-rtl.css']
         //resource url:[plugin: 'banner-aip-ui', file: 'css/xe-ui-components-rtl.css']
         resource url:[plugin: 'banner-aip-ui', file: 'css/aip-main-rtl.css']
     }
