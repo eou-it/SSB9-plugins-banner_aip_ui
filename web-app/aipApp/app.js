@@ -155,7 +155,8 @@ var bannerAIPApp = angular.module("bannerAIP", [
             statusSave: aipAppAbsPath + "aipAdmin/statusSave",
             rulesByActionItem: aipAppAbsPath + "aipAdmin/actionItemStatusRulesByActionItemId",
             updateActionItemStatusRule: aipAppAbsPath + "aipAdmin/updateActionItemStatusRule",
-            blockedProcessList: aipAppAbsPath + "aipAdmin/blockedProcessList"
+            blockedProcessList: aipAppAbsPath + "aipAdmin/blockedProcessList",
+            updateBlockedProcessItems: aipAppAbsPath + "aipAdmin/updateBlockedProcessItems"
         }
     })
     .constant("PAGINATIONCONFIG",

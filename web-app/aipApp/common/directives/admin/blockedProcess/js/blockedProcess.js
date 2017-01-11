@@ -27,9 +27,14 @@ var AIPUI;
         };
         AIPBlockedProcessDirective.prototype.controller = function ($scope) {
             $scope.init = function () {
+                var generated = $scope.generated.filter(function (item) {
+                    return item.name === $scope.currentitem.name;
+                });
                 $scope.current = $scope.getCurrent();
-                $scope.generated.push($scope.currentitem);
-                $scope.urls = $scope.getCurrentUrls();
+                if (generated.length === 0) {
+                    $scope.generated.push($scope.currentitem);
+                    $scope.urls = $scope.getCurrentUrls();
+                }
             };
             // $scope.availableItems = function() {
             //     var available = [];
@@ -48,10 +53,20 @@ var AIPUI;
             //     return available;
             // }
             $scope.updateCurrent = function () {
-                $scope.remove(); //remove current item item from selected list
-                $scope.selected.push($scope.currentitem); //add newly selected item to selected list
+                // $scope.remove() //remove current item item from selected list
+                var selected = $scope.selected.filter(function (item) {
+                    return item.name === $scope.current.name;
+                });
+                $scope.selected[$scope.selected.indexOf(selected[0])] = $scope.currentitem;
+                // $scope.selected.push($scope.currentitem);   //add newly selected item to selected list
                 // $scope.generated.push($scope.currentitem);
                 // $scope.current = $scope.currentitem;
+                var generated = $scope.generated.filter(function (item) {
+                    return item.name === $scope.current.name;
+                });
+                $scope.generated[$scope.generated.indexOf(generated[0])] = $scope.currentitem;
+                $scope.current = $scope.currentitem;
+                $scope.urls = $scope.getCurrentUrls();
             };
             $scope.getCurrentUrls = function () {
                 var current = $scope.getCurrent();

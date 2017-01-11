@@ -138,6 +138,17 @@ var AIP;
             });
             return request;
         };
+        AdminActionService.prototype.updateBlockedProcessItems = function (actionItemId, blockItems) {
+            var request = this.$http({
+                method: "POST",
+                url: this.ENDPOINT.admin.updateBlockedProcessItems,
+                data: {
+                    actionItemId: actionItemId,
+                    blockItems: blockItems
+                }
+            });
+            return request;
+        };
         AdminActionService.$inject = ["$http", "$q", "$filter", "ENDPOINT"];
         return AdminActionService;
     }());

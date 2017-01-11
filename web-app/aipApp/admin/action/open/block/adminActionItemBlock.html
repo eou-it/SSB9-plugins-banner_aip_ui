@@ -13,12 +13,12 @@
                     <div ng-if="!vm.isEmpty(vm.blockedProcess)">
                         <div class="row blockedItem" ng-repeat="item in vm.blockedProcess">
                             <div class="col-xs-12 col-sm-5">
-                                <span class="blockedProcessTitle">{{item.value.processNamei18n}}</span>
+                                <span class="blockedProcessTitle">{{item.value.processNamei18n|i18n_aip}}</span>
                             </div>
                             <div class="col-xs-12 col-sm-7">
-                                <div class="row blockedUrl" ng-repeat="url in item.value.urls">
-                                    <span>{{url}}</span>
-                                </div>
+                                <!--<div class="row blockedUrl" ng-repeat="url in item.value.urls">-->
+                                    <!--<span>{{url}}</span>-->
+                                <!--</div>-->
                             </div>
                         </div>
                     </div>

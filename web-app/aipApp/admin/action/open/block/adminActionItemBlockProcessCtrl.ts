@@ -34,6 +34,7 @@ module AIP {
         allBlockProcessList: any[];
         alreadyGenerated: any[];
         editMode: boolean;
+        isSaving: boolean;
 
         constructor($scope, $q:ng.IQService, $state, $filter, $sce, $window, $templateRequest, $templateCache, $compile,
                     $timeout, $interpolate, SpinnerService, AdminActionService, AdminActionStatusService, APP_ROOT, CKEDITORCONFIG) {
@@ -60,6 +61,7 @@ module AIP {
             this.alreadyGenerated = [];
 
             this.editMode = false;
+            this.isSaving = false;
 
             this.init();
             angular.element( $window ).bind( 'resize', function () {
@@ -183,19 +185,33 @@ module AIP {
             //reset selected items then exit edit mode
             this.getBlockedProcessList(this.$state.params.data)
                 .then((response) => {
+                    this.alreadyGenerated = [];
                     this.editMode = false;
                 }, (error) => {
                     console.log("something wrong");
+                    this.alreadyGenerated = [];
                     this.editMode = false;
                 });
         }
 
         validateActionBlockProcess() {
-            return false;
+            if (this.alreadyGenerated.length === 0 || this.isSaving ) {
+                return false;
+            }
+            return true;
         }
         saveBlocks() {
             //save selected items then exit edit mode
             this.editMode = false;
+            this.isSaving = true;
+            // items: this.alreadyGenerated[{id:id, name: "name", value:{processNamei18n:"i18n", urls:["url"]}}]
+            // actionItemId: this.$state.params.data
+            this.adminActionService.updateBlockedProcessItems(this.$state.params.data, this.alreadyGenerated)
+                .then((response) => {
+                    this.isSaving = false;
+                }, (error) => {
+                    this.isSaving = false;
+                });
         }
     }
 }

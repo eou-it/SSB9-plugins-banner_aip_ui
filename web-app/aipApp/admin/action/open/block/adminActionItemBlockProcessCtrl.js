@@ -40,6 +40,7 @@ var AIP;
             this.allBlockProcessList = [];
             this.alreadyGenerated = [];
             this.editMode = false;
+            this.isSaving = false;
             this.init();
             angular.element($window).bind('resize', function () {
                 if (!$scope.$root.$$phase) {
@@ -152,18 +153,33 @@ var AIP;
             //reset selected items then exit edit mode
             this.getBlockedProcessList(this.$state.params.data)
                 .then(function (response) {
+                _this.alreadyGenerated = [];
                 _this.editMode = false;
             }, function (error) {
                 console.log("something wrong");
+                _this.alreadyGenerated = [];
                 _this.editMode = false;
             });
         };
         AdminActionItemBlockCtrl.prototype.validateActionBlockProcess = function () {
-            return false;
+            if (this.alreadyGenerated.length === 0 || this.isSaving) {
+                return false;
+            }
+            return true;
         };
         AdminActionItemBlockCtrl.prototype.saveBlocks = function () {
+            var _this = this;
             //save selected items then exit edit mode
             this.editMode = false;
+            this.isSaving = true;
+            // items: this.alreadyGenerated[{id:id, name: "name", value:{processNamei18n:"i18n", urls:["url"]}}]
+            // actionItemId: this.$state.params.data
+            this.adminActionService.updateBlockedProcessItems(this.$state.params.data, this.alreadyGenerated)
+                .then(function (response) {
+                _this.isSaving = false;
+            }, function (error) {
+                _this.isSaving = false;
+            });
         };
         return AdminActionItemBlockCtrl;
     }());

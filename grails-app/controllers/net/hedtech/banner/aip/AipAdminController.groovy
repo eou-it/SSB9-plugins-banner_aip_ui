@@ -5,6 +5,7 @@ import groovy.json.JsonSlurper
 import net.hedtech.banner.MessageUtility
 import net.hedtech.banner.exceptions.ApplicationException
 import net.hedtech.banner.general.communication.folder.CommunicationFolder
+import org.omg.CORBA.portable.ApplicationException
 import org.springframework.security.core.context.SecurityContextHolder
 
 import java.text.MessageFormat
@@ -680,7 +681,7 @@ class AipAdminController {
                 tempBlockedList.each { item ->
                     def value = jsonSlurper.parseText(item.value.replaceAll("[\n\r]",""))
                     def block = [
-                            id: item.id,
+//                            id: item.id,
                             name: item.name,
                             value: value.aipBlock
                     ]
@@ -698,11 +699,12 @@ class AipAdminController {
             try {
                 def tempBlockedList = actionItemBlockedProcessService.listBlockedProcessByActionItemId(Long.parseLong(actionItemId))
                 tempBlockedList.each { item ->
-                    def value = jsonSlurper.parseText(item.value.replaceAll("[\n\r]",""))
+                    def configurationData = actionItemBlockedProcessService.listBlockedProcessesByNameAndType(item.blockConfigName)
+//                    def value = jsonSlurper.parseText(item.value.replaceAll("[\n\r]",""))
                     def block = [
-                            id: item.id,
-                            name: item.name,
-                            value: value.aipBlock
+                            id: item.blockId,
+                            name: item.blockConfigName,
+                            value: configurationData
                     ]
                     blockedList.push(block)
                 }
@@ -721,5 +723,48 @@ class AipAdminController {
                 blockedProcesses: blockedList
         ]
         render model as JSON
+    }
+
+    def updateBlockedProcessItems() {
+        def jsonObj = request.JSON
+
+        def user = SecurityContextHolder?.context?.authentication?.principal
+        if (!user.pidm) {
+            response.sendError( 403 )
+            return
+        }
+        def aipUser = AipControllerUtils.getPersonForAip( params, user.pidm )
+        def actionItemId = new Long(jsonObj.actionItemId)
+        def blockItems = jsonObj.blockItems
+
+        def success = false
+        def message
+        def model
+        try {
+            Map actionItemBlockedProcess = actionItemCompositeService.updateBlockedProcess(aipUser, actionItemId, blockItems)
+            if(actionItemBlockedProcess) {
+                success = true
+            }
+            model = [
+                    success: success,
+                    message: message,
+                    actionItemBlockedProcess: actionItemBlockedProcess
+            ]
+        } catch (ApplicationException ae) {
+            model = [
+                    success: success,
+                    message: MessageUtility.message(ae.getDefaultMessate() ),
+                    actionItemBlockedProcess: ""
+            ]
+        } catch (Exception e) {
+            model = [
+                    success: success,
+                    message: message,
+                    actionItemBlockedProcess: ""
+            ]
+        }
+
+        render model as JSON
+
     }
 }

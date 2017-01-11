@@ -247,6 +247,17 @@ module AIP {
             } );
             return request;
         }
+        updateBlockedProcessItems(actionItemId, blockItems) {
+            var request = this.$http({
+                method: "POST",
+                url: this.ENDPOINT.admin.updateBlockedProcessItems,
+                data: {
+                    actionItemId: actionItemId,
+                    blockItems: blockItems
+                }
+            });
+            return request;
+        }
     }
 }
 
