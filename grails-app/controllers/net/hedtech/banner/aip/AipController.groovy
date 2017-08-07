@@ -137,7 +137,7 @@ class AipController {
         ]
 
         def items = []
-        if (actionItems.size() > 0) {
+//        if (actionItems.size() > 0) {
             actionItems?.each { item ->
                 def actionItem = [
                         id         : item.id,
@@ -150,7 +150,7 @@ class AipController {
             }
             myItems.groups[0].items = items
 //            itemsList << myItems
-        }
+//        }
         render myItems as JSON
     }
 

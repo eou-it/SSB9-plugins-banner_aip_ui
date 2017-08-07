@@ -35,4 +35,3 @@ var AIP;
     AIP.AdminLandingPageCtrl = AdminLandingPageCtrl;
 })(AIP || (AIP = {}));
 register("bannerAIP").controller("AdminLandingPageCtrl", AIP.AdminLandingPageCtrl);
-//# sourceMappingURL=adminLandingPageCtrl.js.map

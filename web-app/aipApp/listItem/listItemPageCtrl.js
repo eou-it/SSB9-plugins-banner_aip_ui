@@ -251,8 +251,7 @@ var AIP;
             notifications.addNotification(n);
         };
         return ListItemPageCtrl;
-    })();
+    }());
     AIP.ListItemPageCtrl = ListItemPageCtrl;
 })(AIP || (AIP = {}));
 register("bannerAIP").controller("ListItemPageCtrl", AIP.ListItemPageCtrl);
-//# sourceMappingURL=listItemPageCtrl.js.map
