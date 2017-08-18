@@ -10,6 +10,7 @@ class AipPageBuilderController {
 
     def groovyPagesTemplateEngine
     def compileService
+    def pageService
     def user = net.hedtech.banner.sspb.PBUser.get()
     def jsonSlurper = new JsonSlurper()
 
@@ -58,7 +59,7 @@ class AipPageBuilderController {
             page = net.hedtech.banner.sspb.Page.get(id)
         }
         catch (e) { //pageId is not a Long, find by name
-            page = net.hedtech.banner.sspb.Page.findByConstantName(pageId)
+            page = pageService.get(pageId)
         }
         return page
     }
