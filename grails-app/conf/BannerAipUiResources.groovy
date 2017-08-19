@@ -7,64 +7,30 @@
  ****************************************************************************** */
 
 modules = {
-//    overrides {
-//        'angularApp' {
-//            resource url: [plugin: 'banner-aip-ui', file: 'node_modules/angular-aria/angular-aria.js']
-//        }
-//    }
-
-//    'aip-angular' { // Temp resources
-//        resource url: [plugin: 'banner-aip-ui', file: 'node_modules/angular/angular.js']
-//        resource url: [plugin: 'banner-aip-ui', file: 'node_modules/angular-route/angular-route.js']
-//        resource url: [plugin: 'banner-aip-ui', file: 'node_modules/angular-animate/angular-animate.js']
-//        resource url: [plugin: 'banner-aip-ui', file: 'node_modules/angular-ui-router/release/angular-ui-router.js']
-//        resource url: [plugin: 'banner-aip-ui', file: 'node_modules/angular-sanitize/angular-sanitize.js']
-//        resource url: [plugin: 'banner-aip-ui', file: 'node_modules/angular-messages/angular-messages.js']
-//        resource url: [plugin: 'banner-aip-ui', file: 'node_modules/angular-translate/dist/angular-translate.js']
-//        resource url: [plugin: 'banner-aip-ui', file: 'node_modules/angular-resource/angular-resource.js']
-//        resource url: [plugin: 'banner-aip-ui', file: 'node_modules/angular-aria/angular-aria.js']
-//
-//        resource url: [plugin: 'banner-aip-ui', file: 'node_modules/moment/min/moment.min.js']
-//       // resource url: [plugin: 'banner-aip-ui', file: 'node_modules/ckeditor/ckeditor.js']
-//
-//       // resource url: [plugin: 'banner-aip-ui', file: 'bower_components/ng-ckeditor/ng-ckeditor.js']
-//        //resource url: [plugin: 'banner-aip-ui', file: 'bower_components/ng-ckeditor/libs/ckeditor/ckeditor.js']
-//        resource url: [plugin: 'banner-aip-ui', file: 'bower_components/ng-ckeditor/ng-ckeditor.min.js']
-////        resource url:[plugin: 'banner-aip', file: 'bower_components/angular-common/build/angular-common.js']
-//    }
 
     'aipCheck' {
         resource url:[plugin: 'banner-aip-ui', file: 'aipApp/aipCheck.js']
     }
     'bannerAIPUI' {
         dependsOn 'angularApp'
-
-       // dependsOn 'bannerSelfServiceCommonLTR, extensibilityCommon, extensibilityAngular, common-components, common-components-ltr, angularApp, ' +
-        //        'bootstrap'
-        dependsOn 'bannerSelfServiceCommonLTR, extensibilityCommon, extensibilityAngular, commonComponents, commonComponentsLTR, ' +
-                'bootstrap'
+        dependsOn 'bannerSelfServiceCommonLTR, extensibilityCommon, extensibilityAngular, commonComponents, commonComponentsLTR, bootstrap'
         dependsOn 'bannerAIPApp'
         dependsOn 'font-awesome'
-        //resource url:[plugin: 'banner-aip-ui', file: 'css/xe-ui-components.css']
         resource url:[plugin: 'banner-aip-ui', file: 'css/aip-main.css']
         resource url:[plugin: 'banner-aip-ui', file: 'css/iconFonts.css']
-        //resource url:[plugin: 'banner-aip-ui', file: 'node_modules/ckeditor/contents.css']
     }
     'bannerAIPUIRTL' {
         dependsOn 'bannerAIPUI'
-        //dependsOn 'bannerSelfServiceCommonRTL, extensibilityAngularRTL, common-components, common-components-rtl'
         dependsOn 'bannerSelfServiceCommonRTL, extensibilityAngularRTL, commonComponentsRTL, bootstrapRTL'
-//        resource url:[plugin: 'banner-ui-ss', file: 'bootstrap/css/bootstrap-rtl.css']
-        //resource url:[plugin: 'banner-aip-ui', file: 'css/xe-ui-components-rtl.css']
         resource url:[plugin: 'banner-aip-ui', file: 'css/aip-main-rtl.css']
     }
     'bannerAIPUtils' {
-        resource url:[plugin: 'banner-aip-ui', file: 'node_modules/angular-aria/angular-aria.js']
-        resource url:[plugin: 'banner-aip-ui', file: 'bower_components/ng-ckeditor/ng-ckeditor.min.js']
+        resource url:[plugin: 'banner-aip-ui', file: 'js/angular-aria.js']
+        resource url:[plugin: 'banner-aip-ui', file: 'js/ng-ckeditor/ng-ckeditor.min.js']
         resource url:[plugin: 'banner-aip-ui', file: 'aipApp/common/filters/i18n-filter.js']
         resource url:[plugin: 'banner-aip-ui', file: 'aipApp/common/filters/html-filter.js']
         resource url:[plugin: 'banner-aip-ui', file: 'aipApp/utils/register.js']
-        resource url: [plugin: 'banner-aip-ui', file: 'node_modules/angular-ui-bootstrap/dist/ui-bootstrap-tpls.js']
+        resource url:[plugin: 'banner-aip-ui', file: 'js/angular-ui-bootstrap/dist/ui-bootstrap-tpls.js']
     }
     'bannerAIPApp' {
         dependsOn 'bannerAIPUtils'
@@ -118,26 +84,10 @@ modules = {
         resource url:[plugin: 'banner-aip-ui', file: 'css/xe-ui-components-rtl.css']
     }
 
-//    'bannerSelfServiceAngular' {
-//        resource url:[plugin: 'banner-ui-ss', file: 'js/angular/load-angular-locale.js']
-//        resource url:[plugin: 'banner-ui-ss', file: 'js/angular/angular-resource.min.js']
-//        resource url:[plugin: 'banner-ui-ss', file: 'js/angular/lrInfiniteScroll.js']
-//        resource url:[plugin: 'banner-ui-ss', file: 'js/moment.js']
-//        resource url:[plugin: 'banner-ui-ss', file: 'js/angular/angular-common.js']
-//        resource url:[plugin: 'banner-ui-ss', file: 'js/angular-components/locale-numeric-input/custom-number-input.js']
-//        resource url:[plugin: 'banner-ui-ss', file: 'js/angular-components/locale-numeric-input/directives/currency-directive.js']
-//        resource url:[plugin: 'banner-ui-ss', file: 'js/angular-components/locale-numeric-input/directives/decimal-directive.js']
-//        resource url:[plugin: 'banner-ui-ss', file: 'js/angular-components/locale-numeric-input/directives/percent-directive.js']
-//        resource url:[plugin: 'banner-ui-ss', file: 'js/angular-components/locale-numeric-input/directives/only-number.js']
-//        resource url:[plugin: 'banner-ui-ss', file: 'css/custom-number-input/custom-number-input.css'],     attrs:[media:'screen, projection']
-//        resource url:[plugin: 'banner-ui-ss', file: 'js/angular-components/locale-numeric-input/services/readonly-service.js']
-//        resource url:[plugin: 'banner-ui-ss', file: 'js/angular-components/date-picker/directives/date-picker-directive.js']
-//    }
 
     // Resources for PageBuilder
 
     'bannerAIPPB' {
-//        dependsOn "angularApp"
         resource url:[plugin: 'banner-sspb', file: "BannerXE/lib/ng-upload/ng-upload.js"]
         resource url:[plugin: 'banner-sspb', file: "BannerXE/lib/ng-grid/ng-grid.js"]
         resource url:[plugin: 'banner-sspb', file: "BannerXE/lib/angular-ui/angular-ui.js"]
