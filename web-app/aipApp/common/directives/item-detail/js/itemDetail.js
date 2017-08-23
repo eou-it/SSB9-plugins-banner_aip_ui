@@ -41,4 +41,3 @@ var AIPUI;
     AIPUI.AIPItemDetailDirective = AIPItemDetailDirective;
 })(AIPUI || (AIPUI = {}));
 register("bannerAIPUI").directive("aipItemDetail", AIPUI.AIPItemDetailDirective);
-//# sourceMappingURL=itemDetail.js.map

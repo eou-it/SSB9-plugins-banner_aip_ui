@@ -58,4 +58,3 @@ var AIP;
     AIP.AdminActionStatusService = AdminActionStatusService;
 })(AIP || (AIP = {}));
 register("bannerAIP").service("AdminActionStatusService", AIP.AdminActionStatusService);
-//# sourceMappingURL=adminActionStatusService.js.map

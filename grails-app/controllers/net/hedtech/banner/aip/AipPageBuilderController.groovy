@@ -2,6 +2,7 @@ package net.hedtech.banner.aip
 
 import grails.converters.JSON
 import groovy.json.JsonSlurper
+import net.hedtech.banner.sspb.Page
 
 
 class AipPageBuilderController {
@@ -29,7 +30,7 @@ class AipPageBuilderController {
             def output = new StringWriter()
             groovyPagesTemplateEngine.clearPageCache()
             groovyPagesTemplateEngine.createTemplate(compiledView, 'test').make().writeTo(output)
-            model = ['html': output.toString(), 'pageName':pageName, 'script': compiledJSCode.toString()]
+            model = ['html': output.toString(), 'pageName':pageName, 'script': compiledJSCode.toString(), 'compiled':html]
         }
         render model as JSON
     }
@@ -59,7 +60,7 @@ class AipPageBuilderController {
             page = net.hedtech.banner.sspb.Page.get(id)
         }
         catch (e) { //pageId is not a Long, find by name
-            page = pageService.get(pageId)
+            page = Page.findByConstantName(pageId)
         }
         return page
     }

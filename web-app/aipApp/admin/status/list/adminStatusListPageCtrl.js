@@ -189,4 +189,3 @@ var AIP;
     AIP.AdminStatusListPageCtrl = AdminStatusListPageCtrl;
 })(AIP || (AIP = {}));
 register("bannerAIP").controller("AdminStatusListPageCtrl", AIP.AdminStatusListPageCtrl);
-//# sourceMappingURL=adminStatusListPageCtrl.js.map

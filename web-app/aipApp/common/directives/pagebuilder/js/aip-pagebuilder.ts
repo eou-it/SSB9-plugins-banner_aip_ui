@@ -54,20 +54,20 @@ module PB {
                         //   return this.tagName==="SCRIPT" || this.tagName==="DIV"
                         //});
                         //eval(val.control);
-                        var validateResult = val.validateResult;
+                        // var validateResult = val.validateResult;
 
-                        //var appElement = document.querySelector('[ng-app="BannerOnAngular"]');
-                        //var appScope = angular.element(appElement).scope();
-                        //me.$compile(bodyContent)(appScope);
+                        // var appElement = document.querySelector('[ng-app="BannerOnAngular"]');
+                        // var appScope = angular.element(appElement).scope();
+                        // me.$compile(bodyContent)(appScope);
                         bodyContent.filter("div").attr("id", "PBContent");
                         //var bodyContent2 = me.$compile(bodyContent)(scope);
                         // eval("var "+"CustomPageController_"+val.pageName+"="+val.script);
-                        // angular.module("BannerOnAngular").controller("CustomPageController_"+val.pageName, eval("CustomPageController_"+val.pageName));
+                        angular.module("BannerOnAngular").controller("CustomPageController_"+val.pageName, eval("CustomPageController_"+val.pageName));
                         angular.module("BannerOnAngular").requires.push('ngResource','ngGrid','ui', 'pbrun.directives', 'ngSanitize', 'xe-ui-components');
                         angular.bootstrap(bodyContent, ["BannerOnAngular"]);
                         element.empty();
                         element.append(bodyContent);
-                        //me.$compile(element)(scope)
+                        me.$compile(element)(scope)
 
                     });
             })
