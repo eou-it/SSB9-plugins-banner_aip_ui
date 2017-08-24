@@ -1,3 +1,6 @@
+<!--*******************************************************************************
+Copyright 2017 Ellucian Company L.P. and its affiliates.
+*******************************************************************************-->
 <div id="openActionItemContent">
 
     <!--content view with no template-->
@@ -6,13 +9,14 @@
             <div class="row">
                 <div class="col-xs-10 col-sm-8">
                     <h2>{{'aip.common.text.template'|i18n_aip}}</h2>
-                    {{'aip.admin.action.open.tab.content.noItem1'|i18n_aip}} <br />
+                    {{'aip.admin.action.open.tab.content.noItem1'|i18n_aip}} <br/>
                     {{'aip.admin.action.open.tab.content.noItem2'|i18n_aip}}
-               </div>
+                </div>
 
                 <div class="control col-xs-2 col-sm-4">
                     <div class="h2-container">
-                        <button name="Edit" type="button" class="btn btn-default edit" ng-click="vm.selectTemplate()" aria-label="">
+                        <button name="Edit" type="button" class="btn btn-default edit" ng-click="vm.selectTemplate()"
+                                aria-label="">
                             <span class="icon icon-edit-CO"></span>
                             <span class="button-text hidden-sm-down">{{'aip.admin.action.open.tab.content.edit'|i18n_aip}}</span>
                         </button>
@@ -26,14 +30,19 @@
     <div class="actionItemContent row" ng-if="!vm.isNoTemplate() && vm.templateSelect">
         <div class="contentContainer">
             <div class="row input-actionItem">
-                <label for="actionItemTemplate" class="templateSelect required" id="actionItemTemplateSelector">{{'aip.admin.action.open.tab.content.templateSelect'|i18n_aip}} {{'aip.character.astrick'|i18n_aip}}</label>
+                <label for="actionItemTemplate" class="templateSelect required" id="actionItemTemplateSelector">{{'aip.admin.action.open.tab.content.templateSelect'|i18n_aip}}
+                    {{'aip.character.astrick'|i18n_aip}}</label>
             </div>
             <div class="row">
                 <div class="col-sm-4">
-                    <select id="actionItemTemplate" class="actionItemSelect form-control" xe-data="" required aria-required="true" ng-model="vm.selectedTemplate" ng-change="vm.getRules()">
-                        <option selected="selected" disabled selected value="">{{"aip.admin.action.open.tab.content.templatePlaceholder"|i18n_aip}}</option>
+                    <select id="actionItemTemplate" class="actionItemSelect form-control" xe-data="" required
+                            aria-required="true" ng-model="vm.selectedTemplate" ng-change="vm.getRules()">
+                        <option selected="selected" disabled selected value="">
+                            {{"aip.admin.action.open.tab.content.templatePlaceholder"|i18n_aip}}
+                        </option>
                         <option ng-repeat="item in vm.templates" value="{{item.id}}">{{item.title}}
-                            ({{vm.templateSource}})</option>
+                            ({{vm.templateSource}})
+                        </option>
                     </select>
                 </div>
             </div>
@@ -42,10 +51,12 @@
         <!-- edit view -->
         <div class="contentContainer" ng-if="!vm.isNoTemplateSelected()">
             <div class="row">
-                <label for="templateContent" class="titleValue" id="template-content">{{vm.actionItem.actionItemTemplateName}} {{'aip.common.text.content'|i18n_aip}}</label>
+                <label for="templateContent" class="titleValue" id="template-content">{{vm.actionItem.actionItemTemplateName}}
+                    {{'aip.common.text.content'|i18n_aip}}</label>
             </div>
             <div class="row">
-                <textarea id="templateContent" ng-required="true" aria-required="true" name="templateContent" ckeditor="ckEditorConfig" ng-model="vm.actionItem.actionItemContent"></textarea>
+                <textarea id="templateContent" ng-required="true" aria-required="true" name="templateContent"
+                          ckeditor="ckEditorConfig" ng-model="vm.actionItem.actionItemContent"></textarea>
             </div>
 
             <div class="contentContainer">
@@ -61,10 +72,13 @@
                 </div>
                 <div class="col-xs-11 col-sm-4">
                     <div class="col-xs-6 col-sm-6 actionButton">
-                        <button name="Cancel" type="button" class="btn btn-default" ng-click="vm.cancel('content')">{{"aip.common.cancel"|i18n_aip}}</button>
+                        <button name="Cancel" type="button" class="btn btn-default" ng-click="vm.cancel('content')">
+                            {{"aip.common.cancel"|i18n_aip}}
+                        </button>
                     </div>
                     <div class="col-xs-6 col-sm-6 actionButton">
-                        <button type="button" name="Save" class="btn btn-primary" ng-disabled="!vm.validateActionItemRule()" ng-click="vm.saveTemplate()">
+                        <button type="button" name="Save" class="btn btn-primary"
+                                ng-disabled="!vm.validateActionItemRule()" ng-click="vm.saveTemplate()">
                             {{"aip.common.saveandreturn"|i18n_aip}}
                         </button>
                     </div>
@@ -75,7 +89,8 @@
     </div>
 
     <!--read only content-->
-    <div class="actionItemContent row" ng-if="!vm.isNoTemplate() && vm.actionItem.actionItemTemplateId && !vm.templateSelect">
+    <div class="actionItemContent row"
+         ng-if="!vm.isNoTemplate() && vm.actionItem.actionItemTemplateId && !vm.templateSelect">
         <div class="contentContainer">
             <div class="row">
                 <div class="col-xs-10 col-sm-8">
@@ -83,7 +98,8 @@
                 </div>
                 <div class="control col-xs-2 col-sm-4">
                     <div class="h2-container">
-                        <button name="Edit" type="button" class="btn btn-default edit" ng-click="vm.selectTemplate()" aria-label="">
+                        <button name="Edit" type="button" class="btn btn-default edit" ng-click="vm.selectTemplate()"
+                                aria-label="">
                             <span class="icon icon-edit-CO"></span>
                             <span class="button-text hidden-sm-down">{{'aip.admin.action.open.tab.content.edit'|i18n_aip}}</span>
                         </button>
@@ -93,14 +109,18 @@
             <div class="row">
                 <div class="col-xs-12 col-sm-8">
                     <div class="templateText">
-                    {{vm.actionItem.actionItemTemplateName||'aip.admin.action.open.tab.content.templateContent'|i18n_aip}} ({{vm.templateSource}})</div>
+                        {{vm.actionItem.actionItemTemplateName||'aip.admin.action.open.tab.content.templateContent'|i18n_aip}}
+                        ({{vm.templateSource}})
+                    </div>
                 </div>
             </div>
             <div class="row">
                 <div class="col-xs-12 col-sm-12">
-                    <h2>{{vm.actionItem.actionItemTemplateName}} {{'aip.common.text.content'|i18n_aip}}</h2>
+                    <h2>{{'aip.common.text.content'|i18n_aip}}</h2>
+
                     <div ng-if="!vm.isNoContent()">
-                        <div class="contentPreview" data-ng-bind-html="vm.trustAsHtml(vm.actionItem.actionItemContent)"></div>
+                        <div class="contentPreview"
+                             data-ng-bind-html="vm.trustAsHtml(vm.actionItem.actionItemContent)"></div>
                     </div>
                     <div ng-if="vm.isNoContent()">
                         <span>{{'aip.admin.action.open.tab.content.noContent'|i18n_aip}}</span>
@@ -111,26 +131,33 @@
             <div class="row">
                 <div class="col-xs-12 col-sm-12">
                     <h2>{{'aip.admin.status.rules.table.heading'|i18n_aip}}</h2>
+
                     <div class="contentContainer" ng-if="vm.rules.length>0">
                         <table class="ruleListReadOnly">
-                            <caption aria-label="Action Item Response Options">{{'aip.admin.status.rules.table.caption'|i18n_aip}}</caption>
+                            <caption aria-label="Action Item Response Options">
+                                {{'aip.admin.status.rules.table.caption'|i18n_aip}}
+                            </caption>
                             <thead>
-                                <th class="ruleLabelText">{{'aip.admin.status.rules.table.header.responseOptionText'|i18n_aip}}</th>
-                                <th class="ruleStatus">{{'aip.admin.status.rules.table.header.status'|i18n_aip}}</th>
-                                <td aria-label="{{'aip.admin.status.rules.table.header.blocks'|i18n_aip}}"></td>
+                            <th class="ruleLabelText">
+                                {{'aip.admin.status.rules.table.header.responseOptionText'|i18n_aip}}
+                            </th>
+                            <th class="ruleStatus">{{'aip.admin.status.rules.table.header.status'|i18n_aip}}</th>
+                            <td aria-label="{{'aip.admin.status.rules.table.header.blocks'|i18n_aip}}"></td>
                             </thead>
                             <tbody>
-                                <tr ng-repeat="rule in vm.rules">
-                                    <td data-label="{{'aip.admin.status.rules.table.header.responseOptionText'|i18n_aip}}" data-ng-bind-html="vm.trustAsHtml(rule.statusRuleLabelText)"></td>
-                                    <td data-label="{{'aip.admin.status.rules.table.header.status'|i18n_aip}}">
-                                        <span class="labels" ng-class="{'rejected':rule.statusBlockProcessInd==='Y', 'approved':rule.statusBlockProcessInd==='N'}">
+                            <tr ng-repeat="rule in vm.rules">
+                                <td data-label="{{'aip.admin.status.rules.table.header.responseOptionText'|i18n_aip}}"
+                                    data-ng-bind-html="vm.trustAsHtml(rule.statusRuleLabelText)"></td>
+                                <td data-label="{{'aip.admin.status.rules.table.header.status'|i18n_aip}}">
+                                        <span class="labels"
+                                              ng-class="{'rejected':rule.statusBlockProcessInd==='Y', 'approved':rule.statusBlockProcessInd==='N'}">
                                             {{rule.statusName}}
                                         </span>
-                                    </td>
-                                    <td>
-                                        {{(rule.statusBlockProcessInd=="Y"?"aip.admin.status.rules.table.blockText.block":"aip.admin.status.rules.table.blockText.unblock")|i18n_aip}}
-                                    </td>
-                                </tr>
+                                </td>
+                                <td>
+                                    {{(rule.statusBlockProcessInd=="Y"?"aip.admin.status.rules.table.blockText.block":"aip.admin.status.rules.table.blockText.unblock")|i18n_aip}}
+                                </td>
+                            </tr>
                             </tbody>
                         </table>
                     </div>
