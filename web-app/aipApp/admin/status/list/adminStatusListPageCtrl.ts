@@ -24,7 +24,7 @@ module AIP {
         mobileSize;
         adminActionStatusService;
         selectedRecord;
-        APP_ROOT;
+        APP_ROOT;dd
         modalInstance;
 
         constructor($scope, $state, $window, $filter, $q, $uibModal, ENDPOINT, PAGINATIONCONFIG,
@@ -130,7 +130,19 @@ module AIP {
                     visible: true,
                     columnShowHide: true
                 }
-            }];
+            }
+            {
+                    name: "actionTobeTaken",
+                    title: this.$filter("i18n_aip")("aip.list.grid.actionTobeTaken"),
+                    ariaLabel: this.$filter("i18n_aip")("aip.list.grid.actionTobeTaken"),
+                    width: "100px",
+                    options: {
+                        sortable: false,
+                        visible: true,
+                        columnShowHide: true
+                    }
+                }
+            ];
         }
         getIndicatorVal() {
 
@@ -163,6 +175,20 @@ module AIP {
                 console.log(error);
             });
         }
+
+
+        AdminStatusListPageCtrl.prototype.deleteSystemRecord = function (message) {
+                var _this = this;
+               var n = new Notification({
+                   message: _this.$filter("i18n_aip")("aip.common.save.deleteSystemRecord"),
+                  type: "error",
+                   flash: true
+               });
+               notifications.addNotification(n);
+           };
+           AdminStatusListPageCtrl.prototype.disableSystemRecord = function (e) {
+           e.preventDefault();
+           };
 
         /*
         add() {
