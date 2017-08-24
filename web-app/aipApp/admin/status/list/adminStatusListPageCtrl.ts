@@ -26,7 +26,7 @@ module AIP {
         mobileSize;
         adminActionStatusService;
         selectedRecord;
-        APP_ROOT;dd
+        APP_ROOT;
         modalInstance;
 
         constructor($scope, $state, $window, $filter, $q, $uibModal, ENDPOINT, PAGINATIONCONFIG,
@@ -61,7 +61,8 @@ module AIP {
                 actionItemBlockedProcess: 3,
                 actionItemSystemRequired: 3,
                 actionItemLastUpdatedBy: 3,
-                actionItemActivityDate: 3
+                actionItemActivityDate: 3,
+                actionItemStatusNotification:3
             };
             this.mobileSize = angular.element("body").width()>768?false:true;
             this.searchConfig = {

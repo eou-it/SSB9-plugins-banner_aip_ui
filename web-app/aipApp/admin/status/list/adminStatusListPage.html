@@ -56,10 +56,10 @@ Copyright 2017 Ellucian Company L.P. and its affiliates.
                     </div>
                 </xe-cell-markup>
                 <xe-cell-markup column-name="actionTobeTaken">
-                    <div ng-if="row.actionItemStatusSystemRequired === 'Y'" class="icon icon-delete-CF" ng-click="vm.deleteSystemRecord()">
+                    <div ng-if="row.actionItemStatusSystemRequired === 'Y'" class="icon icon-delete-CO" ng-click="vm.deleteSystemRecord()">
                         <span class="offscreen">{{'aip.common.system.required.indicator.is'|i18n_aip}} {{'aip.common.text.yes'|i18n_aip}}</span>
                     </div>
-                    <div ng-if="row.actionItemStatusSystemRequired === 'N'" class="icon icon-delete-CF" ng-click="vm.disableSystemRecord()">
+                    <div ng-if="row.actionItemStatusSystemRequired === 'N'" class="icon icon-delete-CO" ng-click="vm.disableSystemRecord()">
                         <span class="offscreen">{{'aip.common.system.required.indicator.is'|i18n_aip}} {{'aip.common.text.no'|i18n_aip}}</span>
                     </div>
                 </xe-cell-markup>
