@@ -48,7 +48,7 @@ class AipPageBuilderController {
 
             }
         }
-        compiledJSCode = "var CustomPageController_" + pageName.toString() + "=" + compiledJSCode
+        compiledJSCode = "var pageId = '" + pageName.toString() + "',\n controllerId = 'CustomPageController_" + pageName.toString() + "',\n" + "CustomPageController_" + pageName.toString() + "=" + compiledJSCode.toString() + ";"
         render (text: compiledJSCode, contentType: "text/javascript")
 //        render model as JSON
     }
