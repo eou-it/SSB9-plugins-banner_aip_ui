@@ -72,7 +72,7 @@ modules = {
         resource url:[plugin: 'banner-aip-ui', file: 'aipApp/common/filters/blockProcessItem-filter.js']
     }
     'commonComponents' {
-        dependsOn 'aip-angular'
+        dependsOn 'bannerAIPApp'
         resource url:[plugin: 'banner-aip-ui', file: 'js/xe-components/xe-ui-components.js']
     }
     'commonComponentsLTR' {
