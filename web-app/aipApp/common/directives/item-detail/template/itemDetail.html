@@ -10,8 +10,10 @@
             <div ng-if="data.type === 'actionItem' && !data.info.templateId">
                 {{"aip.user.detail.noTemplate"|i18n_aip}}
             </div>
-            <pagebuilder-page ng-if="data.type === 'actionItem' && data.info.templateId" content="{{data.info.templateId}}"
+            <div ng-if="data.type === 'actionItem' && data.info.templateId">
+                <pagebuilder-page  content="{{data.info.templateId}}"
                               aid="{{data.info.id}}" gid="{{data.groupId}}"></pagebuilder-page>
+            </div>
         </div>
         <hr/>
         <div class="detail-nav hidden-sm hidden-md hidden-lg visible-xs-12">
