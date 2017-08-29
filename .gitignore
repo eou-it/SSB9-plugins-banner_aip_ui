@@ -23,5 +23,5 @@ out/
 test/**/release_info.groovy
 test/**/release_info.groovy.old
 plugin.xml
-#*-rtl.css
+*-rtl.css
 messages_ar_SA.properties
