@@ -1,5 +1,5 @@
 /*********************************************************************************
- Copyright 2017 Ellucian Company L.P. and its affiliates.
+ Copyright 2016 Ellucian Company L.P. and its affiliates.
  **********************************************************************************/
 
 package net.hedtech.banner.aip
@@ -12,9 +12,7 @@ import org.springframework.security.core.context.SecurityContextHolder
 
 import java.security.InvalidParameterException
 
-/**
- * AIP Controller class to have all API endpoints
- */
+
 class AipController {
 
     static defaultAction = "list"
@@ -26,7 +24,6 @@ class AipController {
     def groupFolderReadOnlyService
 
     def actionItemReadOnlyService
-
 
     @Secured(['ROLE_SELFSERVICE-FACULTY_BAN_DEFAULT_M', 'ROLE_SELFSERVICE-STUDENT_BAN_DEFAULT_M'])
     def list() {
@@ -60,6 +57,8 @@ class AipController {
         render model as JSON;
     }
 
+
+
     //todo: this is probably going to go away w/new method in admin controller
     @Secured(['ROLE_SELFSERVICE-FACULTY_BAN_DEFAULT_M', 'ROLE_SELFSERVICE-STUDENT_BAN_DEFAULT_M'])
     def adminGroupList() {
@@ -67,7 +66,7 @@ class AipController {
 
         def groupList = []
         if (actionItemGroups.size() > 0) {
-            actionItemGroups?.each {group ->
+            actionItemGroups?.each { group ->
                 def groupItem = [
                         id         : group.groupId,
                         title      : group.groupTitle,
@@ -93,7 +92,7 @@ class AipController {
         ]
         def model = [
                 header: testDataHeader,
-                result: groupList,
+                result  : groupList,
                 length: groupList.size()
 
         ]
@@ -116,7 +115,7 @@ class AipController {
         def actionItemGroups = groupFolderReadOnlyService.listActionItemGroups()
 
         if (actionItemGroups.size() > 0) {
-            actionItemGroups[0]?.each {group ->
+            actionItemGroups[0]?.each { group ->
                 if (!group.groupDesc) {
                     groupDesc = MessageUtility.message( "aip.placeholder.nogroups" )
                 } else {
@@ -126,7 +125,7 @@ class AipController {
                         id         : group.groupId,
                         title      : group.groupTitle,
                         description: groupDesc,
-                        header     : ["title", "state", "completedDate", "description"]
+                        header : ["title", "state","completedDate","description"]
 
                 ]
                 userGroupInfo << groupItem
@@ -134,22 +133,22 @@ class AipController {
         }
 
         def myItems = [
-                groups: userGroupInfo
+                groups : userGroupInfo
         ]
 
         def items = []
 //        if (actionItems.size() > 0) {
-        actionItems?.each {item ->
-            def actionItem = [
-                    id           : item.id,
-                    title        : item.title,
-                    state        : item.status,
-                    description  : item.description,
-                    completedDate: item.completedDate
-            ]
-            items << actionItem
-        }
-        myItems.groups[0].items = items
+            actionItems?.each { item ->
+                def actionItem = [
+                        id         : item.id,
+                        title      : item.title,
+                        state      : item.status,
+                        description: item.description,
+                        completedDate: item.completedDate
+                ]
+                items << actionItem
+            }
+            myItems.groups[0].items = items
 //            itemsList << myItems
 //        }
         render myItems as JSON
@@ -181,7 +180,7 @@ class AipController {
                 def actionItemGroups = groupFolderReadOnlyService.listActionItemGroups()
                 itemDetailInfo = []
                 if (actionItemGroups.size() > 0) {
-                    actionItemGroups[0]?.each {group ->
+                    actionItemGroups[0]?.each { group ->
                         if (!group.groupDesc) {
                             groupDesc = MessageUtility.message( "aip.placeholder.nogroups" )
                         } else {
@@ -245,13 +244,13 @@ class AipController {
         def model = [
                 [
                         "id"   : 1,
-                        "value": "Draft"
+                        "value": "pending"
                 ], [
                         "id"   : 2,
-                        "value": "Active"
+                        "value": "active"
                 ], [
                         "id"   : 3,
-                        "value": "Inactive"
+                        "value": "inactive"
                 ]
         ]
         render model as JSON

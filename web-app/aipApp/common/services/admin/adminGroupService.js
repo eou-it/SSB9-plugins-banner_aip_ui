@@ -127,4 +127,3 @@ var AIP;
     AIP.AdminGroupService = AdminGroupService;
 })(AIP || (AIP = {}));
 register("bannerAIP").service("AdminGroupService", AIP.AdminGroupService);
-//# sourceMappingURL=adminGroupService.js.map
