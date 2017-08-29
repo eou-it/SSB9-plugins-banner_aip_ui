@@ -1,16 +1,21 @@
+/*******************************************************************************
+ Copyright 2017 Ellucian Company L.P. and its affiliates.
+ ****************************************************************************** */
 package net.hedtech.banner.aip
 
 import grails.converters.JSON
 import groovy.json.JsonSlurper
 import net.hedtech.banner.MessageUtility
-import net.hedtech.banner.exceptions.ApplicationException
 import net.hedtech.banner.general.communication.folder.CommunicationFolder
+import net.hedtech.banner.i18n.MessageHelper
 import org.omg.CORBA.portable.ApplicationException
 import org.springframework.security.core.context.SecurityContextHolder
 
 import java.text.MessageFormat
 
-
+/**
+ * Controller class for AIP Admin
+ */
 class AipAdminController {
 
     static defaultAction = "folders"
@@ -52,7 +57,7 @@ class AipAdminController {
         def model = [
                 [
                         "id"   : 0,
-                        "value": "Pending"
+                        "value": "Draft"
                 ], [
                         "id"   : 1,
                         "value": "Active"
@@ -250,7 +255,7 @@ class AipAdminController {
             groupItem = [
                     groupId          : groupRO?.groupId[0],
                     groupTitle       : groupRO?.groupTitle[0],
-                    groupStatus      : groupRO?.groupStatus[0],
+                    groupStatus      : groupRO ? MessageHelper.message( "aip.status.${groupRO?.groupStatus[0]}" ) : null,
                     folderId         : groupRO?.folderId[0],
                     folderName       : groupRO?.folderName[0],
                     folderDesc       : groupRO?.folderDesc[0],
@@ -545,7 +550,7 @@ class AipAdminController {
 
 
     def actionItemStatusRulesByActionItemId() {
-        def actionItemId = params.long('actionItemId')
+        def actionItemId = params.long( 'actionItemId' )
         def actionItemStatusRuleReadOnlies = actionItemStatusRuleReadOnlyService.getActionItemStatusRulesROByActionItemId( actionItemId )
         render actionItemStatusRuleReadOnlies as JSON
     }
@@ -572,7 +577,7 @@ class AipAdminController {
         try {
             //update&create
             List<ActionItemStatusRule> ruleList = []
-            inputRules.each { rule ->
+            inputRules.each {rule ->
                 def statusRule
                 if (rule.statusRuleId) {
                     statusRule = ActionItemStatusRule.get( rule.statusRuleId )
@@ -639,7 +644,7 @@ class AipAdminController {
         def model
         try {
             Map actionItemInfo = actionItemCompositeService.updateDetailsAndStatusRules( aipUser, inputRules, templateId, actionItemId,
-                    actionItemDetailText )
+                                                                                         actionItemDetailText )
 
             if (actionItemInfo['actionItemRO'] && actionItemInfo['statusRules']) {
                 success = true
@@ -668,6 +673,7 @@ class AipAdminController {
         render model as JSON
     }
 
+
     def blockedProcessList() {
 
         def success = false
@@ -678,18 +684,18 @@ class AipAdminController {
             //rerun all as list
             try {
                 def tempBlockedList = actionItemBlockedProcessService.listBlockedProcessesByType()
-                tempBlockedList.each { item ->
-                    def value = jsonSlurper.parseText(item.value.replaceAll("[\n\r]",""))
+                tempBlockedList.each {item ->
+                    def value = jsonSlurper.parseText( item.value.replaceAll( "[\n\r]", "" ) )
                     def block = [
 //                            id: item.id,
-                            name: item.name,
-                            value: value.aipBlock
+name : item.name,
+value: value.aipBlock
                     ]
-                    blockedList.push(block)
+                    blockedList.push( block )
                 }
                 response.status = 200
                 success = true
-            } catch(Exception e) {
+            } catch (Exception e) {
                 println e.defaultMessage
                 //fixme: this needs to be set to point to default message. wasn't finding it so used status unique until we have time to debug.
                 message = MessageUtility.message( "Something happened" )
@@ -697,33 +703,34 @@ class AipAdminController {
         } else {
             def actionItemId = params.actionItemId
             try {
-                def tempBlockedList = actionItemBlockedProcessService.listBlockedProcessByActionItemId(Long.parseLong(actionItemId))
-                tempBlockedList.each { item ->
-                    def configurationData = actionItemBlockedProcessService.listBlockedProcessesByNameAndType(item.blockConfigName)
+                def tempBlockedList = actionItemBlockedProcessService.listBlockedProcessByActionItemId( Long.parseLong( actionItemId ) )
+                tempBlockedList.each {item ->
+                    def configurationData = actionItemBlockedProcessService.listBlockedProcessesByNameAndType( item.blockConfigName )
 //                    def value = jsonSlurper.parseText(item.value.replaceAll("[\n\r]",""))
                     def block = [
-                            id: item.blockId,
-                            name: item.blockConfigName,
+                            id   : item.blockId,
+                            name : item.blockConfigName,
                             value: configurationData
                     ]
-                    blockedList.push(block)
+                    blockedList.push( block )
                 }
 
                 response.status = 200
                 success = true
-            } catch(Exception e) {
+            } catch (Exception e) {
                 println e.defaultMessage
                 //fixme: this needs to be set to point to default message. wasn't finding it so used status unique until we have time to debug.
                 message = MessageUtility.message( "Something happened" )
             }
         }
         def model = [
-                success: success,
-                message: message,
+                success         : success,
+                message         : message,
                 blockedProcesses: blockedList
         ]
         render model as JSON
     }
+
 
     def updateBlockedProcessItems() {
         def jsonObj = request.JSON
@@ -734,32 +741,32 @@ class AipAdminController {
             return
         }
         def aipUser = AipControllerUtils.getPersonForAip( params, user.pidm )
-        def actionItemId = new Long(jsonObj.actionItemId)
+        def actionItemId = new Long( jsonObj.actionItemId )
         def blockItems = jsonObj.blockItems
 
         def success = false
         def message
         def model
         try {
-            Map actionItemBlockedProcess = actionItemCompositeService.updateBlockedProcess(aipUser, actionItemId, blockItems)
-            if(actionItemBlockedProcess) {
+            Map actionItemBlockedProcess = actionItemCompositeService.updateBlockedProcess( aipUser, actionItemId, blockItems )
+            if (actionItemBlockedProcess) {
                 success = true
             }
             model = [
-                    success: success,
-                    message: message,
+                    success                 : success,
+                    message                 : message,
                     actionItemBlockedProcess: actionItemBlockedProcess
             ]
         } catch (ApplicationException ae) {
             model = [
-                    success: success,
-                    message: MessageUtility.message(ae.getDefaultMessate() ),
+                    success                 : success,
+                    message                 : MessageUtility.message( ae.getDefaultMessate() ),
                     actionItemBlockedProcess: ""
             ]
         } catch (Exception e) {
             model = [
-                    success: success,
-                    message: message,
+                    success                 : success,
+                    message                 : message,
                     actionItemBlockedProcess: ""
             ]
         }
