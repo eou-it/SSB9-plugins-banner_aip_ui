@@ -52,24 +52,6 @@ class AipAdminController {
     }
 
 
-    def adminActionItemStatus() {
-        //TODO:: get action item status from DB through service
-        def model = [
-                [
-                        "id"   : 0,
-                        "value": "Draft"
-                ], [
-                        "id"   : 1,
-                        "value": "Active"
-                ], [
-                        "id"   : 2,
-                        "value": "Inactive"
-                ]
-        ]
-        render model as JSON
-    }
-
-
     def addFolder( name, description ) {
 
         CommunicationFolder aFolder
@@ -186,7 +168,7 @@ class AipAdminController {
         def groupItem = [
                 groupId          : groupRO?.groupId[0],
                 groupTitle       : groupRO?.groupTitle[0],
-                groupStatus      : groupRO?.groupStatus[0],
+                groupStatus      : groupRO ? MessageHelper.message( "aip.status.${groupRO.groupStatus[0]}" ) : null,
                 folderId         : groupRO?.folderId[0],
                 folderName       : groupRO?.folderName[0],
                 folderDesc       : groupRO?.folderDesc[0],
@@ -255,7 +237,7 @@ class AipAdminController {
             groupItem = [
                     groupId          : groupRO?.groupId[0],
                     groupTitle       : groupRO?.groupTitle[0],
-                    groupStatus      : groupRO ? MessageHelper.message( "aip.status.${groupRO?.groupStatus[0]}" ) : null,
+                    groupStatus      : groupRO ? MessageHelper.message( "aip.status.${groupRO.groupStatus[0]}" ) : null,
                     folderId         : groupRO?.folderId[0],
                     folderName       : groupRO?.folderName[0],
                     folderDesc       : groupRO?.folderDesc[0],
@@ -340,7 +322,28 @@ class AipAdminController {
         def model = [
                 success   : success,
                 errors    : errors,
-                actionItem: actionItem
+                actionItem: [
+                        actionItemId           : actionItem?.actionItemId,
+                        actionItemName         : actionItem?.actionItemName,
+                        folderId               : actionItem?.folderId,
+                        folderName             : actionItem?.folderName,
+                        folderDesc             : actionItem?.folderDesc,
+                        actionItemStatus       : actionItem ? MessageHelper.message( "aip.status.${actionItem.actionItemStatus}" ) : null,
+                        actionItemActivityDate : actionItem?.actionItemActivityDate,
+                        actionItemUserId       : actionItem?.actionItemUserId,
+                        actionItemContentUserId: actionItem?.actionItemContentUserId,
+                        actionItemCreatorId    : actionItem?.actionItemCreatorId,
+                        actionItemCreateDate   : actionItem?.actionItemCreateDate,
+                        actionItemCompositeDate: actionItem?.actionItemCompositeDate,
+                        actionItemLastUserId   : actionItem?.actionItemLastUserId,
+                        actionItemVersion      : actionItem?.actionItemVersion,
+                        actionItemTemplateId   : actionItem?.actionItemTemplateId,
+                        actionItemTemplateName : actionItem?.actionItemTemplateName,
+                        actionItemPageName     : actionItem?.actionItemPageName,
+                        actionItemContentId    : actionItem?.actionItemContentId,
+                        actionItemContentDate  : actionItem?.actionItemContentDate,
+                        actionItemContent      : actionItem?.actionItemContent
+                ]
         ]
 
         render model as JSON
