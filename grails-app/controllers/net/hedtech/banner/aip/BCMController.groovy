@@ -13,7 +13,10 @@ class BCMController {
     def bannerCommManagementResourceAccessService
     private final static String BCM_LOCATION = 'BCM_LOCATION'
 
-
+    /**
+     * Provides BCM Location
+     * @return
+     */
     def getBCMLocation() {
         def bcmLocationURL
         if (!session[BCM_LOCATION]) {
