@@ -53,6 +53,11 @@ module AIP {
                 this.adminActionService.getStatus()
                     .then((response: AIP.IActionItemStatusResponse) => {
                         this.status = response.data;
+                        angular.forEach(this.status,function(key,value){
+                            key.value =  "aip.status." + key.value;
+                            console.log(key.value)
+                            return value;
+                        });
                         var actionItemStatus:any = $("#actionItemStatus");
                         this.actionItemInfo.status = this.status[0];
                         this.$timeout(()=> {
