@@ -1,5 +1,5 @@
 /*********************************************************************************
- Copyright 2016 Ellucian Company L.P. and its affiliates.
+ Copyright 2017 Ellucian Company L.P. and its affiliates.
  **********************************************************************************/
 
 grails.project.class.dir = "target/classes"
@@ -7,11 +7,12 @@ grails.project.test.class.dir = "target/test-classes"
 grails.project.test.reports.dir = "target/test-reports"
 
 
-grails.plugin.location.'banner-aip'="../banner_aip.git"
-grails.plugin.location.'i18n_core'="../i18n_core.git"
-grails.plugin.location.'banner-general-person'="../banner_general_person.git"
-grails.plugin.location.'banner-core'="../banner_core.git"
-grails.plugin.location.'banner-general-common'="../banner_general_common.git"
+grails.plugin.location.'banner-aip' = "../banner_aip.git"
+grails.plugin.location.'banner-ui-ss' = "../banner_ui_ss.git"
+grails.plugin.location.'i18n_core' = "../i18n_core.git"
+grails.plugin.location.'banner-general-person' = "../banner_general_person.git"
+grails.plugin.location.'banner-general-common' = "../banner_general_common.git"
+grails.plugin.location.'banner-general-validation-common' = "../banner_general_validation_common.git"
 
 grails.project.dependency.resolver = "maven" // or maven
 grails.project.dependency.resolution = {
@@ -44,7 +45,6 @@ grails.project.dependency.resolution = {
         test ':code-coverage:2.0.3-3'
         compile ":ckeditor:4.5.4.1"
     }
-
 
 
 }
