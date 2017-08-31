@@ -104,6 +104,11 @@ module AIP {
         saveActionItem(actionItem: IActionItemParam): ng.IHttpPromise<IActionItemSaveResponse>;
         getActionItemDetail(actionItemId:number): ng.IHttpPromise<IActionItemOpenResponse>;
     }
+
+    enum Status {
+        Draft=1, Active=2, Inactive=3
+    }
+
     export class AdminActionService implements IAdminActionService{
         static $inject=["$http", "$q", "$filter", "ENDPOINT"];
         $http: ng.IHttpService;
@@ -165,7 +170,8 @@ module AIP {
                 title: actionItem.title,
                 folderId: parseInt(actionItem.folder.id),
                 description: actionItem.description,
-                status: actionItem.status.value
+                status: Status[actionItem.status.id],
+
             };
             var request = this.$http({
                 method: "POST",
