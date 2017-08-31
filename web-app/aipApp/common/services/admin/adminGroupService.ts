@@ -1,5 +1,6 @@
-///<reference path="../../../../typings/tsd.d.ts"/>
-
+/*******************************************************************************
+ Copyright 2017 Ellucian Company L.P. and its affiliates.
+ ****************************************************************************** */
 declare var register;
 
 module AIP {
@@ -74,7 +75,7 @@ module AIP {
 
 
     enum Status {
-        Pending=1, Active=2, Inactive=3
+        Draft=1, Active=2, Inactive=3
     }
 
     export class AdminGroupService implements IAdminGroupService{
