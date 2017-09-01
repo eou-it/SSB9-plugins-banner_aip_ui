@@ -10,12 +10,19 @@ angular.module('bannerAIPUI')
                 model: "=",
                 method: "&"
             },
-            controller: ['$scope', '$attrs', "$state", function($scope, $attrs, $state) {
+            controller: ['$scope', '$attrs', "$state","$http","BCM_ROOT", function($scope, $attrs, $state,$http,BCM_ROOT) {
                 if (!$scope.model) {
                     devErrorMessages += "model attribute is required\n";
                 }
                 $scope.changeState = function(state) {
-                    $state.go(state);
+                    $http.get(BCM_ROOT + "/BCM/getBCMLocation").then(function (response) {
+                        $scope.bcm = response.data.bcmURL;
+
+                        if (state == "admin-manage-list") {
+                            window.open($scope.bcm);
+                        }
+                        $state.go(state);
+                    });
                 }
             }],
             link: function(scope, elem, attributes, parentController) {

@@ -4,6 +4,7 @@
 var aipAppRoot = "/" + extensibilityInfo.application + "/plugins/" +
     window.aipApp.fileSystemName + "/aipApp/";
 var aipAppAbsPath = window.location.protocol + "//" + window.location.host + Application.getApplicationPath() + "/";
+var bcmRoot = window.location.protocol +  Application.getApplicationPath();
 
 
 // required global variables for PageBuilder render
@@ -33,6 +34,8 @@ var bannerAIPApp = angular.module("bannerAIP", [
 
 //set application root url
     .constant('APP_ROOT', aipAppRoot)
+
+    .constant('BCM_ROOT',bcmRoot)
 
     .constant('APP_PATH', Application.getApplicationPath())
 
@@ -417,6 +420,7 @@ angular.module("templates/dataTable.html", []).run(["$templateCache", function($
 angular.module("BannerOnAngular")
 //set application root url
     .constant('APP_ROOT', aipAppRoot)
+    .constant('BCM_ROOT',bcmRoot)
     .constant('APP_PATH', Application.getApplicationPath())
     .constant("APP_ABS_PATH", aipAppAbsPath)
     .constant("params", params)
