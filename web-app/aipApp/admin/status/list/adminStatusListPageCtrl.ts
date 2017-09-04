@@ -133,7 +133,7 @@ module AIP {
                     visible: true,
                     columnShowHide: true
                 }
-            }
+            },
             {
                     name: "actionTobeTaken",
                     title: this.$filter("i18n_aip")("aip.list.grid.actionTobeTaken"),
@@ -179,19 +179,19 @@ module AIP {
             });
         }
 
-
-        AdminStatusListPageCtrl.prototype.deleteSystemRecord = function (message) {
-                var _this = this;
-               var n = new Notification({
-                   message: _this.$filter("i18n_aip")("aip.common.save.deleteSystemRecord"),
-                  type: "error",
-                   flash: true
-               });
-               notifications.addNotification(n);
-           };
-           AdminStatusListPageCtrl.prototype.disableSystemRecord = function (e) {
-           e.preventDefault();
-           };
+        deleteSystemRecord(message) {
+                    var n = new Notification({
+                    message: this.$filter("i18n_aip")("aip.common.save.deleteSystemRecord"),
+                    type: "error",
+                    flash: true
+                });
+                notifications.addNotification(n);
+            }
+        disableSystemRecord(){
+            this.modalInstance = function (e) {
+                e.preventDefault();
+            };
+        }
 
         /*
         add() {
