@@ -1,7 +1,3 @@
-/*******************************************************************************
-Copyright 2017 Ellucian Company L.P. and its affiliates.
-*******************************************************************************/
-
 //<reference path="../../../../typings/tsd.d.ts"/>
 ///<reference path="../../../common/services/admin/adminActionStatusService.ts"/>
 var AIP;
@@ -39,8 +35,7 @@ var AIP;
                 actionItemBlockedProcess: 3,
                 actionItemSystemRequired: 3,
                 actionItemLastUpdatedBy: 3,
-                actionItemActivityDate: 3,
-                actionItemStatusNotification:3
+                actionItemActivityDate: 3
             };
             this.mobileSize = angular.element("body").width() > 768 ? false : true;
             this.searchConfig = {
@@ -111,21 +106,7 @@ var AIP;
                         visible: true,
                         columnShowHide: true
                     }
-                    },
-                    {
-                    name: "actionTobeTaken",
-                    title: this.$filter("i18n_aip")("aip.list.grid.actionTobeTaken"),
-                    ariaLabel: this.$filter("i18n_aip")("aip.list.grid.actionTobeTaken"),
-                    width: "100px",
-                    options: {
-                        sortable: false,
-                        visible: true,
-                        columnShowHide: true
-                    }
-                }
-                    
-
-                ];
+                }];
         };
         AdminStatusListPageCtrl.prototype.getIndicatorVal = function () {
         };
@@ -156,22 +137,6 @@ var AIP;
                 console.log(error);
             });
         };
-
-AdminStatusListPageCtrl.prototype.deleteSystemRecord = function (message) {
-                var _this = this;
-               var n = new Notification({
-                   message: _this.$filter("i18n_aip")("aip.common.save.deleteSystemRecord"),
-                  type: "error",
-                   flash: true
-               });
-               notifications.addNotification(n);
-           };
-           AdminStatusListPageCtrl.prototype.disableSystemRecord = function (e) {
-           e.preventDefault();
-           };
-        
-
-
         /*
         add() {
             this.$state.go("admin-group-add");
