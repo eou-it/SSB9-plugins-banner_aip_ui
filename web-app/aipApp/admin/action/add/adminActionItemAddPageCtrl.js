@@ -25,6 +25,11 @@ var AIP;
             allPromises.push(this.adminActionService.getStatus()
                 .then(function (response) {
                 _this.status = response.data;
+                angular.forEach(_this.status, function (key, value) {
+                    key.value = "aip.status." + key.value;
+                    console.log(key.value);
+                    return value;
+                });
                 var actionItemStatus = $("#actionItemStatus");
                 _this.actionItemInfo.status = _this.status[0];
                 _this.$timeout(function () {
@@ -118,4 +123,3 @@ var AIP;
     AIP.AdminActionItemAddPageCtrl = AdminActionItemAddPageCtrl;
 })(AIP || (AIP = {}));
 register("bannerAIP").controller("AdminActionItemAddPageCtrl", AIP.AdminActionItemAddPageCtrl);
-//# sourceMappingURL=adminActionItemAddPageCtrl.js.map

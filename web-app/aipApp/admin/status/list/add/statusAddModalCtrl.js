@@ -63,4 +63,3 @@ var AIP;
     AIP.StatusAddModalCtrl = StatusAddModalCtrl;
 })(AIP || (AIP = {}));
 register("bannerAIP").controller("StatusAddModalCtrl", AIP.StatusAddModalCtrl);
-//# sourceMappingURL=statusAddModalCtrl.js.map

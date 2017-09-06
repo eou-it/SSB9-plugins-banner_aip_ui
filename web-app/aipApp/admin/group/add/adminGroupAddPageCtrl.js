@@ -154,4 +154,3 @@ var AIP;
     AIP.AdminGroupAddPageCtrl = AdminGroupAddPageCtrl;
 })(AIP || (AIP = {}));
 register("bannerAIP").controller("AdminGroupAddPageCtrl", AIP.AdminGroupAddPageCtrl);
-//# sourceMappingURL=adminGroupAddPageCtrl.js.map

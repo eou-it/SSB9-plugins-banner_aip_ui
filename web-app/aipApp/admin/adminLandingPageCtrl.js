@@ -17,6 +17,12 @@ var AIP;
                     description: "aip.admin.status.description"
                 },
                 {
+                    title: "aip.admin.manage",
+                    icon: "icon-folder",
+                    click: "admin-manage-list",
+                    description: "aip.admin.manage.description"
+                },
+                {
                     title: "aip.admin.action",
                     icon: "icon-check-SO",
                     click: "admin-action-list",

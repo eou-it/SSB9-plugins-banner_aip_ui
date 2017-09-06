@@ -4,6 +4,12 @@
 ///<reference path="../../../../typings/tsd.d.ts"/>
 var AIP;
 (function (AIP) {
+    var Status;
+    (function (Status) {
+        Status[Status["Draft"] = 1] = "Draft";
+        Status[Status["Active"] = 2] = "Active";
+        Status[Status["Inactive"] = 3] = "Inactive";
+    })(Status || (Status = {}));
     var AdminActionService = (function () {
         function AdminActionService($http, $q, $filter, ENDPOINT) {
             this.$http = $http;
@@ -58,7 +64,7 @@ var AIP;
                 title: actionItem.title,
                 folderId: parseInt(actionItem.folder.id),
                 description: actionItem.description,
-                status: actionItem.status.value
+                status: Status[actionItem.status.id],
             };
             var request = this.$http({
                 method: "POST",
@@ -149,10 +155,9 @@ var AIP;
             });
             return request;
         };
-        AdminActionService.$inject = ["$http", "$q", "$filter", "ENDPOINT"];
         return AdminActionService;
     }());
+    AdminActionService.$inject = ["$http", "$q", "$filter", "ENDPOINT"];
     AIP.AdminActionService = AdminActionService;
 })(AIP || (AIP = {}));
 register("bannerAIP").service("AdminActionService", AIP.AdminActionService);
-//# sourceMappingURL=adminActionService.js.map
