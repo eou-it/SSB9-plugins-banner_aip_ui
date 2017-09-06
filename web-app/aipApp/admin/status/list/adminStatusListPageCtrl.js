@@ -1,4 +1,4 @@
-//<reference path="../../../../typings/tsd.d.ts"/>
+/*! Copyright 2017 Ellucian Company L.P. and its affiliates*/
 ///<reference path="../../../common/services/admin/adminActionStatusService.ts"/>
 var AIP;
 (function (AIP) {
@@ -35,7 +35,8 @@ var AIP;
                 actionItemBlockedProcess: 3,
                 actionItemSystemRequired: 3,
                 actionItemLastUpdatedBy: 3,
-                actionItemActivityDate: 3
+                actionItemActivityDate: 3,
+                actionItemStatusNotification: 3
             };
             this.mobileSize = angular.element("body").width() > 768 ? false : true;
             this.searchConfig = {
@@ -106,7 +107,19 @@ var AIP;
                         visible: true,
                         columnShowHide: true
                     }
-                }];
+                },
+                {
+                    name: "actionTobeTaken",
+                    title: this.$filter("i18n_aip")("aip.list.grid.actionTobeTaken"),
+                    ariaLabel: this.$filter("i18n_aip")("aip.list.grid.actionTobeTaken"),
+                    width: "100px",
+                    options: {
+                        sortable: false,
+                        visible: true,
+                        columnShowHide: true
+                    }
+                }
+            ];
         };
         AdminStatusListPageCtrl.prototype.getIndicatorVal = function () {
         };
@@ -130,12 +143,27 @@ var AIP;
                     });
                     notifications.addNotification(n);
                     _this.$scope.refreshGrid(true); //use scope to call grid directive's function
+                    // this.refreshGrid(true);
                 }
                 else {
+                    //TODO:: send error notification
                 }
             }, function (error) {
                 console.log(error);
             });
+        };
+        AdminStatusListPageCtrl.prototype.deleteSystemRecord = function (message) {
+            var n = new Notification({
+                message: this.$filter("i18n_aip")("aip.common.save.deleteSystemRecord"),
+                type: "error",
+                flash: true
+            });
+            notifications.addNotification(n);
+        };
+        AdminStatusListPageCtrl.prototype.disableSystemRecord = function () {
+            this.modalInstance = function (e) {
+                e.preventDefault();
+            };
         };
         /*
         add() {
