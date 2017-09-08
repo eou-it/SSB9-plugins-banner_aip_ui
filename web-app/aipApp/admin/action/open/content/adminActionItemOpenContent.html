@@ -140,22 +140,11 @@ Copyright 2017 Ellucian Company L.P. and its affiliates.
                             <th class="ruleLabelText">
                                 {{'aip.admin.status.rules.table.header.responseOptionText'|i18n_aip}}
                             </th>
-                            <th class="ruleStatus">{{'aip.admin.status.rules.table.header.status'|i18n_aip}}</th>
-                            <td aria-label="{{'aip.admin.status.rules.table.header.blocks'|i18n_aip}}"></td>
                             </thead>
                             <tbody>
                             <tr ng-repeat="rule in vm.rules">
                                 <td data-label="{{'aip.admin.status.rules.table.header.responseOptionText'|i18n_aip}}"
                                     data-ng-bind-html="vm.trustAsHtml(rule.statusRuleLabelText)"></td>
-                                <td data-label="{{'aip.admin.status.rules.table.header.status'|i18n_aip}}">
-                                        <span class="labels"
-                                              ng-class="{'rejected':rule.statusBlockProcessInd==='Y', 'approved':rule.statusBlockProcessInd==='N'}">
-                                            {{rule.statusName}}
-                                        </span>
-                                </td>
-                                <td>
-                                    {{(rule.statusBlockProcessInd=="Y"?"aip.admin.status.rules.table.blockText.block":"aip.admin.status.rules.table.blockText.unblock")|i18n_aip}}
-                                </td>
                             </tr>
                             </tbody>
                         </table>
