@@ -1,6 +1,6 @@
-/**
- * Created by jshin on 8/10/16.
- */
+/*******************************************************************************
+Copyright 2017 Ellucian Company L.P. and its affiliates.
+********************************************************************************/
 ///<reference path="../../../../typings/tsd.d.ts"/>
 var AIP;
 (function (AIP) {
