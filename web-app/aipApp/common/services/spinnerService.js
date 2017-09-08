@@ -17,4 +17,3 @@ var AIP;
     AIP.SpinnerService = SpinnerService;
 })(AIP || (AIP = {}));
 register("bannerAIP").service("SpinnerService", AIP.SpinnerService);
-//# sourceMappingURL=spinnerService.js.map

@@ -1,4 +1,6 @@
-/*! Copyright 2017 Ellucian Company L.P. and its affiliates*/
+//*******************************************************************************
+//Copyright 2017 Ellucian Company L.P. and its affiliates.
+//*******************************************************************************-
 
 //<reference path="../../../../typings/tsd.d.ts"/>
 ///<reference path="../../../common/services/admin/adminActionStatusService.ts"/>
