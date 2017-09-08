@@ -20,7 +20,7 @@ class AipAdminController {
 
     static defaultAction = "folders"
 
-    def CommunicationFolderService
+    def communicationFolderService
 
     def groupFolderReadOnlyService
 
