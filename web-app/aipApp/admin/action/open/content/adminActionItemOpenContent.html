@@ -51,8 +51,7 @@ Copyright 2017 Ellucian Company L.P. and its affiliates.
         <!-- edit view -->
         <div class="contentContainer" ng-if="!vm.isNoTemplateSelected()">
             <div class="row">
-                <label for="templateContent" class="titleValue" id="template-content">{{vm.actionItem.actionItemTemplateName}}
-                    {{'aip.common.text.content'|i18n_aip}}</label>
+                <label for="templateContent" class="titleValue" id="template-content">{{'aip.common.text.content'|i18n_aip}}</label>
             </div>
             <div class="row">
                 <textarea id="templateContent" ng-required="true" aria-required="true" name="templateContent"
@@ -142,7 +141,6 @@ Copyright 2017 Ellucian Company L.P. and its affiliates.
                                 {{'aip.admin.status.rules.table.header.responseOptionText'|i18n_aip}}
                             </th>
                             <th class="ruleStatus">{{'aip.admin.status.rules.table.header.status'|i18n_aip}}</th>
-                            <td aria-label="{{'aip.admin.status.rules.table.header.blocks'|i18n_aip}}"></td>
                             </thead>
                             <tbody>
                             <tr ng-repeat="rule in vm.rules">
@@ -153,9 +151,6 @@ Copyright 2017 Ellucian Company L.P. and its affiliates.
                                               ng-class="{'rejected':rule.statusBlockProcessInd==='Y', 'approved':rule.statusBlockProcessInd==='N'}">
                                             {{rule.statusName}}
                                         </span>
-                                </td>
-                                <td>
-                                    {{(rule.statusBlockProcessInd=="Y"?"aip.admin.status.rules.table.blockText.block":"aip.admin.status.rules.table.blockText.unblock")|i18n_aip}}
                                 </td>
                             </tr>
                             </tbody>

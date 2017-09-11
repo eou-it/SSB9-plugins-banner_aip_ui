@@ -1,9 +1,8 @@
-///<reference path="../../../../typings/tsd.d.ts"/>
 var AIP;
 (function (AIP) {
     var Status;
     (function (Status) {
-        Status[Status["Pending"] = 1] = "Pending";
+        Status[Status["Draft"] = 1] = "Draft";
         Status[Status["Active"] = 2] = "Active";
         Status[Status["Inactive"] = 3] = "Inactive";
     })(Status || (Status = {}));

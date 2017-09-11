@@ -1,3 +1,7 @@
+/*******************************************************************************
+Copyright 2017 Ellucian Company L.P. and its affiliates.
+********************************************************************************/
+
 @import '../aipApp/common/directives/list/css/list';
 @import '../aipApp/common/directives/admin/landing-item/css/landingItem';
 @import '../aipApp/common/directives/item-detail/css/itemDetail';
@@ -219,7 +223,7 @@ label {
         }
       }
       .modal-control {
-        border-top: 1px solid #1F6E9F;
+        border-top: 1px solid #1F6E9F;margin-top:15px;
         button {
           font-size: 18px;
           color: #1F6E9F;

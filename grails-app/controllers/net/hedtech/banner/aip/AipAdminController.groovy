@@ -8,8 +8,10 @@ import groovy.json.JsonSlurper
 import net.hedtech.banner.MessageUtility
 import net.hedtech.banner.general.communication.folder.CommunicationFolder
 import net.hedtech.banner.i18n.MessageHelper
+import org.apache.log4j.Logger
 import org.omg.CORBA.portable.ApplicationException
 import org.springframework.security.core.context.SecurityContextHolder
+import org.codehaus.groovy.grails.plugins.web.taglib.ValidationTagLib
 
 import java.text.MessageFormat
 
@@ -17,7 +19,7 @@ import java.text.MessageFormat
  * Controller class for AIP Admin
  */
 class AipAdminController {
-
+    private static final def LOGGER = Logger.getLogger( this.class )
     static defaultAction = "folders"
 
     def communicationFolderService
@@ -275,22 +277,7 @@ class AipAdminController {
                         sortAscending: params.ascending ? params.ascending.toBoolean() : false,
                         max          : params.max.toInteger(),
                         offset       : params.offset ? params.offset.toInteger() : 0]
-
         def results = actionItemReadOnlyService.listActionItemsPageSort( paramObj )
-        response.status = 200
-
-        def actionItemHeadings = [
-                [name: "actionItemId", title: "id", options: [visible: false, isSortable: true]],
-                [name: "actionItemName", title: MessageUtility.message( "aip.common.title" ), options: [visible: true, isSortable: true, ascending: paramObj.sortAscending], width: 0],
-                [name: "actionItemStatus", title: MessageUtility.message( "aip.common.status" ), options: [visible: true, isSortable: true, ascending: paramObj.sortAscending], width: 0],
-                [name: "folderName", title: MessageUtility.message( "aip.common.folder" ), options: [visible: true, isSortable: true, ascending: paramObj.sortAscending], width: 0],
-                [name: "actionItemActivityDate", title: MessageUtility.message( "aip.common.activity.date" ), options: [visible: true, isSortable: true, ascending: paramObj.sortAscending], width: 0],
-                [name: "actionItemLastUserId", title: MessageUtility.message( "aip.common.last.updated.by" ), options: [visible: true, isSortable:
-                        true, ascending                                                                                        : paramObj.sortAscending], width: 0]
-        ]
-
-        results.header = actionItemHeadings
-
         render results as JSON
     }
 
@@ -386,19 +373,6 @@ class AipAdminController {
                         offset       : params.offset ? params.offset.toInteger() : 0]
 
         def results = actionItemStatusService.listActionItemsPageSort( paramObj )
-        response.status = 200
-
-        def actionItemStatusHeadings = [
-                [name: "actionItemStatusId", title: "id", options: [visible: false, isSortable: true]],
-                [name: "actionItemStatus", title: MessageUtility.message( "aip.common.status" ), options: [visible: true, isSortable: true, ascending: paramObj.sortAscending], width: 0],
-                [name: "actionItemBlockedProcess", title: MessageUtility.message( "aip.common.block.process" ), options: [visible: true, isSortable: true, ascending: paramObj.sortAscending], width: 0],
-                [name: "actionItemSystemRequired", title: MessageUtility.message( "aip.common.system.required" ), options: [visible: true, isSortable: true, ascending: paramObj.sortAscending], width: 0],
-                [name: "actionItemStatusUserId", title: MessageUtility.message( "aip.common.last.updated.by" ), options: [visible: true, isSortable: true, ascending: paramObj.sortAscending], width: 0],
-                [name: "actionItemStatusActivityDate", title: MessageUtility.message( "aip.common.activity.date" ), options: [visible: true, isSortable: true, ascending: paramObj.sortAscending], width: 0]
-        ]
-
-        results.header = actionItemStatusHeadings
-
         render results as JSON
     }
 
@@ -492,49 +466,19 @@ class AipAdminController {
         render model as JSON
     }
 
-
+    /**
+     * Save Action Item Status
+     * @return
+     */
     def statusSave() {
-        def jsonObj = request.JSON
-        def statusTitle = jsonObj.title
-        def isBlock = jsonObj.block
-        def user = SecurityContextHolder?.context?.authentication?.principal
-        if (!user.pidm) {
-            response.sendError( 403 )
-            return
-        }
-        def aipUser = AipControllerUtils.getPersonForAip( params, user.pidm )
-
-        ActionItemStatus status = new ActionItemStatus()
-
-        status.actionItemStatus = statusTitle
-        status.actionItemStatusActive = "Y"
-        status.actionItemStatusBlockedProcess = isBlock ? "Y" : "N"
-        status.actionItemStatusActivityDate = new Date()
-        status.actionItemStatusUserId = aipUser.bannerId
-        status.actionItemStatusSystemRequired = "N"
-        status.actionItemStatusVersion = null
-        status.actionItemStatusDataOrigin = null
-
-        ActionItemStatus newStatus
-        def success = false
-        def message
-
+        def model
         try {
-            newStatus = actionItemStatusService.create( status );
-            response.status = 200
-            success = true
+            model = actionItemStatusService.statusSave( request.JSON.title );
         } catch (ApplicationException e) {
-            println e.defaultMessage
-            //fixme: this needs to be set to point to default message. wasn't finding it so used status unique until we have time to debug.
-            message = MessageUtility.message( "actionItemStatus.status.unique" )
+            model = [fail: true]
+            LOGGER.error( e.getMessage() )
+            model.message = e.returnMap( {mapToLocalize -> new ValidationTagLib().message( mapToLocalize )} ).message
         }
-
-
-        def model = [
-                success: success,
-                message: message,
-                status : newStatus
-        ]
         render model as JSON
     }
 

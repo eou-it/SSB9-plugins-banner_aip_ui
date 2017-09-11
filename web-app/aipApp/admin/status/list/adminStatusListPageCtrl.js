@@ -1,4 +1,6 @@
-/*! Copyright 2017 Ellucian Company L.P. and its affiliates*/
+/*******************************************************************************
+Copyright 2017 Ellucian Company L.P. and its affiliates.
+********************************************************************************/
 ///<reference path="../../../common/services/admin/adminActionStatusService.ts"/>
 var AIP;
 (function (AIP) {
@@ -32,7 +34,6 @@ var AIP;
             this.draggableColumnNames = [];
             this.mobileConfig = {
                 actionItemStatus: 3,
-                actionItemBlockedProcess: 3,
                 actionItemSystemRequired: 3,
                 actionItemLastUpdatedBy: 3,
                 actionItemActivityDate: 3,
@@ -67,17 +68,8 @@ var AIP;
                         ascending: true,
                         columnShowHide: false
                     }
-                }, {
-                    name: "actionItemStatusBlockedProcess",
-                    title: this.$filter("i18n_aip")("aip.list.grid.blockedProcess"),
-                    ariaLabel: this.$filter("i18n_aip")("aip.list.grid.blockedProcess"),
-                    width: "100px",
-                    options: {
-                        sortable: true,
-                        visible: true,
-                        columnShowHide: false
-                    }
-                }, {
+                },
+                {
                     name: "actionItemStatusSystemRequired",
                     title: this.$filter("i18n_aip")("aip.list.grid.systemRequired"),
                     ariaLabel: this.$filter("i18n_aip")("aip.list.grid.systemRequired"),
@@ -87,7 +79,8 @@ var AIP;
                         visible: true,
                         columnShowHide: true
                     }
-                }, {
+                },
+                {
                     name: "actionItemStatusUserId",
                     title: this.$filter("i18n_aip")("aip.list.grid.lastUpdated"),
                     ariaLabel: this.$filter("i18n_aip")("aip.list.grid.lastUpdated"),

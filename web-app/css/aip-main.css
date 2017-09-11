@@ -1,3 +1,7 @@
+/*******************************************************************************
+Copyright 2017 Ellucian Company L.P. and its affiliates.
+********************************************************************************/
+
 aip-list .aip-list-container {
   border: none;
   box-shadow: none; }
@@ -866,7 +870,8 @@ label {
       margin-right: 0;
       margin-left: 0; }
   .aip-modal .modal-dialog .modal-body .modal-control {
-    border-top: 1px solid #1F6E9F; }
+    border-top: 1px solid #1F6E9F;
+    margin-top: 15px; }
     .aip-modal .modal-dialog .modal-body .modal-control button {
       font-size: 18px;
       color: #1F6E9F;
