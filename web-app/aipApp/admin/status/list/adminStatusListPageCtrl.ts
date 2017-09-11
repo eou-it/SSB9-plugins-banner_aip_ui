@@ -75,7 +75,7 @@ module AIP {
                 minimumCharacters: 1
             };
             this.header = [{
-                name: "actionItemStatusId",
+                name: "id",
                 title: "id",
                 width: "0px",
                 options: {
