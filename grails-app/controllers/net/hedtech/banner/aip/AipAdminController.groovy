@@ -38,6 +38,8 @@ class AipAdminController {
 
     def actionItemCompositeService
 
+    def actionItemStatusCompositeService
+
     def actionItemStatusService
 
     def actionItemStatusRuleService
@@ -372,7 +374,7 @@ class AipAdminController {
                         max          : params.max.toInteger(),
                         offset       : params.offset ? params.offset.toInteger() : 0]
 
-        def results = actionItemStatusService.listActionItemsPageSort( paramObj )
+        def results = actionItemStatusCompositeService.listActionItemsPageSort( paramObj )
         render results as JSON
     }
 
@@ -473,7 +475,7 @@ class AipAdminController {
     def statusSave() {
         def model
         try {
-            model = actionItemStatusService.statusSave( request.JSON.title );
+            model = actionItemStatusCompositeService.statusSave( request.JSON.title );
         } catch (ApplicationException e) {
             model = [fail: true]
             LOGGER.error( e.getMessage() )
@@ -489,7 +491,7 @@ class AipAdminController {
        def removeStatus() {
            def model
            try {
-               model = actionItemStatusService.removeStatus( request.JSON.id );
+               model = actionItemStatusCompositeService.removeStatus( request.JSON.id );
            } catch (ApplicationException e) {
                model = [fail: true]
                LOGGER.error( e.getMessage() )
