@@ -68,7 +68,6 @@ module PB {
                         element.empty();
                         element.append(bodyContent);
                         me.$compile(element)(scope)
-
                     });
             })
 

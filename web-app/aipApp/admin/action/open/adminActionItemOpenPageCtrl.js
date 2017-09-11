@@ -176,10 +176,12 @@ var AIP;
                 default:
                     break;
             }
+            var newScope = this.$scope.$new(true); // isolate scope
+            newScope.vm = this.$scope.vm;
             var templateUrl = this.$sce.getTrustedResourceUrl(url);
             this.$templateRequest(templateUrl)
                 .then(function (template) {
-                var compiled = _this.$compile(template)(_this.$scope);
+                var compiled = _this.$compile(template)(newScope);
                 deferred.resolve(compiled);
                 if (panelName === "overview") {
                     $("#title-panel").children()[0].innerHTML = _this.actionItem.actionItemName;
@@ -414,4 +416,3 @@ var AIP;
     AIP.AdminActionItemOpenPageCtrl = AdminActionItemOpenPageCtrl;
 })(AIP || (AIP = {}));
 register("bannerAIP").controller("AdminActionItemOpenPageCtrl", AIP.AdminActionItemOpenPageCtrl);
-//# sourceMappingURL=adminActionItemOpenPageCtrl.js.map

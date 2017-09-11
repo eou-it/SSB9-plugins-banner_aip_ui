@@ -197,10 +197,12 @@ module AIP {
                 default:
                     break;
             }
+            var newScope = this.$scope.$new(true); // isolate scope
+            newScope.vm = this.$scope.vm;
             var templateUrl = this.$sce.getTrustedResourceUrl(url);
             this.$templateRequest(templateUrl)
                 .then((template) => {
-                    var compiled = this.$compile(template)(this.$scope);
+                    var compiled = this.$compile(template)(newScope);
                     deferred.resolve(compiled);
                     if(panelName === "overview") {
                         $("#title-panel").children()[0].innerHTML = this.actionItem.actionItemName;
