@@ -6,12 +6,12 @@ package net.hedtech.banner.aip
 import grails.converters.JSON
 import groovy.json.JsonSlurper
 import net.hedtech.banner.MessageUtility
+import net.hedtech.banner.exceptions.ApplicationException
 import net.hedtech.banner.general.communication.folder.CommunicationFolder
 import net.hedtech.banner.i18n.MessageHelper
 import org.apache.log4j.Logger
-import org.omg.CORBA.portable.ApplicationException
-import org.springframework.security.core.context.SecurityContextHolder
 import org.codehaus.groovy.grails.plugins.web.taglib.ValidationTagLib
+import org.springframework.security.core.context.SecurityContextHolder
 
 import java.text.MessageFormat
 
@@ -482,6 +482,21 @@ class AipAdminController {
         render model as JSON
     }
 
+    /**
+        * Delete Action Item Status
+        * @return
+        */
+       def removeStatus() {
+           def model
+           try {
+               model = actionItemStatusService.removeStatus( request.JSON.id );
+           } catch (ApplicationException e) {
+               model = [fail: true]
+               LOGGER.error( e.getMessage() )
+               model.message = e.returnMap( {mapToLocalize -> new ValidationTagLib().message( mapToLocalize )} ).message
+           }
+           render model as JSON
+       }
 
     def actionItemStatusRule() {
         def actionItemStatusRules = actionItemStatusRuleReadOnlyService.listActionItemStatusRulesRO()
