@@ -1,4 +1,4 @@
-//<reference path="../../../../typings/tsd.d.ts"/>
+///<reference path="../../../../typings/tsd.d.ts"/>
 ///<reference path="../../../common/services/admin/adminGroupService.ts"/>
 
 declare var register: any;
@@ -80,8 +80,8 @@ module AIP {
                 }
             }, {
                 name: "groupTitle",
-                title: this.$filter("i18n_aip")("aip.list.grid.groupTitle"),
-                ariaLabel: this.$filter("i18n_aip")("aip.list.grid.groupTitle"),
+                title: this.$filter("i18n_aip")("aip.list.grid.group"),
+                ariaLabel: this.$filter("i18n_aip")("aip.list.grid.group"),
                 width: "100px",
                 options: {
                     sortable: true,
