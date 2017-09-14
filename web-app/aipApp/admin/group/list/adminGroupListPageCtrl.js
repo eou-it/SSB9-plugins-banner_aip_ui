@@ -1,4 +1,4 @@
-//<reference path="../../../../typings/tsd.d.ts"/>
+///<reference path="../../../../typings/tsd.d.ts"/>
 ///<reference path="../../../common/services/admin/adminGroupService.ts"/>
 var AIP;
 (function (AIP) {
@@ -59,8 +59,8 @@ var AIP;
                     }
                 }, {
                     name: "groupTitle",
-                    title: this.$filter("i18n_aip")("aip.list.grid.groupTitle"),
-                    ariaLabel: this.$filter("i18n_aip")("aip.list.grid.groupTitle"),
+                    title: this.$filter("i18n_aip")("aip.list.grid.group"),
+                    ariaLabel: this.$filter("i18n_aip")("aip.list.grid.group"),
                     width: "100px",
                     options: {
                         sortable: true,
@@ -159,8 +159,7 @@ var AIP;
         AdminGroupListPageCtrl.prototype.refreshGrid = function () {
         };
         return AdminGroupListPageCtrl;
-    })();
+    }());
     AIP.AdminGroupListPageCtrl = AdminGroupListPageCtrl;
 })(AIP || (AIP = {}));
 register("bannerAIP").controller("AdminGroupListPageCtrl", AIP.AdminGroupListPageCtrl);
-//# sourceMappingURL=adminGroupListPageCtrl.js.map

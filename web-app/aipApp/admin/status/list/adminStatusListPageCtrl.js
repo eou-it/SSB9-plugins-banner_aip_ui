@@ -136,10 +136,8 @@ var AIP;
                     });
                     notifications.addNotification(n);
                     _this.$scope.refreshGrid(true); //use scope to call grid directive's function
-                    // this.refreshGrid(true);
                 }
                 else {
-                    //TODO:: send error notification
                 }
             }, function (error) {
                 console.log(error);
