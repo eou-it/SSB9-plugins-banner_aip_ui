@@ -264,6 +264,9 @@ var AIP;
                 //action item selected temlate
                 if (_this.selectedTemplate) {
                     if (_this.templates[0].sourceInd == "B") {
+                        /*
+                        $(".select2-container.actionItemSelect .select2-chosen")[0].innerHTML = this.actionItem.actionItemTemplateName + " (" + this.$filter("i18n_aip")("aip.common.baseline") + ")";
+                        */
                     }
                 }
             }, 500);
@@ -310,7 +313,7 @@ var AIP;
             // set seq order in rule array with it's index
             angular.forEach(this.rules, function (item) {
                 item.statusRuleSeqOrder = _this.rules.indexOf(item);
-                item.statusId = item.status.actionItemStatusId;
+                item.statusId = item.status.id;
             });
             allDefer.push(this.adminActionService.updateActionItemStatusRule(this.rules, this.$state.params.data)
                 .then(function (response) {
@@ -401,7 +404,7 @@ var AIP;
                 }
                 else {
                     var invalidRule = this.rules.filter(function (item) {
-                        return !item.statusRuleLabelText || item.statusRuleLabelText === "" || !item.status || !item.status.actionItemStatusId;
+                        return !item.statusRuleLabelText || item.statusRuleLabelText === "" || !item.status || !item.status.id;
                     });
                     if (invalidRule.length === 0) {
                         return true;

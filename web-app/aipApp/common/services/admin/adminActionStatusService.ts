@@ -14,7 +14,7 @@ module AIP {
         max: string;
     }
     export interface IActionItemStatus {
-        actionItemStatusId: number;
+        id: number;
         actionItemStatus: string;
         actionItemStatusActivityDate: Date,
         actionItemStatusUserId: string;
@@ -66,7 +66,7 @@ module AIP {
     interface IAdminActionStatusService {
         fetchData(query:IActionItemStatusListQuery):ng.IPromise<IActionItemStatusFetchResponse>;
         //saveActionItem(actionItemStatus: IActionItemStatusParam): ng.IHttpPromise<IActionItemStatusSaveResponse>;
-       // getActionItemStatusDetail(actionItemStatusId:number): ng.IHttpPromise<IActionItemStatusOpenResponse>;
+       // getActionItemStatusDetail(id:number): ng.IHttpPromise<IActionItemStatusOpenResponse>;
     }
 
     export class AdminActionStatusService implements IAdminActionStatusService{
@@ -155,10 +155,10 @@ module AIP {
         }
 
 
-        getActionItemStatusDetail(actionItemStatusId) {
+        getActionItemStatusDetail(id) {
             var request = this.$http({
                 method: "GET",
-                url: this.ENDPOINT.admin.openActionItemStatus + "?actionItemStatusId=" + actionItemStatusId.toString()
+                url: this.ENDPOINT.admin.openActionItemStatus + "?id=" + id.toString()
             });
             return request;
         }

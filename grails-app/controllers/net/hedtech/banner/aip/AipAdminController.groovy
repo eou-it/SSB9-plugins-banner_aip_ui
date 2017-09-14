@@ -6,12 +6,12 @@ package net.hedtech.banner.aip
 import grails.converters.JSON
 import groovy.json.JsonSlurper
 import net.hedtech.banner.MessageUtility
+import net.hedtech.banner.exceptions.ApplicationException
 import net.hedtech.banner.general.communication.folder.CommunicationFolder
 import net.hedtech.banner.i18n.MessageHelper
 import org.apache.log4j.Logger
-import org.omg.CORBA.portable.ApplicationException
-import org.springframework.security.core.context.SecurityContextHolder
 import org.codehaus.groovy.grails.plugins.web.taglib.ValidationTagLib
+import org.springframework.security.core.context.SecurityContextHolder
 
 import java.text.MessageFormat
 
@@ -37,6 +37,8 @@ class AipAdminController {
     def actionItemDetailService
 
     def actionItemCompositeService
+
+    def actionItemStatusCompositeService
 
     def actionItemStatusService
 
@@ -372,7 +374,7 @@ class AipAdminController {
                         max          : params.max.toInteger(),
                         offset       : params.offset ? params.offset.toInteger() : 0]
 
-        def results = actionItemStatusService.listActionItemsPageSort( paramObj )
+        def results = actionItemStatusCompositeService.listActionItemsPageSort( paramObj )
         render results as JSON
     }
 
@@ -473,7 +475,7 @@ class AipAdminController {
     def statusSave() {
         def model
         try {
-            model = actionItemStatusService.statusSave( request.JSON.title );
+            model = actionItemStatusCompositeService.statusSave( request.JSON.title );
         } catch (ApplicationException e) {
             model = [fail: true]
             LOGGER.error( e.getMessage() )
@@ -482,6 +484,21 @@ class AipAdminController {
         render model as JSON
     }
 
+    /**
+        * Delete Action Item Status
+        * @return
+        */
+       def removeStatus() {
+           def model
+           try {
+               model = actionItemStatusCompositeService.removeStatus( request.JSON.id );
+           } catch (ApplicationException e) {
+               model = [fail: true]
+               LOGGER.error( e.getMessage() )
+               model.message = e.returnMap( {mapToLocalize -> new ValidationTagLib().message( mapToLocalize )} ).message
+           }
+           render model as JSON
+       }
 
     def actionItemStatusRule() {
         def actionItemStatusRules = actionItemStatusRuleReadOnlyService.listActionItemStatusRulesRO()

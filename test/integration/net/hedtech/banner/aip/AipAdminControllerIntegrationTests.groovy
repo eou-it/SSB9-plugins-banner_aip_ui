@@ -824,7 +824,7 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
         controller.actionItemStatusList()
         def answer = JSON.parse( controller.response.contentAsString )
         assertEquals( statuses.size(), answer.size() )
-        assertEquals( statuses[0].actionItemStatusId, answer[0].actionItemStatusId )
+        assertEquals( statuses[0].id, answer[0].actionItemStatusId )
     }
 
 

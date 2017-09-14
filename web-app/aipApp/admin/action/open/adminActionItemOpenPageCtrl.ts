@@ -343,8 +343,8 @@ module AIP {
                 }));
             // set seq order in rule array with it's index
             angular.forEach(this.rules, (item) => {
-                item.statusRuleSeqOrder = this.rules.indexOf(item)
-                item.statusId = item.status.actionItemStatusId;
+                item.statusRuleSeqOrder = this.rules.indexOf(item);
+                item.statusId = item.status.id;
             });
             allDefer.push(this.adminActionService.updateActionItemStatusRule(this.rules, this.$state.params.data)
                 .then((response: any) => {
@@ -433,7 +433,7 @@ module AIP {
                     return true;
                 } else {
                     var invalidRule = this.rules.filter((item) => {
-                        return !item.statusRuleLabelText || item.statusRuleLabelText==="" || !item.status || !item.status.actionItemStatusId;
+                        return !item.statusRuleLabelText || item.statusRuleLabelText==="" || !item.status || !item.status.id;
                     });
                     if (invalidRule.length===0) {
                         return true;
