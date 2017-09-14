@@ -29,7 +29,6 @@ var bannerAIPApp = angular.module("bannerAIP", [
     "BannerOnAngular",
     "I18nAIP",
     "pbrun.directives"
-    //"xe-ui-components"
     ])
 
 //set application root url
