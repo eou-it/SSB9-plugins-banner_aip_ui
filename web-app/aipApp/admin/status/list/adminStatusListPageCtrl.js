@@ -49,7 +49,7 @@ var AIP;
                 minimumCharacters: 1
             };
             this.header = [{
-                    name: "actionItemStatusId",
+                    name: "id",
                     title: "id",
                     width: "0px",
                     options: {
@@ -136,10 +136,8 @@ var AIP;
                     });
                     notifications.addNotification(n);
                     _this.$scope.refreshGrid(true); //use scope to call grid directive's function
-                    // this.refreshGrid(true);
                 }
                 else {
-                    //TODO:: send error notification
                 }
             }, function (error) {
                 console.log(error);

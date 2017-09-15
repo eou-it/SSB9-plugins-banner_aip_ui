@@ -29,7 +29,6 @@ var bannerAIPApp = angular.module("bannerAIP", [
     "BannerOnAngular",
     "I18nAIP",
     "pbrun.directives"
-    //"xe-ui-components"
     ])
 
 //set application root url
@@ -165,6 +164,7 @@ var bannerAIPApp = angular.module("bannerAIP", [
             actionItemTemplateList: aipAppAbsPath + "aipAdmin/actionItemTemplateList",
             saveActionItemTemplate: aipAppAbsPath + "aipAdmin/updateActionItemDetailWithTemplate",
             statusSave: aipAppAbsPath + "aipAdmin/statusSave",
+            removeStatus:aipAppAbsPath + "aipAdmin/removeStatus",
             rulesByActionItem: aipAppAbsPath + "aipAdmin/actionItemStatusRulesByActionItemId",
             updateActionItemStatusRule: aipAppAbsPath + "aipAdmin/updateActionItemStatusRule",
             blockedProcessList: aipAppAbsPath + "aipAdmin/blockedProcessList",
