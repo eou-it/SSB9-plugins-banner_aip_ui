@@ -103,9 +103,17 @@ module AIP {
             return deferred.promise;
         }
         saveStatus (status:{title:string, block:boolean}) {
+                var request = this.$http({
+                    method: "POST",
+                    url: this.ENDPOINT.admin.statusSave,
+                    data: status
+                });
+        return request;
+    }
+        removeStatus (status:{id:number}) {
             var request = this.$http({
                 method: "POST",
-                url: this.ENDPOINT.admin.statusSave,
+                url: this.ENDPOINT.admin.removeStatus,
                 data: status
             });
             return request;

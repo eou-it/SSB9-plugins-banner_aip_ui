@@ -38,6 +38,14 @@ var AIP;
             });
             return request;
         };
+        AdminActionStatusService.prototype.removeStatus = function (status) {
+            var request = this.$http({
+                method: "POST",
+                url: this.ENDPOINT.admin.removeStatus,
+                data: status
+            });
+            return request;
+        };
         AdminActionStatusService.prototype.getRules = function (actionItemId) {
             var request = this.$http({
                 method: "GET",
@@ -52,9 +60,9 @@ var AIP;
             });
             return request;
         };
-        AdminActionStatusService.$inject = ["$http", "$q", "$filter", "ENDPOINT"];
         return AdminActionStatusService;
     }());
+    AdminActionStatusService.$inject = ["$http", "$q", "$filter", "ENDPOINT"];
     AIP.AdminActionStatusService = AdminActionStatusService;
 })(AIP || (AIP = {}));
 register("bannerAIP").service("AdminActionStatusService", AIP.AdminActionStatusService);
