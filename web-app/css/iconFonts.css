@@ -407,8 +407,14 @@
 .icon-folder-SO:before {
 	content: "\e67f";
 }
-.icon-folder:before {
-	content: "\e680";
+.icon-folder{
+	/*content: "\e680";*/
+	background-image: url(images/manage.svg);
+	background-repeat:no-repeat;
+	display: block;
+	width: 65px;
+	height: 55px;
+
 }
 .icon-graduation-CF:before {
 	content: "\e681";

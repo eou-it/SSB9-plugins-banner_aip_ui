@@ -1,7 +1,6 @@
 /*******************************************************************************
 Copyright 2017 Ellucian Company L.P. and its affiliates.
 ********************************************************************************/
-
 aip-list .aip-list-container {
   border: none;
   box-shadow: none; }
@@ -156,6 +155,8 @@ aip-list .aip-list-container {
     .landingItem-container .landing-icon .icon {
       font-size: 3em;
       color: #206E9F; }
+    .landingItem-container .landing-icon .icon-folder {
+      background-image: url(images/manage.svg); }
   .landingItem-container .landing-context {
     padding: 8px 24px;
     border-left: 2px solid #EDF2F7;
