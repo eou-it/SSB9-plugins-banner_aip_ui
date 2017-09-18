@@ -1,19 +1,23 @@
+/*******************************************************************************
+ Copyright 2017 Ellucian Company L.P. and its affiliates.
+ ********************************************************************************/
 ///<reference path="../../../../typings/tsd.d.ts"/>
 ///<reference path="../../../common/services/admin/adminGroupService.ts"/>
 ///<reference path="../../../common/services/spinnerService.ts"/>
 var AIP;
 (function (AIP) {
     var AdminGroupAddPageCtrl = (function () {
-        function AdminGroupAddPageCtrl($scope, AdminGroupService, $q, SpinnerService, $state, $filter, CKEDITORCONFIG) {
-            this.$inject = ["$scope", "AdminGroupService", "$q", "SpinnerService", "$state", "$filter", "CKEDITORCONFIG"];
+        function AdminGroupAddPageCtrl($scope, AdminGroupService, $q, SpinnerService, $state, $filter, $sce, CKEDITORCONFIG) {
+            this.$inject = ["$scope", "AdminGroupService", "$q", "SpinnerService", "$state", "$filter", "$sce", "CKEDITORCONFIG"];
             this.trustGroupDesc = function () {
-                this.groupInfo.description = this.$filter("html")(this.$sce.trustAsHtml(this.groupInfo.description));
+                this.groupInfo.description = this.groupInfo.description ? this.$filter("html")(this.$sce.trustAsHtml(this.groupInfo.description)) : "";
                 return this.groupInfo.description;
             };
             $scope.vm = this;
             this.$q = $q;
             this.$state = $state;
             this.$filter = $filter;
+            this.$sce = $sce;
             this.ckEditorConfig = CKEDITORCONFIG;
             this.adminGroupService = AdminGroupService;
             this.spinnerService = SpinnerService;
@@ -97,6 +101,12 @@ var AIP;
             else {
                 delete this.errorMessage.title;
             }
+            if (!this.groupInfo.name || this.groupInfo.name === null || this.groupInfo.name === "" || this.groupInfo.name.length > 60) {
+                this.errorMessage.name = "invalid name";
+            }
+            else {
+                delete this.errorMessage.name;
+            }
             if (!this.groupInfo.folder) {
                 this.errorMessage.folder = "invalid folder";
             }
@@ -137,6 +147,9 @@ var AIP;
                 }
                 if (field === "group title") {
                     message += "</br>" + _this.$filter("i18n_aip")("aip.admin.group.add.error.noTitle");
+                }
+                if (field === "group name") {
+                    message += "</br>" + _this.$filter("i18n_aip")("aip.admin.group.add.error.noName");
                 }
                 if (field === "group description") {
                     message += "</br>" + _this.$filter("i18n_aip")("aip.admin.group.add.error.noDesc");

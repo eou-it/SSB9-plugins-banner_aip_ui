@@ -28,6 +28,7 @@ module AIP {
     export interface IGroupFolder {
         id: string|number|boolean;
         groupTitle: string;
+        groupName: string;
         folderName: string;
         folderDesc?: string;
         groupActivityDate?: Date|string;
@@ -136,6 +137,7 @@ module AIP {
         saveGroup(groupInfo:any) {
             var params = {
                 groupTitle: groupInfo.title,
+                groupName: groupInfo.name,
                 folderId: groupInfo.folder,
                 groupStatus: Status[groupInfo.status],
                 groupDesc: groupInfo.description,
