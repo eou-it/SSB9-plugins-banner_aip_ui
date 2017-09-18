@@ -11,7 +11,7 @@ declare var notifications: any;
 
 module AIP {
     export class AdminStatusListPageCtrl {
-        $inject = ["$scope", "$state", "$window", "$filter", "$q", "$uibModal",
+        $inject = ["$scope", "$state", "$window", "$filter","$http", "$q", "$uibModal",
             "ENDPOINT", "PAGINATIONCONFIG", "AdminActionStatusService", "APP_ROOT"];
         $scope;
         $state;
@@ -30,10 +30,17 @@ module AIP {
         selectedRecord;
         APP_ROOT;
         modalInstance;
+        statusModel;
 
-        constructor($scope, $state, $window, $filter, $q, $uibModal, ENDPOINT, PAGINATIONCONFIG,
+        constructor($scope, $state, $window, $filter, $q,$http, $uibModal, ENDPOINT, PAGINATIONCONFIG,
                     AdminActionStatusService, APP_ROOT) {
             $scope.vm = this;
+            $scope.disableSystemRecord=function(data){
+
+                alert(data);
+
+            }
+
             this.$scope = $scope;
             this.$state = $state;
             this.$filter = $filter;
@@ -45,27 +52,27 @@ module AIP {
             this.APP_ROOT = APP_ROOT;
             this.modalInstance;
             this.init();
-            angular.element($window).bind('resize', function() {
+            angular.element($window).bind('resize', function () {
                 //$scope.onResize();
                 $scope.$apply();
             });
-
-            angular.element($window).bind('resize', function() {
+            angular.element($window).bind('resize', function () {
                 //$scope.onResize();
                 $scope.$apply();
             });
         }
+
         init() {
             this.gridData = {};
-            this.draggableColumnNames=[];
+            this.draggableColumnNames = [];
             this.mobileConfig = {
                 actionItemStatus: 3,
                 actionItemSystemRequired: 3,
                 actionItemLastUpdatedBy: 3,
                 actionItemActivityDate: 3,
-                actionItemStatusNotification:3
+                actionItemStatusNotification: 3
             };
-            this.mobileSize = angular.element("body").width()>768?false:true;
+            this.mobileSize = angular.element("body").width() > 768 ? false : true;
             this.searchConfig = {
                 id: "statusDataTableSearch",
                 delay: 300,
@@ -91,43 +98,43 @@ module AIP {
                 options: {
                     sortable: true,
                     visible: true,
-                    ascending:true,
+                    ascending: true,
                     columnShowHide: false
                 }
             },
                 {
-                name: "actionItemStatusSystemRequired",
-                title: this.$filter("i18n_aip")("aip.list.grid.systemRequired"),
-                ariaLabel: this.$filter("i18n_aip")("aip.list.grid.systemRequired"),
-                width: "100px",
-                options: {
-                    sortable: true,
-                    visible: true,
-                    columnShowHide: true
-                }
-            },
+                    name: "actionItemStatusSystemRequired",
+                    title: this.$filter("i18n_aip")("aip.list.grid.systemRequired"),
+                    ariaLabel: this.$filter("i18n_aip")("aip.list.grid.systemRequired"),
+                    width: "100px",
+                    options: {
+                        sortable: true,
+                        visible: true,
+                        columnShowHide: true
+                    }
+                },
                 {
-                name: "actionItemStatusUserId",
-                title: this.$filter("i18n_aip")("aip.list.grid.lastUpdated"),
-                ariaLabel: this.$filter("i18n_aip")("aip.list.grid.lastUpdated"),
-                width: "100px",
-                options: {
-                    sortable: true,
-                    visible: true,
-                    columnShowHide: true
-                }
-            }, {
-                name: "actionItemStatusActivityDate",
-                title: this.$filter("i18n_aip")("aip.list.grid.activityDate"),
-                ariaLabel: this.$filter("i18n_aip")("aip.list.grid.activityDate"),
-                width: "100px",
-                options: {
-                    sortable: true,
-                    visible: true,
-                    columnShowHide: true
-                }
-            },
-            {
+                    name: "actionItemStatusUserId",
+                    title: this.$filter("i18n_aip")("aip.list.grid.lastUpdated"),
+                    ariaLabel: this.$filter("i18n_aip")("aip.list.grid.lastUpdated"),
+                    width: "100px",
+                    options: {
+                        sortable: true,
+                        visible: true,
+                        columnShowHide: true
+                    }
+                }, {
+                    name: "actionItemStatusActivityDate",
+                    title: this.$filter("i18n_aip")("aip.list.grid.activityDate"),
+                    ariaLabel: this.$filter("i18n_aip")("aip.list.grid.activityDate"),
+                    width: "100px",
+                    options: {
+                        sortable: true,
+                        visible: true,
+                        columnShowHide: true
+                    }
+                },
+                {
                     name: "actionTobeTaken",
                     title: this.$filter("i18n_aip")("aip.list.grid.actionTobeTaken"),
                     ariaLabel: this.$filter("i18n_aip")("aip.list.grid.actionTobeTaken"),
@@ -140,6 +147,7 @@ module AIP {
                 }
             ];
         }
+
         getIndicatorVal() {
 
         }
@@ -154,7 +162,7 @@ module AIP {
             });
             this.modalInstance.result.then((result) => {
                 console.log(result);
-                if(result.success) {
+                if (result.success) {
                     //TODO:: send notification and refresh grid
                     var n = new Notification({
                         message: this.$filter("i18n_aip")("aip.common.save.successful"), //+
@@ -172,21 +180,58 @@ module AIP {
             });
         }
 
-        deleteSystemRecord(message) {
-                    var n = new Notification({
-                    message: this.$filter("i18n_aip")("aip.common.save.deleteSystemRecord"),
-                    type: "error",
-                    flash: true
-                });
-                notifications.addNotification(n);
-            }
-        disableSystemRecord(){
-            this.modalInstance = function (e) {
-                e.preventDefault();
-            };
+        disableSystemRecord() {
+            var n = new Notification({
+                message: this.$filter("i18n_aip")("aip.common.save.deleteSystemRecord"),
+                type: "error",
+                flash: true
+            });
+            notifications.addNotification(n);
         }
+        deleteSystemRecord(map,name,$scope) {
+            var n = new Notification({
+                message: this.$filter("i18n_aip")("aip.common.save.disableSystemRecord"),
+                type: "warning",
+            });
+            var actionService = this.adminActionStatusService;
+            var keyValue = {
+                id: map
+            };
+            var refreshGrid = this.$scope;
+            var DeleteError= this.$filter("i18n_aip")("aip.common.save.DeletenotPermitted");
+            n.addPromptAction("Yes", function () {
+                actionService.removeStatus(keyValue).then((response) => {
+                    if (response.data.success) {
+                        refreshGrid.refreshGrid(true);
+                        var n1 = new Notification({
+                            message: response.data.message,
+                            type: "success",
+                            flash: true
+                        });
+                        notifications.remove(n);
+                        notifications.addNotification(n1);
+                    }
+                    else{
+                        var n2 = new Notification({
+                            message: DeleteError,
+                            type: "error",
+                            flash: true
+                        });
+                        notifications.remove(n,n1);
+                        notifications.addNotification(n2);
+                    }
 
+                });
+            });
+
+            n.addPromptAction("No", function () {
+                notifications.remove(n);
+            })
+            notifications.addNotification(n);
+
+        }
         /*
+
         add() {
             this.$state.go("admin-group-add");
         }
