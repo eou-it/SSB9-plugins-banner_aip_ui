@@ -5,10 +5,13 @@ Copyright 2017 Ellucian Company L.P. and its affiliates.
 var AIP;
 (function (AIP) {
     var AdminStatusListPageCtrl = (function () {
-        function AdminStatusListPageCtrl($scope, $state, $window, $filter, $q, $uibModal, ENDPOINT, PAGINATIONCONFIG, AdminActionStatusService, APP_ROOT) {
-            this.$inject = ["$scope", "$state", "$window", "$filter", "$q", "$uibModal",
+        function AdminStatusListPageCtrl($scope, $state, $window, $filter, $q, $http, $uibModal, ENDPOINT, PAGINATIONCONFIG, AdminActionStatusService, APP_ROOT) {
+            this.$inject = ["$scope", "$state", "$window", "$filter", "$http", "$q", "$uibModal",
                 "ENDPOINT", "PAGINATIONCONFIG", "AdminActionStatusService", "APP_ROOT"];
             $scope.vm = this;
+            $scope.disableSystemRecord = function (data) {
+                alert(data);
+            };
             this.$scope = $scope;
             this.$state = $state;
             this.$filter = $filter;
@@ -143,7 +146,7 @@ var AIP;
                 console.log(error);
             });
         };
-        AdminStatusListPageCtrl.prototype.deleteSystemRecord = function (message) {
+        AdminStatusListPageCtrl.prototype.disableSystemRecord = function () {
             var n = new Notification({
                 message: this.$filter("i18n_aip")("aip.common.save.deleteSystemRecord"),
                 type: "error",
@@ -151,12 +154,47 @@ var AIP;
             });
             notifications.addNotification(n);
         };
-        AdminStatusListPageCtrl.prototype.disableSystemRecord = function () {
-            this.modalInstance = function (e) {
-                e.preventDefault();
+        AdminStatusListPageCtrl.prototype.deleteSystemRecord = function (map, name, $scope) {
+            var n = new Notification({
+                message: this.$filter("i18n_aip")("aip.common.save.disableSystemRecord"),
+                type: "warning",
+            });
+            var actionService = this.adminActionStatusService;
+            var keyValue = {
+                id: map
             };
+            var refreshGrid = this.$scope;
+            var DeleteError = this.$filter("i18n_aip")("aip.common.save.DeletenotPermitted");
+            n.addPromptAction("Yes", function () {
+                actionService.removeStatus(keyValue).then(function (response) {
+                    if (response.data.success) {
+                        refreshGrid.refreshGrid(true);
+                        var n1 = new Notification({
+                            message: response.data.message,
+                            type: "success",
+                            flash: true
+                        });
+                        notifications.remove(n);
+                        notifications.addNotification(n1);
+                    }
+                    else {
+                        var n2 = new Notification({
+                            message: DeleteError,
+                            type: "error",
+                            flash: true
+                        });
+                        notifications.remove(n, n1);
+                        notifications.addNotification(n2);
+                    }
+                });
+            });
+            n.addPromptAction("No", function () {
+                notifications.remove(n);
+            });
+            notifications.addNotification(n);
         };
         /*
+
         add() {
             this.$state.go("admin-group-add");
         }
