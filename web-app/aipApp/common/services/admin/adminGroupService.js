@@ -56,7 +56,6 @@ var AIP;
         AdminGroupService.prototype.saveGroup = function (groupInfo) {
             var params = {
                 groupTitle: groupInfo.title,
-                groupName: groupInfo.name,
                 folderId: groupInfo.folder,
                 groupStatus: Status[groupInfo.status],
                 groupDesc: groupInfo.description,
