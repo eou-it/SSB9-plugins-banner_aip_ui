@@ -1,9 +1,5 @@
-/**
- * Created by jshin on 12/8/15.
- */
-
 /** *****************************************************************************
- Copyright 2009-2012 Ellucian Company L.P. and its affiliates.
+ Copyright 2017 Ellucian Company L.P. and its affiliates.
  ****************************************************************************** */
 
 modules = {
@@ -72,16 +68,14 @@ modules = {
         resource url:[plugin: 'banner-aip-ui', file: 'aipApp/common/filters/blockProcessItem-filter.js']
     }
     'commonComponents' {
-        dependsOn 'bannerAIPApp'
-        resource url:[plugin: 'banner-aip-ui', file: 'js/xe-components/xe-ui-components.js']
+        resource url: [file: 'js/d3/d3.min.js']
+        resource url: [file: 'js/xe-components/xe-ui-components.js']
     }
     'commonComponentsLTR' {
-        dependsOn 'commonComponents'
-        resource url:[plugin: 'banner-aip-ui', file: 'css/xe-ui-components.css']
+        resource url: [file: 'css/xe-components/xe-ui-components.min.css']
     }
     'commonComponentsRTL' {
-        dependsOn 'commonComponents'
-        resource url:[plugin: 'banner-aip-ui', file: 'css/xe-ui-components-rtl.css']
+        resource url: [file: 'css/xe-components/xe-ui-components.min-rtl.css']
     }
 
 

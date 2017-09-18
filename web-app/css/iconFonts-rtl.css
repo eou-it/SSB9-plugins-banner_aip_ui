@@ -406,7 +406,7 @@
     content:"\e67f";
 }
 .icon-folder:before  {
-    content:"\e680";
+    background-image:url(images/manage.svg);
 }
 .icon-graduation-CF:before  {
     content:"\e681";
