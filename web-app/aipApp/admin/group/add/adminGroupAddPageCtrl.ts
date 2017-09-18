@@ -158,7 +158,7 @@ module AIP {
         }
 
         trustGroupDesc = function() {
-            this.groupInfo.description = this.$filter("html")(this.$sce.trustAsHtml(this.groupInfo.description));
+            this.groupInfo.description = this.groupInfo.description?this.$filter("html")(this.$sce.trustAsHtml(this.groupInfo.description)):"";
             return this.groupInfo.description;
         }
 

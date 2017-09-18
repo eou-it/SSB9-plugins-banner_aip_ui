@@ -10,7 +10,7 @@ var AIP;
         function AdminGroupAddPageCtrl($scope, AdminGroupService, $q, SpinnerService, $state, $filter, $sce, CKEDITORCONFIG) {
             this.$inject = ["$scope", "AdminGroupService", "$q", "SpinnerService", "$state", "$filter", "$sce", "CKEDITORCONFIG"];
             this.trustGroupDesc = function () {
-                this.groupInfo.description = this.$filter("html")(this.$sce.trustAsHtml(this.groupInfo.description));
+                this.groupInfo.description = this.groupInfo.description ? this.$filter("html")(this.$sce.trustAsHtml(this.groupInfo.description)) : "";
                 return this.groupInfo.description;
             };
             $scope.vm = this;

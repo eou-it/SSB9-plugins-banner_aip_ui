@@ -83,7 +83,7 @@ module AIP {
                 }
             }, {
                 name: "groupName",
-                title: this.$filter("i18n_aip")("`"),
+                title: this.$filter("i18n_aip")("aip.list.grid.group"),
                 ariaLabel: this.$filter("i18n_aip")("aip.list.grid.group"),
                 // width: "100px",
                 options: {

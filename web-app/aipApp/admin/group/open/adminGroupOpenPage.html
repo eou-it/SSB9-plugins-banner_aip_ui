@@ -1,3 +1,6 @@
+<!--*******************************************************************************
+Copyright 2017 Ellucian Company L.P. and its affiliates.
+*******************************************************************************-->
 <div class="groupOpenContainer">
     <div class="groupInfo">
         <div class="row groupInfoRow">
@@ -8,12 +11,14 @@
                         <xe-tab-panel heading="{{'aip.common.overview'|i18n_aip}}">
                             <div id="openGroupDetail" ng-controller="AdminGroupOpenPageCtrl">
                                 <div class="groupElement groupDetail col-xs-12 col-sm-8">
-                                    <h3>{{"aip.common.title"|i18n_aip}}</h3>
-                                   <p class="openGroupTitle">{{vm.groupFolder.groupTitle}}</p>
+                                    <h3>{{"aip.common.group.name"|i18n_aip}}</h3>
+                                    <p class="openGroupTitle">{{vm.groupFolder.groupName}}</p>
                                     <h3>{{"aip.common.folder"|i18n_aip}}</h3>
                                     <p class="openGroupFolder">{{vm.groupFolder.folderName}}</p>
                                     <h3>{{"aip.common.status"|i18n_aip}}</h3>
                                     <p class="openGroupStatus">{{vm.groupFolder.groupStatus}}</p>
+                                    <h3>{{"aip.common.group.title"|i18n_aip}}</h3>
+                                    <p class="openGroupTitle">{{vm.groupFolder.groupTitle}}</p>
                                     <h3>{{"aip.common.group.description"|i18n_aip}}</h3>
                                     <p class="openGroupDesc">{{vm.groupFolder.groupDesc}}</p>
                                 </div>

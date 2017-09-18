@@ -28,6 +28,7 @@ module AIP {
     export interface IGroupFolder {
         id: string|number|boolean;
         groupTitle: string;
+        groupName: string;
         folderName: string;
         folderDesc?: string;
         groupActivityDate?: Date|string;
