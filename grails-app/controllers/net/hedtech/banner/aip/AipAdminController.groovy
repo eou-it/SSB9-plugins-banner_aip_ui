@@ -211,6 +211,7 @@ class AipAdminController {
 
         def group = new ActionItemGroup(
                 title: jsonObj.groupTitle ? jsonObj.groupTitle : null,
+                name: jsonObj.groupName ? jsonObj.groupName : null,
                 folderId: jsonObj.folderId ? jsonObj.folderId : null,
                 description: jsonObj.groupDesc ? jsonObj.groupDesc : null,
                 status: jsonObj.groupStatus ? jsonObj.groupStatus : null,
@@ -241,6 +242,7 @@ class AipAdminController {
             groupItem = [
                     groupId          : groupRO?.groupId[0],
                     groupTitle       : groupRO?.groupTitle[0],
+                    groupName        : groupRO?.groupName[0],
                     groupStatus      : groupRO ? MessageHelper.message( "aip.status.${groupRO.groupStatus[0]}" ) : null,
                     folderId         : groupRO?.folderId[0],
                     folderName       : groupRO?.folderName[0],
@@ -353,7 +355,8 @@ class AipAdminController {
 
         def groupHeadings = [
                 [name: "groupId", title: "id", options: [visible: false, isSortable: true]],
-                [name: "groupTitle", title: MessageUtility.message( "aip.common.title" ), options: [visible: true, isSortable: true, ascending: jsonObj.sortAscending], width: 0],
+                [name: "groupName", title: MessageUtility.message( "aip.common.group" ), options: [visible: true, isSortable: true, ascending: jsonObj.sortAscending], width: 0],
+                [name: "groupTitle", title: MessageUtility.message( "aip.common.group.title" ), options: [visible: true, isSortable: true, ascending: jsonObj.sortAscending], width: 0],
                 [name: "groupStatus", title: MessageUtility.message( "aip.common.status" ), options: [visible: true, isSortable: true, ascending: jsonObj.sortAscending], width: 0],
                 [name: "folderName", title: MessageUtility.message( "aip.common.folder" ), options: [visible: true, isSortable: true, ascending: jsonObj.sortAscending], width: 0],
                 [name: "groupActivityDate", title: MessageUtility.message( "aip.common.activity.date" ), options: [visible: true, isSortable: true, ascending: jsonObj.sortAscending], width: 0],

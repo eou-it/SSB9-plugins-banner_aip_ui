@@ -20,12 +20,13 @@ module AIP {
     }
     interface IGroupSelect {
         title: string;
+        name: string;
         status: string|number;
         folder: number|string;
         description: string;
     }
     export class AdminGroupAddPageCtrl implements IAdminGroupAddPageCtrl{
-        $inject = ["$scope", "AdminGroupService", "$q", "SpinnerService", "$state", "$filter", "CKEDITORCONFIG"];
+        $inject = ["$scope", "AdminGroupService", "$q", "SpinnerService", "$state", "$filter", "$sce", "CKEDITORCONFIG"];
         status: AIP.IStatus[];
         folders: AIP.IFolder[];
         groupInfo: IGroupSelect;
@@ -36,13 +37,15 @@ module AIP {
         $q: ng.IQService;
         $state;
         $filter;
+        $sce;
         ckEditorConfig;
         constructor($scope, AdminGroupService:AIP.AdminGroupService,
-            $q:ng.IQService, SpinnerService, $state, $filter, CKEDITORCONFIG) {
+            $q:ng.IQService, SpinnerService, $state, $filter, $sce, CKEDITORCONFIG) {
             $scope.vm = this;
             this.$q = $q;
             this.$state = $state;
             this.$filter = $filter;
+            this.$sce = $sce;
             this.ckEditorConfig = CKEDITORCONFIG
             this.adminGroupService = AdminGroupService;
             this.spinnerService = SpinnerService;
@@ -129,6 +132,11 @@ module AIP {
             } else {
                 delete this.errorMessage.title;
             }
+            if(!this.groupInfo.name || this.groupInfo.name === null || this.groupInfo.name === "" || this.groupInfo.name.length > 60) {
+                this.errorMessage.name = "invalid name";
+            } else {
+                delete this.errorMessage.name;
+            }
             if(!this.groupInfo.folder) {
                 this.errorMessage.folder = "invalid folder";
             } else {
@@ -172,6 +180,9 @@ module AIP {
                 }
                 if(field === "group title") {
                     message += "</br>" + this.$filter("i18n_aip")("aip.admin.group.add.error.noTitle");
+                }
+                if(field === "group name") {
+                    message += "</br>" + this.$filter("i18n_aip")("aip.admin.group.add.error.noName");
                 }
                 if(field === "group description") {
                     message += "</br>" + this.$filter("i18n_aip")("aip.admin.group.add.error.noDesc");

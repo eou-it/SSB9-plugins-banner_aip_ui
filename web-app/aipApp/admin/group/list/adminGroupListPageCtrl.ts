@@ -57,7 +57,7 @@ module AIP {
                 groupTitle: 3,
                 folderName: 3,
                 groupStatus: 3,
-                groupmUserId: 3,
+                groupUserId: 3,
                 groupActivityDate: 3
             };
             this.mobileSize = angular.element("body").width()>768?false:true;
@@ -79,10 +79,10 @@ module AIP {
                     columnShowHide: false
                 }
             }, {
-                name: "groupTitle",
-                title: this.$filter("i18n_aip")("aip.list.grid.group"),
+                name: "groupName",
+                title: this.$filter("i18n_aip")("`"),
                 ariaLabel: this.$filter("i18n_aip")("aip.list.grid.group"),
-                width: "100px",
+                // width: "100px",
                 options: {
                     sortable: true,
                     visible: true,
@@ -93,7 +93,7 @@ module AIP {
                 name: "folderName",
                 title: this.$filter("i18n_aip")("aip.list.grid.folder"),
                 ariaLabel: this.$filter("i18n_aip")("aip.list.grid.folder"),
-                width: "100px",
+                // width: "100px",
                 options: {
                     sortable: true,
                     visible: true,
@@ -103,7 +103,7 @@ module AIP {
                 name: "groupStatus",
                 title: this.$filter("i18n_aip")("aip.list.grid.status"),
                 ariaLabel: this.$filter("i18n_aip")("aip.list.grid.status"),
-                width: "100px",
+                // width: "100px",
                 options: {
                     sortable: true,
                     visible: true,
@@ -113,23 +113,35 @@ module AIP {
                 name: "groupUserId",
                 title: this.$filter("i18n_aip")("aip.list.grid.lastUpdated"),
                 ariaLabel: this.$filter("i18n_aip")("aip.list.grid.lastUpdated"),
-                width: "100px",
+                // width: "100px",
+                options: {
+                    sortable: true,
+                    visible: true,
+                    columnShowHide: true
+                }
+            },
+                {
+                name: "groupActivityDate",
+                title: this.$filter("i18n_aip")("aip.list.grid.activityDate"),
+                ariaLabel: this.$filter("i18n_aip")("aip.list.grid.activityDate"),
+                // width: "100px",
                 options: {
                     sortable: true,
                     visible: true,
                     columnShowHide: true
                 }
             }, {
-                name: "groupActivityDate",
-                title: this.$filter("i18n_aip")("aip.list.grid.activityDate"),
-                ariaLabel: this.$filter("i18n_aip")("aip.list.grid.activityDate"),
-                width: "100px",
-                options: {
-                    sortable: true,
-                    visible: true,
-                    columnShowHide: true
+                    name: "groupActions",
+                    title: this.$filter("i18n_aip")("aip.list.grid.actions"),
+                    ariaLabel: this.$filter("i18n_aip")("aip.list.grid.actions"),
+                    // width: "100px",
+                    options: {
+                        sortable: false,
+                        visible: true,
+                        columnShowHide: false
+                    }
                 }
-            }];
+            ];
         }
 
         add() {

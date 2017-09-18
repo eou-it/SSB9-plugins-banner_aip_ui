@@ -1,17 +1,17 @@
 <div class="groupAddContainer">
     <div class="groupInfo">
-        <div class="row groupInfoRow groupTitle">
+        <div class="row groupInfoRow groupFolder">
             <div class="groupElement row input-group">
                 <div class="groupTitle col-xs-12 col-sm-5">
-                    <label for="groupTitle" class="titleValue" id="groupAdd-Title">{{"aip.common.title"|i18n_aip}}
+                    <label for="groupName" class="titleValue" id="groupAdd-Name">{{"aip.common.group"|i18n_aip}}
                         {{"aip.character.astrick"|i18n_aip}}</label>
                     <span class="titleValue supplement">{{"aip.admin.group.add.maxLength"|i18n_aip:60}}</span>
                 </div>
             </div>
             <div class="groupElement col-xs-12 col-sm-5">
-                <div class="row" ng-class="{'has-error':vm.groupInfo.title.length>60}">
-                    <input id="groupTitle" maxlength="60" aria-valuemax="60" type="text" class="form-control" ng-model="vm.groupInfo.title"
-                           placeholder="Group title" aria-describedby="groupAdd-Title" required="required" aria-required="true">
+                <div class="row" ng-class="{'has-error':vm.groupInfo.name.length>60}">
+                    <input id="groupName" maxlength="60" aria-valuemax="60" type="text" class="form-control" ng-model="vm.groupInfo.name"
+                           placeholder="Group Name" aria-describedby="groupAdd-Name" required="required" aria-required="true">
                 </div>
                 <div class="alert alert-danger" role="alert" ng-if="vm.groupInfo.title.length>60">
                     <i class="fa fa-exclamation-circle" aria-hidden="true"></i>
@@ -55,6 +55,26 @@
                     <!--ng-options="item as item.value|i18n_aip for item in vm.status track by item.value" ng-model="vm.groupInfo.status">-->
                     <!--&lt;!&ndash;<option value="pending">{{"aip.status.pending"|i18n_aip}}</option>&ndash;&gt;-->
                     <!--</select>-->
+                </div>
+            </div>
+        </div>
+        <div class="row groupInfoRow groupTitle">
+            <div class="groupElement row input-group">
+                <div class="groupTitle col-xs-12 col-sm-5">
+                    <label for="groupTitle" class="titleValue" id="groupAdd-Title">{{"aip.common.group.title"|i18n_aip}}
+                        {{"aip.character.astrick"|i18n_aip}}</label>
+                    <span class="titleValue supplement">{{"aip.admin.group.add.maxLength"|i18n_aip:60}}</span>
+                </div>
+            </div>
+            <div class="groupElement col-xs-12 col-sm-5">
+                <div class="row" ng-class="{'has-error':vm.groupInfo.title.length>60}">
+                    <input id="groupTitle" maxlength="60" aria-valuemax="60" type="text" class="form-control" ng-model="vm.groupInfo.title"
+                           placeholder="Group title" aria-describedby="groupAdd-Title" required="required" aria-required="true">
+                </div>
+                <div class="alert alert-danger" role="alert" ng-if="vm.groupInfo.title.length>60">
+                    <i class="fa fa-exclamation-circle" aria-hidden="true"></i>
+                    <span class="sr-only">Error:</span>
+                    {{"aip.admin.group.error.exceedMax"|i18n_aip:60}}"}}
                 </div>
             </div>
         </div>

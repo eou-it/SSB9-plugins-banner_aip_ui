@@ -136,6 +136,7 @@ module AIP {
         saveGroup(groupInfo:any) {
             var params = {
                 groupTitle: groupInfo.title,
+                groupName: groupInfo.name,
                 folderId: groupInfo.folder,
                 groupStatus: Status[groupInfo.status],
                 groupDesc: groupInfo.description,
