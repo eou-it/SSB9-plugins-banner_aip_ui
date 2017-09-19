@@ -143,6 +143,7 @@ class AipController {
             def actionItem = [
                     id           : item.id,
                     title        : item.title,
+                    name         : item.name,
                     state        : item.status,
                     description  : item.description,
                     completedDate: item.completedDate
