@@ -107,12 +107,13 @@ class AipAdminController {
         def jsonObj = request.JSON
 
         ActionItem ai = new ActionItem()
-        ai.folderId = jsonObj.folderId ? jsonObj.folderId : null
-        ai.status = jsonObj.status ? jsonObj.status : null
-        ai.title = jsonObj.title ? jsonObj.title : null
-        ai.creatorId = aipUser.bannerId ? aipUser.bannerId : null
-        ai.userId = aipUser.bannerId ? aipUser.bannerId : null
-        ai.description = jsonObj.description ? jsonObj.description : null
+        ai.folderId = jsonObj.folderId ?: null
+        ai.status = jsonObj.status ?: null
+        ai.title = jsonObj.title ?: null
+        ai.name = jsonObj.name ?: 'DUMMY NMAE'
+        ai.creatorId = aipUser.bannerId ?: null
+        ai.userId = aipUser.bannerId ?: null
+        ai.description = jsonObj.description ?: null
         ai.activityDate = new Date()
 
         try {
@@ -211,13 +212,13 @@ class AipAdminController {
         def jsonObj = request.JSON
 
         def group = new ActionItemGroup(
-                title: jsonObj.groupTitle?: null,
-                name: jsonObj.groupName?: null,
-                folderId: jsonObj.folderId?: null,
-                description: jsonObj.groupDesc?: null,
-                status: jsonObj.groupStatus?: null,
-                version: jsonObj.version?: null,
-                userId: aipUser.bannerId?: null,
+                title: jsonObj.groupTitle ?: null,
+                name: jsonObj.groupName ?: null,
+                folderId: jsonObj.folderId ?: null,
+                description: jsonObj.groupDesc ?: null,
+                status: jsonObj.groupStatus ?: null,
+                version: jsonObj.version ?: null,
+                userId: aipUser.bannerId ?: null,
                 activityDate: new Date(),
                 dataOrigin: "GRAILS"
         )
@@ -304,7 +305,7 @@ class AipAdminController {
         def success = false
         def errors = []
 
-        def actionItem = actionItemReadOnlyService.getActionItemROById( actionItemId.toInteger() )
+        ActionItemReadOnly actionItem = actionItemReadOnlyService.getActionItemROById( actionItemId.toInteger() )
 
         if (actionItem) {
             response.status = 200
@@ -317,6 +318,7 @@ class AipAdminController {
                 actionItem: [
                         actionItemId           : actionItem?.actionItemId,
                         actionItemName         : actionItem?.actionItemName,
+                        actionItemTitle        : actionItem?.actionItemTitle,
                         folderId               : actionItem?.folderId,
                         folderName             : actionItem?.folderName,
                         folderDesc             : actionItem?.folderDesc,
@@ -489,20 +491,21 @@ class AipAdminController {
     }
 
     /**
-        * Delete Action Item Status
-        * @return
-        */
-       def removeStatus() {
-           def model
-           try {
-               model = actionItemStatusCompositeService.removeStatus( request.JSON.id );
-           } catch (ApplicationException e) {
-               model = [fail: true]
-               LOGGER.error( e.getMessage() )
-               model.message = e.returnMap( {mapToLocalize -> new ValidationTagLib().message( mapToLocalize )} ).message
-           }
-           render model as JSON
-       }
+     * Delete Action Item Status
+     * @return
+     */
+    def removeStatus() {
+        def model
+        try {
+            model = actionItemStatusCompositeService.removeStatus( request.JSON.id );
+        } catch (ApplicationException e) {
+            model = [fail: true]
+            LOGGER.error( e.getMessage() )
+            model.message = e.returnMap( {mapToLocalize -> new ValidationTagLib().message( mapToLocalize )} ).message
+        }
+        render model as JSON
+    }
+
 
     def actionItemStatusRule() {
         def actionItemStatusRules = actionItemStatusRuleReadOnlyService.listActionItemStatusRulesRO()
