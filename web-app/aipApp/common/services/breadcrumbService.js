@@ -1,3 +1,6 @@
+/*******************************************************************************
+ Copyright 2017 Ellucian Company L.P. and its affiliates.
+ ********************************************************************************/
 ///<reference path = "../../../typings/tsd.d.ts"/>
 var AIP;
 (function (AIP) {
@@ -67,4 +70,3 @@ var AIP;
     AIP.AIPBreadcrumbService = AIPBreadcrumbService;
 })(AIP || (AIP = {}));
 angular.module("bannerAIP").service("BreadcrumbService", AIP.AIPBreadcrumbService);
-//# sourceMappingURL=breadcrumbService.js.map

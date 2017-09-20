@@ -1,3 +1,6 @@
+/*******************************************************************************
+ Copyright 2017 Ellucian Company L.P. and its affiliates.
+ ********************************************************************************/
 ///<reference path = "../../../typings/tsd.d.ts"/>
 
 declare var BreadCrumbAndPageTitle;
@@ -60,9 +63,9 @@ module AIP {
             var breadcrumbI18 = {};
             angular.forEach(this.breadcrumbs, (value, key) => {
                 if(Object.keys(this.breadcrumbs).indexOf(key)===Object.keys(this.breadcrumbs).length-1) {
-                    breadcrumbI18[_this.$filter('i18n_aip')(key)] = "";
+                    breadcrumbI18[this.$filter('i18n_aip')(key)] = "";
                 } else {
-                    breadcrumbI18[_this.$filter('i18n_aip')(key)] = value;
+                    breadcrumbI18[this.$filter('i18n_aip')(key)] = value;
                 }
             }, this.breadcrumbs);
 
