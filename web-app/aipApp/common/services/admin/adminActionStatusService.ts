@@ -42,6 +42,7 @@ module AIP {
         header: [IActionItemStatusHeader]
     }
     export interface IActionItemStatusParam {
+        name:string;
         title: string;
         status: string;
         folderId: number;

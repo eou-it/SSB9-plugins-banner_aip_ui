@@ -55,7 +55,8 @@ module AIP {
                 folderName: 3,
                 actionItemStatus: 3,
                 actionItemLastUserId: 3,
-                actionItemCompositeDate: 3
+                actionItemCompositeDate: 3,
+                actionStatus:3
             };
             this.mobileSize = angular.element("body").width()>768?false:true;
             this.searchConfig = {
@@ -116,17 +117,18 @@ module AIP {
                     visible: true,
                     columnShowHide: true
                 }
-            }, {
-                name: "actionItemCompositeDate",
-                title: this.$filter("i18n_aip")("aip.list.grid.activityDate"),
-                ariaLabel: this.$filter("i18n_aip")("aip.list.grid.activityDate"),
-                width: "100px",
-                options: {
-                    sortable: true,
-                    visible: true,
-                    columnShowHide: true
-                }
-            }];
+            },
+                {
+                    name: "actionStatus",
+                    title: this.$filter("i18n_aip")("aip.list.grid.actionStatus"),
+                    ariaLabel: this.$filter("i18n_aip")("aip.list.grid.actionStatus"),
+                    width: "100px",
+                    options: {
+                        sortable: true,
+                        visible: true,
+                        columnShowHide: true
+                    }
+                }];
 
 
         }

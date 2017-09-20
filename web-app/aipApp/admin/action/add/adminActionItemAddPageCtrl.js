@@ -59,12 +59,11 @@ var AIP;
             if (this.saving) {
                 return false;
             }
-            if (!this.actionItemInfo.title || this.actionItemInfo.title === null || this.actionItemInfo.title === "" || this.actionItemInfo.title.length > 300) {
-                this.errorMessage.title = "invalid title";
-            }
-            else {
-                delete this.errorMessage.title;
-            }
+            /*if(!this.actionItemInfo.name || this.actionItemInfo.name === null || this.actionItemInfo.name === "" || this.actionItemInfo.title.name > 300) {
+                this.errorMessage.name = "invalid title";
+            } else {
+                delete this.errorMessage.name;
+            }*/
             if (!this.actionItemInfo.folder) {
                 this.errorMessage.folder = "invalid folder";
             }
@@ -76,6 +75,12 @@ var AIP;
             }
             else {
                 delete this.errorMessage.description;
+            }
+            if (!this.actionItemInfo.title || this.actionItemInfo.title === null || this.actionItemInfo.title === "" || this.actionItemInfo.title.length > 300) {
+                this.errorMessage.title = "invalid title";
+            }
+            else {
+                delete this.errorMessage.title;
             }
             if (Object.keys(this.errorMessage).length > 0) {
                 return false;
