@@ -98,11 +98,11 @@ module AIP {
         };
     }
     interface IAdminActionService {
-        fetchData(query:IActionItemListQuery):ng.IPromise<IActionItemFetchResponse>;
-        getFolder(): ng.IHttpPromise<IActionItemFolderResponse>;
-        getStatus(): ng.IHttpPromise<IActionItemStatusResponse>;
-        saveActionItem(actionItem: IActionItemParam): ng.IHttpPromise<IActionItemSaveResponse>;
-        getActionItemDetail(actionItemId:number): ng.IHttpPromise<IActionItemOpenResponse>;
+        fetchData(query:IActionItemListQuery):ng.IPromise<{}>;
+        getFolder(): ng.IHttpPromise<{}>;
+        getStatus(): ng.IHttpPromise<{}>;
+        saveActionItem(actionItem: IActionItemParam): ng.IHttpPromise<{}>;
+        getActionItemDetail(actionItemId:number): ng.IHttpPromise<{}>;
     }
 
     enum Status {
