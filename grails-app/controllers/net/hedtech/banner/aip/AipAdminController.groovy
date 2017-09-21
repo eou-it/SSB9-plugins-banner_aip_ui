@@ -319,6 +319,7 @@ class AipAdminController {
                         actionItemId           : actionItem?.actionItemId,
                         actionItemName         : actionItem?.actionItemName,
                         actionItemTitle        : actionItem?.actionItemTitle,
+                        actionItemDesc            : actionItem ?.actionItemDesc,
                         folderId               : actionItem?.folderId,
                         folderName             : actionItem?.folderName,
                         folderDesc             : actionItem?.folderDesc,
