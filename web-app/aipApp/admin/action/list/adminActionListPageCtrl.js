@@ -89,6 +89,16 @@ var AIP;
                         visible: true,
                         columnShowHide: true
                     }
+                }, {
+                    name: "actionItemCompositeDate",
+                    title: this.$filter("i18n_aip")("aip.list.grid.activityDate"),
+                    ariaLabel: this.$filter("i18n_aip")("aip.list.grid.activityDate"),
+                    width: "100px",
+                    options: {
+                        sortable: true,
+                        visible: true,
+                        columnShowHide: true
+                    }
                 },
                 {
                     name: "actionStatus",
