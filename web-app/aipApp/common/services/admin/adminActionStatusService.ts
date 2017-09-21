@@ -65,7 +65,7 @@ module AIP {
     }
     */
     interface IAdminActionStatusService {
-        fetchData(query:IActionItemStatusListQuery):ng.IPromise<IActionItemStatusFetchResponse>;
+        fetchData(query:IActionItemStatusListQuery):ng.IPromise<{}>;
         //saveActionItem(actionItemStatus: IActionItemStatusParam): ng.IHttpPromise<IActionItemStatusSaveResponse>;
        // getActionItemStatusDetail(id:number): ng.IHttpPromise<IActionItemStatusOpenResponse>;
     }
