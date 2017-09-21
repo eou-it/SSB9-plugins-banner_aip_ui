@@ -1,6 +1,6 @@
-/**
- * Created by jshin on 8/10/16.
- */
+/*******************************************************************************
+ Copyright 2017 Ellucian Company L.P. and its affiliates.
+ ********************************************************************************/
 ///<reference path="../../../../typings/tsd.d.ts"/>
 var AIP;
 (function (AIP) {
@@ -62,6 +62,7 @@ var AIP;
         AdminActionService.prototype.saveActionItem = function (actionItem) {
             var params = {
                 title: actionItem.title,
+                name: actionItem.name,
                 folderId: parseInt(actionItem.folder.id),
                 description: actionItem.description,
                 status: Status[actionItem.status.id],
@@ -155,9 +156,9 @@ var AIP;
             });
             return request;
         };
-        AdminActionService.$inject = ["$http", "$q", "$filter", "ENDPOINT"];
         return AdminActionService;
     }());
+    AdminActionService.$inject = ["$http", "$q", "$filter", "ENDPOINT"];
     AIP.AdminActionService = AdminActionService;
 })(AIP || (AIP = {}));
 register("bannerAIP").service("AdminActionService", AIP.AdminActionService);

@@ -1,25 +1,25 @@
 <div class="actionItemAddContainer">
     <div class="actionItemInfo">
-        <div class="row actionItemInfoRow actionItemTitle">
+        <div class="row actionItemInfoRow actionItemName">
             <div class="actionItemElement row input-actionItem">
                 <div class="actionItemTitle col-xs-12 col-md-8">
-                    <label for="actionItemTitle" class="titleValue required" id="actionItemAdd-Title"
-                           aria-label="Action Item Title">{{"aip.admin.action.actionItem.title"|i18n_aip}}
+                    <label for="actionItemTitle" class="titleValue required" id="actionItemAdd-Name"
+                           aria-label="Action Item Name">{{"aip.admin.action.actionItem.name"|i18n_aip}}
                     </label>
-                    <span class="titleValue supplement">{{"aip.admin.action.add.maxLength"|i18n_aip:300}}</span>
+                    <span class="titleValue supplement">{{"aip.admin.action.add.actionName.maxLength"|i18n_aip:60}}</span>
                 </div>
             </div>
             <div class="actionItemElement col-xs-12 col-md-8">
-                <div class="row" ng-class="{'has-error':vm.actionItemInfo.title.length>300}">
-                    <input id="actionItemTitle" maxlength="300" aria-valuemax="300" type="text" class="form-control"
-                           ng-model="vm.actionItemInfo.title"
-                           placeholder="{{'aip.admin.action.actionItem.title'|i18n_aip}}" aria-label="Action Item Title"
+                <div class="row" ng-class="{'has-error':vm.actionItemInfo.name.length>60}">
+                    <input id="actionItemName" maxlength="60" aria-valuemax="60" type="text" class="form-control"
+                           ng-model="vm.actionItemInfo.name"
+                           placeholder="{{'aip.admin.action.actionItem.name'|i18n_aip}}" aria-label="Action Item Name"
                            aria-required="true">
                 </div>
-                <div class="alert alert-danger" role="alert" ng-if="vm.actionItemInfo.title.length>300">
+                <div class="alert alert-danger" role="alert" ng-if="vm.actionItemInfo.title.name>60">
                     <i class="fa fa-exclamation-circle" aria-hidden="true"></i>
                     <span class="sr-only">Error:</span>
-                    {{"aip.admin.action.add.error.exceedMax"|i18n_aip:300}}"}}
+                    {{"aip.admin.action.add.actionName.error.exceedMax"|i18n_aip:60}}"}}
                 </div>
             </div>
         </div>
@@ -50,6 +50,29 @@
                             ng-model="vm.actionItemInfo.status"
                             ng-options="item as (item.value|i18n_aip) for item in vm.status track by item.id">
                     </select>
+                </div>
+            </div>
+        </div>
+        <div class="row actionItemInfoRow actionItemTitle">
+            <div class="actionItemElement row input-actionItem">
+                <div class="actionItemTitle col-xs-12 col-md-8">
+                    <label for="actionItemTitle" class="titleValue required" id="actionItemAdd-Title"
+                           aria-label="Action Item Title">{{"aip.admin.action.actionItem.title"|i18n_aip}}
+                    </label>
+                    <span class="titleValue supplement">{{"aip.admin.action.add.maxLength"|i18n_aip:300}}</span>
+                </div>
+            </div>
+            <div class="actionItemElement col-xs-12 col-md-8">
+                <div class="row" ng-class="{'has-error':vm.actionItemInfo.title.length>300}">
+                    <input id="actionItemTitle" maxlength="300" aria-valuemax="300" type="text" class="form-control"
+                           ng-model="vm.actionItemInfo.title"
+                           placeholder="{{'aip.admin.action.actionItem.title'|i18n_aip}}" aria-label="Action Item Title"
+                           aria-required="true">
+                </div>
+                <div class="alert alert-danger" role="alert" ng-if="vm.actionItemInfo.title.length>300">
+                    <i class="fa fa-exclamation-circle" aria-hidden="true"></i>
+                    <span class="sr-only">Error:</span>
+                    {{"aip.admin.action.add.error.exceedMax"|i18n_aip:300}}"}}
                 </div>
             </div>
         </div>

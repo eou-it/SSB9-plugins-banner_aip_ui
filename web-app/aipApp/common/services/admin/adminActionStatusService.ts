@@ -42,6 +42,7 @@ module AIP {
         header: [IActionItemStatusHeader]
     }
     export interface IActionItemStatusParam {
+        name:string;
         title: string;
         status: string;
         folderId: number;
@@ -64,7 +65,7 @@ module AIP {
     }
     */
     interface IAdminActionStatusService {
-        fetchData(query:IActionItemStatusListQuery):ng.IPromise<IActionItemStatusFetchResponse>;
+        fetchData(query:IActionItemStatusListQuery):ng.IPromise<{}>;
         //saveActionItem(actionItemStatus: IActionItemStatusParam): ng.IHttpPromise<IActionItemStatusSaveResponse>;
        // getActionItemStatusDetail(id:number): ng.IHttpPromise<IActionItemStatusOpenResponse>;
     }

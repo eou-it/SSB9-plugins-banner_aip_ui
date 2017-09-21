@@ -2,13 +2,15 @@
     <div class="row">
         <div class="actionItemElement actionItemDetail col-xs-12 col-sm-9 col-height">
                 <div class="col-sm-11">
-                    <h2 name="titleLabel">{{"aip.list.grid.itemTitle"|i18n_aip}}</h2>
-                    <!--<p class="openActionItemTitle">{{vm.actionItem.actionItemName}}</p>-->
-                    <p class="openActionItemTitle" ng-bind-html="vm.actionItem.actionItemName | html"></p>
+                    <h2 name="titleLabel">{{"aip.admin.action.actionItem.name"|i18n_aip}}</h2>
+                    <p class="openActionItemTitle">{{vm.actionItem.actionItemName}}</p>
                     <h2 name="folderLabel">{{"aip.common.folder"|i18n_aip}}</h2>
                     <p class="openActionItemFolder">{{vm.actionItem.folderName}}</p>
                     <h2 name="statusLabel">{{"aip.common.status"|i18n_aip}}</h2>
                     <p class="openActionItemStatus">{{vm.actionItem.actionItemStatus}}</p>
+                    <h2 name="titleLabel">{{"aip.list.grid.itemTitle"|i18n_aip}}</h2>
+                    <!--<p class="openActionItemTitle">{{vm.actionItem.actionItemName}}</p>-->
+                    <p class="openActionItemTitle" ng-bind-html="vm.actionItem.actionItemTitle | html"></p>
                     <h2 name="descriptionLabel">{{"aip.common.description"|i18n_aip}}</h2>
                     <p class="openActionItemDesc">{{vm.actionItem.actionItemDesc}}</p>
                 </div>
