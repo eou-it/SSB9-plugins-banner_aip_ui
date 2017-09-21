@@ -12,7 +12,7 @@ var AIP;
                 return this.$sce.trustAsHtml(string);
             };
             this.trustActionItemContent = function () {
-                this.actionItem.actionItemContent = this.$sce.trustAsHtml(this.$filter("html")(this.actionItem.actionItemContent)).toString();
+                this.actionItem.actionItemContent = this.$sce.trustAsHtml(this.$filter("html")(this.actionItem.actionItemContent));
                 return this.actionItem.actionItemContent;
             };
             this.trustActionItemRules = function (statusRuleLabelText) {
@@ -48,7 +48,7 @@ var AIP;
             this.init();
             angular.element($window).bind('resize', function () {
                 // $scope.onResize();
-                if (!$scope.$root.$$phase) {
+                if (!$scope.$root.$phase) {
                     $scope.$apply();
                 }
                 // $scope.$evalAsync(() => {
