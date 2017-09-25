@@ -165,7 +165,7 @@ module AIP {
                 if (result.success) {
                     //TODO:: send notification and refresh grid
                     var n = new Notification({
-                        message: this.$filter("i18n_aip")("aip.common.save.successful"), //+
+                        message: this.$filter("i18n_aip")("aip.common.save.successful"),
                         type: "success",
                         flash: true
                     });
@@ -180,9 +180,9 @@ module AIP {
             });
         }
 
-        disableSystemRecord() {
+        disableSystemRecord(deleteRestrictionReason) {
             var n = new Notification({
-                message: this.$filter("i18n_aip")("aip.common.save.deleteSystemRecord"),
+                message: deleteRestrictionReason,
                 type: "error",
                 flash: true
             });
@@ -190,7 +190,7 @@ module AIP {
         }
         deleteSystemRecord(map,name,$scope) {
             var n = new Notification({
-                message: this.$filter("i18n_aip")("aip.common.save.disableSystemRecord"),
+                message: this.$filter("i18n_aip")("aip.common.action.item.status.delete.warning"),
                 type: "warning",
             });
             var actionService = this.adminActionStatusService;

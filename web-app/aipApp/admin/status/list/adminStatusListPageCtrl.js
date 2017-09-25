@@ -148,9 +148,9 @@ var AIP;
                 console.log(error);
             });
         };
-        AdminStatusListPageCtrl.prototype.disableSystemRecord = function () {
+        AdminStatusListPageCtrl.prototype.disableSystemRecord = function (deleteRestrictionReason) {
             var n = new Notification({
-                message: this.$filter("i18n_aip")("aip.common.save.deleteSystemRecord"),
+                message: deleteRestrictionReason,
                 type: "error",
                 flash: true
             });
@@ -158,7 +158,7 @@ var AIP;
         };
         AdminStatusListPageCtrl.prototype.deleteSystemRecord = function (map, name, $scope) {
             var n = new Notification({
-                message: this.$filter("i18n_aip")("aip.common.save.disableSystemRecord"),
+                message: this.$filter("i18n_aip")("aip.common.action.item.status.delete.warning"),
                 type: "warning",
             });
             var actionService = this.adminActionStatusService;
