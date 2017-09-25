@@ -1,6 +1,6 @@
 /*******************************************************************************
-Copyright 2017 Ellucian Company L.P. and its affiliates.
-********************************************************************************/
+ Copyright 2017 Ellucian Company L.P. and its affiliates.
+ ********************************************************************************/
 ///<reference path="../../../common/services/admin/adminActionStatusService.ts"/>
 var AIP;
 (function (AIP) {
@@ -166,7 +166,10 @@ var AIP;
                 id: map
             };
             var refreshGrid = this.$scope;
-            n.addPromptAction("Yes", function () {
+            n.addPromptAction('No', function () {
+                notifications.remove(n);
+            });
+            n.addPromptAction('Yes', function () {
                 actionService.removeStatus(keyValue).then(function (response) {
                     if (response.data.success) {
                         refreshGrid.refreshGrid(true);
@@ -188,9 +191,6 @@ var AIP;
                         notifications.addNotification(n2);
                     }
                 });
-            });
-            n.addPromptAction("No", function () {
-                notifications.remove(n);
             });
             notifications.addNotification(n);
         };

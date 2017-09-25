@@ -1,6 +1,6 @@
 /*******************************************************************************
-Copyright 2017 Ellucian Company L.P. and its affiliates.
-********************************************************************************/
+ Copyright 2017 Ellucian Company L.P. and its affiliates.
+ ********************************************************************************/
 
 //<reference path="../../../../typings/tsd.d.ts"/>
 ///<reference path="../../../common/services/admin/adminActionStatusService.ts"/>
@@ -11,7 +11,7 @@ declare var notifications: any;
 
 module AIP {
     export class AdminStatusListPageCtrl {
-        $inject = ["$scope", "$state", "$window", "$filter","$http", "$q", "$uibModal",
+        $inject = ["$scope", "$state", "$window", "$filter", "$http", "$q", "$uibModal",
             "ENDPOINT", "PAGINATIONCONFIG", "AdminActionStatusService", "APP_ROOT"];
         $scope;
         $state;
@@ -32,10 +32,10 @@ module AIP {
         modalInstance;
         statusModel;
 
-        constructor($scope, $state, $window, $filter, $q,$http, $uibModal, ENDPOINT, PAGINATIONCONFIG,
+        constructor($scope, $state, $window, $filter, $q, $http, $uibModal, ENDPOINT, PAGINATIONCONFIG,
                     AdminActionStatusService, APP_ROOT) {
             $scope.vm = this;
-            $scope.disableSystemRecord=function(data){
+            $scope.disableSystemRecord = function (data) {
 
                 alert(data);
 
@@ -188,7 +188,8 @@ module AIP {
             });
             notifications.addNotification(n);
         }
-        deleteSystemRecord(map,name,$scope) {
+
+        deleteSystemRecord(map, name, $scope) {
             var n = new Notification({
                 message: this.$filter("i18n_aip")("aip.common.action.item.status.delete.warning"),
                 type: "warning",
@@ -198,7 +199,10 @@ module AIP {
                 id: map
             };
             var refreshGrid = this.$scope;
-            n.addPromptAction("Yes", function () {
+            n.addPromptAction('No', function () {
+                notifications.remove(n);
+            })
+            n.addPromptAction('Yes', function () {
                 actionService.removeStatus(keyValue).then((response) => {
                     if (response.data.success) {
                         refreshGrid.refreshGrid(true);
@@ -210,25 +214,22 @@ module AIP {
                         notifications.remove(n);
                         notifications.addNotification(n1);
                     }
-                    else{
+                    else {
                         var n2 = new Notification({
                             message: response.data.message,
                             type: "error",
                             flash: true
                         });
-                        notifications.remove(n,n1);
+                        notifications.remove(n, n1);
                         notifications.addNotification(n2);
                     }
 
                 });
             });
-
-            n.addPromptAction("No", function () {
-                notifications.remove(n);
-            })
             notifications.addNotification(n);
 
         }
+
         /*
 
         add() {
@@ -274,11 +275,13 @@ module AIP {
                 });
             return deferred.promise;
         }
+
         selectRecord(data) {
             this.selectedRecord = data;
             //this.adminActionStatusService.enableGroupOpen(data.id);
             //this.$state.params.grp = data.id;
         }
+
         // refreshGrid() {
         //     console.log("Refresh");
         // }
