@@ -166,7 +166,6 @@ var AIP;
                 id: map
             };
             var refreshGrid = this.$scope;
-            var DeleteError = this.$filter("i18n_aip")("aip.common.save.DeletenotPermitted");
             n.addPromptAction("Yes", function () {
                 actionService.removeStatus(keyValue).then(function (response) {
                     if (response.data.success) {
@@ -181,7 +180,7 @@ var AIP;
                     }
                     else {
                         var n2 = new Notification({
-                            message: DeleteError,
+                            message: response.data.message,
                             type: "error",
                             flash: true
                         });
