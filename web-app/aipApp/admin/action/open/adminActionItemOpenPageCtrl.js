@@ -11,8 +11,8 @@ var AIP;
             this.trustAsHtml = function (string) {
                 return this.$sce.trustAsHtml(string);
             };
-            this.trustActionItemContent = function () {
-                this.actionItem.actionItemContent = this.$sce.trustAsHtml(this.$filter("html")(this.actionItem.actionItemContent));
+            this.trustActionItemContent = function (actionItemContent) {
+                this.actionItem.actionItemContent = (this.actionItem.actionItemContent);
                 return this.actionItem.actionItemContent;
             };
             this.trustActionItemRules = function (statusRuleLabelText) {
@@ -298,6 +298,7 @@ var AIP;
             //TODO:: implement to save rules
             var allDefer = [];
             this.saving = true;
+            console.log(this.actionItem.actionItemContent);
             allDefer.push(this.adminActionService.saveActionItemTemplate(this.selectedTemplate, this.actionItem.actionItemId, this.actionItem.actionItemContent)
                 .then(function (response) {
                 if (response.data.success) {
@@ -366,6 +367,7 @@ var AIP;
                 angular.forEach(_this.rules, function (item) {
                     //item.statusRuleLabelText = this.trustActionItemRules(item.statusRuleLabelText);
                     item.statusRuleLabelText = _this.$sce.trustAsHtml(_this.$filter("html")(item.statusRuleLabelText)).toString();
+                    console.log(item.statusName);
                     item["status"] = {
                         actionItemStatus: item.statusName,
                         actionItemStatusId: item.statusId

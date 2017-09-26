@@ -166,10 +166,10 @@ var AIP;
                 id: map
             };
             var refreshGrid = this.$scope;
-            n.addPromptAction('No', function () {
+            n.addPromptAction(this.$filter("i18n_aip")("aip.common.text.no"), function () {
                 notifications.remove(n);
             });
-            n.addPromptAction('Yes', function () {
+            n.addPromptAction(this.$filter("i18n_aip")("aip.common.text.yes"), function () {
                 actionService.removeStatus(keyValue).then(function (response) {
                     if (response.data.success) {
                         refreshGrid.refreshGrid(true);

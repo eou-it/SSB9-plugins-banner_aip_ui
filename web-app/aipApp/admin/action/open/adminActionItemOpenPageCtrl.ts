@@ -262,8 +262,8 @@ module AIP {
             return this.$sce.trustAsHtml(string);
         }
 
-        trustActionItemContent = function() {
-            this.actionItem.actionItemContent = this.$sce.trustAsHtml(this.$filter("html")(this.actionItem.actionItemContent));
+        trustActionItemContent = function(actionItemContent) {
+            this.actionItem.actionItemContent = (this.actionItem.actionItemContent);
             return this.actionItem.actionItemContent;
         }
 
@@ -330,6 +330,7 @@ module AIP {
             //TODO:: implement to save rules
             var allDefer = [];
             this.saving = true;
+            console.log(this.actionItem.actionItemContent)
             allDefer.push(this.adminActionService.saveActionItemTemplate(this.selectedTemplate, this.actionItem.actionItemId, this.actionItem.actionItemContent)
                 .then((response:any) => {
                     if(response.data.success) {
@@ -395,10 +396,12 @@ module AIP {
                     angular.forEach(this.rules, (item) => {
                         //item.statusRuleLabelText = this.trustActionItemRules(item.statusRuleLabelText);
                         item.statusRuleLabelText = this.$sce.trustAsHtml(this.$filter("html")(item.statusRuleLabelText)).toString();
+                        console.log(item.statusName);
                         item["status"] = {
                             actionItemStatus: item.statusName,
                             actionItemStatusId: item.statusId
                         }
+
                     });
                     this.rules.sort((a, b) => {
                         return a.statusRuleSeqOrder - b.statusRuleSeqOrder;

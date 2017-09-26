@@ -116,10 +116,9 @@ Copyright 2017 Ellucian Company L.P. and its affiliates.
             <div class="row">
                 <div class="col-xs-12 col-sm-12">
                     <h2>{{'aip.common.text.content'|i18n_aip}}</h2>
-
                     <div ng-if="!vm.isNoContent()">
-                        <div class="contentPreview"
-                             data-ng-bind-html="vm.trustAsHtml(vm.actionItem.actionItemContent)"></div>
+                        <div class="contentPreview">
+                             {{vm.actionItem.actionItemContent}}</div>
                     </div>
                     <div ng-if="vm.isNoContent()">
                         <span>{{'aip.admin.action.open.tab.content.noContent'|i18n_aip}}</span>
