@@ -124,6 +124,9 @@ class AipAdminController {
             if (ActionItemService.FOLDER_VALIDATION_ERROR.equals( e.getMessage() )) {
                 message = MessageUtility.message( e.getDefaultMessage(), MessageFormat.format( "{0,number,#}", ai.folderId ) )
             } else {
+                println 'Error ===>' + e.getDefaultMessage();
+                println 'Error 1===>' + e.getMessage();
+
                 message = MessageUtility.message( e.getDefaultMessage() )
             }
         }
