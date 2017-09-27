@@ -25,8 +25,6 @@ class AipController {
 
     def groupFolderReadOnlyService
 
-    def actionItemReadOnlyService
-
 
     @Secured(['ROLE_SELFSERVICE-FACULTY_BAN_DEFAULT_M', 'ROLE_SELFSERVICE-STUDENT_BAN_DEFAULT_M'])
     def list() {

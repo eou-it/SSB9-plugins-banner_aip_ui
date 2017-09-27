@@ -30,8 +30,6 @@ class AipAdminController {
 
     def actionItemReadOnlyService
 
-    def actionItemService
-
     def actionItemTemplateService
 
     def actionItemDetailService
@@ -85,56 +83,15 @@ class AipAdminController {
         render result as JSON
     }
 
-
+    /**
+     * Add Action Item
+     * @return
+     */
     def addActionItem() {
-        def user = SecurityContextHolder?.context?.authentication?.principal
-        if (!user.pidm) {
-            response.sendError( 403 )
-            return
-        }
-        /* TODO: determine access in later US
-        if (!hasAccess( 'save' )) {
-            response.sendError( 403 )
-            return
-        }
-        */
-        ActionItem aActionItem
-        def success = false
-        def message
-
-
-        def aipUser = AipControllerUtils.getPersonForAip( params, user.pidm )
-        def jsonObj = request.JSON
-
-        ActionItem ai = new ActionItem()
-        ai.folderId = jsonObj.folderId ?: null
-        ai.status = jsonObj.status ?: null
-        ai.title = jsonObj.title ?: null
-        ai.name = jsonObj.name ?: 'DUMMY NMAE'
-        ai.creatorId = aipUser.bannerId ?: null
-        ai.userId = aipUser.bannerId ?: null
-        ai.description = jsonObj.description ?: null
-        ai.activityDate = new Date()
-
-        try {
-            aActionItem = actionItemService.create( ai )
-            response.status = 200
-            success = true
-        } catch (ApplicationException e) {
-            if (ActionItemService.FOLDER_VALIDATION_ERROR.equals( e.getMessage() )) {
-                message = MessageUtility.message( e.getDefaultMessage(), MessageFormat.format( "{0,number,#}", ai.folderId ) )
-            } else {
-                println 'Error ===>' + e.getDefaultMessage();
-                println 'Error 1===>' + e.getMessage();
-
-                message = MessageUtility.message( e.getDefaultMessage() )
-            }
-        }
-        def result = [
-                success      : success,
-                message      : message,
-                newActionItem: aActionItem
-        ]
+        def map = [:]
+        map = request.JSON
+        map.studentId = params.studentId
+        def result = actionItemCompositeService.addActionItem( map )
         render result as JSON
     }
 
@@ -322,7 +279,7 @@ class AipAdminController {
                         actionItemId           : actionItem?.actionItemId,
                         actionItemName         : actionItem?.actionItemName,
                         actionItemTitle        : actionItem?.actionItemTitle,
-                        actionItemDesc            : actionItem ?.actionItemDesc,
+                        actionItemDesc         : actionItem?.actionItemDesc,
                         folderId               : actionItem?.folderId,
                         folderName             : actionItem?.folderName,
                         folderDesc             : actionItem?.folderDesc,
