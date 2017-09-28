@@ -6,6 +6,7 @@ package net.hedtech.banner.aip
 import grails.converters.JSON
 import groovy.json.JsonSlurper
 import net.hedtech.banner.MessageUtility
+import net.hedtech.banner.aip.common.AIPConstants
 import net.hedtech.banner.exceptions.ApplicationException
 import net.hedtech.banner.general.communication.folder.CommunicationFolder
 import net.hedtech.banner.i18n.MessageHelper
@@ -176,7 +177,7 @@ class AipAdminController {
                 name: jsonObj.groupName ?: null,
                 folderId: jsonObj.folderId ?: null,
                 description: jsonObj.groupDesc ?: null,
-                status: jsonObj.groupStatus ?: null,
+                status: AIPConstants.STATUS_MAP.get( jsonObj.groupStatus) ?: null,
                 version: jsonObj.version ?: null,
                 userId: aipUser.bannerId ?: null,
                 activityDate: new Date(),
@@ -284,6 +285,7 @@ class AipAdminController {
                         folderName             : actionItem?.folderName,
                         folderDesc             : actionItem?.folderDesc,
                         actionItemStatus       : actionItem ? MessageHelper.message( "aip.status.${actionItem.actionItemStatus}" ) : null,
+                        actionItemPostedStatus : actionItem?.actionItemPostedStatus,
                         actionItemActivityDate : actionItem?.actionItemActivityDate,
                         actionItemUserId       : actionItem?.actionItemUserId,
                         actionItemContentUserId: actionItem?.actionItemContentUserId,
