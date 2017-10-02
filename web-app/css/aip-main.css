@@ -155,8 +155,6 @@ aip-list .aip-list-container {
     .landingItem-container .landing-icon .icon {
       font-size: 3em;
       color: #206E9F; }
-    .landingItem-container .landing-icon .icon-folder {
-      background-image: url(images/manage.svg); }
   .landingItem-container .landing-context {
     padding: 8px 24px;
     border-left: 2px solid #EDF2F7;
@@ -292,8 +290,6 @@ aip-list .aip-list-container {
 .groupListContainer {
   overflow-y: auto;
   font-size: 14px; }
-  .groupListContainer .groupListTable #groupDataTableSearch {
-    display: none; }
   .groupListContainer .row {
     margin-right: 0;
     margin-left: 0; }
@@ -304,6 +300,17 @@ aip-list .aip-list-container {
     overflow: auto; }
     .groupListContainer .groupListTable .table-container {
       margin-top: 8px; }
+      .groupListContainer .groupListTable .table-container .row.groupActions {
+        display: flex;
+        margin-right: 16px;
+        margin-left: 16px; }
+        .groupListContainer .groupListTable .table-container .row.groupActions .icon {
+          font-size: 1.5em; }
+        .groupListContainer .groupListTable .table-container .row.groupActions div {
+          flex: 1;
+          margin-right: 10px; }
+        .groupListContainer .groupListTable .table-container .row.groupActions div:last-child {
+          margin-right: 0; }
 
 .groupOpenContainer {
   padding: 0;

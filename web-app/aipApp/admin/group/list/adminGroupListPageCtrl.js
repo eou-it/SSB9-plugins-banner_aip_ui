@@ -128,9 +128,17 @@ var AIP;
         AdminGroupListPageCtrl.prototype.add = function () {
             this.$state.go("admin-group-add");
         };
-        AdminGroupListPageCtrl.prototype.open = function () {
+        AdminGroupListPageCtrl.prototype.delete = function (id) {
+            //TODO:: implement delete function
+            console.log("Deleging id: " + id);
+        };
+        AdminGroupListPageCtrl.prototype.copy = function (id) {
+            //TODO:: implement copy function
+            console.log("Copy id: " + id);
+        };
+        AdminGroupListPageCtrl.prototype.open = function (id) {
             var _this = this;
-            this.adminGroupService.getGroupDetail(this.$state.params.grp).then(function (response) {
+            this.adminGroupService.getGroupDetail(id).then(function (response) {
                 if (response.group) {
                     _this.$state.go("admin-group-open", { data: response.group });
                 }
@@ -167,9 +175,9 @@ var AIP;
             return deferred.promise;
         };
         AdminGroupListPageCtrl.prototype.selectRecord = function (data) {
-            this.selectedRecord = data;
-            this.adminGroupService.enableGroupOpen(data.id);
-            this.$state.params.grp = data.id;
+            // this.selectedRecord = data;
+            // this.adminGroupService.enableGroupOpen(data.id);
+            // this.$state.params.grp = data.id;
         };
         AdminGroupListPageCtrl.prototype.refreshGrid = function () {
         };

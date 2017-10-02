@@ -1,7 +1,6 @@
 /*******************************************************************************
 Copyright 2017 Ellucian Company L.P. and its affiliates.
 ********************************************************************************/
-
 aip-list .aip-list-container  {
     border:none;
     box-shadow:none;
@@ -340,9 +339,6 @@ aip-list .aip-list-container  {
     overflow-y:auto;
     font-size:14px;
 }
-  .groupListContainer .groupListTable #groupDataTableSearch  {
-    display:none;
-}
   .groupListContainer .row  {
     margin-left:0;
     margin-right:0;
@@ -356,6 +352,21 @@ aip-list .aip-list-container  {
 }
     .groupListContainer .groupListTable .table-container  {
     margin-top:8px;
+}
+      .groupListContainer .groupListTable .table-container .row.groupActions  {
+    display:flex;
+    margin-left:16px;
+    margin-right:16px;
+}
+        .groupListContainer .groupListTable .table-container .row.groupActions .icon  {
+    font-size:1.5em;
+}
+        .groupListContainer .groupListTable .table-container .row.groupActions div  {
+    flex:1;
+    margin-left:10px;
+}
+        .groupListContainer .groupListTable .table-container .row.groupActions div:last-child  {
+    margin-left:0;
 }
 
 .groupOpenContainer  {

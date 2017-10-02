@@ -3,7 +3,7 @@
   font-size: 14px;
   .groupListTable {
     #groupDataTableSearch {
-      display: none;
+      //display: none;
     }
   }
   .row {
@@ -20,6 +20,25 @@
     //padding-top: 16px;
     .table-container {
       margin-top: 8px;
+
+      .row.groupActions {
+        display: flex;
+        margin-right: 16px;
+        margin-left: 16px;
+
+        .icon {
+          font-size: 1.5em;
+        }
+
+        div {
+          flex: 1;
+          margin-right: 10px;
+        }
+        div:last-child {
+          margin-right: 0;
+
+        }
+      }
     }
   }
 }
@@ -31,6 +50,8 @@
     margin-left: 0;
     margin-right: 0;
   }
+
+
   .groupInfo  {
     margin-bottom: 20px;
     .groupInfoRow {
