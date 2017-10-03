@@ -177,6 +177,7 @@ class AipAdminController {
                 name: jsonObj.groupName ?: null,
                 folderId: jsonObj.folderId ?: null,
                 description: jsonObj.groupDesc ?: null,
+                postingInd:'N',
                 status: AIPConstants.STATUS_MAP.get( jsonObj.groupStatus) ?: null,
                 version: jsonObj.version ?: null,
                 userId: aipUser.bannerId ?: null,

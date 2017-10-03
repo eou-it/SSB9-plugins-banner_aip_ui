@@ -1,3 +1,6 @@
+/*******************************************************************************
+ Copyright 2017 Ellucian Company L.P. and its affiliates.
+ ********************************************************************************/
 ///<reference path="../../../../typings/tsd.d.ts"/>
 ///<reference path="../../../common/services/spinnerService.ts"/>
 ///<reference path="../../../common/services/admin/adminActionService.ts"/>
@@ -54,7 +57,7 @@ module AIP {
                     .then((response: AIP.IActionItemStatusResponse) => {
                         this.status = response.data;
                         angular.forEach(this.status,function(key,value){
-                            key.value =  "aip.status." + key.value;
+                            key.value =  "aip.status." + key.value.charAt(0);
                             console.log(key.value)
                             return value;
                         });
