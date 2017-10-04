@@ -21,7 +21,7 @@ class AipController {
 
     def userActionItemReadOnlyService
 
-    def actionItemDetailService
+    def actionItemContentService
 
     def groupFolderReadOnlyService
 
@@ -222,7 +222,7 @@ class AipController {
                                   ]]
                                   */
             } else if (jsonObj.type == "actionItem") {
-                itemDetailInfo = actionItemDetailService.listActionItemDetailById( jsonObj.actionItemId )
+                itemDetailInfo = actionItemContentService.listActionItemContentById( jsonObj.actionItemId )
 //                itemDetailInfo = [
 //                        content: "Action item information for item " + jsonObj.actionItemId.toString() + " goes here",
 //                        type: "doc",

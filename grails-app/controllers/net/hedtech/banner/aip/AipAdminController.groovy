@@ -33,7 +33,7 @@ class AipAdminController {
 
     def actionItemTemplateService
 
-    def actionItemDetailService
+    def actionItemContentService
 
     def actionItemCompositeService
 
@@ -378,7 +378,7 @@ class AipAdminController {
 
             def actionItemText = params.actionItemContent?.toString()
 
-            actionItemDetailService.updateTemplateContent( actionItemContentId, actionItemText )
+            actionItemContentService.updateTemplateContent( actionItemContentId, actionItemText )
             response.status = 200
 
             def model = [
@@ -409,22 +409,22 @@ class AipAdminController {
         }
 
         def aipUser = AipControllerUtils.getPersonForAip( params, user.pidm )
-        ActionItemDetail aid = actionItemDetailService.listActionItemDetailById( actionItemId )
-        aid.actionItemId = actionItemId
-        aid.actionItemTemplateId = templateId
-        aid.lastModifiedby = aipUser.bannerId
-        aid.lastModified = new Date()
-        aid.text = actionItemDetailText
+        ActionItemContent aic = actionItemContentService.listActionItemContentById( actionItemId )
+        aic.actionItemId = actionItemId
+        aic.actionItemTemplateId = templateId
+        aic.lastModifiedby = aipUser.bannerId
+        aic.lastModified = new Date()
+        aic.text = actionItemDetailText
 
-        ActionItemDetail newAid = actionItemDetailService.createOrUpdate( aid )
+        ActionItemContent newAic = actionItemContentService.createOrUpdate( aic )
 
         def success = false
         def errors = []
-//        ActionItemDetail newActionItemDetail = actionItemDetailService.listActionItemDetailById(actionItemId)
+//        ActionItemContent newActionItemDetail = actionItemDetailService.listActionItemContentById(actionItemId)
 
         //todo: add new method to service for action item detail to retreive an action item by detail id and action item id
-        ActionItemReadOnly actionItemRO = actionItemReadOnlyService.getActionItemROById( newAid.actionItemId )
-        if (newAid) {
+        ActionItemReadOnly actionItemRO = actionItemReadOnlyService.getActionItemROById( newAic.actionItemId )
+        if (newAic) {
             response.status = 200
             success = true
         }
