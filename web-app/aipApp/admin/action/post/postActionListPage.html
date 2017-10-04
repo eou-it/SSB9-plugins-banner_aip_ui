@@ -1,0 +1,39 @@
+<div class="actionListContainer" id="postActionListPage" ng-controller="PostActionListPageCtrl">
+    <div class="row">
+        <div class="control">
+            <button type="button" class="btn btn-default" ng-click="vm.goAddPage()" aria-label="Add new Action Item">
+                <span class="icon icon-add-CO"></span>
+                <span class="button-text hidden-sm-down">{{'aip.common.add.new'|i18n_aip}}</span>
+            </button>
+
+            <button id="openActionBtn" type="button" class="btn btn-default" ng-click="vm.openActionItem()"
+                    aria-label="Open Action Item" ng-disabled="!vm.selectedRecord">
+                <span class="icon icon-view-CO"></span>
+                <span class="button-text hidden-sm-down">{{'aip.common.open'|i18n_aip}}</span>
+            </button>
+        </div>
+    </div>
+    <div class="actionListTable" ng-style="vm.getHeight()">
+        <xe-table-grid
+                caption="{{'aip.admin.selectable.post.action.items'|i18n_aip}}"
+                table-id="dataTableAdminActionList"
+                header="vm.header"
+                fetch="vm.fetchData(query)"
+                end-point="vm.adminActionListEnd"
+                content="vm.gridData.row"
+                results-found="vm.records"
+                toolbar="true"
+                paginate="true"
+                on-row-click="vm.selectRecord(data)"
+                no-data-msg="No Results Found"
+                empty-table-msg="emptyTableMsg"
+                search-config="vm.searchConfig"
+                pagination-config="vm.paginationConfig"
+                mobile-layout="vm.mobileConfig"
+                refresh-grid="refreshGrid"
+                draggable-column-names="vm.draggableColumnNames"
+                continuous-scrolling="vm.mobileSize"
+                continuous-scroll-parent="postActionListPage">
+        </xe-table-grid>
+    </div>
+</div>
