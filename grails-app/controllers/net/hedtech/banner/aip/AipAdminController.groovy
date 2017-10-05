@@ -528,6 +528,7 @@ class AipAdminController {
                             labelText: rule.statusRuleLabelText,
                             actionItemId: jsonObj.actionItemId,
                             actionItemStatusId: rule.statusId,
+                            resubmitInd: rule.resubmitInd,
                             userId: aipUser.bannerId,
                             activityDate: new Date()
                     )
