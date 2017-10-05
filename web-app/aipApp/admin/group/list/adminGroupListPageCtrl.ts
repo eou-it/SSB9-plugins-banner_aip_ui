@@ -150,9 +150,17 @@ module AIP {
         add() {
             this.$state.go("admin-group-add");
         }
+        delete(id:string) {
+            //TODO:: implement delete function
+            console.log("Deleging id: " + id);
+        }
+        copy(id:string) {
+            //TODO:: implement copy function
+            console.log("Copy id: "+id);
+        }
 
-        open() {
-            this.adminGroupService.getGroupDetail(this.$state.params.grp).then((response) => {
+        open(id:number) {
+            this.adminGroupService.getGroupDetail(id).then((response) => {
                 if(response.group) {
                         this.$state.go("admin-group-open", {data: response.group});
                     } else {
@@ -190,9 +198,10 @@ module AIP {
             return deferred.promise;
         }
         selectRecord(data) {
-            this.selectedRecord = data;
-            this.adminGroupService.enableGroupOpen(data.id);
-            this.$state.params.grp = data.id;
+            // this.selectedRecord = data;
+            // this.adminGroupService.enableGroupOpen(data.id);
+            // this.$state.params.grp = data.id;
+
         }
         refreshGrid() {
 

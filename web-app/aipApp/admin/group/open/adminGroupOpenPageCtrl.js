@@ -25,7 +25,7 @@ var AIP;
             //console.log(groupDescHtml);
             //todo: replace this temporary workaround for sce not working for description
             $("p.openGroupDesc").html(this.$state.params.data.groupDesc);
-            $("#title-panel h1").html(this.$state.params.data.groupTitle);
+            $("#title-panel h1").html(this.$state.params.data.groupName);
             if (this.$state.params.noti) {
                 this.handleNotification(this.$state.params.noti);
             }
