@@ -27,7 +27,7 @@ import org.springframework.security.core.context.SecurityContextHolder
 class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
     def selfServiceBannerAuthenticationProvider
 
-    def actionItemDetailService
+    def actionItemContentService
 
     def actionItemGroupService
 
@@ -1241,8 +1241,8 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
         requestObj.actionItemId = actionItemIdToUse
 
         // look at detail. verify our change was actually a change
-        ActionItemDetail originalAid = actionItemDetailService.listActionItemDetailById( actionItemIdToUse )
-        def originalTemplateId = originalAid.actionItemTemplateId
+        ActionItemContent originalAic = actionItemContentService.listActionItemContentById( actionItemIdToUse )
+        def originalTemplateId = originalAic.actionItemTemplateId
 
         // should start as null, attempt change to '1'
         assertNull( originalTemplateId )

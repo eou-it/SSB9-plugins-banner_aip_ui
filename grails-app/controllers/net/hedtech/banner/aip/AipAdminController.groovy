@@ -6,6 +6,7 @@ package net.hedtech.banner.aip
 import grails.converters.JSON
 import groovy.json.JsonSlurper
 import net.hedtech.banner.MessageUtility
+import net.hedtech.banner.aip.common.AIPConstants
 import net.hedtech.banner.exceptions.ApplicationException
 import net.hedtech.banner.general.communication.folder.CommunicationFolder
 import net.hedtech.banner.i18n.MessageHelper
@@ -32,7 +33,7 @@ class AipAdminController {
 
     def actionItemTemplateService
 
-    def actionItemDetailService
+    def actionItemContentService
 
     def actionItemCompositeService
 
@@ -176,7 +177,8 @@ class AipAdminController {
                 name: jsonObj.groupName ?: null,
                 folderId: jsonObj.folderId ?: null,
                 description: jsonObj.groupDesc ?: null,
-                status: jsonObj.groupStatus ?: null,
+                postingInd:'N',
+                status: AIPConstants.STATUS_MAP.get( jsonObj.groupStatus) ?: null,
                 version: jsonObj.version ?: null,
                 userId: aipUser.bannerId ?: null,
                 activityDate: new Date(),
@@ -284,6 +286,7 @@ class AipAdminController {
                         folderName             : actionItem?.folderName,
                         folderDesc             : actionItem?.folderDesc,
                         actionItemStatus       : actionItem ? MessageHelper.message( "aip.status.${actionItem.actionItemStatus}" ) : null,
+                        actionItemPostedStatus : actionItem?.actionItemPostedStatus,
                         actionItemActivityDate : actionItem?.actionItemActivityDate,
                         actionItemUserId       : actionItem?.actionItemUserId,
                         actionItemContentUserId: actionItem?.actionItemContentUserId,
@@ -375,7 +378,7 @@ class AipAdminController {
 
             def actionItemText = params.actionItemContent?.toString()
 
-            actionItemDetailService.updateTemplateContent( actionItemContentId, actionItemText )
+            actionItemContentService.updateTemplateContent( actionItemContentId, actionItemText )
             response.status = 200
 
             def model = [
@@ -406,22 +409,22 @@ class AipAdminController {
         }
 
         def aipUser = AipControllerUtils.getPersonForAip( params, user.pidm )
-        ActionItemDetail aid = actionItemDetailService.listActionItemDetailById( actionItemId )
-        aid.actionItemId = actionItemId
-        aid.actionItemTemplateId = templateId
-        aid.lastModifiedby = aipUser.bannerId
-        aid.lastModified = new Date()
-        aid.text = actionItemDetailText
+        ActionItemContent aic = actionItemContentService.listActionItemContentById( actionItemId )
+        aic.actionItemId = actionItemId
+        aic.actionItemTemplateId = templateId
+        aic.lastModifiedby = aipUser.bannerId
+        aic.lastModified = new Date()
+        aic.text = actionItemDetailText
 
-        ActionItemDetail newAid = actionItemDetailService.createOrUpdate( aid )
+        ActionItemContent newAic = actionItemContentService.createOrUpdate( aic )
 
         def success = false
         def errors = []
-//        ActionItemDetail newActionItemDetail = actionItemDetailService.listActionItemDetailById(actionItemId)
+//        ActionItemContent newActionItemDetail = actionItemDetailService.listActionItemContentById(actionItemId)
 
         //todo: add new method to service for action item detail to retreive an action item by detail id and action item id
-        ActionItemReadOnly actionItemRO = actionItemReadOnlyService.getActionItemROById( newAid.actionItemId )
-        if (newAid) {
+        ActionItemReadOnly actionItemRO = actionItemReadOnlyService.getActionItemROById( newAic.actionItemId )
+        if (newAic) {
             response.status = 200
             success = true
         }
@@ -525,6 +528,7 @@ class AipAdminController {
                             labelText: rule.statusRuleLabelText,
                             actionItemId: jsonObj.actionItemId,
                             actionItemStatusId: rule.statusId,
+                            resubmitInd: rule.resubmitInd,
                             userId: aipUser.bannerId,
                             activityDate: new Date()
                     )

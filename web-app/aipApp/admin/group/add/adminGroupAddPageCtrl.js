@@ -38,7 +38,7 @@ var AIP;
             this.groupInfo = {};
             promises.push(this.adminGroupService.getStatus().then(function (status) {
                 _this.status = status.map(function (item) {
-                    item.value = "aip.status." + item.value;
+                    item.value = "aip.status." + item.value.charAt(0);
                     return item;
                 });
                 var groupStatus = $("#groupStatus");

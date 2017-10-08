@@ -71,7 +71,7 @@ module AIP {
             promises.push(
                 this.adminGroupService.getStatus().then((status) => {
                     this.status = status.map((item) => {
-                        item.value = "aip.status." + item.value;
+                        item.value = "aip.status." + item.value.charAt(0);
                         return item;
                     });
                     var groupStatus:any = $("#groupStatus");
