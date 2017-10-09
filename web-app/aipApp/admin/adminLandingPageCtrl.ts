@@ -1,4 +1,7 @@
 ///<reference path="../../typings/tsd.d.ts"/>
+/*******************************************************************************
+ Copyright 2017 Ellucian Company L.P. and its affiliates.
+ ********************************************************************************/
 declare var register;
 
 interface IAdminLandingPageCtrlScope extends ng.IScope {
@@ -42,7 +45,7 @@ module AIP {
                     description:"aip.admin.group.description"
                 },
                 {
-                    title:"aip.admin.postItem",
+                    title:"aip.admin.action.item.post.item",
                     icon: "",
                     click:"admin-post-list",
                     description:"aip.admin.post.description"
