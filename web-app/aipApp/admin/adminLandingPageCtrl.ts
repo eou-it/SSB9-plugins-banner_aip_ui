@@ -40,6 +40,12 @@ module AIP {
                     icon: "icon-cardView-SO",
                     click:"admin-group-list",
                     description:"aip.admin.group.description"
+                },
+                {
+                    title:"aip.admin.postItem",
+                    icon: "",
+                    click:"admin-post-list",
+                    description:"aip.admin.post.description"
                 }
             ];
         }
