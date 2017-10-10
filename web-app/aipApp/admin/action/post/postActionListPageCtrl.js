@@ -51,8 +51,8 @@ var AIP;
                     }
                 }, {
                     name: "jobStatus",
-                    title: this.$filter("i18n_aip")("aip.list.grid.jobStatus"),
-                    ariaLabel: this.$filter("i18n_aip")("aip.list.grid.jobStatus"),
+                    title: this.$filter("i18n_aip")("aip.action.item.list.grid.jobStatus"),
+                    ariaLabel: this.$filter("i18n_aip")("aip.action.item.list.grid.jobStatus"),
                     width: "100px",
                     options: {
                         sortable: true,
@@ -62,8 +62,8 @@ var AIP;
                     }
                 }, {
                     name: "jobName",
-                    title: this.$filter("i18n_aip")("aip.list.grid.jobName"),
-                    ariaLabel: this.$filter("i18n_aip")("aip.list.grid.jobName"),
+                    title: this.$filter("i18n_aip")("aip.action.item.list.grid.jobName"),
+                    ariaLabel: this.$filter("i18n_aip")("aip.action.item.list.grid.jobName"),
                     width: "100px",
                     options: {
                         sortable: true,
@@ -73,8 +73,8 @@ var AIP;
                 },
                 {
                     name: "scheduleDate",
-                    title: this.$filter("i18n_aip")("aip.list.grid.scheduleDate"),
-                    ariaLabel: this.$filter("i18n_aip")("aip.list.grid.scheduleDate"),
+                    title: this.$filter("i18n_aip")("aip.action.item.list.grid.scheduleDate"),
+                    ariaLabel: this.$filter("i18n_aip")("aip.action.item.list.grid.scheduleDate"),
                     width: "100px",
                     options: {
                         sortable: true,
@@ -83,8 +83,8 @@ var AIP;
                     }
                 }, {
                     name: "groupFolder",
-                    title: this.$filter("i18n_aip")("aip.list.grid.groupFolder"),
-                    ariaLabel: this.$filter("i18n_aip")("aip.list.grid.groupFolder"),
+                    title: this.$filter("i18n_aip")("aip.action.item.list.grid.groupFolder"),
+                    ariaLabel: this.$filter("i18n_aip")("aip.action.item.list.grid.groupFolder"),
                     width: "100px",
                     options: {
                         sortable: true,
@@ -105,8 +105,8 @@ var AIP;
                 },
                 {
                     name: "submittedBy",
-                    title: this.$filter("i18n_aip")("aip.list.grid.submittedBy"),
-                    ariaLabel: this.$filter("i18n_aip")("aip.list.grid.submittedBy"),
+                    title: this.$filter("i18n_aip")("aip.action.item.list.grid.submittedBy"),
+                    ariaLabel: this.$filter("i18n_aip")("aip.action.item.list.grid.submittedBy"),
                     width: "100px",
                     options: {
                         sortable: true,
@@ -116,8 +116,8 @@ var AIP;
                 },
                 {
                     name: "action",
-                    title: this.$filter("i18n_aip")("aip.list.grid.action"),
-                    ariaLabel: this.$filter("i18n_aip")("aip.list.grid.action"),
+                    title: this.$filter("i18n_aip")("aip.action.item.list.grid.action"),
+                    ariaLabel: this.$filter("i18n_aip")("aip.action.item.list.grid.action"),
                     width: "100px",
                     options: {
                         sortable: true,
@@ -157,7 +157,7 @@ var AIP;
         PostActionListPageCtrl.prototype.refreshGrid = function () {
         };
         PostActionListPageCtrl.prototype.goAddPage = function () {
-            this.$state.go("admin-action-add");
+            this.$state.go("admin-post-add");
         };
         // goOpenPage() {
         //
