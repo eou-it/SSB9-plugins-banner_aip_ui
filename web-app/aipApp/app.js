@@ -68,6 +68,14 @@ var bannerAIPApp = angular.module("bannerAIP", [
 
             }
         },
+        "admin-post-add": {
+            url: "/action/add",
+            templateUrl:"admin/action/post/adminPostItemAddPage.html",
+            controller:"AdminPostItemAddPageCtrl",
+            breadcrumb: {
+                label: "aip.admin.action.actionItem.Addjob",
+                url: "/aip/admin#/action/add"}
+        },
         "admin-action-add": {
             url: "/action/add",
             templateUrl:"admin/action/add/adminActionItemAddPage.html",
