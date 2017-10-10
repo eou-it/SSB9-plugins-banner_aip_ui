@@ -63,7 +63,7 @@ var bannerAIPApp = angular.module("bannerAIP", [
             url: "/post",
             templateUrl: "admin/action/post/postActionListPage.html",
             breadcrumb: {
-                label: "aip.admin.postItem",
+                label: "aip.admin.action.item.post.item",
                 url: "/aip/admin#/post"
 
             }
