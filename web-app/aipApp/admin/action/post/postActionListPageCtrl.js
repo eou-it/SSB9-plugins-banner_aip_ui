@@ -27,6 +27,7 @@ var AIP;
                 jobName: 3,
                 scheduleDate: 3,
                 groupFolder: 3,
+                population: 3,
                 group: 3,
                 submittedBy: 3,
                 action: 3
@@ -55,7 +56,7 @@ var AIP;
                     ariaLabel: this.$filter("i18n_aip")("aip.action.item.list.grid.jobStatus"),
                     width: "100px",
                     options: {
-                        sortable: true,
+                        sortable: false,
                         visible: true,
                         ascending: true,
                         columnShowHide: false
@@ -66,7 +67,7 @@ var AIP;
                     ariaLabel: this.$filter("i18n_aip")("aip.action.item.list.grid.jobName"),
                     width: "100px",
                     options: {
-                        sortable: true,
+                        sortable: false,
                         visible: true,
                         columnShowHide: false
                     }
@@ -77,7 +78,7 @@ var AIP;
                     ariaLabel: this.$filter("i18n_aip")("aip.action.item.list.grid.scheduleDate"),
                     width: "100px",
                     options: {
-                        sortable: true,
+                        sortable: false,
                         visible: true,
                         columnShowHide: true
                     }
@@ -87,7 +88,18 @@ var AIP;
                     ariaLabel: this.$filter("i18n_aip")("aip.action.item.list.grid.groupFolder"),
                     width: "100px",
                     options: {
-                        sortable: true,
+                        sortable: false,
+                        visible: true,
+                        columnShowHide: true
+                    }
+                },
+                {
+                    name: "population",
+                    title: this.$filter("i18n_aip")("aip.action.item.list.grid.population"),
+                    ariaLabel: this.$filter("i18n_aip")("aip.action.item.list.grid.population"),
+                    width: "100px",
+                    options: {
+                        sortable: false,
                         visible: true,
                         columnShowHide: true
                     }
@@ -98,7 +110,7 @@ var AIP;
                     ariaLabel: this.$filter("i18n_aip")("aip.list.grid.group"),
                     width: "100px",
                     options: {
-                        sortable: true,
+                        sortable: false,
                         visible: true,
                         columnShowHide: true
                     }
@@ -109,7 +121,7 @@ var AIP;
                     ariaLabel: this.$filter("i18n_aip")("aip.action.item.list.grid.submittedBy"),
                     width: "100px",
                     options: {
-                        sortable: true,
+                        sortable: false,
                         visible: true,
                         columnShowHide: true
                     }
@@ -120,7 +132,7 @@ var AIP;
                     ariaLabel: this.$filter("i18n_aip")("aip.action.item.list.grid.action"),
                     width: "100px",
                     options: {
-                        sortable: true,
+                        sortable: false,
                         visible: true,
                         columnShowHide: true
                     }
