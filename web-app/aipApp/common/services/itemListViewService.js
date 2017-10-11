@@ -62,7 +62,7 @@ var AIP;
                     url: _this.APP_PATH + "/aipPageBuilder/pageScript?id=" + id + "&actionItemId=" + actionItemId + "&groupId=" + groupId,
                     dataType: 'script',
                     success: function () {
-                        angular.module("BannerOnAngular").controller("CustomPageController_" + data.pageName, eval("CustomPageController_" + data.pageName));
+                        angular.module("BannerOnAngular").controller(data.controllerId, data.controllerId);
                         params = { action: "page", controller: "customPage", id: data.pageName, actionItemId: actionItemId, groupId: groupId, saved: false };
                         defer.resolve(data);
                     },
