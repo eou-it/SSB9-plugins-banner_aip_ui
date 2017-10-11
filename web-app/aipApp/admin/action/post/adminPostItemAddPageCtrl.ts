@@ -1,24 +1,26 @@
 ///<reference path="../../../../typings/tsd.d.ts"/>
 ///<reference path="../../../common/services/spinnerService.ts"/>
 ///<reference path="../../../common/services/admin/adminActionService.ts"/>
-
+/*******************************************************************************
+ Copyright 2017 Ellucian Company L.P. and its affiliates.
+ ********************************************************************************/
 declare var register;
 declare var Notification: any;
 declare var notifications: any;
 
 
 module AIP {
-    interface IAdminActionItemAddPageCtrl {
+    interface IAdminPostItemAddPageCtrl {
         validateInput(): boolean;
         cancel(): void;
         save(): void;
         saveErrorCallback(message: string): void;
     }
     interface IActionItemAddPageScope {
-        vm: AdminActionItemAddPageCtrl;
+        vm: AdminPostItemAddPageCtrl;
     }
 
-    export class AdminActionItemAddPageCtrl implements IAdminActionItemAddPageCtrl{
+    export class AdminPostItemAddPageCtrl implements IAdminPostItemAddPageCtrl{
         $inject = ["$scope", "$q", "$state", "$filter", "$timeout", "SpinnerService", "AdminActionService" ];
         status: [AIP.IStatus];
         folders: [AIP.IFolder];
@@ -152,4 +154,4 @@ module AIP {
     }
 }
 
-register("bannerAIP").controller("AdminActionItemAddPageCtrl", AIP.AdminActionItemAddPageCtrl);
+register("bannerAIP").controller("AdminPostItemAddPageCtrl", AIP.AdminPostItemAddPageCtrl);

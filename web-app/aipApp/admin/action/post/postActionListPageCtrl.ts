@@ -1,6 +1,8 @@
 ///<reference path="../../../../typings/tsd.d.ts"/>
 ///<reference path="../../../common/services/admin/adminActionService.ts"/>
-
+/*******************************************************************************
+ Copyright 2017 Ellucian Company L.P. and its affiliates.
+ ********************************************************************************/
 declare var register: any;
 
 module AIP {
@@ -55,6 +57,7 @@ module AIP {
                 jobName: 3,
                 scheduleDate: 3,
                 groupFolder: 3,
+                population:3,
                 group: 3,
                 submittedBy:3,
                 action:3
@@ -79,76 +82,87 @@ module AIP {
                 }
             }, {
                 name: "jobStatus",
-                title: this.$filter("i18n_aip")("aip.list.grid.jobStatus"),
-                ariaLabel: this.$filter("i18n_aip")("aip.list.grid.jobStatus"),
+                title: this.$filter("i18n_aip")("aip.action.item.list.grid.jobStatus"),
+                ariaLabel: this.$filter("i18n_aip")("aip.action.item.list.grid.jobStatus"),
                 width: "100px",
                 options: {
-                    sortable: true,
+                    sortable: false,
                     visible: true,
                     ascending:true,
                     columnShowHide: false
                 }
             }, {
                 name: "jobName",
-                title: this.$filter("i18n_aip")("aip.list.grid.jobName"),
-                ariaLabel: this.$filter("i18n_aip")("aip.list.grid.jobName"),
+                title: this.$filter("i18n_aip")("aip.action.item.list.grid.jobName"),
+                ariaLabel: this.$filter("i18n_aip")("aip.action.item.list.grid.jobName"),
                 width: "100px",
                 options: {
-                    sortable: true,
+                    sortable: false,
                     visible: true,
                     columnShowHide: false
                 }
             },
                 {
                 name: "scheduleDate",
-                title: this.$filter("i18n_aip")("aip.list.grid.scheduleDate"),
-                ariaLabel: this.$filter("i18n_aip")("aip.list.grid.scheduleDate"),
+                title: this.$filter("i18n_aip")("aip.action.item.list.grid.scheduleDate"),
+                ariaLabel: this.$filter("i18n_aip")("aip.action.item.list.grid.scheduleDate"),
                 width: "100px",
                 options: {
-                    sortable: true,
+                    sortable: false,
                     visible: true,
                     columnShowHide: true
                 }
             }, {
                 name: "groupFolder",
-                title: this.$filter("i18n_aip")("aip.list.grid.groupFolder"),
-                ariaLabel: this.$filter("i18n_aip")("aip.list.grid.groupFolder"),
+                title: this.$filter("i18n_aip")("aip.action.item.list.grid.groupFolder"),
+                ariaLabel: this.$filter("i18n_aip")("aip.action.item.list.grid.groupFolder"),
                 width: "100px",
                 options: {
-                    sortable: true,
+                    sortable: false,
                     visible: true,
                     columnShowHide: true
                 }
             },
+                {
+                    name: "population",
+                    title: this.$filter("i18n_aip")("aip.action.item.list.grid.population"),
+                    ariaLabel: this.$filter("i18n_aip")("aip.action.item.list.grid.population"),
+                    width: "100px",
+                    options: {
+                        sortable: false,
+                        visible: true,
+                        columnShowHide: true
+                    }
+                },
                 {
                     name: "group",
                     title: this.$filter("i18n_aip")("aip.list.grid.group"),
                     ariaLabel: this.$filter("i18n_aip")("aip.list.grid.group"),
                     width: "100px",
                     options: {
-                        sortable: true,
+                        sortable: false,
                         visible: true,
                         columnShowHide: true
                     }
                 },
                 {
                     name: "submittedBy",
-                    title: this.$filter("i18n_aip")("aip.list.grid.submittedBy"),
-                    ariaLabel: this.$filter("i18n_aip")("aip.list.grid.submittedBy"),
+                    title: this.$filter("i18n_aip")("aip.action.item.list.grid.submittedBy"),
+                    ariaLabel: this.$filter("i18n_aip")("aip.action.item.list.grid.submittedBy"),
                     width: "100px",
                     options: {
-                        sortable: true,
+                        sortable: false,
                         visible: true,
                         columnShowHide: true
                     }
                 },
                 {
                     name: "action",
-                    title: this.$filter("i18n_aip")("aip.list.grid.action"),
-                    ariaLabel: this.$filter("i18n_aip")("aip.list.grid.action"),
+                    title: this.$filter("i18n_aip")("aip.action.item.list.grid.action"),
+                    ariaLabel: this.$filter("i18n_aip")("aip.action.item.list.grid.action"),
                     width: "100px",
                     options: {
-                        sortable: true,
+                        sortable: false,
                         visible: true,
                         columnShowHide: true
                     }
@@ -192,7 +206,7 @@ module AIP {
 
         }
         goAddPage() {
-            this.$state.go("admin-action-add");
+            this.$state.go("admin-post-add");
         }
         // goOpenPage() {
         //
