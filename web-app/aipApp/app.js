@@ -164,8 +164,6 @@ var bannerAIPApp = angular.module("bannerAIP", [
     .constant("ENDPOINT", {
         admin: {
             folders: aipAppAbsPath + "aipAdmin/folders",
-            addFolder: aipAppAbsPath + "aipAdmin/addFolder",
-
             groupList: aipAppAbsPath + "aipAdmin/groupList",
             groupStatus: aipAppAbsPath + "aip/adminGroupStatus",
             createGroup: aipAppAbsPath + "aipAdmin/createGroup",

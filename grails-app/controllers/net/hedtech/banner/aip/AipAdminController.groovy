@@ -88,7 +88,7 @@ class AipAdminController {
     }
 
     /**
-     * Get group LOV
+     * Get active group action item LOV
      * @return
      */
     def getActionGroupActionItemLov() {
