@@ -8,7 +8,6 @@ import groovy.json.JsonSlurper
 import net.hedtech.banner.MessageUtility
 import net.hedtech.banner.aip.common.AIPConstants
 import net.hedtech.banner.exceptions.ApplicationException
-import net.hedtech.banner.general.communication.folder.CommunicationFolder
 import net.hedtech.banner.i18n.MessageHelper
 import org.apache.log4j.Logger
 import org.codehaus.groovy.grails.plugins.web.taglib.ValidationTagLib
@@ -44,44 +43,17 @@ class AipAdminController {
     def actionItemStatusRuleService
 
     def actionItemStatusRuleReadOnlyService
-
     def actionItemBlockedProcessService
+    def actionItemProcessingCommonService
+    def actionItemGroupAssignReadOnlyService
 
-
+    /**
+     * API for folders LOV
+     * @return
+     */
     def folders() {
-        def results = CommunicationFolder.list( sort: "name", order: "asc" )
-        response.status = 200
+        def results = actionItemProcessingCommonService.fetchCommunicationFolders()
         render results as JSON
-    }
-
-
-    def addFolder( name, description ) {
-
-        CommunicationFolder aFolder
-        def map
-        def success = false
-        def message
-        map = [id         : null,
-               name       : name,
-               description: description,
-               internal   : false
-        ]
-        try {
-            aFolder = communicationFolderService.create( map )
-            response.status = 200
-            success = true
-        } catch (ApplicationException e) {
-            log.error( e )
-            if ("@@r1:operation.not.authorized@@".equals( e.getMessage() )) {
-                message = MessageUtility.message( "aip.operation.not.permitted" )
-            }
-        }
-        def result = [
-                success  : success,
-                message  : message,
-                newFolder: aFolder
-        ]
-        render result as JSON
     }
 
     /**
@@ -101,7 +73,16 @@ class AipAdminController {
      * @return
      */
     def getGroupLov() {
-        def map = groupFolderReadOnlyService.fetchGroupLookup(params.searchParam)
+        def map = groupFolderReadOnlyService.fetchGroupLookup( params.searchParam )
+        render map as JSON
+    }
+
+    /**
+     * Get group LOV
+     * @return
+     */
+    def getActionGroupActionItemLov() {
+        def map = actionItemGroupAssignReadOnlyService.fetchActiveActionItemByGroupId( (params.searchParam?:0) as long)
         render map as JSON
     }
 
@@ -130,7 +111,6 @@ class AipAdminController {
 
 
         if (groupRO) {
-            response.status = 200
             success = true
         }
 
@@ -201,7 +181,6 @@ class AipAdminController {
         try {
             groupNew = actionItemGroupService.create( group )
 
-            response.status = 200
             success = true
             groupRO = groupFolderReadOnlyService.getActionItemGroupById( groupNew.id.toInteger() )
 
@@ -235,7 +214,6 @@ class AipAdminController {
             }
         }
 
-        // response.status = 200
 
         def model = [
                 success: success,
@@ -279,7 +257,6 @@ class AipAdminController {
         ActionItemReadOnly actionItem = actionItemReadOnlyService.getActionItemROById( actionItemId.toInteger() )
 
         if (actionItem) {
-            response.status = 200
             success = true
         }
 
@@ -327,7 +304,6 @@ class AipAdminController {
                       offset       : jsonObj.offset]
 
         def results = groupFolderReadOnlyService.listGroupFolderPageSort( params )
-        response.status = 200
 
         def groupHeadings = [
                 [name: "groupId", title: "id", options: [visible: false, isSortable: true]],
@@ -388,7 +364,6 @@ class AipAdminController {
             def actionItemText = params.actionItemContent?.toString()
 
             actionItemContentService.updateTemplateContent( actionItemContentId, actionItemText )
-            response.status = 200
 
             def model = [
                     success: true
@@ -434,7 +409,6 @@ class AipAdminController {
         //todo: add new method to service for action item detail to retreive an action item by detail id and action item id
         ActionItemReadOnly actionItemRO = actionItemReadOnlyService.getActionItemROById( newAic.actionItemId )
         if (newAic) {
-            response.status = 200
             success = true
         }
 
@@ -549,7 +523,6 @@ class AipAdminController {
 
             actionItemStatusRuleService.createOrUpdate( ruleList ) //list of domain objects to be updated or created
 
-            response.status = 200
             success = true
 
         } catch (ApplicationException e) {
@@ -638,7 +611,6 @@ value: value.aipBlock
                     ]
                     blockedList.push( block )
                 }
-                response.status = 200
                 success = true
             } catch (Exception e) {
                 println e.defaultMessage
@@ -660,7 +632,6 @@ value: value.aipBlock
                     blockedList.push( block )
                 }
 
-                response.status = 200
                 success = true
             } catch (Exception e) {
                 println e.defaultMessage
