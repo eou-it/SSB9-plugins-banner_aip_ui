@@ -57,6 +57,16 @@ class AipAdminController {
     }
 
     /**
+     * API for folders LOV
+     * @return
+     */
+    def populationListForSend() {
+        def paginationParam = [max   : params.max,
+                               offset: params.offset]
+        def results = actionItemProcessingCommonService.fetchPopulationListForSend( params.searchParam, paginationParam )
+        render results as JSON
+    }
+    /**
      * Add Action Item
      * @return
      */
@@ -82,7 +92,7 @@ class AipAdminController {
      * @return
      */
     def getActionGroupActionItemLov() {
-        def map = actionItemGroupAssignReadOnlyService.fetchActiveActionItemByGroupId( (params.searchParam?:0) as long)
+        def map = actionItemGroupAssignReadOnlyService.fetchActiveActionItemByGroupId( (params.searchParam ?: 0) as long )
         render map as JSON
     }
 
