@@ -96,6 +96,15 @@ class AipAdminController {
         render result as JSON
     }
 
+    /**
+     * Get group LOV
+     * @return
+     */
+    def getGroupLov() {
+        def map = groupFolderReadOnlyService.fetchGroupLookup(params.searchParam)
+        render map as JSON
+    }
+
 
     def openGroup() {
         /* //TODO: determine access in later US
@@ -177,8 +186,8 @@ class AipAdminController {
                 name: jsonObj.groupName ?: null,
                 folderId: jsonObj.folderId ?: null,
                 description: jsonObj.groupDesc ?: null,
-                postingInd:'N',
-                status: AIPConstants.STATUS_MAP.get( jsonObj.groupStatus) ?: null,
+                postingInd: 'N',
+                status: AIPConstants.STATUS_MAP.get( jsonObj.groupStatus ) ?: null,
                 version: jsonObj.version ?: null,
                 userId: aipUser.bannerId ?: null,
                 activityDate: new Date(),
