@@ -76,7 +76,7 @@ module AIP {
                     .then((response:AIP.IActionItemFolderResponse) => {
                         this.folders = response.data;
                         var actionItemFolder:any = $("#actionItemFolder");
-                        this.actionItemInfo.folder = this.folders[0];
+                        this.actionItemInfo.folder = this.folders;
                         this.$timeout(() => {
                             actionItemFolder.select2( {
                                 width: "25em",

@@ -46,7 +46,7 @@ var AIP;
                 .then(function (response) {
                 _this.folders = response.data;
                 var actionItemFolder = $("#actionItemFolder");
-                _this.actionItemInfo.folder = _this.folders[0];
+                _this.actionItemInfo.folder = _this.folders;
                 _this.$timeout(function () {
                     actionItemFolder.select2({
                         width: "25em",
