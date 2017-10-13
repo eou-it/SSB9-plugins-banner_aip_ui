@@ -22,8 +22,6 @@ class AipAdminController {
     private static final def LOGGER = Logger.getLogger( this.class )
     static defaultAction = "folders"
 
-    def communicationFolderService
-
     def groupFolderReadOnlyService
 
     def actionItemGroupService
@@ -60,7 +58,7 @@ class AipAdminController {
      * API for folders LOV
      * @return
      */
-    def populationListForSend() {
+    def populationListForSendLov() {
         def paginationParam = [max   : params.max,
                                offset: params.offset]
         def results = actionItemProcessingCommonService.fetchPopulationListForSend( params.searchParam, paginationParam )
@@ -83,7 +81,9 @@ class AipAdminController {
      * @return
      */
     def getGroupLov() {
-        def map = groupFolderReadOnlyService.fetchGroupLookup( params.searchParam )
+        def paginationParam = [max   : params.max,
+                               offset: params.offset]
+        def map = actionItemGroupAssignReadOnlyService.fetchGroupLookup( params.searchParam, paginationParam )
         render map as JSON
     }
 
@@ -92,7 +92,9 @@ class AipAdminController {
      * @return
      */
     def getActionGroupActionItemLov() {
-        def map = actionItemGroupAssignReadOnlyService.fetchActiveActionItemByGroupId( (params.searchParam ?: 0) as long )
+        def paginationParam = [max   : params.max,
+                               offset: params.offset]
+        def map = actionItemGroupAssignReadOnlyService.fetchActiveActionItemByGroupId( (params.searchParam ?: 0) as long, paginationParam )
         render map as JSON
     }
 
