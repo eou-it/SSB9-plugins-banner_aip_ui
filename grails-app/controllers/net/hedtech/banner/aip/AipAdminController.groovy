@@ -3,12 +3,12 @@
  ****************************************************************************** */
 package net.hedtech.banner.aip
 
-import groovy.json.*
 import grails.converters.JSON
 import groovy.json.JsonSlurper
 import net.hedtech.banner.MessageUtility
 import net.hedtech.banner.aip.common.AIPConstants
 import net.hedtech.banner.exceptions.ApplicationException
+import net.hedtech.banner.general.communication.folder.CommunicationFolder
 import net.hedtech.banner.i18n.MessageHelper
 import org.apache.log4j.Logger
 import org.codehaus.groovy.grails.plugins.web.taglib.ValidationTagLib
@@ -22,6 +22,8 @@ import java.text.MessageFormat
 class AipAdminController {
     private static final def LOGGER = Logger.getLogger( this.class )
     static defaultAction = "folders"
+
+    def communicationFolderService
 
     def groupFolderReadOnlyService
 
@@ -42,29 +44,17 @@ class AipAdminController {
     def actionItemStatusRuleService
 
     def actionItemStatusRuleReadOnlyService
+
     def actionItemBlockedProcessService
-    def actionItemProcessingCommonService
-    def actionItemGroupAssignReadOnlyService
 
-    /**
-     * API for folders LOV
-     * @return
-     */
+
     def folders() {
-        def results = actionItemProcessingCommonService.fetchCommunicationFolders()
+        def results = CommunicationFolder.list( sort: "name", order: "asc" )
+        response.status = 200
         render results as JSON
     }
 
-    /**
-     * API for folders LOV
-     * @return
-     */
-    def populationListForSendLov() {
-        def paginationParam = [max   : params.max,
-                               offset: params.offset]
-        def results = actionItemProcessingCommonService.fetchPopulationListForSend( params.searchParam, paginationParam )
-        render results as JSON
-    }
+
     /**
      * Add Action Item
      * @return
@@ -75,28 +65,6 @@ class AipAdminController {
         map.studentId = params.studentId
         def result = actionItemCompositeService.addActionItem( map )
         render result as JSON
-    }
-
-    /**
-     * Get group LOV
-     * @return
-     */
-    def getGroupLov() {
-        def paginationParam = [max   : params.max,
-                               offset: params.offset]
-        def map = actionItemGroupAssignReadOnlyService.fetchGroupLookup( params.searchParam, paginationParam )
-        render map as JSON
-    }
-
-    /**
-     * Get active group action item LOV
-     * @return
-     */
-    def getActionGroupActionItemLov() {
-        def paginationParam = [max   : params.max,
-                               offset: params.offset]
-        def map = actionItemGroupAssignReadOnlyService.fetchActiveActionItemByGroupId( (params.searchParam ?: 0) as long, paginationParam )
-        render map as JSON
     }
 
 
