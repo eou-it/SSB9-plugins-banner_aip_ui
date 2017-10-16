@@ -39,7 +39,6 @@ modules = {
         resource url:[plugin: 'banner-aip-ui', file: 'aipApp/admin/group/list/adminGroupListPageCtrl.js']
         resource url:[plugin: 'banner-aip-ui', file: 'aipApp/admin/action/list/adminActionListPageCtrl.js']
         resource url:[plugin: 'banner-aip-ui', file: 'aipApp/admin/action/post/postActionListPageCtrl.js']
-        resource url:[plugin: 'banner-aip-ui', file: 'aipApp/admin/action/post/adminPostItemAddPageCtrl.js']
         resource url:[plugin: 'banner-aip-ui', file: 'aipApp/admin/action/add/adminActionItemAddPageCtrl.js']
         resource url:[plugin: 'banner-aip-ui', file: 'aipApp/admin/action/open/adminActionItemOpenPageCtrl.js']
         resource url:[plugin: 'banner-aip-ui', file: 'aipApp/admin/action/open/block/adminActionItemBlockProcessCtrl.js']
