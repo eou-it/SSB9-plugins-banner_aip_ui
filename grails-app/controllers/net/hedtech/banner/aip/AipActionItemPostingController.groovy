@@ -23,6 +23,8 @@ class AipActionItemPostingController {
     def addActionItemPosting() {
         def map = [:]
         map = request.JSON
+        map.postNow = 'true' == map.postNow
+        map.schedule = 'true' == map.schedule
         def model
         try {
             model = actionItemPostingCompositeService.addActionItemPosting( map )
