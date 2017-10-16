@@ -1,13 +1,13 @@
-///<reference path="../../../../typings/tsd.d.ts"/>
-///<reference path="../../../common/services/spinnerService.ts"/>
-///<reference path="../../../common/services/admin/adminActionService.ts"/>
 /*******************************************************************************
  Copyright 2017 Ellucian Company L.P. and its affiliates.
  ********************************************************************************/
+///<reference path="../../../../typings/tsd.d.ts"/>
+///<reference path="../../../common/services/spinnerService.ts"/>
+///<reference path="../../../common/services/admin/adminActionService.ts"/>
 var AIP;
 (function (AIP) {
-    var AdminPostItemAddPageCtrl = (function () {
-        function AdminPostItemAddPageCtrl($scope, $q, $state, $filter, $timeout, SpinnerService, AdminActionService) {
+    var AdminActionItemAddPageCtrl = (function () {
+        function AdminActionItemAddPageCtrl($scope, $q, $state, $filter, $timeout, SpinnerService, AdminActionService) {
             this.$inject = ["$scope", "$q", "$state", "$filter", "$timeout", "SpinnerService", "AdminActionService"];
             $scope.vm = this;
             this.$q = $q;
@@ -20,7 +20,7 @@ var AIP;
             this.errorMessage = {};
             this.init();
         }
-        AdminPostItemAddPageCtrl.prototype.init = function () {
+        AdminActionItemAddPageCtrl.prototype.init = function () {
             var _this = this;
             this.spinnerService.showSpinner(true);
             var allPromises = [];
@@ -29,7 +29,7 @@ var AIP;
                 .then(function (response) {
                 _this.status = response.data;
                 angular.forEach(_this.status, function (key, value) {
-                    key.value = "aip.status." + key.value;
+                    key.value = "aip.status." + key.value.charAt(0);
                     console.log(key.value);
                     return value;
                 });
@@ -46,7 +46,7 @@ var AIP;
                 .then(function (response) {
                 _this.folders = response.data;
                 var actionItemFolder = $("#actionItemFolder");
-                _this.actionItemInfo.folder = _this.folders[0];
+                _this.actionItemInfo.folder = _this.folders;
                 _this.$timeout(function () {
                     actionItemFolder.select2({
                         width: "25em",
@@ -58,7 +58,7 @@ var AIP;
                 _this.spinnerService.showSpinner(false);
             });
         };
-        AdminPostItemAddPageCtrl.prototype.validateInput = function () {
+        AdminActionItemAddPageCtrl.prototype.validateInput = function () {
             if (this.saving) {
                 return false;
             }
@@ -92,10 +92,10 @@ var AIP;
                 return true;
             }
         };
-        AdminPostItemAddPageCtrl.prototype.cancel = function () {
+        AdminActionItemAddPageCtrl.prototype.cancel = function () {
             this.$state.go("admin-action-list");
         };
-        AdminPostItemAddPageCtrl.prototype.save = function () {
+        AdminActionItemAddPageCtrl.prototype.save = function () {
             var _this = this;
             this.saving = true;
             this.adminActionService.saveActionItem(this.actionItemInfo)
@@ -118,7 +118,7 @@ var AIP;
                 console.log(err);
             });
         };
-        AdminPostItemAddPageCtrl.prototype.saveErrorCallback = function (message) {
+        AdminActionItemAddPageCtrl.prototype.saveErrorCallback = function (message) {
             var n = new Notification({
                 message: message,
                 type: "error",
@@ -126,8 +126,8 @@ var AIP;
             });
             notifications.addNotification(n);
         };
-        return AdminPostItemAddPageCtrl;
+        return AdminActionItemAddPageCtrl;
     }());
-    AIP.AdminPostItemAddPageCtrl = AdminPostItemAddPageCtrl;
+    AIP.AdminActionItemAddPageCtrl = AdminActionItemAddPageCtrl;
 })(AIP || (AIP = {}));
-register("bannerAIP").controller("AdminPostItemAddPageCtrl", AIP.AdminPostItemAddPageCtrl);
+register("bannerAIP").controller("AdminActionItemAddPageCtrl", AIP.AdminActionItemAddPageCtrl);
