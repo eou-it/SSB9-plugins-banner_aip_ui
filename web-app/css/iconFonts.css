@@ -278,11 +278,12 @@
 .icon-cardView-SF:before {
 	content: "\e654";
 }
-.icon-cardView-SO:before {
-	content: "\e655";
-}
-.icon-cardView:before {
-	content: "\e656";
+.icon-cardView{
+	background-image: url(images/Groups.svg);
+	background-repeat:no-repeat;
+	display: block;
+	width: 90px;
+	height: 80px;
 }
 .icon-check-CF:before {
 	content: "\e657";
@@ -290,12 +291,18 @@
 .icon-check-CO:before {
 	content: "\e658";
 }
-.icon-check-SO:before {
-	content: "\e659";
+.icon-check{
+	background-image: url(images/ActionItems.svg);
+	background-repeat:no-repeat;
+	display: block;
+	width: 90px;
+	height: 80px;
 }
-.icon-check:before {
-	content: "\e65a";
-}
+.icon-postactionitem{background-image: url(images/PostActionItems.svg);
+	background-repeat:no-repeat;
+	display: block;
+	width: 90px;
+	height: 80px;}
 .icon-clock-CF:before {
 	content: "\e65b";
 }
@@ -408,13 +415,11 @@
 	content: "\e67f";
 }
 .icon-folder{
-	/*content: "\e680";*/
-	background-image: url(images/manage.svg);
+	background-image: url(images/ManageFolder.svg);
 	background-repeat:no-repeat;
 	display: block;
-	width: 65px;
-	height: 55px;
-
+	width: 90px;
+	height: 80px;
 }
 .icon-graduation-CF:before {
 	content: "\e681";
@@ -563,8 +568,13 @@
 .icon-newDocument-SO:before {
 	content: "\e6b1";
 }
-.icon-newDocument:before {
-	content: "\e6b2";
+
+.icon-newDocument{
+	background-image: url(images/ActionItemsStatus.svg);
+	background-repeat:no-repeat;
+	display: block;
+	width: 90px;
+	height: 80px;
 }
 .icon-notification-CF:before {
 	content: "\e6b3";

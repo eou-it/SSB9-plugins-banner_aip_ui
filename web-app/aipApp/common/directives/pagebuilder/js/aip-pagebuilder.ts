@@ -49,25 +49,28 @@ module PB {
                     .then((val) => {
                         element.children().empty();
                         var tempElement = angular.element(val.html);
-                        var bodyContent = tempElement.filter("div");
-                        //var bodyContent = tempElement.filter(function(index) {
-                        //   return this.tagName==="SCRIPT" || this.tagName==="DIV"
-                        //});
-                        //eval(val.control);
-                        // var validateResult = val.validateResult;
 
-                        // var appElement = document.querySelector('[ng-app="BannerOnAngular"]');
-                        // var appScope = angular.element(appElement).scope();
-                        // me.$compile(bodyContent)(appScope);
-                        bodyContent.filter("div").attr("id", "PBContent");
-                        //var bodyContent2 = me.$compile(bodyContent)(scope);
-                        // eval("var "+"CustomPageController_"+val.pageName+"="+val.script);
-                        angular.module("BannerOnAngular").controller("CustomPageController_"+val.pageName, eval("CustomPageController_"+val.pageName));
-                        angular.module("BannerOnAngular").requires.push('ngResource','ngGrid','ui', 'pbrun.directives', 'ngSanitize', 'xe-ui-components');
+                        var bodyContent = tempElement.filter("div.customPage").attr("id", "PBContent");
+
+                        var aipController = {};
+                        var pbController = window.controllerId;
+                        var appModule = appModule||angular.module('BannerOnAngular');
+
+                        appModule.requires.push('ngResource','ngGrid','ui', 'pbrun.directives', 'ngSanitize', 'xe-ui-components');
+
+                        if (window[pbController]) { // backwards compatibel with alpha release
+                            aipController[pbController] = window[pbController];
+                        }
+                        for (var pc in aipController) {
+                            if (aipController.hasOwnProperty(pc)) {
+                                appModule.controller(pc, aipController[pc]);
+                            }
+                        }
+
                         angular.bootstrap(bodyContent, ["BannerOnAngular"]);
-                        element.empty();
+                       // element.empty();
                         element.append(bodyContent);
-                        me.$compile(element)(scope)
+                        me.$compile(element)(scope);
                     });
             })
 

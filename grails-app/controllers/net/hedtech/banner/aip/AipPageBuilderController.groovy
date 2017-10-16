@@ -15,6 +15,25 @@ class AipPageBuilderController {
     def user = net.hedtech.banner.sspb.PBUser.get()
     def jsonSlurper = new JsonSlurper()
 
+
+    def pageScript = {
+        def compiledJSCode
+        def pageId = params.id
+        def data = getPage(pageId)
+        def pageName = jsonSlurper.parseText(data.modelView).name
+        def validateResult = compileService.preparePage(data.modelView)
+        if(validateResult.valid) {
+            try {
+                compiledJSCode=compileService.compileController(validateResult.pageComponent)
+            } catch(e) {
+
+            }
+        }
+        compiledJSCode = "var pageId = '" + pageName.toString() + "',\n controllerId = 'CustomPageController_" + pageName.toString() + "',\n" + "CustomPageController_" + pageName.toString() + "=" + compiledJSCode.toString() + ";"
+        render (text: compiledJSCode, contentType: "text/javascript")
+//        render model as JSON
+    }
+
     def page = {
         def html
         def model
@@ -35,23 +54,6 @@ class AipPageBuilderController {
         render model as JSON
     }
 
-    def pageScript = {
-        def compiledJSCode
-        def pageId = params.id
-        def data = getPage(pageId)
-        def pageName = jsonSlurper.parseText(data.modelView).name
-        def validateResult = compileService.preparePage(data.modelView)
-        if(validateResult.valid) {
-            try {
-                compiledJSCode=compileService.compileController(validateResult.pageComponent)
-            } catch(e) {
-
-            }
-        }
-        compiledJSCode = "var pageId = '" + pageName.toString() + "',\n controllerId = 'CustomPageController_" + pageName.toString() + "',\n" + "CustomPageController_" + pageName.toString() + "=" + compiledJSCode.toString() + ";"
-        render (text: compiledJSCode, contentType: "text/javascript")
-//        render model as JSON
-    }
 
     def getPage(pageId) {
         def page
