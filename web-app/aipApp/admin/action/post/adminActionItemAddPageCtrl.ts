@@ -1,26 +1,27 @@
-///<reference path="../../../../typings/tsd.d.ts"/>
-///<reference path="../../../common/services/spinnerService.ts"/>
-///<reference path="../../../common/services/admin/adminActionService.ts"/>
 /*******************************************************************************
  Copyright 2017 Ellucian Company L.P. and its affiliates.
  ********************************************************************************/
+///<reference path="../../../../typings/tsd.d.ts"/>
+///<reference path="../../../common/services/spinnerService.ts"/>
+///<reference path="../../../common/services/admin/adminActionService.ts"/>
+
 declare var register;
 declare var Notification: any;
 declare var notifications: any;
 
 
 module AIP {
-    interface IAdminPostItemAddPageCtrl {
+    interface IAdminActionItemAddPageCtrl {
         validateInput(): boolean;
         cancel(): void;
         save(): void;
         saveErrorCallback(message: string): void;
     }
     interface IActionItemAddPageScope {
-        vm: AdminPostItemAddPageCtrl;
+        vm: AdminActionItemAddPageCtrl;
     }
 
-    export class AdminPostItemAddPageCtrl implements IAdminPostItemAddPageCtrl{
+    export class AdminActionItemAddPageCtrl implements IAdminActionItemAddPageCtrl{
         $inject = ["$scope", "$q", "$state", "$filter", "$timeout", "SpinnerService", "AdminActionService" ];
         status: [AIP.IStatus];
         folders: [AIP.IFolder];
@@ -56,7 +57,7 @@ module AIP {
                     .then((response: AIP.IActionItemStatusResponse) => {
                         this.status = response.data;
                         angular.forEach(this.status,function(key,value){
-                            key.value =  "aip.status." + key.value;
+                            key.value =  "aip.status." + key.value.charAt(0);
                             console.log(key.value)
                             return value;
                         });
@@ -75,7 +76,7 @@ module AIP {
                     .then((response:AIP.IActionItemFolderResponse) => {
                         this.folders = response.data;
                         var actionItemFolder:any = $("#actionItemFolder");
-                        this.actionItemInfo.folder = this.folders[0];
+                        this.actionItemInfo.folder = this.folders;
                         this.$timeout(() => {
                             actionItemFolder.select2( {
                                 width: "25em",
@@ -154,4 +155,4 @@ module AIP {
     }
 }
 
-register("bannerAIP").controller("AdminPostItemAddPageCtrl", AIP.AdminPostItemAddPageCtrl);
+register("bannerAIP").controller("AdminActionItemAddPageCtrl", AIP.AdminActionItemAddPageCtrl);

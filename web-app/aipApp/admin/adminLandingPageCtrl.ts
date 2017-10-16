@@ -34,21 +34,21 @@ module AIP {
                 },
                 {
                     title:"aip.admin.action",
-                    icon: "icon-check-SO",
+                    icon: "icon-check",
                     click:"admin-action-list",
                     description:"aip.admin.action.description"
                 },
                 {
                     title:"aip.admin.group",
-                    icon: "icon-cardView-SO",
+                    icon: "icon-cardView",
                     click:"admin-group-list",
                     description:"aip.admin.group.description"
                 },
                 {
                     title:"aip.admin.action.item.post.item",
-                    icon: "",
+                    icon: "icon-postactionitem",
                     click:"admin-post-list",
-                    description:"aip.admin.post.description"
+                    description:"aip.admin.action.item.post.description"
                 }
             ];
         }
