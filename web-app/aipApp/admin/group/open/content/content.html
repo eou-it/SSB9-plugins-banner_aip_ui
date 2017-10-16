@@ -1,0 +1,79 @@
+<!--*******************************************************************************
+Copyright 2017 Ellucian Company L.P. and its affiliates.
+*******************************************************************************-->
+<div class="contentInfo">
+    <div class="contentText">
+        <div class="row">
+            <h2>{{'aip.admin.group.open.contentHeader'|i18n_aip}}</h2>
+        </div>
+        <div class="row" ng-if="!vm.editMode">
+            <div class="infoText col-xs-10 col-sm-10">
+                {{vm.assignedActionItems.length === 0 ? 'aip.admin.group.open.noContent':'aip.admin.group.open.content' |i18n_aip}}
+            </div>
+            <div class="control col-xs-2 col-sm-2">
+                <button name="Edit" type="button" class="btn btn-default edit" ng-click="vm.edit()"
+                        aria-label="">
+                    <span class="icon icon-edit-CO"></span>
+                    <span class="button-text hidden-sm-down">{{'aip.common.text.edit'|i18n_aip}}</span>
+                </button>
+            </div>
+        </div>
+        <div class="row" ng-if="vm.assignedActionItems.length > 0 && !vm.editMode">
+            <table class="adminGroupOpenContent">
+                <caption area-label="Group Action Items">
+                    Group Action Items
+                </caption>
+                <thead>
+                    <th class="">
+                        Action Items
+                    </th>
+                    <th class="">
+                        Status
+                    </th>
+                    <th class="">
+                        Folder
+                    </th>
+                    <th class="">
+                        Action Item Title / Description
+                    </th>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="item in vm.assignedActionItems">
+                        <td data-label="Action Items i18n">{{item}}</td>
+                        <td data-label="Status i18n">{{item}}</td>
+                        <td data-label="Folder i18n">{{item}}</td>
+                        <td data-label="Action Item Title / Description i18n">
+                            <span class="row actionItemTitle">{{item}}</span>
+                            <span class="row actionItemDescroption">{{item}}</span>
+                        </td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+        <div class="row" ng-if="vm.editMode">
+            <div class="row">
+                Action Items
+            </div>
+            <div class="row existActionItems" ng-repeat="item in vm.initialDisplayItems">
+                <div class="row">
+                    <div class="col-xs-10 col-sm-4">
+                        <select></select>
+                    </div>
+                    <div class="col-xs-2 col-sm-push-6">
+                        <div>up down</div>
+                        <div>delete</div>
+                    </div>
+                </div>
+            </div>
+            <div class="row add">
+                add button here
+            </div>
+            <div class="row control">
+                <div>cancel button</div>
+                <div>save button</div>
+            </div>
+
+        </div>
+    </div>
+</div>s

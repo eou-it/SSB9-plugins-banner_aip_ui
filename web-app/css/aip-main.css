@@ -394,6 +394,46 @@ ol.selected-group > li > button {
   float: right;
   margin-right: 5px; }
 
+.groupOpenContainer {
+  padding: 0;
+  margin: 0; }
+  .groupOpenContainer .row {
+    margin-left: 0;
+    margin-right: 0; }
+  .groupOpenContainer .groupInfo {
+    margin-bottom: 20px; }
+    .groupOpenContainer .groupInfo .groupInfoRow {
+      margin-bottom: 16px; }
+      .groupOpenContainer .groupInfo .groupInfoRow .groupElement {
+        padding-right: 8px;
+        padding-left: 8px;
+        margin-bottom: 8px; }
+        .groupOpenContainer .groupInfo .groupInfoRow .groupElement .xe-tab-container {
+          padding: 0; }
+          .groupOpenContainer .groupInfo .groupInfoRow .groupElement .xe-tab-container .contentInfo .row {
+            padding: 8px; }
+          .groupOpenContainer .groupInfo .groupInfoRow .groupElement .xe-tab-container .contentInfo .contentText h2 {
+            font-size: 1em; }
+          .groupOpenContainer .groupInfo .groupInfoRow .groupElement .xe-tab-container .contentInfo .contentText .infoText {
+            line-height: 32px; }
+          .groupOpenContainer .groupInfo .groupInfoRow .groupElement .xe-tab-container .contentInfo .contentText .control button {
+            float: right; }
+          .groupOpenContainer .groupInfo .groupInfoRow .groupElement .xe-tab-container .contentInfo table {
+            width: 100%; }
+            .groupOpenContainer .groupInfo .groupInfoRow .groupElement .xe-tab-container .contentInfo table caption {
+              text-align: left; }
+            .groupOpenContainer .groupInfo .groupInfoRow .groupElement .xe-tab-container .contentInfo table tr {
+              border-top: 1px black solid; }
+              .groupOpenContainer .groupInfo .groupInfoRow .groupElement .xe-tab-container .contentInfo table tr .actionItemDescroption {
+                font-size: 0.7em;
+                line-height: 0.7em;
+                padding: 0; }
+              .groupOpenContainer .groupInfo .groupInfoRow .groupElement .xe-tab-container .contentInfo table tr .actionItemTitle {
+                line-height: 0.7em;
+                padding: 0; }
+        .groupOpenContainer .groupInfo .groupInfoRow .groupElement .groupDetail {
+          border-right: 1px solid #444444; }
+
 .actionListContainer {
   overflow-y: auto;
   font-size: 14px; }

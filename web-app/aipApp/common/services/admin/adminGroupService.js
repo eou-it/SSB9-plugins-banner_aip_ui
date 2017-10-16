@@ -120,7 +120,18 @@ var AIP;
             });
             return deferred.promise;
         };
-        ;
+        AdminGroupService.prototype.getAssignedActionItemInGroup = function (groupId) {
+            var request = this.$http({
+                method: "GET",
+                url: this.ENDPOINT.admin.getAssignedActionItemInGroup + "?groupId=" + groupId
+            })
+                .then(function (response) {
+                return response.data;
+            }, function (err) {
+                throw new Error(err);
+            });
+            return request;
+        };
         AdminGroupService.$inject = ["$http", "$q", "$filter", "ENDPOINT", "$sce"];
         return AdminGroupService;
     }());

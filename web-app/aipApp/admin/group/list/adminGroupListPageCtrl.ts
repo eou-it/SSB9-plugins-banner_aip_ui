@@ -160,17 +160,7 @@ module AIP {
         }
 
         open(id:number) {
-            this.adminGroupService.getGroupDetail(id).then((response) => {
-                if(response.group) {
-                        this.$state.go("admin-group-open", {data: response.group});
-                    } else {
-                        //todo: output error in notification center?
-                        console.log("fail");
-                    }
-                }, (err) => {
-                    //TODO:: handle error call
-                    console.log(err);
-                });
+            this.$state.go("admin-group-open", {data: id});
         }
 
         getHeight() {

@@ -468,6 +468,44 @@ ol.selected-group > li > button  {
     margin-left:5px;
 }
 
+.groupOpenContainer  {
+    padding:0;
+    margin:0;
+}
+  .groupOpenContainer .row  {
+    margin-right:0;
+    margin-left:0;
+}
+  .groupOpenContainer .groupInfo  {
+    margin-bottom:20px;
+}
+    .groupOpenContainer .groupInfo .groupInfoRow  {
+    margin-bottom:16px;
+}
+      .groupOpenContainer .groupInfo .groupInfoRow .groupElement  {
+    padding-left:8px;
+    padding-right:8px;
+    margin-bottom:8px;
+}
+        .groupOpenContainer .groupInfo .groupInfoRow .groupElement .xe-tab-container  {
+    padding:0;
+}
+          .groupOpenContainer .groupInfo .groupInfoRow .groupElement .xe-tab-container .contentInfo .row  {
+    padding:8px;
+}
+          .groupOpenContainer .groupInfo .groupInfoRow .groupElement .xe-tab-container .contentInfo .contentText h2  {
+    font-size:1em;
+}
+          .groupOpenContainer .groupInfo .groupInfoRow .groupElement .xe-tab-container .contentInfo .contentText .infoText  {
+    line-height:32px;
+}
+          .groupOpenContainer .groupInfo .groupInfoRow .groupElement .xe-tab-container .contentInfo .contentText .control button  {
+    float:left;
+}
+        .groupOpenContainer .groupInfo .groupInfoRow .groupElement .groupDetail  {
+    border-left:1px solid #444444;
+}
+
 .actionListContainer  {
     overflow-y:auto;
     font-size:14px;

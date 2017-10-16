@@ -3,6 +3,7 @@
  ****************************************************************************** */
 package net.hedtech.banner.aip
 
+import groovy.json.*
 import grails.converters.JSON
 import groovy.json.JsonSlurper
 import net.hedtech.banner.MessageUtility
@@ -47,6 +48,7 @@ class AipAdminController {
 
     def actionItemBlockedProcessService
 
+    def actionItemGroupAssignReadOnlyService
 
     def folders() {
         def results = CommunicationFolder.list( sort: "name", order: "asc" )
@@ -177,8 +179,7 @@ class AipAdminController {
                 name: jsonObj.groupName ?: null,
                 folderId: jsonObj.folderId ?: null,
                 description: jsonObj.groupDesc ?: null,
-                postingInd:'N',
-                status: AIPConstants.STATUS_MAP.get( jsonObj.groupStatus) ?: null,
+                status: jsonObj.groupStatus ?: null,
                 version: jsonObj.version ?: null,
                 userId: aipUser.bannerId ?: null,
                 activityDate: new Date(),
@@ -286,7 +287,6 @@ class AipAdminController {
                         folderName             : actionItem?.folderName,
                         folderDesc             : actionItem?.folderDesc,
                         actionItemStatus       : actionItem ? MessageHelper.message( "aip.status.${actionItem.actionItemStatus}" ) : null,
-                        actionItemPostedStatus : actionItem?.actionItemPostedStatus,
                         actionItemActivityDate : actionItem?.actionItemActivityDate,
                         actionItemUserId       : actionItem?.actionItemUserId,
                         actionItemContentUserId: actionItem?.actionItemContentUserId,
@@ -528,7 +528,6 @@ class AipAdminController {
                             labelText: rule.statusRuleLabelText,
                             actionItemId: jsonObj.actionItemId,
                             actionItemStatusId: rule.statusId,
-                            resubmitInd: rule.resubmitInd,
                             userId: aipUser.bannerId,
                             activityDate: new Date()
                     )
@@ -709,5 +708,16 @@ value: value.aipBlock
 
         render model as JSON
 
+    }
+
+    def getAssignedActionItemInGroup () {
+        def user = SecurityContextHolder?.context?.authentication?.principal
+        if (!user.pidm) {
+            response.sendError( 403 )
+            return
+        }
+        Long groupId = Long.parseLong(params.groupId)
+        List<ActionItemGroupAssignReadOnly> assignedActionItems = actionItemGroupAssignReadOnlyService.getAssignedActionItemsInGroup(groupId)
+        render assignedActionItems as JSON
     }
 }

@@ -54,16 +54,16 @@ module AIP {
         width: any
     }
     export interface IFolder {
-        id: number;
+        id:  string|number|boolean;
         dataOrigin: string;
-        description: string;
+        description?: string;
         internal: boolean;
-        lastModified: Date;
-        lastModifiedBy: string;
+        lastModified?: Date|string;
+        lastModifiedBy?: string;
         name: string;
     }
     export interface IStatus {
-        id: number;
+        id: string|number;
         value: string;
     }
     export interface IActionItemFetchResponse {
