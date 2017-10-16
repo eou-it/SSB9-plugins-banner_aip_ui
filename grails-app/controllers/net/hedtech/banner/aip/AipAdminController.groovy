@@ -43,7 +43,6 @@ class AipAdminController {
     def actionItemStatusRuleReadOnlyService
     def actionItemBlockedProcessService
     def actionItemProcessingCommonService
-    def actionItemGroupAssignReadOnlyService
 
     /**
      * API for folders LOV
@@ -55,16 +54,6 @@ class AipAdminController {
     }
 
     /**
-     * API for folders LOV
-     * @return
-     */
-    def populationListForSendLov() {
-        def paginationParam = [max   : params.max,
-                               offset: params.offset]
-        def results = actionItemProcessingCommonService.fetchPopulationListForSend( params.searchParam, paginationParam )
-        render results as JSON
-    }
-    /**
      * Add Action Item
      * @return
      */
@@ -74,28 +63,6 @@ class AipAdminController {
         map.studentId = params.studentId
         def result = actionItemCompositeService.addActionItem( map )
         render result as JSON
-    }
-
-    /**
-     * Get group LOV
-     * @return
-     */
-    def getGroupLov() {
-        def paginationParam = [max   : params.max,
-                               offset: params.offset]
-        def map = actionItemGroupAssignReadOnlyService.fetchGroupLookup( params.searchParam, paginationParam )
-        render map as JSON
-    }
-
-    /**
-     * Get active group action item LOV
-     * @return
-     */
-    def getActionGroupActionItemLov() {
-        def paginationParam = [max   : params.max,
-                               offset: params.offset]
-        def map = actionItemGroupAssignReadOnlyService.fetchActiveActionItemByGroupId( (params.searchParam ?: 0) as long, paginationParam )
-        render map as JSON
     }
 
 

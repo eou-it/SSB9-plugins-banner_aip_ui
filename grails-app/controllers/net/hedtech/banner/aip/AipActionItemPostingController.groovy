@@ -14,6 +14,8 @@ import org.codehaus.groovy.grails.plugins.web.taglib.ValidationTagLib
 class AipActionItemPostingController {
     private static final def LOGGER = Logger.getLogger( this.class )
     def actionItemPostingCompositeService
+    def actionItemGroupAssignReadOnlyService
+    def actionItemProcessingCommonService
     /**
      * Add Action Item Post
      * @return
@@ -30,5 +32,39 @@ class AipActionItemPostingController {
             model.message = e.returnMap( {mapToLocalize -> new ValidationTagLib().message( mapToLocalize )} ).message
         }
         render model as JSON
+    }
+
+    /**
+     * API for folders LOV
+     * @return
+     */
+    def populationListForSendLov() {
+        def paginationParam = [max   : params.max,
+                               offset: params.offset]
+        def results = actionItemProcessingCommonService.fetchPopulationListForSend( params.searchParam, paginationParam )
+        render results as JSON
+    }
+
+    /**
+     * Get group LOV
+     * @return
+     */
+    def getGroupLov() {
+
+        def paginationParam = [max   : params.max.toInteger(),
+                               offset: params.offset ? params.offset.toInteger() : 0]
+        def map = actionItemGroupAssignReadOnlyService.fetchGroupLookup( params.searchParam, paginationParam )
+        render map as JSON
+    }
+
+    /**
+     * Get active group action item LOV
+     * @return
+     */
+    def getActionGroupActionItemLov() {
+        def paginationParam = [max   : params.max.toInteger(),
+                               offset: params.offset ? params.offset.toInteger() : 0]
+        def map = actionItemGroupAssignReadOnlyService.fetchActiveActionItemByGroupId( (params.searchParam ?: 0) as long, paginationParam )
+        render map as JSON
     }
 }
