@@ -46,6 +46,7 @@ class AipAdminController {
 
     def actionItemBlockedProcessService
 
+    def actionItemGroupAssignReadOnlyService
 
     def folders() {
         def results = CommunicationFolder.list( sort: "name", order: "asc" )
