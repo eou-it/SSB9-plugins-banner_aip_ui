@@ -13,7 +13,6 @@ import net.hedtech.banner.i18n.MessageHelper
 import org.apache.log4j.Logger
 import org.codehaus.groovy.grails.plugins.web.taglib.ValidationTagLib
 import org.springframework.security.core.context.SecurityContextHolder
-
 import java.text.MessageFormat
 
 /**
@@ -710,7 +709,21 @@ value: value.aipBlock
             return
         }
         Long groupId = Long.parseLong(params.groupId)
-        List<ActionItemGroupAssignReadOnly> assignedActionItems = actionItemGroupAssignReadOnlyService.getAssignedActionItemsInGroup(groupId)
+        def assignedActionItems = actionItemGroupAssignReadOnlyService.getAssignedActionItemsInGroup(groupId)
         render assignedActionItems as JSON
+    }
+
+    def getActionItemsListForSelect () {
+        def user = SecurityContextHolder?.context?.authentication?.principal
+        if (!user.pidm) {
+            response.sendError( 403 )
+            return
+        }
+        def paramObj = [
+                        sortColumn   : params.sortColumnName ?: "folderName",
+                        sortAscending: params.ascending
+        ]
+        def results = actionItemReadOnlyService.listActionItemsPageSort( paramObj )
+        render results as JSON
     }
 }

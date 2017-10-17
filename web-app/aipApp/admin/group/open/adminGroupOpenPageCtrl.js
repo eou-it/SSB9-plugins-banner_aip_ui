@@ -22,6 +22,8 @@ var AIP;
             this.APP_ROOT = APP_ROOT;
             this.assignedActionItems = [];
             this.editMode = false;
+            this.selected = {};
+            this.allActionItems = [];
             this.init();
         }
         AdminGroupOpenPageCtrl.prototype.init = function () {
@@ -97,14 +99,24 @@ var AIP;
         AdminGroupOpenPageCtrl.prototype.openContentPanel = function () {
             var _this = this;
             var deferred = this.$q.defer();
-            this.adminGroupService.getAssignedActionItemInGroup(this.$state.params.data)
+            var promises = [];
+            this.spinnerService.showSpinner(true);
+            promises.push(this.adminGroupService.getAssignedActionItemInGroup(this.$state.params.data)
                 .then(function (response) {
                 _this.assignedActionItems = response;
-                deferred.resolve(_this.openPanel("content"));
             }, function (err) {
                 _this.assignedActionItems = [];
-                deferred.resolve(_this.openPanel("content"));
                 console.log(err);
+            }));
+            promises.push(this.adminGroupService.getActionItemListForselect()
+                .then(function (response) {
+                _this.allActionItems = response;
+            }, function (err) {
+                console.log(err);
+            }));
+            this.$q.all(promises).then(function () {
+                _this.spinnerService.showSpinner(false);
+                deferred.resolve(_this.openPanel("content"));
             });
             return deferred.promise;
         };
@@ -127,6 +139,21 @@ var AIP;
                     $(".groupAddContainer").focus();
                 }, 500);
             }
+        };
+        AdminGroupOpenPageCtrl.prototype.groupFn = function () {
+            return true;
+        };
+        AdminGroupOpenPageCtrl.prototype.cancel = function () {
+        };
+        AdminGroupOpenPageCtrl.prototype.save = function () {
+        };
+        AdminGroupOpenPageCtrl.prototype.addNew = function () {
+        };
+        AdminGroupOpenPageCtrl.prototype.delete = function (item) {
+        };
+        AdminGroupOpenPageCtrl.prototype.goUp = function (item) {
+        };
+        AdminGroupOpenPageCtrl.prototype.goDown = function (item) {
         };
         return AdminGroupOpenPageCtrl;
     }());

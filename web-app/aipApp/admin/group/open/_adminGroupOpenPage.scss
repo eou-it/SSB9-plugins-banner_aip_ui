@@ -1,4 +1,7 @@
- .groupOpenContainer {
+$borderColor: lighten(grey, 20);
+$tableTextColor: #4F585F;
+
+.groupOpenContainer {
     padding: 0;
     margin: 0;
     .row {
@@ -32,31 +35,54 @@
                     float: right;
                   }
                 }
-              }
-            table {
-              width: 100%;
-              caption {
-                text-align: left;
-              }
-              tr {
-                border-top: 1px black solid;
-                .actionItemDescroption {
-                  font-size: 0.7em;
-                  line-height: 0.7em;
-                  padding: 0;
-                }
-                .actionItemTitle {
-                  line-height: 0.7em;
-                  padding: 0;
+                .noBorder {
+                  border: none;
                 }
               }
+              table {
+                 width: 100%;
+                 border: 1px solid $borderColor;
+                 caption {
+                   text-align: left;
+                   font-size: 1.4em;
+                   line-height:1.5em;
+                   border: 1px solid $borderColor;
+                   border-bottom: none;
+                   padding: 8px;
+                 }
+                 tr {
+                   border: 1px solid $borderColor;
+                   .actionItemDescroption {
+                     font-size: 0.8em;
+                     line-height: 0.8em;
+                     padding: 0;
+                   }
+                   .actionItemTitle {
+                     line-height: 0.7em;
+                     padding: 0;
+                   }
+                 }
+                 td {
+                   padding: 8px;
+                 }
+                 th {
+                   padding: 8px;
+                   line-height: 1.3em;
+                 }
 
-            }
+               }
+              hr {
+                border-color: $borderColor
+              }
 
             }
           }
           .groupDetail {
             border-right: 1px solid #444444;
+          }
+          .btn.vertical {
+            display: table-row;
+            border: none;
           }
         }
       }

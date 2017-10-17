@@ -144,8 +144,8 @@ aip-list .aip-list-container {
   .landingItem-container:hover {
     background-color: #ffffff; }
   .landingItem-container .landing-icon {
-    padding: 30px 15px;
-    max-width: 90px;
+    padding: 15px 0px;
+    max-width: 100px;
     margin: 0;
     height: auto; }
     .landingItem-container .landing-icon .well {
@@ -418,21 +418,39 @@ ol.selected-group > li > button {
             line-height: 32px; }
           .groupOpenContainer .groupInfo .groupInfoRow .groupElement .xe-tab-container .contentInfo .contentText .control button {
             float: right; }
+          .groupOpenContainer .groupInfo .groupInfoRow .groupElement .xe-tab-container .contentInfo .contentText .noBorder {
+            border: none; }
           .groupOpenContainer .groupInfo .groupInfoRow .groupElement .xe-tab-container .contentInfo table {
-            width: 100%; }
+            width: 100%;
+            border: 1px solid #b3b3b3; }
             .groupOpenContainer .groupInfo .groupInfoRow .groupElement .xe-tab-container .contentInfo table caption {
-              text-align: left; }
+              text-align: left;
+              font-size: 1.4em;
+              line-height: 1.5em;
+              border: 1px solid #b3b3b3;
+              border-bottom: none;
+              padding: 8px; }
             .groupOpenContainer .groupInfo .groupInfoRow .groupElement .xe-tab-container .contentInfo table tr {
-              border-top: 1px black solid; }
+              border: 1px solid #b3b3b3; }
               .groupOpenContainer .groupInfo .groupInfoRow .groupElement .xe-tab-container .contentInfo table tr .actionItemDescroption {
-                font-size: 0.7em;
-                line-height: 0.7em;
+                font-size: 0.8em;
+                line-height: 0.8em;
                 padding: 0; }
               .groupOpenContainer .groupInfo .groupInfoRow .groupElement .xe-tab-container .contentInfo table tr .actionItemTitle {
                 line-height: 0.7em;
                 padding: 0; }
+            .groupOpenContainer .groupInfo .groupInfoRow .groupElement .xe-tab-container .contentInfo table td {
+              padding: 8px; }
+            .groupOpenContainer .groupInfo .groupInfoRow .groupElement .xe-tab-container .contentInfo table th {
+              padding: 8px;
+              line-height: 1.3em; }
+          .groupOpenContainer .groupInfo .groupInfoRow .groupElement .xe-tab-container .contentInfo hr {
+            border-color: #b3b3b3; }
         .groupOpenContainer .groupInfo .groupInfoRow .groupElement .groupDetail {
           border-right: 1px solid #444444; }
+        .groupOpenContainer .groupInfo .groupInfoRow .groupElement .btn.vertical {
+          display: table-row;
+          border: none; }
 
 .actionListContainer {
   overflow-y: auto;

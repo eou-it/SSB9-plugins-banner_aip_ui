@@ -126,6 +126,29 @@ var AIP;
                 url: this.ENDPOINT.admin.getAssignedActionItemInGroup + "?groupId=" + groupId
             })
                 .then(function (response) {
+                var newObj = response.data.map(function (actionItem) {
+                    return {
+                        actionItemId: actionItem[0],
+                        sequenceNumber: actionItem[1],
+                        actionItemName: actionItem[2],
+                        actionItemStatus: actionItem[3],
+                        actionItemFolderName: actionItem[4],
+                        actionItemTitle: actionItem[5],
+                        actionItemDescription: actionItem[6]
+                    };
+                });
+                return newObj;
+            }, function (err) {
+                throw new Error(err);
+            });
+            return request;
+        };
+        AdminGroupService.prototype.getActionItemListForselect = function () {
+            var request = this.$http({
+                method: "GET",
+                url: this.ENDPOINT.admin.listActionItemForSelect
+            })
+                .then(function (response) {
                 return response.data;
             }, function (err) {
                 throw new Error(err);

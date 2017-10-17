@@ -212,10 +212,33 @@ module AIP {
                 url: this.ENDPOINT.admin.getAssignedActionItemInGroup + "?groupId=" + groupId
             })
                 .then((response:any) => {
-                    return response.data;
+                    var newObj = response.data.map(actionItem => {
+                        return {
+                            actionItemId: actionItem[0],
+                            sequenceNumber: actionItem[1],
+                            actionItemName: actionItem[2],
+                            actionItemStatus: actionItem[3],
+                            actionItemFolderName: actionItem[4],
+                            actionItemTitle: actionItem[5],
+                            actionItemDescription: actionItem[6]
+                        };
+                    });
+                    return newObj;
                 }, (err) => {
                     throw new Error(err);
                 });
+            return request;
+        }
+        getActionItemListForselect() {
+            var request = this.$http({
+                method: "GET",
+                url: this.ENDPOINT.admin.listActionItemForSelect
+            })
+                .then((response) => {
+                return response.data
+                }, (err) => {
+                throw new Error(err);
+            });
             return request;
         }
     }
