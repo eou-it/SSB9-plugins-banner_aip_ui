@@ -43,6 +43,20 @@ var AIP;
             });
             return request;
         };
+        AdminActionService.prototype.getGrouplist = function () {
+            var request = this.$http({
+                method: "GET",
+                url: this.ENDPOINT.admin.getGroupLov
+            });
+            return request;
+        };
+        AdminActionService.prototype.getPopulationlist = function () {
+            var request = this.$http({
+                method: "GET",
+                url: this.ENDPOINT.admin.populationListForSendLov
+            });
+            return request;
+        };
         AdminActionService.prototype.getStatus = function () {
             var request = this.$http({
                 method: "GET",
@@ -156,9 +170,9 @@ var AIP;
             });
             return request;
         };
-        AdminActionService.$inject = ["$http", "$q", "$filter", "ENDPOINT"];
         return AdminActionService;
     }());
+    AdminActionService.$inject = ["$http", "$q", "$filter", "ENDPOINT"];
     AIP.AdminActionService = AdminActionService;
 })(AIP || (AIP = {}));
 register("bannerAIP").service("AdminActionService", AIP.AdminActionService);

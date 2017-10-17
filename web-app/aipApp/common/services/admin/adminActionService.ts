@@ -35,6 +35,7 @@ module AIP {
         title: string;
         status: string|number;
         folder?: IFolder;
+        group?:IGroup;
         folderId?: string;
         folderName?: string;
         actionItemContent?:string;
@@ -62,6 +63,16 @@ module AIP {
         lastModifiedBy: string;
         name: string;
     }
+    export interface IGroup {
+        groupId: number;
+        groupName: string;
+        groupTitle: string;
+    }
+    export interface IPopulation {
+        groupId: number;
+        groupName: string;
+        groupTitle: string;
+    }
     export interface IStatus {
         id: number;
         value: string;
@@ -74,6 +85,12 @@ module AIP {
     export interface IActionItemFolderResponse {
         data: [IFolder];
     }
+    export interface IPostActionItemGroupResponse {
+        data: [IGroup];
+    }
+    export interface IPostActionItemPopulationResponse {
+        data: [IPopulation];
+    }
     export interface IActionItemStatusResponse {
         data: [IStatus]
     }
@@ -83,6 +100,11 @@ module AIP {
         folderId: number;
         description: string;
     }
+    export interface IPostActionItemParam{
+        groupId: number;
+        groupName: string;
+        groupTitle: string;
+}
     export interface IActionItemSaveResponse {
         data: {
             success: boolean;
@@ -149,6 +171,21 @@ module AIP {
             });
             return request;
         }
+        getGrouplist() {
+            var request = this.$http({
+                method: "GET",
+                url: this.ENDPOINT.admin.getGroupLov
+            });
+            return request;
+        }
+        getPopulationlist(){
+            var request = this.$http({
+                method: "GET",
+                url: this.ENDPOINT.admin.populationListForSendLov
+            });
+            return request;
+        }
+
         getStatus() {
             var request = this.$http({
                 method: "GET",

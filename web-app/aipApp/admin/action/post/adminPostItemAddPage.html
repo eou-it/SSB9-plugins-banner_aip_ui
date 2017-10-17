@@ -7,7 +7,7 @@ Copyright 2017 Ellucian Company L.P. and its affiliates.
         <div class="row actionItemInfoRow actionItemName">
             <div class="actionItemElement row input-actionItem">
                 <div class="actionItemTitle col-xs-12 col-md-8">
-                    <label for="actionItemTitle" class="titleValue required" id="actionItemAdd-Name"
+                    <label for="" class="titleValue required" id="actionItemAdd-Name"
                            aria-label="Action Item Name">{{"aip.admin.action.actionItem.Postingjob"|i18n_aip}}
                     </label>
                     <span class="titleValue supplement">{{"aip.admin.action.add.actionName.maxLength"|i18n_aip:60}}</span>
@@ -17,7 +17,7 @@ Copyright 2017 Ellucian Company L.P. and its affiliates.
                 <div class="row" ng-class="{'has-error':vm.actionItemInfo.name.length>60}">
                     <input id="actionItemName" maxlength="60" aria-valuemax="60" type="text" class="form-control"
                            ng-model="vm.actionItemInfo.name"
-                           placeholder="{{'aip.admin.action.actionItem.name'|i18n_aip}}" aria-label="Action Item Name"
+                           placeholder="" aria-label=""
                            aria-required="true">
                 </div>
                 <div class="alert alert-danger" role="alert" ng-if="vm.actionItemInfo.title.name>60">
@@ -29,73 +29,54 @@ Copyright 2017 Ellucian Company L.P. and its affiliates.
         </div>
         <div class="row actionItemInfoRow actionItemFolder">
             <div class="actionItemElement row input-actionItem">
-                <label for="actionItemFolder" class="titleValue required" id="actionItemAdd-folder">{{"aip.common.folder"|i18n_aip}}
+                <label for="postActionItemGroup" class="titleValue required" id="postActionItemAdd-Group">{{"aip.list.grid.group"|i18n_aip}}
                 </label>
             </div>
             <div class="actionItemElement col-xs-12 col-sm-5">
                 <div class="row">
-                    <select id="actionItemFolder" class="actionItemSelect" xe-data="" aria-label="Folder" required
+                    <select id="postActionItemGroup" class="actionItemSelect" xe-data="" aria-label="Group" required
                             aria-required="true"
-                            ng-model="vm.actionItemInfo.folder"
-                            ng-options="item as item.name for item in vm.folders track by item.id">
+                            ng-model="vm.postActionItemInfo.group"
+                            ng-options="item as item.groupName for item in vm.groupList.AIPgeneral.concat(vm.groupList.AIPstudent) track by item.groupId">
+                        <option selected="selected" value="">{{"aip.common.select.group.default"|i18n_aip}}</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="row actionItemInfoRow actionItemFolder">
+            <div class="actionItemElement row input-actionItem">
+                <label for="postActionItems" class="titleValue required" id="postActionItem">{{"aip.admin.action.actionItems.name"|i18n_aip}}
+                </label>
+            </div>
+            <div class="actionItemElement col-xs-12 col-sm-5">
+                <div class="row">
+                    <select id="postActionItems" class="actionItemSelect" xe-data="" aria-label="Action Items" required
+                            aria-required="true"
+                            ng-model="vm.actionItemInfo.group"
+                            ng-options="">
+                        <option selected="selected" value="">{{"aip.common.select.group.default"|i18n_aip}}</option>
                     </select>
                 </div>
             </div>
         </div>
         <div class="row actionItemInfoRow actionItemStatus">
             <div class="actionItemElement row input-actionItem">
-                <label for="actionItemStatus" class="titleValue required" id="actionItemAdd-status">{{"aip.common.status"|i18n_aip}}
+                <label for="postActionItemPopulation" class="titleValue required" id="postActionItemPopulation-Population">{{"aip.admin.action.actionItem.population.name"|i18n_aip}}
                 </label>
             </div>
             <div class="actionItemElement col-xs-12 col-sm-5">
                 <div class="row">
-                    <select id="actionItemStatus" class="actionItemSelect" xe-data="" aria-label="Status" required
+                    <select id="postActionItemPopulation" class="actionItemSelect" xe-data="" aria-label="Status" required
                             aria-required="true"
-                            ng-model="vm.actionItemInfo.status"
-                            ng-options="item as (item.value|i18n_aip) for item in vm.status track by item.id">
+                            ng-model="vm.postActionItemInfo.population"
+                            ng-options="item as item.name for item in vm.populationList track by item.id">
+                        <option selected="selected" value="">{{"aip.common.select.population.default"|i18n_aip}}</option>
                     </select>
                 </div>
             </div>
         </div>
-        <div class="row actionItemInfoRow actionItemTitle">
-            <div class="actionItemElement row input-actionItem">
-                <div class="actionItemTitle col-xs-12 col-md-8">
-                    <label for="actionItemTitle" class="titleValue required" id="actionItemAdd-Title"
-                           aria-label="Action Item Title">{{"aip.admin.action.actionItem.title"|i18n_aip}}
-                    </label>
-                    <span class="titleValue supplement">{{"aip.admin.action.add.maxLength"|i18n_aip:300}}</span>
-                </div>
-            </div>
-            <div class="actionItemElement col-xs-12 col-md-8">
-                <div class="row" ng-class="{'has-error':vm.actionItemInfo.title.length>300}">
-                    <input id="actionItemTitle" maxlength="300" aria-valuemax="300" type="text" class="form-control"
-                           ng-model="vm.actionItemInfo.title"
-                           placeholder="{{'aip.admin.action.actionItem.title'|i18n_aip}}" aria-label="Action Item Title"
-                           aria-required="true">
-                </div>
-                <div class="alert alert-danger" role="alert" ng-if="vm.actionItemInfo.title.length>300">
-                    <i class="fa fa-exclamation-circle" aria-hidden="true"></i>
-                    <span class="sr-only">Error:</span>
-                    {{"aip.admin.action.add.error.exceedMax"|i18n_aip:300}}"}}
-                </div>
-            </div>
-        </div>
-        <div class="row actionItemInfoRow">
-            <div class="actionItemElement row input-actionItem">
-                <div class="actionItemTitle col-xs-12 col-sm-8">
-                    <label for="actionItemDesc" class="titleValue required" id="actionItemAdd-description">{{"aip.common.description"|i18n_aip}}
-                    </label>
-                    <span class="titleValue supplement dimmed">{{"aip.common.plainText"|i18n_aip}}</span>
-                </div>
-            </div>
-            <div class="actionItemElement col-xs-12 col-sm-8">
 
-                    <textarea id="actionItemDesc" aria-required="true" name="actionItemDesc"
-                              placeholder="{{'aip.admin.action.add.description.placeholder'|i18n_aip}}" rows="20"
-                              ng-model="vm.actionItemInfo.description" aria-label="Description"></textarea>
 
-            </div>
-        </div>
     </div>
     <div class="actionItemControl">
         <div class="row">
