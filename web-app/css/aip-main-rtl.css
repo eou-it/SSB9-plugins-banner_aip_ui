@@ -171,8 +171,8 @@ aip-list .aip-list-container  {
     background-color:#ffffff;
 }
   .landingItem-container .landing-icon  {
-    padding:30px 15px;
-    max-width:90px;
+    padding:15px 0px;
+    max-width:100px;
     margin:0;
     height:auto;
 }
