@@ -204,7 +204,20 @@ module AIP {
             })
 
             return deferred.promise;
-        };
+        }
+
+        getAssignedActionItemInGroup (groupId) {
+            var request = this.$http({
+                method: "GET",
+                url: this.ENDPOINT.admin.getAssignedActionItemInGroup + "?groupId=" + groupId
+            })
+                .then((response:any) => {
+                    return response.data;
+                }, (err) => {
+                    throw new Error(err);
+                });
+            return request;
+        }
     }
 }
 

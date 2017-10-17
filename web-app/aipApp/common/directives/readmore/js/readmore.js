@@ -41,4 +41,3 @@ var AIPUI;
     AIPUI.AIPReadmoreDirective = AIPReadmoreDirective;
 })(AIPUI || (AIPUI = {}));
 register("bannerAIPUI").directive("aipReadmore", AIPUI.AIPReadmoreDirective);
-//# sourceMappingURL=readmore.js.map

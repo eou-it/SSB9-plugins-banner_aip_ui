@@ -29,7 +29,7 @@ var AIPUI;
                     status: $scope.status[0]
                 });
                 setTimeout(function () {
-                    var btnTarget = $("input#response-" + $scope.rules.length);
+                    var btnTarget = $("input#response-" + $scope.rules.length) /*+ $scope.rules.length*/;
                     $(btnTarget).focus();
                 }, 500);
             };
@@ -107,4 +107,3 @@ var AIPUI;
     AIPUI.AIPStatusRuleDirective = AIPStatusRuleDirective;
 })(AIPUI || (AIPUI = {}));
 register("bannerAIPUI").directive("aipStatusRule", AIPUI.AIPStatusRuleDirective);
-//# sourceMappingURL=statusRule.js.map

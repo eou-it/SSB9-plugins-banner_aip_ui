@@ -14,7 +14,8 @@ module AIP {
         groupFolder: IGroupFolder;
     }
     export class AdminGroupOpenPageCtrl implements IAdminGroupOpenPageCtrl{
-        $inject = ["$scope", "AdminGroupService", "$q", "SpinnerService", "$state", "$filter", "$sce"];
+        $inject = ["$scope", "AdminGroupService", "$q", "SpinnerService", "$state", "$filter", "$sce", "$templateRequest", "$templateCache",
+            "$compile", "$timeout", "APP_ROOT"];
         groupInfo:IGroupInfo;
         groupFolder: IGroupFolder;
         groupStatus: IStatus;
@@ -24,24 +25,40 @@ module AIP {
         $state;
         $filter;
         $sce;
-        constructor($scope, AdminGroupService:AIP.AdminGroupService,
-                    $q:ng.IQService, SpinnerService, $state, $filter, $sce) {
+        $templateRequest;
+        $templateCache;
+        $compile;
+        $timeout;
+        $scope;
+        APP_ROOT;
+        assignedActionItems;
+        editMode;
+
+        constructor($scope, AdminGroupService:AIP.AdminGroupService, $q:ng.IQService, SpinnerService, $state, $filter, $sce, $templateRequest, $templateCache,
+                    $compile, $timeout, APP_ROOT) {
             $scope.vm = this;
+            this.$scope = $scope;
             this.$q = $q;
             this.$state = $state;
             this.$filter = $filter;
             this.$sce = $sce;
             this.adminGroupService = AdminGroupService;
             this.spinnerService = SpinnerService;
+            this.$templateRequest = $templateRequest;
+            this.$templateCache = $templateCache;
+            this.$compile = $compile;
+            this.$timeout = $timeout;
+            this.APP_ROOT = APP_ROOT;
+            this.assignedActionItems = [];
+            this.editMode = false;
             this.init();
         }
 
         init() {
             this.spinnerService.showSpinner( true );
             var promises = [];
-
+            // this.openOverviewPanel();
             this.groupFolder = this.$state.params.data;
-            console.log(this.groupFolder);
             //var groupDescHtml = this.$sce.trustAsHtml(this.$state.params.data.description);
             //console.log(groupDescHtml);
             //todo: replace this temporary workaround for sce not working for description
@@ -55,13 +72,81 @@ module AIP {
                 //TODO:: turn off the spinner
                 this.spinnerService.showSpinner( false );
             } );
-        };
+        }
+
+        openPanel(panelName) {
+            var deferred=this.$q.defer();
+            var url = "";
+            switch (panelName) {
+                case "overview":
+                    url = this.APP_ROOT + "admin/group/open/overview/overview.html";
+                    break;
+                case "content":
+                    url = this.APP_ROOT + "admin/group/open/content/content.html";
+                    break;
+                case "edit":
+                    url = this.APP_ROOT + "admin/group/open/edit/edit.html";
+                default:
+                    break;
+            }
+            var newScope = this.$scope.$new(true); // isolate scope
+            newScope.vm = this.$scope.vm;
+            var templateUrl = this.$sce.getTrustedResourceUrl(url);
+            this.$templateRequest(templateUrl)
+                .then((template) => {
+                    var compiled = this.$compile(template)(newScope);
+                    deferred.resolve(compiled);
+                    if(panelName === "overview") {
+                        $("#title-panel").children()[0].innerHTML = this.groupFolder.groupTitle;
+                    }
+                }, (error) => {
+                    console.log(error);
+                });
+            return deferred.promise;
+        }
+
+        openOverviewPanel() {
+            this.editMode = false;
+            var deferred = this.$q.defer();
+            this.adminGroupService.getGroupDetail(this.$state.params.data)
+                .then((response) => {
+                if(response.group) {
+                    this.groupFolder = response.group;
+                } else {
+                    //todo: output error in notification center?
+                    console.log("fail");
+                }
+                deferred.resolve(this.openPanel("overview"));
+            }, (err) => {
+                //TODO:: handle error call
+                console.log(err);
+            });
+            return deferred.promise;
+        }
+        openContentPanel() {
+            var deferred = this.$q.defer();
+            this.adminGroupService.getAssignedActionItemInGroup(this.$state.params.data)
+                .then((response) => {
+                    this.assignedActionItems = response;
+                    deferred.resolve(this.openPanel("content"));
+                }, (err) => {
+                    this.assignedActionItems = [];
+                    deferred.resolve(this.openPanel("content"));
+                    console.log(err);
+                });
+            return deferred.promise;
+        }
+
+        edit() {
+            console.log("edit");
+            this.editMode = true;
+        }
 
         handleNotification(noti) {
             if(noti.notiType === "saveSuccess") {
                 var data = noti.data.group[0];
                 var n = new Notification({
-                    message: this.$filter("i18n_aip")("aip.admin.group.add.success"), //+
+                    message: this.$filter("i18n_aip")("aip.admin.group.add.success"),
                     type: "success",
                     flash: true
                 });

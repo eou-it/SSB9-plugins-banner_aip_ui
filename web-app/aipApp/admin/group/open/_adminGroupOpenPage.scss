@@ -13,6 +13,48 @@
           padding-right: 8px;
           padding-left: 8px;
           margin-bottom: 8px;
+          .xe-tab-container {
+            padding: 0;
+
+            .contentInfo {
+              .row {
+                padding: 8px;
+              }
+              .contentText {
+                h2 {
+                  font-size: 1em;
+                }
+                .infoText {
+                  line-height: 32px;
+                }
+                .control {
+                  button {
+                    float: right;
+                  }
+                }
+              }
+            table {
+              width: 100%;
+              caption {
+                text-align: left;
+              }
+              tr {
+                border-top: 1px black solid;
+                .actionItemDescroption {
+                  font-size: 0.7em;
+                  line-height: 0.7em;
+                  padding: 0;
+                }
+                .actionItemTitle {
+                  line-height: 0.7em;
+                  padding: 0;
+                }
+              }
+
+            }
+
+            }
+          }
           .groupDetail {
             border-right: 1px solid #444444;
           }

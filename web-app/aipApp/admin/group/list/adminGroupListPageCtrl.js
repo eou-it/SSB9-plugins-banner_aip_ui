@@ -137,19 +137,7 @@ var AIP;
             console.log("Copy id: " + id);
         };
         AdminGroupListPageCtrl.prototype.open = function (id) {
-            var _this = this;
-            this.adminGroupService.getGroupDetail(id).then(function (response) {
-                if (response.group) {
-                    _this.$state.go("admin-group-open", { data: response.group });
-                }
-                else {
-                    //todo: output error in notification center?
-                    console.log("fail");
-                }
-            }, function (err) {
-                //TODO:: handle error call
-                console.log(err);
-            });
+            this.$state.go("admin-group-open", { data: id });
         };
         AdminGroupListPageCtrl.prototype.getHeight = function () {
             var containerHeight = $(document).height() -
