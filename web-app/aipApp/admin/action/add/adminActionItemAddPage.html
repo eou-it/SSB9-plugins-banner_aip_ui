@@ -34,6 +34,7 @@
                             aria-required="true"
                             ng-model="vm.actionItemInfo.folder"
                             ng-options="item as item.name for item in vm.folders track by item.id">
+                        <option selected="selected" value="">{{"aip.common.select.folder.default"|i18n_aip}}</option>
                     </select>
                 </div>
             </div>

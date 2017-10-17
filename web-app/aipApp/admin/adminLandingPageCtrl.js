@@ -38,7 +38,7 @@ var AIP;
                     title: "aip.admin.action.item.post.item",
                     icon: "icon-postactionitem",
                     click: "admin-post-list",
-                    description: "aip.admin.post.description"
+                    description: "aip.admin.action.item.post.description"
                 }
             ];
         };
