@@ -121,6 +121,7 @@ var AIP;
             return request;
         };
         AdminActionService.prototype.updateActionItemStatusRule = function (rules, actionItemId) {
+            console.log("admin action service");
             console.log(rules);
             var request = this.$http({
                 method: "POST",
@@ -156,9 +157,9 @@ var AIP;
             });
             return request;
         };
+        AdminActionService.$inject = ["$http", "$q", "$filter", "ENDPOINT"];
         return AdminActionService;
     }());
-    AdminActionService.$inject = ["$http", "$q", "$filter", "ENDPOINT"];
     AIP.AdminActionService = AdminActionService;
 })(AIP || (AIP = {}));
 register("bannerAIP").service("AdminActionService", AIP.AdminActionService);
