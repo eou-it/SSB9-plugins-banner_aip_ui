@@ -502,8 +502,46 @@ ol.selected-group > li > button  {
           .groupOpenContainer .groupInfo .groupInfoRow .groupElement .xe-tab-container .contentInfo .contentText .control button  {
     float:left;
 }
+          .groupOpenContainer .groupInfo .groupInfoRow .groupElement .xe-tab-container .contentInfo table  {
+    width:100%;
+    border:1px solid #b3b3b3;
+}
+            .groupOpenContainer .groupInfo .groupInfoRow .groupElement .xe-tab-container .contentInfo table caption  {
+    text-align:right;
+    font-size:1.4em;
+    line-height:1.5em;
+    border:1px solid #b3b3b3;
+    border-bottom:none;
+    padding:8px;
+}
+            .groupOpenContainer .groupInfo .groupInfoRow .groupElement .xe-tab-container .contentInfo table tr  {
+    border:1px solid #b3b3b3;
+}
+              .groupOpenContainer .groupInfo .groupInfoRow .groupElement .xe-tab-container .contentInfo table tr .actionItemDescroption  {
+    font-size:0.8em;
+    line-height:0.8em;
+    padding:0;
+}
+              .groupOpenContainer .groupInfo .groupInfoRow .groupElement .xe-tab-container .contentInfo table tr .actionItemTitle  {
+    line-height:0.7em;
+    padding:0;
+}
+            .groupOpenContainer .groupInfo .groupInfoRow .groupElement .xe-tab-container .contentInfo table td  {
+    padding:8px;
+}
+            .groupOpenContainer .groupInfo .groupInfoRow .groupElement .xe-tab-container .contentInfo table th  {
+    padding:8px;
+    line-height:1.3em;
+}
+          .groupOpenContainer .groupInfo .groupInfoRow .groupElement .xe-tab-container .contentInfo hr  {
+    border-color:#b3b3b3;
+}
         .groupOpenContainer .groupInfo .groupInfoRow .groupElement .groupDetail  {
     border-left:1px solid #444444;
+}
+        .groupOpenContainer .groupInfo .groupInfoRow .groupElement .btn.vertical  {
+    display:table-row;
+    border:none;
 }
 
 .actionListContainer  {

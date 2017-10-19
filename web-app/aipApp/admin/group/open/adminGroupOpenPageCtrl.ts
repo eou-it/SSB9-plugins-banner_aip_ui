@@ -33,6 +33,8 @@ module AIP {
         APP_ROOT;
         assignedActionItems;
         editMode;
+        selected;
+        allActionItems;
 
         constructor($scope, AdminGroupService:AIP.AdminGroupService, $q:ng.IQService, SpinnerService, $state, $filter, $sce, $templateRequest, $templateCache,
                     $compile, $timeout, APP_ROOT) {
@@ -51,6 +53,8 @@ module AIP {
             this.APP_ROOT = APP_ROOT;
             this.assignedActionItems = [];
             this.editMode = false;
+            this.selected = {};
+            this.allActionItems = [];
             this.init();
         }
 
@@ -125,15 +129,29 @@ module AIP {
         }
         openContentPanel() {
             var deferred = this.$q.defer();
-            this.adminGroupService.getAssignedActionItemInGroup(this.$state.params.data)
-                .then((response) => {
-                    this.assignedActionItems = response;
-                    deferred.resolve(this.openPanel("content"));
-                }, (err) => {
-                    this.assignedActionItems = [];
-                    deferred.resolve(this.openPanel("content"));
+            var promises = [];
+            this.spinnerService.showSpinner( true );
+            promises.push(
+                this.adminGroupService.getAssignedActionItemInGroup(this.$state.params.data)
+                    .then((response) => {
+                        this.assignedActionItems = response;
+                    }, (err) => {
+                        this.assignedActionItems = [];
+                        console.log(err);
+                    })
+            );
+            promises.push(
+                this.adminGroupService.getActionItemListForselect()
+                    .then((response) => {
+                    this.allActionItems = response;
+                    }, (err) => {
                     console.log(err);
-                });
+                    })
+            );
+            this.$q.all( promises ).then(() => {
+                this.spinnerService.showSpinner( false );
+                deferred.resolve(this.openPanel("content"));
+            })
             return deferred.promise;
         }
 
@@ -156,6 +174,27 @@ module AIP {
                     $(".groupAddContainer").focus();
                 }, 500);
             }
+        }
+        groupFn() {
+            return true;
+        }
+        cancel() {
+
+        }
+        save() {
+
+        }
+        addNew() {
+
+        }
+        delete(item) {
+
+        }
+        goUp(item) {
+
+        }
+        goDown(item) {
+
         }
     }
 
