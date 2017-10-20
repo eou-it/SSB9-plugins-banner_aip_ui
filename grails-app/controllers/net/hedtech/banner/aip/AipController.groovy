@@ -26,21 +26,21 @@ class AipController {
     def groupFolderReadOnlyService
 
 
-    @Secured(['ROLE_SELFSERVICE-FACULTY_BAN_DEFAULT_M', 'ROLE_SELFSERVICE-STUDENT_BAN_DEFAULT_M'])
+    //@Secured(['ROLE_SELFSERVICE-FACULTY_BAN_DEFAULT_M', 'ROLE_SELFSERVICE-STUDENT_BAN_DEFAULT_M'])
     def list() {
         def model = [fragment: "/list"]
         render( model: model, view: "index" )
     }
 
 
-    @Secured(['ROLE_SELFSERVICE-FACULTY_BAN_DEFAULT_M', 'ROLE_SELFSERVICE-STUDENT_BAN_DEFAULT_M'])
+   //@Secured(['ROLE_SELFSERVICE-FACULTY_BAN_DEFAULT_M', 'ROLE_SELFSERVICE-STUDENT_BAN_DEFAULT_M'])
     def informedList() {
         def model = [fragment: "/informedList"]
         render( model: model, view: "index" )
     }
 
 
-    @Secured(['ROLE_SELFSERVICE-FACULTY_BAN_DEFAULT_M', 'ROLE_SELFSERVICE-STUDENT_BAN_DEFAULT_M'])
+   //@Secured(['ROLE_SELFSERVICE-FACULTY_BAN_DEFAULT_M', 'ROLE_SELFSERVICE-STUDENT_BAN_DEFAULT_M'])
     def admin() {
         def model = [fragment: "/landing"]
         render( model: model, view: "index" )
@@ -59,7 +59,7 @@ class AipController {
     }
 
     //todo: this is probably going to go away w/new method in admin controller
-    @Secured(['ROLE_SELFSERVICE-FACULTY_BAN_DEFAULT_M', 'ROLE_SELFSERVICE-STUDENT_BAN_DEFAULT_M'])
+   // @Secured(['ROLE_SELFSERVICE-FACULTY_BAN_DEFAULT_M', 'ROLE_SELFSERVICE-STUDENT_BAN_DEFAULT_M'])
     def adminGroupList() {
         def actionItemGroups = groupFolderReadOnlyService.listActionItemGroups()
 
@@ -99,7 +99,7 @@ class AipController {
     }
 
     // Return user's action items
-    @Secured(['ROLE_SELFSERVICE-FACULTY_BAN_DEFAULT_M', 'ROLE_SELFSERVICE-STUDENT_BAN_DEFAULT_M'])
+   // @Secured(['ROLE_SELFSERVICE-FACULTY_BAN_DEFAULT_M', 'ROLE_SELFSERVICE-STUDENT_BAN_DEFAULT_M'])
     def actionItems() {
         def itemsList = []
         if (!userPidm) {
@@ -155,7 +155,7 @@ class AipController {
     }
 
     // Return login user's information
-    @Secured(['ROLE_SELFSERVICE-FACULTY_BAN_DEFAULT_M', 'ROLE_SELFSERVICE-STUDENT_BAN_DEFAULT_M'])
+   // @Secured(['ROLE_SELFSERVICE-FACULTY_BAN_DEFAULT_M', 'ROLE_SELFSERVICE-STUDENT_BAN_DEFAULT_M'])
     def userInfo() {
         if (!userPidm) {
             response.sendError( 403 )
@@ -166,7 +166,7 @@ class AipController {
     }
 
 
-    @Secured(['ROLE_SELFSERVICE-FACULTY_BAN_DEFAULT_M', 'ROLE_SELFSERVICE-STUDENT_BAN_DEFAULT_M'])
+   // @Secured(['ROLE_SELFSERVICE-FACULTY_BAN_DEFAULT_M', 'ROLE_SELFSERVICE-STUDENT_BAN_DEFAULT_M'])
     def detailInfo() {
         //TODO:: tie in groups and user in db and create an associated service
         def jsonObj = request.JSON; //type, groupId, actionItemId
