@@ -66,6 +66,7 @@ modules = {
         resource url:[plugin: 'banner-aip-ui', file: 'aipApp/common/directives/pagebuilder/js/aip-pagebuilder.js']
 
         resource url:[plugin: 'banner-aip-ui', file: 'aipApp/common/filters/blockProcessItem-filter.js']
+        resource url:[plugin: 'banner-aip-ui', file: 'aipApp/common/filters/select2-groupAssign-filter.js']
     }
     'commonComponents' {
         resource url: [file: 'js/d3/d3.min.js']

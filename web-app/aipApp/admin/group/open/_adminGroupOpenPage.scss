@@ -38,6 +38,27 @@ $tableTextColor: #4F585F;
                 .noBorder {
                   border: none;
                 }
+                #select2actionItems {
+                  .select2-results ul.select2-result-sub {
+                    padding-left: 8px;
+                  }
+                  .row.actionItemName {
+                    padding: 0;
+                    line-height: 1.7em;
+                  }
+                  .row.additionalInfo {
+                    padding:0;
+                    line-height: 1em;
+                    font-size: 0.8em;
+                    .actionItemStatus {
+                      padding: 0;
+                      border-right: 1px solid $borderColor
+                    }
+                    .actionItemFolder {
+                      padding: 0 0 0 16px;
+                    }
+                  }
+                }
               }
               table {
                  width: 100%;
@@ -83,6 +104,9 @@ $tableTextColor: #4F585F;
           .btn.vertical {
             display: table-row;
             border: none;
+          }
+          .groupAssignAddButtonText {
+            padding: 8px;
           }
         }
       }

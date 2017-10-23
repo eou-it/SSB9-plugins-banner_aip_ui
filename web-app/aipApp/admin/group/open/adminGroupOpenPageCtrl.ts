@@ -35,6 +35,7 @@ module AIP {
         editMode;
         selected;
         allActionItems;
+        originalAssign;
 
         constructor($scope, AdminGroupService:AIP.AdminGroupService, $q:ng.IQService, SpinnerService, $state, $filter, $sce, $templateRequest, $templateCache,
                     $compile, $timeout, APP_ROOT) {
@@ -53,8 +54,9 @@ module AIP {
             this.APP_ROOT = APP_ROOT;
             this.assignedActionItems = [];
             this.editMode = false;
-            this.selected = {};
+            this.selected = [];
             this.allActionItems = [];
+            this.originalAssign = [];
             this.init();
         }
 
@@ -111,6 +113,8 @@ module AIP {
 
         openOverviewPanel() {
             this.editMode = false;
+            this.selected = [];
+            this.assignedActionItems = [];
             var deferred = this.$q.defer();
             this.adminGroupService.getGroupDetail(this.$state.params.data)
                 .then((response) => {
@@ -128,6 +132,9 @@ module AIP {
             return deferred.promise;
         }
         openContentPanel() {
+            this.editMode = false;
+            this.assignedActionItems = [];
+            this.allActionItems = [];
             var deferred = this.$q.defer();
             var promises = [];
             this.spinnerService.showSpinner( true );
@@ -135,6 +142,9 @@ module AIP {
                 this.adminGroupService.getAssignedActionItemInGroup(this.$state.params.data)
                     .then((response) => {
                         this.assignedActionItems = response;
+                        this.assignedActionItems.sort((a,b) => {
+                            return a.sequenceNumber - b.sequenceNumber;
+                        });
                     }, (err) => {
                         this.assignedActionItems = [];
                         console.log(err);
@@ -144,6 +154,18 @@ module AIP {
                 this.adminGroupService.getActionItemListForselect()
                     .then((response) => {
                     this.allActionItems = response;
+                    this.allActionItems.sort((a,b) => {
+                        return a.folderName < b.folderName;
+                    });
+                    this.assignedActionItems.forEach((item) => {
+                        this.selected[item.sequenceNumber-1] = this.allActionItems.filter((_item) => {
+                            if (_item.actionItemId === item.actionItemId) {
+                                _item.seq = item.sequenceNumber;
+                                return _item;
+                            }
+                        })[0]
+                    });
+                    this.originalAssign =  angular.copy(this.selected);
                     }, (err) => {
                     console.log(err);
                     })
@@ -175,26 +197,124 @@ module AIP {
                 }, 500);
             }
         }
-        groupFn() {
-            return true;
-        }
-        cancel() {
-
-        }
-        save() {
-
-        }
-        addNew() {
-
-        }
-        delete(item) {
-
+        groupFn(item) {
+            return item.folderName;
         }
         goUp(item) {
+            var preItemIdx = this.assignedActionItems.indexOf(item) - 1;
+            var preItem = this.assignedActionItems[preItemIdx];
+            this.assignedActionItems[preItemIdx] = item;
+            this.assignedActionItems[preItemIdx + 1] = preItem
 
+            var preSelected = this.selected[preItemIdx];
+            this.selected[preItemIdx] = this.selected[preItemIdx + 1];
+            this.selected[preItemIdx + 1 ] = preSelected;
+
+            this.reAssignSeqnumber();
         }
         goDown(item) {
+            var nextItemIdx = this.assignedActionItems.indexOf(item) + 1;
+            var nextItem = this.assignedActionItems[nextItemIdx];
+            this.assignedActionItems[nextItemIdx] = item;
+            this.assignedActionItems[nextItemIdx - 1] = nextItem
 
+            var nextSelected = this.selected[nextItemIdx];
+            this.selected[nextItemIdx] = this.selected[nextItemIdx - 1];
+            this.selected[nextItemIdx - 1 ] = nextSelected ;
+
+            this.reAssignSeqnumber();
+        }
+        reAssignSeqnumber() {
+            this.selected.map((item, index) => {
+                item.seq = index + 1;
+                return item;
+            });
+            this.assignedActionItems.map((item, index) => {
+                item.sequenceNumber = index + 1;
+                return item;
+            });
+        }
+        delete(item) {
+            var itemIdx = this.assignedActionItems.indexOf(item);
+            this.assignedActionItems.splice(itemIdx, 1);
+            this.selected.splice(itemIdx, 1);
+            this.reAssignSeqnumber();
+        }
+        addNew() {
+            this.assignedActionItems.push({});
+            this.selected.push({});
+        }
+        selectActionItem(item, index) {
+            var currentAssigned = this.assignedActionItems[index];
+            if (currentAssigned.actionItemId === item.actionItemId) {
+                return;
+            }
+            if (!currentAssigned.actionItemId) {
+                currentAssigned.sequenceNumber = index + 1;
+            }
+            currentAssigned.actionItemId = item.actionItemId;
+            currentAssigned.actionItemFolderName = item.folderName;
+            currentAssigned.actionItemName = item.actionItemName;
+            currentAssigned.actionItemStatus = item.actionItemStatus;
+            this.assignedActionItems[index] = currentAssigned;
+            if(!this.selected[index].actionItemId) {
+                item.seq = index + 1;
+                this.selected[index] = item;
+            }
+            this.selected = this.selected.filter((item, idx) => {
+                return true;
+            });
+        }
+        selectFilter(item,index,all) {
+            var exist = this.assignedActionItems.filter((_item) => {
+                return item.actionItemId === _item.actionItemId;
+            });
+            if (exist.length > 0) {
+                return false;
+            }
+            return true;
+        }
+        validateInput() {
+            var validation = true;
+            var unassigned = this.selected.filter((item) => {
+                return !item.actionItemId
+            });
+
+            if (this.isEqual(this.selected, this.originalAssign)) {
+                validation = false;
+            }
+            if (unassigned.length!==0) {
+                validation = false;
+            }
+            return validation;
+        }
+        cancel() {
+            this.editMode = false;
+            this.openContentPanel()
+        }
+        isEqual(item1, item2) {
+            var item1Properties = item1.map((item) => {
+                return [item.actionItemId, item.folderId, item.seq];
+            });
+            var item2Properties = item2.map((item) => {
+                return [item.actionItemId, item.folderId, item.seq];
+            })
+
+            if ( angular.equals(item1Properties, item2Properties)) {
+                return true;
+            }
+            return false;
+        }
+        save() {
+            //TODO:: send this.selected, groupId to service
+            // send().then show content preview page with success notification
+            this.adminGroupService.updateActionItemGroupAssignment(this.selected, this.$state.params.data)
+                .then((response) => {
+                console.log(response);
+                this.openContentPanel();
+                }, (err) => {
+                console.log(err);
+                });
         }
     }
 
