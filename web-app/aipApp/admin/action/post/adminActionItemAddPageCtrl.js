@@ -1,13 +1,10 @@
-/*******************************************************************************
- Copyright 2017 Ellucian Company L.P. and its affiliates.
- ********************************************************************************/
 ///<reference path="../../../../typings/tsd.d.ts"/>
 ///<reference path="../../../common/services/spinnerService.ts"/>
 ///<reference path="../../../common/services/admin/adminActionService.ts"/>
 var AIP;
 (function (AIP) {
-    var AdminActionItemAddPageCtrl = (function () {
-        function AdminActionItemAddPageCtrl($scope, $q, $state, $filter, $timeout, SpinnerService, AdminActionService) {
+    var AdminPostItemAddPageCtrl = (function () {
+        function AdminPostItemAddPageCtrl($scope, $q, $state, $filter, $timeout, SpinnerService, AdminActionService) {
             this.$inject = ["$scope", "$q", "$state", "$filter", "$timeout", "SpinnerService", "AdminActionService"];
             $scope.vm = this;
             this.$q = $q;
@@ -20,7 +17,7 @@ var AIP;
             this.errorMessage = {};
             this.init();
         }
-        AdminActionItemAddPageCtrl.prototype.init = function () {
+        AdminPostItemAddPageCtrl.prototype.init = function () {
             var _this = this;
             this.spinnerService.showSpinner(true);
             var allPromises = [];
@@ -29,7 +26,7 @@ var AIP;
                 .then(function (response) {
                 _this.status = response.data;
                 angular.forEach(_this.status, function (key, value) {
-                    key.value = "aip.status." + key.value.charAt(0);
+                    key.value = "aip.status." + key.value;
                     console.log(key.value);
                     return value;
                 });
@@ -46,7 +43,7 @@ var AIP;
                 .then(function (response) {
                 _this.folders = response.data;
                 var actionItemFolder = $("#actionItemFolder");
-                _this.actionItemInfo.folder = _this.folders;
+                _this.actionItemInfo.folder = _this.folders[0];
                 _this.$timeout(function () {
                     actionItemFolder.select2({
                         width: "25em",
@@ -58,7 +55,7 @@ var AIP;
                 _this.spinnerService.showSpinner(false);
             });
         };
-        AdminActionItemAddPageCtrl.prototype.validateInput = function () {
+        AdminPostItemAddPageCtrl.prototype.validateInput = function () {
             if (this.saving) {
                 return false;
             }
@@ -92,10 +89,10 @@ var AIP;
                 return true;
             }
         };
-        AdminActionItemAddPageCtrl.prototype.cancel = function () {
+        AdminPostItemAddPageCtrl.prototype.cancel = function () {
             this.$state.go("admin-action-list");
         };
-        AdminActionItemAddPageCtrl.prototype.save = function () {
+        AdminPostItemAddPageCtrl.prototype.save = function () {
             var _this = this;
             this.saving = true;
             this.adminActionService.saveActionItem(this.actionItemInfo)
@@ -118,7 +115,7 @@ var AIP;
                 console.log(err);
             });
         };
-        AdminActionItemAddPageCtrl.prototype.saveErrorCallback = function (message) {
+        AdminPostItemAddPageCtrl.prototype.saveErrorCallback = function (message) {
             var n = new Notification({
                 message: message,
                 type: "error",
@@ -126,8 +123,8 @@ var AIP;
             });
             notifications.addNotification(n);
         };
-        return AdminActionItemAddPageCtrl;
+        return AdminPostItemAddPageCtrl;
     }());
-    AIP.AdminActionItemAddPageCtrl = AdminActionItemAddPageCtrl;
+    AIP.AdminPostItemAddPageCtrl = AdminPostItemAddPageCtrl;
 })(AIP || (AIP = {}));
-register("bannerAIP").controller("AdminActionItemAddPageCtrl", AIP.AdminActionItemAddPageCtrl);
+register("bannerAIP").controller("AdminPostItemAddPageCtrl", AIP.AdminPostItemAddPageCtrl);

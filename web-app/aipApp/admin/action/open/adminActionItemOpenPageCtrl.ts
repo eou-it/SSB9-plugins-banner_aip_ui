@@ -142,10 +142,10 @@ module AIP {
                     this.actionItem = response.data.actionItem;
                     this.selectedTemplate = this.actionItem.actionItemTemplateId;
                     if (this.templateSelect) {
-                        this.trustActionItemContent();
+                        //this.trustActionItemContent();
                         this.selectTemplate();
                     } else {
-                        this.trustActionItemContent();
+                       // this.trustActionItemContent();
                     }
                     deferred.resolve(this.openPanel("overview"));
                 }, (err) => {
@@ -262,8 +262,8 @@ module AIP {
             return this.$sce.trustAsHtml(string);
         }
 
-        trustActionItemContent = function(actionItemContent) {
-            this.actionItem.actionItemContent = (this.actionItem.actionItemContent);
+        trustActionItemContent = function() {
+            this.actionItem.actionItemContent = this.$sce.trustAsHtml(this.$filter("html")(this.actionItem.actionItemContent)).toString();
             return this.actionItem.actionItemContent;
         }
 
@@ -330,7 +330,7 @@ module AIP {
             //TODO:: implement to save rules
             var allDefer = [];
             this.saving = true;
-            console.log(this.actionItem.actionItemContent)
+           // console.log(this.actionItem.actionItemContent)
             allDefer.push(this.adminActionService.saveActionItemTemplate(this.selectedTemplate, this.actionItem.actionItemId, this.actionItem.actionItemContent)
                 .then((response:any) => {
                     if(response.data.success) {
@@ -396,7 +396,6 @@ module AIP {
                     angular.forEach(this.rules, (item) => {
                         //item.statusRuleLabelText = this.trustActionItemRules(item.statusRuleLabelText);
                         item.statusRuleLabelText = this.$sce.trustAsHtml(this.$filter("html")(item.statusRuleLabelText)).toString();
-                        console.log(item.statusName);
                         item["status"] = {
                             actionItemStatus: item.statusName,
                             actionItemStatusId: item.statusId
@@ -435,8 +434,16 @@ module AIP {
                 if (this.rules.length === 0) {
                     return true;
                 } else {
+
                     var invalidRule = this.rules.filter((item) => {
-                        return !item.statusRuleLabelText || item.statusRuleLabelText==="" || !item.status || !item.status.id;
+
+                        var statusIdExists = true
+
+                        if (!item.status.id ) {
+                            statusIdExists = item.status.actionItemStatusId
+                        }
+
+                        return !item.statusRuleLabelText || item.statusRuleLabelText==="" || !statusIdExists
                     });
                     if (invalidRule.length===0) {
                         return true;

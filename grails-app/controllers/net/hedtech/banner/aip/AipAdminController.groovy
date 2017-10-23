@@ -41,8 +41,10 @@ class AipAdminController {
     def actionItemStatusRuleService
 
     def actionItemStatusRuleReadOnlyService
+
     def actionItemBlockedProcessService
     def actionItemProcessingCommonService
+    def actionItemGroupAssignReadOnlyService
 
     /**
      * API for folders LOV
@@ -52,6 +54,7 @@ class AipAdminController {
         def results = actionItemProcessingCommonService.fetchCommunicationFolders()
         render results as JSON
     }
+
 
     /**
      * Add Action Item
@@ -465,42 +468,45 @@ class AipAdminController {
         def message
 
         def inputRules = jsonObj.rules
-        List<Long> tempRuleIdList = inputRules.statusRuleId.toList()
+
         def aipUser = AipControllerUtils.getPersonForAip( params, user.pidm )
-        List<ActionItemStatusRule> actionItemStatusRules = actionItemStatusRuleService.getActionItemStatusRuleByActionItemId( jsonObj.actionItemId )
-        def existingRuleId = actionItemStatusRules.id
-        def deleteRules = existingRuleId - tempRuleIdList
 
         try {
-            //update&create
+
             List<ActionItemStatusRule> ruleList = []
             inputRules.each {rule ->
                 def statusRule
                 if (rule.statusRuleId) {
                     statusRule = ActionItemStatusRule.get( rule.statusRuleId )
-                    statusRule.seqOrder = rule.statusRuleSeqOrder
+                    statusRule.seqOrder = rule.statusRuleSeqOrder.toInteger()
                     statusRule.labelText = rule.statusRuleLabelText
-                    statusRule.actionItemStatusId = rule.statusId
+                    statusRule.actionItemStatusId = rule.status.actionItemStatusId
                     statusRule.actionItemId = jsonObj.actionItemId
+                    //TODO: future user story
+                    //statusRule.resbumitInd =  rule.resubmitInd
                     statusRule.userId = aipUser.bannerId
                     statusRule.activityDate = new Date()
+                    statusRule.version = rule.status.version
                 } else {
                     statusRule = new ActionItemStatusRule(
                             seqOrder: rule.statusRuleSeqOrder,
                             labelText: rule.statusRuleLabelText,
                             actionItemId: jsonObj.actionItemId,
                             actionItemStatusId: rule.statusId,
-                            resubmitInd: rule.resubmitInd,
+                            resubmitInd: 'N',
                             userId: aipUser.bannerId,
-                            activityDate: new Date()
+                            activityDate: new Date(),
+                            version: 0,
+                            dataOrigin: 'GRAILS'
                     )
                 }
                 ruleList.push( statusRule )
             }
-            //delete
-            actionItemStatusRuleService.delete( deleteRules ) //list of ids to be deleted
 
-            actionItemStatusRuleService.createOrUpdate( ruleList ) //list of domain objects to be updated or created
+
+            ruleList.each { rule ->
+                actionItemStatusRuleService.createOrUpdate( rule ) //list of domain objects to be updated or created
+           }
 
             success = true
 
@@ -510,7 +516,10 @@ class AipAdminController {
             message = "Something happened"
         }
 
-        List<ActionItemStatusRule> updatedActionItemStatusRules = actionItemStatusRuleService.getActionItemStatusRuleByActionItemId( jsonObj.actionItemId )
+        List<ActionItemStatusRule> updatedActionItemStatusRules =
+                actionItemStatusRuleService.getActionItemStatusRuleByActionItemId( jsonObj.actionItemId )
+
+
         def model = [
                 success: success,
                 message: message,
@@ -518,7 +527,6 @@ class AipAdminController {
         ]
 
         render model as JSON
-
     }
 
 
@@ -526,10 +534,12 @@ class AipAdminController {
         def jsonObj = request.JSON
 
         def user = SecurityContextHolder?.context?.authentication?.principal
+
         if (!user.pidm) {
             response.sendError( 403 )
             return
         }
+
         def aipUser = AipControllerUtils.getPersonForAip( params, user.pidm )
         def inputRules = jsonObj.rules
         def templateId = jsonObj.templateId.toInteger()
@@ -539,19 +549,21 @@ class AipAdminController {
         def message
         def success = false
         def model
+
         try {
-            Map actionItemInfo = actionItemCompositeService.updateDetailsAndStatusRules( aipUser, inputRules, templateId, actionItemId,
-                                                                                         actionItemDetailText )
+            Map actionItemInfo = actionItemCompositeService.updateDetailsAndStatusRules( aipUser, inputRules, templateId, actionItemId, actionItemDetailText )
 
             if (actionItemInfo['actionItemRO'] && actionItemInfo['statusRules']) {
                 success = true
             }
+
             model = [
                     success   : success,
                     message   : message,
                     actionItem: actionItemInfo['actionItemRO'],
                     rules     : actionItemInfo['statusRules']
             ]
+
         } catch (ApplicationException ae) {
             model = [
                     success   : success,
@@ -668,5 +680,30 @@ value: value.aipBlock
 
         render model as JSON
 
+    }
+
+    def getAssignedActionItemInGroup () {
+        def user = SecurityContextHolder?.context?.authentication?.principal
+        if (!user.pidm) {
+            response.sendError( 403 )
+            return
+        }
+        Long groupId = Long.parseLong(params.groupId)
+        def assignedActionItems = actionItemGroupAssignReadOnlyService.getAssignedActionItemsInGroup(groupId)
+        render assignedActionItems as JSON
+    }
+
+    def getActionItemsListForSelect () {
+        def user = SecurityContextHolder?.context?.authentication?.principal
+        if (!user.pidm) {
+            response.sendError( 403 )
+            return
+        }
+        def paramObj = [
+                        sortColumn   : params.sortColumnName ?: "folderName",
+                        sortAscending: params.ascending
+        ]
+        def results = actionItemReadOnlyService.listActionItemsPageSort( paramObj )
+        render results as JSON
     }
 }

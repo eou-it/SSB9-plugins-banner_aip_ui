@@ -186,4 +186,3 @@ var AIP;
     AIP.AdminActionItemBlockCtrl = AdminActionItemBlockCtrl;
 })(AIP || (AIP = {}));
 register("bannerAIP").controller("AdminActionItemBlockCtrl", AIP.AdminActionItemBlockCtrl);
-//# sourceMappingURL=adminActionItemBlockProcessCtrl.js.map
