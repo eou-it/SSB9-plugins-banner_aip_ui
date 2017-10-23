@@ -113,7 +113,7 @@ var bannerAIPApp = angular.module("bannerAIP", [
         "admin-group-open": {
             url: "/group/open",
             templateUrl:"admin/group/open/adminGroupOpenPage.html",
-            //controller:"AdminGroupOpenPageCtrl",
+            controller:"AdminGroupOpenPageCtrl",
             breadcrumb: {
                 label: "aip.admin.group.open",
                 url: "/aip/admin#/group/open",
@@ -186,7 +186,10 @@ var bannerAIPApp = angular.module("bannerAIP", [
             rulesByActionItem: aipAppAbsPath + "aipAdmin/actionItemStatusRulesByActionItemId",
             updateActionItemStatusRule: aipAppAbsPath + "aipAdmin/updateActionItemStatusRule",
             blockedProcessList: aipAppAbsPath + "aipAdmin/blockedProcessList",
-            updateBlockedProcessItems: aipAppAbsPath + "aipAdmin/updateBlockedProcessItems"
+            updateBlockedProcessItems: aipAppAbsPath + "aipAdmin/updateBlockedProcessItems",
+            getAssignedActionItemInGroup: aipAppAbsPath + "aipAdmin/getAssignedActionItemInGroup",
+            listActionItemForSelect: aipAppAbsPath + "aipAdmin/getActionItemsListForSelect"
+
         }
     })
     .constant("PAGINATIONCONFIG",
@@ -295,36 +298,6 @@ var bannerAIPApp = angular.module("bannerAIP", [
 
             $.i18n.prop("actionItem.title.unique.error");
 
-            $templateCache.put("adminActionItemOpenOverview.html",
-                '<div class="actionItemElement actionItemDetail col-xs-12 col-sm-8"> \
-                    <h3>{{"aip.list.grid.itemTitle"|i18n_aip}}</h3> \
-                    <p class="openActionItemTitle">{{vm.actionItem.title}}</p> \
-                    <h3>{{"aip.common.folder"|i18n_aip}}</h3> \
-                    <p class="openActionItemFolder">{{vm.actionItem.folder.name}}</p> \
-                    <h3>{{"aip.common.status"|i18n_aip}}</h3> \
-                    <p class="openActionItemStatus">{{vm.actionItem.status}}</p> \
-                    <h3>{{"aip.common.description"|i18n_aip}}</h3> \
-                    <p class="openActionItemDesc">{{vm.actionItem.description}}</p> \
-                </div> \
-                <div class="hidden-xs col-sm-1 dividerContainer" ng-style="vm.getSaparatorHeight()"> \
-                    <div class="divider"></div> \
-                </div> \
-                <div class="actionItemElement col-xs-12 col-sm-3"> \
-                    <h3>{{"aip.common.activity"|i18n_aip}}</h3> \
-                <hr /> \
-                <div class="actionItemElement"> \
-                    <h4>{{"aip.common.last.updated.by"|i18n_aip}}</h4> \
-                <p class="openActionItemLastUpdatedBy">{{vm.actionItem.creatorId}}</p> \
-                </div> \
-                <hr /> \
-                <div class="actionItemElement"> \
-                        <h4>{{"aip.common.activity.date"|i18n_aip}}</h4> \
-                    <p class="openActionItemActivityDate">{{vm.actionItem.activityDate}}</p> \
-                    </div> \
-                </div>'
-            );
-
-
             CKEDITOR.on( 'instanceCreated', function( event ) {
                 var editor = event.editor,
                         element = editor.element;
@@ -432,7 +405,11 @@ angular.module("templates/tabNav.html", []).run(["$templateCache", function($tem
 //     $templateCache.put("templates/dataTable.html",
 //             "<div id=\"{{tableId}}\" class=\"table-container\" ng-class=\"{'fixed-height': !!height, 'noToolbar': noCaptionAndToolbar, 'no-data': !resultsFound, 'empty': emptyTableMsg}\" browser-detect role=\"grid\" aria-labelledby=\"gridCaption\" ng-cloak><div class=\"caption\" ng-if=\"::!noCaptionBar\" xe-section=\"{{xeSection + 'CaptionBar'}}\"><table class=\"data-table\" title=\"{{'aip.admin.selectable.action.items'|i18n_aip}}\"><caption ng-class=\"{'search-opened': hideContainer}\"><span id=\"gridCaption\" class=\"caption-container font-semibold\" ng-if=\"::!nocaption\" ng-bind=\"::caption\" xe-field=\"caption\"></span><div class=\"toolbar\" ng-if=\"toolbar\"><xe-toolbar></xe-toolbar><xe-column-filter></xe-column-filter><span role=\"search\" title=\"{{'search.shortcut.label' | xei18n}}\" ng-if=\"::!nosearch\"><xe-search value=\"searchConfig.searchString\" place-holder=\"{{'search.label' | xei18n}}\" on-change=\"fetchSpecial(query)\" on-focus=\"onSearchFocus({event: event})\" on-blur=\"onSearchBlur({event: event})\" search-config=\"searchConfig\" loading-data=\"loadingData\"></xe-search></span></div></caption></table></div><div class=\"hr-scrollable-content\"><div class=\"thead\"><table class=\"data-table\" ng-style=\"headerPadding\"><thead role=\"rowgroup\"><tr role=\"row\"><th class=\"font-semibold width-animate {{::heading.name}}\" ng-repeat=\"heading in header\" ng-class=\"{'sortable': heading.options.sortable, 'ascending': sortArray[heading.name].ascending, 'decending': sortArray[heading.name].decending}\" ng-if=\"heading.options.visible === true\" ng-style=\"{'width': heading.dynamicWidth + 'px'}\" data-name=\"{{::heading.name}}\" ng-click=\"onSort({heading: heading}); sortOnHeading(heading, $index);\" role=\"columnheader\" aria-sort=\"{{sortArray[heading.name].ascending ? ('dataTable.sort.ascending.label' | xei18n) : (sortArray[heading.name].decending ? ('dataTable.sort.descending.label' | xei18n) : 'none')}}\" drag-drop=\"handleDrop\" tabindex=\"0\" xe-field=\"{{::heading.name}}\" xe-heading-injector><div class=\"data\" title=\"{{heading.label}}\"><span ng-show=\"::heading.options.titleVisible !== false\" aria-hidden=\"false\" ng-bind=\"::heading.title\"></span><label id=\"${{'headingAria' + $index}}\" class=\"sr-only\" ng-bind=\"(heading.options.sortable ? ('dataTable.sortable.label' | xei18n) : '')\"></label></div></th></tr></thead></table></div><div class=\"tbody\" ng-style=\"::{'height': height}\" continuous-scroll=\"nextPage()\" scroll-parent=\"{{::continuousScrollParent}}\" aria-labelledby=\"msg\" tabindex=\"{{(!resultsFound || emptyTableMsg) ? 0 : ''}}\" resize><div id=\"msg\" ng-bind=\"emptyTableMsg? emptyTableMsg : ((!resultsFound && !loadingData) ? noDataMsg : '')\"></div><table class=\"data-table\" ng-class=\"::mobileLayout ? 'mobileLayout' : 'noMobileLayout'\"><thead aria-hidden=\"true\"><tr><th class=\"font-semibold {{::heading.name}}\" ng-repeat=\"heading in header\" ng-class=\"{'sortable': heading.options.sortable, 'ascending': sortArray[heading.name].ascending, 'decending': sortArray[heading.name].decending}\" ng-if=\"heading.options.visible === true\" ng-style=\"{'width': heading.dynamicWidth + 'px'}\" data-name=\"{{::heading.name}}\" xe-field=\"{{::heading.name}}\" xe-heading-injector tab-index><div class=\"data\"><span ng-show=\"::heading.options.titleVisible !== false\" ng-bind=\"::heading.title\"></span></div></th></tr></thead><tbody role=\"rowgroup\"><tr ng-repeat=\"row in content\" ng-click=\"onRowClick({data:row,index:$index})\" ng-dblclick=\"onRowDoubleClick({data:row,index:$index})\" xe-row-injector tabindex=\"-1\" role=\"row\"><td class=\"width-animate\" ng-repeat=\"heading in header\" ng-class=\"{'align-right': heading.options.actionOrStatus, 'sortable': heading.options.sortable}\" ng-if=\"heading.options.visible === true\" data-name=\"{{::heading.name}}\" data-title=\"{{::(heading.title && heading.options.titleVisible !== false) ? heading.title + ':' : ''}}\" attain-mobile-layout=\"{{mobileLayout[heading.name]}}\" xe-field=\"{{::heading.name}}\" xe-cell-injector tab-index role=\"gridcell\" ng-cloak>{{getObjectValue(row, heading.name)}}</td></tr></tbody></table></div></div><div class=\"tfoot\" ng-transclude></div><xe-pagination model=\"content\" results-found=\"resultsFound\" ng-show=\"showPagination\" search-string=\"searchConfig.searchString\"></xe-pagination><div ng-show=\"loadingData\" class=\"load-indicator\"><div class=\"spinner\"><div class=\"bounce1\"></div><div class=\"bounce2\"></div><div class=\"bounce3\"></div></div></div></div>");
 // }]);
-
+//TODO:: modifty droupdown template html to add grouping and filtering functionalities to xe-dropdown directive
+angular.module("templates/dropdown.html", []).run(["$templateCache", function($templateCache) {
+    $templateCache.put("templates/dropdown.html",
+        "<div class=\"btn-group\"><button type=\"button\" ng-disabled=\"{{disabled}}\" ng-class=\"{disabledDD:disabled}\" data-toggle=\"dropdown\" class=\"btn btn-default dropdown dropdown-toggle\" role=\"listbox\" aria-expanded=\"false\" aria-haspopup=\"true\"><span class=\"placeholder\" ng-show=\"!ngModel\">{{::xeLabel}}</span> <span class=\"placeholder\">{{ dropDownLabel }}</span> <span class=\"glyphicon glyphicon-chevron-down\"></span></button><ul class=\"dropdown-menu\" role=\"listbox\" aria-expanded=\"false\" role=\"listbox\"><li ng-hide=\"!ngModel\" ng-click=\"updateModel(xeLabel)\">{{::xeLabel}}</li><li ng-if=\"!isObject\" role=\"option\" ng-repeat=\"option in xeOptions track by $index\" ng-click=\"updateModel(option)\" ng-class=\"{'selected':option===ngModel}\">{{::option}}</li><li ng-if=\"isObject\" ng-repeat=\"option in xeOptions track by $index\" ng-click=\"updateModel(option)\">{{::option.label}}</li></ul></div>");
+}]);
 
 
 angular.module("BannerOnAngular")

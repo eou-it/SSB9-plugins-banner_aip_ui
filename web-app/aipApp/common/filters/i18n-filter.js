@@ -12,4 +12,3 @@ angular.module('I18nAIP', []).
         return value;
     };
 });
-//# sourceMappingURL=i18n-filter.js.map

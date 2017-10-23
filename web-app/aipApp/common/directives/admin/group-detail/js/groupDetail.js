@@ -41,4 +41,3 @@ var AIPUI;
     AIPUI.AIPGroupDetailDirective = AIPGroupDetailDirective;
 })(AIPUI || (AIPUI = {}));
 register("bannerAIPUI").directive("aipGroupDetail", AIPUI.AIPGroupDetailDirective);
-//# sourceMappingURL=groupDetail.js.map

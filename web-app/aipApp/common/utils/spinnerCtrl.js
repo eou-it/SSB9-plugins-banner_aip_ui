@@ -19,4 +19,3 @@ var AIP;
     AIP.SpinnerCtrl = SpinnerCtrl;
 })(AIP || (AIP = {}));
 register("bannerAIP").controller("SpinnerCtrl", AIP.SpinnerCtrl);
-//# sourceMappingURL=spinnerCtrl.js.map

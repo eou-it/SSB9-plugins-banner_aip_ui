@@ -171,8 +171,8 @@ aip-list .aip-list-container  {
     background-color:#ffffff;
 }
   .landingItem-container .landing-icon  {
-    padding:30px 15px;
-    max-width:90px;
+    padding:15px 0px;
+    max-width:100px;
     margin:0;
     height:auto;
 }
@@ -466,6 +466,82 @@ ol.selected-group > li  {
 ol.selected-group > li > button  {
     float:left;
     margin-left:5px;
+}
+
+.groupOpenContainer  {
+    padding:0;
+    margin:0;
+}
+  .groupOpenContainer .row  {
+    margin-right:0;
+    margin-left:0;
+}
+  .groupOpenContainer .groupInfo  {
+    margin-bottom:20px;
+}
+    .groupOpenContainer .groupInfo .groupInfoRow  {
+    margin-bottom:16px;
+}
+      .groupOpenContainer .groupInfo .groupInfoRow .groupElement  {
+    padding-left:8px;
+    padding-right:8px;
+    margin-bottom:8px;
+}
+        .groupOpenContainer .groupInfo .groupInfoRow .groupElement .xe-tab-container  {
+    padding:0;
+}
+          .groupOpenContainer .groupInfo .groupInfoRow .groupElement .xe-tab-container .contentInfo .row  {
+    padding:8px;
+}
+          .groupOpenContainer .groupInfo .groupInfoRow .groupElement .xe-tab-container .contentInfo .contentText h2  {
+    font-size:1em;
+}
+          .groupOpenContainer .groupInfo .groupInfoRow .groupElement .xe-tab-container .contentInfo .contentText .infoText  {
+    line-height:32px;
+}
+          .groupOpenContainer .groupInfo .groupInfoRow .groupElement .xe-tab-container .contentInfo .contentText .control button  {
+    float:left;
+}
+          .groupOpenContainer .groupInfo .groupInfoRow .groupElement .xe-tab-container .contentInfo table  {
+    width:100%;
+    border:1px solid #b3b3b3;
+}
+            .groupOpenContainer .groupInfo .groupInfoRow .groupElement .xe-tab-container .contentInfo table caption  {
+    text-align:right;
+    font-size:1.4em;
+    line-height:1.5em;
+    border:1px solid #b3b3b3;
+    border-bottom:none;
+    padding:8px;
+}
+            .groupOpenContainer .groupInfo .groupInfoRow .groupElement .xe-tab-container .contentInfo table tr  {
+    border:1px solid #b3b3b3;
+}
+              .groupOpenContainer .groupInfo .groupInfoRow .groupElement .xe-tab-container .contentInfo table tr .actionItemDescroption  {
+    font-size:0.8em;
+    line-height:0.8em;
+    padding:0;
+}
+              .groupOpenContainer .groupInfo .groupInfoRow .groupElement .xe-tab-container .contentInfo table tr .actionItemTitle  {
+    line-height:0.7em;
+    padding:0;
+}
+            .groupOpenContainer .groupInfo .groupInfoRow .groupElement .xe-tab-container .contentInfo table td  {
+    padding:8px;
+}
+            .groupOpenContainer .groupInfo .groupInfoRow .groupElement .xe-tab-container .contentInfo table th  {
+    padding:8px;
+    line-height:1.3em;
+}
+          .groupOpenContainer .groupInfo .groupInfoRow .groupElement .xe-tab-container .contentInfo hr  {
+    border-color:#b3b3b3;
+}
+        .groupOpenContainer .groupInfo .groupInfoRow .groupElement .groupDetail  {
+    border-left:1px solid #444444;
+}
+        .groupOpenContainer .groupInfo .groupInfoRow .groupElement .btn.vertical  {
+    display:table-row;
+    border:none;
 }
 
 .actionListContainer  {

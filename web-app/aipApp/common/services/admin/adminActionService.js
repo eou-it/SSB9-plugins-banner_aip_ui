@@ -142,6 +142,7 @@ var AIP;
             return request;
         };
         AdminActionService.prototype.updateActionItemStatusRule = function (rules, actionItemId) {
+            console.log("admin action service");
             console.log(rules);
             var request = this.$http({
                 method: "POST",

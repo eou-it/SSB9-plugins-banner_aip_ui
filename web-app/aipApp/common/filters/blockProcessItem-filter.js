@@ -19,4 +19,3 @@ angular.module('bannerAIP').
         return notGenerated;
     };
 });
-//# sourceMappingURL=blockProcessItem-filter.js.map

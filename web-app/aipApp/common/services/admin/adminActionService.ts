@@ -55,12 +55,12 @@ module AIP {
         width: any
     }
     export interface IFolder {
-        id: number;
+        id:  string|number|boolean;
         dataOrigin: string;
-        description: string;
+        description?: string;
         internal: boolean;
-        lastModified: Date;
-        lastModifiedBy: string;
+        lastModified?: Date|string;
+        lastModifiedBy?: string;
         name: string;
     }
     export interface IGroup {
@@ -79,7 +79,7 @@ module AIP {
         groupTitle: string;
     }
     export interface IStatus {
-        id: number;
+        id: string|number;
         value: string;
     }
     export interface IActionItemFetchResponse {
@@ -281,6 +281,7 @@ module AIP {
             return request;
         }
         updateActionItemStatusRule(rules, actionItemId) {
+            console.log("admin action service");
             console.log(rules);
             var request = this.$http({
                 method: "POST",
