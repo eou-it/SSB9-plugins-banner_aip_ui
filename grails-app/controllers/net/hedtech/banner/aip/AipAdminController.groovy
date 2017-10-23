@@ -55,7 +55,6 @@ class AipAdminController {
         render results as JSON
     }
 
-
     /**
      * Add Action Item
      * @return
@@ -504,9 +503,9 @@ class AipAdminController {
             }
 
 
-            ruleList.each { rule ->
+            ruleList.each {rule ->
                 actionItemStatusRuleService.createOrUpdate( rule ) //list of domain objects to be updated or created
-           }
+            }
 
             success = true
 
@@ -682,26 +681,28 @@ value: value.aipBlock
 
     }
 
-    def getAssignedActionItemInGroup () {
+
+    def getAssignedActionItemInGroup() {
         def user = SecurityContextHolder?.context?.authentication?.principal
         if (!user.pidm) {
             response.sendError( 403 )
             return
         }
-        Long groupId = Long.parseLong(params.groupId)
-        def assignedActionItems = actionItemGroupAssignReadOnlyService.getAssignedActionItemsInGroup(groupId)
+        Long groupId = Long.parseLong( params.groupId )
+        def assignedActionItems = actionItemGroupAssignReadOnlyService.getAssignedActionItemsInGroup( groupId )
         render assignedActionItems as JSON
     }
 
-    def getActionItemsListForSelect () {
+
+    def getActionItemsListForSelect() {
         def user = SecurityContextHolder?.context?.authentication?.principal
         if (!user.pidm) {
             response.sendError( 403 )
             return
         }
         def paramObj = [
-                        sortColumn   : params.sortColumnName ?: "folderName",
-                        sortAscending: params.ascending
+                sortColumn   : params.sortColumnName ?: "folderName",
+                sortAscending: params.ascending
         ]
         def results = actionItemReadOnlyService.listActionItemsPageSort( paramObj )
         render results as JSON
