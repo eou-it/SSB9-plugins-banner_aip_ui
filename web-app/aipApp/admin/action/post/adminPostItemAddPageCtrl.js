@@ -8,9 +8,10 @@ var AIP;
 (function (AIP) {
     var AdminPostItemAddPageCtrl = (function () {
         function AdminPostItemAddPageCtrl($scope, $q, $state, $filter, $timeout, SpinnerService, AdminActionService) {
-            this.$inject = ["$scope", "$q", "$state", "$filter", "$timeout", "SpinnerService", "AdminActionService"];
+            this.$inject = ["$scope", "$q", "$state", "$filter", "$timeout", "SpinnerService", "AdminActionService", "angular.filter"];
             $scope.vm = this;
             this.$q = $q;
+            this.$scope = $scope;
             this.$state = $state;
             this.$filter = $filter;
             this.$timeout = $timeout;
@@ -34,7 +35,8 @@ var AIP;
                 _this.$timeout(function () {
                     postActionItemGroup.select2({
                         width: "25em",
-                        minimumResultsForSearch: Infinity
+                        minimumResultsForSearch: Infinity,
+                        placeholderOption: 'first'
                     });
                 }, 50);
             }));
@@ -55,34 +57,47 @@ var AIP;
                 _this.spinnerService.showSpinner(false);
             });
         };
+        AdminPostItemAddPageCtrl.prototype.changedValue = function (item) {
+            var _this = this;
+            this.$scope = item.groupId;
+            var a = this.$scope;
+            console.log(this.$scope);
+            this.adminActionService.getGroupActionItem(a)
+                .then(function (response) {
+                _this.actionItemList = response.data;
+                console.log(_this.actionItemList);
+                var postActionItemGroup = $("#ActionItemGroup");
+                _this.postActionItemInfo.groupAction = _this.actionItemList;
+            });
+        };
         AdminPostItemAddPageCtrl.prototype.validateInput = function () {
             if (this.saving) {
                 return false;
             }
             /*if(!this.actionItemInfo.name || this.actionItemInfo.name === null || this.actionItemInfo.name === "" || this.actionItemInfo.title.name > 300) {
-                this.errorMessage.name = "invalid title";
-            } else {
-                delete this.errorMessage.name;
-            }*/
-            /* if(!this.postactionItemInfo.folder) {
-                 this.errorMessage.folder = "invalid folder";
+             this.errorMessage.name = "invalid title";
              } else {
-                 delete this.errorMessage.folder;
+             delete this.errorMessage.name;
+             }*/
+            /* if(!this.postactionItemInfo.folder) {
+             this.errorMessage.folder = "invalid folder";
+             } else {
+             delete this.errorMessage.folder;
              }
              if(!this.postactionItemInfo.description || this.postactionItemInfo.description === null || this.postactionItemInfo.description === "" ) {
-                 this.errorMessage.description = "invalid description";
+             this.errorMessage.description = "invalid description";
              } else {
-                 delete this.errorMessage.description;
+             delete this.errorMessage.description;
              }
              if(!this.postactionItemInfo.title || this.postactionItemInfo.title === null || this.postactionItemInfo.title === "" || this.postactionItemInfo.title.length > 300) {
-                 this.errorMessage.title = "invalid title";
+             this.errorMessage.title = "invalid title";
              } else {
-                 delete this.errorMessage.title;
+             delete this.errorMessage.title;
              }
              if(Object.keys(this.errorMessage).length>0) {
-                 return false;
+             return false;
              } else {
-                 return true;
+             return true;
              }*/
         };
         AdminPostItemAddPageCtrl.prototype.cancel = function () {

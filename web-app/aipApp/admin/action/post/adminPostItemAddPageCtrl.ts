@@ -22,10 +22,12 @@ module AIP {
     }
 
     export class AdminPostItemAddPageCtrl implements IAdminPostItemAddPageCtrl{
-        $inject = ["$scope", "$q", "$state", "$filter", "$timeout", "SpinnerService", "AdminActionService" ];
+        $inject = ["$scope", "$q", "$state", "$filter", "$timeout", "SpinnerService", "AdminActionService","angular.filter"];
+        $scope;
         status: [AIP.IStatus];
         folders: [AIP.IFolder];
         groupList: [AIP.IGroup];
+        actionItemList: [AIP.IGroupActionItem];
         populationList:[AIP.IPopulation];
         postActionItemInfo: AIP.IPostActionItemParam|any;
         errorMessage:any;
@@ -40,6 +42,7 @@ module AIP {
                     SpinnerService:AIP.SpinnerService, AdminActionService:AIP.AdminActionService) {
             $scope.vm = this;
             this.$q = $q;
+            this.$scope = $scope;
             this.$state = $state;
             this.$filter = $filter;
             this.$timeout = $timeout;
@@ -65,7 +68,8 @@ module AIP {
                         this.$timeout(() => {
                             postActionItemGroup.select2( {
                                 width: "25em",
-                                minimumResultsForSearch:Infinity
+                                minimumResultsForSearch:Infinity,
+                                placeholderOption:'first'
                             });
                         }, 50);
                     })
@@ -92,36 +96,50 @@ module AIP {
                 this.spinnerService.showSpinner(false);
             });
         }
+        changedValue(item){
+this.$scope = item.groupId;
+var a = this.$scope;
+console.log(this.$scope);
+            this.adminActionService.getGroupActionItem(a)
+                .then((response:AIP.IPostActionItemResponse) => {
+                    this.actionItemList = response.data;
+                    console.log(this.actionItemList);
+
+                    var postActionItemGroup:any = $("#ActionItemGroup");
+                    this.postActionItemInfo.groupAction = this.actionItemList;
+                })
+
+        }
         validateInput() {
             if(this.saving) {
                 return false;
             }
             /*if(!this.actionItemInfo.name || this.actionItemInfo.name === null || this.actionItemInfo.name === "" || this.actionItemInfo.title.name > 300) {
-                this.errorMessage.name = "invalid title";
-            } else {
-                delete this.errorMessage.name;
-            }*/
+             this.errorMessage.name = "invalid title";
+             } else {
+             delete this.errorMessage.name;
+             }*/
 
-           /* if(!this.postactionItemInfo.folder) {
-                this.errorMessage.folder = "invalid folder";
-            } else {
-                delete this.errorMessage.folder;
-            }
-            if(!this.postactionItemInfo.description || this.postactionItemInfo.description === null || this.postactionItemInfo.description === "" ) {
-                this.errorMessage.description = "invalid description";
-            } else {
-                delete this.errorMessage.description;
-            }
-            if(!this.postactionItemInfo.title || this.postactionItemInfo.title === null || this.postactionItemInfo.title === "" || this.postactionItemInfo.title.length > 300) {
-                this.errorMessage.title = "invalid title";
-            } else {
-                delete this.errorMessage.title;
-            }
-            if(Object.keys(this.errorMessage).length>0) {
-                return false;
-            } else {
-                return true;
-            }*/
+            /* if(!this.postactionItemInfo.folder) {
+             this.errorMessage.folder = "invalid folder";
+             } else {
+             delete this.errorMessage.folder;
+             }
+             if(!this.postactionItemInfo.description || this.postactionItemInfo.description === null || this.postactionItemInfo.description === "" ) {
+             this.errorMessage.description = "invalid description";
+             } else {
+             delete this.errorMessage.description;
+             }
+             if(!this.postactionItemInfo.title || this.postactionItemInfo.title === null || this.postactionItemInfo.title === "" || this.postactionItemInfo.title.length > 300) {
+             this.errorMessage.title = "invalid title";
+             } else {
+             delete this.errorMessage.title;
+             }
+             if(Object.keys(this.errorMessage).length>0) {
+             return false;
+             } else {
+             return true;
+             }*/
         }
         cancel() {
             this.$state.go("admin-action-list");

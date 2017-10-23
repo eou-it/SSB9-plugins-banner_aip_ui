@@ -50,6 +50,13 @@ var AIP;
             });
             return request;
         };
+        AdminActionService.prototype.getGroupActionItem = function (groupId) {
+            var request = this.$http({
+                method: "GET",
+                url: this.ENDPOINT.admin.getActionGroupActionItemLov
+            });
+            return request;
+        };
         AdminActionService.prototype.getPopulationlist = function () {
             var request = this.$http({
                 method: "GET",
