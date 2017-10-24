@@ -68,6 +68,11 @@ module AIP {
         groupName: string;
         groupTitle: string;
     }
+    export interface IGroupActionItem {
+        groupId: number;
+        groupName: string;
+        groupTitle: string;
+    }
     export interface IPopulation {
         groupId: number;
         groupName: string;
@@ -87,6 +92,9 @@ module AIP {
     }
     export interface IPostActionItemGroupResponse {
         data: [IGroup];
+    }
+    export interface IPostActionItemResponse {
+        data: [IGroupActionItem];
     }
     export interface IPostActionItemPopulationResponse {
         data: [IPopulation];
@@ -175,6 +183,13 @@ module AIP {
             var request = this.$http({
                 method: "GET",
                 url: this.ENDPOINT.admin.getGroupLov
+            });
+            return request;
+        }
+        getGroupActionItem(groupId) {
+            var request = this.$http({
+                method: "GET",
+                url: this.ENDPOINT.admin.getActionGroupActionItemLov
             });
             return request;
         }
