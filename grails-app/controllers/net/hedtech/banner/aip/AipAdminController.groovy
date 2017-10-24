@@ -471,8 +471,19 @@ class AipAdminController {
 
         def aipUser = AipControllerUtils.getPersonForAip( params, user.pidm )
 
-        try {
 
+        List<ActionItemStatusRule> currentRules = actionItemStatusRuleService.getActionItemStatusRuleByActionItemId( jsonObj.actionItemId )
+
+        List<Long> newRuleIdList = inputRules.statusRuleId.toList()
+        List<Long> existingRuleIdList = currentRules.id.toList()
+
+        def deleteRules = existingRuleIdList.minus(newRuleIdList)
+
+        //delete those that have been removed
+        actionItemStatusRuleService.delete( deleteRules )
+
+        //create or update rules
+        try {
             List<ActionItemStatusRule> ruleList = []
             inputRules.each {rule ->
                 def statusRule
@@ -492,7 +503,7 @@ class AipAdminController {
                             seqOrder: rule.statusRuleSeqOrder,
                             labelText: rule.statusRuleLabelText,
                             actionItemId: jsonObj.actionItemId,
-                            actionItemStatusId: rule.statusId,
+                            actionItemStatusId: rule.status.id,
                             resubmitInd: 'N',
                             userId: aipUser.bannerId,
                             activityDate: new Date(),
@@ -502,7 +513,6 @@ class AipAdminController {
                 }
                 ruleList.push( statusRule )
             }
-
 
             ruleList.each { rule ->
                 actionItemStatusRuleService.createOrUpdate( rule ) //list of domain objects to be updated or created
@@ -519,7 +529,6 @@ class AipAdminController {
         List<ActionItemStatusRule> updatedActionItemStatusRules =
                 actionItemStatusRuleService.getActionItemStatusRuleByActionItemId( jsonObj.actionItemId )
 
-
         def model = [
                 success: success,
                 message: message,
@@ -528,7 +537,6 @@ class AipAdminController {
 
         render model as JSON
     }
-
 
     def updateActionItemDetailsAndStatusRules() {
         def jsonObj = request.JSON

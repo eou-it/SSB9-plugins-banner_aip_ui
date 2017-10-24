@@ -229,8 +229,6 @@ module AIP {
             return request;
         }
         updateActionItemStatusRule(rules, actionItemId) {
-            console.log("admin action service");
-            console.log(rules);
             var request = this.$http({
                 method: "POST",
                 url: this.ENDPOINT.admin.updateActionItemStatusRule,
