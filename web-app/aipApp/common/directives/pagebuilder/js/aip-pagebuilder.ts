@@ -46,7 +46,7 @@ module PB {
             attrs.$observe('aid', (tpl)  => {
                 var me = self;
                 console.log(window);
-                self.ItemListViewService.getPagebuilderPage('aip.MasterTemplateSystemRequired', attrs.aid, attrs.gid)
+                self.ItemListViewService.getPagebuilderPage('MasterTemplateSystemRequired', attrs.aid, attrs.gid)
                     .then((val) => {
                         element.children().empty();
                         var tempElement = angular.element(val.html);
