@@ -20,7 +20,8 @@ var PB;
             var self = this;
             attrs.$observe('aid', function (tpl) {
                 var me = self;
-                self.ItemListViewService.getPagebuilderPage(window.controllerId, attrs.aid, attrs.gid)
+                console.log(window.controllerId);
+                self.ItemListViewService.getPagebuilderPage('aip.MasterTemplateSystemRequired', attrs.aid, attrs.gid)
                     .then(function (val) {
                     element.children().empty();
                     var tempElement = angular.element(val.html);
