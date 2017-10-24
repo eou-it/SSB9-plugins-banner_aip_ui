@@ -20,7 +20,7 @@ var PB;
             var self = this;
             attrs.$observe('aid', function (tpl) {
                 var me = self;
-                console.log(window.controllerId);
+                console.log(window);
                 self.ItemListViewService.getPagebuilderPage('aip.MasterTemplateSystemRequired', attrs.aid, attrs.gid)
                     .then(function (val) {
                     element.children().empty();

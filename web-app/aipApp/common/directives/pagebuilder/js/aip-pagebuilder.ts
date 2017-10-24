@@ -45,7 +45,7 @@ module PB {
 
             attrs.$observe('aid', (tpl)  => {
                 var me = self;
-                console.log(window.controllerId);
+                console.log(window);
                 self.ItemListViewService.getPagebuilderPage('aip.MasterTemplateSystemRequired', attrs.aid, attrs.gid)
                     .then((val) => {
                         element.children().empty();
