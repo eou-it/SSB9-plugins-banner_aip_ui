@@ -22,8 +22,9 @@ var AIP;
             this.APP_ROOT = APP_ROOT;
             this.assignedActionItems = [];
             this.editMode = false;
-            this.selected = {};
+            this.selected = [];
             this.allActionItems = [];
+            this.originalAssign = [];
             this.init();
         }
         AdminGroupOpenPageCtrl.prototype.init = function () {
@@ -79,6 +80,8 @@ var AIP;
         AdminGroupOpenPageCtrl.prototype.openOverviewPanel = function () {
             var _this = this;
             this.editMode = false;
+            this.selected = [];
+            this.assignedActionItems = [];
             var deferred = this.$q.defer();
             this.adminGroupService.getGroupDetail(this.$state.params.data)
                 .then(function (response) {
@@ -98,12 +101,18 @@ var AIP;
         };
         AdminGroupOpenPageCtrl.prototype.openContentPanel = function () {
             var _this = this;
+            this.editMode = false;
+            this.assignedActionItems = [];
+            this.allActionItems = [];
             var deferred = this.$q.defer();
             var promises = [];
             this.spinnerService.showSpinner(true);
             promises.push(this.adminGroupService.getAssignedActionItemInGroup(this.$state.params.data)
                 .then(function (response) {
                 _this.assignedActionItems = response;
+                _this.assignedActionItems.sort(function (a, b) {
+                    return a.sequenceNumber - b.sequenceNumber;
+                });
             }, function (err) {
                 _this.assignedActionItems = [];
                 console.log(err);
@@ -111,6 +120,18 @@ var AIP;
             promises.push(this.adminGroupService.getActionItemListForselect()
                 .then(function (response) {
                 _this.allActionItems = response;
+                _this.allActionItems.sort(function (a, b) {
+                    return a.folderName < b.folderName;
+                });
+                _this.assignedActionItems.forEach(function (item) {
+                    _this.selected[item.sequenceNumber - 1] = _this.allActionItems.filter(function (_item) {
+                        if (_item.actionItemId === item.actionItemId) {
+                            _item.seq = item.sequenceNumber;
+                            return _item;
+                        }
+                    })[0];
+                });
+                _this.originalAssign = angular.copy(_this.selected);
             }, function (err) {
                 console.log(err);
             }));
@@ -140,20 +161,119 @@ var AIP;
                 }, 500);
             }
         };
-        AdminGroupOpenPageCtrl.prototype.groupFn = function () {
-            return true;
-        };
-        AdminGroupOpenPageCtrl.prototype.cancel = function () {
-        };
-        AdminGroupOpenPageCtrl.prototype.save = function () {
-        };
-        AdminGroupOpenPageCtrl.prototype.addNew = function () {
-        };
-        AdminGroupOpenPageCtrl.prototype.delete = function (item) {
+        AdminGroupOpenPageCtrl.prototype.groupFn = function (item) {
+            return item.folderName;
         };
         AdminGroupOpenPageCtrl.prototype.goUp = function (item) {
+            var preItemIdx = this.assignedActionItems.indexOf(item) - 1;
+            var preItem = this.assignedActionItems[preItemIdx];
+            this.assignedActionItems[preItemIdx] = item;
+            this.assignedActionItems[preItemIdx + 1] = preItem;
+            var preSelected = this.selected[preItemIdx];
+            this.selected[preItemIdx] = this.selected[preItemIdx + 1];
+            this.selected[preItemIdx + 1] = preSelected;
+            this.reAssignSeqnumber();
         };
         AdminGroupOpenPageCtrl.prototype.goDown = function (item) {
+            var nextItemIdx = this.assignedActionItems.indexOf(item) + 1;
+            var nextItem = this.assignedActionItems[nextItemIdx];
+            this.assignedActionItems[nextItemIdx] = item;
+            this.assignedActionItems[nextItemIdx - 1] = nextItem;
+            var nextSelected = this.selected[nextItemIdx];
+            this.selected[nextItemIdx] = this.selected[nextItemIdx - 1];
+            this.selected[nextItemIdx - 1] = nextSelected;
+            this.reAssignSeqnumber();
+        };
+        AdminGroupOpenPageCtrl.prototype.reAssignSeqnumber = function () {
+            this.selected.map(function (item, index) {
+                item.seq = index + 1;
+                return item;
+            });
+            this.assignedActionItems.map(function (item, index) {
+                item.sequenceNumber = index + 1;
+                return item;
+            });
+        };
+        AdminGroupOpenPageCtrl.prototype.delete = function (item) {
+            var itemIdx = this.assignedActionItems.indexOf(item);
+            this.assignedActionItems.splice(itemIdx, 1);
+            this.selected.splice(itemIdx, 1);
+            this.reAssignSeqnumber();
+        };
+        AdminGroupOpenPageCtrl.prototype.addNew = function () {
+            this.assignedActionItems.push({});
+            this.selected.push({});
+        };
+        AdminGroupOpenPageCtrl.prototype.selectActionItem = function (item, index) {
+            var currentAssigned = this.assignedActionItems[index];
+            if (currentAssigned.actionItemId === item.actionItemId) {
+                return;
+            }
+            if (!currentAssigned.actionItemId) {
+                currentAssigned.sequenceNumber = index + 1;
+            }
+            currentAssigned.actionItemId = item.actionItemId;
+            currentAssigned.actionItemFolderName = item.folderName;
+            currentAssigned.actionItemName = item.actionItemName;
+            currentAssigned.actionItemStatus = item.actionItemStatus;
+            this.assignedActionItems[index] = currentAssigned;
+            if (!this.selected[index].actionItemId) {
+                item.seq = index + 1;
+                this.selected[index] = item;
+            }
+            this.selected = this.selected.filter(function (item, idx) {
+                return true;
+            });
+        };
+        AdminGroupOpenPageCtrl.prototype.selectFilter = function (item, index, all) {
+            var exist = this.assignedActionItems.filter(function (_item) {
+                return item.actionItemId === _item.actionItemId;
+            });
+            if (exist.length > 0) {
+                return false;
+            }
+            return true;
+        };
+        AdminGroupOpenPageCtrl.prototype.validateInput = function () {
+            var validation = true;
+            var unassigned = this.selected.filter(function (item) {
+                return !item.actionItemId;
+            });
+            if (this.isEqual(this.selected, this.originalAssign)) {
+                validation = false;
+            }
+            if (unassigned.length !== 0) {
+                validation = false;
+            }
+            return validation;
+        };
+        AdminGroupOpenPageCtrl.prototype.cancel = function () {
+            this.editMode = false;
+            this.openContentPanel();
+        };
+        AdminGroupOpenPageCtrl.prototype.isEqual = function (item1, item2) {
+            var item1Properties = item1.map(function (item) {
+                return [item.actionItemId, item.folderId, item.seq];
+            });
+            var item2Properties = item2.map(function (item) {
+                return [item.actionItemId, item.folderId, item.seq];
+            });
+            if (angular.equals(item1Properties, item2Properties)) {
+                return true;
+            }
+            return false;
+        };
+        AdminGroupOpenPageCtrl.prototype.save = function () {
+            var _this = this;
+            //TODO:: send this.selected, groupId to service
+            // send().then show content preview page with success notification
+            this.adminGroupService.updateActionItemGroupAssignment(this.selected, this.$state.params.data)
+                .then(function (response) {
+                console.log(response);
+                _this.openContentPanel();
+            }, function (err) {
+                console.log(err);
+            });
         };
         return AdminGroupOpenPageCtrl;
     }());
