@@ -20,7 +20,8 @@ var PB;
             var self = this;
             attrs.$observe('aid', function (tpl) {
                 var me = self;
-                self.ItemListViewService.getPagebuilderPage("ActionItemPolicy", attrs.aid, attrs.gid)
+                console.log(window);
+                self.ItemListViewService.getPagebuilderPage('AIPMasterTemplateSystemRequired', attrs.aid, attrs.gid)
                     .then(function (val) {
                     element.children().empty();
                     var tempElement = angular.element(val.html);

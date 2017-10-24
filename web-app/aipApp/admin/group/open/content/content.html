@@ -59,9 +59,17 @@ Copyright 2017 Ellucian Company L.P. and its affiliates.
             <div class="row existActionItems" ng-repeat="item in vm.assignedActionItems">
                 <div class="row">
                     <div class="col-xs-8 col-sm-8">
-                        <xe-ui-select id="select2actionItems" ng-model="vm.selected[actionItemId]" theme="select2" ng-disabled="disabled">
-                            <xe-ui-select-match>{{$select.selected.name}}</xe-ui-select-match>
-                            <xe-ui-select-choices group-by="vm.groupFn" repeat="actionItem in allActionItems | propsFilter: {name: $select.search}">
+                        <xe-ui-select id="select2actionItems" ng-model="vm.selected[item.sequenceNumber-1]" theme="select2" ng-disabled="disabled"
+                                      on-select="vm.selectActionItem($item, $index)">
+                            <xe-ui-select-match placeholder="Select">
+                                <div class="row actionItemName">{{vm.selected[item.sequenceNumber-1].actionItemName}}</div>
+                                <div class="row additionalInfo">
+                                    <div class="col-sm-3 actionItemStatus">{{vm.selected[item.sequenceNumber-1].actionItemStatus}}</div>
+                                    <div class="col-sm-9 actionItemFolder">{{vm.selected[item.sequenceNumber-1].folderName}}</div>
+                                </div>
+                            </xe-ui-select-match>
+                            <xe-ui-select-choices group-by="vm.groupFn" repeat="actionItem in vm.allActionItems | groupAssignFilter:$index:vm.assignedActionItems:vm.selected |
+                                    propsFilter: {actionItemName: $select.search, folderName: $select.search}">
                                 <div ng-bind-html="actionItem.actionItemName | highlight: $select.search"></div>
                             </xe-ui-select-choices>
                         </xe-ui-select>
@@ -86,7 +94,8 @@ Copyright 2017 Ellucian Company L.P. and its affiliates.
             <hr>
             <div class="row add">
                 <div type="button" class="btn btn-default noBorder" ng-click="vm.addNew()" aria-label="{{'aip.admin.group.actionItem.addActionItem'|i18n_aip}}">
-                    <i class="icon icon-add-CO" aria-hidden="true">{{'aip.admin.group.actionItem.addActionItem'|i18n_aip}}</i>
+                    <i class="icon icon-add-CO" aria-hidden="true"></i>
+                    <span class="groupAssignAddButtonText">{{"aip.admin.group.actionItem.addActionItem"|i18n_aip}}</span>
                 </div>
             </div>
             <div class="row control">

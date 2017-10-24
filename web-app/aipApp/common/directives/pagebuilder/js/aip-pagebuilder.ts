@@ -45,7 +45,8 @@ module PB {
 
             attrs.$observe('aid', (tpl)  => {
                 var me = self;
-                self.ItemListViewService.getPagebuilderPage("ActionItemPolicy", attrs.aid, attrs.gid)
+                console.log(window);
+                self.ItemListViewService.getPagebuilderPage('AIPMasterTemplateSystemRequired', attrs.aid, attrs.gid)
                     .then((val) => {
                         element.children().empty();
                         var tempElement = angular.element(val.html);
@@ -58,7 +59,7 @@ module PB {
 
                         appModule.requires.push('ngResource','ngGrid','ui', 'pbrun.directives', 'ngSanitize', 'xe-ui-components');
 
-                        if (window[pbController]) { // backwards compatibel with alpha release
+                        if (window[pbController]) { // backwards compatible with alpha release
                             aipController[pbController] = window[pbController];
                         }
                         for (var pc in aipController) {
