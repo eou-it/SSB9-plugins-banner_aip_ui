@@ -502,6 +502,28 @@ ol.selected-group > li > button  {
           .groupOpenContainer .groupInfo .groupInfoRow .groupElement .xe-tab-container .contentInfo .contentText .control button  {
     float:left;
 }
+          .groupOpenContainer .groupInfo .groupInfoRow .groupElement .xe-tab-container .contentInfo .contentText .noBorder  {
+    border:none;
+}
+          .groupOpenContainer .groupInfo .groupInfoRow .groupElement .xe-tab-container .contentInfo .contentText #select2actionItems .select2-results ul.select2-result-sub  {
+    padding-right:8px;
+}
+          .groupOpenContainer .groupInfo .groupInfoRow .groupElement .xe-tab-container .contentInfo .contentText #select2actionItems .row.actionItemName  {
+    padding:0;
+    line-height:1.7em;
+}
+          .groupOpenContainer .groupInfo .groupInfoRow .groupElement .xe-tab-container .contentInfo .contentText #select2actionItems .row.additionalInfo  {
+    padding:0;
+    line-height:1em;
+    font-size:0.8em;
+}
+            .groupOpenContainer .groupInfo .groupInfoRow .groupElement .xe-tab-container .contentInfo .contentText #select2actionItems .row.additionalInfo .actionItemStatus  {
+    padding:0;
+    border-left:1px solid #b3b3b3;
+}
+            .groupOpenContainer .groupInfo .groupInfoRow .groupElement .xe-tab-container .contentInfo .contentText #select2actionItems .row.additionalInfo .actionItemFolder  {
+    padding:0 16px 0 0;
+}
           .groupOpenContainer .groupInfo .groupInfoRow .groupElement .xe-tab-container .contentInfo table  {
     width:100%;
     border:1px solid #b3b3b3;
@@ -542,6 +564,9 @@ ol.selected-group > li > button  {
         .groupOpenContainer .groupInfo .groupInfoRow .groupElement .btn.vertical  {
     display:table-row;
     border:none;
+}
+        .groupOpenContainer .groupInfo .groupInfoRow .groupElement .groupAssignAddButtonText  {
+    padding:8px;
 }
 
 .actionListContainer  {

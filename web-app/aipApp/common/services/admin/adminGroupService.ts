@@ -212,18 +212,7 @@ module AIP {
                 url: this.ENDPOINT.admin.getAssignedActionItemInGroup + "?groupId=" + groupId
             })
                 .then((response:any) => {
-                    var newObj = response.data.map(actionItem => {
-                        return {
-                            actionItemId: actionItem[0],
-                            sequenceNumber: actionItem[1],
-                            actionItemName: actionItem[2],
-                            actionItemStatus: actionItem[3],
-                            actionItemFolderName: actionItem[4],
-                            actionItemTitle: actionItem[5],
-                            actionItemDescription: actionItem[6]
-                        };
-                    });
-                    return newObj;
+                    return response.data;
                 }, (err) => {
                     throw new Error(err);
                 });
@@ -240,6 +229,20 @@ module AIP {
                 throw new Error(err);
             });
             return request;
+        }
+        updateActionItemGroupAssignment(groupAssignment, groupId) {
+            var request = this.$http({
+                method: "POST",
+                url: this.ENDPOINT.admin.updateActionItemGroupAssignment,
+                data: {assignment: groupAssignment, groupId: groupId}
+            })
+                .then((response) => {
+                return response.data;
+                }, (err) => {
+                throw new Error(err);
+                });
+            return request;
+
         }
     }
 }
