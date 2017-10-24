@@ -13,7 +13,7 @@ import org.codehaus.groovy.grails.plugins.web.taglib.ValidationTagLib
  */
 class AipActionItemPostingController {
     private static final def LOGGER = Logger.getLogger( this.class )
-    def actionItemPostingCompositeService
+    def actionItemPostCompositeService
     def actionItemGroupAssignReadOnlyService
     def actionItemProcessingCommonService
     /**
@@ -27,7 +27,7 @@ class AipActionItemPostingController {
         map.schedule = 'true' == map.schedule
         def model
         try {
-            model = actionItemPostingCompositeService.addActionItemPosting( map )
+            model = actionItemPostCompositeService.sendAsynchronousPostItem( map )
         } catch (ApplicationException e) {
             model = [fail: true]
             LOGGER.error( e.getMessage() )
