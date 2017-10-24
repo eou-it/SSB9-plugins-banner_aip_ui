@@ -52,10 +52,7 @@ class AipActionItemPostingController {
      * @return
      */
     def getGroupLov() {
-
-        def paginationParam = [max   : params.max.toInteger(),
-                               offset: params.offset ? params.offset.toInteger() : 0]
-        def map = actionItemGroupAssignReadOnlyService.fetchGroupLookup( params.searchParam, paginationParam )
+        def map = actionItemGroupAssignReadOnlyService.fetchGroupLookup()
         render map as JSON
     }
 
@@ -64,9 +61,7 @@ class AipActionItemPostingController {
      * @return
      */
     def getActionGroupActionItemLov() {
-        def paginationParam = [max   : params.max.toInteger(),
-                               offset: params.offset ? params.offset.toInteger() : 0]
-        def map = actionItemGroupAssignReadOnlyService.fetchActiveActionItemByGroupId( (params.searchParam ?: 0) as long, paginationParam )
+        def map = actionItemGroupAssignReadOnlyService.fetchActiveActionItemByGroupId( (params.searchParam ?: 0) as long )
         render map as JSON
     }
 }
