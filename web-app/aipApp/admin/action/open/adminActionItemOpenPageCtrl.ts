@@ -37,6 +37,7 @@ module AIP {
         rules;
         selectedTemplate;
         saving;
+        contentChanged = false;
         templateSource;
 
         constructor($scope, $q:ng.IQService, $state, $filter, $sce, $window, $templateRequest, $templateCache, $compile,
@@ -67,15 +68,31 @@ module AIP {
             this.selectedTemplate;
             this.templateSource;
             this.saving = false;
+            this.contentChanged = $scope.vm.contentChanged;
+
+            $scope.$watch(
+                "[vm.templateSelect, vm.rules, vm.statuses, vm.actionItem.actionItemContent]", function(newVal, oldVal) {
+
+                if ($scope.vm.templateSelect) {
+                    $scope.vm.contentChanged = false;
+
+                    var rulesSame =  angular.equals(oldVal[1], newVal[1]);
+                    var statusSame =  angular.equals(oldVal[2], newVal[2]);
+                    var contentSame = angular.equals(oldVal[3], newVal[3]);
+
+                    if (!rulesSame || !statusSame || !contentSame) {
+                        console.log("something changed changed");
+                        $scope.vm.contentChanged = true;
+                    }
+                }
+                }, true);
+
             this.init();
             angular.element( $window ).bind( 'resize', function () {
                 // $scope.onResize();
                 if (!$scope.$root.$phase) {
                     $scope.$apply();
                 }
-                // $scope.$evalAsync(() => {
-                //     $scope.$apply();
-                // });
             } );
         };
 
@@ -432,10 +449,10 @@ module AIP {
             if (this.selectedTemplate && !this.saving) {
                 if (this.rules.length === 0) {
                     return true;
+                } else if (!this.contentChanged) {
+                    return false
                 } else {
-
                     var invalidRule = this.rules.filter((item) => {
-
                         var statusIdExists = true
 
                         if (!item.status.id ) {
@@ -444,6 +461,7 @@ module AIP {
 
                         return !item.statusRuleLabelText || item.statusRuleLabelText==="" || !statusIdExists
                     });
+
                     if (invalidRule.length===0) {
                         return true;
                     }

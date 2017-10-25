@@ -485,13 +485,26 @@ class AipAdminController {
         //create or update rules
         try {
             List<ActionItemStatusRule> ruleList = []
-            inputRules.each {rule ->
+            inputRules.each { rule ->
                 def statusRule
+                def statusId
+
+                if (rule.status.id) {
+                    statusId = rule.status.id
+
+                } else if (rule.status.actionItemStatusId) {
+                    statusId = rule.status.actionItemStatusId
+                } else {
+                    //fixme: replace message with i18n values
+                    message = "Error updating action item status rule."
+                    throw new Exception(message)
+                }
+
                 if (rule.statusRuleId) {
                     statusRule = ActionItemStatusRule.get( rule.statusRuleId )
                     statusRule.seqOrder = rule.statusRuleSeqOrder.toInteger()
                     statusRule.labelText = rule.statusRuleLabelText
-                    statusRule.actionItemStatusId = rule.status.actionItemStatusId
+                    statusRule.actionItemStatusId = statusId
                     statusRule.actionItemId = jsonObj.actionItemId
                     //TODO: future user story
                     //statusRule.resbumitInd =  rule.resubmitInd
@@ -503,7 +516,7 @@ class AipAdminController {
                             seqOrder: rule.statusRuleSeqOrder,
                             labelText: rule.statusRuleLabelText,
                             actionItemId: jsonObj.actionItemId,
-                            actionItemStatusId: rule.status.id,
+                            actionItemStatusId: statusId,
                             resubmitInd: 'N',
                             userId: aipUser.bannerId,
                             activityDate: new Date(),
