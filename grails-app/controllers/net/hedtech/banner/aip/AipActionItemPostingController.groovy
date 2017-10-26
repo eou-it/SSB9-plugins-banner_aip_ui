@@ -13,7 +13,10 @@ import org.codehaus.groovy.grails.plugins.web.taglib.ValidationTagLib
  */
 class AipActionItemPostingController {
     private static final def LOGGER = Logger.getLogger( this.class )
-    def actionItemPostingCompositeService
+    def actionItemPostCompositeService
+    def actionItemGroupAssignReadOnlyService
+    def actionItemProcessingCommonService
+    def actionItemPostReadOnlyService
     /**
      * Add Action Item Post
      * @return
@@ -21,14 +24,55 @@ class AipActionItemPostingController {
     def addActionItemPosting() {
         def map = [:]
         map = request.JSON
+        map.postNow = 'true' == map.postNow
+        map.schedule = 'true' == map.schedule
         def model
         try {
-            model = actionItemPostingCompositeService.addActionItemPosting( map )
+            model = actionItemPostCompositeService.sendAsynchronousPostItem( map )
         } catch (ApplicationException e) {
             model = [fail: true]
             LOGGER.error( e.getMessage() )
             model.message = e.returnMap( {mapToLocalize -> new ValidationTagLib().message( mapToLocalize )} ).message
         }
         render model as JSON
+    }
+
+    /**
+     * API for folders LOV
+     * @return
+     */
+    def populationListForSendLov() {
+        def paginationParam = [max   : params.max,
+                               offset: params.offset]
+        def results = actionItemProcessingCommonService.fetchPopulationListForSend( params.searchParam, paginationParam )
+        render results as JSON
+    }
+
+    /**
+     * Get group LOV
+     * @return
+     */
+    def getGroupLov() {
+        def map = actionItemGroupAssignReadOnlyService.fetchGroupLookup()
+        render map as JSON
+    }
+
+    /**
+     * Get active group action item LOV
+     * @return
+     */
+    def getActionGroupActionItemLov() {
+        def map = actionItemGroupAssignReadOnlyService.fetchActiveActionItemByGroupId( (params.searchParam ?: 0) as long )
+        render map as JSON
+    }
+
+    /**
+     *
+     * @return
+     */
+    def actionItemPostJobList() {
+        def jsonObj = request.JSON
+        def results = actionItemPostReadOnlyService.listActionItemPostJobList( [searchParam: jsonObj.searchParam], [max: jsonObj.max as int, offset: jsonObj.offset as int] )
+        render results as JSON
     }
 }
