@@ -189,7 +189,7 @@ module AIP {
         getGroupActionItem(groupId) {
             var request = this.$http({
                 method: "GET",
-                url: this.ENDPOINT.admin.getActionGroupActionItemLov
+                url: this.ENDPOINT.admin.getActionGroupActionItemLov+ "?searchParam=" + groupId
             });
             return request;
         }
@@ -322,3 +322,4 @@ module AIP {
 }
 
 register("bannerAIP").service("AdminActionService", AIP.AdminActionService);
+register("bannerAIP").service("dateFormatService", AIP.AdminActionService);

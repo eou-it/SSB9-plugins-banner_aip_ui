@@ -7,20 +7,29 @@
 var AIP;
 (function (AIP) {
     var AdminPostItemAddPageCtrl = (function () {
-        function AdminPostItemAddPageCtrl($scope, $q, $state, $filter, $timeout, SpinnerService, AdminActionService) {
-            this.$inject = ["$scope", "$q", "$state", "$filter", "$timeout", "SpinnerService", "AdminActionService", "angular.filter"];
+        function AdminPostItemAddPageCtrl($scope, $q, $state, $uibModal, $filter, $timeout, SpinnerService, APP_ROOT, AdminActionService) {
+            this.$inject = ["$scope", "$q", "$state", "$filter", "$timeout", "SpinnerService", "AdminActionService", "$uibModal", "APP_ROOT", "datePicker"];
             $scope.vm = this;
             this.$q = $q;
             this.$scope = $scope;
             this.$state = $state;
             this.$filter = $filter;
+            this.$uibModal = $uibModal;
+            this.modalInstance;
             this.$timeout = $timeout;
             this.spinnerService = SpinnerService;
             this.adminActionService = AdminActionService;
             this.saving = false;
+            this.APP_ROOT = APP_ROOT;
             this.errorMessage = {};
             this.init();
         }
+        AdminPostItemAddPageCtrl.prototype.groupFunc = function (item) {
+            return item.folderName;
+        };
+        AdminPostItemAddPageCtrl.prototype.populationFunc = function (item) {
+            return item.populationFolderName;
+        };
         AdminPostItemAddPageCtrl.prototype.init = function () {
             var _this = this;
             this.spinnerService.showSpinner(true);
@@ -31,14 +40,9 @@ var AIP;
                 _this.groupList = response.data;
                 console.log(_this.groupList);
                 var postActionItemGroup = $("#postActionItemGroup");
+                //this.postActionItemInfo["group"] = [];
                 _this.postActionItemInfo.group = _this.groupList;
-                _this.$timeout(function () {
-                    postActionItemGroup.select2({
-                        width: "25em",
-                        minimumResultsForSearch: Infinity,
-                        placeholderOption: 'first'
-                    });
-                }, 50);
+                console.log(_this.postActionItemInfo.group);
             }));
             allPromises.push(this.adminActionService.getPopulationlist()
                 .then(function (response) {
@@ -46,12 +50,6 @@ var AIP;
                 console.log(_this.groupList);
                 var postActionItemPopulation = $("#postActionItemPopulation");
                 _this.postActionItemInfo.population = _this.populationList;
-                _this.$timeout(function () {
-                    postActionItemPopulation.select2({
-                        width: "25em",
-                        minimumResultsForSearch: Infinity
-                    });
-                }, 50);
             }));
             this.$q.all(allPromises).then(function () {
                 _this.spinnerService.showSpinner(false);
@@ -60,21 +58,60 @@ var AIP;
         AdminPostItemAddPageCtrl.prototype.changedValue = function (item) {
             var _this = this;
             this.$scope = item.groupId;
-            var a = this.$scope;
+            var groupId = this.$scope;
             console.log(this.$scope);
-            this.adminActionService.getGroupActionItem(a)
+            this.adminActionService.getGroupActionItem(groupId)
                 .then(function (response) {
                 _this.actionItemList = response.data;
                 console.log(_this.actionItemList);
                 var postActionItemGroup = $("#ActionItemGroup");
+                _this.postActionItemInfo["groupAction"] = [];
                 _this.postActionItemInfo.groupAction = _this.actionItemList;
+            });
+        };
+        AdminPostItemAddPageCtrl.prototype.checkBoxValue = function () {
+            this.modalInstance.result.then(function (statusSave) {
+            });
+        };
+        AdminPostItemAddPageCtrl.prototype.editPage = function () {
+            var _this = this;
+            this.modalInstance = this.$uibModal.open({
+                templateUrl: this.APP_ROOT + "admin/action/post/addpost/postAddTemplate.html",
+                controller: "PostAddModalCtrl",
+                controllerAs: "$ctrl",
+                size: "md",
+                windowClass: "aip-modal",
+                resolve: {
+                    actionItemModal: function () {
+                        return _this.postActionItemInfo.groupAction;
+                    }
+                }
+            });
+            this.modalInstance.result.then(function (result) {
+                console.log(result);
+                if (result.success) {
+                    //TODO:: send notification and refresh grid
+                    var n = new Notification({
+                        message: _this.$filter("i18n_aip")("aip.common.save.successful"),
+                        type: "success",
+                        flash: true
+                    });
+                    notifications.addNotification(n);
+                    _this.$scope.refreshGrid(true); //use scope to call grid directive's function
+                    // this.refreshGrid(true);
+                }
+                else {
+                    //TODO:: send error notification
+                }
+            }, function (error) {
+                console.log(error);
             });
         };
         AdminPostItemAddPageCtrl.prototype.validateInput = function () {
             if (this.saving) {
                 return false;
             }
-            /*if(!this.actionItemInfo.name || this.actionItemInfo.name === null || this.actionItemInfo.name === "" || this.actionItemInfo.title.name > 300) {
+            /*if(!this.actionItemInfo.name || this.actionItemInfo.name === null || this.actionItemInfo.name === "" ) {
              this.errorMessage.name = "invalid title";
              } else {
              delete this.errorMessage.name;
@@ -139,3 +176,4 @@ var AIP;
     AIP.AdminPostItemAddPageCtrl = AdminPostItemAddPageCtrl;
 })(AIP || (AIP = {}));
 register("bannerAIP").controller("AdminPostItemAddPageCtrl", AIP.AdminPostItemAddPageCtrl);
+register("bannerAIP").controller("PostAddModalCtrl", AIP.PostAddModalCtrl);

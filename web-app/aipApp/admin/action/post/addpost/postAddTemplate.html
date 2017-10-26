@@ -1,0 +1,28 @@
+<!--*******************************************************************************
+Copyright 2017 Ellucian Company L.P. and its affiliates.
+*******************************************************************************-->
+<div class="modal-header">
+    <h3 class="modal-title" id="modal-status-add-title">{{"aip.admin.action.group.action.items"|i18n_aip}}</h3>
+    <button class="modal-close" type="button" ng-click="vm.closeDialog()">
+        <i class="fa fa-times" aria-hidden="true"></i>
+    </button>
+</div>
+<div class="modal-header"><p class="groupInstruction">{{"aip.admin.action.group.action.items.instructions"|i18n_aip}}</p></div>
+<div class="modal-body" id="modal-status-add-body">
+    <div class="modal-body-content">
+        <div class="row actionInstruction">
+            <label class="">
+                {{"aip.admin.action.group.action.items.active.items"|i18n_aip}}
+            </label>
+        </div>
+        <div class="row">
+        <div class="checkbox checkbox-success">
+            <li class="groupFolder checkbox-green" ng-repeat="item in vm.actionItemModal track by item.actionItemId"> <span><input type="checkbox"  ng-change="vm.changedValue(item)"  ng-model="vm.actionItemModal[$index].check"><label>{{item.actionItemName}}</label></span> <span class="actionFolder">Folder({{item.actionItemFolderName}})</span></li>
+        </div>
+    </div>
+    <div class="modal-control actionlistitems">
+        <button type="button" class="btn btn-default" ng-click="vm.statusSave()" ng-disabled="!vm.validate()">
+            {{"aip.common.save.modal"|i18n_aip}}
+        </button>
+    </div>
+</div>

@@ -10,21 +10,16 @@ Copyright 2017 Ellucian Company L.P. and its affiliates.
                     <label for="" class="titleValue required" id="actionItemAdd-Name"
                            aria-label="Action Item Name">{{"aip.admin.action.actionItem.Postingjob"|i18n_aip}}
                     </label>
-                    <span class="titleValue supplement">{{"aip.admin.action.add.actionName.maxLength"|i18n_aip:60}}</span>
                 </div>
             </div>
             <div class="actionItemElement col-xs-12 col-md-8">
-                <div class="row" ng-class="{'has-error':vm.actionItemInfo.name.length>60}">
-                    <input id="actionItemName" maxlength="60" aria-valuemax="60" type="text" class="form-control"
+                <div class="row">
+                    <input id="actionItemName" type="text" class="form-control"
                            ng-model="vm.actionItemInfo.name"
-                           placeholder="" aria-label=""
+                           placeholder='{{"aip.admin.action.actionItem.Postingjob"|i18n_aip}}' aria-label='{{"aip.admin.action.actionItem.Postingjob"|i18n_aip}}'
                            aria-required="true">
                 </div>
-                <div class="alert alert-danger" role="alert" ng-if="vm.actionItemInfo.title.name>60">
-                    <i class="fa fa-exclamation-circle" aria-hidden="true"></i>
-                    <span class="sr-only">Error:</span>
-                    {{"aip.admin.action.add.actionName.error.exceedMax"|i18n_aip:60}}"}}
-                </div>
+
             </div>
         </div>
         <div class="row actionItemInfoRow actionItemFolder">
@@ -32,31 +27,36 @@ Copyright 2017 Ellucian Company L.P. and its affiliates.
                 <label for="postActionItemGroup" class="titleValue required" id="postActionItemAdd-Group">{{"aip.list.grid.group"|i18n_aip}}
                 </label>
             </div>
-            <div class="actionItemElement col-xs-12 col-sm-5">
+            <div class="actionItemElement col-xs-8 col-sm-8">
                 <div class="row">
-                    <select id="postActionItemGroup" class="actionItemSelect" xe-data="" aria-label="Group" required
-                            aria-required="true"
-                            ng-model="vm.postActionItemInfo.group"
-                            ng-options="item as item.groupName for item in vm.groupList.AIPgeneral.concat(vm.groupList.AIPstudent) track by item.groupId">
-                        <option selected="selected" value="">{{"aip.common.select.group.default"|i18n_aip}}</option>
-                    </select>
+                    <xe-ui-select id="postActionItemGroup" ng-change="vm.changedValue(vm.postActionItemInfo.group)" ng-model="vm.postActionItemInfo.group" theme="select2" ng-disabled="disabled">
+
+                        <xe-ui-select-match placeholder="Select">
+                            <div class="row actionItemName">{{vm.postActionItemInfo.group.groupName}}</div>
+
+                        </xe-ui-select-match>
+
+                        <xe-ui-select-choices group-by="vm.groupFunc" repeat="item in vm.groupList|
+                                    propsFilter: {groupName: $select.search, folderName: $select.search}">
+                            <div ng-bind-html="item.groupName | highlight: $select.search"></div>
+
+                        </xe-ui-select-choices>
+
+                    </xe-ui-select>
+
                 </div>
             </div>
         </div>
         <div class="row actionItemInfoRow actionItemFolder">
             <div class="actionItemElement row input-actionItem">
-                <label for="postActionItems" class="titleValue required" id="postActionItem">{{"aip.admin.action.actionItems.name"|i18n_aip}}
+                <label for="postActionItemGroup" class="titleValue required" id="postActionItem">{{"aip.admin.action.actionItems.name"|i18n_aip}}
                 </label>
-            </div>
-            <div class="actionItemElement col-xs-12 col-sm-5">
-                <div class="row">
-                    <select id="postActionItems" class="actionItemSelect" xe-data="" aria-label="Action Items" required
-                            aria-required="true"
-                            ng-model="vm.actionItemInfo.group"
-                            ng-options="">
-                        <option selected="selected" value="">{{"aip.common.select.group.default"|i18n_aip}}</option>
-                    </select>
+                <span class="actionItemEdit"  ng-click="vm.editPage()">{{"aip.admin.action.actionItems.add.edit"|i18n_aip}}</span>
+                <div class="actionItemElement">
+
+                    <div id="ActionItemGroup"></div>
                 </div>
+
             </div>
         </div>
         <div class="row actionItemInfoRow actionItemStatus">
@@ -64,21 +64,78 @@ Copyright 2017 Ellucian Company L.P. and its affiliates.
                 <label for="postActionItemPopulation" class="titleValue required" id="postActionItemPopulation-Population">{{"aip.admin.action.actionItem.population.name"|i18n_aip}}
                 </label>
             </div>
+
             <div class="actionItemElement col-xs-12 col-sm-5">
                 <div class="row">
-                    <select id="postActionItemPopulation" class="actionItemSelect" xe-data="" aria-label="Status" required
-                            aria-required="true"
-                            ng-model="vm.postActionItemInfo.population"
-                            ng-options="item as item.name for item in vm.populationList track by item.id">
-                        <option selected="selected" value="">{{"aip.common.select.population.default"|i18n_aip}}</option>
-                    </select>
+                    <xe-ui-select id="postActionItemPopulation" ng-model="vm.postActionItemInfo.population" theme="select2" ng-disabled="disabled">
+
+                        <xe-ui-select-match placeholder="Select">
+                          <div class="row actionItemName">{{vm.postActionItemInfo.population.name}}</div>
+
+                        </xe-ui-select-match>
+
+                        <xe-ui-select-choices group-by="vm.populationFunc" repeat="item in vm.populationList |
+                                    propsFilter: {name: $select.search, populationFolderName: $select.search}">
+                            <div ng-bind-html="item.name | highlight: $select.search"></div>
+
+                        </xe-ui-select-choices>
+
+                    </xe-ui-select>
+
                 </div>
             </div>
+
+
+        </div>
+
+        <div class="row actionItemInfoRow actionItemStatus">
+            <div class="col-sm-6 startdate">
+                <div class="col-sm-4 startdate">
+                    <div class="actionItemElement row input-actionItem">
+                        <label for="postActionItemDate" class="titleValue required">{{"aip.admin.action.postactionItem.start.date"|i18n_aip}}
+                        </label>
+                    </div>
+                    <div class="actionItemElement Datelement col-sm-10 dateRow form-container">
+
+                        <div class="row input-daterange form-group right-inner-addon">
+                            <input date-picker type="text" id="deliveryDate" today="{{today}}"
+                                   class="form-control date-picker Datelement" name="deliveryDate"
+
+                                   aria-required="true" required autocomplete="off" placeholder='{{"aip.postaction.dateFormatWaterMark"|i18n_aip}}'/>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="actionItemElement row input-actionItem">
+                        <label for="postActionItemPopulation" class="titleValue required">{{"aip.admin.action.postactionItem.end.date"|i18n_aip}}
+                        </label>
+                    </div>
+                    <div class="actionItemElement col-sm-6">
+                        <div class="row">
+                            <input date-picker type="text" id="deliveryDate1"
+                                   class="form-control date-picker Datelement" name="deliveryDate"
+
+                                   aria-required="true" required autocomplete="off" placeholder='{{"aip.postaction.dateFormatWaterMark"|i18n_aip}}'/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+        </div>
+
+        <div class="row actionItemInfoRow actionItemStatus">
+
         </div>
 
 
+
+
+
     </div>
-    <div class="actionItemControl">
+ <div class="actionItemControl">
         <div class="row">
             <div class="actionItemElement col-xs-12 col-sm-8">
                 <div class="col-sm-4 offset-sm-8 col-xs-12 actionItemButton">
