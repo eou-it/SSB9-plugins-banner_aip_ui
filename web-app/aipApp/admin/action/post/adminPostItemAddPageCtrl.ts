@@ -114,11 +114,6 @@ console.log(this.$scope);
 
         }
 
-        checkBoxValue(){
-            this.modalInstance.result.then(function(statusSave){
-
-        }
-        }
 
         editPage() {
             this.modalInstance = this.$uibModal.open({
@@ -189,7 +184,7 @@ console.log(this.$scope);
         }
         save() {
             this.saving = true;
-            this.adminActionService.saveActionItem(this.postactionItemInfo)
+            this.adminActionService.savePostActionItem(this.postActionItemInfo)
                 .then((response:AIP.IActionItemSaveResponse) => {
                     this.saving = false;
                     var notiParams = {};
@@ -198,7 +193,7 @@ console.log(this.$scope);
                             notiType: "saveSuccess",
                             data: response.data
                         };
-                        this.$state.go("admin-action-open", {noti: notiParams, data: response.data.newActionItem.id});
+                        this.$state.go("admin-post-add", {noti: notiParams, data: response.data.newActionItem.id});
                     } else {
                         this.saveErrorCallback(response.data.message);
                     }

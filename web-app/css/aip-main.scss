@@ -16,6 +16,7 @@ Copyright 2017 Ellucian Company L.P. and its affiliates.
 @import '../aipApp/admin/status/list/adminStatusListPage';
 @import '../aipApp/admin/status/list/add/statusAddModal';
 @import '../aipApp/listItem/itemInform/itemInformModal';
+@import '../aipApp/admin/action/post/addpost/postAddModal';
 @import '../aipApp/admin/action/post/adminPostItemAddPage';
 
 
@@ -359,64 +360,6 @@ ol.selected-group > li {
 ol.selected-group > li > button {
   float: right;
   margin-right: 5px; }
-
-.startdate{padding-left:0px;position:relative;}
-.calendar-img{float: right;
-margin-right: 10px;
-top: -28px;
-position: relative;}
-input.hasMultiCalendarPicker{height:35px;border-radius: 5px;
-  padding-left: 15px;}
-
-/*.ui-select-choices .select2-result-label{font-size: 1.25em;}
-.ui-select-container {
-  font-family: "Open Sans";
-  width: 21em;
-  background: #fff;
-}
-.ui-select-dropdown{width: 21.35em;}
-.ui-select-dropdown .select2-search input {
-  width: 20em !important;}*/
-.actionInstruction{
-font-size: 12px;
-font-style: italic;}
-.actionInstruction{margin:0px;border-bottom:1px solid #888181;}
-.actionInstruction label{margin-bottom:0px;}
-.actionlistitems{margin-top: 0px !important;border-top: 0px !important;}
-.actionItemEdit{font-size: 14px;
-  margin-left: 15px;
-  color: #524e4e;
-  text-decoration: underline;}
-.groupFolder{list-style-type: none;
-  font-weight: bold;
-  color: #1c8445;
-  border-bottom: 1px solid #a7a4a4;
-  line-height: 2.25em;
-  padding: 10px;
-}
-.actionFolder{float:right;}
-
-
-
-
-
-/*input[type="checkbox"]:checked + label::after {
-  content: '';
-  position: absolute;
-  width: 1.2ex;
-  height: 0.4ex;
-  background: rgba(0, 0, 0, 0);
-  top: 0.9ex;
-  left: 0.4ex;
-  border: 3px solid blue;
-  border-top: none;
-  border-right: none;
-  -webkit-transform: rotate(-45deg);
-  -moz-transform: rotate(-45deg);
-  -o-transform: rotate(-45deg);
-  -ms-transform: rotate(-45deg);
-  transform: rotate(-45deg);
-}*/
 
 input[type="checkbox"] {
   line-height: 2.1ex;

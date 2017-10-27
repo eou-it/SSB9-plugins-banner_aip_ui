@@ -17,7 +17,7 @@ Copyright 2017 Ellucian Company L.P. and its affiliates.
         </div>
         <div class="row">
         <div class="checkbox checkbox-success">
-            <li class="groupFolder checkbox-green" ng-repeat="item in vm.actionItemModal track by item.actionItemId"> <span><input type="checkbox"  ng-change="vm.changedValue(item)"  ng-model="vm.actionItemModal[$index].check"><label>{{item.actionItemName}}</label></span> <span class="actionFolder">Folder({{item.actionItemFolderName}})</span></li>
+            <li class="groupFolder checkbox-green" ng-repeat="item in vm.actionItemModal track by item.actionItemId"> <span><input type="checkbox"  ng-change="vm.changedChkBoxValue(item)"  ng-model="vm.actionItemModal[$index].check"><label>{{item.actionItemName}}</label></span> <span class="actionFolder">Folder({{item.actionItemFolderName}})</span></li>
         </div>
     </div>
     <div class="modal-control actionlistitems">

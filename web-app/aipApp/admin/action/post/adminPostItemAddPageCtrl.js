@@ -69,10 +69,6 @@ var AIP;
                 _this.postActionItemInfo.groupAction = _this.actionItemList;
             });
         };
-        AdminPostItemAddPageCtrl.prototype.checkBoxValue = function () {
-            this.modalInstance.result.then(function (statusSave) {
-            });
-        };
         AdminPostItemAddPageCtrl.prototype.editPage = function () {
             var _this = this;
             this.modalInstance = this.$uibModal.open({
@@ -143,7 +139,7 @@ var AIP;
         AdminPostItemAddPageCtrl.prototype.save = function () {
             var _this = this;
             this.saving = true;
-            this.adminActionService.saveActionItem(this.postactionItemInfo)
+            this.adminActionService.savePostActionItem(this.postActionItemInfo)
                 .then(function (response) {
                 _this.saving = false;
                 var notiParams = {};
@@ -152,7 +148,7 @@ var AIP;
                         notiType: "saveSuccess",
                         data: response.data
                     };
-                    _this.$state.go("admin-action-open", { noti: notiParams, data: response.data.newActionItem.id });
+                    _this.$state.go("admin-post-add", { noti: notiParams, data: response.data.newActionItem.id });
                 }
                 else {
                     _this.saveErrorCallback(response.data.message);

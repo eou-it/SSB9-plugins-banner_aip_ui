@@ -80,6 +80,21 @@ var AIP;
             });
             return request;
         };
+        AdminActionService.prototype.savePostActionItem = function (postActionItem) {
+            var params = {
+                title: postActionItem.title,
+                name: postActionItem.groupname,
+                groupId: postActionItem.groupId,
+                editActionItem: postActionItem.description,
+                population: postActionItem.population,
+            };
+            var request = this.$http({
+                method: "POST",
+                data: params,
+                url: this.ENDPOINT.admin.createPostActionItem
+            });
+            return request;
+        };
         AdminActionService.prototype.saveActionItem = function (actionItem) {
             var params = {
                 title: actionItem.title,
