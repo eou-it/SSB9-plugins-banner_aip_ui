@@ -425,7 +425,7 @@ input[type="checkbox"] {
   background-image: url(images/checkbox/checkbox-default.svg);
 }
 
-/*
+
 input[type="radio"],
 input[type="checkbox"] {
   position: absolute;
@@ -451,7 +451,7 @@ input[type="checkbox"] + label::before {
   margin-right: 0.5em;
 }
 input[type="checkbox"]:checked + label::after {
-  content: "W";
+  content: "";
   position: absolute;
   width: 1.2ex;
   height: 0.4ex;
@@ -462,4 +462,4 @@ display: block;
   -o-transform: rotate(-45deg);
   -ms-transform: rotate(-45deg);
   transform: rotate(-45deg);
-}*/
+}

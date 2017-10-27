@@ -1391,6 +1391,14 @@ input.hasMultiCalendarPicker  {
 .actionFolder  {
     float:left;
 }
+
+
+input[type="checkbox"]  {
+    line-height:2.1ex;
+    width:17px;
+    height:25px;
+    background-image:url(images/checkbox/checkbox-default.svg);
+}
 /*** Media Query Section ***/
 @media screen and (max-width: 768px) {
     aip-list .aip-list-container .header .list-item .title  {

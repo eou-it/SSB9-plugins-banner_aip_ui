@@ -822,77 +822,39 @@ ol.selected-group > li > button {
 .aip-modal .modal-dialog .modal-body .modal-control .btn-forward {
   width: 50%; }
 
-.actionItemAddContainer {
-  padding: 8px 0; }
-  .actionItemAddContainer .row {
-    margin-left: 0;
-    margin-right: 0; }
-  .actionItemAddContainer .actionItemInfo {
-    margin-bottom: 20px; }
-    .actionItemAddContainer .actionItemInfo .actionItemInfoRow {
-      margin-bottom: 16px; }
-      .actionItemAddContainer .actionItemInfo .actionItemInfoRow .actionItemElement {
-        padding-right: 8px;
-        padding-left: 8px;
-        margin-bottom: 8px; }
-        .actionItemAddContainer .actionItemInfo .actionItemInfoRow .actionItemElement .alert {
-          padding-top: 8px;
-          padding-bottom: 8px; }
-        .actionItemAddContainer .actionItemInfo .actionItemInfoRow .actionItemElement .open > .dropdown-menu {
-          max-height: 200px;
-          overflow-y: scroll; }
-        .actionItemAddContainer .actionItemInfo .actionItemInfoRow .actionItemElement .titleValue {
-          font-size: 1.5em;
-          font-weight: bold; }
-        .actionItemAddContainer .actionItemInfo .actionItemInfoRow .actionItemElement .titleValue.required:after {
-          content: " *"; }
-        .actionItemAddContainer .actionItemInfo .actionItemInfoRow .actionItemElement .titleValue.supplement {
-          font-size: 1.0em;
-          font-style: italic;
-          position: absolute;
-          bottom: 0;
-          left: auto;
-          right: 8px; }
-        .actionItemAddContainer .actionItemInfo .actionItemInfoRow .actionItemElement .titleValue.supplement.dimmed {
-          font-style: italic;
-          position: relative;
-          padding: 0 24px; }
-        .actionItemAddContainer .actionItemInfo .actionItemInfoRow .actionItemElement [lang='ar'] .titleValue.supplement {
-          left: 8px;
-          right: auto; }
-        .actionItemAddContainer .actionItemInfo .actionItemInfoRow .actionItemElement [lang='ar-sa'] .titleValue.supplement {
-          left: 8px;
-          right: auto; }
-        .actionItemAddContainer .actionItemInfo .actionItemInfoRow .actionItemElement textArea {
-          width: 100%; }
-      .actionItemAddContainer .actionItemInfo .actionItemInfoRow .actionItemElement.input-actionItem {
-        width: 100%; }
-        .actionItemAddContainer .actionItemInfo .actionItemInfoRow .actionItemElement.input-actionItem .actionItemTitle {
-          padding-right: 0;
-          padding-left: 0; }
-      .actionItemAddContainer .actionItemInfo .actionItemInfoRow .dropdown {
-        border: none;
-        box-shadow: none;
-        width: auto;
-        padding: 0; }
-        .actionItemAddContainer .actionItemInfo .actionItemInfoRow .dropdown .dropdown-menu {
-          width: auto;
-          border: 1px solid rgba(0, 0, 0, 0.15); }
-  .actionItemAddContainer .actionItemControl {
-    position: relative;
-    width: 100%;
-    bottom: 10px;
-    margin-bottom: 15px;
-    height: 5em; }
-    .actionItemAddContainer .actionItemControl .actionItemButton {
-      float: right; }
-      .actionItemAddContainer .actionItemControl .actionItemButton span {
-        padding-left: 24px; }
-        .actionItemAddContainer .actionItemControl .actionItemButton span button {
-          min-width: 100px; }
-  @media (min-width: 769px) {
-    .actionItemAddContainer .actionItemButton {
-      margin-left: 10px; } }
+.actionItemAddContainer input.hasMultiCalendarPicker {
+  height: 35px;
+  border-radius: 5px;
+  padding-left: 15px; }
+.actionItemAddContainer .ui-select-choices .select2-result-label {
+  font-size: 1.25em; }
+.actionItemAddContainer .ui-select-container {
+  font-family: "Open Sans";
+  width: 21em;
+  background: #fff; }
+.actionItemAddContainer .ui-select-dropdown {
+  width: 21.35em; }
+.actionItemAddContainer .ui-select-dropdown .select2-search input {
+  width: 20em !important; }
+.actionItemAddContainer .actionItemEdit {
+  font-size: 14px;
+  margin-left: 15px;
+  color: #524e4e;
+  text-decoration: underline; }
+.actionItemAddContainer .calendar-img {
+  background: url(./images/datepicker_icon.png) no-repeat scroll !important; }
+.actionItemAddContainer input.hasMultiCalendarPicker + span {
+  background-position: 0px 1px; }
+.actionItemAddContainer input.hasMultiCalendarPicker:hover .calendar-img, .actionItemAddContainer .calendar-img:hover {
+  background-position: 2px 0px; }
+.actionItemAddContainer .startdate {
+  padding-left: 0px;
+  position: relative; }
+.actionItemAddContainer .calendar-img {
+  float: right;
+  margin-right: 10px;
+  top: -28px;
+  position: relative; }
 
 #username {
   padding-right: 0.5em; }
@@ -1229,18 +1191,15 @@ input[type="checkbox"] {
   height: 25px;
   background-image: url(images/checkbox/checkbox-default.svg); }
 
-/*
 input[type="radio"],
 input[type="checkbox"] {
   position: absolute;
-  left: -999em;
-}
+  left: -999em; }
 
 input[type="checkbox"] + label {
   position: relative;
   overflow: hidden;
-  cursor: pointer;
-}
+  cursor: pointer; }
 
 input[type="checkbox"] + label::before {
   content: "";
@@ -1249,23 +1208,22 @@ input[type="checkbox"] + label::before {
   height: 2ex;
   width: 2ex;
   background-color: white;
-  border: 1px solid rgb(166, 166, 166);
+  border: 1px solid #a6a6a6;
   border-radius: 4px;
-  box-shadow: inset 0 2px 5px rgba(0,0,0,0.25);
-  margin-right: 0.5em;
-}
+  box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.25);
+  margin-right: 0.5em; }
+
 input[type="checkbox"]:checked + label::after {
-  content: "W";
+  content: "";
   position: absolute;
   width: 1.2ex;
   height: 0.4ex;
   background: rgba(0, 0, 0, 0);
-display: block;
+  display: block;
   -webkit-transform: rotate(-45deg);
   -moz-transform: rotate(-45deg);
   -o-transform: rotate(-45deg);
   -ms-transform: rotate(-45deg);
-  transform: rotate(-45deg);
-}*/
+  transform: rotate(-45deg); }
 
 /*# sourceMappingURL=aip-main.css.map */
