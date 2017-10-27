@@ -1,0 +1,26 @@
+<!--*******************************************************************************
+Copyright 2017 Ellucian Company L.P. and its affiliates.
+*******************************************************************************-->
+<div class="modal-header">
+    <h3 class="modal-title" id="modal-status-add-title">{{"aip.admin.status.add"|i18n_aip}}</h3>
+    <button class="modal-close" type="button" ng-click="vm.closeDialog()">
+        <i class="fa fa-times" aria-hidden="true"></i>
+    </button>
+</div>
+<div class="modal-body" id="modal-status-add-body">
+    <div class="modal-body-content">
+        <div class="row">
+            <label>
+                {{"aip.admin.status.actionItemStatus"|i18n_aip}}
+            </label>
+        </div>
+        <div class="row">
+            <input maxlength="30" aria-valuemax="30" class="form-control" type="text" ng-model="vm.statusModel.title">
+        </div>
+    </div>
+    <div class="modal-control">
+        <button type="button" class="btn btn-default" ng-click="vm.statusSave()" ng-disabled="!vm.validate()">
+            {{"aip.common.save.modal"|i18n_aip}}
+        </button>
+    </div>
+</div>

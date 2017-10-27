@@ -330,7 +330,6 @@ module AIP {
             //TODO:: implement to save rules
             var allDefer = [];
             this.saving = true;
-           // console.log(this.actionItem.actionItemContent)
             allDefer.push(this.adminActionService.saveActionItemTemplate(this.selectedTemplate, this.actionItem.actionItemId, this.actionItem.actionItemContent)
                 .then((response:any) => {
                     if(response.data.success) {
@@ -345,7 +344,7 @@ module AIP {
             // set seq order in rule array with it's index
             angular.forEach(this.rules, (item) => {
                 item.statusRuleSeqOrder = this.rules.indexOf(item);
-                item.statusId = item.status.id;
+                item.statusId = item.statusId;
             });
             allDefer.push(this.adminActionService.updateActionItemStatusRule(this.rules, this.$state.params.data)
                 .then((response: any) => {
@@ -398,7 +397,7 @@ module AIP {
                         item.statusRuleLabelText = this.$sce.trustAsHtml(this.$filter("html")(item.statusRuleLabelText)).toString();
                         item["status"] = {
                             actionItemStatus: item.statusName,
-                            actionItemStatusId: item.statusId
+                            actionItemStatusId: item.statusId ? item.statusId : item.status.id
                         }
 
                     });

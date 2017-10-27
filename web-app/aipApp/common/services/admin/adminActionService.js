@@ -43,6 +43,27 @@ var AIP;
             });
             return request;
         };
+        AdminActionService.prototype.getGrouplist = function () {
+            var request = this.$http({
+                method: "GET",
+                url: this.ENDPOINT.admin.getGroupLov
+            });
+            return request;
+        };
+        AdminActionService.prototype.getGroupActionItem = function (groupId) {
+            var request = this.$http({
+                method: "GET",
+                url: this.ENDPOINT.admin.getActionGroupActionItemLov + "?searchParam=" + groupId
+            });
+            return request;
+        };
+        AdminActionService.prototype.getPopulationlist = function () {
+            var request = this.$http({
+                method: "GET",
+                url: this.ENDPOINT.admin.populationListForSendLov
+            });
+            return request;
+        };
         AdminActionService.prototype.getStatus = function () {
             var request = this.$http({
                 method: "GET",
@@ -56,6 +77,21 @@ var AIP;
             var request = this.$http({
                 method: "GET",
                 url: url
+            });
+            return request;
+        };
+        AdminActionService.prototype.savePostActionItem = function (postActionItem) {
+            var params = {
+                title: postActionItem.title,
+                name: postActionItem.groupname,
+                groupId: postActionItem.groupId,
+                editActionItem: postActionItem.description,
+                population: postActionItem.population,
+            };
+            var request = this.$http({
+                method: "POST",
+                data: params,
+                url: this.ENDPOINT.admin.createPostActionItem
             });
             return request;
         };
@@ -121,8 +157,6 @@ var AIP;
             return request;
         };
         AdminActionService.prototype.updateActionItemStatusRule = function (rules, actionItemId) {
-            console.log("admin action service");
-            console.log(rules);
             var request = this.$http({
                 method: "POST",
                 url: this.ENDPOINT.admin.updateActionItemStatusRule,
@@ -163,3 +197,4 @@ var AIP;
     AIP.AdminActionService = AdminActionService;
 })(AIP || (AIP = {}));
 register("bannerAIP").service("AdminActionService", AIP.AdminActionService);
+register("bannerAIP").service("dateFormatService", AIP.AdminActionService);
