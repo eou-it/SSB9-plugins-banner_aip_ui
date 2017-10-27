@@ -189,12 +189,11 @@ var AIP;
             var group = this.actionItems.groups.filter(function (item) {
                 return item.id == groupId;
             });
-            var actionItem = this.actionItems.groups[0].items.filter(function (item) {
+            var actionItem = group[0].items.filter(function (item) {
                 return item.id == itemId;
             });
-            this.itemListViewService.getDetailInformation(groupId, selectionType, index.item === null ? null : itemId).then(function (response) {
+            this.itemListViewService.getDetailInformation(groupId, selectionType, itemId).then(function (response) {
                 _this.selectedData = response;
-                _this.selectedData.info.title = actionItem[0].title;
                 defer.resolve();
             });
             return defer.promise;

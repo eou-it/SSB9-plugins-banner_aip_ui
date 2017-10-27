@@ -241,14 +241,13 @@ module AIP {
             var group = this.actionItems.groups.filter((item) => {
                 return item.id == groupId;
             });
-            var actionItem = this.actionItems.groups[0].items.filter((item) => {
+
+            var actionItem = group[0].items.filter((item) => {
                 return item.id == itemId;
             });
 
-            this.itemListViewService.getDetailInformation(groupId, selectionType, index.item===null?null:itemId).then((response:ISelectedData) => {
+            this.itemListViewService.getDetailInformation(groupId, selectionType, itemId).then((response:ISelectedData) => {
                 this.selectedData = response;
-
-                this.selectedData.info.title= actionItem[0].title;
                 defer.resolve();
             })
             return defer.promise;

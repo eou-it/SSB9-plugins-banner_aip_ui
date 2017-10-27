@@ -107,51 +107,36 @@ class AipController {
             return
         }
         def actionItems = userActionItemReadOnlyService.listActionItemsByPidm( userPidm )
-        //TODO: group is hardcoded. to be pulled from db in future US
+        //TODO:get user assigned group
 
         def userGroupInfo = []
-        def groupDesc
-        def actionItemGroups = groupFolderReadOnlyService.listActionItemGroups()
-
-        if (actionItemGroups.size() > 0) {
-            actionItemGroups[0]?.each {group ->
-                if (!group.groupDesc) {
-                    groupDesc = MessageUtility.message( "aip.placeholder.nogroups" )
-                } else {
-                    groupDesc = group.groupDesc
-                }
-                def groupItem = [
-                        id         : group.groupId,
-                        title      : group.groupTitle,
-                        description: groupDesc,
+        for (item in actionItems) {
+            def exist = userGroupInfo.findIndexOf { it ->
+                it.id == item.actionItemGroupID
+            }
+            if (exist == -1) {
+                def group = groupFolderReadOnlyService.get(item.actionItemGroupID)
+                def newGroup = [
+                        id   : group.groupId,
+                        name : group.groupName,
+                        title: group.groupTitle,
+                        discription: group.groupDesc?group.groupDesc:MessageUtility.message( "aip.placeholder.nogroups" ),
+                        status: group.groupStatus,
+                        postInd: group.postedInd,
+                        folderName: group.folderName,
+                        folderId: group.folderId,
+                        folderDesc: group.folderDesc,
+                        items: [],
                         header     : ["title", "state", "completedDate", "description"]
-
                 ]
-                userGroupInfo << groupItem
+                newGroup.items.push(item)
+                userGroupInfo.push(newGroup)
+            } else {
+                userGroupInfo[exist].items.push(item)
             }
         }
-
-        def myItems = [
-                groups: userGroupInfo
-        ]
-
-        def items = []
-//        if (actionItems.size() > 0) {
-        actionItems?.each {item ->
-            def actionItem = [
-                    id           : item.id,
-                    title        : item.title,
-                    name         : item.name,
-                    state        : item.status,
-                    description  : item.description,
-                    completedDate: item.completedDate
-            ]
-            items << actionItem
-        }
-        myItems.groups[0].items = items
-//            itemsList << myItems
-//        }
-        render myItems as JSON
+        def model = [groups: userGroupInfo, header: ["title", "state", "completedDate", "description"]]
+        render model as JSON
     }
 
     // Return login user's information
@@ -169,15 +154,13 @@ class AipController {
    // @Secured(['ROLE_SELFSERVICE-FACULTY_BAN_DEFAULT_M', 'ROLE_SELFSERVICE-STUDENT_BAN_DEFAULT_M'])
     def detailInfo() {
         //TODO:: tie in groups and user in db and create an associated service
-        def jsonObj = request.JSON; //type, groupId, actionItemId
         def itemDetailInfo
         def groupDesc
-
         try {
-            if (jsonObj.type == "group") {
+            if (params.searrchType == "group") {
                 //itemDetailInfo = actionItemDetailService.getGroupDetailById(jsonObj.groupId)
 
-                def actionItemGroups = groupFolderReadOnlyService.listActionItemGroups()
+                def actionItemGroups = groupFolderReadOnlyService.getActionItemGroupById(params.groupId)
                 itemDetailInfo = []
                 if (actionItemGroups.size() > 0) {
                     actionItemGroups[0]?.each {group ->
@@ -221,8 +204,8 @@ class AipController {
 
                                   ]]
                                   */
-            } else if (jsonObj.type == "actionItem") {
-                itemDetailInfo = actionItemContentService.listActionItemContentById( jsonObj.actionItemId )
+            } else if (params.searchType == "actionItem") {
+                itemDetailInfo = actionItemContentService.listActionItemContentById(params.actionItemId )
 //                itemDetailInfo = [
 //                        content: "Action item information for item " + jsonObj.actionItemId.toString() + " goes here",
 //                        type: "doc",
