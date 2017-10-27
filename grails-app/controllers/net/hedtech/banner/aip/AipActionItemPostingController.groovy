@@ -16,6 +16,7 @@ class AipActionItemPostingController {
     def actionItemPostCompositeService
     def actionItemGroupAssignReadOnlyService
     def actionItemProcessingCommonService
+    def actionItemPostReadOnlyService
     /**
      * Add Action Item Post
      * @return
@@ -63,5 +64,15 @@ class AipActionItemPostingController {
     def getActionGroupActionItemLov() {
         def map = actionItemGroupAssignReadOnlyService.fetchActiveActionItemByGroupId( (params.searchParam ?: 0) as long )
         render map as JSON
+    }
+
+    /**
+     *
+     * @return
+     */
+    def actionItemPostJobList() {
+        def jsonObj = request.JSON
+        def results = actionItemPostReadOnlyService.listActionItemPostJobList( [searchParam: jsonObj.searchParam], [max: jsonObj.max as int, offset: jsonObj.offset as int] )
+        render results as JSON
     }
 }
