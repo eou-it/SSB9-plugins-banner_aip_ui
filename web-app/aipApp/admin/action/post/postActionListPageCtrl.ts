@@ -82,8 +82,8 @@ module AIP {
                 }
             }, {
                 name: "jobStatus",
-                title: this.$filter("i18n_aip")("aip.action.item.list.grid.jobStatus"),
-                ariaLabel: this.$filter("i18n_aip")("aip.action.item.list.grid.jobStatus"),
+                title: this.$filter("i18n_aip")("aip.admin.actionItem.post.grid.job.status"),
+                ariaLabel: this.$filter("i18n_aip")("aip.admin.actionItem.post.grid.job.status"),
                 width: "100px",
                 options: {
                     sortable: false,
@@ -93,8 +93,8 @@ module AIP {
                 }
             }, {
                 name: "jobName",
-                title: this.$filter("i18n_aip")("aip.action.item.list.grid.jobName"),
-                ariaLabel: this.$filter("i18n_aip")("aip.action.item.list.grid.jobName"),
+                title: this.$filter("i18n_aip")("aip.admin.actionItem.post.grid.job.name"),
+                ariaLabel: this.$filter("i18n_aip")("aip.admin.actionItem.post.grid.job.name"),
                 width: "100px",
                 options: {
                     sortable: false,
@@ -104,8 +104,8 @@ module AIP {
             },
                 {
                 name: "scheduleDate",
-                title: this.$filter("i18n_aip")("aip.action.item.list.grid.scheduleDate"),
-                ariaLabel: this.$filter("i18n_aip")("aip.action.item.list.grid.scheduleDate"),
+                title: this.$filter("i18n_aip")("aip.admin.actionItem.post.grid.job.start-schedule.date"),
+                ariaLabel: this.$filter("i18n_aip")("aip.admin.actionItem.post.grid.job.start-schedule.date"),
                 width: "100px",
                 options: {
                     sortable: false,
@@ -114,8 +114,8 @@ module AIP {
                 }
             }, {
                 name: "groupFolder",
-                title: this.$filter("i18n_aip")("aip.action.item.list.grid.groupFolder"),
-                ariaLabel: this.$filter("i18n_aip")("aip.action.item.list.grid.groupFolder"),
+                title: this.$filter("i18n_aip")("aip.admin.actionItem.post.grid.job.group.folder"),
+                ariaLabel: this.$filter("i18n_aip")("aip.admin.actionItem.post.grid.job.group.folder"),
                 width: "100px",
                 options: {
                     sortable: false,
@@ -125,8 +125,8 @@ module AIP {
             },
                 {
                     name: "population",
-                    title: this.$filter("i18n_aip")("aip.action.item.list.grid.population"),
-                    ariaLabel: this.$filter("i18n_aip")("aip.action.item.list.grid.population"),
+                    title: this.$filter("i18n_aip")("aip.admin.actionItem.post.grid.job.population"),
+                    ariaLabel: this.$filter("i18n_aip")("aip.admin.actionItem.post.grid.job.population"),
                     width: "100px",
                     options: {
                         sortable: false,
@@ -136,8 +136,8 @@ module AIP {
                 },
                 {
                     name: "group",
-                    title: this.$filter("i18n_aip")("aip.list.grid.group"),
-                    ariaLabel: this.$filter("i18n_aip")("aip.list.grid.group"),
+                    title: this.$filter("i18n_aip")("aip.admin.actionItem.post.grid.job.group.name"),
+                    ariaLabel: this.$filter("i18n_aip")("aip.admin.actionItem.post.grid.job.group.name"),
                     width: "100px",
                     options: {
                         sortable: false,
@@ -147,8 +147,8 @@ module AIP {
                 },
                 {
                     name: "submittedBy",
-                    title: this.$filter("i18n_aip")("aip.action.item.list.grid.submittedBy"),
-                    ariaLabel: this.$filter("i18n_aip")("aip.action.item.list.grid.submittedBy"),
+                    title: this.$filter("i18n_aip")("aip.admin.actionItem.post.grid.job.submittedBy"),
+                    ariaLabel: this.$filter("i18n_aip")("aip.admin.actionItem.post.grid.job.submittedBy"),
                     width: "100px",
                     options: {
                         sortable: false,
