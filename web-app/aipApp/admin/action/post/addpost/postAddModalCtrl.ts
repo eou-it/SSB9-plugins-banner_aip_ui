@@ -32,17 +32,14 @@ module AIP {
             this.errorMessage = {};
             console.log(this.actionItemModal);
         }
-        /*changedChkBoxValue(item) {
-            var a =item.actionItemId;
-            console.log(item.actionItemId);
-            return item.actionItemId;
 
-        }*/
         statusSave() {
             var checkedCavllue = this.actionItemModal.filter((item) => {
+                console.log();
                 return item.check===true;
+
             });
-            this.$uibModalInstance.dismiss(this.actionItemModal);
+            this.$uibModalInstance.close(checkedCavllue);
         }
 
         closeDialog() {

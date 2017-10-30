@@ -79,22 +79,9 @@ var AIP;
                     }
                 }
             });
-            this.modalInstance.result.then(function (test) {
-                console.log(test);
-                if (test.success) {
-                    //TODO:: send notification and refresh grid
-                    var n = new Notification({
-                        message: _this.$filter("i18n_aip")("aip.common.save.successful"),
-                        type: "success",
-                        flash: true
-                    });
-                    notifications.addNotification(n);
-                    _this.$scope.refreshGrid(true); //use scope to call grid directive's function
-                    // this.refreshGrid(true);
-                }
-                else {
-                    //TODO:: send error notification
-                }
+            this.modalInstance.result.then(function (result) {
+                _this.modalResult = result;
+                console.log(_this.modalResult);
             }, function (error) {
                 console.log(error);
             });
@@ -109,36 +96,34 @@ var AIP;
             else {
                 delete this.errorMessage.name;
             }
-            /*if(!this.postActionItemInfo.startDate || this.postActionItemInfo.startDate === null || this.postActionItemInfo.startDate === "" ) {
+            if (!this.postActionItemInfo.startDate || this.postActionItemInfo.startDate === null || this.postActionItemInfo.startDate === "") {
                 this.errorMessage.startDate = "invalid StartDate";
-            } else {
+            }
+            else {
                 delete this.errorMessage.startDate;
             }
-            if(!this.postActionItemInfo.endDate || this.postActionItemInfo.endDate === null || this.postActionItemInfo.endDate === "" ) {
+            if (!this.postActionItemInfo.endDate || this.postActionItemInfo.endDate === null || this.postActionItemInfo.endDate === "") {
                 this.errorMessage.endDate = "invalid EndDate";
-            } else {
+            }
+            else {
                 delete this.errorMessage.endDate;
             }
-            if(!this.modalInstance.test.result.success.hasOwnProperty('checked')  ) {
+            if (!this.postActionItemInfo.group.selected) {
+                this.errorMessage.group = "invalid group";
+            }
+            else {
+                delete this.errorMessage.group;
+            }
+            if (!this.postActionItemInfo.population.selected || this.postActionItemInfo.population.selected === null || this.postActionItemInfo.population.selected === "") {
+                this.errorMessage.population = "invalid title";
+            }
+            else {
+                delete this.errorMessage.population;
+            }
+            /*if(!this.modalResult.hasOwnProperty('check')) {
                 this.errorMessage.success = "invalid EndDate";
             } else {
                 delete this.errorMessage.success;
-            }
-*/
-            /* if(!this.postActionItemInfo.group.selected) {
-             this.errorMessage.group = "invalid group";
-             } else {
-             delete this.errorMessage.group;
-             }
-             if(!this.postActionItemInfo.groupAction || this.postActionItemInfo.groupAction === null || this.postActionItemInfo.groupAction === "" ) {
-             this.errorMessage.groupAction = "invalid actionItem";
-             } else {
-             delete this.errorMessage.groupAction;
-             }*/
-            /*if(!this.postActionItemInfo.population.selected || this.postActionItemInfo.population.selected === null || this.postActionItemInfo.population.selected === "" ) {
-            this.errorMessage.population = "invalid title";
-            } else {
-            delete this.errorMessage.population;
             }*/
             if (Object.keys(this.errorMessage).length > 0) {
                 return false;

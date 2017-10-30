@@ -29,6 +29,7 @@ module AIP {
         folders: [AIP.IFolder];
         groupList: [AIP.IGroup];
         actionItemList: [AIP.IGroupActionItem];
+        modalResult:[AIP.IModalResult];
         populationList:[AIP.IPopulation];
         postActionItemInfo: AIP.IPostActionItemParam|any;
         errorMessage:any;
@@ -124,23 +125,10 @@ console.log(this.$scope);
                     }
                 }
             });
-            this.modalInstance.result.then((test) => {
-                console.log(test);
-                if (test.success) {
+            this.modalInstance.result.then((result) => {
+                this.modalResult=result;
+                console.log(this.modalResult);
 
-
-                    //TODO:: send notification and refresh grid
-                    var n = new Notification({
-                        message: this.$filter("i18n_aip")("aip.common.save.successful"),
-                        type: "success",
-                        flash: true
-                    });
-                    notifications.addNotification(n);
-                    this.$scope.refreshGrid(true);  //use scope to call grid directive's function
-                    // this.refreshGrid(true);
-                } else {
-                    //TODO:: send error notification
-                }
             }, (error) => {
                 console.log(error);
             });
@@ -156,7 +144,7 @@ console.log(this.$scope);
              delete this.errorMessage.name;
              }
 
-            /*if(!this.postActionItemInfo.startDate || this.postActionItemInfo.startDate === null || this.postActionItemInfo.startDate === "" ) {
+            if(!this.postActionItemInfo.startDate || this.postActionItemInfo.startDate === null || this.postActionItemInfo.startDate === "" ) {
                 this.errorMessage.startDate = "invalid StartDate";
             } else {
                 delete this.errorMessage.startDate;
@@ -166,28 +154,22 @@ console.log(this.$scope);
             } else {
                 delete this.errorMessage.endDate;
             }
-            if(!this.modalInstance.test.result.success.hasOwnProperty('checked')  ) {
-                this.errorMessage.success = "invalid EndDate";
-            } else {
-                delete this.errorMessage.success;
-            }
-*/
 
-            /* if(!this.postActionItemInfo.group.selected) {
+             if(!this.postActionItemInfo.group.selected) {
              this.errorMessage.group = "invalid group";
              } else {
              delete this.errorMessage.group;
              }
-             if(!this.postActionItemInfo.groupAction || this.postActionItemInfo.groupAction === null || this.postActionItemInfo.groupAction === "" ) {
-             this.errorMessage.groupAction = "invalid actionItem";
-             } else {
-             delete this.errorMessage.groupAction;
-             }*/
-             /*if(!this.postActionItemInfo.population.selected || this.postActionItemInfo.population.selected === null || this.postActionItemInfo.population.selected === "" ) {
+             if(!this.postActionItemInfo.population.selected || this.postActionItemInfo.population.selected === null || this.postActionItemInfo.population.selected === "" ) {
              this.errorMessage.population = "invalid title";
              } else {
              delete this.errorMessage.population;
-             }*/
+             }
+            /*if(!this.modalResult.hasOwnProperty('check')) {
+                this.errorMessage.success = "invalid EndDate";
+            } else {
+                delete this.errorMessage.success;
+            }*/
              if(Object.keys(this.errorMessage).length>0) {
              return false;
              } else {
@@ -200,7 +182,7 @@ console.log(this.$scope);
         save() {
             this.saving = true;
             this.adminActionService.saveActionItem(this.postActionItemInfo)
-                .then((response:AIP.IActionItemSaveResponse) => {
+                .then((response:AIP.IPostActionItemSaveResponse) => {
                     this.saving = false;
                     var notiParams = {};
                     if(response.data.success) {

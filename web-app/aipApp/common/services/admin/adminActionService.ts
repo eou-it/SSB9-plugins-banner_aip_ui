@@ -78,6 +78,12 @@ module AIP {
         groupName: string;
         groupTitle: string;
     }
+    export interface IModalResult {
+        actionItemId: number;
+        actionItemFolderName: string;
+        actionItemName: string;
+        actionItemTitle:string;
+    }
     export interface IStatus {
         id: string|number;
         value: string;
@@ -114,6 +120,13 @@ module AIP {
         groupTitle: string;
 }
     export interface IActionItemSaveResponse {
+        data: {
+            success: boolean;
+            message: string;
+            newActionItem: IActionItem2;
+        };
+    }
+    export interface IPostActionItemSaveResponse {
         data: {
             success: boolean;
             message: string;

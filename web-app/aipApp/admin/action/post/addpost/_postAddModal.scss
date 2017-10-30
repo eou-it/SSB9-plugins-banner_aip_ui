@@ -49,5 +49,20 @@
     left: 4px;
 
   }
+  .groupFolder{list-style-type: none;
+    font-weight: bold;
+    color: #1c8445;
+    border-bottom: 1px solid #a7a4a4;
+    line-height: 2.25em;
+    padding: 10px;
+  }
+  .actionFolder{float:right;}
+  .actionlistitems{margin-top: 0px !important;border-top: 0px !important;}
   .actionfolder{ margin-left: 12px;}
+  .actionInstruction{
+    font-size: 12px;
+    font-style: italic;
+    margin:0px;border-bottom:1px solid #888181;}
+
+  .actionInstruction label{margin-bottom:0px;}
 }
