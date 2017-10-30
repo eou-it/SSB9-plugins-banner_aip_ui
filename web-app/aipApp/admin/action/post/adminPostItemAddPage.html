@@ -36,7 +36,7 @@ Copyright 2017 Ellucian Company L.P. and its affiliates.
 
                         </xe-ui-select-match>
 
-                        <xe-ui-select-choices group-by="vm.groupFunc" repeat="item in vm.groupList|
+                        <xe-ui-select-choices  group-by="vm.groupFunc" repeat="item in vm.groupList |
                                     propsFilter: {groupName: $select.search, folderName: $select.search}">
                             <div ng-bind-html="item.groupName | highlight: $select.search"></div>
 
@@ -90,12 +90,12 @@ Copyright 2017 Ellucian Company L.P. and its affiliates.
 
         <div class="row actionItemInfoRow actionItemStatus">
             <div class="col-sm-6 startdate">
-                <div class="col-sm-4 startdate">
+                <div class="col-sm-6 startdate">
                     <div class="actionItemElement row input-actionItem">
                         <label for="postActionItemDate" class="titleValue required">{{"aip.admin.action.postactionItem.start.date"|i18n_aip}}
                         </label>
                     </div>
-                    <div class="actionItemElement Datelement col-sm-10 dateRow form-container">
+                    <div class="actionItemElement Datelement col-sm-6 dateRow form-container">
 
                         <div class="row input-daterange form-group right-inner-addon">
                             <input date-picker type="text" ng-model="vm.postActionItemInfo.startDate" id="deliveryDate" today="{{today}}"

@@ -217,6 +217,23 @@ module AIP {
             });
             return request;
         }
+        savePostActionItem(postActionItem) {
+            var params = {
+                title: postActionItem.title,
+                name: postActionItem.groupname,
+                groupId: postActionItem.groupId,
+                editActionItem: postActionItem.description,
+                population: postActionItem.population,
+
+            };
+            var request = this.$http({
+                method: "POST",
+                data: params,
+                url: this.ENDPOINT.admin.createPostActionItem
+            });
+            return request;
+        }
+
         saveActionItem(actionItem) {
             var params = {
                 title: actionItem.title,

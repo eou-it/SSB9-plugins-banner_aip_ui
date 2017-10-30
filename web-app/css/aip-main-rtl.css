@@ -946,97 +946,86 @@ ol.selected-group > li > button  {
     width:50%;
 }
 
-.actionItemAddContainer  {
-    padding:8px 0;
+.aip-modal .modal-dialog .modal-header .row.blockProcess  {
+    padding:16px;
 }
-  .actionItemAddContainer .row  {
-    margin-right:0;
-    margin-left:0;
+  .aip-modal .modal-dialog .modal-header .row.blockProcess input  {
+    margin-left:8px;
 }
-  .actionItemAddContainer .actionItemInfo  {
-    margin-bottom:20px;
+
+.actionInstruction  {
+    font-size:12px;
+    font-style:italic;
+    margin:0px;
+    border-bottom:1px solid #888181;
 }
-    .actionItemAddContainer .actionItemInfo .actionItemInfoRow  {
-    margin-bottom:16px;
+
+.actionInstruction label  {
+    margin-bottom:0px;
 }
-      .actionItemAddContainer .actionItemInfo .actionItemInfoRow .actionItemElement  {
-    padding-left:8px;
-    padding-right:8px;
-    margin-bottom:8px;
+
+.actionlistitems  {
+    margin-top:0px !important;
+    border-top:0px !important;
 }
-        .actionItemAddContainer .actionItemInfo .actionItemInfoRow .actionItemElement .alert  {
-    padding-top:8px;
-    padding-bottom:8px;
-}
-        .actionItemAddContainer .actionItemInfo .actionItemInfoRow .actionItemElement .open > .dropdown-menu  {
-    max-height:200px;
-    overflow-y:scroll;
-}
-        .actionItemAddContainer .actionItemInfo .actionItemInfoRow .actionItemElement .titleValue  {
-    font-size:1.5em;
+
+.groupFolder  {
+    list-style-type:none;
     font-weight:bold;
+    color:#1c8445;
+    border-bottom:1px solid #a7a4a4;
+    line-height:2.25em;
+    padding:10px;
 }
-        .actionItemAddContainer .actionItemInfo .actionItemInfoRow .actionItemElement .titleValue.required:after  {
-    content:" *";
-}
-        .actionItemAddContainer .actionItemInfo .actionItemInfoRow .actionItemElement .titleValue.supplement  {
-    font-size:1.0em;
-    font-style:italic;
-    position:absolute;
-    bottom:0;
-    right:auto;
-    left:8px;
-}
-        .actionItemAddContainer .actionItemInfo .actionItemInfoRow .actionItemElement .titleValue.supplement.dimmed  {
-    font-style:italic;
-    position:relative;
-    padding:0 24px;
-}
-        .actionItemAddContainer .actionItemInfo .actionItemInfoRow .actionItemElement [lang='ar'] .titleValue.supplement  {
-    right:8px;
-    left:auto;
-}
-        .actionItemAddContainer .actionItemInfo .actionItemInfoRow .actionItemElement [lang='ar-sa'] .titleValue.supplement  {
-    right:8px;
-    left:auto;
-}
-        .actionItemAddContainer .actionItemInfo .actionItemInfoRow .actionItemElement textArea  {
-    width:100%;
-}
-      .actionItemAddContainer .actionItemInfo .actionItemInfoRow .actionItemElement.input-actionItem  {
-    width:100%;
-}
-        .actionItemAddContainer .actionItemInfo .actionItemInfoRow .actionItemElement.input-actionItem .actionItemTitle  {
-    padding-left:0;
-    padding-right:0;
-}
-      .actionItemAddContainer .actionItemInfo .actionItemInfoRow .dropdown  {
-    border:none;
-    box-shadow:none;
-    width:auto;
-    padding:0;
-}
-        .actionItemAddContainer .actionItemInfo .actionItemInfoRow .dropdown .dropdown-menu  {
-    width:auto;
-    border:1px solid rgba(0, 0, 0, 0.15);
-}
-  .actionItemAddContainer .actionItemControl  {
-    position:relative;
-    width:100%;
-    bottom:10px;
-    margin-bottom:15px;
-    height:5em;
-}
-    .actionItemAddContainer .actionItemControl .actionItemButton  {
+
+.actionFolder  {
     float:left;
 }
-      .actionItemAddContainer .actionItemControl .actionItemButton span  {
-    padding-right:24px;
+
+.actionItemAddContainer input.hasMultiCalendarPicker  {
+    height:35px;
+    border-radius:5px;
+    padding-right:15px;
 }
-        .actionItemAddContainer .actionItemControl .actionItemButton span button  {
-    min-width:100px;
+.actionItemAddContainer .ui-select-choices .select2-result-label  {
+    font-size:1.25em;
 }
-  
+.actionItemAddContainer .ui-select-container  {
+    font-family:"Open Sans";
+    width:21em;
+    background:#fff;
+}
+.actionItemAddContainer .ui-select-dropdown  {
+    width:21.35em;
+}
+.actionItemAddContainer .ui-select-dropdown .select2-search input  {
+    width:20em !important;
+}
+.actionItemAddContainer .actionItemEdit  {
+    font-size:14px;
+    margin-right:15px;
+    color:#524e4e;
+    text-decoration:underline;
+}
+.actionItemAddContainer .calendar-img  {
+    background:url(./images/datepicker_icon.png) no-repeat scroll !important;
+}
+.actionItemAddContainer input.hasMultiCalendarPicker + span  {
+    background-position:0px 1px;
+}
+.actionItemAddContainer input.hasMultiCalendarPicker:hover .calendar-img, .actionItemAddContainer .calendar-img:hover  {
+    background-position:2px 0px;
+}
+.actionItemAddContainer .startdate  {
+    padding-right:0px;
+    position:relative;
+}
+.actionItemAddContainer .calendar-img  {
+    float:left;
+    margin-left:10px;
+    top:-28px;
+    position:relative;
+}
 
 #username  {
     padding-left:0.5em;
@@ -1334,62 +1323,11 @@ ol.selected-group > li > button  {
     margin-left:5px;
 }
 
-.startdate  {
-    padding-right:0px;
-    position:relative;
-}
-
-.calendar-img  {
-    float:left;
-    margin-left:10px;
-    top:-28px;
-    position:relative;
-}
-
-input.hasMultiCalendarPicker  {
-    height:35px;
-    border-radius:5px;
-    padding-right:15px;
-}
-
-
-.actionInstruction  {
-    font-size:12px;
-    font-style:italic;
-}
-
-.actionInstruction  {
-    margin:0px;
-    border-bottom:1px solid #888181;
-}
-
-.actionInstruction label  {
-    margin-bottom:0px;
-}
-
-.actionlistitems  {
-    margin-top:0px !important;
-    border-top:0px !important;
-}
-
-.actionItemEdit  {
-    font-size:14px;
-    margin-right:15px;
-    color:#524e4e;
-    text-decoration:underline;
-}
-
-.groupFolder  {
-    list-style-type:none;
-    font-weight:bold;
-    color:#1c8445;
-    border-bottom:1px solid #a7a4a4;
-    line-height:2.25em;
-    padding:10px;
-}
-
-.actionFolder  {
-    float:left;
+input[type="checkbox"]  {
+    line-height:2.1ex;
+    width:17px;
+    height:25px;
+    background-image:url(images/checkbox/checkbox-default.svg);
 }
 
 
@@ -1537,11 +1475,6 @@ input[type="checkbox"]  {
     font-weight:bold;
     padding-left:8px;
     text-indent:0;
-}
-}
-@media (min-width: 769px) {
-    .actionItemAddContainer .actionItemButton  {
-    margin-right:10px;
 }
 }
 @media screen and (min-width: 1024px) {
