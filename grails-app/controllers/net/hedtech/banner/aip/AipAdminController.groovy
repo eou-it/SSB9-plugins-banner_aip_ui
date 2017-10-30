@@ -6,15 +6,12 @@ package net.hedtech.banner.aip
 import grails.converters.JSON
 import groovy.json.JsonSlurper
 import net.hedtech.banner.MessageUtility
-import net.hedtech.banner.aip.common.AIPConstants
 import net.hedtech.banner.exceptions.ApplicationException
-import net.hedtech.banner.general.communication.folder.CommunicationFolder
 import net.hedtech.banner.i18n.MessageHelper
 import org.apache.log4j.Logger
 import org.codehaus.groovy.grails.plugins.web.taglib.ValidationTagLib
 import org.omg.CORBA.portable.ApplicationException
 import org.springframework.security.core.context.SecurityContextHolder
-import java.text.MessageFormat
 
 /**
  * Controller class for AIP Admin
@@ -22,8 +19,6 @@ import java.text.MessageFormat
 class AipAdminController {
     private static final def LOGGER = Logger.getLogger( this.class )
     static defaultAction = "folders"
-
-    def communicationFolderService
 
     def groupFolderReadOnlyService
 
@@ -37,6 +32,8 @@ class AipAdminController {
 
     def actionItemCompositeService
 
+    def actionItemGroupCompositeService
+
     def actionItemStatusCompositeService
 
     def actionItemStatusService
@@ -46,17 +43,19 @@ class AipAdminController {
     def actionItemStatusRuleReadOnlyService
 
     def actionItemBlockedProcessService
-
+    def actionItemProcessingCommonService
     def actionItemGroupAssignReadOnlyService
 
     def actionItemGroupAssignService
 
+    /**
+     * API for folders LOV
+     * @return
+     */
     def folders() {
-        def results = CommunicationFolder.list( sort: "name", order: "asc" )
-        response.status = 200
+        def results = actionItemProcessingCommonService.fetchCommunicationFolders()
         render results as JSON
     }
-
 
     /**
      * Add Action Item
@@ -70,142 +69,27 @@ class AipAdminController {
         render result as JSON
     }
 
-
+    /**
+     * Provides group information for specified id
+     * @return
+     */
     def openGroup() {
-        /* //TODO: determine access in later US
-        if (!hasAccess( 'read' )) {
-            response.sendError( 403 )
-            return
-        }
-        */
-        def jsonObj = request.JSON;
-        def groupId = jsonObj.groupId;
-        def groupDesc;
-
-        if (!groupId) {
-            response.sendError( 403 )
-            return
-        }
-
         def success = false
-        def errors = []
-
-        //def group = actionItemGroupService.getActionItemGroupById( groupId )
-        def groupRO = groupFolderReadOnlyService.getActionItemGroupById( groupId )
-
-
-        if (groupRO) {
-            success = true
-        }
-
-        if (!groupRO) {
-            groupDesc = MessageUtility.message( "aip.placeholder.nogroups" )
-        } else {
-            groupDesc = groupRO.groupDesc[0]
-        }
-
-        def groupItem = [
-                groupId          : groupRO.groupId[0],
-                groupTitle       : groupRO.groupTitle[0],
-                groupName        : groupRO.groupName[0],
-                groupStatus      : MessageHelper.message( "aip.status.${groupRO.groupStatus[0]}" ),
-                folderId         : groupRO.folderId[0],
-                folderName       : groupRO.folderName[0],
-                folderDesc       : groupRO.folderDesc[0],
-                groupUserId      : groupRO.groupUserId[0],
-                groupDesc        : groupDesc,
-                groupActivityDate: groupRO.groupActivityDate[0],
-                groupVersion     : groupRO.groupVersion[0]
-                //dataOrigin     : groupRO?.groupDataOrigin
-        ]
-
-
-
         def model = [
                 success: success,
-                errors : errors,
-                group  : groupItem
-                //folder : groupRO
+                errors : [],
+                group  : groupFolderReadOnlyService.getActionItemGroupById( request.JSON.groupId )
         ]
-
         render model as JSON
     }
 
-
+    /**
+     * Creates Group
+     * @return
+     */
     def createGroup() {
-        def success = false
-        def message
-        /* //TODO: determine access in later US
-        if (!hasAccess( 'save' )) {
-            response.sendError( 403 )
-            return
-        }
-        */
-        def user = SecurityContextHolder?.context?.authentication?.principal
-        def aipUser = AipControllerUtils.getPersonForAip( params, user.pidm )
-        def jsonObj = request.JSON
-
-        def group = new ActionItemGroup(
-                title: jsonObj.groupTitle ?: null,
-                name: jsonObj.groupName ?: null,
-                folderId: jsonObj.folderId ?: null,
-                description: jsonObj.groupDesc ?: null,
-                postingInd: 'N',
-                status: AIPConstants.STATUS_MAP.get( jsonObj.groupStatus ) ?: null,
-                version: jsonObj.version ?: null,
-                userId: aipUser.bannerId ?: null,
-                activityDate: new Date(),
-                dataOrigin: "GRAILS"
-        )
-
-        def groupNew
-        def groupRO
-        def groupItem
-        def groupDesc
-        try {
-            groupNew = actionItemGroupService.create( group )
-
-            success = true
-            groupRO = groupFolderReadOnlyService.getActionItemGroupById( groupNew.id.toInteger() )
-
-
-            if (!groupRO) {
-                groupDesc = MessageUtility.message( "aip.placeholder.nogroups" )
-            } else {
-                groupDesc = groupRO.groupDesc[0]
-            }
-
-            groupItem = [
-                    groupId          : groupRO.groupId[0],
-                    groupTitle       : groupRO.groupTitle[0],
-                    groupName        : groupRO.groupName[0],
-                    groupStatus      : MessageHelper.message( "aip.status.${groupRO.groupStatus[0]}" ),
-                    folderId         : groupRO.folderId[0],
-                    folderName       : groupRO.folderName[0],
-                    folderDesc       : groupRO.folderDesc[0],
-                    groupUserId      : groupRO.groupUserId[0],
-                    groupDesc        : groupDesc,
-                    groupActivityDate: groupRO.groupActivityDate[0],
-                    groupVersion     : groupRO.groupVersion[0]
-            ]
-
-
-        } catch (ApplicationException e) {
-            if (ActionItemGroupService.FOLDER_VALIDATION_ERROR.equals( e.getMessage() )) {
-                message = MessageUtility.message( e.getDefaultMessage(), MessageFormat.format( "{0,number,#}", jsonObj.folderId ) )
-            } else {
-                message = MessageUtility.message( e.getDefaultMessage() )
-            }
-        }
-
-
-        def model = [
-                success: success,
-                message: message,
-                group  : groupItem
-        ]
-
-        render model as JSON
+        def result = actionItemGroupCompositeService.createGroup( request.JSON )
+        render result as JSON
     }
 
 
@@ -276,30 +160,14 @@ class AipAdminController {
         render model as JSON
     }
 
-
+    /**
+     * List the groups
+     * @return
+     */
     def groupList() {
-
-        def jsonObj = request.JSON
-        def params = [filterName   : jsonObj.filterName,
-                      sortColumn   : jsonObj.sortColumn,
-                      sortAscending: jsonObj.sortAscending,
-                      max          : jsonObj.max,
-                      offset       : jsonObj.offset]
-
-        def results = groupFolderReadOnlyService.listGroupFolderPageSort( params )
-
-        def groupHeadings = [
-                [name: "groupId", title: "id", options: [visible: false, isSortable: true]],
-                [name: "groupName", title: MessageUtility.message( "aip.common.group.name" ), options: [visible: true, isSortable: true, ascending: jsonObj.sortAscending], width: 0],
-                [name: "groupTitle", title: MessageUtility.message( "aip.common.group.title" ), options: [visible: true, isSortable: true, ascending: jsonObj.sortAscending], width: 0],
-                [name: "groupStatus", title: MessageUtility.message( "aip.common.status" ), options: [visible: true, isSortable: true, ascending: jsonObj.sortAscending], width: 0],
-                [name: "folderName", title: MessageUtility.message( "aip.common.folder" ), options: [visible: true, isSortable: true, ascending: jsonObj.sortAscending], width: 0],
-                [name: "groupActivityDate", title: MessageUtility.message( "aip.common.activity.date" ), options: [visible: true, isSortable: true, ascending: jsonObj.sortAscending], width: 0],
-                [name: "groupUserId", title: MessageUtility.message( "aip.common.last.updated.by" ), options: [visible: true, isSortable: true, ascending: jsonObj.sortAscending], width: 0]
-        ]
-
-        results.header = groupHeadings
-
+        def requestParams = request.JSON
+        def paginationParams = [sortColumn: requestParams.sortColumn, sortAscending: requestParams.sortAscending, max: requestParams.max, offset: requestParams.offset]
+        def results = groupFolderReadOnlyService.listGroupFolderPageSort( [name: requestParams.filterName], paginationParams )
         render results as JSON
     }
 
@@ -379,8 +247,6 @@ class AipAdminController {
         ActionItemContent aic = actionItemContentService.listActionItemContentById( actionItemId )
         aic.actionItemId = actionItemId
         aic.actionItemTemplateId = templateId
-        aic.lastModifiedby = aipUser.bannerId
-        aic.lastModified = new Date()
         aic.text = actionItemDetailText
 
         ActionItemContent newAic = actionItemContentService.createOrUpdate( aic )
@@ -478,7 +344,7 @@ class AipAdminController {
         List<Long> newRuleIdList = inputRules.statusRuleId.toList()
         List<Long> existingRuleIdList = currentRules.id.toList()
 
-        def deleteRules = existingRuleIdList.minus(newRuleIdList)
+        def deleteRules = existingRuleIdList.minus( newRuleIdList )
 
         //delete those that have been removed
         actionItemStatusRuleService.delete( deleteRules )
@@ -539,6 +405,7 @@ class AipAdminController {
 
         List<ActionItemStatusRule> updatedActionItemStatusRules =
                 actionItemStatusRuleService.getActionItemStatusRuleByActionItemId( jsonObj.actionItemId )
+
 
         def model = [
                 success: success,
@@ -699,30 +566,32 @@ value: value.aipBlock
 
     }
 
-    def getAssignedActionItemInGroup () {
+
+    def getAssignedActionItemInGroup() {
         def user = SecurityContextHolder?.context?.authentication?.principal
         if (!user.pidm) {
             response.sendError( 403 )
             return
         }
-        Long groupId = Long.parseLong(params.groupId)
-        def assignedActionItems = actionItemGroupAssignReadOnlyService.getAssignedActionItemsInGroup(groupId)
+        Long groupId = Long.parseLong( params.groupId )
+        def assignedActionItems = actionItemGroupAssignReadOnlyService.getAssignedActionItemsInGroup( groupId )
         def resultMap = assignedActionItems?.collect {it ->
             [
-                    id                      : it.id,
-                    actionItemId            : it.actionItemId,
-                    sequenceNumber          : it.sequenceNumber,
-                    actionItemName          : it.actionItemName,
-                    actionItemStatus        : it.actionItemStatus ? MessageHelper.message( "aip.status.${it.actionItemStatus.trim()}" ) : null,
-                    actionItemFolderName    : it.actionItemFolderName,
-                    actionItemTitle         : it.actionItemTitle,
-                    actionItemFolderId      : it.actionItemFolderId
-                    ]
+                    id                  : it.id,
+                    actionItemId        : it.actionItemId,
+                    sequenceNumber      : it.sequenceNumber,
+                    actionItemName      : it.actionItemName,
+                    actionItemStatus    : it.actionItemStatus ? MessageHelper.message( "aip.status.${it.actionItemStatus.trim()}" ) : null,
+                    actionItemFolderName: it.actionItemFolderName,
+                    actionItemTitle     : it.actionItemTitle,
+                    actionItemFolderId  : it.actionItemFolderId
+            ]
         }
-        render resultMap  as JSON
+        render resultMap as JSON
     }
 
-    def getActionItemsListForSelect () {
+
+    def getActionItemsListForSelect() {
         def user = SecurityContextHolder?.context?.authentication?.principal
         if (!user.pidm) {
             response.sendError( 403 )
@@ -730,37 +599,38 @@ value: value.aipBlock
         }
         def results = actionItemReadOnlyService.listActionItemRO()
         def resultMap = results?.collect {actionItem ->
-                    [
-                            actionItemId           : actionItem.actionItemId,
-                            actionItemName         : actionItem.actionItemName,
-                            actionItemTitle        : actionItem.actionItemTitle,
-                            folderId               : actionItem.folderId,
-                            folderName             : actionItem.folderName,
-                            folderDesc             : actionItem.folderDesc,
-                            actionItemStatus       : actionItem.actionItemStatus ? MessageHelper.message( "aip.status.${actionItem.actionItemStatus.trim()}" ) : null,
-                            actionItemActivityDate : actionItem.actionItemActivityDate,
-                            actionItemUserId       : actionItem.actionItemUserId,
-                            actionItemContentUserId: actionItem.actionItemContentUserId,
-                            actionItemCreatorId    : actionItem.actionItemCreatorId,
-                            actionItemCreateDate   : actionItem.actionItemCreateDate,
-                            actionItemCompositeDate: actionItem.actionItemCompositeDate,
-                            actionItemLastUserId   : actionItem.actionItemLastUserId,
-                            actionItemVersion      : actionItem.actionItemVersion,
-                            actionItemTemplateId   : actionItem.actionItemTemplateId,
-                            actionItemTemplateName : actionItem.actionItemTemplateName,
-                            actionItemPageName     : actionItem.actionItemPageName,
-                            actionItemContentId    : actionItem.actionItemContentId,
-                            actionItemContentDate  : actionItem.actionItemContentDate,
-                            actionItemContent      : actionItem.actionItemContent
-                    ]
-                }
+            [
+                    actionItemId           : actionItem.actionItemId,
+                    actionItemName         : actionItem.actionItemName,
+                    actionItemTitle        : actionItem.actionItemTitle,
+                    folderId               : actionItem.folderId,
+                    folderName             : actionItem.folderName,
+                    folderDesc             : actionItem.folderDesc,
+                    actionItemStatus       : actionItem.actionItemStatus ? MessageHelper.message( "aip.status.${actionItem.actionItemStatus.trim()}" ) : null,
+                    actionItemActivityDate : actionItem.actionItemActivityDate,
+                    actionItemUserId       : actionItem.actionItemUserId,
+                    actionItemContentUserId: actionItem.actionItemContentUserId,
+                    actionItemCreatorId    : actionItem.actionItemCreatorId,
+                    actionItemCreateDate   : actionItem.actionItemCreateDate,
+                    actionItemCompositeDate: actionItem.actionItemCompositeDate,
+                    actionItemLastUserId   : actionItem.actionItemLastUserId,
+                    actionItemVersion      : actionItem.actionItemVersion,
+                    actionItemTemplateId   : actionItem.actionItemTemplateId,
+                    actionItemTemplateName : actionItem.actionItemTemplateName,
+                    actionItemPageName     : actionItem.actionItemPageName,
+                    actionItemContentId    : actionItem.actionItemContentId,
+                    actionItemContentDate  : actionItem.actionItemContentDate,
+                    actionItemContent      : actionItem.actionItemContent
+            ]
+        }
 
 
 
         render resultMap as JSON
     }
 
-    def updateActionItemGroupAssignment () {
+
+    def updateActionItemGroupAssignment() {
         def user = SecurityContextHolder?.context?.authentication?.principal
         if (!user.pidm) {
             response.sendError( 403 )
@@ -771,45 +641,45 @@ value: value.aipBlock
 
         def aipUser = AipControllerUtils.getPersonForAip( params, user.pidm )
         def inputGroupAssignments = jsonObj.assignment
-        def groupId= jsonObj.groupId
+        def groupId = jsonObj.groupId
 
         def message
         def success = false
         def model
         try {
-            Map assignActionItem = actionItemGroupAssignService.updateActionItemGroupAssignment(user, inputGroupAssignments, groupId)
+            Map assignActionItem = actionItemGroupAssignService.updateActionItemGroupAssignment( user, inputGroupAssignments, groupId )
             def resultMap
 
             if (assignActionItem) {
                 success = true
                 resultMap = assignActionItem?.collect {it ->
                     [
-                            id                      : it.id,
-                            actionItemId            : it.actionItemId,
-                            sequenceNumber          : it.sequenceNumber,
-                            actionItemName          : it.actionItemName,
-                            actionItemStatus        : it.actionItemStatus ? MessageHelper.message( "aip.status.${it.actionItemStatus.trim()}" ) : null,
-                            actionItemFolderName    : it.actionItemFolderName,
-                            actionItemTitle         : it.actionItemTitle,
-                            actionItemFolderId      : it.actionItemFolderId
+                            id                  : it.id,
+                            actionItemId        : it.actionItemId,
+                            sequenceNumber      : it.sequenceNumber,
+                            actionItemName      : it.actionItemName,
+                            actionItemStatus    : it.actionItemStatus ? MessageHelper.message( "aip.status.${it.actionItemStatus.trim()}" ) : null,
+                            actionItemFolderName: it.actionItemFolderName,
+                            actionItemTitle     : it.actionItemTitle,
+                            actionItemFolderId  : it.actionItemFolderId
                     ]
                 }
             }
             model = [
-                    success   : success,
-                    message   : message,
+                    success              : success,
+                    message              : message,
                     actionItemGroupAssign: resultMap
             ]
         } catch (ApplicationException ae) {
             model = [
-                    success   : success,
-                    message   : MessageUtility.message( ae.getDefaultMessage() ),
+                    success              : success,
+                    message              : MessageUtility.message( ae.getDefaultMessage() ),
                     actionItemGroupAssign: ""
             ]
         } catch (Exception e) {
             model = [
-                    success   : success,
-                    message   : message,
+                    success              : success,
+                    message              : message,
                     actionItemGroupAssign: ""
             ]
         }

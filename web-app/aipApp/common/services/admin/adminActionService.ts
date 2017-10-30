@@ -35,6 +35,7 @@ module AIP {
         title: string;
         status: string|number;
         folder?: IFolder;
+        group?:IGroup;
         folderId?: string;
         folderName?: string;
         actionItemContent?:string;
@@ -62,6 +63,21 @@ module AIP {
         lastModifiedBy?: string;
         name: string;
     }
+    export interface IGroup {
+        groupId: number;
+        groupName: string;
+        groupTitle: string;
+    }
+    export interface IGroupActionItem {
+        groupId: number;
+        groupName: string;
+        groupTitle: string;
+    }
+    export interface IPopulation {
+        groupId: number;
+        groupName: string;
+        groupTitle: string;
+    }
     export interface IStatus {
         id: string|number;
         value: string;
@@ -74,6 +90,15 @@ module AIP {
     export interface IActionItemFolderResponse {
         data: [IFolder];
     }
+    export interface IPostActionItemGroupResponse {
+        data: [IGroup];
+    }
+    export interface IPostActionItemResponse {
+        data: [IGroupActionItem];
+    }
+    export interface IPostActionItemPopulationResponse {
+        data: [IPopulation];
+    }
     export interface IActionItemStatusResponse {
         data: [IStatus]
     }
@@ -83,6 +108,11 @@ module AIP {
         folderId: number;
         description: string;
     }
+    export interface IPostActionItemParam{
+        groupId: number;
+        groupName: string;
+        groupTitle: string;
+}
     export interface IActionItemSaveResponse {
         data: {
             success: boolean;
@@ -149,6 +179,28 @@ module AIP {
             });
             return request;
         }
+        getGrouplist() {
+            var request = this.$http({
+                method: "GET",
+                url: this.ENDPOINT.admin.getGroupLov
+            });
+            return request;
+        }
+        getGroupActionItem(groupId) {
+            var request = this.$http({
+                method: "GET",
+                url: this.ENDPOINT.admin.getActionGroupActionItemLov+ "?searchParam=" + groupId
+            });
+            return request;
+        }
+        getPopulationlist(){
+            var request = this.$http({
+                method: "GET",
+                url: this.ENDPOINT.admin.populationListForSendLov
+            });
+            return request;
+        }
+
         getStatus() {
             var request = this.$http({
                 method: "GET",
@@ -165,6 +217,23 @@ module AIP {
             });
             return request;
         }
+        savePostActionItem(postActionItem) {
+            var params = {
+                title: postActionItem.title,
+                name: postActionItem.groupname,
+                groupId: postActionItem.groupId,
+                editActionItem: postActionItem.description,
+                population: postActionItem.population,
+
+            };
+            var request = this.$http({
+                method: "POST",
+                data: params,
+                url: this.ENDPOINT.admin.createPostActionItem
+            });
+            return request;
+        }
+
         saveActionItem(actionItem) {
             var params = {
                 title: actionItem.title,
@@ -268,3 +337,4 @@ module AIP {
 }
 
 register("bannerAIP").service("AdminActionService", AIP.AdminActionService);
+register("bannerAIP").service("dateFormatService", AIP.AdminActionService);

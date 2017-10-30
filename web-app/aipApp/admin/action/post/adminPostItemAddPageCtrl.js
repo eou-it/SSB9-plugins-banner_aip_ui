@@ -6,82 +6,140 @@
 ///<reference path="../../../common/services/admin/adminActionService.ts"/>
 var AIP;
 (function (AIP) {
-    var AdminActionItemAddPageCtrl = (function () {
-        function AdminActionItemAddPageCtrl($scope, $q, $state, $filter, $timeout, SpinnerService, AdminActionService) {
-            this.$inject = ["$scope", "$q", "$state", "$filter", "$timeout", "SpinnerService", "AdminActionService"];
+    var AdminPostItemAddPageCtrl = (function () {
+        function AdminPostItemAddPageCtrl($scope, $q, $state, $uibModal, $filter, $timeout, SpinnerService, APP_ROOT, AdminActionService) {
+            this.$inject = ["$scope", "$q", "$state", "$filter", "$timeout", "SpinnerService", "AdminActionService", "$uibModal", "APP_ROOT", "datePicker"];
             $scope.vm = this;
             this.$q = $q;
+            this.$scope = $scope;
             this.$state = $state;
             this.$filter = $filter;
+            this.$uibModal = $uibModal;
+            this.modalInstance;
             this.$timeout = $timeout;
             this.spinnerService = SpinnerService;
             this.adminActionService = AdminActionService;
             this.saving = false;
+            this.APP_ROOT = APP_ROOT;
             this.errorMessage = {};
             this.init();
         }
-        AdminActionItemAddPageCtrl.prototype.init = function () {
+        AdminPostItemAddPageCtrl.prototype.groupFunc = function (item) {
+            return item.folderName;
+        };
+        AdminPostItemAddPageCtrl.prototype.populationFunc = function (item) {
+            return item.populationFolderName;
+        };
+        AdminPostItemAddPageCtrl.prototype.init = function () {
             var _this = this;
             this.spinnerService.showSpinner(true);
             var allPromises = [];
-            this.actionItemInfo = {};
+            this.postActionItemInfo = {};
             allPromises.push(this.adminActionService.getGrouplist()
                 .then(function (response) {
                 _this.groupList = response.data;
-                var postactionItemGroup = $("#postactionItemGroup");
-                _this.actionItemInfo.group = _this.groupList;
-                _this.$timeout(function () {
-                    postactionItemGroup.select2({
-                        width: "25em",
-                        minimumResultsForSearch: Infinity
-                    });
-                }, 50);
+                console.log(_this.groupList);
+                var postActionItemGroup = $("#postActionItemGroup");
+                //this.postActionItemInfo["group"] = [];
+                _this.postActionItemInfo.group = _this.groupList;
+                console.log(_this.postActionItemInfo.group);
+            }));
+            allPromises.push(this.adminActionService.getPopulationlist()
+                .then(function (response) {
+                _this.populationList = response.data;
+                console.log(_this.groupList);
+                var postActionItemPopulation = $("#postActionItemPopulation");
+                _this.postActionItemInfo.population = _this.populationList;
             }));
             this.$q.all(allPromises).then(function () {
                 _this.spinnerService.showSpinner(false);
             });
         };
-        AdminActionItemAddPageCtrl.prototype.validateInput = function () {
+        AdminPostItemAddPageCtrl.prototype.changedValue = function (item) {
+            var _this = this;
+            this.$scope = item.groupId;
+            var groupId = this.$scope;
+            console.log(this.$scope);
+            this.adminActionService.getGroupActionItem(groupId)
+                .then(function (response) {
+                _this.actionItemList = response.data;
+                console.log(_this.actionItemList);
+                var postActionItemGroup = $("#ActionItemGroup");
+                _this.postActionItemInfo["groupAction"] = [];
+                _this.postActionItemInfo.groupAction = _this.actionItemList;
+            });
+        };
+        AdminPostItemAddPageCtrl.prototype.editPage = function () {
+            var _this = this;
+            this.modalInstance = this.$uibModal.open({
+                templateUrl: this.APP_ROOT + "admin/action/post/addpost/postAddTemplate.html",
+                controller: "PostAddModalCtrl",
+                controllerAs: "$ctrl",
+                size: "md",
+                windowClass: "aip-modal",
+                resolve: {
+                    actionItemModal: function () {
+                        return _this.postActionItemInfo.groupAction;
+                    }
+                }
+            });
+            this.modalInstance.result.then(function (result) {
+                console.log(result);
+                if (result.success) {
+                    //TODO:: send notification and refresh grid
+                    var n = new Notification({
+                        message: _this.$filter("i18n_aip")("aip.common.save.successful"),
+                        type: "success",
+                        flash: true
+                    });
+                    notifications.addNotification(n);
+                    _this.$scope.refreshGrid(true); //use scope to call grid directive's function
+                    // this.refreshGrid(true);
+                }
+                else {
+                    //TODO:: send error notification
+                }
+            }, function (error) {
+                console.log(error);
+            });
+        };
+        AdminPostItemAddPageCtrl.prototype.validateInput = function () {
             if (this.saving) {
                 return false;
             }
-            /*if(!this.actionItemInfo.name || this.actionItemInfo.name === null || this.actionItemInfo.name === "" || this.actionItemInfo.title.name > 300) {
-                this.errorMessage.name = "invalid title";
-            } else {
-                delete this.errorMessage.name;
-            }*/
-            if (!this.actionItemInfo.folder) {
-                this.errorMessage.folder = "invalid folder";
-            }
-            else {
-                delete this.errorMessage.folder;
-            }
-            if (!this.actionItemInfo.description || this.actionItemInfo.description === null || this.actionItemInfo.description === "") {
-                this.errorMessage.description = "invalid description";
-            }
-            else {
-                delete this.errorMessage.description;
-            }
-            if (!this.actionItemInfo.title || this.actionItemInfo.title === null || this.actionItemInfo.title === "" || this.actionItemInfo.title.length > 300) {
-                this.errorMessage.title = "invalid title";
-            }
-            else {
-                delete this.errorMessage.title;
-            }
-            if (Object.keys(this.errorMessage).length > 0) {
-                return false;
-            }
-            else {
-                return true;
-            }
+            /*if(!this.actionItemInfo.name || this.actionItemInfo.name === null || this.actionItemInfo.name === "" ) {
+             this.errorMessage.name = "invalid title";
+             } else {
+             delete this.errorMessage.name;
+             }*/
+            /* if(!this.postactionItemInfo.folder) {
+             this.errorMessage.folder = "invalid folder";
+             } else {
+             delete this.errorMessage.folder;
+             }
+             if(!this.postactionItemInfo.description || this.postactionItemInfo.description === null || this.postactionItemInfo.description === "" ) {
+             this.errorMessage.description = "invalid description";
+             } else {
+             delete this.errorMessage.description;
+             }
+             if(!this.postactionItemInfo.title || this.postactionItemInfo.title === null || this.postactionItemInfo.title === "" || this.postactionItemInfo.title.length > 300) {
+             this.errorMessage.title = "invalid title";
+             } else {
+             delete this.errorMessage.title;
+             }
+             if(Object.keys(this.errorMessage).length>0) {
+             return false;
+             } else {
+             return true;
+             }*/
         };
-        AdminActionItemAddPageCtrl.prototype.cancel = function () {
+        AdminPostItemAddPageCtrl.prototype.cancel = function () {
             this.$state.go("admin-action-list");
         };
-        AdminActionItemAddPageCtrl.prototype.save = function () {
+        AdminPostItemAddPageCtrl.prototype.save = function () {
             var _this = this;
             this.saving = true;
-            this.adminActionService.saveActionItem(this.actionItemInfo)
+            this.adminActionService.savePostActionItem(this.postActionItemInfo)
                 .then(function (response) {
                 _this.saving = false;
                 var notiParams = {};
@@ -90,7 +148,7 @@ var AIP;
                         notiType: "saveSuccess",
                         data: response.data
                     };
-                    _this.$state.go("admin-action-open", { noti: notiParams, data: response.data.newActionItem.id });
+                    _this.$state.go("admin-post-add", { noti: notiParams, data: response.data.newActionItem.id });
                 }
                 else {
                     _this.saveErrorCallback(response.data.message);
@@ -101,7 +159,7 @@ var AIP;
                 console.log(err);
             });
         };
-        AdminActionItemAddPageCtrl.prototype.saveErrorCallback = function (message) {
+        AdminPostItemAddPageCtrl.prototype.saveErrorCallback = function (message) {
             var n = new Notification({
                 message: message,
                 type: "error",
@@ -109,8 +167,9 @@ var AIP;
             });
             notifications.addNotification(n);
         };
-        return AdminActionItemAddPageCtrl;
+        return AdminPostItemAddPageCtrl;
     }());
-    AIP.AdminActionItemAddPageCtrl = AdminActionItemAddPageCtrl;
+    AIP.AdminPostItemAddPageCtrl = AdminPostItemAddPageCtrl;
 })(AIP || (AIP = {}));
-register("bannerAIP").controller("AdminActionItemAddPageCtrl", AIP.AdminActionItemAddPageCtrl);
+register("bannerAIP").controller("AdminPostItemAddPageCtrl", AIP.AdminPostItemAddPageCtrl);
+register("bannerAIP").controller("PostAddModalCtrl", AIP.PostAddModalCtrl);

@@ -946,6 +946,87 @@ ol.selected-group > li > button  {
     width:50%;
 }
 
+.aip-modal .modal-dialog .modal-header .row.blockProcess  {
+    padding:16px;
+}
+  .aip-modal .modal-dialog .modal-header .row.blockProcess input  {
+    margin-left:8px;
+}
+
+.actionInstruction  {
+    font-size:12px;
+    font-style:italic;
+    margin:0px;
+    border-bottom:1px solid #888181;
+}
+
+.actionInstruction label  {
+    margin-bottom:0px;
+}
+
+.actionlistitems  {
+    margin-top:0px !important;
+    border-top:0px !important;
+}
+
+.groupFolder  {
+    list-style-type:none;
+    font-weight:bold;
+    color:#1c8445;
+    border-bottom:1px solid #a7a4a4;
+    line-height:2.25em;
+    padding:10px;
+}
+
+.actionFolder  {
+    float:left;
+}
+
+.actionItemAddContainer input.hasMultiCalendarPicker  {
+    height:35px;
+    border-radius:5px;
+    padding-right:15px;
+}
+.actionItemAddContainer .ui-select-choices .select2-result-label  {
+    font-size:1.25em;
+}
+.actionItemAddContainer .ui-select-container  {
+    font-family:"Open Sans";
+    width:21em;
+    background:#fff;
+}
+.actionItemAddContainer .ui-select-dropdown  {
+    width:21.35em;
+}
+.actionItemAddContainer .ui-select-dropdown .select2-search input  {
+    width:20em !important;
+}
+.actionItemAddContainer .actionItemEdit  {
+    font-size:14px;
+    margin-right:15px;
+    color:#524e4e;
+    text-decoration:underline;
+}
+.actionItemAddContainer .calendar-img  {
+    background:url(./images/datepicker_icon.png) no-repeat scroll !important;
+}
+.actionItemAddContainer input.hasMultiCalendarPicker + span  {
+    background-position:0px 1px;
+}
+.actionItemAddContainer input.hasMultiCalendarPicker:hover .calendar-img, .actionItemAddContainer .calendar-img:hover  {
+    background-position:2px 0px;
+}
+.actionItemAddContainer .startdate  {
+    padding-right:0px;
+    position:relative;
+}
+.actionItemAddContainer .calendar-img  {
+    float:left;
+    margin-left:10px;
+    top:-28px;
+    position:relative;
+}
+
 #username  {
     padding-left:0.5em;
 }
@@ -1240,6 +1321,21 @@ ol.selected-group > li  {
 ol.selected-group > li > button  {
     float:left;
     margin-left:5px;
+}
+
+input[type="checkbox"]  {
+    line-height:2.1ex;
+    width:17px;
+    height:25px;
+    background-image:url(images/checkbox/checkbox-default.svg);
+}
+
+
+input[type="checkbox"]  {
+    line-height:2.1ex;
+    width:17px;
+    height:25px;
+    background-image:url(images/checkbox/checkbox-default.svg);
 }
 /*** Media Query Section ***/
 @media screen and (max-width: 768px) {
