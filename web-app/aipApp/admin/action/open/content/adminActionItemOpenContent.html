@@ -55,13 +55,15 @@ Copyright 2017 Ellucian Company L.P. and its affiliates.
             </div>
             <div class="row">
                 <textarea id="templateContent" ng-required="true" aria-required="true" name="templateContent"
-                          ckeditor="ckEditorConfig" ng-model="vm.actionItem.actionItemContent"></textarea>
+                          ckeditor="ckEditorConfig" ng-model="vm.actionItem.actionItemContent" ng-change="vm.detectContentChange(vm.actionItem.actionItemContent)"></textarea>
+
+
             </div>
 
             <div class="contentContainer">
 
                 <div class="row">
-                    <aip-status-rule rules="vm.rules" status="vm.statuses"></aip-status-rule>
+                    <aip-status-rule rules="vm.rules" status="vm.statuses" changes="vm.contentChanged"></aip-status-rule>
                 </div>
             </div>
         </div>
@@ -122,7 +124,7 @@ Copyright 2017 Ellucian Company L.P. and its affiliates.
                              {{vm.actionItem.actionItemContent}}</div>
 -->
                         <div class="contentPreview"
-                             data-ng-bind-html="vm.trustAsHtml(vm.actionItem.actionItemContent)"></div>
+                             data-ng-bind-html="vm.actionItem.actionItemContent"></div>
 
                     </div>
                     <div ng-if="vm.isNoContent()">
