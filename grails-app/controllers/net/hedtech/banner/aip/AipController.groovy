@@ -215,7 +215,7 @@ class AipController {
                                           title     : groupList.title,
                                           groupId   : groupList.status,
                                           version   : groupList.version,
-                                          userId    : groupList.user,
+                                          lastModifiedBy    : groupList.user,
                                           dataOrigin: "GRAILS"
 
 
