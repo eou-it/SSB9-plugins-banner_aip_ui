@@ -649,7 +649,7 @@ value: value.aipBlock
         def success = false
         def model
         try {
-            Map assignActionItem = actionItemGroupAssignService.updateActionItemGroupAssignment( user, inputGroupAssignments, groupId )
+           def assignActionItem = actionItemGroupAssignService.updateActionItemGroupAssignment( user, inputGroupAssignments, groupId )
             def resultMap
 
             if (assignActionItem) {
