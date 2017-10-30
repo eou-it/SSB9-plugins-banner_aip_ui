@@ -145,10 +145,10 @@ var AIP;
                 _this.templates = response.data;
                 deferred.resolve(_this.openPanel("content"));
                 _this.getTemplateSource();
+                _this.contentChanged = false;
                 if (_this.templateSelect) {
                     _this.selectTemplate();
                     _this.selectTemplate();
-                    _this.contentChanged = false;
                 }
             }, function (error) {
                 console.log(error);

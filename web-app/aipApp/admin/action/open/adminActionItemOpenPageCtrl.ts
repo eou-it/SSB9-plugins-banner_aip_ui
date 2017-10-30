@@ -173,11 +173,10 @@ module AIP {
                     this.templates = response.data;
                     deferred.resolve(this.openPanel("content"));
                     this.getTemplateSource();
-
+                    this.contentChanged = false;
                     if (this.templateSelect) {
                         this.selectTemplate();
                         this.selectTemplate();
-                        this.contentChanged = false;
                     }
 
                 }, (error) => {
