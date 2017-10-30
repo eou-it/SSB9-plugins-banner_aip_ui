@@ -137,12 +137,12 @@ aip-list .aip-list-container  {
     color:#3a3737;
     margin-left:8px;
     float:left;
-    width:100%;
 }
       aip-list .aip-list-container .list-body-container .list-body .list-item .cell.completedDate  {
     font-size:1.3em;
     border-bottom:none;
     padding:25px 10px 0px 8px;
+    float:left;
 }
         aip-list .aip-list-container .list-body-container .list-body .list-item .cell.completedDate span.data-label  {
     font-family:"OpenSans-bold";
@@ -1322,14 +1322,6 @@ ol.selected-group > li > button  {
     float:left;
     margin-left:5px;
 }
-
-input[type="checkbox"]  {
-    line-height:2.1ex;
-    width:17px;
-    height:25px;
-    background-image:url(images/checkbox/checkbox-default.svg);
-}
-
 
 input[type="checkbox"]  {
     line-height:2.1ex;

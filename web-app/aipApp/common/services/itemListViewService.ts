@@ -75,7 +75,7 @@ module AIP {
         getDetailInformation(groupId, selectType, actionItemId) {
             var request = this.$http({
                 method: "GET",
-                url: this.APP_PATH + "/aip/detailInfo?searcgType="+selectType+"&groupId="+groupId+"&actionItemId"+actionItemId
+                url: this.APP_PATH + "/aip/detailInfo?searchType="+selectType+"&groupId="+groupId+"&actionItemId="+actionItemId
             })
                 .then((response:any) => {
                     var returnData;
@@ -92,8 +92,8 @@ module AIP {
                         returnData = {
                             content: response.data.text,
                             type: "doc",
-                            id: groupId,
-                            templateId: "",
+                            id: response.data.id,
+                            templateId: response.data.actionItemTemplateId,
                             detailId: response.data.id,
                             title: response.data.title
                         }

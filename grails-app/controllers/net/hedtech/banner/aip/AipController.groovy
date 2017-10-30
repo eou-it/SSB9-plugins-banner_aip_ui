@@ -98,16 +98,13 @@ class AipController {
         render model as JSON
     }
 
-    // Return user's action items
-   // @Secured(['ROLE_SELFSERVICE-FACULTY_BAN_DEFAULT_M', 'ROLE_SELFSERVICE-STUDENT_BAN_DEFAULT_M'])
     def actionItems() {
         def itemsList = []
         if (!userPidm) {
             response.sendError( 403 )
             return
         }
-        def actionItems = userActionItemReadOnlyService.listActionItemsByPidm( userPidm )
-        //TODO:get user assigned group
+        def actionItems = userActionItemReadOnlyService.listActionItemByPidmWithinDate( userPidm )
 
         def userGroupInfo = []
         for (item in actionItems) {
@@ -127,7 +124,7 @@ class AipController {
                         folderId: group.folderId,
                         folderDesc: group.folderDesc,
                         items: [],
-                        header     : ["title", "state", "completedDate", "description"]
+                        header     : ["title", "status", "completedDate", "description"]
                 ]
                 newGroup.items.push(item)
                 userGroupInfo.push(newGroup)
@@ -135,12 +132,14 @@ class AipController {
                 userGroupInfo[exist].items.push(item)
             }
         }
+        //TODO:: order action items in group by seq number
+        def orderBySeqNumber = new OrderBy([{it.actionItemSequenceNumber}])
+        userGroupInfo.items.sort(orderBySeqNumber)
+
         def model = [groups: userGroupInfo, header: ["title", "state", "completedDate", "description"]]
         render model as JSON
     }
 
-    // Return login user's information
-   // @Secured(['ROLE_SELFSERVICE-FACULTY_BAN_DEFAULT_M', 'ROLE_SELFSERVICE-STUDENT_BAN_DEFAULT_M'])
     def userInfo() {
         if (!userPidm) {
             response.sendError( 403 )
@@ -150,17 +149,15 @@ class AipController {
         render personForAIP as JSON
     }
 
-
-   // @Secured(['ROLE_SELFSERVICE-FACULTY_BAN_DEFAULT_M', 'ROLE_SELFSERVICE-STUDENT_BAN_DEFAULT_M'])
     def detailInfo() {
         //TODO:: tie in groups and user in db and create an associated service
         def itemDetailInfo
         def groupDesc
         try {
-            if (params.searrchType == "group") {
+            if (params.searchType == "group") {
                 //itemDetailInfo = actionItemDetailService.getGroupDetailById(jsonObj.groupId)
 
-                def actionItemGroups = groupFolderReadOnlyService.getActionItemGroupById(params.groupId)
+                def actionItemGroups = groupFolderReadOnlyService.getActionItemGroupById(Long.parseLong(params.groupId))
                 itemDetailInfo = []
                 if (actionItemGroups.size() > 0) {
                     actionItemGroups[0]?.each {group ->
@@ -205,7 +202,7 @@ class AipController {
                                   ]]
                                   */
             } else if (params.searchType == "actionItem") {
-                itemDetailInfo = actionItemContentService.listActionItemContentById(params.actionItemId )
+                itemDetailInfo = actionItemContentService.listActionItemContentById(Long.parseLong(params.actionItemId))
 //                itemDetailInfo = [
 //                        content: "Action item information for item " + jsonObj.actionItemId.toString() + " goes here",
 //                        type: "doc",
