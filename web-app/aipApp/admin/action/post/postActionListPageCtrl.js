@@ -25,7 +25,7 @@ var AIP;
             this.mobileConfig = {
                 jobStatus: 3,
                 jobName: 3,
-                scheduleDate: 3,
+                postingStartScheduleDate: 3,
                 groupFolder: 3,
                 population: 3,
                 group: 3,
@@ -34,16 +34,16 @@ var AIP;
             };
             this.mobileSize = angular.element("body").width() > 768 ? false : true;
             this.searchConfig = {
-                id: "actionItemDataTableSearch",
+                id: "actionItemPostJobsDataTableSearch",
                 delay: 300,
-                ariaLabel: this.$filter("i18n_aip")("aip.list.grid.search.actionItem"),
+                ariaLabel: this.$filter("i18n_aip")("aip.list.grid.search.actionItemPostJob"),
                 searchString: "",
                 maxlength: 200,
                 minimumCharacters: 1
             };
             this.header = [{
-                    name: "actionItemId",
-                    title: "id",
+                    name: "jobId",
+                    title: "jobId",
                     width: "0px",
                     options: {
                         sortable: true,
@@ -52,30 +52,30 @@ var AIP;
                     }
                 }, {
                     name: "jobStatus",
-                    title: this.$filter("i18n_aip")("aip.action.item.list.grid.jobStatus"),
-                    ariaLabel: this.$filter("i18n_aip")("aip.action.item.list.grid.jobStatus"),
+                    title: this.$filter("i18n_aip")("aip.admin.actionItem.post.grid.job.status"),
+                    ariaLabel: this.$filter("i18n_aip")("aip.admin.actionItem.post.grid.job.status"),
                     width: "100px",
                     options: {
                         sortable: false,
                         visible: true,
                         ascending: true,
-                        columnShowHide: false
+                        columnShowHide: true
                     }
                 }, {
                     name: "jobName",
-                    title: this.$filter("i18n_aip")("aip.action.item.list.grid.jobName"),
-                    ariaLabel: this.$filter("i18n_aip")("aip.action.item.list.grid.jobName"),
+                    title: this.$filter("i18n_aip")("aip.admin.actionItem.post.grid.job.name"),
+                    ariaLabel: this.$filter("i18n_aip")("aip.admin.actionItem.post.grid.job.name"),
                     width: "100px",
                     options: {
                         sortable: false,
                         visible: true,
-                        columnShowHide: false
+                        columnShowHide: true
                     }
                 },
                 {
-                    name: "scheduleDate",
-                    title: this.$filter("i18n_aip")("aip.action.item.list.grid.scheduleDate"),
-                    ariaLabel: this.$filter("i18n_aip")("aip.action.item.list.grid.scheduleDate"),
+                    name: "postingStartScheduleDate",
+                    title: this.$filter("i18n_aip")("aip.admin.actionItem.post.grid.job.start-schedule.date"),
+                    ariaLabel: this.$filter("i18n_aip")("aip.admin.actionItem.post.grid.job.start-schedule.date"),
                     width: "100px",
                     options: {
                         sortable: false,
@@ -84,8 +84,8 @@ var AIP;
                     }
                 }, {
                     name: "groupFolder",
-                    title: this.$filter("i18n_aip")("aip.action.item.list.grid.groupFolder"),
-                    ariaLabel: this.$filter("i18n_aip")("aip.action.item.list.grid.groupFolder"),
+                    title: this.$filter("i18n_aip")("aip.admin.actionItem.post.grid.job.group.folder"),
+                    ariaLabel: this.$filter("i18n_aip")("aip.admin.actionItem.post.grid.job.group.folder"),
                     width: "100px",
                     options: {
                         sortable: false,
@@ -95,8 +95,8 @@ var AIP;
                 },
                 {
                     name: "population",
-                    title: this.$filter("i18n_aip")("aip.action.item.list.grid.population"),
-                    ariaLabel: this.$filter("i18n_aip")("aip.action.item.list.grid.population"),
+                    title: this.$filter("i18n_aip")("aip.admin.actionItem.post.grid.job.population"),
+                    ariaLabel: this.$filter("i18n_aip")("aip.admin.actionItem.post.grid.job.population"),
                     width: "100px",
                     options: {
                         sortable: false,
@@ -105,9 +105,9 @@ var AIP;
                     }
                 },
                 {
-                    name: "group",
-                    title: this.$filter("i18n_aip")("aip.list.grid.group"),
-                    ariaLabel: this.$filter("i18n_aip")("aip.list.grid.group"),
+                    name: "groupName",
+                    title: this.$filter("i18n_aip")("aip.admin.actionItem.post.grid.job.group.name"),
+                    ariaLabel: this.$filter("i18n_aip")("aip.admin.actionItem.post.grid.job.group.name"),
                     width: "100px",
                     options: {
                         sortable: false,
@@ -117,8 +117,8 @@ var AIP;
                 },
                 {
                     name: "submittedBy",
-                    title: this.$filter("i18n_aip")("aip.action.item.list.grid.submittedBy"),
-                    ariaLabel: this.$filter("i18n_aip")("aip.action.item.list.grid.submittedBy"),
+                    title: this.$filter("i18n_aip")("aip.admin.actionItem.post.grid.job.submittedBy"),
+                    ariaLabel: this.$filter("i18n_aip")("aip.admin.actionItem.post.grid.job.submittedBy"),
                     width: "100px",
                     options: {
                         sortable: false,
