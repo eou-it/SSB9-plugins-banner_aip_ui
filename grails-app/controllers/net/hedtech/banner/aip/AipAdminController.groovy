@@ -374,20 +374,22 @@ class AipAdminController {
                     statusRule.actionItemId = jsonObj.actionItemId
                     //TODO: future user story
                     //statusRule.resbumitInd =  rule.resubmitInd
-                    statusRule.userId = aipUser.bannerId
-                    statusRule.activityDate = new Date()
+                    //statusRule.userId = aipUser.bannerId
+                   // statusRule.activityDate = new Date()
                     statusRule.version = rule.status.version
                 } else {
                     statusRule = new ActionItemStatusRule(
                             seqOrder: rule.statusRuleSeqOrder,
                             labelText: rule.statusRuleLabelText,
                             actionItemId: jsonObj.actionItemId,
-                            actionItemStatusId: statusId,
+                            actionItemStatusId: statusId
+                            /*
                             resubmitInd: 'N',
                             userId: aipUser.bannerId,
                             activityDate: new Date(),
                             version: 0,
                             dataOrigin: 'GRAILS'
+                            */
                     )
                 }
                 ruleList.push( statusRule )
