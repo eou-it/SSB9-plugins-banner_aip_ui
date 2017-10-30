@@ -1,3 +1,6 @@
+/*******************************************************************************
+ Copyright 2017 Ellucian Company L.P. and its affiliates.
+ ********************************************************************************/
 ///<reference path="../../../../typings/tsd.d.ts"/>
 ///<reference path="../../../common/services/admin/adminActionService.ts"/>
 ///<reference path="../../../common/services/admin/adminActionStatusService.ts"/>
@@ -11,8 +14,7 @@ declare var CKEDITOR;
 module AIP {
 
     export class AdminActionItemOpenPageCtrl{
-        $inject = ["$scope", "$q", "$state", "$filter", "$sce", "$window", "$templateRequest", "$templateCache", "$compile",
-            "$timeout", "$interpolate", "SpinnerService", "AdminActionService", "AdminActionStatusService", "APP_ROOT", "CKEDITORCONFIG"];
+        $inject = ["$scope", "$q", "$state", "$filter", "$sce", "$window", "$templateRequest", "$templateCache", "$compile", "$timeout", "$interpolate", "SpinnerService", "AdminActionService", "AdminActionStatusService", "APP_ROOT", "CKEDITORCONFIG"];
         adminActionService: AIP.AdminActionService;
         adminActionStatusService: AIP.AdminActionStatusService;
         spinnerService: AIP.SpinnerService;
@@ -37,7 +39,7 @@ module AIP {
         rules;
         selectedTemplate;
         saving;
-        contentChanged = false;
+        contentChanged;
         templateSource;
 
         constructor($scope, $q:ng.IQService, $state, $filter, $sce, $window, $templateRequest, $templateCache, $compile,
@@ -68,26 +70,9 @@ module AIP {
             this.selectedTemplate;
             this.templateSource;
             this.saving = false;
-            this.contentChanged = $scope.vm.contentChanged;
-
-            $scope.$watch(
-                "[vm.templateSelect, vm.rules, vm.statuses, vm.actionItem.actionItemContent]", function(newVal, oldVal) {
-
-                if ($scope.vm.templateSelect) {
-                    $scope.vm.contentChanged = false;
-
-                    var rulesSame =  angular.equals(oldVal[1], newVal[1]);
-                    var statusSame =  angular.equals(oldVal[2], newVal[2]);
-                    var contentSame = angular.equals(oldVal[3], newVal[3]);
-
-                    if (!rulesSame || !statusSame || !contentSame) {
-                        console.log("something changed changed");
-                        $scope.vm.contentChanged = true;
-                    }
-                }
-                }, true);
-
+            this.contentChanged;
             this.init();
+
             angular.element( $window ).bind( 'resize', function () {
                 // $scope.onResize();
                 if (!$scope.$root.$phase) {
@@ -109,8 +94,19 @@ module AIP {
             this.$q.all( promises ).then( () => {
                 //TODO:: turn off the spinner
                 this.spinnerService.showSpinner( false );
+                this.contentChanged = false;
+
             } );
         }
+
+
+        detectContentChange(content) {
+            if (this.templateSelect) {
+                this.contentChanged = true;
+            }
+        }
+
+
 
         handleNotification(noti) {
             if(noti.notiType === "saveSuccess") {
@@ -159,10 +155,10 @@ module AIP {
                     this.actionItem = response.data.actionItem;
                     this.selectedTemplate = this.actionItem.actionItemTemplateId;
                     if (this.templateSelect) {
-                        //this.trustActionItemContent();
                         this.selectTemplate();
+                        //this.trustActionItemContent();
                     } else {
-                       // this.trustActionItemContent();
+                        //this.trustActionItemContent();
                     }
                     deferred.resolve(this.openPanel("overview"));
                 }, (err) => {
@@ -180,6 +176,8 @@ module AIP {
 
                     if (this.templateSelect) {
                         this.selectTemplate();
+                        this.selectTemplate();
+                        this.contentChanged = false;
                     }
 
                 }, (error) => {
@@ -396,10 +394,11 @@ module AIP {
                         this.trustActionItemContent();
                         this.openContentPanel();
                     } else {
-                        //this.saveErrorCallback(response.data.message); //todo: add callback error on actionitem open page
+                        this.saveErrorCallback(response.data.message);
                         console.log("error:");
                     }
                 }, (err) => {
+                    this.saveErrorCallback(err);
                     console.log(err);
                     this.saving=false;
                 });
@@ -422,6 +421,7 @@ module AIP {
                         return a.statusRuleSeqOrder - b.statusRuleSeqOrder;
                     });
                 }, (err) => {
+                    this.saveErrorCallback(err);
                     console.log("error:" + err);
             });
         }
@@ -469,6 +469,15 @@ module AIP {
                 }
             }
             return false;
+        }
+
+        saveErrorCallback(message) {
+            var n = new Notification({
+                message: message,
+                type: "error",
+                flash: true
+            });
+            notifications.addNotification(n);
         }
     }
 

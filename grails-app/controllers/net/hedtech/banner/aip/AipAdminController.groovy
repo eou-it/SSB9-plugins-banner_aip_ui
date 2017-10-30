@@ -12,6 +12,7 @@ import net.hedtech.banner.general.communication.folder.CommunicationFolder
 import net.hedtech.banner.i18n.MessageHelper
 import org.apache.log4j.Logger
 import org.codehaus.groovy.grails.plugins.web.taglib.ValidationTagLib
+import org.omg.CORBA.portable.ApplicationException
 import org.springframework.security.core.context.SecurityContextHolder
 import java.text.MessageFormat
 
@@ -495,9 +496,8 @@ class AipAdminController {
                 } else if (rule.status.actionItemStatusId) {
                     statusId = rule.status.actionItemStatusId
                 } else {
-                    //fixme: replace message with i18n values
-                    message = "Error updating action item status rule."
-                    throw new Exception(message)
+                    message =  MessageUtility.message( "actionItemStatusRule.statusId.nullable.error" )
+                    throw new ApplicationException(message)
                 }
 
                 if (rule.statusRuleId) {
@@ -534,9 +534,7 @@ class AipAdminController {
             success = true
 
         } catch (ApplicationException e) {
-            println e.defaultMessage
-            //fixme: add more detailed exception catch and handle correctly
-            message = "Something happened"
+            LOGGER.error( e.getMessage() )
         }
 
         List<ActionItemStatusRule> updatedActionItemStatusRules =
@@ -626,8 +624,7 @@ value: value.aipBlock
                 success = true
             } catch (Exception e) {
                 println e.defaultMessage
-                //fixme: this needs to be set to point to default message. wasn't finding it so used status unique until we have time to debug.
-                message = MessageUtility.message( "Something happened" )
+                LOGGER.error( e.getMessage() )
             }
         } else {
             def actionItemId = params.actionItemId
@@ -647,8 +644,7 @@ value: value.aipBlock
                 success = true
             } catch (Exception e) {
                 println e.defaultMessage
-                //fixme: this needs to be set to point to default message. wasn't finding it so used status unique until we have time to debug.
-                message = MessageUtility.message( "Something happened" )
+                LOGGER.error( e.getMessage() )
             }
         }
         def model = [
