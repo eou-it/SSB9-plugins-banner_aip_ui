@@ -10,6 +10,7 @@ import net.hedtech.banner.exceptions.ApplicationException
 import net.hedtech.banner.i18n.MessageHelper
 import org.apache.log4j.Logger
 import org.codehaus.groovy.grails.plugins.web.taglib.ValidationTagLib
+import org.omg.CORBA.portable.ApplicationException
 import org.springframework.security.core.context.SecurityContextHolder
 
 /**
@@ -351,13 +352,25 @@ class AipAdminController {
         //create or update rules
         try {
             List<ActionItemStatusRule> ruleList = []
-            inputRules.each {rule ->
+            inputRules.each { rule ->
                 def statusRule
+                def statusId
+
+                if (rule.status.id) {
+                    statusId = rule.status.id
+
+                } else if (rule.status.actionItemStatusId) {
+                    statusId = rule.status.actionItemStatusId
+                } else {
+                    message =  MessageUtility.message( "actionItemStatusRule.statusId.nullable.error" )
+                    throw new ApplicationException(message)
+                }
+
                 if (rule.statusRuleId) {
                     statusRule = ActionItemStatusRule.get( rule.statusRuleId )
                     statusRule.seqOrder = rule.statusRuleSeqOrder.toInteger()
                     statusRule.labelText = rule.statusRuleLabelText
-                    statusRule.actionItemStatusId = rule.status.actionItemStatusId
+                    statusRule.actionItemStatusId = statusId
                     statusRule.actionItemId = jsonObj.actionItemId
                     //TODO: future user story
                     //statusRule.resbumitInd =  rule.resubmitInd
@@ -369,23 +382,25 @@ class AipAdminController {
                             seqOrder: rule.statusRuleSeqOrder,
                             labelText: rule.statusRuleLabelText,
                             actionItemId: jsonObj.actionItemId,
-                            actionItemStatusId: rule.status.id,
-                            resubmitInd: 'N'
+                            actionItemStatusId: statusId,
+                            resubmitInd: 'N',
+                            userId: aipUser.bannerId,
+                            activityDate: new Date(),
+                            version: 0,
+                            dataOrigin: 'GRAILS'
                     )
                 }
                 ruleList.push( statusRule )
             }
 
-            ruleList.each {rule ->
+            ruleList.each { rule ->
                 actionItemStatusRuleService.createOrUpdate( rule ) //list of domain objects to be updated or created
-            }
+           }
 
             success = true
 
         } catch (ApplicationException e) {
-            println e.defaultMessage
-            //fixme: add more detailed exception catch and handle correctly
-            message = "Something happened"
+            LOGGER.error( e.getMessage() )
         }
 
         List<ActionItemStatusRule> updatedActionItemStatusRules =
@@ -400,7 +415,6 @@ class AipAdminController {
 
         render model as JSON
     }
-
 
     def updateActionItemDetailsAndStatusRules() {
         def jsonObj = request.JSON
@@ -477,8 +491,7 @@ value: value.aipBlock
                 success = true
             } catch (Exception e) {
                 println e.defaultMessage
-                //fixme: this needs to be set to point to default message. wasn't finding it so used status unique until we have time to debug.
-                message = MessageUtility.message( "Something happened" )
+                LOGGER.error( e.getMessage() )
             }
         } else {
             def actionItemId = params.actionItemId
@@ -498,8 +511,7 @@ value: value.aipBlock
                 success = true
             } catch (Exception e) {
                 println e.defaultMessage
-                //fixme: this needs to be set to point to default message. wasn't finding it so used status unique until we have time to debug.
-                message = MessageUtility.message( "Something happened" )
+                LOGGER.error( e.getMessage() )
             }
         }
         def model = [

@@ -1,3 +1,6 @@
+/*******************************************************************************
+ Copyright 2017 Ellucian Company L.P. and its affiliates.
+ ********************************************************************************/
 ///<reference path="../../../../typings/tsd.d.ts"/>
 ///<reference path="../../../common/services/admin/adminActionService.ts"/>
 ///<reference path="../../../common/services/admin/adminActionStatusService.ts"/>
@@ -6,8 +9,7 @@ var AIP;
 (function (AIP) {
     var AdminActionItemOpenPageCtrl = (function () {
         function AdminActionItemOpenPageCtrl($scope, $q, $state, $filter, $sce, $window, $templateRequest, $templateCache, $compile, $timeout, $interpolate, SpinnerService, AdminActionService, AdminActionStatusService, APP_ROOT, CKEDITORCONFIG) {
-            this.$inject = ["$scope", "$q", "$state", "$filter", "$sce", "$window", "$templateRequest", "$templateCache", "$compile",
-                "$timeout", "$interpolate", "SpinnerService", "AdminActionService", "AdminActionStatusService", "APP_ROOT", "CKEDITORCONFIG"];
+            this.$inject = ["$scope", "$q", "$state", "$filter", "$sce", "$window", "$templateRequest", "$templateCache", "$compile", "$timeout", "$interpolate", "SpinnerService", "AdminActionService", "AdminActionStatusService", "APP_ROOT", "CKEDITORCONFIG"];
             this.trustAsHtml = function (string) {
                 return this.$sce.trustAsHtml(string);
             };
@@ -45,15 +47,13 @@ var AIP;
             this.selectedTemplate;
             this.templateSource;
             this.saving = false;
+            this.contentChanged;
             this.init();
             angular.element($window).bind('resize', function () {
                 // $scope.onResize();
                 if (!$scope.$root.$phase) {
                     $scope.$apply();
                 }
-                // $scope.$evalAsync(() => {
-                //     $scope.$apply();
-                // });
             });
         }
         ;
@@ -70,7 +70,13 @@ var AIP;
             this.$q.all(promises).then(function () {
                 //TODO:: turn off the spinner
                 _this.spinnerService.showSpinner(false);
+                _this.contentChanged = false;
             });
+        };
+        AdminActionItemOpenPageCtrl.prototype.detectContentChange = function (content) {
+            if (this.templateSelect) {
+                this.contentChanged = true;
+            }
         };
         AdminActionItemOpenPageCtrl.prototype.handleNotification = function (noti) {
             var _this = this;
@@ -119,11 +125,11 @@ var AIP;
                 _this.actionItem = response.data.actionItem;
                 _this.selectedTemplate = _this.actionItem.actionItemTemplateId;
                 if (_this.templateSelect) {
-                    //this.trustActionItemContent();
                     _this.selectTemplate();
+                    //this.trustActionItemContent();
                 }
                 else {
-                    // this.trustActionItemContent();
+                    //this.trustActionItemContent();
                 }
                 deferred.resolve(_this.openPanel("overview"));
             }, function (err) {
@@ -141,6 +147,8 @@ var AIP;
                 _this.getTemplateSource();
                 if (_this.templateSelect) {
                     _this.selectTemplate();
+                    _this.selectTemplate();
+                    _this.contentChanged = false;
                 }
             }, function (error) {
                 console.log(error);
@@ -350,10 +358,11 @@ var AIP;
                     _this.openContentPanel();
                 }
                 else {
-                    //this.saveErrorCallback(response.data.message); //todo: add callback error on actionitem open page
+                    _this.saveErrorCallback(response.data.message);
                     console.log("error:");
                 }
             }, function (err) {
+                _this.saveErrorCallback(err);
                 console.log(err);
                 _this.saving = false;
             });
@@ -375,6 +384,7 @@ var AIP;
                     return a.statusRuleSeqOrder - b.statusRuleSeqOrder;
                 });
             }, function (err) {
+                _this.saveErrorCallback(err);
                 console.log("error:" + err);
             });
         };
@@ -402,6 +412,9 @@ var AIP;
                 if (this.rules.length === 0) {
                     return true;
                 }
+                else if (!this.contentChanged) {
+                    return false;
+                }
                 else {
                     var invalidRule = this.rules.filter(function (item) {
                         var statusIdExists = true;
@@ -417,6 +430,14 @@ var AIP;
                 }
             }
             return false;
+        };
+        AdminActionItemOpenPageCtrl.prototype.saveErrorCallback = function (message) {
+            var n = new Notification({
+                message: message,
+                type: "error",
+                flash: true
+            });
+            notifications.addNotification(n);
         };
         return AdminActionItemOpenPageCtrl;
     }());
