@@ -32,35 +32,23 @@ module AIP {
             this.errorMessage = {};
             console.log(this.actionItemModal);
         }
-        statusSave(changedValue) {
-            this.$uibModalInstance.dismiss();
-            console.log(changedValue)
-
-
-            /*this.adminActionStatusService.saveStatus(this.statusModel)
-                .then((response) => {
-                    if(response.data.success) {
-                        console.log( response.data );
-                        this.$uibModalInstance.close( response.data );
-                    } else {
-                        //this.$uibModalInstance.dismiss();
-                        this.saveErrorCallback(response.data.message)
-                    }
-                }, (error) => {
-                    console.log(error);
-                    this.$uibModalInstance.dismiss(error);
-                });*/
-        }
-        changedValue(item) {
+        /*changedChkBoxValue(item) {
+            var a =item.actionItemId;
             console.log(item.actionItemId);
-        return item.actionItemId;
+            return item.actionItemId;
 
+        }*/
+        statusSave() {
+            var checkedCavllue = this.actionItemModal.filter((item) => {
+                return item.check===true;
+            });
+            this.$uibModalInstance.dismiss(this.actionItemModal);
         }
 
         closeDialog() {
             this.$uibModalInstance.dismiss('cancel');
         }
-        validate() {
+       /* validate() {
             if (this.statusModel.title.length===0 || this.statusModel.title.length > 30) {
                 delete this.errorMessage.title;
             } else {
@@ -72,7 +60,7 @@ module AIP {
             } else {
                 return true;
             }
-        }
+        }*/
         saveErrorCallback(message) {
             var n = new Notification({
                 message: message,

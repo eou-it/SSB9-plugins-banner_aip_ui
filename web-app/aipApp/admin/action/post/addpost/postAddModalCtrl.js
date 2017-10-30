@@ -19,44 +19,34 @@ var AIP;
             this.errorMessage = {};
             console.log(this.actionItemModal);
         }
-        PostAddModalCtrl.prototype.statusSave = function (changedValue) {
-            this.$uibModalInstance.dismiss();
-            console.log(changedValue);
-            /*this.adminActionStatusService.saveStatus(this.statusModel)
-                .then((response) => {
-                    if(response.data.success) {
-                        console.log( response.data );
-                        this.$uibModalInstance.close( response.data );
-                    } else {
-                        //this.$uibModalInstance.dismiss();
-                        this.saveErrorCallback(response.data.message)
-                    }
-                }, (error) => {
-                    console.log(error);
-                    this.$uibModalInstance.dismiss(error);
-                });*/
-        };
-        PostAddModalCtrl.prototype.changedValue = function (item) {
+        /*changedChkBoxValue(item) {
+            var a =item.actionItemId;
             console.log(item.actionItemId);
             return item.actionItemId;
+
+        }*/
+        PostAddModalCtrl.prototype.statusSave = function () {
+            var checkedCavllue = this.actionItemModal.filter(function (item) {
+                return item.check === true;
+            });
+            this.$uibModalInstance.dismiss(this.actionItemModal);
         };
         PostAddModalCtrl.prototype.closeDialog = function () {
             this.$uibModalInstance.dismiss('cancel');
         };
-        PostAddModalCtrl.prototype.validate = function () {
-            if (this.statusModel.title.length === 0 || this.statusModel.title.length > 30) {
-                delete this.errorMessage.title;
-            }
-            else {
-                delete this.errorMessage.title;
-            }
-            if (Object.keys(this.errorMessage).length > 0) {
-                return false;
-            }
-            else {
-                return true;
-            }
-        };
+        /* validate() {
+             if (this.statusModel.title.length===0 || this.statusModel.title.length > 30) {
+                 delete this.errorMessage.title;
+             } else {
+                 delete this.errorMessage.title;
+             }
+ 
+             if(Object.keys(this.errorMessage).length>0) {
+                 return false;
+             } else {
+                 return true;
+             }
+         }*/
         PostAddModalCtrl.prototype.saveErrorCallback = function (message) {
             var n = new Notification({
                 message: message,

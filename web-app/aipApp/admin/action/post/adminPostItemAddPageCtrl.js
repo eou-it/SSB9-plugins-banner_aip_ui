@@ -38,16 +38,13 @@ var AIP;
             allPromises.push(this.adminActionService.getGrouplist()
                 .then(function (response) {
                 _this.groupList = response.data;
-                console.log(_this.groupList);
                 var postActionItemGroup = $("#postActionItemGroup");
                 //this.postActionItemInfo["group"] = [];
                 _this.postActionItemInfo.group = _this.groupList;
-                console.log(_this.postActionItemInfo.group);
             }));
             allPromises.push(this.adminActionService.getPopulationlist()
                 .then(function (response) {
                 _this.populationList = response.data;
-                console.log(_this.groupList);
                 var postActionItemPopulation = $("#postActionItemPopulation");
                 _this.postActionItemInfo.population = _this.populationList;
             }));
@@ -63,14 +60,9 @@ var AIP;
             this.adminActionService.getGroupActionItem(groupId)
                 .then(function (response) {
                 _this.actionItemList = response.data;
-                console.log(_this.actionItemList);
                 var postActionItemGroup = $("#ActionItemGroup");
                 _this.postActionItemInfo["groupAction"] = [];
                 _this.postActionItemInfo.groupAction = _this.actionItemList;
-            });
-        };
-        AdminPostItemAddPageCtrl.prototype.checkBoxValue = function () {
-            this.modalInstance.result.then(function (statusSave) {
             });
         };
         AdminPostItemAddPageCtrl.prototype.editPage = function () {
@@ -87,9 +79,9 @@ var AIP;
                     }
                 }
             });
-            this.modalInstance.result.then(function (result) {
-                console.log(result);
-                if (result.success) {
+            this.modalInstance.result.then(function (test) {
+                console.log(test);
+                if (test.success) {
                     //TODO:: send notification and refresh grid
                     var n = new Notification({
                         message: _this.$filter("i18n_aip")("aip.common.save.successful"),
@@ -111,31 +103,49 @@ var AIP;
             if (this.saving) {
                 return false;
             }
-            /*if(!this.actionItemInfo.name || this.actionItemInfo.name === null || this.actionItemInfo.name === "" ) {
-             this.errorMessage.name = "invalid title";
+            if (!this.postActionItemInfo.name || this.postActionItemInfo.name === null || this.postActionItemInfo.name === "") {
+                this.errorMessage.name = "invalid title";
+            }
+            else {
+                delete this.errorMessage.name;
+            }
+            /*if(!this.postActionItemInfo.startDate || this.postActionItemInfo.startDate === null || this.postActionItemInfo.startDate === "" ) {
+                this.errorMessage.startDate = "invalid StartDate";
+            } else {
+                delete this.errorMessage.startDate;
+            }
+            if(!this.postActionItemInfo.endDate || this.postActionItemInfo.endDate === null || this.postActionItemInfo.endDate === "" ) {
+                this.errorMessage.endDate = "invalid EndDate";
+            } else {
+                delete this.errorMessage.endDate;
+            }
+            if(!this.modalInstance.test.result.success.hasOwnProperty('checked')  ) {
+                this.errorMessage.success = "invalid EndDate";
+            } else {
+                delete this.errorMessage.success;
+            }
+*/
+            /* if(!this.postActionItemInfo.group.selected) {
+             this.errorMessage.group = "invalid group";
              } else {
-             delete this.errorMessage.name;
+             delete this.errorMessage.group;
+             }
+             if(!this.postActionItemInfo.groupAction || this.postActionItemInfo.groupAction === null || this.postActionItemInfo.groupAction === "" ) {
+             this.errorMessage.groupAction = "invalid actionItem";
+             } else {
+             delete this.errorMessage.groupAction;
              }*/
-            /* if(!this.postactionItemInfo.folder) {
-             this.errorMessage.folder = "invalid folder";
-             } else {
-             delete this.errorMessage.folder;
-             }
-             if(!this.postactionItemInfo.description || this.postactionItemInfo.description === null || this.postactionItemInfo.description === "" ) {
-             this.errorMessage.description = "invalid description";
-             } else {
-             delete this.errorMessage.description;
-             }
-             if(!this.postactionItemInfo.title || this.postactionItemInfo.title === null || this.postactionItemInfo.title === "" || this.postactionItemInfo.title.length > 300) {
-             this.errorMessage.title = "invalid title";
-             } else {
-             delete this.errorMessage.title;
-             }
-             if(Object.keys(this.errorMessage).length>0) {
-             return false;
-             } else {
-             return true;
-             }*/
+            /*if(!this.postActionItemInfo.population.selected || this.postActionItemInfo.population.selected === null || this.postActionItemInfo.population.selected === "" ) {
+            this.errorMessage.population = "invalid title";
+            } else {
+            delete this.errorMessage.population;
+            }*/
+            if (Object.keys(this.errorMessage).length > 0) {
+                return false;
+            }
+            else {
+                return true;
+            }
         };
         AdminPostItemAddPageCtrl.prototype.cancel = function () {
             this.$state.go("admin-action-list");
@@ -143,7 +153,7 @@ var AIP;
         AdminPostItemAddPageCtrl.prototype.save = function () {
             var _this = this;
             this.saving = true;
-            this.adminActionService.saveActionItem(this.postactionItemInfo)
+            this.adminActionService.saveActionItem(this.postActionItemInfo)
                 .then(function (response) {
                 _this.saving = false;
                 var notiParams = {};
@@ -176,4 +186,3 @@ var AIP;
     AIP.AdminPostItemAddPageCtrl = AdminPostItemAddPageCtrl;
 })(AIP || (AIP = {}));
 register("bannerAIP").controller("AdminPostItemAddPageCtrl", AIP.AdminPostItemAddPageCtrl);
-register("bannerAIP").controller("PostAddModalCtrl", AIP.PostAddModalCtrl);

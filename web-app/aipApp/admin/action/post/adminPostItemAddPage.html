@@ -15,7 +15,7 @@ Copyright 2017 Ellucian Company L.P. and its affiliates.
             <div class="actionItemElement col-xs-12 col-md-8">
                 <div class="row">
                     <input id="actionItemName" type="text" class="form-control"
-                           ng-model="vm.actionItemInfo.name"
+                           ng-model="vm.postActionItemInfo.name"
                            placeholder='{{"aip.admin.action.actionItem.Postingjob"|i18n_aip}}' aria-label='{{"aip.admin.action.actionItem.Postingjob"|i18n_aip}}'
                            aria-required="true">
                 </div>
@@ -29,10 +29,10 @@ Copyright 2017 Ellucian Company L.P. and its affiliates.
             </div>
             <div class="actionItemElement col-xs-8 col-sm-8">
                 <div class="row">
-                    <xe-ui-select id="postActionItemGroup" ng-change="vm.changedValue(vm.postActionItemInfo.group)" ng-model="vm.postActionItemInfo.group" theme="select2" ng-disabled="disabled">
+                    <xe-ui-select id="postActionItemGroup" ng-change="vm.changedValue(vm.postActionItemInfo.group.selected)" ng-model="vm.postActionItemInfo.group.selected" theme="select2" ng-disabled="disabled">
 
                         <xe-ui-select-match placeholder="Select">
-                            <div class="row actionItemName">{{vm.postActionItemInfo.group.groupName}}</div>
+                            <div class="row actionItemName">{{vm.postActionItemInfo.group.selected.groupName}}</div>
 
                         </xe-ui-select-match>
 
@@ -67,10 +67,10 @@ Copyright 2017 Ellucian Company L.P. and its affiliates.
 
             <div class="actionItemElement col-xs-12 col-sm-5">
                 <div class="row">
-                    <xe-ui-select id="postActionItemPopulation" ng-model="vm.postActionItemInfo.population" theme="select2" ng-disabled="disabled">
+                    <xe-ui-select id="postActionItemPopulation" ng-model="vm.postActionItemInfo.population.selected" theme="select2" ng-disabled="disabled">
 
                         <xe-ui-select-match placeholder="Select">
-                          <div class="row actionItemName">{{vm.postActionItemInfo.population.name}}</div>
+                          <div class="row actionItemName">{{vm.postActionItemInfo.population.selected.name}}</div>
 
                         </xe-ui-select-match>
 
@@ -98,7 +98,7 @@ Copyright 2017 Ellucian Company L.P. and its affiliates.
                     <div class="actionItemElement Datelement col-sm-10 dateRow form-container">
 
                         <div class="row input-daterange form-group right-inner-addon">
-                            <input date-picker type="text" id="deliveryDate" today="{{today}}"
+                            <input date-picker type="text" ng-model="vm.postActionItemInfo.startDate" id="deliveryDate" today="{{today}}"
                                    class="form-control date-picker Datelement" name="deliveryDate"
 
                                    aria-required="true" required autocomplete="off" placeholder='{{"aip.postaction.dateFormatWaterMark"|i18n_aip}}'/>
@@ -110,9 +110,9 @@ Copyright 2017 Ellucian Company L.P. and its affiliates.
                         <label for="postActionItemPopulation" class="titleValue required">{{"aip.admin.action.postactionItem.end.date"|i18n_aip}}
                         </label>
                     </div>
-                    <div class="actionItemElement col-sm-6">
+                    <div class="actionItemElement col-sm-6" id="postActionItemPopulation">
                         <div class="row">
-                            <input date-picker type="text" id="deliveryDate1"
+                            <input date-picker type="text" ng-model="vm.postActionItemInfo.endDate" id="deliveryDate1"
                                    class="form-control date-picker Datelement" name="deliveryDate"
 
                                    aria-required="true" required autocomplete="off" placeholder='{{"aip.postaction.dateFormatWaterMark"|i18n_aip}}'/>
@@ -120,20 +120,13 @@ Copyright 2017 Ellucian Company L.P. and its affiliates.
                     </div>
                 </div>
             </div>
-
-
-
-
         </div>
 
         <div class="row actionItemInfoRow actionItemStatus">
+            <div class=""><input type="radio" id="chkPost" checked="checked"><label class="titleValue  required" for="chkPost"><span class="postChk">{{"aip.admin.action.postactionItem.post.now"|i18n_aip}}</span></label></div>
+            <div class=""><input type="checkbox" id="chkPopulation"><label class="titleValue required"><span class="postChk">{{"aip.admin.action.postactionItem.regenerate.Population"|i18n_aip}}</span></label></div>
 
         </div>
-
-
-
-
-
     </div>
  <div class="actionItemControl">
         <div class="row">
