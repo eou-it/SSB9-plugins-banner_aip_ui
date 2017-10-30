@@ -59,7 +59,6 @@ var AIP;
                 }).finally(function () {
                     _this.spinnerService.showSpinner(false);
                     _this.initialOpenGroup = _this.getInitialSelection();
-                    ;
                     //this.selectedData = {type: SelectionType.Group};
                     if (_this.initialOpenGroup !== -1) {
                         _this.itemListViewService.getDetailInformation(_this.actionItems.groups[_this.initialOpenGroup].id, "group", null)

@@ -104,7 +104,7 @@ module AIP {
                 }).finally(() => {
                     this.spinnerService.showSpinner(false);
 
-                    this.initialOpenGroup = this.getInitialSelection()];
+                    this.initialOpenGroup = this.getInitialSelection();
 
                     //this.selectedData = {type: SelectionType.Group};
                     if(this.initialOpenGroup !== -1) {
