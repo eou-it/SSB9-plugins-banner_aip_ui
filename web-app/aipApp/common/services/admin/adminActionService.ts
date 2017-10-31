@@ -136,7 +136,7 @@ module AIP {
         groupId: number;
         groupName: string;
         groupTitle: string;
-}
+    }
     export interface IActionItemSaveResponse {
         data: {
             success: boolean;
@@ -278,7 +278,7 @@ module AIP {
             var params = {
                 name: postActionItem.name,
                 postGroupId: selected.groupId,
-                actionItemIds: modalResult.actionItemId,
+                actionItemIds: modalResult,
                 populationId: selectedPopulation.id,
                 displayStartDate:postActionItem.startDate,
                 displayEndDate:postActionItem.endDate,

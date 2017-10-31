@@ -22,6 +22,7 @@ var AIP;
             this.saving = false;
             this.selected = {};
             this.modalResult = {};
+            this.modalResults = [];
             this.regeneratePopulation;
             this.selectedPopulation = {};
             this.postNow = true;
@@ -85,9 +86,9 @@ var AIP;
             });
             this.modalInstance.result.then(function (result) {
                 result.forEach(function (item, index) {
-                    console.log(item);
                     _this.modalResult = item;
                     console.log(_this.modalResult);
+                    _this.modalResults.push(_this.modalResult.actionItemId);
                 });
             }, function (error) {
                 console.log(error);
@@ -146,7 +147,7 @@ var AIP;
         AdminPostItemAddPageCtrl.prototype.save = function () {
             var _this = this;
             this.saving = true;
-            this.adminActionService.savePostActionItem(this.postActionItemInfo, this.selected, this.modalResult, this.selectedPopulation, this.postNow, this.regeneratePopulation)
+            this.adminActionService.savePostActionItem(this.postActionItemInfo, this.selected, this.modalResults, this.selectedPopulation, this.postNow, this.regeneratePopulation)
                 .then(function (response) {
                 _this.saving = false;
                 var notiParams = {};

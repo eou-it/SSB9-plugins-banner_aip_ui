@@ -41,8 +41,10 @@ module AIP {
         $filter;
         selected;
         modalResult;
+        modalResults;
         postNow:boolean;
         selectedPopulation;
+        modalResults;
         regeneratePopulation:boolean;
         APP_ROOT;
         modalInstance;
@@ -62,6 +64,7 @@ module AIP {
             this.saving = false;
             this.selected = {};
             this.modalResult={};
+            this.modalResults=[];
             this.regeneratePopulation;
             this.selectedPopulation={};
             this.postNow=true;
@@ -138,13 +141,10 @@ console.log(this.$scope);
             this.modalInstance.result.then((result) => {
 
                 result.forEach((item, index) => {
-                    console.log(item);
-
                     this.modalResult=item;
                     console.log(this.modalResult);
+                    this.modalResults.push(this.modalResult.actionItemId);
                 });
-
-
 
             }, (error) => {
                 console.log(error);
@@ -199,7 +199,7 @@ console.log(this.$scope);
         }
         save() {
             this.saving = true;
-            this.adminActionService.savePostActionItem(this.postActionItemInfo,this.selected,this.modalResult,this.selectedPopulation,this.postNow,this.regeneratePopulation)
+            this.adminActionService.savePostActionItem(this.postActionItemInfo,this.selected,this.modalResults,this.selectedPopulation,this.postNow,this.regeneratePopulation)
                 .then((response:AIP.IPostActionItemSaveResponse) => {
                     this.saving = false;
                     var notiParams = {};

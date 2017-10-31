@@ -101,7 +101,7 @@ var AIP;
             var params = {
                 name: postActionItem.name,
                 postGroupId: selected.groupId,
-                actionItemIds: modalResult.actionItemId,
+                actionItemIds: modalResult,
                 populationId: selectedPopulation.id,
                 displayStartDate: postActionItem.startDate,
                 displayEndDate: postActionItem.endDate,
