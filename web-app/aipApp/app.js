@@ -165,12 +165,12 @@ var bannerAIPApp = angular.module("bannerAIP", [
         admin: {
             folders: aipAppAbsPath + "aipAdmin/folders",
             groupList: aipAppAbsPath + "aipAdmin/groupList",
-            groupStatus: aipAppAbsPath + "aip/adminGroupStatus",
+            groupStatus: aipAppAbsPath + "aipAdmin/adminGroupStatus",
             createGroup: aipAppAbsPath + "aipAdmin/createGroup",
             openGroup: aipAppAbsPath + "aipAdmin/openGroup",
             // actionList: aipAppAbsPath + "aip/adminActionLists",
             actionItemList: aipAppAbsPath + "aipAdmin/actionItemList",
-            adminActionItemStatus: aipAppAbsPath + "aip/adminGroupStatus", //todo: replace with future lookup table and rename
+            adminActionItemStatus: aipAppAbsPath + "aipAdmin/adminGroupStatus", //todo: replace with future lookup table and rename
             actionItemStatusList: aipAppAbsPath + "aipAdmin/actionItemStatusList", //simple list of statuses
             actionItemStatusGrid: aipAppAbsPath + "aipAdmin/actionItemStatusGridList", //filterable list for grid functionality
             createActionItem: aipAppAbsPath + "aipAdmin/addActionItem",
