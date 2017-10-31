@@ -61,7 +61,7 @@ Copyright 2017 Ellucian Company L.P. and its affiliates.
                     <div class="col-xs-8 col-sm-8">
                         <xe-ui-select id="select2actionItems" ng-model="vm.selected[item.sequenceNumber-1]" theme="select2" ng-disabled="disabled"
                                       on-select="vm.selectActionItem($item, $index)">
-                            <xe-ui-select-match placeholder="Select">
+                            <xe-ui-select-match placeholder="{{'aip.admin.group.assign.select.default'|i18n_aip}}">
                                 <div class="row actionItemName">{{vm.selected[item.sequenceNumber-1].actionItemName}}</div>
                                 <div class="row additionalInfo">
                                     <div class="col-sm-3 actionItemStatus">{{vm.selected[item.sequenceNumber-1].actionItemStatus}}</div>
@@ -93,7 +93,7 @@ Copyright 2017 Ellucian Company L.P. and its affiliates.
             </div>
             <hr>
             <div class="row add">
-                <div type="button" class="btn btn-default noBorder" ng-click="vm.addNew()" aria-label="{{'aip.admin.group.actionItem.addActionItem'|i18n_aip}}">
+                <div type="button" class="btn btn-default noBorder" ng-click="vm.addNew()" ng-disabled="!vm.validateAddInput()" aria-label="{{'aip.admin.group.actionItem.addActionItem'|i18n_aip}}">
                     <i class="icon icon-add-CO" aria-hidden="true"></i>
                     <span class="groupAssignAddButtonText">{{"aip.admin.group.actionItem.addActionItem"|i18n_aip}}</span>
                 </div>

@@ -74,22 +74,34 @@ module AIP {
         }
         getDetailInformation(groupId, selectType, actionItemId) {
             var request = this.$http({
-                method: "POST",
-                url: this.APP_PATH + "/aip/detailInfo",
-                data: {type:selectType, groupId: groupId, actionItemId:actionItemId}
+                method: "GET",
+                url: this.APP_PATH + "/aip/detailInfo?searchType="+selectType+"&groupId="+groupId+"&actionItemId="+actionItemId
             })
                 .then((response:any) => {
-                    var data = (selectType==="group") ? response.data[0] : response.data;
+                    var returnData;
+                    if (selectType === "group") {
+                        returnData = {
+                            content: response.data[0].text,
+                            type: "doc",
+                            id: groupId,
+                            templateId: "",
+                            detailId: response.data[0].id,
+                            title: response.data[0].title
+                        }
+                    } else if (selectType === "actionItem") {
+                        returnData = {
+                            content: response.data.text,
+                            type: "doc",
+                            id: response.data.id,
+                            templateId: response.data.actionItemTemplateId,
+                            detailId: response.data.id,
+                            title: response.data.title
+                        }
+                    }
                     return {
                         type: selectType,
                         groupId: groupId,
-                        info: {
-                            content: data.text,
-                            type: "doc",
-                            id: data.actionItemId,
-                            templateId: data.actionItemTemplateId,
-                            detailId: data.id
-                        }
+                        info: returnData
                     };
                 }, (err) => {
                     throw new Error(err);

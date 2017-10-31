@@ -9,7 +9,10 @@ var AIPUI;
             this.scope = {
                 rules: "=",
                 status: "=",
-                inputs: "&"
+                inputs: "&",
+                ngModel: '=',
+                ngChange: '&',
+                contentChanged: "=changes"
             };
         }
         AIPStatusRuleDirective.prototype.compile = function () {
@@ -35,6 +38,9 @@ var AIPUI;
             };
             $scope.getState = function (id) {
                 //$scope.itemstate(id)
+            };
+            $scope.detectRuleChange = function () {
+                $scope.contentChanged = true;
             };
             $scope.moveUp = function (item, $event) {
                 var idx = $scope.rules.indexOf(item);

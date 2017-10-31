@@ -327,7 +327,7 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
         assertNotNull( answer.newActionItem )
         assertTrue( answer.message.equals( null ) )
         assertEquals( "BCMADMIN", answer.newActionItem.creatorId )
-        assertEquals( "BCMADMIN", answer.newActionItem.userId )
+        assertEquals( "BCMADMIN", answer.newActionItem.lastModifiedBy )
     }
 
 
@@ -374,7 +374,7 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
         requestObj.folderId = folderId
         requestObj.title = "a title"
         requestObj.description = null
-        //requestObj.userId = "CSRADM001"
+        //requestObj.lastModifiedBy = "CSRADM001"
         controller.request.method = "POST"
         controller.request.json = requestObj
         controller.addActionItem()
@@ -384,7 +384,7 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
         assertNotNull( answer.newActionItem )
         assertTrue( answer.message.equals( null ) )
         assertEquals( "BCMADMIN", answer.newActionItem.creatorId )
-        assertEquals( "BCMADMIN", answer.newActionItem.userId )
+        assertEquals( "BCMADMIN", answer.newActionItem.lastModifiedBy )
     }
 
 
@@ -422,7 +422,7 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
         requestObj.folderId = folderId
         requestObj.title = "a title"
         requestObj.description = null
-        //requestObj.userId = "CSRADM001"
+        //requestObj.lastModifiedBy = "CSRADM001"
         controller.request.method = "POST"
         controller.request.json = requestObj
         controller.addActionItem()
@@ -695,7 +695,7 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
         def answer = JSON.parse( controller.response.contentAsString )
 
         answer.result.each {
-            def person = PersonUtility.getPerson( it.actionItemStatusUserId )
+            def person = PersonUtility.getPerson( it.lastModifiedBy )
 
             /*
             if (person) {
@@ -706,7 +706,7 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
                 println "preferred name: " +preferredName
 
             } else {
-                println "no person record for" +  it.actionItemStatusUserId
+                println "no person record for" +  it.lastModifiedBy
             }*/
 
 

@@ -61,7 +61,7 @@ var AIP;
                     _this.initialOpenGroup = _this.getInitialSelection();
                     //this.selectedData = {type: SelectionType.Group};
                     if (_this.initialOpenGroup !== -1) {
-                        _this.itemListViewService.getDetailInformation(_this.initialOpenGroup, "group", null)
+                        _this.itemListViewService.getDetailInformation(_this.actionItems.groups[_this.initialOpenGroup].id, "group", null)
                             .then(function (response) {
                             _this.selectedData = response;
                         });
@@ -105,7 +105,7 @@ var AIP;
         };
         ListItemPageCtrl.prototype.getInitialSelection = function () {
             var defaultSelection = 0;
-            if (this.actionItems.groups.length > 1) {
+            if (this.actionItems.groups.length === 0) {
                 defaultSelection = -1;
             }
             return defaultSelection;
@@ -189,12 +189,16 @@ var AIP;
             var group = this.actionItems.groups.filter(function (item) {
                 return item.id == groupId;
             });
-            var actionItem = this.actionItems.groups[0].items.filter(function (item) {
+            var actionItem = group[0].items.filter(function (item) {
                 return item.id == itemId;
             });
-            this.itemListViewService.getDetailInformation(groupId, selectionType, index.item === null ? null : itemId).then(function (response) {
+            this.itemListViewService.getDetailInformation(groupId, selectionType, itemId).then(function (response) {
                 _this.selectedData = response;
-                _this.selectedData.info.title = actionItem[0].title;
+                if (selectionType === "actionItem") {
+                    var group = _this.actionItems.groups.filter(function (item) { return item.id === groupId; });
+                    var acitonItem = group[0].items.filter(function (item) { return item.id === itemId; });
+                    _this.selectedData.info.title = actionItem[0].title;
+                }
                 defer.resolve();
             });
             return defer.promise;

@@ -6,14 +6,12 @@ package net.hedtech.banner.aip
 import grails.converters.JSON
 import groovy.json.JsonSlurper
 import net.hedtech.banner.MessageUtility
-import net.hedtech.banner.aip.common.AIPConstants
 import net.hedtech.banner.exceptions.ApplicationException
 import net.hedtech.banner.i18n.MessageHelper
 import org.apache.log4j.Logger
 import org.codehaus.groovy.grails.plugins.web.taglib.ValidationTagLib
+import org.omg.CORBA.portable.ApplicationException
 import org.springframework.security.core.context.SecurityContextHolder
-
-import java.text.MessageFormat
 
 /**
  * Controller class for AIP Admin
@@ -34,6 +32,8 @@ class AipAdminController {
 
     def actionItemCompositeService
 
+    def actionItemGroupCompositeService
+
     def actionItemStatusCompositeService
 
     def actionItemStatusService
@@ -45,8 +45,6 @@ class AipAdminController {
     def actionItemBlockedProcessService
     def actionItemProcessingCommonService
     def actionItemGroupAssignReadOnlyService
-
-    def actionItemGroupAssignService
 
     /**
      * API for folders LOV
@@ -69,142 +67,27 @@ class AipAdminController {
         render result as JSON
     }
 
-
+    /**
+     * Provides group information for specified id
+     * @return
+     */
     def openGroup() {
-        /* //TODO: determine access in later US
-        if (!hasAccess( 'read' )) {
-            response.sendError( 403 )
-            return
-        }
-        */
-        def jsonObj = request.JSON;
-        def groupId = jsonObj.groupId;
-        def groupDesc;
-
-        if (!groupId) {
-            response.sendError( 403 )
-            return
-        }
-
         def success = false
-        def errors = []
-
-        //def group = actionItemGroupService.getActionItemGroupById( groupId )
-        def groupRO = groupFolderReadOnlyService.getActionItemGroupById( groupId )
-
-
-        if (groupRO) {
-            success = true
-        }
-
-        if (!groupRO) {
-            groupDesc = MessageUtility.message( "aip.placeholder.nogroups" )
-        } else {
-            groupDesc = groupRO.groupDesc[0]
-        }
-
-        def groupItem = [
-                groupId          : groupRO.groupId[0],
-                groupTitle       : groupRO.groupTitle[0],
-                groupName        : groupRO.groupName[0],
-                groupStatus      : MessageHelper.message( "aip.status.${groupRO.groupStatus[0]}" ),
-                folderId         : groupRO.folderId[0],
-                folderName       : groupRO.folderName[0],
-                folderDesc       : groupRO.folderDesc[0],
-                groupUserId      : groupRO.groupUserId[0],
-                groupDesc        : groupDesc,
-                groupActivityDate: groupRO.groupActivityDate[0],
-                groupVersion     : groupRO.groupVersion[0]
-                //dataOrigin     : groupRO?.groupDataOrigin
-        ]
-
-
-
         def model = [
                 success: success,
-                errors : errors,
-                group  : groupItem
-                //folder : groupRO
+                errors : [],
+                group  : groupFolderReadOnlyService.getActionItemGroupById( request.JSON.groupId )
         ]
-
         render model as JSON
     }
 
-
+    /**
+     * Creates Group
+     * @return
+     */
     def createGroup() {
-        def success = false
-        def message
-        /* //TODO: determine access in later US
-        if (!hasAccess( 'save' )) {
-            response.sendError( 403 )
-            return
-        }
-        */
-        def user = SecurityContextHolder?.context?.authentication?.principal
-        def aipUser = AipControllerUtils.getPersonForAip( params, user.pidm )
-        def jsonObj = request.JSON
-
-        def group = new ActionItemGroup(
-                title: jsonObj.groupTitle ?: null,
-                name: jsonObj.groupName ?: null,
-                folderId: jsonObj.folderId ?: null,
-                description: jsonObj.groupDesc ?: null,
-                postingInd: 'N',
-                status: AIPConstants.STATUS_MAP.get( jsonObj.groupStatus ) ?: null,
-                version: jsonObj.version ?: null,
-                userId: aipUser.bannerId ?: null,
-                activityDate: new Date(),
-                dataOrigin: "GRAILS"
-        )
-
-        def groupNew
-        def groupRO
-        def groupItem
-        def groupDesc
-        try {
-            groupNew = actionItemGroupService.create( group )
-
-            success = true
-            groupRO = groupFolderReadOnlyService.getActionItemGroupById( groupNew.id.toInteger() )
-
-
-            if (!groupRO) {
-                groupDesc = MessageUtility.message( "aip.placeholder.nogroups" )
-            } else {
-                groupDesc = groupRO.groupDesc[0]
-            }
-
-            groupItem = [
-                    groupId          : groupRO.groupId[0],
-                    groupTitle       : groupRO.groupTitle[0],
-                    groupName        : groupRO.groupName[0],
-                    groupStatus      : MessageHelper.message( "aip.status.${groupRO.groupStatus[0]}" ),
-                    folderId         : groupRO.folderId[0],
-                    folderName       : groupRO.folderName[0],
-                    folderDesc       : groupRO.folderDesc[0],
-                    groupUserId      : groupRO.groupUserId[0],
-                    groupDesc        : groupDesc,
-                    groupActivityDate: groupRO.groupActivityDate[0],
-                    groupVersion     : groupRO.groupVersion[0]
-            ]
-
-
-        } catch (ApplicationException e) {
-            if (ActionItemGroupService.FOLDER_VALIDATION_ERROR.equals( e.getMessage() )) {
-                message = MessageUtility.message( e.getDefaultMessage(), MessageFormat.format( "{0,number,#}", jsonObj.folderId ) )
-            } else {
-                message = MessageUtility.message( e.getDefaultMessage() )
-            }
-        }
-
-
-        def model = [
-                success: success,
-                message: message,
-                group  : groupItem
-        ]
-
-        render model as JSON
+        def result = actionItemGroupCompositeService.createGroup( request.JSON )
+        render result as JSON
     }
 
 
@@ -362,8 +245,6 @@ class AipAdminController {
         ActionItemContent aic = actionItemContentService.listActionItemContentById( actionItemId )
         aic.actionItemId = actionItemId
         aic.actionItemTemplateId = templateId
-        aic.lastModifiedby = aipUser.bannerId
-        aic.lastModified = new Date()
         aic.text = actionItemDetailText
 
         ActionItemContent newAic = actionItemContentService.createOrUpdate( aic )
@@ -469,45 +350,57 @@ class AipAdminController {
         //create or update rules
         try {
             List<ActionItemStatusRule> ruleList = []
-            inputRules.each {rule ->
+            inputRules.each { rule ->
                 def statusRule
+                def statusId
+
+                if (rule.status.id) {
+                    statusId = rule.status.id
+
+                } else if (rule.status.actionItemStatusId) {
+                    statusId = rule.status.actionItemStatusId
+                } else {
+                    message =  MessageUtility.message( "actionItemStatusRule.statusId.nullable.error" )
+                    throw new ApplicationException(message)
+                }
+
                 if (rule.statusRuleId) {
                     statusRule = ActionItemStatusRule.get( rule.statusRuleId )
                     statusRule.seqOrder = rule.statusRuleSeqOrder.toInteger()
                     statusRule.labelText = rule.statusRuleLabelText
-                    statusRule.actionItemStatusId = rule.status.actionItemStatusId
+                    statusRule.actionItemStatusId = statusId
                     statusRule.actionItemId = jsonObj.actionItemId
                     //TODO: future user story
                     //statusRule.resbumitInd =  rule.resubmitInd
-                    statusRule.userId = aipUser.bannerId
-                    statusRule.activityDate = new Date()
+                    //statusRule.userId = aipUser.bannerId
+                   // statusRule.activityDate = new Date()
                     statusRule.version = rule.status.version
                 } else {
                     statusRule = new ActionItemStatusRule(
                             seqOrder: rule.statusRuleSeqOrder,
                             labelText: rule.statusRuleLabelText,
                             actionItemId: jsonObj.actionItemId,
-                            actionItemStatusId: rule.status.id,
+                            actionItemStatusId: statusId
+                            /*
                             resubmitInd: 'N',
                             userId: aipUser.bannerId,
                             activityDate: new Date(),
                             version: 0,
                             dataOrigin: 'GRAILS'
+                            */
                     )
                 }
                 ruleList.push( statusRule )
             }
 
-            ruleList.each {rule ->
+            ruleList.each { rule ->
                 actionItemStatusRuleService.createOrUpdate( rule ) //list of domain objects to be updated or created
-            }
+           }
 
             success = true
 
         } catch (ApplicationException e) {
-            println e.defaultMessage
-            //fixme: add more detailed exception catch and handle correctly
-            message = "Something happened"
+            LOGGER.error( e.getMessage() )
         }
 
         List<ActionItemStatusRule> updatedActionItemStatusRules =
@@ -522,7 +415,6 @@ class AipAdminController {
 
         render model as JSON
     }
-
 
     def updateActionItemDetailsAndStatusRules() {
         def jsonObj = request.JSON
@@ -599,8 +491,7 @@ value: value.aipBlock
                 success = true
             } catch (Exception e) {
                 println e.defaultMessage
-                //fixme: this needs to be set to point to default message. wasn't finding it so used status unique until we have time to debug.
-                message = MessageUtility.message( "Something happened" )
+                LOGGER.error( e.getMessage() )
             }
         } else {
             def actionItemId = params.actionItemId
@@ -620,8 +511,7 @@ value: value.aipBlock
                 success = true
             } catch (Exception e) {
                 println e.defaultMessage
-                //fixme: this needs to be set to point to default message. wasn't finding it so used status unique until we have time to debug.
-                message = MessageUtility.message( "Something happened" )
+                LOGGER.error( e.getMessage() )
             }
         }
         def model = [
@@ -649,7 +539,7 @@ value: value.aipBlock
         def message
         def model
         try {
-            Map actionItemBlockedProcess = actionItemCompositeService.updateBlockedProcess( aipUser, actionItemId, blockItems )
+            def actionItemBlockedProcess = actionItemCompositeService.updateBlockedProcess( aipUser, actionItemId, blockItems )
             if (actionItemBlockedProcess) {
                 success = true
             }
@@ -678,11 +568,6 @@ value: value.aipBlock
 
 
     def getAssignedActionItemInGroup() {
-        def user = SecurityContextHolder?.context?.authentication?.principal
-        if (!user.pidm) {
-            response.sendError( 403 )
-            return
-        }
         Long groupId = Long.parseLong( params.groupId )
         def assignedActionItems = actionItemGroupAssignReadOnlyService.getAssignedActionItemsInGroup( groupId )
         def resultMap = assignedActionItems?.collect {it ->
@@ -702,11 +587,6 @@ value: value.aipBlock
 
 
     def getActionItemsListForSelect() {
-        def user = SecurityContextHolder?.context?.authentication?.principal
-        if (!user.pidm) {
-            response.sendError( 403 )
-            return
-        }
         def results = actionItemReadOnlyService.listActionItemRO()
         def resultMap = results?.collect {actionItem ->
             [
@@ -733,35 +613,18 @@ value: value.aipBlock
                     actionItemContent      : actionItem.actionItemContent
             ]
         }
-
-
-
         render resultMap as JSON
     }
 
 
     def updateActionItemGroupAssignment() {
         def user = SecurityContextHolder?.context?.authentication?.principal
-        if (!user.pidm) {
-            response.sendError( 403 )
-            return
-        }
-
-        def jsonObj = request.JSON
-
-        def aipUser = AipControllerUtils.getPersonForAip( params, user.pidm )
-        def inputGroupAssignments = jsonObj.assignment
-        def groupId = jsonObj.groupId
-
-        def message
-        def success = false
         def model
         try {
-            Map assignActionItem = actionItemGroupAssignService.updateActionItemGroupAssignment( user, inputGroupAssignments, groupId )
+            List<ActionItemGroupAssignReadOnly> assignActionItem = actionItemGroupCompositeService.updateActionItemGroupAssignment( user, request.JSON)
             def resultMap
 
             if (assignActionItem) {
-                success = true
                 resultMap = assignActionItem?.collect {it ->
                     [
                             id                  : it.id,
@@ -776,20 +639,13 @@ value: value.aipBlock
                 }
             }
             model = [
-                    success              : success,
-                    message              : message,
+                    success              : true,
                     actionItemGroupAssign: resultMap
             ]
         } catch (ApplicationException ae) {
             model = [
-                    success              : success,
+                    success              : false,
                     message              : MessageUtility.message( ae.getDefaultMessage() ),
-                    actionItemGroupAssign: ""
-            ]
-        } catch (Exception e) {
-            model = [
-                    success              : success,
-                    message              : message,
                     actionItemGroupAssign: ""
             ]
         }
