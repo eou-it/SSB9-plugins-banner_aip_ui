@@ -36,6 +36,23 @@ var AIP;
             });
             return deferred.promise;
         };
+        AdminActionService.prototype.fetchTableData = function (query) {
+            var deferred = this.$q.defer();
+            var realMax = parseInt(query.max) - parseInt(query.offset);
+            var url = this.ENDPOINT.admin.actionItemPostJobList +
+                '?searchParam=' + (query.searchParam || '') +
+                '&offset=' + (query.offset.toString() || '') +
+                '&max=' + (realMax.toString() || '');
+            this.$http({
+                method: "GET",
+                url: url
+            }).then(function (response) {
+                deferred.resolve(response.data);
+            }, function (data) {
+                deferred.reject(data);
+            });
+            return deferred.promise;
+        };
         AdminActionService.prototype.getFolder = function () {
             var request = this.$http({
                 method: "GET",
@@ -80,13 +97,16 @@ var AIP;
             });
             return request;
         };
-        AdminActionService.prototype.savePostActionItem = function (postActionItem) {
+        AdminActionService.prototype.savePostActionItem = function (postActionItem, selected, modalResult, selectedPopulation, postNow, regeneratePopulation) {
             var params = {
-                title: postActionItem.title,
-                name: postActionItem.groupname,
-                groupId: postActionItem.groupId,
-                editActionItem: postActionItem.description,
-                population: postActionItem.population,
+                name: postActionItem.name,
+                postGroupId: selected.groupId,
+                actionItemIds: modalResult,
+                populationId: selectedPopulation.id,
+                displayStartDate: postActionItem.startDate,
+                displayEndDate: postActionItem.endDate,
+                postNow: '' + postNow + '',
+                populationRegenerateIndicator: regeneratePopulation
             };
             var request = this.$http({
                 method: "POST",
@@ -191,9 +211,9 @@ var AIP;
             });
             return request;
         };
-        AdminActionService.$inject = ["$http", "$q", "$filter", "ENDPOINT"];
         return AdminActionService;
     }());
+    AdminActionService.$inject = ["$http", "$q", "$filter", "ENDPOINT"];
     AIP.AdminActionService = AdminActionService;
 })(AIP || (AIP = {}));
 register("bannerAIP").service("AdminActionService", AIP.AdminActionService);

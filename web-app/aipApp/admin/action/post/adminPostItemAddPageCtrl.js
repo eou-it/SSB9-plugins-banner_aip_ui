@@ -20,6 +20,12 @@ var AIP;
             this.spinnerService = SpinnerService;
             this.adminActionService = AdminActionService;
             this.saving = false;
+            this.selected = {};
+            this.modalResult = {};
+            this.modalResults = [];
+            this.regeneratePopulation;
+            this.selectedPopulation = {};
+            this.postNow = true;
             this.APP_ROOT = APP_ROOT;
             this.errorMessage = {};
             this.init();
@@ -38,16 +44,13 @@ var AIP;
             allPromises.push(this.adminActionService.getGrouplist()
                 .then(function (response) {
                 _this.groupList = response.data;
-                console.log(_this.groupList);
                 var postActionItemGroup = $("#postActionItemGroup");
                 //this.postActionItemInfo["group"] = [];
                 _this.postActionItemInfo.group = _this.groupList;
-                console.log(_this.postActionItemInfo.group);
             }));
             allPromises.push(this.adminActionService.getPopulationlist()
                 .then(function (response) {
                 _this.populationList = response.data;
-                console.log(_this.groupList);
                 var postActionItemPopulation = $("#postActionItemPopulation");
                 _this.postActionItemInfo.population = _this.populationList;
             }));
@@ -55,15 +58,13 @@ var AIP;
                 _this.spinnerService.showSpinner(false);
             });
         };
-        AdminPostItemAddPageCtrl.prototype.changedValue = function (item) {
+        AdminPostItemAddPageCtrl.prototype.changedValue = function () {
             var _this = this;
-            this.$scope = item.groupId;
             var groupId = this.$scope;
             console.log(this.$scope);
-            this.adminActionService.getGroupActionItem(groupId)
+            this.adminActionService.getGroupActionItem(this.selected.groupId)
                 .then(function (response) {
                 _this.actionItemList = response.data;
-                console.log(_this.actionItemList);
                 var postActionItemGroup = $("#ActionItemGroup");
                 _this.postActionItemInfo["groupAction"] = [];
                 _this.postActionItemInfo.groupAction = _this.actionItemList;
@@ -84,21 +85,11 @@ var AIP;
                 }
             });
             this.modalInstance.result.then(function (result) {
-                console.log(result);
-                if (result.success) {
-                    //TODO:: send notification and refresh grid
-                    var n = new Notification({
-                        message: _this.$filter("i18n_aip")("aip.common.save.successful"),
-                        type: "success",
-                        flash: true
-                    });
-                    notifications.addNotification(n);
-                    _this.$scope.refreshGrid(true); //use scope to call grid directive's function
-                    // this.refreshGrid(true);
-                }
-                else {
-                    //TODO:: send error notification
-                }
+                result.forEach(function (item, index) {
+                    _this.modalResult = item;
+                    console.log(_this.modalResult);
+                    _this.modalResults.push(_this.modalResult.actionItemId);
+                });
             }, function (error) {
                 console.log(error);
             });
@@ -107,31 +98,48 @@ var AIP;
             if (this.saving) {
                 return false;
             }
-            /*if(!this.actionItemInfo.name || this.actionItemInfo.name === null || this.actionItemInfo.name === "" ) {
-             this.errorMessage.name = "invalid title";
-             } else {
-             delete this.errorMessage.name;
-             }*/
-            /* if(!this.postactionItemInfo.folder) {
-             this.errorMessage.folder = "invalid folder";
-             } else {
-             delete this.errorMessage.folder;
-             }
-             if(!this.postactionItemInfo.description || this.postactionItemInfo.description === null || this.postactionItemInfo.description === "" ) {
-             this.errorMessage.description = "invalid description";
-             } else {
-             delete this.errorMessage.description;
-             }
-             if(!this.postactionItemInfo.title || this.postactionItemInfo.title === null || this.postactionItemInfo.title === "" || this.postactionItemInfo.title.length > 300) {
-             this.errorMessage.title = "invalid title";
-             } else {
-             delete this.errorMessage.title;
-             }
-             if(Object.keys(this.errorMessage).length>0) {
-             return false;
-             } else {
-             return true;
-             }*/
+            if (!this.postActionItemInfo.name || this.postActionItemInfo.name === null || this.postActionItemInfo.name === "") {
+                this.errorMessage.name = "invalid title";
+            }
+            else {
+                delete this.errorMessage.name;
+            }
+            if (!this.postActionItemInfo.startDate || this.postActionItemInfo.startDate === null || this.postActionItemInfo.startDate === "") {
+                this.errorMessage.startDate = "invalid StartDate";
+            }
+            else {
+                delete this.errorMessage.startDate;
+            }
+            if (!this.postActionItemInfo.endDate || this.postActionItemInfo.endDate === null || this.postActionItemInfo.endDate === "") {
+                this.errorMessage.endDate = "invalid EndDate";
+            }
+            else {
+                delete this.errorMessage.endDate;
+            }
+            if (!this.selected) {
+                this.errorMessage.postGroupId = "invalid group";
+            }
+            else {
+                delete this.errorMessage.postGroupId;
+            }
+            if (!this.selectedPopulation) {
+                this.errorMessage.population = "invalid population";
+            }
+            else {
+                delete this.errorMessage.population;
+            }
+            if (!this.modalResult == null) {
+                this.errorMessage.success = "invalid actionItem";
+            }
+            else {
+                delete this.errorMessage.success;
+            }
+            if (Object.keys(this.errorMessage).length > 0) {
+                return false;
+            }
+            else {
+                return true;
+            }
         };
         AdminPostItemAddPageCtrl.prototype.cancel = function () {
             this.$state.go("admin-action-list");
@@ -139,7 +147,7 @@ var AIP;
         AdminPostItemAddPageCtrl.prototype.save = function () {
             var _this = this;
             this.saving = true;
-            this.adminActionService.savePostActionItem(this.postActionItemInfo)
+            this.adminActionService.savePostActionItem(this.postActionItemInfo, this.selected, this.modalResults, this.selectedPopulation, this.postNow, this.regeneratePopulation)
                 .then(function (response) {
                 _this.saving = false;
                 var notiParams = {};
@@ -148,7 +156,7 @@ var AIP;
                         notiType: "saveSuccess",
                         data: response.data
                     };
-                    _this.$state.go("admin-post-add", { noti: notiParams, data: response.data.newActionItem.id });
+                    _this.$state.go("admin-post-list", { noti: notiParams, data: response.data.newActionItem.id });
                 }
                 else {
                     _this.saveErrorCallback(response.data.message);
@@ -172,4 +180,3 @@ var AIP;
     AIP.AdminPostItemAddPageCtrl = AdminPostItemAddPageCtrl;
 })(AIP || (AIP = {}));
 register("bannerAIP").controller("AdminPostItemAddPageCtrl", AIP.AdminPostItemAddPageCtrl);
-register("bannerAIP").controller("PostAddModalCtrl", AIP.PostAddModalCtrl);

@@ -148,9 +148,9 @@ var AIP;
                 30;
             return { height: containerHeight };
         };
-        PostActionListPageCtrl.prototype.fetchData = function (query) {
+        PostActionListPageCtrl.prototype.fetchTableData = function (query) {
             var deferred = this.$q.defer();
-            this.actionListService.fetchData(query)
+            this.actionListService.fetchTableData(query)
                 .then(function (response) {
                 // this.gridData = response;
                 // this.gridData.header = this.header;

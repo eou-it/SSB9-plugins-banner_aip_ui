@@ -19,35 +19,30 @@ var AIP;
             this.errorMessage = {};
             console.log(this.actionItemModal);
         }
-        /*changedChkBoxValue(item) {
-            var a =item.actionItemId;
-            console.log(item.actionItemId);
-            return item.actionItemId;
-
-        }*/
         PostAddModalCtrl.prototype.statusSave = function () {
+            this.checkedCavllue = {};
             var checkedCavllue = this.actionItemModal.filter(function (item) {
+                console.log();
                 return item.check === true;
             });
-            this.$uibModalInstance.dismiss(this.actionItemModal);
+            this.$uibModalInstance.close(checkedCavllue);
         };
         PostAddModalCtrl.prototype.closeDialog = function () {
             this.$uibModalInstance.dismiss('cancel');
         };
-        PostAddModalCtrl.prototype.validate = function () {
-            if (this.statusModel.title.length === 0 || this.statusModel.title.length > 30) {
-                delete this.errorMessage.title;
-            }
-            else {
-                delete this.errorMessage.title;
-            }
-            if (Object.keys(this.errorMessage).length > 0) {
-                return false;
-            }
-            else {
-                return true;
-            }
-        };
+        /* validate() {
+             if (this.statusModel.title.length===0 || this.statusModel.title.length > 30) {
+                 delete this.errorMessage.title;
+             } else {
+                 delete this.errorMessage.title;
+             }
+ 
+             if(Object.keys(this.errorMessage).length>0) {
+                 return false;
+             } else {
+                 return true;
+             }
+         }*/
         PostAddModalCtrl.prototype.saveErrorCallback = function (message) {
             var n = new Notification({
                 message: message,
