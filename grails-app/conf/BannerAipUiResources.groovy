@@ -22,7 +22,7 @@ modules = {
     }
     'bannerAIPUtils' {
         resource url:[plugin: 'banner-aip-ui', file: 'js/angular-aria.js']
-        resource url:[plugin: 'banner-aip-ui', file: 'js/ng-ckeditor/libs/ckeditor/ckeditor.js']
+       // resource url:[plugin: 'banner-aip-ui', file: 'js/ng-ckeditor/libs/ckeditor/ckeditor.js']
         resource url:[plugin: 'banner-aip-ui', file: 'js/ng-ckeditor/ng-ckeditor.js']
         resource url:[plugin: 'banner-aip-ui', file: 'aipApp/common/filters/i18n-filter.js']
         resource url:[plugin: 'banner-aip-ui', file: 'aipApp/common/filters/html-filter.js']
