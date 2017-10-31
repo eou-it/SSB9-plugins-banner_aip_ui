@@ -5,12 +5,7 @@
 package net.hedtech.banner.aip
 
 import grails.converters.JSON
-import grails.plugin.springsecurity.annotation.Secured
 import net.hedtech.banner.MessageUtility
-import net.hedtech.banner.security.BannerUser
-import org.springframework.security.core.context.SecurityContextHolder
-
-import java.security.InvalidParameterException
 
 /**
  * AIP Controller class to have all API endpoints
@@ -19,28 +14,24 @@ class AipController {
 
     static defaultAction = "list"
 
-    def userActionItemReadOnlyService
+    def userActionItemReadOnlyCompositeService
 
     def actionItemContentService
 
     def groupFolderReadOnlyService
 
+    def springSecurityService
 
-    //@Secured(['ROLE_SELFSERVICE-FACULTY_BAN_DEFAULT_M', 'ROLE_SELFSERVICE-STUDENT_BAN_DEFAULT_M'])
     def list() {
         def model = [fragment: "/list"]
         render( model: model, view: "index" )
     }
 
-
-   //@Secured(['ROLE_SELFSERVICE-FACULTY_BAN_DEFAULT_M', 'ROLE_SELFSERVICE-STUDENT_BAN_DEFAULT_M'])
     def informedList() {
         def model = [fragment: "/informedList"]
         render( model: model, view: "index" )
     }
 
-
-   //@Secured(['ROLE_SELFSERVICE-FACULTY_BAN_DEFAULT_M', 'ROLE_SELFSERVICE-STUDENT_BAN_DEFAULT_M'])
     def admin() {
         def model = [fragment: "/landing"]
         render( model: model, view: "index" )
@@ -58,97 +49,28 @@ class AipController {
         render model as JSON;
     }
 
-    //todo: this is probably going to go away w/new method in admin controller
-   // @Secured(['ROLE_SELFSERVICE-FACULTY_BAN_DEFAULT_M', 'ROLE_SELFSERVICE-STUDENT_BAN_DEFAULT_M'])
-    def adminGroupList() {
-        def actionItemGroups = groupFolderReadOnlyService.listActionItemGroups()
-
-        def groupList = []
-        if (actionItemGroups.size() > 0) {
-            actionItemGroups?.each {group ->
-                def groupItem = [
-                        id         : group.groupId,
-                        title      : group.groupTitle,
-                        status     : group.groupStatus,
-                        user       : group.groupUserId,
-                        description: group.groupDesc,
-                        activity   : group.groupActivityDate,
-                        folder     : group.folderName,
-                        //dataOrigin : group.groupDataOrigin
-                ]
-                groupList << groupItem
-            }
-        }
-
-        //TODO: header configuration should probably come from a config file - TBD
-        def testDataHeader = [
-                [name: "id", title: "id", options: [visible: false, isSortable: true]],
-                [name: "title", title: MessageUtility.message( "aip.common.title" ), options: [visible: true, isSortable: true]],
-                [name: "status", title: MessageUtility.message( "aip.common.status" ), options: [visible: true, isSortable: true]],
-                [name: "folder", title: MessageUtility.message( "aip.common.folder" ), options: [visible: true, isSortable: true]],
-                [name: "activity", title: MessageUtility.message( "aip.common.activity.date" ), options: [visible: true, isSortable: true]],
-                [name: "user", title: MessageUtility.message( "aip.common.last.updated.by" ), options: [visible: true, isSortable: true]]
-        ]
-        def model = [
-                header: testDataHeader,
-                result: groupList,
-                length: groupList.size()
-
-        ]
-        render model as JSON
-    }
-
+    /**
+     * List action items
+     * @return
+     */
     def actionItems() {
-        def itemsList = []
-        if (!userPidm) {
-            response.sendError( 403 )
-            return
-        }
-        def actionItems = userActionItemReadOnlyService.listActionItemByPidmWithinDate( userPidm )
-
-        def userGroupInfo = []
-        for (item in actionItems) {
-            def exist = userGroupInfo.findIndexOf { it ->
-                it.id == item.actionItemGroupID
-            }
-            if (exist == -1) {
-                def group = groupFolderReadOnlyService.get(item.actionItemGroupID)
-                def newGroup = [
-                        id   : group.groupId,
-                        name : group.groupName,
-                        title: group.groupTitle,
-                        discription: group.groupDesc?group.groupDesc:MessageUtility.message( "aip.placeholder.nogroups" ),
-                        status: group.groupStatus,
-                        postInd: group.postedInd,
-                        folderName: group.folderName,
-                        folderId: group.folderId,
-                        folderDesc: group.folderDesc,
-                        items: [],
-                        header     : ["title", "status", "completedDate", "description"]
-                ]
-                newGroup.items.push(item)
-                userGroupInfo.push(newGroup)
-            } else {
-                userGroupInfo[exist].items.push(item)
-            }
-        }
-        //TODO:: order action items in group by seq number
-        def orderBySeqNumber = new OrderBy([{it.actionItemSequenceNumber}])
-        userGroupInfo.items.sort(orderBySeqNumber)
-
-        def model = [groups: userGroupInfo, header: ["title", "state", "completedDate", "description"]]
+        def model = userActionItemReadOnlyCompositeService.listActionItemByPidmWithinDate()
         render model as JSON
     }
 
+    /**
+     * Get User Info
+     * @return
+     */
     def userInfo() {
-        if (!userPidm) {
-            response.sendError( 403 )
-            return
-        }
-        def personForAIP = AipControllerUtils.getPersonForAip( params, userPidm )
+        def personForAIP = AipControllerUtils.getPersonForAip( params, springSecurityService.getAuthentication()?.user.pidm )
         render personForAIP as JSON
     }
 
+    /**
+     * Get Detail information
+     * @return
+     */
     def detailInfo() {
         //TODO:: tie in groups and user in db and create an associated service
         def itemDetailInfo
@@ -157,7 +79,7 @@ class AipController {
             if (params.searchType == "group") {
                 //itemDetailInfo = actionItemDetailService.getGroupDetailById(jsonObj.groupId)
 
-                def actionItemGroups = groupFolderReadOnlyService.getActionItemGroupById(Long.parseLong(params.groupId))
+                def actionItemGroups = groupFolderReadOnlyService.getActionItemGroupById( Long.parseLong( params.groupId ) )
                 itemDetailInfo = []
                 if (actionItemGroups.size() > 0) {
                     actionItemGroups[0]?.each {group ->
@@ -173,42 +95,13 @@ class AipController {
                                 userId  : group.groupUserId,
                                 text    : groupDesc,
                                 activity: group.groupActivityDate,
-                                //dataOrigin: group.groupDataOrigin,
                                 version : group.groupVersion
                         ]
                         itemDetailInfo << groupItem
                     }
                 }
-
-                //TODO: Add data origin to action item group view
-
-                /*
-                if (groupList.description == null || groupList.description.length == 0) {
-                    groupDesc =  MessageUtility.message( "aip.placeholder.nogroups" )
-                } else {
-                    groupDesc = groupList.description
-                }
-                itemDetailInfo = [[
-
-                                          text      : groupDesc,   //require
-                                          id        : groupList[0]id,
-                                          title     : groupList.title,
-                                          groupId   : groupList.status,
-                                          version   : groupList.version,
-                                          lastModifiedBy    : groupList.user,
-                                          dataOrigin: "GRAILS"
-
-
-                                  ]]
-                                  */
             } else if (params.searchType == "actionItem") {
-                itemDetailInfo = actionItemContentService.listActionItemContentById(Long.parseLong(params.actionItemId))
-//                itemDetailInfo = [
-//                        content: "Action item information for item " + jsonObj.actionItemId.toString() + " goes here",
-//                        type: "doc",
-//                        id: jsonObj.actionItemId, //remove or not
-//                        title: "Action item information"
-//                ]
+                itemDetailInfo = actionItemContentService.listActionItemContentById( Long.parseLong( params.actionItemId ) )
             }
         } catch (Exception e) {
             org.codehaus.groovy.runtime.StackTraceUtils.sanitize( e ).printStackTrace()
@@ -218,86 +111,5 @@ class AipController {
         }
     }
 
-
-    def adminGroupStatus() {
-        //TODO:: get group status from DB through service
-        def model = [
-                [
-                        "id"   : 1,
-                        "value": "Draft"
-                ], [
-                        "id"   : 2,
-                        "value": "Active"
-                ], [
-                        "id"   : 3,
-                        "value": "Inactive"
-                ]
-        ]
-        render model as JSON
-    }
-
-    // It might be better in service in banner_aip.git, not in controller since this shouldn't be able to access from front-end
-    // It might not be needed depends on query style on user items
-    def getItemInfo( type ) {
-        //TODO: change whatever it needed
-        Map item = [:]
-        switch (type) {
-            case "drugAndAlcohol":
-                item.put( "description", "You must review and confirm the Ellucian University Campus Drug and Alcohol Policy prior to registering for classes." )
-                item.put( "title", "Drug and Alcohol Policy" )
-                break
-            case "registrationTraining":
-                item.put( "description", "It is takes 10 minutes, review the training video provided to help expedite your registration experience." )
-                item.put( "title", "Registration Process Training" )
-                break;
-            case "personalInfo":
-                item.put( "description", "It is important that we have you current information such as your name, and contact information therefore it is required that you review, update and confirm your personal information." )
-                item.put( "title", "Personal Information" )
-                break;
-            case "meetAdvisor":
-                item.put( "description", "You must meet with you Advisor or ensure you are on target to meet your educational goals for graduation." )
-                item.put( "title", "Meet with Advisor" )
-                break;
-            case "residenceProof":
-                item.put( "description", "" )
-                item.put( "title", "Proof of Residence" )
-                break;
-            default:
-                throw new InvalidParameterException( "Invalid action item type" )
-                break;
-        }
-        return item
-    }
-
-    // It might be better in service banner_aip.git, not in controller since this shouldn't be able to access from front-end
-    // It might not be needed depends on query style on user items
-    def getActionGroupDescription( type ) {
-        //TODO: change whatever it needed
-        Map item = [:]
-        switch (type) {
-            case "registration":
-                item.put( "title", "aip.user.list.header.title.registration" )
-                item.put( "description", "aip.user.list.header.description.registration" )
-                break;
-            case "graduation":
-                item.put( "title", "aip.user.list.header.title.graduation" )
-                item.put( "description", "aip.user.list.header.description.graduation" )
-                break;
-            default:
-                item.put( "title", "" )
-                item.put( "description", "" )
-        }
-        return item
-    }
-
-
-    private def getUserPidm() {
-        def user = SecurityContextHolder?.context?.authentication?.principal
-        if (user instanceof BannerUser) {
-            //TODO:: extract necessary user information and return. (ex: remove pidm, etc)
-            return user.pidm
-        }
-        return null
-    }
 
 }

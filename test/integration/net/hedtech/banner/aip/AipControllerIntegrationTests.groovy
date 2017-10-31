@@ -145,22 +145,6 @@ class AipControllerIntegrationTests extends BaseIntegrationTestCase {
         assertEquals 403, controller.response.status
     }
 
-
-    @Test
-    void testFetchAdminGroups() {
-        def person = PersonUtility.getPerson( "CSRSTU001" )
-        assertNotNull person
-
-        def auth = selfServiceBannerAuthenticationProvider.authenticate(
-                new UsernamePasswordAuthenticationToken( person.bannerId, '111111' ) )
-        SecurityContextHolder.getContext().setAuthentication( auth )
-        controller.adminGroupList()
-        assertEquals 200, controller.response.status
-        def answer = JSON.parse( controller.response.contentAsString )
-        assert 1 < answer.result.size()
-    }
-
-
     @Test
     void testLogout() {
         def person = PersonUtility.getPerson( "CSRSTU002" )
@@ -171,23 +155,6 @@ class AipControllerIntegrationTests extends BaseIntegrationTestCase {
         controller.logout()
         assertEquals 200, controller.response.status
     }
-
-
-    @Test
-    void testGetItemInfo() {
-        def person = PersonUtility.getPerson( "CSRSTU002" )
-        assertNotNull person
-        def auth = selfServiceBannerAuthenticationProvider.authenticate(
-                new UsernamePasswordAuthenticationToken( person.bannerId, '111111' ) )
-        SecurityContextHolder.getContext().setAuthentication( auth )
-        controller.getItemInfo( "drugAndAlcohol" )
-        controller.getItemInfo( "registrationTraining" )
-        controller.getItemInfo( "personalInfo" )
-        controller.getItemInfo( "meetAdvisor" )
-        controller.getItemInfo( "residenceProof" )
-        assertEquals 200, controller.response.status
-    }
-
 
     @Test
     void testDetailInfo() {

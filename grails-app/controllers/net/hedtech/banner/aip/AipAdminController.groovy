@@ -22,8 +22,6 @@ class AipAdminController {
 
     def groupFolderReadOnlyService
 
-    def actionItemGroupService
-
     def actionItemReadOnlyService
 
     def actionItemTemplateService
@@ -350,7 +348,7 @@ class AipAdminController {
         //create or update rules
         try {
             List<ActionItemStatusRule> ruleList = []
-            inputRules.each { rule ->
+            inputRules.each {rule ->
                 def statusRule
                 def statusId
 
@@ -360,8 +358,8 @@ class AipAdminController {
                 } else if (rule.status.actionItemStatusId) {
                     statusId = rule.status.actionItemStatusId
                 } else {
-                    message =  MessageUtility.message( "actionItemStatusRule.statusId.nullable.error" )
-                    throw new ApplicationException(message)
+                    message = MessageUtility.message( "actionItemStatusRule.statusId.nullable.error" )
+                    throw new ApplicationException( message )
                 }
 
                 if (rule.statusRuleId) {
@@ -373,7 +371,7 @@ class AipAdminController {
                     //TODO: future user story
                     //statusRule.resbumitInd =  rule.resubmitInd
                     //statusRule.userId = aipUser.bannerId
-                   // statusRule.activityDate = new Date()
+                    // statusRule.activityDate = new Date()
                     statusRule.version = rule.status.version
                 } else {
                     statusRule = new ActionItemStatusRule(
@@ -393,9 +391,9 @@ class AipAdminController {
                 ruleList.push( statusRule )
             }
 
-            ruleList.each { rule ->
+            ruleList.each {rule ->
                 actionItemStatusRuleService.createOrUpdate( rule ) //list of domain objects to be updated or created
-           }
+            }
 
             success = true
 
@@ -415,6 +413,7 @@ class AipAdminController {
 
         render model as JSON
     }
+
 
     def updateActionItemDetailsAndStatusRules() {
         def jsonObj = request.JSON
@@ -621,7 +620,7 @@ value: value.aipBlock
         def user = SecurityContextHolder?.context?.authentication?.principal
         def model
         try {
-            List<ActionItemGroupAssignReadOnly> assignActionItem = actionItemGroupCompositeService.updateActionItemGroupAssignment( user, request.JSON)
+            List<ActionItemGroupAssignReadOnly> assignActionItem = actionItemGroupCompositeService.updateActionItemGroupAssignment( user, request.JSON )
             def resultMap
 
             if (assignActionItem) {
@@ -649,6 +648,15 @@ value: value.aipBlock
                     actionItemGroupAssign: ""
             ]
         }
+        render model as JSON
+    }
+
+    /**
+     * List Admin Group/Action Item Status
+     * @return
+     */
+    def adminGroupStatus() {
+        def model = actionItemProcessingCommonService.listStatus()
         render model as JSON
     }
 }
