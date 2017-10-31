@@ -46,8 +46,6 @@ class AipAdminController {
     def actionItemProcessingCommonService
     def actionItemGroupAssignReadOnlyService
 
-    def actionItemGroupAssignService
-
     /**
      * API for folders LOV
      * @return
@@ -541,7 +539,7 @@ value: value.aipBlock
         def message
         def model
         try {
-            Map actionItemBlockedProcess = actionItemCompositeService.updateBlockedProcess( aipUser, actionItemId, blockItems )
+            def actionItemBlockedProcess = actionItemCompositeService.updateBlockedProcess( aipUser, actionItemId, blockItems )
             if (actionItemBlockedProcess) {
                 success = true
             }
@@ -570,11 +568,6 @@ value: value.aipBlock
 
 
     def getAssignedActionItemInGroup() {
-        def user = SecurityContextHolder?.context?.authentication?.principal
-        if (!user.pidm) {
-            response.sendError( 403 )
-            return
-        }
         Long groupId = Long.parseLong( params.groupId )
         def assignedActionItems = actionItemGroupAssignReadOnlyService.getAssignedActionItemsInGroup( groupId )
         def resultMap = assignedActionItems?.collect {it ->
@@ -594,11 +587,6 @@ value: value.aipBlock
 
 
     def getActionItemsListForSelect() {
-        def user = SecurityContextHolder?.context?.authentication?.principal
-        if (!user.pidm) {
-            response.sendError( 403 )
-            return
-        }
         def results = actionItemReadOnlyService.listActionItemRO()
         def resultMap = results?.collect {actionItem ->
             [
@@ -625,35 +613,18 @@ value: value.aipBlock
                     actionItemContent      : actionItem.actionItemContent
             ]
         }
-
-
-
         render resultMap as JSON
     }
 
 
     def updateActionItemGroupAssignment() {
         def user = SecurityContextHolder?.context?.authentication?.principal
-        if (!user.pidm) {
-            response.sendError( 403 )
-            return
-        }
-
-        def jsonObj = request.JSON
-
-        def aipUser = AipControllerUtils.getPersonForAip( params, user.pidm )
-        def inputGroupAssignments = jsonObj.assignment
-        def groupId = jsonObj.groupId
-
-        def message
-        def success = false
         def model
         try {
-           def assignActionItem = actionItemGroupAssignService.updateActionItemGroupAssignment( user, inputGroupAssignments, groupId )
+            List<ActionItemGroupAssignReadOnly> assignActionItem = actionItemGroupCompositeService.updateActionItemGroupAssignment( user, request.JSON)
             def resultMap
 
             if (assignActionItem) {
-                success = true
                 resultMap = assignActionItem?.collect {it ->
                     [
                             id                  : it.id,
@@ -668,20 +639,13 @@ value: value.aipBlock
                 }
             }
             model = [
-                    success              : success,
-                    message              : message,
+                    success              : true,
                     actionItemGroupAssign: resultMap
             ]
         } catch (ApplicationException ae) {
             model = [
-                    success              : success,
+                    success              : false,
                     message              : MessageUtility.message( ae.getDefaultMessage() ),
-                    actionItemGroupAssign: ""
-            ]
-        } catch (Exception e) {
-            model = [
-                    success              : success,
-                    message              : message,
                     actionItemGroupAssign: ""
             ]
         }
