@@ -29,10 +29,10 @@ Copyright 2017 Ellucian Company L.P. and its affiliates.
             </div>
             <div class="actionItemElement col-xs-8 col-sm-8">
                 <div class="row">
-                    <xe-ui-select id="postActionItemGroup" ng-change="vm.changedValue(vm.postActionItemInfo.group.selected)" ng-model="vm.postActionItemInfo.group.selected" theme="select2" ng-disabled="disabled">
+                    <xe-ui-select id="postActionItemGroup" ng-change="vm.changedValue()" ng-model="vm.selected" theme="select2" ng-disabled="disabled">
 
                         <xe-ui-select-match placeholder="Select">
-                            <div class="row actionItemName">{{vm.postActionItemInfo.group.selected.groupName}}</div>
+                            <div class="row actionItemName">{{vm.selected.groupName}}</div>
 
                         </xe-ui-select-match>
 
@@ -67,10 +67,10 @@ Copyright 2017 Ellucian Company L.P. and its affiliates.
 
             <div class="actionItemElement col-xs-12 col-sm-5">
                 <div class="row">
-                    <xe-ui-select id="postActionItemPopulation" ng-model="vm.postActionItemInfo.population.selected" theme="select2" ng-disabled="disabled">
+                    <xe-ui-select id="postActionItemPopulation" ng-model="vm.selectedPopulation" theme="select2" ng-disabled="disabled">
 
                         <xe-ui-select-match placeholder="Select">
-                          <div class="row actionItemName">{{vm.postActionItemInfo.population.selected.name}}</div>
+                          <div class="row actionItemName">{{vm.selectedPopulation.name}}</div>
 
                         </xe-ui-select-match>
 
@@ -123,8 +123,8 @@ Copyright 2017 Ellucian Company L.P. and its affiliates.
         </div>
 
         <div class="row actionItemInfoRow actionItemStatus">
-            <div class=""><input type="radio" id="chkPost" checked="checked"><label class="titleValue  required" for="chkPost"><span class="postChk">{{"aip.admin.action.postactionItem.post.now"|i18n_aip}}</span></label></div>
-            <div class=""><input type="checkbox" id="chkPopulation"><label class="titleValue required"><span class="postChk">{{"aip.admin.action.postactionItem.regenerate.Population"|i18n_aip}}</span></label></div>
+            <div class="" ng-model="vm.postNow"><input type="radio" id="chkPost" checked="checked"><label class="titleValue  required" for="chkPost"><span class="postChk">{{"aip.admin.action.postactionItem.post.now"|i18n_aip}}</span></label></div>
+            <div class=""  ng-model="vm.regeneratePopulation"><input type="checkbox" id="chkPopulation"><label class="titleValue required"><span class="postChk">{{"aip.admin.action.postactionItem.regenerate.Population"|i18n_aip}}</span></label></div>
 
         </div>
     </div>

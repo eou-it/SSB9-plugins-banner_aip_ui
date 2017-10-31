@@ -20,6 +20,11 @@ var AIP;
             this.spinnerService = SpinnerService;
             this.adminActionService = AdminActionService;
             this.saving = false;
+            this.selected = {};
+            this.modalResult = {};
+            this.regeneratePopulation;
+            this.selectedPopulation = {};
+            this.postNow = true;
             this.APP_ROOT = APP_ROOT;
             this.errorMessage = {};
             this.init();
@@ -52,12 +57,11 @@ var AIP;
                 _this.spinnerService.showSpinner(false);
             });
         };
-        AdminPostItemAddPageCtrl.prototype.changedValue = function (item) {
+        AdminPostItemAddPageCtrl.prototype.changedValue = function () {
             var _this = this;
-            this.$scope = item.groupId;
             var groupId = this.$scope;
             console.log(this.$scope);
-            this.adminActionService.getGroupActionItem(groupId)
+            this.adminActionService.getGroupActionItem(this.selected.groupId)
                 .then(function (response) {
                 _this.actionItemList = response.data;
                 var postActionItemGroup = $("#ActionItemGroup");
@@ -80,8 +84,11 @@ var AIP;
                 }
             });
             this.modalInstance.result.then(function (result) {
-                _this.modalResult = result;
-                console.log(_this.modalResult);
+                result.forEach(function (item, index) {
+                    console.log(item);
+                    _this.modalResult = item;
+                    console.log(_this.modalResult);
+                });
             }, function (error) {
                 console.log(error);
             });
@@ -108,23 +115,24 @@ var AIP;
             else {
                 delete this.errorMessage.endDate;
             }
-            if (!this.postActionItemInfo.group.selected) {
-                this.errorMessage.group = "invalid group";
+            if (!this.selected) {
+                this.errorMessage.postGroupId = "invalid group";
             }
             else {
-                delete this.errorMessage.group;
+                delete this.errorMessage.postGroupId;
             }
-            if (!this.postActionItemInfo.population.selected || this.postActionItemInfo.population.selected === null || this.postActionItemInfo.population.selected === "") {
-                this.errorMessage.population = "invalid title";
+            if (!this.selectedPopulation) {
+                this.errorMessage.population = "invalid population";
             }
             else {
                 delete this.errorMessage.population;
             }
-            /*if(!this.modalResult.hasOwnProperty('check')) {
-                this.errorMessage.success = "invalid EndDate";
-            } else {
+            if (!this.modalResult == null) {
+                this.errorMessage.success = "invalid actionItem";
+            }
+            else {
                 delete this.errorMessage.success;
-            }*/
+            }
             if (Object.keys(this.errorMessage).length > 0) {
                 return false;
             }
@@ -138,7 +146,7 @@ var AIP;
         AdminPostItemAddPageCtrl.prototype.save = function () {
             var _this = this;
             this.saving = true;
-            this.adminActionService.saveActionItem(this.postActionItemInfo)
+            this.adminActionService.savePostActionItem(this.postActionItemInfo, this.selected, this.modalResult, this.selectedPopulation, this.postNow, this.regeneratePopulation)
                 .then(function (response) {
                 _this.saving = false;
                 var notiParams = {};
@@ -147,7 +155,7 @@ var AIP;
                         notiType: "saveSuccess",
                         data: response.data
                     };
-                    _this.$state.go("admin-action-open", { noti: notiParams, data: response.data.newActionItem.id });
+                    _this.$state.go("admin-post-list", { noti: notiParams, data: response.data.newActionItem.id });
                 }
                 else {
                     _this.saveErrorCallback(response.data.message);

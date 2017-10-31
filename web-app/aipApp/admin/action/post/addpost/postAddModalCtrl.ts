@@ -15,6 +15,7 @@ module AIP {
         APP_ROOT;
         statusModel;
         ENDPOINT;
+        checkedCavllue;
         errorMessage:any;
 
         constructor($scope, $uibModalInstance, ENDPOINT, AdminActionStatusService,actionItemModal, APP_ROOT) {
@@ -34,6 +35,7 @@ module AIP {
         }
 
         statusSave() {
+            this.checkedCavllue={};
             var checkedCavllue = this.actionItemModal.filter((item) => {
                 console.log();
                 return item.check===true;

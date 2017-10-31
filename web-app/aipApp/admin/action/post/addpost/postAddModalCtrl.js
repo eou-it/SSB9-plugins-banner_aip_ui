@@ -20,6 +20,7 @@ var AIP;
             console.log(this.actionItemModal);
         }
         PostAddModalCtrl.prototype.statusSave = function () {
+            this.checkedCavllue = {};
             var checkedCavllue = this.actionItemModal.filter(function (item) {
                 console.log();
                 return item.check === true;

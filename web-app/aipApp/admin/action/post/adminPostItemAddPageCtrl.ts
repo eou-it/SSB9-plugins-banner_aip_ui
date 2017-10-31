@@ -29,7 +29,7 @@ module AIP {
         folders: [AIP.IFolder];
         groupList: [AIP.IGroup];
         actionItemList: [AIP.IGroupActionItem];
-        modalResult:[AIP.IModalResult];
+
         populationList:[AIP.IPopulation];
         postActionItemInfo: AIP.IPostActionItemParam|any;
         errorMessage:any;
@@ -39,6 +39,11 @@ module AIP {
         $q: ng.IQService;
         $state;
         $filter;
+        selected;
+        modalResult;
+        postNow:boolean;
+        selectedPopulation;
+        regeneratePopulation:boolean;
         APP_ROOT;
         modalInstance;
         $timeout;
@@ -55,6 +60,11 @@ module AIP {
             this.spinnerService = SpinnerService;
             this.adminActionService = AdminActionService;
             this.saving = false;
+            this.selected = {};
+            this.modalResult={};
+            this.regeneratePopulation;
+            this.selectedPopulation={};
+            this.postNow=true;
             this.APP_ROOT = APP_ROOT;
             this.errorMessage = {};
             this.init();
@@ -97,11 +107,11 @@ module AIP {
                 this.spinnerService.showSpinner(false);
             });
         }
-        changedValue(item){
-this.$scope = item.groupId;
+        changedValue(){
+
 var groupId = this.$scope;
 console.log(this.$scope);
-            this.adminActionService.getGroupActionItem(groupId)
+            this.adminActionService.getGroupActionItem(this.selected.groupId)
                 .then((response:AIP.IPostActionItemResponse) => {
                     this.actionItemList = response.data;
                     var postActionItemGroup:any = $("#ActionItemGroup");
@@ -126,8 +136,15 @@ console.log(this.$scope);
                 }
             });
             this.modalInstance.result.then((result) => {
-                this.modalResult=result;
-                console.log(this.modalResult);
+
+                result.forEach((item, index) => {
+                    console.log(item);
+
+                    this.modalResult=item;
+                    console.log(this.modalResult);
+                });
+
+
 
             }, (error) => {
                 console.log(error);
@@ -155,21 +172,22 @@ console.log(this.$scope);
                 delete this.errorMessage.endDate;
             }
 
-             if(!this.postActionItemInfo.group.selected) {
-             this.errorMessage.group = "invalid group";
+             if(!this.selected) {
+             this.errorMessage.postGroupId = "invalid group";
              } else {
-             delete this.errorMessage.group;
+             delete this.errorMessage.postGroupId;
              }
-             if(!this.postActionItemInfo.population.selected || this.postActionItemInfo.population.selected === null || this.postActionItemInfo.population.selected === "" ) {
-             this.errorMessage.population = "invalid title";
+           if(!this.selectedPopulation ) {
+
+             this.errorMessage.population = "invalid population";
              } else {
              delete this.errorMessage.population;
              }
-            /*if(!this.modalResult.hasOwnProperty('check')) {
-                this.errorMessage.success = "invalid EndDate";
+            if(!this.modalResult==null) {
+                this.errorMessage.success = "invalid actionItem";
             } else {
                 delete this.errorMessage.success;
-            }*/
+            }
              if(Object.keys(this.errorMessage).length>0) {
              return false;
              } else {
@@ -181,7 +199,7 @@ console.log(this.$scope);
         }
         save() {
             this.saving = true;
-            this.adminActionService.saveActionItem(this.postActionItemInfo)
+            this.adminActionService.savePostActionItem(this.postActionItemInfo,this.selected,this.modalResult,this.selectedPopulation,this.postNow,this.regeneratePopulation)
                 .then((response:AIP.IPostActionItemSaveResponse) => {
                     this.saving = false;
                     var notiParams = {};
@@ -190,7 +208,7 @@ console.log(this.$scope);
                             notiType: "saveSuccess",
                             data: response.data
                         };
-                        this.$state.go("admin-action-open", {noti: notiParams, data: response.data.newActionItem.id});
+                        this.$state.go("admin-post-list", {noti: notiParams, data: response.data.newActionItem.id});
                     } else {
                         this.saveErrorCallback(response.data.message);
                     }

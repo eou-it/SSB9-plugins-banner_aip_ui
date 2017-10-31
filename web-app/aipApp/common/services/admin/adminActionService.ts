@@ -13,6 +13,11 @@ module AIP {
         offset: string;
         max: string;
     }
+    export interface IPostActionItemListQuery {
+        searchParam: string;
+        offset: string;
+        max: string;
+    }
     interface IActionItem {
         actionItemId: number;
         actionItemActivityDate: Date;
@@ -54,6 +59,19 @@ module AIP {
         },
         width: any
     }
+    export interface IPostActionItemHeader {
+        name: string;
+        title: string;
+        ariaLabel?: string;
+        options: {
+            visible: boolean,
+            inSortable?: boolean,
+            sortable?: boolean,
+            ascending?: boolean,
+            columnShowHide?: boolean
+        },
+        width: any
+    }
     export interface IFolder {
         id:  string|number|boolean;
         dataOrigin: string;
@@ -78,12 +96,7 @@ module AIP {
         groupName: string;
         groupTitle: string;
     }
-    export interface IModalResult {
-        actionItemId: number;
-        actionItemFolderName: string;
-        actionItemName: string;
-        actionItemTitle:string;
-    }
+
     export interface IStatus {
         id: string|number;
         value: string;
@@ -92,6 +105,11 @@ module AIP {
         result: [IActionItem],
         length: number;
         header: [IActionItemHeader]
+    }
+    export interface IPostActionItemFetchResponse {
+        result: [IActionItem],
+        length: number;
+        header: [IPostActionItemHeader]
     }
     export interface IActionItemFolderResponse {
         data: [IFolder];
@@ -147,6 +165,13 @@ module AIP {
         saveActionItem(actionItem: IActionItemParam): ng.IHttpPromise<{}>;
         getActionItemDetail(actionItemId:number): ng.IHttpPromise<{}>;
     }
+    interface IPostAdminActionService {
+        fetchTableData(query:IPostActionItemListQuery):ng.IPromise<{}>;
+        getFolder(): ng.IHttpPromise<{}>;
+        getStatus(): ng.IHttpPromise<{}>;
+        savePostActionItem(actionItem: IActionItemParam): ng.IHttpPromise<{}>;
+        getActionItemDetail(actionItemId:number): ng.IHttpPromise<{}>;
+    }
 
     enum Status {
         Draft=1, Active=2, Inactive=3
@@ -172,6 +197,25 @@ module AIP {
                 '?searchString=' + (query.searchString || '') +
                 '&sortColumnName=' + (query.sortColumnName || 'actionItemName') +
                 '&ascending=' + (query.ascending.toString() || "") +
+                '&offset=' + (query.offset.toString() || '') +
+                '&max=' + (realMax.toString() || '');
+            this.$http({
+                method: "GET",
+                url: url
+            }).then((response:any)=> {
+                deferred.resolve(response.data);
+            }, (data) => {
+                deferred.reject(data);
+            })
+
+            return deferred.promise;
+        }
+
+        fetchTableData (query:IPostActionItemListQuery) {
+            var deferred = this.$q.defer();
+            var realMax = parseInt(query.max) - parseInt(query.offset);
+            var url = this.ENDPOINT.admin.actionItemPostJobList +
+                '?searchParam=' + (query.searchParam || '') +
                 '&offset=' + (query.offset.toString() || '') +
                 '&max=' + (realMax.toString() || '');
             this.$http({
@@ -230,14 +274,16 @@ module AIP {
             });
             return request;
         }
-        savePostActionItem(postActionItem) {
+        savePostActionItem(postActionItem,selected,modalResult,selectedPopulation,postNow,regeneratePopulation) {
             var params = {
-                title: postActionItem.title,
-                name: postActionItem.groupname,
-                groupId: postActionItem.groupId,
-                editActionItem: postActionItem.description,
-                population: postActionItem.population,
-
+                name: postActionItem.name,
+                postGroupId: selected.groupId,
+                actionItemIds: modalResult.actionItemId,
+                populationId: selectedPopulation.id,
+                displayStartDate:postActionItem.startDate,
+                displayEndDate:postActionItem.endDate,
+                postNow:''+postNow+'',
+                populationRegenerateIndicator:regeneratePopulation
             };
             var request = this.$http({
                 method: "POST",

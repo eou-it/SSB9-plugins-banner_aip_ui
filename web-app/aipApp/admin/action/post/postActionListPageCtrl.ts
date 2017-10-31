@@ -15,7 +15,7 @@ module AIP {
     interface IPostActionListPageCtrl {
         getHeight(): { height: number };
 
-        fetchData(query: IActionItemListQuery): ng.IPromise<IActionItemFetchResponse>;
+        fetchData(query: IActionItemListQuery): ng.IPromise<IPostActionItemFetchResponse>;
 
         selectRecord(data: any): void;
 
@@ -189,11 +189,11 @@ module AIP {
         }
 
 
-        fetchData(query: AIP.IActionItemListQuery) {
+        fetchTableData(query: AIP.IPostActionItemListQuery) {
 
             var deferred = this.$q.defer();
-            this.actionListService.fetchData(query)
-                .then((response: AIP.IActionItemFetchResponse) => {
+            this.actionListService.fetchTableData(query)
+                .then((response: AIP.IPostActionItemFetchResponse) => {
                     // this.gridData = response;
                     // this.gridData.header = this.header;
                     deferred.resolve(response);
