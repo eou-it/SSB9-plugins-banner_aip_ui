@@ -107,8 +107,8 @@ module AIP {
                     this.initialOpenGroup = this.getInitialSelection();
 
                     //this.selectedData = {type: SelectionType.Group};
-                    if(this.initialOpenGroup !==-1) {
-                        this.itemListViewService.getDetailInformation(this.initialOpenGroup, "group", null)
+                    if(this.initialOpenGroup !== -1) {
+                        this.itemListViewService.getDetailInformation(this.actionItems.groups[this.initialOpenGroup].id, "group", null)
                             .then((response:ISelectedData) => {
                                 this.selectedData = response;
                         });
@@ -155,8 +155,8 @@ module AIP {
 
 
         getInitialSelection() {
-            var defaultSelection= 0;
-            if(this.actionItems.groups.length > 1) {
+            var defaultSelection = 0;
+            if(this.actionItems.groups.length === 0) {
                 defaultSelection = -1;
             }
             return defaultSelection;
@@ -241,14 +241,18 @@ module AIP {
             var group = this.actionItems.groups.filter((item) => {
                 return item.id == groupId;
             });
-            var actionItem = this.actionItems.groups[0].items.filter((item) => {
+
+            var actionItem = group[0].items.filter((item) => {
                 return item.id == itemId;
             });
 
-            this.itemListViewService.getDetailInformation(groupId, selectionType, index.item===null?null:itemId).then((response:ISelectedData) => {
+            this.itemListViewService.getDetailInformation(groupId, selectionType, itemId).then((response:ISelectedData) => {
                 this.selectedData = response;
-
-                this.selectedData.info.title= actionItem[0].title;
+                if (selectionType==="actionItem") {
+                    var group = this.actionItems.groups.filter((item) => {return item.id === groupId;});
+                    var acitonItem = group[0].items.filter((item) => {return item.id===itemId;});
+                    this.selectedData.info.title = actionItem[0].title;
+                }
                 defer.resolve();
             })
             return defer.promise;
