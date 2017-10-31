@@ -17,7 +17,10 @@ module AIPUI {
             this.scope = {
                 rules: "=",
                 status: "=",
-                inputs:"&"
+                inputs:"&",
+                ngModel: '=',
+                ngChange: '&',
+                contentChanged: "=changes"
             }
         }
         compile() {
@@ -29,12 +32,14 @@ module AIPUI {
                 scope.init();
 
             });
+
         }
         controller($scope) {
 
             $scope.init = function(){
                 // $scope.addRule();
             }
+
 
             $scope.addRule=function($event){
 
@@ -54,6 +59,11 @@ module AIPUI {
             $scope.getState = function(id) {
                 //$scope.itemstate(id)
             }
+
+            $scope.detectRuleChange = function() {
+                $scope.contentChanged = true;
+            };
+
             $scope.moveUp = function(item, $event) {
                 var idx = $scope.rules.indexOf(item);
 

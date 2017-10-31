@@ -10,6 +10,7 @@ import net.hedtech.banner.exceptions.ApplicationException
 import net.hedtech.banner.i18n.MessageHelper
 import org.apache.log4j.Logger
 import org.codehaus.groovy.grails.plugins.web.taglib.ValidationTagLib
+import org.omg.CORBA.portable.ApplicationException
 import org.springframework.security.core.context.SecurityContextHolder
 
 /**
@@ -44,8 +45,6 @@ class AipAdminController {
     def actionItemBlockedProcessService
     def actionItemProcessingCommonService
     def actionItemGroupAssignReadOnlyService
-
-    def actionItemGroupAssignService
 
     /**
      * API for folders LOV
@@ -351,41 +350,57 @@ class AipAdminController {
         //create or update rules
         try {
             List<ActionItemStatusRule> ruleList = []
-            inputRules.each {rule ->
+            inputRules.each { rule ->
                 def statusRule
+                def statusId
+
+                if (rule.status.id) {
+                    statusId = rule.status.id
+
+                } else if (rule.status.actionItemStatusId) {
+                    statusId = rule.status.actionItemStatusId
+                } else {
+                    message =  MessageUtility.message( "actionItemStatusRule.statusId.nullable.error" )
+                    throw new ApplicationException(message)
+                }
+
                 if (rule.statusRuleId) {
                     statusRule = ActionItemStatusRule.get( rule.statusRuleId )
                     statusRule.seqOrder = rule.statusRuleSeqOrder.toInteger()
                     statusRule.labelText = rule.statusRuleLabelText
-                    statusRule.actionItemStatusId = rule.status.actionItemStatusId
+                    statusRule.actionItemStatusId = statusId
                     statusRule.actionItemId = jsonObj.actionItemId
                     //TODO: future user story
                     //statusRule.resbumitInd =  rule.resubmitInd
-                    statusRule.userId = aipUser.bannerId
-                    statusRule.activityDate = new Date()
+                    //statusRule.userId = aipUser.bannerId
+                   // statusRule.activityDate = new Date()
                     statusRule.version = rule.status.version
                 } else {
                     statusRule = new ActionItemStatusRule(
                             seqOrder: rule.statusRuleSeqOrder,
                             labelText: rule.statusRuleLabelText,
                             actionItemId: jsonObj.actionItemId,
-                            actionItemStatusId: rule.status.id,
-                            resubmitInd: 'N'
+                            actionItemStatusId: statusId
+                            /*
+                            resubmitInd: 'N',
+                            userId: aipUser.bannerId,
+                            activityDate: new Date(),
+                            version: 0,
+                            dataOrigin: 'GRAILS'
+                            */
                     )
                 }
                 ruleList.push( statusRule )
             }
 
-            ruleList.each {rule ->
+            ruleList.each { rule ->
                 actionItemStatusRuleService.createOrUpdate( rule ) //list of domain objects to be updated or created
-            }
+           }
 
             success = true
 
         } catch (ApplicationException e) {
-            println e.defaultMessage
-            //fixme: add more detailed exception catch and handle correctly
-            message = "Something happened"
+            LOGGER.error( e.getMessage() )
         }
 
         List<ActionItemStatusRule> updatedActionItemStatusRules =
@@ -400,7 +415,6 @@ class AipAdminController {
 
         render model as JSON
     }
-
 
     def updateActionItemDetailsAndStatusRules() {
         def jsonObj = request.JSON
@@ -477,8 +491,7 @@ value: value.aipBlock
                 success = true
             } catch (Exception e) {
                 println e.defaultMessage
-                //fixme: this needs to be set to point to default message. wasn't finding it so used status unique until we have time to debug.
-                message = MessageUtility.message( "Something happened" )
+                LOGGER.error( e.getMessage() )
             }
         } else {
             def actionItemId = params.actionItemId
@@ -498,8 +511,7 @@ value: value.aipBlock
                 success = true
             } catch (Exception e) {
                 println e.defaultMessage
-                //fixme: this needs to be set to point to default message. wasn't finding it so used status unique until we have time to debug.
-                message = MessageUtility.message( "Something happened" )
+                LOGGER.error( e.getMessage() )
             }
         }
         def model = [
@@ -527,7 +539,7 @@ value: value.aipBlock
         def message
         def model
         try {
-            Map actionItemBlockedProcess = actionItemCompositeService.updateBlockedProcess( aipUser, actionItemId, blockItems )
+            def actionItemBlockedProcess = actionItemCompositeService.updateBlockedProcess( aipUser, actionItemId, blockItems )
             if (actionItemBlockedProcess) {
                 success = true
             }
@@ -556,11 +568,6 @@ value: value.aipBlock
 
 
     def getAssignedActionItemInGroup() {
-        def user = SecurityContextHolder?.context?.authentication?.principal
-        if (!user.pidm) {
-            response.sendError( 403 )
-            return
-        }
         Long groupId = Long.parseLong( params.groupId )
         def assignedActionItems = actionItemGroupAssignReadOnlyService.getAssignedActionItemsInGroup( groupId )
         def resultMap = assignedActionItems?.collect {it ->
@@ -580,11 +587,6 @@ value: value.aipBlock
 
 
     def getActionItemsListForSelect() {
-        def user = SecurityContextHolder?.context?.authentication?.principal
-        if (!user.pidm) {
-            response.sendError( 403 )
-            return
-        }
         def results = actionItemReadOnlyService.listActionItemRO()
         def resultMap = results?.collect {actionItem ->
             [
@@ -611,35 +613,18 @@ value: value.aipBlock
                     actionItemContent      : actionItem.actionItemContent
             ]
         }
-
-
-
         render resultMap as JSON
     }
 
 
     def updateActionItemGroupAssignment() {
         def user = SecurityContextHolder?.context?.authentication?.principal
-        if (!user.pidm) {
-            response.sendError( 403 )
-            return
-        }
-
-        def jsonObj = request.JSON
-
-        def aipUser = AipControllerUtils.getPersonForAip( params, user.pidm )
-        def inputGroupAssignments = jsonObj.assignment
-        def groupId = jsonObj.groupId
-
-        def message
-        def success = false
         def model
         try {
-            Map assignActionItem = actionItemGroupAssignService.updateActionItemGroupAssignment( user, inputGroupAssignments, groupId )
+            List<ActionItemGroupAssignReadOnly> assignActionItem = actionItemGroupCompositeService.updateActionItemGroupAssignment( user, request.JSON)
             def resultMap
 
             if (assignActionItem) {
-                success = true
                 resultMap = assignActionItem?.collect {it ->
                     [
                             id                  : it.id,
@@ -654,20 +639,13 @@ value: value.aipBlock
                 }
             }
             model = [
-                    success              : success,
-                    message              : message,
+                    success              : true,
                     actionItemGroupAssign: resultMap
             ]
         } catch (ApplicationException ae) {
             model = [
-                    success              : success,
+                    success              : false,
                     message              : MessageUtility.message( ae.getDefaultMessage() ),
-                    actionItemGroupAssign: ""
-            ]
-        } catch (Exception e) {
-            model = [
-                    success              : success,
-                    message              : message,
                     actionItemGroupAssign: ""
             ]
         }

@@ -121,7 +121,13 @@ var AIP;
                 .then(function (response) {
                 _this.allActionItems = response;
                 _this.allActionItems.sort(function (a, b) {
-                    return a.folderName < b.folderName;
+                    if (a.folderName < b.folderName) {
+                        return -1;
+                    }
+                    if (a.folderName > b.folderName) {
+                        return 1;
+                    }
+                    return 0;
                 });
                 _this.assignedActionItems.forEach(function (item) {
                     _this.selected[item.sequenceNumber - 1] = _this.allActionItems.filter(function (_item) {
@@ -247,6 +253,15 @@ var AIP;
             }
             return validation;
         };
+        AdminGroupOpenPageCtrl.prototype.validateAddInput = function () {
+            var notSelected = this.selected.filter(function (item) {
+                return !item.actionItemId;
+            });
+            if (notSelected.length === 0 && this.allActionItems.length !== this.selected.length) {
+                return true;
+            }
+            return false;
+        };
         AdminGroupOpenPageCtrl.prototype.cancel = function () {
             this.editMode = false;
             this.openContentPanel();
@@ -270,9 +285,25 @@ var AIP;
             this.adminGroupService.updateActionItemGroupAssignment(this.selected, this.$state.params.data)
                 .then(function (response) {
                 console.log(response);
-                _this.openContentPanel();
+                var n = new Notification({
+                    message: _this.$filter("i18n_aip")("aip.admin.group.assign.success"),
+                    type: "success",
+                    flash: true
+                });
+                setTimeout(function () {
+                    notifications.addNotification(n);
+                    _this.openContentPanel();
+                }, 500);
             }, function (err) {
                 console.log(err);
+                var n = new Notification({
+                    message: _this.$filter("i18n_aip")("aip.admin.group.assign.fail"),
+                    type: "warning"
+                });
+                setTimeout(function () {
+                    notifications.addNotification(n);
+                    _this.openContentPanel();
+                }, 500);
             });
         };
         return AdminGroupOpenPageCtrl;

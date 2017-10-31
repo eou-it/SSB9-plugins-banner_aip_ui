@@ -204,24 +204,9 @@ var bannerAIPApp = angular.module("bannerAIP", [
                 ofLabel: "of"
             })
 
-     .constant("CKEDITORCONFIG",
-             /*todo: this config actually doesn't load but needs to be cleaned up when minify ng-ckeditor build issues are resolved*/
-                {
-                    toolbar: 'full',
-                    toolbar_full: [
-                        { name: 'document', items: [ 'Source', '-', 'NewPage', 'Preview', '-', 'Templates' ] },
-                        { name: 'clipboard', items: [ 'Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo' ] },
-                        { name: 'editing', items: [ 'Find', 'Replace', '-', 'SelectAll', '-', 'SpellChecker', 'Scayt', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock' ] },
-                        { name: 'basicstyles',
-                            items: [ 'Bold', 'Italic', 'Strike', 'Underline' ] },
-                        { name: 'paragraph', items: [ 'BulletedList', 'NumberedList', 'Blockquote' ] },
-                        { name: 'links', items: [ 'Link', 'Unlink', 'Anchor' ] },
-                        { name: 'tools', items: [ 'Maximize', 'ShowBlocks', '-', 'About' ] },
-                        '/',
-                        { name: 'styles', items: [ 'Format', 'FontSize', 'TextColor', 'PasteText', 'PasteFromWord', 'RemoveFormat' ] },
-                        { name: 'insert', items: [ 'Image', 'Table', 'HorizontalRule', 'SpecialChar', 'PageBreak' ] },
 
-                    ],
+     .constant("CKEDITORCONFIG",
+                {
                     disableNativeSpellChecker: false,
                     height: '400px',
                     width: '100%',
@@ -232,6 +217,7 @@ var bannerAIPApp = angular.module("bannerAIP", [
                     toolbarCanCollapse: true,
                     toolbarStartupExpanded: true
                 })
+
 
 //provider-injector
     .config(["$stateProvider", "$urlRouterProvider", "$locationProvider",  "$httpProvider", "$windowProvider", "PAGES", "APP_ROOT", "APP_ABS_PATH",
@@ -337,7 +323,6 @@ var bannerAIPApp = angular.module("bannerAIP", [
                          ];
                     });
             });
-
     }]
 );
 

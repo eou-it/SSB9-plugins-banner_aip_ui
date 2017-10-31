@@ -155,7 +155,13 @@ module AIP {
                     .then((response) => {
                     this.allActionItems = response;
                     this.allActionItems.sort((a,b) => {
-                        return a.folderName < b.folderName;
+                        if (a.folderName < b.folderName) {
+                            return -1;
+                        }
+                        if (a.folderName > b.folderName ) {
+                            return 1
+                        }
+                        return 0;
                     });
                     this.assignedActionItems.forEach((item) => {
                         this.selected[item.sequenceNumber-1] = this.allActionItems.filter((_item) => {
@@ -277,7 +283,7 @@ module AIP {
         validateInput() {
             var validation = true;
             var unassigned = this.selected.filter((item) => {
-                return !item.actionItemId
+                return !item.actionItemId;
             });
 
             if (this.isEqual(this.selected, this.originalAssign)) {
@@ -287,6 +293,15 @@ module AIP {
                 validation = false;
             }
             return validation;
+        }
+        validateAddInput() {
+            var notSelected = this.selected.filter((item) => {
+                return !item.actionItemId;
+            });
+            if (notSelected.length===0 && this.allActionItems.length!==this.selected.length) {
+                return true;
+            }
+            return false;
         }
         cancel() {
             this.editMode = false;
@@ -310,10 +325,26 @@ module AIP {
             // send().then show content preview page with success notification
             this.adminGroupService.updateActionItemGroupAssignment(this.selected, this.$state.params.data)
                 .then((response) => {
-                console.log(response);
-                this.openContentPanel();
+                    console.log(response);
+                    var n = new Notification({
+                        message: this.$filter("i18n_aip")("aip.admin.group.assign.success"),
+                        type: "success",
+                        flash: true
+                    });
+                    setTimeout(() => {
+                        notifications.addNotification(n);
+                        this.openContentPanel();
+                    }, 500);
                 }, (err) => {
-                console.log(err);
+                    console.log(err);
+                    var n = new Notification({
+                        message: this.$filter("i18n_aip")("aip.admin.group.assign.fail"),
+                        type: "warning"
+                  });
+                    setTimeout(() => {
+                        notifications.addNotification(n);
+                        this.openContentPanel();
+                    }, 500);
                 });
         }
     }

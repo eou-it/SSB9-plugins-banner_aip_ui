@@ -81,7 +81,20 @@ aip-list {
           .badge {
             //float: right;
             margin-left: 5px;
+            &.pending {
+              border: 1px solid #B0ABD0;
+              background-color: #DAD5FF;
+            }
+            &.reject {
+              border: 1px solid #4EC76A;
+              background-color: #C9F0C7;
+            }
+            &.approve {
+              border: 1px solid #F57E7E;
+              background-color: #FFDCDC;
+            }
           }
+
           .group-instructions {
             text-decoration: underline;
             color: $link-color;
@@ -170,7 +183,19 @@ aip-list {
             margin-right: 8px;
             //padding: 7px 10px;
             float: right;
-            width: 100%;
+            //width: 100%;
+            &.pending {
+              border: 1px solid #B0ABD0;
+              background-color: #DAD5FF;
+            }
+            &.reject {
+              border: 1px solid #4EC76A;
+              background-color: #C9F0C7;
+            }
+            &.approve {
+              border: 1px solid #F57E7E;
+              background-color: #FFDCDC;
+            }
           }
           .cell.completedDate {
             font-size: 1.3em;
