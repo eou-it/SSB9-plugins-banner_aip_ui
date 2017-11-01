@@ -272,7 +272,7 @@ module AIP {
             this.selected = this.selected.filter((item, idx) => {
                 return true;
             });
-            reAssignSeqnumber()
+            this.reAssignSeqnumber()
         }
         selectFilter(item,index,all) {
             var exist = this.assignedActionItems.filter((_item) => {

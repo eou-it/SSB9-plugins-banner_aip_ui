@@ -1,6 +1,9 @@
 /*******************************************************************************
 Copyright 2017 Ellucian Company L.P. and its affiliates.
 ********************************************************************************/
+/*********************************************************************************
+ Copyright 2017 Ellucian Company L.P. and its affiliates.
+ **********************************************************************************/
 aip-list .aip-list-container  {
     border:none;
     box-shadow:none;
@@ -618,7 +621,7 @@ ol.selected-group > li > button  {
     margin:0 auto;
     font-size:1.25em;
 }
-  .actionListContainer .actionListTable #actionItemDataTableSearch  {
+  .actionListContainer .actionListTable actionItemDataTableSearch  {
     display:none;
 }
 
@@ -969,42 +972,6 @@ ol.selected-group > li > button  {
     width:50%;
 }
 
-.aip-modal .modal-dialog .modal-header .row.blockProcess  {
-    padding:16px;
-}
-  .aip-modal .modal-dialog .modal-header .row.blockProcess input  {
-    margin-left:8px;
-}
-
-.actionInstruction  {
-    font-size:12px;
-    font-style:italic;
-    margin:0px;
-    border-bottom:1px solid #888181;
-}
-
-.actionInstruction label  {
-    margin-bottom:0px;
-}
-
-.actionlistitems  {
-    margin-top:0px !important;
-    border-top:0px !important;
-}
-
-.groupFolder  {
-    list-style-type:none;
-    font-weight:bold;
-    color:#1c8445;
-    border-bottom:1px solid #a7a4a4;
-    line-height:2.25em;
-    padding:10px;
-}
-
-.actionFolder  {
-    float:left;
-}
-
 .actionItemAddContainer input.hasMultiCalendarPicker  {
     height:35px;
     border-radius:5px;
@@ -1030,6 +997,12 @@ ol.selected-group > li > button  {
     color:#524e4e;
     text-decoration:underline;
 }
+.actionItemAddContainer .actionItemEdit  {
+    font-size:14px;
+    margin-right:15px;
+    color:#524e4e;
+    text-decoration:underline;
+}
 .actionItemAddContainer .calendar-img  {
     background:url(./images/datepicker_icon.png) no-repeat scroll !important;
 }
@@ -1048,6 +1021,156 @@ ol.selected-group > li > button  {
     margin-left:10px;
     top:-28px;
     position:relative;
+}
+.actionItemAddContainer input.hasMultiCalendarPicker  {
+    height:35px;
+    border-radius:5px;
+    padding-right:15px;
+}
+.actionItemAddContainer input[type="checkbox"]  {
+    -webkit-appearance:initial;
+    appearance:initial;
+    background:white;
+    width:20px;
+    height:20px;
+    border:1px solid #a4a4ca;
+    background:white;
+    position:relative;
+    border-radius:4px;
+    vertical-align:-40%;
+    box-shadow:inset 0 2px 5px rgba(0, 0, 0, 0.25);
+}
+.actionItemAddContainer input[type="checkbox"]:checked  {
+    background:#1c8445;
+}
+.actionItemAddContainer input[type="checkbox"]:checked:after  {
+    content:'';
+    color:#fff;
+    position:absolute;
+    border:3px solid #fff;
+    border-top:none;
+    border-left:none;
+    -webkit-transform:rotate(-45deg);
+    -moz-transform:rotate(-45deg);
+    -o-transform:rotate(-45deg);
+    -ms-transform:rotate(-45deg);
+    transform:rotate(-45deg);
+    width:12px;
+    height:6px;
+    top:5px;
+    right:4px;
+}
+.actionItemAddContainer input[type="radio"]  {
+    line-height:2.1ex;
+}
+.actionItemAddContainer input[type="radio"]  {
+    position:absolute;
+    right:-999em;
+}
+.actionItemAddContainer input[type="radio"] + label  {
+    position:relative;
+    overflow:hidden;
+    cursor:pointer;
+}
+.actionItemAddContainer input[type="radio"] + label::before  {
+    content:"";
+    display:inline-block;
+    vertical-align:-25%;
+    height:21px;
+    width:21px;
+    background-color:#1c8445;
+    border:1px solid #a4a4ca;
+    border-radius:25px;
+    box-shadow:inset 0 2px 5px rgba(0, 0, 0, 0.25);
+    margin-left:0.5em;
+}
+.actionItemAddContainer input[type="radio"]:checked + label::after  {
+    content:'';
+    position:absolute;
+    width:8px;
+    height:8px;
+    background:rgba(0, 0, 0, 0);
+    top:6px;
+    right:7px;
+    border:4px solid #fff;
+    border-radius:25px;
+    -webkit-transform:rotate(0deg);
+    -moz-transform:rotate(0deg);
+    -o-transform:rotate(0deg);
+    -ms-transform:rotate(0deg);
+    transform:rotate(0deg);
+}
+.actionItemAddContainer .postChk  {
+    font-size:1.5em;
+    font-weight:bold;
+    margin-right:12px;
+}
+
+.aip-modal .modal-dialog .modal-header .row.blockProcess  {
+    padding:16px;
+}
+  .aip-modal .modal-dialog .modal-header .row.blockProcess input  {
+    margin-left:8px;
+}
+.aip-modal input[type="checkbox"]  {
+    -webkit-appearance:initial;
+    appearance:initial;
+    background:white;
+    width:20px;
+    height:20px;
+    border:1px solid #a4a4ca;
+    background:white;
+    position:relative;
+    border-radius:4px;
+    vertical-align:-40%;
+    box-shadow:inset 0 2px 5px rgba(0, 0, 0, 0.25);
+}
+.aip-modal input[type="checkbox"]:checked  {
+    background:#1c8445;
+}
+.aip-modal input[type="checkbox"]:checked:after  {
+    content:'';
+    color:#fff;
+    position:absolute;
+    border:3px solid #fff;
+    border-top:none;
+    border-left:none;
+    -webkit-transform:rotate(-45deg);
+    -moz-transform:rotate(-45deg);
+    -o-transform:rotate(-45deg);
+    -ms-transform:rotate(-45deg);
+    transform:rotate(-45deg);
+    width:12px;
+    height:6px;
+    top:5px;
+    right:4px;
+}
+.aip-modal .groupFolder  {
+    list-style-type:none;
+    font-weight:bold;
+    color:#1c8445;
+    border-bottom:1px solid #a7a4a4;
+    line-height:2.25em;
+    padding:10px;
+}
+.aip-modal .actionFolder  {
+    float:left;
+}
+.aip-modal .actionlistitems  {
+    margin-top:0px !important;
+    border-top:0px !important;
+}
+.aip-modal .actionfolder  {
+    margin-right:12px;
+}
+.aip-modal .actionInstruction  {
+    font-size:12px;
+    font-style:italic;
+    margin:0px;
+    border-bottom:1px solid #888181;
+}
+.aip-modal .actionInstruction label  {
+    margin-bottom:0px;
 }
 
 #username  {
@@ -1344,21 +1467,6 @@ ol.selected-group > li  {
 ol.selected-group > li > button  {
     float:left;
     margin-left:5px;
-}
-
-input[type="checkbox"]  {
-    line-height:2.1ex;
-    width:17px;
-    height:25px;
-    background-image:url(images/checkbox/checkbox-default.svg);
-}
-
-
-input[type="checkbox"]  {
-    line-height:2.1ex;
-    width:17px;
-    height:25px;
-    background-image:url(images/checkbox/checkbox-default.svg);
 }
 /*** Media Query Section ***/
 @media screen and (max-width: 768px) {

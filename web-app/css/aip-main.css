@@ -491,25 +491,32 @@ ol.selected-group > li > button {
 .actionListContainer {
   overflow-y: auto;
   font-size: 14px; }
-  .actionListContainer .row {
-    margin-right: 0px;
-    margin-left: 0px; }
-    .actionListContainer .row .control {
-      text-align: right;
-      padding: 0 24px; }
-      .actionListContainer .row .control .btn-default {
-        background-color: transparent;
-        border: none;
-        color: #206E9F;
-        font-weight: 500; }
-        .actionListContainer .row .control .btn-default .button-text {
-          font-size: 0.875em; }
-        .actionListContainer .row .control .btn-default .icon {
-          display: table;
-          margin: 0 auto;
-          font-size: 1.25em; }
-  .actionListContainer .actionListTable #actionItemDataTableSearch {
+  .actionListContainer .actionListTable actionItemDataTableSearch {
     display: none; }
+  .actionListContainer .row {
+    margin-right: 0;
+    margin-left: 0; }
+  .actionListContainer .control {
+    float: right;
+    padding-top: 8px; }
+  .actionListContainer .actionListTable {
+    overflow: auto; }
+    .actionListContainer .actionListTable .table-container {
+      margin-top: 8px; }
+      .actionListContainer .actionListTable .table-container .row.actionItemActions {
+        display: flex;
+        margin-right: 16px;
+        margin-left: 16px; }
+        .actionListContainer .actionListTable .table-container .row.actionItemActions .icon {
+          font-size: 1.5em; }
+        .actionListContainer .actionListTable .table-container .row.actionItemActions div {
+          flex: 1;
+          margin-right: 10px; }
+        .actionListContainer .actionListTable .table-container .row.actionItemActions div:last-child {
+          margin-right: 0; }
+
+.actionListTable actionItemDataTableSearch {
+  display: none; }
 
 @media screen and (max-width: 768px) {
   .actionListContainer .row .control {
@@ -864,7 +871,7 @@ ol.selected-group > li > button {
 .actionItemAddContainer .actionItemEdit {
   font-size: 14px;
   margin-left: 15px;
-  color: #524e4e;
+  color: #565e96;
   text-decoration: underline; }
 .actionItemAddContainer .calendar-img {
   background: url(./images/datepicker_icon.png) no-repeat scroll !important; }
@@ -957,6 +964,10 @@ ol.selected-group > li > button {
   font-size: 1.5em;
   font-weight: bold;
   margin-left: 12px; }
+.actionItemAddContainer .actionItemLength {
+  padding: 0px;
+  font-size: 13px;
+  color: #131212; }
 
 .aip-modal .modal-dialog .modal-header .row.blockProcess {
   padding: 16px; }

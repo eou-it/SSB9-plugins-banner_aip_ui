@@ -41,11 +41,11 @@ module AIP {
         $filter;
         selected;
         modalResult;
-        modalResults;
         postNow:boolean;
         selectedPopulation;
         modalResults;
-        regeneratePopulation:boolean;
+        itemLength;
+        regeneratePopulation:any;
         APP_ROOT;
         modalInstance;
         $timeout;
@@ -66,12 +66,15 @@ module AIP {
             this.modalResult={};
             this.modalResults=[];
             this.regeneratePopulation;
+            this.itemLength;
             this.selectedPopulation={};
             this.postNow=true;
             this.APP_ROOT = APP_ROOT;
             this.errorMessage = {};
             this.init();
         }
+
+
         groupFunc(item) {
             return item.folderName;
         }
@@ -139,10 +142,9 @@ console.log(this.$scope);
                 }
             });
             this.modalInstance.result.then((result) => {
-
+                this.itemLength=result.length
                 result.forEach((item, index) => {
                     this.modalResult=item;
-                    console.log(this.modalResult);
                     this.modalResults.push(this.modalResult.actionItemId);
                 });
 
@@ -195,7 +197,7 @@ console.log(this.$scope);
              }
         }
         cancel() {
-            this.$state.go("admin-action-list");
+            this.$state.go("admin-post-list");
         }
         save() {
             this.saving = true;
@@ -208,7 +210,7 @@ console.log(this.$scope);
                             notiType: "saveSuccess",
                             data: response.data
                         };
-                        this.$state.go("admin-post-list", {noti: notiParams, data: response.data.newActionItem.id});
+                        this.$state.go("admin-post-list", {noti: notiParams, data: response.data.savedJob.id});
                     } else {
                         this.saveErrorCallback(response.data.message);
                     }

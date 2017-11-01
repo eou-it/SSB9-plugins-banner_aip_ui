@@ -24,6 +24,7 @@ var AIP;
             this.modalResult = {};
             this.modalResults = [];
             this.regeneratePopulation;
+            this.itemLength;
             this.selectedPopulation = {};
             this.postNow = true;
             this.APP_ROOT = APP_ROOT;
@@ -85,9 +86,9 @@ var AIP;
                 }
             });
             this.modalInstance.result.then(function (result) {
+                _this.itemLength = result.length;
                 result.forEach(function (item, index) {
                     _this.modalResult = item;
-                    console.log(_this.modalResult);
                     _this.modalResults.push(_this.modalResult.actionItemId);
                 });
             }, function (error) {
@@ -142,7 +143,7 @@ var AIP;
             }
         };
         AdminPostItemAddPageCtrl.prototype.cancel = function () {
-            this.$state.go("admin-action-list");
+            this.$state.go("admin-post-list");
         };
         AdminPostItemAddPageCtrl.prototype.save = function () {
             var _this = this;
@@ -156,7 +157,7 @@ var AIP;
                         notiType: "saveSuccess",
                         data: response.data
                     };
-                    _this.$state.go("admin-post-list", { noti: notiParams, data: response.data.newActionItem.id });
+                    _this.$state.go("admin-post-list", { noti: notiParams, data: response.data.savedJob.id });
                 }
                 else {
                     _this.saveErrorCallback(response.data.message);

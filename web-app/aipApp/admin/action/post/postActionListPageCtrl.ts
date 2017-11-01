@@ -15,7 +15,7 @@ module AIP {
     interface IPostActionListPageCtrl {
         getHeight(): { height: number };
 
-        fetchData(query: IActionItemListQuery): ng.IPromise<IPostActionItemFetchResponse>;
+        fetchTableData(query: IPostActionItemListQuery): ng.IPromise<IPostActionItemFetchResponse>;
 
         selectRecord(data: any): void;
 
@@ -60,7 +60,7 @@ module AIP {
             this.draggableColumnNames = [];
             this.mobileConfig = {
                 jobStatus: 3,
-                jobName: 3,
+                postingTitle: 3,
                 postingStartScheduleDate: 3,
                 groupFolder: 3,
                 population: 3,
@@ -68,9 +68,13 @@ module AIP {
                 submittedBy: 3,
                 action: 3
             };
+
+            if (this.$state.params.noti) {
+                this.handleNotification( this.$state.params.noti );
+            }
             this.mobileSize = angular.element("body").width() > 768 ? false : true;
             this.searchConfig = {
-                id: "actionItemPostJobsDataTableSearch",
+                id: "groupDataTableSearch",
                 delay: 300,
                 ariaLabel: this.$filter("i18n_aip")("aip.list.grid.search.actionItemPostJob"),
                 searchString: "",
@@ -78,8 +82,8 @@ module AIP {
                 minimumCharacters: 1
             };
             this.header = [{
-                name: "jobId",
-                title: "jobId",
+                name: "postingId",
+                title: "postingId",
                 width: "0px",
                 options: {
                     sortable: true,
@@ -87,29 +91,29 @@ module AIP {
                     columnShowHide: false
                 }
             }, {
-                name: "jobStatus",
+                name: "jobState",
                 title: this.$filter("i18n_aip")("aip.admin.actionItem.post.grid.job.status"),
                 ariaLabel: this.$filter("i18n_aip")("aip.admin.actionItem.post.grid.job.status"),
                 width: "100px",
                 options: {
                     sortable: false,
                     visible: true,
-                    ascending: true,
                     columnShowHide: true
                 }
             }, {
-                name: "jobName",
+                name: "postingName",
                 title: this.$filter("i18n_aip")("aip.admin.actionItem.post.grid.job.name"),
                 ariaLabel: this.$filter("i18n_aip")("aip.admin.actionItem.post.grid.job.name"),
                 width: "100px",
                 options: {
                     sortable: false,
                     visible: true,
-                    columnShowHide: true
+                    columnShowHide: true,
+                    ascending: true,
                 }
             },
                 {
-                    name: "postingStartScheduleDate",
+                    name: "postingDisplayStartDate",
                     title: this.$filter("i18n_aip")("aip.admin.actionItem.post.grid.job.start-schedule.date"),
                     ariaLabel: this.$filter("i18n_aip")("aip.admin.actionItem.post.grid.job.start-schedule.date"),
                     width: "100px",
@@ -119,7 +123,7 @@ module AIP {
                         columnShowHide: true
                     }
                 }, {
-                    name: "groupFolder",
+                    name: "groupFolderName",
                     title: this.$filter("i18n_aip")("aip.admin.actionItem.post.grid.job.group.folder"),
                     ariaLabel: this.$filter("i18n_aip")("aip.admin.actionItem.post.grid.job.group.folder"),
                     width: "100px",
@@ -130,7 +134,7 @@ module AIP {
                     }
                 },
                 {
-                    name: "population",
+                    name: "postingPopulation",
                     title: this.$filter("i18n_aip")("aip.admin.actionItem.post.grid.job.population"),
                     ariaLabel: this.$filter("i18n_aip")("aip.admin.actionItem.post.grid.job.population"),
                     width: "100px",
@@ -152,7 +156,7 @@ module AIP {
                     }
                 },
                 {
-                    name: "submittedBy",
+                    name: "postingCreatorId",
                     title: this.$filter("i18n_aip")("aip.admin.actionItem.post.grid.job.submittedBy"),
                     ariaLabel: this.$filter("i18n_aip")("aip.admin.actionItem.post.grid.job.submittedBy"),
                     width: "100px",
@@ -188,7 +192,21 @@ module AIP {
             return {height: containerHeight};
         }
 
-
+        handleNotification(noti) {
+            if(noti.notiType === "saveSuccess") {
+                // var data = noti.data.newActionItem||noti.data.actionItem;
+                var n = new Notification({
+                    message: this.$filter("i18n_aip")("aip.admin.post.action.add.success"), //+
+                    type: "success",
+                    flash: true
+                });
+                setTimeout(() => {
+                    notifications.addNotification(n);
+                    this.$state.params.noti = undefined;
+                    $(".actionItemAddContainer").focus();
+                }, 500);
+            }
+        }
         fetchTableData(query: AIP.IPostActionItemListQuery) {
 
             var deferred = this.$q.defer();
