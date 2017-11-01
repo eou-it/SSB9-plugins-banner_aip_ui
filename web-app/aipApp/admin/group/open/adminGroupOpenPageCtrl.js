@@ -25,6 +25,7 @@ var AIP;
             this.selected = [];
             this.allActionItems = [];
             this.originalAssign = [];
+            this.saving = false;
             this.init();
         }
         AdminGroupOpenPageCtrl.prototype.init = function () {
@@ -170,7 +171,7 @@ var AIP;
         AdminGroupOpenPageCtrl.prototype.groupFn = function (item) {
             return item.folderName;
         };
-        AdminGroupOpenPageCtrl.prototype.goUp = function (item) {
+        AdminGroupOpenPageCtrl.prototype.goUp = function (item, evt) {
             var preItemIdx = this.assignedActionItems.indexOf(item) - 1;
             var preItem = this.assignedActionItems[preItemIdx];
             this.assignedActionItems[preItemIdx] = item;
@@ -179,9 +180,22 @@ var AIP;
             this.selected[preItemIdx] = this.selected[preItemIdx + 1];
             this.selected[preItemIdx + 1] = preSelected;
             this.reAssignSeqnumber();
+            if (preItemIdx > 0) {
+                this.$timeout(function () {
+                    evt.currentTarget.focus();
+                }, 0);
+            }
+            else if (preItemIdx === 0) {
+                this.$timeout(function () {
+                    evt.target.nextElementSibling.focus();
+                }, 0);
+            }
         };
-        AdminGroupOpenPageCtrl.prototype.goDown = function (item) {
+        AdminGroupOpenPageCtrl.prototype.goDown = function (item, evt) {
             var nextItemIdx = this.assignedActionItems.indexOf(item) + 1;
+            if (nextItemIdx === this.selected.length) {
+                return;
+            }
             var nextItem = this.assignedActionItems[nextItemIdx];
             this.assignedActionItems[nextItemIdx] = item;
             this.assignedActionItems[nextItemIdx - 1] = nextItem;
@@ -189,6 +203,16 @@ var AIP;
             this.selected[nextItemIdx] = this.selected[nextItemIdx - 1];
             this.selected[nextItemIdx - 1] = nextSelected;
             this.reAssignSeqnumber();
+            if (nextItemIdx + 1 < this.selected.length) {
+                this.$timeout(function () {
+                    evt.currentTarget.focus();
+                }, 0);
+            }
+            else if (nextItemIdx + 1 === this.selected.length) {
+                this.$timeout(function () {
+                    evt.target.previousElementSibling.focus();
+                }, 0);
+            }
         };
         AdminGroupOpenPageCtrl.prototype.reAssignSeqnumber = function () {
             this.selected.map(function (item, index) {
@@ -230,6 +254,7 @@ var AIP;
             this.selected = this.selected.filter(function (item, idx) {
                 return true;
             });
+            this.reAssignSeqnumber();
         };
         AdminGroupOpenPageCtrl.prototype.selectFilter = function (item, index, all) {
             var exist = this.assignedActionItems.filter(function (_item) {
@@ -257,7 +282,7 @@ var AIP;
             var notSelected = this.selected.filter(function (item) {
                 return !item.actionItemId;
             });
-            if (notSelected.length === 0 && this.allActionItems.length !== this.selected.length) {
+            if (notSelected.length === 0 && this.allActionItems.length !== this.selected.length && !this.saving) {
                 return true;
             }
             return false;
@@ -280,11 +305,10 @@ var AIP;
         };
         AdminGroupOpenPageCtrl.prototype.save = function () {
             var _this = this;
-            //TODO:: send this.selected, groupId to service
-            // send().then show content preview page with success notification
-            this.reAssignSeqnumber();
+            this.saving = true;
             this.adminGroupService.updateActionItemGroupAssignment(this.selected, this.$state.params.data)
                 .then(function (response) {
+                _this.saving = false;
                 console.log(response);
                 var n = new Notification({
                     message: _this.$filter("i18n_aip")("aip.admin.group.assign.success"),
@@ -296,6 +320,7 @@ var AIP;
                     _this.openContentPanel();
                 }, 500);
             }, function (err) {
+                _this.saving = false;
                 console.log(err);
                 var n = new Notification({
                     message: _this.$filter("i18n_aip")("aip.admin.group.assign.fail"),

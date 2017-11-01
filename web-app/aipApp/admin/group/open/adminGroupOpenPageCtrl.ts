@@ -208,7 +208,7 @@ module AIP {
         groupFn(item) {
             return item.folderName;
         }
-        goUp(item, target) {
+        goUp(item, evt) {
             var preItemIdx = this.assignedActionItems.indexOf(item) - 1;
             var preItem = this.assignedActionItems[preItemIdx];
             this.assignedActionItems[preItemIdx] = item;
@@ -217,11 +217,23 @@ module AIP {
             var preSelected = this.selected[preItemIdx];
             this.selected[preItemIdx] = this.selected[preItemIdx + 1];
             this.selected[preItemIdx + 1 ] = preSelected;
-
             this.reAssignSeqnumber();
+            if(preItemIdx  > 0 ) {
+                this.$timeout(() => {
+                    evt.currentTarget.focus();
+                }, 0);
+            } else if(preItemIdx === 0) {
+                this.$timeout(() => {
+                    evt.target.nextElementSibling.focus();
+                }, 0);
+            }
         }
-        goDown(item, target) {
+        goDown(item, evt) {
             var nextItemIdx = this.assignedActionItems.indexOf(item) + 1;
+            if(nextItemIdx  === this.selected.length) {
+                return;
+            }
+
             var nextItem = this.assignedActionItems[nextItemIdx];
             this.assignedActionItems[nextItemIdx] = item;
             this.assignedActionItems[nextItemIdx - 1] = nextItem
@@ -229,8 +241,16 @@ module AIP {
             var nextSelected = this.selected[nextItemIdx];
             this.selected[nextItemIdx] = this.selected[nextItemIdx - 1];
             this.selected[nextItemIdx - 1 ] = nextSelected ;
-
             this.reAssignSeqnumber();
+            if(nextItemIdx + 1  < this.selected.length) {
+                this.$timeout(() => {
+                    evt.currentTarget.focus();
+                }, 0);
+            } else if (nextItemIdx + 1 === this.selected.length) {
+                this.$timeout(() => {
+                    evt.target.previousElementSibling.focus();
+                }, 0);
+            }
         }
         reAssignSeqnumber() {
             this.selected.map((item, index) => {

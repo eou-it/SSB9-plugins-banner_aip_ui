@@ -75,12 +75,14 @@ Copyright 2017 Ellucian Company L.P. and its affiliates.
                         </xe-ui-select>
                     </div>
                     <div class="col-xs-2 col-sm-push-1">
-                        <div type="button" class="btn btn-default vertical" ng-click="vm.goUp(item, $target)" aria-label="{{'aip.admin.group.actionItem.up'|i18n_aip}}"
-                             ng-disabled="$index===0" title="{{'aip.admin.group.actionItem.up'|i18n_aip}}">
+                        <div type="button" class="btn btn-default vertical" ng-click="vm.goUp(item, $event)" aria-label="{{'aip.admin.group.actionItem.up'|i18n_aip}}"
+                             ng-disabled="$index===0" title="{{'aip.admin.group.actionItem.up'|i18n_aip}}"
+                             tabindex="{{$index===0?-1:0}}">
                             <i class="icon icon-arrowTop-C" aria-hidden="true"></i>
                         </div>
-                        <div type="button" class="btn btn-default vertical" ng-click="vm.goDown(item, $target)" aria-label="{{'aip.admin.group.actionItem.down'|i18n_aip}}"
-                            ng-disabled="$index===vm.assignedActionItems.length-1" title="{{'aip.admin.group.actionItem.down'|i18n_aip}}">
+                        <div type="button" class="btn btn-default vertical" ng-click="vm.goDown(item, $event)" aria-label="{{'aip.admin.group.actionItem.down'|i18n_aip}}"
+                            ng-disabled="$index===vm.selected.length-1" title="{{'aip.admin.group.actionItem.down'|i18n_aip}}"
+                            tabindex="{{$index===vm.selected.length-1?-1:0}}">
                             <i class="icon icon-arrowBottom-C" aria-hidden="true"></i>
                         </div>
                     </div>
