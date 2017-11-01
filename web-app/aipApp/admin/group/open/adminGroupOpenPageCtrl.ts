@@ -36,6 +36,7 @@ module AIP {
         selected;
         allActionItems;
         originalAssign;
+        saving:boolean;
 
         constructor($scope, AdminGroupService:AIP.AdminGroupService, $q:ng.IQService, SpinnerService, $state, $filter, $sce, $templateRequest, $templateCache,
                     $compile, $timeout, APP_ROOT) {
@@ -57,6 +58,7 @@ module AIP {
             this.selected = [];
             this.allActionItems = [];
             this.originalAssign = [];
+            this.saving = false;
             this.init();
         }
 
@@ -206,7 +208,7 @@ module AIP {
         groupFn(item) {
             return item.folderName;
         }
-        goUp(item) {
+        goUp(item, target) {
             var preItemIdx = this.assignedActionItems.indexOf(item) - 1;
             var preItem = this.assignedActionItems[preItemIdx];
             this.assignedActionItems[preItemIdx] = item;
@@ -218,7 +220,7 @@ module AIP {
 
             this.reAssignSeqnumber();
         }
-        goDown(item) {
+        goDown(item, target) {
             var nextItemIdx = this.assignedActionItems.indexOf(item) + 1;
             var nextItem = this.assignedActionItems[nextItemIdx];
             this.assignedActionItems[nextItemIdx] = item;
@@ -298,7 +300,7 @@ module AIP {
             var notSelected = this.selected.filter((item) => {
                 return !item.actionItemId;
             });
-            if (notSelected.length===0 && this.allActionItems.length!==this.selected.length) {
+            if (notSelected.length===0 && this.allActionItems.length!==this.selected.length && !this.saving) {
                 return true;
             }
             return false;
@@ -323,8 +325,10 @@ module AIP {
         save() {
             //TODO:: send this.selected, groupId to service
             // send().then show content preview page with success notification
+            this.saving = true;
             this.adminGroupService.updateActionItemGroupAssignment(this.selected, this.$state.params.data)
                 .then((response) => {
+                    this.saving = false;
                     console.log(response);
                     var n = new Notification({
                         message: this.$filter("i18n_aip")("aip.admin.group.assign.success"),
@@ -336,6 +340,7 @@ module AIP {
                         this.openContentPanel();
                     }, 500);
                 }, (err) => {
+                    this.saving = false;
                     console.log(err);
                     var n = new Notification({
                         message: this.$filter("i18n_aip")("aip.admin.group.assign.fail"),

@@ -75,17 +75,18 @@ Copyright 2017 Ellucian Company L.P. and its affiliates.
                         </xe-ui-select>
                     </div>
                     <div class="col-xs-2 col-sm-push-1">
-                        <div type="button" class="btn btn-default vertical" ng-click="vm.goUp(item)" aria-label="{{'aip.admin.group.actionItem.up'|i18n_aip}}"
-                             ng-disabled="$index===0">
+                        <div type="button" class="btn btn-default vertical" ng-click="vm.goUp(item, $target)" aria-label="{{'aip.admin.group.actionItem.up'|i18n_aip}}"
+                             ng-disabled="$index===0" title="{{'aip.admin.group.actionItem.up'|i18n_aip}}">
                             <i class="icon icon-arrowTop-C" aria-hidden="true"></i>
                         </div>
-                        <div type="button" class="btn btn-default vertical" ng-click="vm.goDown(item)" aria-label="{{'aip.admin.group.actionItem.down'|i18n_aip}}"
-                        ng-disabled="$index===vm.assignedActionItems.length-1">
+                        <div type="button" class="btn btn-default vertical" ng-click="vm.goDown(item, $target)" aria-label="{{'aip.admin.group.actionItem.down'|i18n_aip}}"
+                            ng-disabled="$index===vm.assignedActionItems.length-1" title="{{'aip.admin.group.actionItem.down'|i18n_aip}}">
                             <i class="icon icon-arrowBottom-C" aria-hidden="true"></i>
                         </div>
                     </div>
                     <div class="col-xs-2 col-sm-push-1">
-                        <div type="button" class="btn btn-default vertical" ng-click="vm.delete(item)" aria-label="{{'aip.admin.group.actionItem.delete'|i18n_aip}}">
+                        <div type="button" class="btn btn-default vertical" ng-click="vm.delete(item)" aria-label="{{'aip.admin.group.actionItem.delete'|i18n_aip}}"
+                        title="{{'aip.admin.group.actionItem.delete'|i18n_aip}}">
                             <i class="icon icon-delete-CO" aria-hidden="true"></i>
                         </div>
                     </div>

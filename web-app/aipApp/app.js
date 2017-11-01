@@ -98,7 +98,7 @@ var bannerAIPApp = angular.module("bannerAIP", [
             templateUrl: "admin/group/list/adminGroupListPage.html",
             //controller: "AdminGroupListPageCtrl",
             breadcrumb: {
-                label: "aip.admin.group",
+                label: "aip.admin.groups",
                 url: "/aip/admin#/group"
             }
         },

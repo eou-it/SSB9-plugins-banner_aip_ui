@@ -39,7 +39,7 @@ module AIP {
                     description:"aip.admin.action.description"
                 },
                 {
-                    title:"aip.admin.group",
+                    title:"aip.admin.groups",
                     icon: "icon-cardView",
                     click:"admin-group-list",
                     description:"aip.admin.group.description"
