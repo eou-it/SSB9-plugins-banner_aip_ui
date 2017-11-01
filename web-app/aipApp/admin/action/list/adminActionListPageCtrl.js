@@ -148,8 +148,8 @@ var AIP;
         // goOpenPage() {
         //
         // }
-        AdminActionListPageCtrl.prototype.openActionItem = function () {
-            this.$state.go("admin-action-open", { data: this.selectedRecord.id });
+        AdminActionListPageCtrl.prototype.openActionItem = function (id) {
+            this.$state.go("admin-action-open", { data: id });
         };
         return AdminActionListPageCtrl;
     }());

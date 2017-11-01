@@ -508,7 +508,7 @@ ol.selected-group > li > button {
           display: table;
           margin: 0 auto;
           font-size: 1.25em; }
-  .actionListContainer .actionListTable #actionItemDataTableSearch {
+  .actionListContainer .actionListTable actionItemDataTableSearch {
     display: none; }
 
 @media screen and (max-width: 768px) {

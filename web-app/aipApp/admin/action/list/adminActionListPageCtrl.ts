@@ -184,8 +184,8 @@ module AIP {
         //
         // }
 
-        openActionItem() {
-            this.$state.go("admin-action-open", { data: this.selectedRecord.id });
+        openActionItem(id) {
+            this.$state.go("admin-action-open", { data: id});
         }
     }
 }
