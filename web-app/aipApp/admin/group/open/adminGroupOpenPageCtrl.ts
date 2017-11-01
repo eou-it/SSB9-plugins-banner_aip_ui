@@ -157,10 +157,10 @@ module AIP {
                     .then((response) => {
                     this.allActionItems = response;
                     this.allActionItems.sort((a,b) => {
-                        if (a.folderName < b.folderName) {
+                        if (a.folderName.toLowerCase() < b.folderName.toLowerCase()) {
                             return -1;
                         }
-                        if (a.folderName > b.folderName ) {
+                        if (a.folderName.toLowerCase() > b.folderName.toLowerCase() ) {
                             return 1
                         }
                         return 0;
@@ -272,6 +272,7 @@ module AIP {
             this.selected = this.selected.filter((item, idx) => {
                 return true;
             });
+            reAssignSeqnumber()
         }
         selectFilter(item,index,all) {
             var exist = this.assignedActionItems.filter((_item) => {
@@ -323,8 +324,6 @@ module AIP {
             return false;
         }
         save() {
-            //TODO:: send this.selected, groupId to service
-            // send().then show content preview page with success notification
             this.saving = true;
             this.adminGroupService.updateActionItemGroupAssignment(this.selected, this.$state.params.data)
                 .then((response) => {

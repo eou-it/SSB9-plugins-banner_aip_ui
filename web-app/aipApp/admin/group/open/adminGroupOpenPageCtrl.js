@@ -122,10 +122,10 @@ var AIP;
                 .then(function (response) {
                 _this.allActionItems = response;
                 _this.allActionItems.sort(function (a, b) {
-                    if (a.folderName < b.folderName) {
+                    if (a.folderName.toLowerCase() < b.folderName.toLowerCase()) {
                         return -1;
                     }
-                    if (a.folderName > b.folderName) {
+                    if (a.folderName.toLowerCase() > b.folderName.toLowerCase()) {
                         return 1;
                     }
                     return 0;
@@ -231,6 +231,7 @@ var AIP;
             this.selected = this.selected.filter(function (item, idx) {
                 return true;
             });
+            reAssignSeqnumber();
         };
         AdminGroupOpenPageCtrl.prototype.selectFilter = function (item, index, all) {
             var exist = this.assignedActionItems.filter(function (_item) {
@@ -281,8 +282,6 @@ var AIP;
         };
         AdminGroupOpenPageCtrl.prototype.save = function () {
             var _this = this;
-            //TODO:: send this.selected, groupId to service
-            // send().then show content preview page with success notification
             this.saving = true;
             this.adminGroupService.updateActionItemGroupAssignment(this.selected, this.$state.params.data)
                 .then(function (response) {
