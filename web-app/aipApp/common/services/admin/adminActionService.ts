@@ -15,6 +15,8 @@ module AIP {
     }
     export interface IPostActionItemListQuery {
         searchParam: string;
+        sortColumnName: string;
+        ascending: string;
         offset: string;
         max: string;
     }
@@ -31,6 +33,19 @@ module AIP {
         folderId: string;
         folderName: string;
     }
+    interface IPostActionItem {
+        id: number;
+        lastModified: Date;
+        postingCreationDateTime: Date;
+        postingDisplayEndDate: Date;
+        postingDisplayStartDate: Date;
+        lastModifiedBy: string;
+        postingName: string;
+        populationListId: string;
+        postingActionItemGroupId: string;
+        postingJobId: string;
+        postingGroupId: string;
+    }
     interface IActionItem2 {
         id: number;
         activityDate: Date;
@@ -45,6 +60,15 @@ module AIP {
         folderName?: string;
         actionItemContent?:string;
         actionItemContentId?:number;
+    }
+    interface IPostActionItem2{
+        id:number;
+        name: number,
+        postGroupId: number,
+        actionItemIds: number,
+        populationId: number,
+        displayStartDate:Date,
+        displayEndDate:Date,
     }
     export interface IActionItemHeader {
         name: string;
@@ -107,7 +131,7 @@ module AIP {
         header: [IActionItemHeader]
     }
     export interface IPostActionItemFetchResponse {
-        result: [IActionItem],
+        result: [IPostActionItem],
         length: number;
         header: [IPostActionItemHeader]
     }
@@ -148,7 +172,7 @@ module AIP {
         data: {
             success: boolean;
             message: string;
-            newActionItem: IActionItem2;
+            savedJob: IPostActionItem2;
         };
     }
     export interface IActionItemOpenResponse {
@@ -218,9 +242,17 @@ module AIP {
                 '?searchParam=' + (query.searchParam || '') +
                 '&offset=' + (query.offset.toString() || '') +
                 '&max=' + (realMax.toString() || '');
+            var params = {
+                filterName: query.searchParam||"%",
+                sortColumn: query.sortColumnName||"id",
+                sortAscending: query.ascending||false,
+                max: realMax||"",
+                offset: query.offset || 0
+            };
             this.$http({
                 method: "GET",
-                url: url
+                url: url,
+                data: params
             }).then((response:any)=> {
                 deferred.resolve(response.data);
             }, (data) => {

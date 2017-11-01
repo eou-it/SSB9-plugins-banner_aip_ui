@@ -156,7 +156,7 @@ var AIP;
                         notiType: "saveSuccess",
                         data: response.data
                     };
-                    _this.$state.go("admin-post-list", { noti: notiParams, data: response.data.newActionItem.id });
+                    _this.$state.go("admin-post-list", { noti: notiParams, data: response.data.savedJob.id });
                 }
                 else {
                     _this.saveErrorCallback(response.data.message);

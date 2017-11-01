@@ -43,9 +43,17 @@ var AIP;
                 '?searchParam=' + (query.searchParam || '') +
                 '&offset=' + (query.offset.toString() || '') +
                 '&max=' + (realMax.toString() || '');
+            var params = {
+                filterName: query.searchParam || "%",
+                sortColumn: query.sortColumnName || "id",
+                sortAscending: query.ascending || false,
+                max: realMax || "",
+                offset: query.offset || 0
+            };
             this.$http({
                 method: "GET",
-                url: url
+                url: url,
+                data: params
             }).then(function (response) {
                 deferred.resolve(response.data);
             }, function (data) {

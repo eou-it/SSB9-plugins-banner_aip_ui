@@ -45,7 +45,7 @@ module AIP {
         postNow:boolean;
         selectedPopulation;
         modalResults;
-        regeneratePopulation:boolean;
+        regeneratePopulation;
         APP_ROOT;
         modalInstance;
         $timeout;
@@ -208,7 +208,7 @@ console.log(this.$scope);
                             notiType: "saveSuccess",
                             data: response.data
                         };
-                        this.$state.go("admin-post-list", {noti: notiParams, data: response.data.newActionItem.id});
+                        this.$state.go("admin-post-list", {noti: notiParams, data: response.data.savedJob.id});
                     } else {
                         this.saveErrorCallback(response.data.message);
                     }
