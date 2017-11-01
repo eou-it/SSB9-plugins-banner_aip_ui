@@ -14,10 +14,10 @@ angular.module('bannerAIP').
             }
         });
         notGenerated.sort(function (a, b) {
-            if (a.actionItemTitle < b.actionItemTitle) {
+            if (a.actionItemTitle.toLowerCase() < b.actionItemTitle.toLowerCase()) {
                 return -1;
             }
-            if (a.actionItemTitle > b.actionItemTitle) {
+            if (a.actionItemTitle.toLowerCase() > b.actionItemTitle.toLowerCase()) {
                 return 1;
             }
             return 0;

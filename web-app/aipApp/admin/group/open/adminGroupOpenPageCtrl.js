@@ -121,10 +121,10 @@ var AIP;
                 .then(function (response) {
                 _this.allActionItems = response;
                 _this.allActionItems.sort(function (a, b) {
-                    if (a.folderName < b.folderName) {
+                    if (a.folderName.toLowerCase() < b.folderName.toLowerCase()) {
                         return -1;
                     }
-                    if (a.folderName > b.folderName) {
+                    if (a.folderName.toLowerCase() > b.folderName.toLowerCase()) {
                         return 1;
                     }
                     return 0;
@@ -282,6 +282,7 @@ var AIP;
             var _this = this;
             //TODO:: send this.selected, groupId to service
             // send().then show content preview page with success notification
+            this.reAssignSeqnumber();
             this.adminGroupService.updateActionItemGroupAssignment(this.selected, this.$state.params.data)
                 .then(function (response) {
                 console.log(response);
