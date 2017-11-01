@@ -24,6 +24,7 @@ var AIP;
             this.modalResult = {};
             this.modalResults = [];
             this.regeneratePopulation;
+            this.itemLength;
             this.selectedPopulation = {};
             this.postNow = true;
             this.APP_ROOT = APP_ROOT;
@@ -85,9 +86,9 @@ var AIP;
                 }
             });
             this.modalInstance.result.then(function (result) {
+                _this.itemLength = result.length;
                 result.forEach(function (item, index) {
                     _this.modalResult = item;
-                    console.log(_this.modalResult);
                     _this.modalResults.push(_this.modalResult.actionItemId);
                 });
             }, function (error) {

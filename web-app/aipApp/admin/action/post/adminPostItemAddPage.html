@@ -49,13 +49,13 @@ Copyright 2017 Ellucian Company L.P. and its affiliates.
         </div>
         <div class="row actionItemInfoRow actionItemFolder">
             <div class="actionItemElement row input-actionItem">
-                <label for="postActionItemGroup" class="titleValue required" id="postActionItem">{{"aip.admin.action.actionItems.name"|i18n_aip}}
+                <label class="titleValue required" id="postActionItem">{{"aip.admin.action.actionItems.name"|i18n_aip}}
                 </label>
                 <span class="actionItemEdit"  ng-click="vm.editPage()">{{"aip.admin.action.actionItems.add.edit"|i18n_aip}}</span>
-                <div class="actionItemElement">
+                <div class="actionItemLength">
 
                     <div id="ActionItemGroup">
-                        <span ng-model="">{{}} items selected</span>
+                        <span ng-model="vm.itemLength" ng-if="vm.itemLength > 0">{{vm.itemLength}} items selected</span>
                     </div>
                 </div>
 
@@ -102,7 +102,6 @@ Copyright 2017 Ellucian Company L.P. and its affiliates.
                         <div class="row input-daterange form-group right-inner-addon">
                             <input date-picker type="text" ng-model="vm.postActionItemInfo.startDate" id="deliveryDate" today="{{today}}"
                                    class="form-control date-picker Datelement" name="deliveryDate"
-
                                    aria-required="true" required autocomplete="off" placeholder='{{"aip.postaction.dateFormatWaterMark"|i18n_aip}}'/>
                         </div>
                     </div>

@@ -41,10 +41,10 @@ module AIP {
         $filter;
         selected;
         modalResult;
-        modalResults;
         postNow:boolean;
         selectedPopulation;
         modalResults;
+        itemLength;
         regeneratePopulation;
         APP_ROOT;
         modalInstance;
@@ -66,6 +66,7 @@ module AIP {
             this.modalResult={};
             this.modalResults=[];
             this.regeneratePopulation;
+            this.itemLength;
             this.selectedPopulation={};
             this.postNow=true;
             this.APP_ROOT = APP_ROOT;
@@ -139,10 +140,9 @@ console.log(this.$scope);
                 }
             });
             this.modalInstance.result.then((result) => {
-
+                this.itemLength=result.length
                 result.forEach((item, index) => {
                     this.modalResult=item;
-                    console.log(this.modalResult);
                     this.modalResults.push(this.modalResult.actionItemId);
                 });
 
