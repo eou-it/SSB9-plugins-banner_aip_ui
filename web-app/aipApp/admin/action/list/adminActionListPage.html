@@ -1,15 +1,10 @@
 <div class="actionListContainer" id="adminActionListPage" ng-controller="AdminActionListPageCtrl">
-    <div class="row">
+    <div class="row controls">
         <div class="control">
-            <button type="button" class="btn btn-default" ng-click="vm.goAddPage()" aria-label="Add new Action Item">
-                <span class="icon icon-add-CO"></span>
-                <span class="button-text hidden-sm-down">{{'aip.common.add.new'|i18n_aip}}</span>
-            </button>
-
-            <button id="openActionBtn" type="button" class="btn btn-default" ng-click="vm.openActionItem()"
-                    aria-label="Open Action Item" ng-disabled="!vm.selectedRecord">
-                <span class="icon icon-view-CO"></span>
-                <span class="button-text hidden-sm-down">{{'aip.common.open'|i18n_aip}}</span>
+            <button type="button" class="btn btn-default" ng-click="vm.goAddPage()"
+                    aria-label="{{'aip.common.add.action.item.jaws'|i18n_aip}}">
+                <i class="icon icon-add-CO" aria-hidden="true"></i>
+                <span>{{"aip.common.add"|i18n_aip}}</span>
             </button>
         </div>
     </div>
@@ -34,6 +29,15 @@
                 draggable-column-names="vm.draggableColumnNames"
                 continuous-scrolling="vm.mobileSize"
                 continuous-scroll-parent="adminActionListPage">
+            <xe-cell-markup column-name="actionStatus">
+                <div class="row actionItemActions">
+                    <div class="icon icon-view-CO" ng-click="vm.openActionItem(row.id)"
+                         title="{{'aip.common.open.action.item.jaws'|i18n_aip}}">
+                        <span class="offscreen">{{'aip.common.open.action.item.jaws'|i18n_aip}}</span>
+                    </div>
+                </div>
+
+            </xe-cell-markup>
         </xe-table-grid>
     </div>
 </div>

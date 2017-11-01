@@ -1,3 +1,6 @@
+/*******************************************************************************
+ Copyright 2017 Ellucian Company L.P. and its affiliates.
+ ********************************************************************************/
 ///<reference path="../../../../typings/tsd.d.ts"/>
 ///<reference path="../../../common/services/admin/adminActionService.ts"/>
 
@@ -184,8 +187,8 @@ module AIP {
         //
         // }
 
-        openActionItem() {
-            this.$state.go("admin-action-open", { data: this.selectedRecord.id });
+        openActionItem(id) {
+            this.$state.go("admin-action-open", { data: id});
         }
     }
 }

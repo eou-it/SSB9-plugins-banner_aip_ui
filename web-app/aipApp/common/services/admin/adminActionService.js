@@ -40,7 +40,7 @@ var AIP;
             var deferred = this.$q.defer();
             var realMax = parseInt(query.max) - parseInt(query.offset);
             var url = this.ENDPOINT.admin.actionItemPostJobList +
-                '?searchParam=' + (query.searchParam || '') +
+                '?searchParam=' + (query.searchString || '') +
                 '&offset=' + (query.offset.toString() || '') +
                 '&max=' + (realMax.toString() || '');
             var params = {
@@ -219,9 +219,9 @@ var AIP;
             });
             return request;
         };
+        AdminActionService.$inject = ["$http", "$q", "$filter", "ENDPOINT"];
         return AdminActionService;
     }());
-    AdminActionService.$inject = ["$http", "$q", "$filter", "ENDPOINT"];
     AIP.AdminActionService = AdminActionService;
 })(AIP || (AIP = {}));
 register("bannerAIP").service("AdminActionService", AIP.AdminActionService);

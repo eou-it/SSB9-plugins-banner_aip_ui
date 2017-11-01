@@ -85,6 +85,7 @@ module AIPUI {
                         $(btnTarget).focus();
                     }, 500);
                 }
+                this.detectRuleChange();
                 //$scope.setFocus($event, first);
             }
             $scope.moveDown = function(item, $event) {
@@ -104,6 +105,7 @@ module AIPUI {
                     $scope.rules[idx + 1] = item;
                     $scope.rules[idx] = temp;
                 }
+                this.detectRuleChange();
 
             }
             $scope.isLast = function(item) {

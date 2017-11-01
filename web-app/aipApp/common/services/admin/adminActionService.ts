@@ -14,6 +14,7 @@ module AIP {
         max: string;
     }
     export interface IPostActionItemListQuery {
+        searchString: string;
         searchParam: string;
         sortColumnName: string;
         ascending: string;
@@ -239,7 +240,7 @@ module AIP {
             var deferred = this.$q.defer();
             var realMax = parseInt(query.max) - parseInt(query.offset);
             var url = this.ENDPOINT.admin.actionItemPostJobList +
-                '?searchParam=' + (query.searchParam || '') +
+                '?searchParam=' + (query.searchString || '') +
                 '&offset=' + (query.offset.toString() || '') +
                 '&max=' + (realMax.toString() || '');
             var params = {
