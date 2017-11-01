@@ -45,7 +45,7 @@ module AIP {
         selectedPopulation;
         modalResults;
         itemLength;
-        regeneratePopulation;
+        regeneratePopulation:any;
         APP_ROOT;
         modalInstance;
         $timeout;
@@ -73,6 +73,8 @@ module AIP {
             this.errorMessage = {};
             this.init();
         }
+
+
         groupFunc(item) {
             return item.folderName;
         }
@@ -195,7 +197,7 @@ console.log(this.$scope);
              }
         }
         cancel() {
-            this.$state.go("admin-action-list");
+            this.$state.go("admin-post-list");
         }
         save() {
             this.saving = true;

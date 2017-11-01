@@ -143,7 +143,7 @@ var AIP;
             }
         };
         AdminPostItemAddPageCtrl.prototype.cancel = function () {
-            this.$state.go("admin-action-list");
+            this.$state.go("admin-post-list");
         };
         AdminPostItemAddPageCtrl.prototype.save = function () {
             var _this = this;
