@@ -31,9 +31,9 @@ Copyright 2017 Ellucian Company L.P. and its affiliates.
                 <div class="row">
                     <xe-ui-select id="postActionItemGroup" ng-change="vm.changedValue()" ng-model="vm.selected" theme="select2" ng-disabled="disabled">
 
-                        <xe-ui-select-match placeholder="Select">
+                        <xe-ui-select-match class="placeholderDisplay" placeholder="Select">
                             <div class="row actionItemName">{{vm.selected.groupName}}</div>
-
+                            <div>Select</div>
                         </xe-ui-select-match>
 
                         <xe-ui-select-choices  group-by="vm.groupFunc" repeat="item in vm.groupList |
@@ -73,7 +73,7 @@ Copyright 2017 Ellucian Company L.P. and its affiliates.
 
                         <xe-ui-select-match placeholder="Select">
                           <div class="row actionItemName">{{vm.selectedPopulation.name}}</div>
-
+                            <div>Select</div>
                         </xe-ui-select-match>
 
                         <xe-ui-select-choices group-by="vm.populationFunc" repeat="item in vm.populationList |
