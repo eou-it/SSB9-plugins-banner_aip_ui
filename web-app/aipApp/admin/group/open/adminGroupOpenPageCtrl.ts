@@ -194,7 +194,7 @@ module AIP {
             if(noti.notiType === "saveSuccess") {
                 var data = noti.data.group[0];
                 var n = new Notification({
-                    message: this.$filter("i18n_aip")("aip.admin.group.add.success"),
+                    message: this.$filter("i18n_aip")("aip.common.save.successful"),
                     type: "success",
                     flash: true
                 });

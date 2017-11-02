@@ -83,7 +83,7 @@ var AIP;
             if (noti.notiType === "saveSuccess") {
                 // var data = noti.data.newActionItem||noti.data.actionItem;
                 var n = new Notification({
-                    message: this.$filter("i18n_aip")("aip.admin.action.add.success"),
+                    message: this.$filter("i18n_aip")("aip.common.save.successful"),
                     type: "success",
                     flash: true
                 });
