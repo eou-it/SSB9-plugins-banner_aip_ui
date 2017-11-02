@@ -571,14 +571,15 @@ value: value.aipBlock
         def assignedActionItems = actionItemGroupAssignReadOnlyService.getAssignedActionItemsInGroup( groupId )
         def resultMap = assignedActionItems?.collect {it ->
             [
-                    id                  : it.id,
-                    actionItemId        : it.actionItemId,
-                    sequenceNumber      : it.sequenceNumber,
-                    actionItemName      : it.actionItemName,
-                    actionItemStatus    : it.actionItemStatus ? MessageHelper.message( "aip.status.${it.actionItemStatus.trim()}" ) : null,
-                    actionItemFolderName: it.actionItemFolderName,
-                    actionItemTitle     : it.actionItemTitle,
-                    actionItemFolderId  : it.actionItemFolderId
+                    id                   : it.id,
+                    actionItemId         : it.actionItemId,
+                    sequenceNumber       : it.sequenceNumber,
+                    actionItemName       : it.actionItemName,
+                    actionItemStatus     : it.actionItemStatus ? MessageHelper.message( "aip.status.${it.actionItemStatus.trim()}" ) : null,
+                    actionItemFolderName : it.actionItemFolderName,
+                    actionItemTitle      : it.actionItemTitle,
+                    actionItemDescription: it.actionItemDescription,
+                    actionItemFolderId   : it.actionItemFolderId
             ]
         }
         render resultMap as JSON
@@ -617,10 +618,9 @@ value: value.aipBlock
 
 
     def updateActionItemGroupAssignment() {
-        def user = SecurityContextHolder?.context?.authentication?.principal
         def model
         try {
-            List<ActionItemGroupAssignReadOnly> assignActionItem = actionItemGroupCompositeService.updateActionItemGroupAssignment( user, request.JSON )
+            List<ActionItemGroupAssignReadOnly> assignActionItem = actionItemGroupCompositeService.updateActionItemGroupAssignment( request.JSON )
             def resultMap
 
             if (assignActionItem) {
