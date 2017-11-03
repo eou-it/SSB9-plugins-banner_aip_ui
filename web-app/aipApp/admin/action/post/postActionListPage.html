@@ -31,6 +31,20 @@ Copyright 2017 Ellucian Company L.P. and its affiliates.
                 draggable-column-names="vm.draggableColumnNames"
                 continuous-scrolling="vm.mobileSize"
                 continuous-scroll-parent="postActionListPage">
+
+
+            <xe-cell-markup column-name="jobState" >
+                <div class="row jobState">
+                    <div    ng-if="!isExtendedField(row, heading.name)">
+                        <span  ng-class='{"jobStateQueued jobstateDefault" : row.jobState == "Queued" || row.jobState == "Scheduled"}' ng-bind="getObjectValue(row, heading.name)" >
+{{}}
+                       </span></div>
+
+
+                    </div>
+
+            </xe-cell-markup>
+
         </xe-table-grid>
     </div>
 </div>

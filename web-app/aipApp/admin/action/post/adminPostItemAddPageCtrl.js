@@ -8,7 +8,7 @@ var AIP;
 (function (AIP) {
     var AdminPostItemAddPageCtrl = (function () {
         function AdminPostItemAddPageCtrl($scope, $q, $state, $uibModal, $filter, $timeout, SpinnerService, APP_ROOT, AdminActionService) {
-            this.$inject = ["$scope", "$q", "$state", "$filter", "$timeout", "SpinnerService", "AdminActionService", "$uibModal", "APP_ROOT", "datePicker"];
+            this.$inject = ["$scope", "$q", "$state", "$filter", "$timeout", "SpinnerService", "AdminActionService", "$uibModal", "APP_ROOT"];
             $scope.vm = this;
             this.$q = $q;
             this.$scope = $scope;

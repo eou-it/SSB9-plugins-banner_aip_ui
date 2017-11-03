@@ -250,6 +250,9 @@ label {
 .offscreen {
   visibility: hidden;
 }
+#multiCalendarContainer > div{
+  padding:1.6em 1.17em 0;
+}
 /*bootstrap overrides*/
 h2 {
   color: #4F585F;
@@ -362,4 +365,23 @@ ol.selected-group > li > button {
   margin-right: 5px; }
 
 
-
+.jobstateDefault{display: inline;
+  color: #000;
+  position: relative;
+  float: left;
+  padding: 8px 21px;
+  font-size: 80%;
+  font-weight: bold;
+  line-height: 1;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: baseline;
+  border-radius: .25em;
+  width: 65%;}
+.jobStateQueued{background-color: #D8D8D8;}
+.jobStateNew{color:#000;border: 1px solid #000;}
+.jobStateCalculating{}
+.jobStateProcessing{}
+.jobStateComplete{}
+.jobStateStopped{}
+.jobStateError{}

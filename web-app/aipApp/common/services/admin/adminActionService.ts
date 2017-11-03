@@ -41,6 +41,7 @@ module AIP {
         postingDisplayEndDate: Date;
         postingDisplayStartDate: Date;
         lastModifiedBy: string;
+        jobState:string;
         postingName: string;
         populationListId: string;
         postingActionItemGroupId: string;
@@ -429,4 +430,4 @@ module AIP {
 }
 
 register("bannerAIP").service("AdminActionService", AIP.AdminActionService);
-register("bannerAIP").service("dateFormatService", AIP.AdminActionService);
+

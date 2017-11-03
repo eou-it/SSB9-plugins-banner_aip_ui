@@ -28,7 +28,8 @@ var bannerAIPApp = angular.module("bannerAIP", [
     "ngCkeditor",
     "BannerOnAngular",
     "I18nAIP",
-    "pbrun.directives"
+    "pbrun.directives",
+    "datePickerApp"
     ])
 
 //set application root url

@@ -22,7 +22,7 @@ module AIP {
     }
 
     export class AdminPostItemAddPageCtrl implements IAdminPostItemAddPageCtrl{
-        $inject = ["$scope", "$q", "$state", "$filter", "$timeout", "SpinnerService","AdminActionService","$uibModal","APP_ROOT","datePicker"];
+        $inject = ["$scope", "$q", "$state", "$filter", "$timeout", "SpinnerService","AdminActionService","$uibModal","APP_ROOT"];
         $scope;
         $uibModal;
         status: [AIP.IStatus];
@@ -142,7 +142,7 @@ console.log(this.$scope);
                 }
             });
             this.modalInstance.result.then((result) => {
-                this.itemLength=result.length
+                this.itemLength=result.length;
                 result.forEach((item, index) => {
                     this.modalResult=item;
                     this.modalResults.push(this.modalResult.actionItemId);

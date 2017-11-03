@@ -225,4 +225,3 @@ var AIP;
     AIP.AdminActionService = AdminActionService;
 })(AIP || (AIP = {}));
 register("bannerAIP").service("AdminActionService", AIP.AdminActionService);
-register("bannerAIP").service("dateFormatService", AIP.AdminActionService);

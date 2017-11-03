@@ -20,29 +20,19 @@ var AIP;
             console.log(this.actionItemModal);
         }
         PostAddModalCtrl.prototype.statusSave = function () {
-            this.checkedCavllue = {};
             var checkedCavllue = this.actionItemModal.filter(function (item) {
-                console.log();
+                console.log(item);
                 return item.check === true;
             });
             this.$uibModalInstance.close(checkedCavllue);
         };
         PostAddModalCtrl.prototype.closeDialog = function () {
-            this.$uibModalInstance.dismiss('cancel');
+            var unCheckedCavllue = this.actionItemModal.filter(function (item) {
+                console.log(item.check);
+                return item.check === false;
+            });
+            this.$uibModalInstance.dismiss(unCheckedCavllue);
         };
-        /* validate() {
-             if (this.statusModel.title.length===0 || this.statusModel.title.length > 30) {
-                 delete this.errorMessage.title;
-             } else {
-                 delete this.errorMessage.title;
-             }
- 
-             if(Object.keys(this.errorMessage).length>0) {
-                 return false;
-             } else {
-                 return true;
-             }
-         }*/
         PostAddModalCtrl.prototype.saveErrorCallback = function (message) {
             var n = new Notification({
                 message: message,
