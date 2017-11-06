@@ -619,9 +619,8 @@ value: value.aipBlock
 
     def updateActionItemGroupAssignment() {
         def model
-        def user = SecurityContextHolder?.context?.authentication?.principal
         try {
-            List<ActionItemGroupAssignReadOnly> assignActionItem = actionItemGroupCompositeService.updateActionItemGroupAssignment( user, request.JSON )
+            List<ActionItemGroupAssignReadOnly> assignActionItem = actionItemGroupCompositeService.updateActionItemGroupAssignment( request.JSON )
             def resultMap
 
             if (assignActionItem) {
