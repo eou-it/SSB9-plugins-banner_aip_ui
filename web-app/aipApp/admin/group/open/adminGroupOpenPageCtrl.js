@@ -121,15 +121,6 @@ var AIP;
             promises.push(this.adminGroupService.getActionItemListForselect()
                 .then(function (response) {
                 _this.allActionItems = response;
-                _this.allActionItems.sort(function (a, b) {
-                    if (a.folderName.toLowerCase() < b.folderName.toLowerCase()) {
-                        return -1;
-                    }
-                    if (a.folderName.toLowerCase() > b.folderName.toLowerCase()) {
-                        return 1;
-                    }
-                    return 0;
-                });
                 _this.assignedActionItems.forEach(function (item) {
                     _this.selected[item.sequenceNumber - 1] = _this.allActionItems.filter(function (_item) {
                         if (_item.actionItemId === item.actionItemId) {

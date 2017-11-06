@@ -1,3 +1,6 @@
+<!--*******************************************************************************
+ Copyright 2017 Ellucian Company L.P. and its affiliates.
+ *******************************************************************************-->
 <%@ page contentType="text/html;charset=UTF-8" %>
 <html>
 <head>
@@ -31,7 +34,7 @@
 <div id="content" role="main" ng-app="bannerAIP">
     <div class="progressbar-container ng-cloak" ng-controller="SpinnerCtrl" ng-show="vm.showing">
         <uib-progressbar aria-labelledby="progressbar" class="progress-striped active" value="100" type="info">
-            <span id="progressbar">Loading</span>
+            <span id="progressbar">{{'aip.common.text.loading'|i18n_aip}}</span>
         </uib-progressbar>
     </div>
     <div id="title-panel" class="aurora-theme"></div>

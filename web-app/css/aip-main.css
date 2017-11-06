@@ -887,6 +887,14 @@ ol.selected-group > li > button {
   margin-right: 10px;
   top: -28px;
   position: relative; }
+.actionItemAddContainer .startdate {
+  padding-left: 0px;
+  position: relative; }
+.actionItemAddContainer .calendar-img {
+  float: right;
+  margin-right: 10px;
+  top: -28px;
+  position: relative; }
 .actionItemAddContainer input.hasMultiCalendarPicker {
   height: 35px;
   border-radius: 5px;
@@ -968,6 +976,8 @@ ol.selected-group > li > button {
   padding: 0px;
   font-size: 13px;
   color: #131212; }
+.actionItemAddContainer .placeholderDisplay > span {
+  display: block; }
 
 .aip-modal .modal-dialog .modal-header .row.blockProcess {
   padding: 16px; }
@@ -1284,5 +1294,27 @@ ol.selected-group > li {
 ol.selected-group > li > button {
   float: right;
   margin-right: 5px; }
+
+.jobstateDefault {
+  display: inline;
+  color: #000;
+  position: relative;
+  float: left;
+  padding: 8px 21px;
+  font-size: 80%;
+  font-weight: bold;
+  line-height: 1;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: baseline;
+  border-radius: .25em;
+  width: 65%; }
+
+.jobStateQueued {
+  background-color: #D8D8D8; }
+
+.jobStateNew {
+  color: #000;
+  border: 1px solid #000; }
 
 /*# sourceMappingURL=aip-main.css.map */

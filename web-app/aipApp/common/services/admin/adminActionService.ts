@@ -41,6 +41,7 @@ module AIP {
         postingDisplayEndDate: Date;
         postingDisplayStartDate: Date;
         lastModifiedBy: string;
+        jobState:string;
         postingName: string;
         populationListId: string;
         postingActionItemGroupId: string;

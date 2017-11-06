@@ -37,7 +37,7 @@ module AIP {
         statusSave() {
             this.checkedCavllue={};
             var checkedCavllue = this.actionItemModal.filter((item) => {
-                console.log();
+
                 return item.check===true;
 
             });
@@ -45,21 +45,11 @@ module AIP {
         }
 
         closeDialog() {
-            this.$uibModalInstance.dismiss('cancel');
-        }
-       /* validate() {
-            if (this.statusModel.title.length===0 || this.statusModel.title.length > 30) {
-                delete this.errorMessage.title;
-            } else {
-                delete this.errorMessage.title;
-            }
 
-            if(Object.keys(this.errorMessage).length>0) {
-                return false;
-            } else {
-                return true;
-            }
-        }*/
+            this.$uibModalInstance.dismiss('cancel');
+
+        }
+
         saveErrorCallback(message) {
             var n = new Notification({
                 message: message,

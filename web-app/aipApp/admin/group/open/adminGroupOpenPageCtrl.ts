@@ -156,15 +156,6 @@ module AIP {
                 this.adminGroupService.getActionItemListForselect()
                     .then((response) => {
                     this.allActionItems = response;
-                    this.allActionItems.sort((a,b) => {
-                        if (a.folderName.toLowerCase() < b.folderName.toLowerCase()) {
-                            return -1;
-                        }
-                        if (a.folderName.toLowerCase() > b.folderName.toLowerCase() ) {
-                            return 1
-                        }
-                        return 0;
-                    });
                     this.assignedActionItems.forEach((item) => {
                         this.selected[item.sequenceNumber-1] = this.allActionItems.filter((_item) => {
                             if (_item.actionItemId === item.actionItemId) {

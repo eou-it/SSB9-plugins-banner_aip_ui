@@ -23,7 +23,7 @@ var AIP;
             this.selected = {};
             this.modalResult = {};
             this.modalResults = [];
-            this.regeneratePopulation;
+            this.regeneratePopulation = false;
             this.itemLength;
             this.selectedPopulation = {};
             this.postNow = true;
@@ -86,6 +86,7 @@ var AIP;
                 }
             });
             this.modalInstance.result.then(function (result) {
+                console.log(result);
                 _this.itemLength = result.length;
                 result.forEach(function (item, index) {
                     _this.modalResult = item;
@@ -95,17 +96,22 @@ var AIP;
                 console.log(error);
             });
         };
+        AdminPostItemAddPageCtrl.prototype.start = function () {
+            console.log(this.postActionItemInfo.startDate);
+        };
         AdminPostItemAddPageCtrl.prototype.validateInput = function () {
             if (this.saving) {
                 return false;
             }
             if (!this.postActionItemInfo.name || this.postActionItemInfo.name === null || this.postActionItemInfo.name === "") {
+                console.log(this.postActionItemInfo.name);
                 this.errorMessage.name = "invalid title";
             }
             else {
                 delete this.errorMessage.name;
             }
             if (!this.postActionItemInfo.startDate || this.postActionItemInfo.startDate === null || this.postActionItemInfo.startDate === "") {
+                console.log(this.postActionItemInfo.startDate);
                 this.errorMessage.startDate = "invalid StartDate";
             }
             else {

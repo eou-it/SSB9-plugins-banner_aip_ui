@@ -128,18 +128,8 @@ var AIP;
                         visible: true,
                         columnShowHide: true
                     }
-                },
-                {
-                    name: "action",
-                    title: this.$filter("i18n_aip")("aip.action.item.list.grid.action"),
-                    ariaLabel: this.$filter("i18n_aip")("aip.action.item.list.grid.action"),
-                    width: "100px",
-                    options: {
-                        sortable: false,
-                        visible: true,
-                        columnShowHide: true
-                    }
-                }];
+                }
+            ];
         };
         PostActionListPageCtrl.prototype.getHeight = function () {
             var containerHeight = $(document).height() -

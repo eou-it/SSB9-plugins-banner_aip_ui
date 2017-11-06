@@ -45,10 +45,11 @@ module AIP {
         selectedPopulation;
         modalResults;
         itemLength;
-        regeneratePopulation:any;
+        regeneratePopulation:boolean;
         APP_ROOT;
         modalInstance;
         $timeout;
+
         constructor($scope:IActionItemAddPageScope, $q:ng.IQService, $state,$uibModal, $filter, $timeout,
                     SpinnerService:AIP.SpinnerService,APP_ROOT, AdminActionService:AIP.AdminActionService) {
             $scope.vm = this;
@@ -65,12 +66,13 @@ module AIP {
             this.selected = {};
             this.modalResult={};
             this.modalResults=[];
-            this.regeneratePopulation;
+            this.regeneratePopulation=false;
             this.itemLength;
             this.selectedPopulation={};
             this.postNow=true;
             this.APP_ROOT = APP_ROOT;
             this.errorMessage = {};
+
             this.init();
         }
 
@@ -85,6 +87,7 @@ module AIP {
             this.spinnerService.showSpinner(true);
             var allPromises = [];
             this.postActionItemInfo = {};
+
 
             allPromises.push(
                 this.adminActionService.getGrouplist()
@@ -142,7 +145,8 @@ console.log(this.$scope);
                 }
             });
             this.modalInstance.result.then((result) => {
-                this.itemLength=result.length
+                console.log(result)
+                this.itemLength=result.length;
                 result.forEach((item, index) => {
                     this.modalResult=item;
                     this.modalResults.push(this.modalResult.actionItemId);
@@ -152,18 +156,23 @@ console.log(this.$scope);
                 console.log(error);
             });
         }
-
+        start(){
+            console.log(this.postActionItemInfo.startDate)
+        }
         validateInput() {
             if(this.saving) {
                 return false;
             }
-            if(!this.postActionItemInfo.name || this.postActionItemInfo.name === null || this.postActionItemInfo.name === "" ) {
-             this.errorMessage.name = "invalid title";
+           if(!this.postActionItemInfo.name || this.postActionItemInfo.name === null || this.postActionItemInfo.name === "" ) {
+
+                console.log(this.postActionItemInfo.name)
+               this.errorMessage.name = "invalid title";
              } else {
              delete this.errorMessage.name;
              }
 
             if(!this.postActionItemInfo.startDate || this.postActionItemInfo.startDate === null || this.postActionItemInfo.startDate === "" ) {
+                console.log(this.postActionItemInfo.startDate)
                 this.errorMessage.startDate = "invalid StartDate";
             } else {
                 delete this.errorMessage.startDate;
@@ -174,7 +183,7 @@ console.log(this.$scope);
                 delete this.errorMessage.endDate;
             }
 
-             if(!this.selected) {
+            if(!this.selected) {
              this.errorMessage.postGroupId = "invalid group";
              } else {
              delete this.errorMessage.postGroupId;
