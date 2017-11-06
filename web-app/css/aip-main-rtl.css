@@ -62,10 +62,11 @@ aip-list .aip-list-container  {
     font-size:1em;
     padding-left:8px;
     white-space:normal;
+    float:right;
 }
       aip-list .aip-list-container .panel-heading .panel-title .item-group .group-title-icon  {
     padding-left:0;
-    padding-right:0;
+    padding-right:16px;
 }
       aip-list .aip-list-container .panel-heading .panel-title .item-group .badge  {
     margin-right:5px;
@@ -127,6 +128,7 @@ aip-list .aip-list-container  {
 }
       aip-list .aip-list-container .list-body-container .list-body .list-item .cell.title  {
     padding-right:10px;
+    float:right;
 }
         aip-list .aip-list-container .list-body-container .list-body .list-item .cell.title h3, aip-list .aip-list-container .list-body-container .list-body .list-item .cell.title h4  {
     font-weight:bold;
@@ -1033,6 +1035,16 @@ ol.selected-group > li > button  {
     top:-28px;
     position:relative;
 }
+.actionItemAddContainer .startdate  {
+    padding-right:0px;
+    position:relative;
+}
+.actionItemAddContainer .calendar-img  {
+    float:left;
+    margin-left:10px;
+    top:-28px;
+    position:relative;
+}
 .actionItemAddContainer input.hasMultiCalendarPicker  {
     height:35px;
     border-radius:5px;
@@ -1100,7 +1112,7 @@ ol.selected-group > li > button  {
     position:absolute;
     width:8px;
     height:8px;
-    background:rgba(0, 0, 0, 0);
+    background:transparent;
     top:6px;
     right:7px;
     border:4px solid #fff;
@@ -1257,6 +1269,7 @@ label  {
 }
   .viewContainer .listActionItem .welcome  {
     padding:0 0 16px 0;
+    float:right;
 }
     .viewContainer .listActionItem .welcome .username  {
     font-size:2em;
@@ -1273,11 +1286,13 @@ label  {
     overflow-y:auto;
     padding-left:0;
     padding-right:0;
+    float:right;
 }
   .viewContainer .listActionItem .listActionItem-container .itemList .groupDetail  {
     overfloat-y:auto;
     padding-left:0;
     padding-right:0;
+    float:left;
 }
     .viewContainer .listActionItem .listActionItem-container .itemList .groupDetail .detail-body-container  {
     height:inherit;

@@ -72,11 +72,12 @@ aip-list {
               font-size: 1em;
               padding-right: 8px;
               white-space: normal;
+              float: left;
             }
           }
           .group-title-icon {
             padding-right: 0;
-            padding-left: 0;
+            padding-left: 16px;
             .group-info {
               //float: right;
             }
@@ -158,6 +159,7 @@ aip-list {
           }
           .cell.title {
             padding-left: 10px;
+            float: left;
             h3,h4 {
               font-weight: bold;
               font-size: 1.5em;

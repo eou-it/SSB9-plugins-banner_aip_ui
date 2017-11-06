@@ -15,7 +15,7 @@
         </div>
         <div class="listActionItem-container" ng-if="vm.actionItems.groups.length > 0">
             <div class="itemList">
-                <div class="groupList col-sm-5" ng-class="{'hidden-xs':vm.selectedData}" ng-style="vm.getHeight()">
+                <div class="groupList col-sm-5 col-xs-12" ng-class="{'hidden-xs':vm.selectedData}" ng-style="vm.getHeight()">
                     <uib-accordion close-others="oneAtATime">
                         <aip-list ng-repeat="actionItemList in vm.actionItems.groups" itemgroup="actionItemList" click="vm.selectItem(groupId, itemId)"
                                   stylefunction="vm.styleFunction(key)" idx="$index", opengroup="vm.initialOpenGroup"
@@ -23,7 +23,7 @@
                         </aip-list>
                     </uib-accordion>
                 </div>
-                <div class="groupDetail col-sm-7" ng-style="vm.getHeight()">
+                <div class="groupDetail col-sm-7 col-xs-12" ng-style="vm.getHeight()">
                     <div class="detail-body-container" ng-if="vm.selectedData">
                         <div class="detail-body">
                             <aip-item-detail data="vm.selectedData" next="vm.nextItem(groupId, itemId)" tolist="vm.resetSelection()">

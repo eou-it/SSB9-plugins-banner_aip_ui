@@ -12,12 +12,14 @@ modules = {
         dependsOn 'bannerSelfServiceCommonLTR, extensibilityCommon, extensibilityAngular, commonComponents, commonComponentsLTR, bootstrap'
         dependsOn 'bannerAIPApp'
         dependsOn 'font-awesome'
+        resource url:[plugin: 'banner-aip-ui', file: 'js/angular-ui-bootstrap/dist/ui-bootstrap-csp.css']
         resource url:[plugin: 'banner-aip-ui', file: 'css/aip-main.css']
         resource url:[plugin: 'banner-aip-ui', file: 'css/iconFonts.css']
     }
     'bannerAIPUIRTL' {
         dependsOn 'bannerAIPUI'
         dependsOn 'bannerSelfServiceCommonRTL, extensibilityAngularRTL, commonComponentsRTL, bootstrapRTL'
+        resource url:[plugin: 'banner-aip-ui', file: 'js/angular-ui-bootstrap/dist/ui-bootstrap-csp-rtl.css']
         resource url:[plugin: 'banner-aip-ui', file: 'css/aip-main-rtl.css']
     }
     'bannerAIPUtils' {

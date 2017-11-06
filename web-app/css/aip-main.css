@@ -48,10 +48,11 @@ aip-list .aip-list-container {
         aip-list .aip-list-container .panel-heading .panel-title .item-group .group-title .group-title-text {
           font-size: 1em;
           padding-right: 8px;
-          white-space: normal; }
+          white-space: normal;
+          float: left; }
       aip-list .aip-list-container .panel-heading .panel-title .item-group .group-title-icon {
         padding-right: 0;
-        padding-left: 0; }
+        padding-left: 16px; }
       aip-list .aip-list-container .panel-heading .panel-title .item-group .badge {
         margin-left: 5px; }
         aip-list .aip-list-container .panel-heading .panel-title .item-group .badge.pending {
@@ -97,7 +98,8 @@ aip-list .aip-list-container {
       aip-list .aip-list-container .list-body-container .list-body .list-item .aipReadmore {
         word-break: normal; }
       aip-list .aip-list-container .list-body-container .list-body .list-item .cell.title {
-        padding-left: 10px; }
+        padding-left: 10px;
+        float: left; }
         aip-list .aip-list-container .list-body-container .list-body .list-item .cell.title h3, aip-list .aip-list-container .list-body-container .list-body .list-item .cell.title h4 {
           font-weight: bold;
           font-size: 1.5em;
@@ -958,7 +960,7 @@ ol.selected-group > li > button {
   position: absolute;
   width: 8px;
   height: 8px;
-  background: rgba(0, 0, 0, 0);
+  background: transparent;
   top: 6px;
   left: 7px;
   border: 4px solid #fff;
@@ -1105,7 +1107,8 @@ label {
     margin-bottom: 8px;
     border-top: 1px solid #000000; }
   .viewContainer .listActionItem .welcome {
-    padding: 0 0 16px 0; }
+    padding: 0 0 16px 0;
+    float: left; }
     .viewContainer .listActionItem .welcome .username {
       font-size: 2em;
       font-weight: bold;
@@ -1117,11 +1120,13 @@ label {
   .viewContainer .listActionItem .listActionItem-container .itemList .groupList {
     overflow-y: auto;
     padding-right: 0;
-    padding-left: 0; }
+    padding-left: 0;
+    float: left; }
   .viewContainer .listActionItem .listActionItem-container .itemList .groupDetail {
     overfloat-y: auto;
     padding-right: 0;
-    padding-left: 0; }
+    padding-left: 0;
+    float: right; }
     .viewContainer .listActionItem .listActionItem-container .itemList .groupDetail .detail-body-container {
       height: inherit;
       padding: 0;

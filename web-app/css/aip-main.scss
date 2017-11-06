@@ -129,6 +129,7 @@ label {
   .listActionItem {
     .welcome {
       padding: 0 0 16px 0;
+      float: left;
       .username {
         font-size: 2em;
         font-weight: bold;
@@ -147,6 +148,7 @@ label {
           overflow-y: auto;
           padding-right: 0;
           padding-left: 0;
+          float: left;
           //header~55px, footer:30px, page header:80px = ~170px
           //height: calc(100vh - 170px);
         }
@@ -154,6 +156,7 @@ label {
           overfloat-y: auto;
           padding-right: 0;
           padding-left: 0;
+          float: right;
           //height: calc(100vh - 60px);
           .detail-body-container {
             height: inherit;
