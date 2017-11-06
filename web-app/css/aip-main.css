@@ -887,6 +887,14 @@ ol.selected-group > li > button {
   margin-right: 10px;
   top: -28px;
   position: relative; }
+.actionItemAddContainer .startdate {
+  padding-left: 0px;
+  position: relative; }
+.actionItemAddContainer .calendar-img {
+  float: right;
+  margin-right: 10px;
+  top: -28px;
+  position: relative; }
 .actionItemAddContainer input.hasMultiCalendarPicker {
   height: 35px;
   border-radius: 5px;
@@ -1180,9 +1188,6 @@ label {
 
 .offscreen {
   visibility: hidden; }
-
-#multiCalendarContainer > div {
-  padding: 1.6em 1.17em 0; }
 
 /*bootstrap overrides*/
 h2 {

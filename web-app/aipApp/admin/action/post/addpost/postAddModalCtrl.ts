@@ -16,7 +16,6 @@ module AIP {
         statusModel;
         ENDPOINT;
         checkedCavllue;
-        unCheckedCavllue;
         errorMessage:any;
 
         constructor($scope, $uibModalInstance, ENDPOINT, AdminActionStatusService,actionItemModal, APP_ROOT) {
@@ -36,8 +35,9 @@ module AIP {
         }
 
         statusSave() {
+            this.checkedCavllue={};
             var checkedCavllue = this.actionItemModal.filter((item) => {
-                console.log(item);
+
                 return item.check===true;
 
             });
@@ -45,11 +45,8 @@ module AIP {
         }
 
         closeDialog() {
-            var unCheckedCavllue = this.actionItemModal.filter((item) => {
-                console.log(item.check);
-                return item.check===false;
-            });
-            this.$uibModalInstance.dismiss(unCheckedCavllue);
+
+            this.$uibModalInstance.dismiss('cancel');
 
         }
 

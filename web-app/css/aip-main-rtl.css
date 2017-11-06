@@ -1366,10 +1366,6 @@ label  {
     visibility:hidden;
 }
 
-#multiCalendarContainer > div  {
-    padding:1.6em 1.17em 0;
-}
-
 /*bootstrap overrides*/
 h2  {
     color:#4F585F;
@@ -1490,6 +1486,31 @@ ol.selected-group > li  {
 ol.selected-group > li > button  {
     float:left;
     margin-left:5px;
+}
+
+.jobstateDefault  {
+    display:inline;
+    color:#000;
+    position:relative;
+    float:right;
+    padding:8px 21px;
+    font-size:80%;
+    font-weight:bold;
+    line-height:1;
+    text-align:center;
+    white-space:nowrap;
+    vertical-align:baseline;
+    border-radius:.25em;
+    width:65%;
+}
+
+.jobStateQueued  {
+    background-color:#D8D8D8;
+}
+
+.jobStateNew  {
+    color:#000;
+    border:1px solid #000;
 }
 /*** Media Query Section ***/
 @media screen and (max-width: 768px) {

@@ -76,3 +76,4 @@ function datePicker(dateFormatService, notificationCenterService, $filter) {
         }
     };
 }
+register("bannerAIPUI").directive("calendar", AIPUI.AIPBlockedProcessDirective);

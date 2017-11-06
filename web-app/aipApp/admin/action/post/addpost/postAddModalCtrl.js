@@ -20,18 +20,14 @@ var AIP;
             console.log(this.actionItemModal);
         }
         PostAddModalCtrl.prototype.statusSave = function () {
+            this.checkedCavllue = {};
             var checkedCavllue = this.actionItemModal.filter(function (item) {
-                console.log(item);
                 return item.check === true;
             });
             this.$uibModalInstance.close(checkedCavllue);
         };
         PostAddModalCtrl.prototype.closeDialog = function () {
-            var unCheckedCavllue = this.actionItemModal.filter(function (item) {
-                console.log(item.check);
-                return item.check === false;
-            });
-            this.$uibModalInstance.dismiss(unCheckedCavllue);
+            this.$uibModalInstance.dismiss('cancel');
         };
         PostAddModalCtrl.prototype.saveErrorCallback = function (message) {
             var n = new Notification({

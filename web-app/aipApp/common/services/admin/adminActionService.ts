@@ -430,4 +430,4 @@ module AIP {
 }
 
 register("bannerAIP").service("AdminActionService", AIP.AdminActionService);
-
+register("bannerAIP").service("dateFormatService", AIP.AdminActionService);
