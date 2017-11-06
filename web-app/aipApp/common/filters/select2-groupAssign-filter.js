@@ -14,10 +14,16 @@ angular.module('bannerAIP').
             }
         });
         notGenerated.sort(function (a, b) {
-            if (a.actionItemTitle.toLowerCase() < b.actionItemTitle.toLowerCase()) {
+            if (a.folderName.toLowerCase() < b.folderName.toLowerCase()) {
                 return -1;
             }
-            if (a.actionItemTitle.toLowerCase() > b.actionItemTitle.toLowerCase()) {
+            if (a.folderName.toLowerCase() > b.folderName.toLowerCase()) {
+                return 1;
+            }
+            if (a.actionItemName.toLowerCase() < b.actionItemName.toLowerCase()) {
+                return -1;
+            }
+            if (a.actionItemName.toLowerCase() > b.actionItemName.toLowerCase()) {
                 return 1;
             }
             return 0;

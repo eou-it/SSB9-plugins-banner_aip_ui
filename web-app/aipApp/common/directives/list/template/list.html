@@ -1,3 +1,6 @@
+<!--*******************************************************************************
+ Copyright 2017 Ellucian Company L.P. and its affiliates.
+ *******************************************************************************-->
 <uib-accordion-group class="aip-list-container" role="tablist" is-open="isOpen">
     <uib-accordion-heading id="heading-{{itemgroup.id}}" role="tab" aria-label="group-title-heading">
         <div class="item-group row">
@@ -26,7 +29,7 @@
             <div class="group-title-icon col-sm-1 col-xs-1">
                 <a class="group-instructions" ng-focus="focusing($event)" tabindex="0" href="javascript:void(0);"
                       ng-click="displayGroupInfo(itemgroup.id, $event)" aria-label="{{'aip.common.text.group.instructions'|i18n_aip}}">
-                    Instructions</a>
+                    {{'aip.common.text.group.instructions'|i18n_aip}}</a>
             </div>
         </div>
     </uib-accordion-heading>
