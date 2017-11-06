@@ -79,26 +79,24 @@ class AipController {
             if (params.searchType == "group") {
                 //itemDetailInfo = actionItemDetailService.getGroupDetailById(jsonObj.groupId)
 
-                def actionItemGroups = groupFolderReadOnlyService.getActionItemGroupById( Long.parseLong( params.groupId ) )
+                def group = groupFolderReadOnlyService.getActionItemGroupById( Long.parseLong( params.groupId ) )
                 itemDetailInfo = []
-                if (actionItemGroups.size() > 0) {
-                    actionItemGroups[0]?.each {group ->
-                        if (!group.groupDesc) {
-                            groupDesc = MessageUtility.message( "aip.placeholder.nogroups" )
-                        } else {
-                            groupDesc = group.groupDesc
-                        }
-                        def groupItem = [
-                                id      : group.groupId,
-                                title   : group.groupTitle,
-                                status  : group.groupStatus,
-                                userId  : group.groupUserId,
-                                text    : groupDesc,
-                                activity: group.groupActivityDate,
-                                version : group.groupVersion
-                        ]
-                        itemDetailInfo << groupItem
+                if (group.size() > 0) {
+                    if (!group.groupDesc) {
+                        groupDesc = MessageUtility.message( "aip.placeholder.nogroups" )
+                    } else {
+                        groupDesc = group.groupDesc
                     }
+                    def groupItem = [
+                            id      : group.groupId,
+                            title   : group.groupTitle,
+                            status  : group.groupStatus,
+                            userId  : group.groupUserId,
+                            text    : groupDesc,
+                            activity: group.groupActivityDate,
+                            version : group.groupVersion
+                    ]
+                    itemDetailInfo << groupItem
                 }
             } else if (params.searchType == "actionItem") {
                 itemDetailInfo = actionItemContentService.listActionItemContentById( Long.parseLong( params.actionItemId ) )
