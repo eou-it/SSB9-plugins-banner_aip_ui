@@ -9,7 +9,8 @@ var PB;
             this.scope = {
                 content: "@",
                 aid: "@",
-                gid: "@"
+                gid: "@",
+                page: "@",
             };
             this.$compile = $compile;
             this.ItemListViewService = ItemListViewService;
@@ -20,16 +21,19 @@ var PB;
             var self = this;
             attrs.$observe('aid', function (tpl) {
                 var me = self;
-                console.log(window);
-                self.ItemListViewService.getPagebuilderPage('AIPMasterTemplateSystemRequired', attrs.aid, attrs.gid)
+                self.ItemListViewService.getPagebuilderPage(attrs.page, attrs.aid, attrs.gid)
                     .then(function (val) {
                     element.children().empty();
                     var tempElement = angular.element(val.html);
                     var bodyContent = tempElement.filter("div.customPage").attr("id", "PBContent");
                     var aipController = {};
-                    var pbController = window.controllerId;
+                    var pbController = "CustomPageController_" + attrs.page;
                     var appModule = appModule || angular.module('BannerOnAngular');
                     appModule.requires.push('ngResource', 'ngGrid', 'ui', 'pbrun.directives', 'ngSanitize', 'xe-ui-components');
+                    /* disable debug: */
+                    appModule.config(['$compileProvider', function ($compileProvider) {
+                            $compileProvider.debugInfoEnabled(false);
+                        }]);
                     if (window[pbController]) {
                         aipController[pbController] = window[pbController];
                     }
@@ -41,7 +45,7 @@ var PB;
                     angular.bootstrap(bodyContent, ["BannerOnAngular"]);
                     // element.empty();
                     element.append(bodyContent);
-                    me.$compile(element)(scope);
+                    // me.$compile(element)(scope);
                 });
             });
         };

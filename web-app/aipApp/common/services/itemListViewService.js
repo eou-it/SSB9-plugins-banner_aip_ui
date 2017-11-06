@@ -47,13 +47,15 @@ var AIP;
                 }
                 else if (selectType === "actionItem") {
                     returnData = {
-                        content: response.data.text,
+                        content: response.data[0].text,
                         type: "doc",
-                        id: response.data.id,
-                        templateId: response.data.actionItemTemplateId,
-                        detailId: response.data.id,
-                        title: response.data.title
+                        id: response.data[0].id,
+                        templateId: response.data[0].actionItemTemplateId,
+                        detailId: response.data[0].id,
+                        title: response.data[0].title,
+                        page: response.data[1].actionItemPageName
                     };
+                    console.log(returnData);
                 }
                 return {
                     type: selectType,

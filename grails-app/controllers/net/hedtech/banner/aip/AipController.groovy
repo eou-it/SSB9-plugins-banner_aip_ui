@@ -18,6 +18,8 @@ class AipController {
 
     def actionItemContentService
 
+    def actionItemReadOnlyService
+
     def groupFolderReadOnlyService
 
     def springSecurityService
@@ -99,7 +101,17 @@ class AipController {
                     itemDetailInfo << groupItem
                 }
             } else if (params.searchType == "actionItem") {
-                itemDetailInfo = actionItemContentService.listActionItemContentById( Long.parseLong( params.actionItemId ) )
+                def itemDetail = actionItemContentService.listActionItemContentById( Long.parseLong( params.actionItemId ) )
+                def templateInfo = actionItemReadOnlyService.getActionItemROById( Long.parseLong( params.actionItemId ) )
+                itemDetailInfo = []
+
+                if (itemDetail) {
+                    itemDetailInfo << itemDetail
+                }
+                if (templateInfo) {
+                    itemDetailInfo << templateInfo
+                }
+
             }
         } catch (Exception e) {
             org.codehaus.groovy.runtime.StackTraceUtils.sanitize( e ).printStackTrace()
