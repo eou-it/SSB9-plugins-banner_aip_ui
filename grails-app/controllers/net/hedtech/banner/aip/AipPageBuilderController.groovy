@@ -62,7 +62,7 @@ class AipPageBuilderController {
             page = net.hedtech.banner.sspb.Page.get(id)
         }
         catch (e) { //pageId is not a Long, find by name
-            page = Page.findByConstantName(pageId)
+            page = pageService.get(pageId)
         }
         return page
     }
