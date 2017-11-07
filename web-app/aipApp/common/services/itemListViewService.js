@@ -49,7 +49,7 @@ var AIP;
                     returnData = {
                         content: response.data[0].text,
                         type: "doc",
-                        id: response.data[0].id,
+                        id: response.data[0].actionItemId,
                         templateId: response.data[0].actionItemTemplateId,
                         detailId: response.data[0].id,
                         title: response.data[0].title,

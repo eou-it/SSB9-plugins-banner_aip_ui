@@ -199,7 +199,7 @@ var AIP;
                 _this.selectedData = response;
                 if (selectionType === "actionItem") {
                     var group = _this.actionItems.groups.filter(function (item) { return item.id === groupId; });
-                    var acitonItem = group[0].items.filter(function (item) { return item.id === itemId; });
+                    var acitonItem = group[0].items.filter(function (item) { return item.actionItemId === itemId; });
                     _this.selectedData.info.title = actionItem[0].title;
                 }
                 defer.resolve();
