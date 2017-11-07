@@ -13,16 +13,20 @@ declare var notifications: any;
 module AIP {
     interface IAdminPostItemAddPageCtrl {
         validateInput(): boolean;
+
         cancel(): void;
+
         save(): void;
+
         saveErrorCallback(message: string): void;
     }
+
     interface IActionItemAddPageScope {
         vm: AdminPostItemAddPageCtrl;
     }
 
-    export class AdminPostItemAddPageCtrl implements IAdminPostItemAddPageCtrl{
-        $inject = ["$scope", "$q", "$state", "$filter", "$timeout", "SpinnerService","AdminActionService","$uibModal","APP_ROOT","datePicker"];
+    export class AdminPostItemAddPageCtrl implements IAdminPostItemAddPageCtrl {
+        $inject = ["$scope", "$q", "$state", "$filter", "$timeout", "SpinnerService", "AdminActionService", "$uibModal", "APP_ROOT", "datePicker"];
         $scope;
         $uibModal;
         status: [AIP.IStatus];
@@ -30,29 +34,29 @@ module AIP {
         groupList: [AIP.IGroup];
         actionItemList: [AIP.IGroupActionItem];
 
-        populationList:[AIP.IPopulation];
-        postActionItemInfo: AIP.IPostActionItemParam|any;
-        errorMessage:any;
-        adminActionService:AIP.AdminActionService;
-        spinnerService:AIP.SpinnerService;
+        populationList: [AIP.IPopulation];
+        postActionItemInfo: AIP.IPostActionItemParam | any;
+        errorMessage: any;
+        adminActionService: AIP.AdminActionService;
+        spinnerService: AIP.SpinnerService;
         saving: boolean;
         $q: ng.IQService;
         $state;
         $filter;
         selected;
         modalResult;
-        postNow:boolean;
+        postNow: boolean;
         selectedPopulation;
         modalResults;
         itemLength;
-        scheduleDate:boolean;
-        regeneratePopulation:boolean;
+        scheduleDate: boolean;
+        regeneratePopulation: boolean;
         APP_ROOT;
         modalInstance;
         $timeout;
 
-        constructor($scope:IActionItemAddPageScope, $q:ng.IQService, $state,$uibModal, $filter, $timeout,
-                    SpinnerService:AIP.SpinnerService,APP_ROOT, AdminActionService:AIP.AdminActionService) {
+        constructor($scope: IActionItemAddPageScope, $q: ng.IQService, $state, $uibModal, $filter, $timeout,
+                    SpinnerService: AIP.SpinnerService, APP_ROOT, AdminActionService: AIP.AdminActionService) {
             $scope.vm = this;
             this.$q = $q;
             this.$scope = $scope;
@@ -65,13 +69,13 @@ module AIP {
             this.adminActionService = AdminActionService;
             this.saving = false;
             this.selected = {};
-            this.modalResult={};
-            this.modalResults=[];
-            this.regeneratePopulation=false;
+            this.modalResult = {};
+            this.modalResults = [];
+            this.regeneratePopulation = false;
             this.itemLength;
-            this.scheduleDate=false;
-            this.selectedPopulation={};
-            this.postNow=true;
+            this.scheduleDate = false;
+            this.selectedPopulation = {};
+            this.postNow = true;
             this.APP_ROOT = APP_ROOT;
             this.errorMessage = {};
 
@@ -82,9 +86,11 @@ module AIP {
         groupFunc(item) {
             return item.folderName;
         }
+
         populationFunc(item) {
             return item.populationFolderName;
         }
+
         init() {
             this.spinnerService.showSpinner(true);
             var allPromises = [];
@@ -93,9 +99,9 @@ module AIP {
 
             allPromises.push(
                 this.adminActionService.getGrouplist()
-                    .then((response:AIP.IPostActionItemGroupResponse) => {
+                    .then((response: AIP.IPostActionItemGroupResponse) => {
                         this.groupList = response.data;
-                        var postActionItemGroup:any = $("#postActionItemGroup");
+                        var postActionItemGroup: any = $("#postActionItemGroup");
                         //this.postActionItemInfo["group"] = [];
                         this.postActionItemInfo.group = this.groupList;
 
@@ -105,9 +111,9 @@ module AIP {
 
             allPromises.push(
                 this.adminActionService.getPopulationlist()
-                    .then((response:AIP.IPostActionItemPopulationResponse) => {
+                    .then((response: AIP.IPostActionItemPopulationResponse) => {
                         this.populationList = response.data;
-                        var postActionItemPopulation:any = $("#postActionItemPopulation");
+                        var postActionItemPopulation: any = $("#postActionItemPopulation");
                         this.postActionItemInfo.population = this.populationList;
 
                     })
@@ -118,15 +124,18 @@ module AIP {
                 this.spinnerService.showSpinner(false);
             });
         }
-        changedValue(){
 
-var groupId = this.$scope;
-console.log(this.$scope); console.log(this.selected.folderName)
+        changedValue() {
+            this.itemLength = 0;
+            this.modalResult = [];
+            var groupId = this.$scope;
+            console.log(this.$scope);
+            console.log(this.selected.folderName)
             this.adminActionService.getGroupActionItem(this.selected.groupId)
 
-                .then((response:AIP.IPostActionItemResponse) => {
+                .then((response: AIP.IPostActionItemResponse) => {
                     this.actionItemList = response.data;
-                    var postActionItemGroup:any = $("#ActionItemGroup");
+                    var postActionItemGroup: any = $("#ActionItemGroup");
                     this.postActionItemInfo["groupAction"] = [];
                     this.postActionItemInfo.groupAction = this.actionItemList;
                 })
@@ -142,14 +151,14 @@ console.log(this.$scope); console.log(this.selected.folderName)
                 size: "md",
                 windowClass: "aip-modal",
                 resolve: {
-                    actionItemModal:() => {
-                            return this.postActionItemInfo.groupAction;
+                    actionItemModal: () => {
+                        return this.postActionItemInfo.groupAction;
                     },
 
-                    actionGroupModal:() => {
+                    actionGroupModal: () => {
                         return this.selected.groupName;
                     },
-                    actionFolderGroupModal:() => {
+                    actionFolderGroupModal: () => {
                         return this.selected.folderName;
                     }
 
@@ -158,9 +167,9 @@ console.log(this.$scope); console.log(this.selected.folderName)
             });
             this.modalInstance.result.then((result) => {
                 console.log(result)
-                this.itemLength=result.length;
+                this.itemLength = result.length;
                 result.forEach((item, index) => {
-                    this.modalResult=item;
+                    this.modalResult = item;
                     this.modalResults.push(this.modalResult.actionItemId);
                 });
 
@@ -168,63 +177,70 @@ console.log(this.$scope); console.log(this.selected.folderName)
                 console.log(error);
             });
         }
-        start(){
+
+        start() {
             console.log(this.postActionItemInfo.startDate)
         }
+
         validateInput() {
-            if(this.saving) {
+            if (this.saving) {
                 return false;
             }
-           if(!this.postActionItemInfo.name || this.postActionItemInfo.name === null || this.postActionItemInfo.name === "" ) {
+            if (this.itemLength === 0) {
+                return false;
+            }
+            if (!this.postActionItemInfo.name || this.postActionItemInfo.name === null || this.postActionItemInfo.name === "") {
 
-               this.errorMessage.name = "invalid title";
-             } else {
-             delete this.errorMessage.name;
-             }
+                this.errorMessage.name = "invalid title";
+            } else {
+                delete this.errorMessage.name;
+            }
 
-            if(!this.postActionItemInfo.startDate || this.postActionItemInfo.startDate === null || this.postActionItemInfo.startDate === "" ) {
+            if (!this.postActionItemInfo.startDate || this.postActionItemInfo.startDate === null || this.postActionItemInfo.startDate === "") {
                 this.errorMessage.startDate = "invalid StartDate";
             } else {
                 delete this.errorMessage.startDate;
             }
-            if(!this.postActionItemInfo.endDate || this.postActionItemInfo.endDate === null || this.postActionItemInfo.endDate === "" ) {
+            if (!this.postActionItemInfo.endDate || this.postActionItemInfo.endDate === null || this.postActionItemInfo.endDate === "") {
                 this.errorMessage.endDate = "invalid EndDate";
             } else {
                 delete this.errorMessage.endDate;
             }
 
-            if(!this.selected) {
-             this.errorMessage.postGroupId = "invalid group";
-             } else {
-             delete this.errorMessage.postGroupId;
-             }
-           if(!this.selectedPopulation ) {
+            if (!this.selected) {
+                this.errorMessage.postGroupId = "invalid group";
+            } else {
+                delete this.errorMessage.postGroupId;
+            }
+            if (!this.selectedPopulation) {
 
-             this.errorMessage.population = "invalid population";
-             } else {
-             delete this.errorMessage.population;
-             }
-            if(!this.modalResult==null) {
+                this.errorMessage.population = "invalid population";
+            } else {
+                delete this.errorMessage.population;
+            }
+            if (!this.modalResult == null) {
                 this.errorMessage.success = "invalid actionItem";
             } else {
                 delete this.errorMessage.success;
             }
-             if(Object.keys(this.errorMessage).length>0) {
-             return false;
-             } else {
-             return true;
-             }
+            if (Object.keys(this.errorMessage).length > 0) {
+                return false;
+            } else {
+                return true;
+            }
         }
+
         cancel() {
             this.$state.go("admin-post-list");
         }
+
         save() {
             this.saving = true;
-            this.adminActionService.savePostActionItem(this.postActionItemInfo,this.selected,this.modalResults,this.selectedPopulation,this.postNow,this.regeneratePopulation)
-                .then((response:AIP.IPostActionItemSaveResponse) => {
+            this.adminActionService.savePostActionItem(this.postActionItemInfo, this.selected, this.modalResults, this.selectedPopulation, this.postNow, this.regeneratePopulation)
+                .then((response: AIP.IPostActionItemSaveResponse) => {
                     this.saving = false;
                     var notiParams = {};
-                    if(response.data.success) {
+                    if (response.data.success) {
                         notiParams = {
                             notiType: "saveSuccess",
                             data: response.data
@@ -239,6 +255,7 @@ console.log(this.$scope); console.log(this.selected.folderName)
                     console.log(err);
                 });
         }
+
         saveErrorCallback(message) {
             var n = new Notification({
                 message: message,

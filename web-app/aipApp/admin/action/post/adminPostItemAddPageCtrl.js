@@ -62,6 +62,8 @@ var AIP;
         };
         AdminPostItemAddPageCtrl.prototype.changedValue = function () {
             var _this = this;
+            this.itemLength = 0;
+            this.modalResult = [];
             var groupId = this.$scope;
             console.log(this.$scope);
             console.log(this.selected.folderName);
@@ -109,6 +111,9 @@ var AIP;
         };
         AdminPostItemAddPageCtrl.prototype.validateInput = function () {
             if (this.saving) {
+                return false;
+            }
+            if (this.itemLength === 0) {
                 return false;
             }
             if (!this.postActionItemInfo.name || this.postActionItemInfo.name === null || this.postActionItemInfo.name === "") {
