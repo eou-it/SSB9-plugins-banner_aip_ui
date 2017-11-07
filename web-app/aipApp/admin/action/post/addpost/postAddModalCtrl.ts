@@ -31,6 +31,11 @@ module AIP {
             this.checkAll=true;
             this.actionItemModal = actionItemModal;
             this.actionGroupModal= actionGroupModal;
+            this.actionItemModal.map((item)=> {
+                if (item.check === undefined) {
+                    item.check = true;
+                }
+            });
             this.actionFolderGroupModal=actionFolderGroupModal;
             this.statusModel = {
                 title: "",
@@ -38,6 +43,7 @@ module AIP {
             };
             this.errorMessage = {};
             console.log(this.actionItemModal);
+            console.log(this.actionItemModal.check)
         }
 
         /*checkAll() {
@@ -51,19 +57,40 @@ module AIP {
                  });
              }
             }*/
+
+        isCheckAll() {
+            var checked = this.actionItemModal.filter((item) => {
+                return item.check && item.check === true;
+            });
+            if (checked.length === this.actionItemModal.length) {
+                this.checkAll = true;
+                return true;
+            } else {
+                this.checkAll = false;
+                return false;
+            }
+        }
+
+        changedAllValue(){
+            this.actionItemModal.map((item) => {item.check=true;})
+        }
+
         statusSave() {
             this.checkedCavllue={};
-            if (this.checkAll===true){
+
+           if (this.checkAll===true){
                 this.actionItemModal.map((item)=> {
+
                     return item["check"]=true;
                 })
             }
 
-            var checkedCavllue = this.actionItemModal.filter((item) => {
+                  var checkedCavllue = this.actionItemModal.filter((item) => {
+
 
                 return item.check===true;
 
-            });
+                          });
             this.$uibModalInstance.close(checkedCavllue);
         }
 

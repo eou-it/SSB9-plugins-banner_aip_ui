@@ -14,6 +14,11 @@ var AIP;
             this.checkAll = true;
             this.actionItemModal = actionItemModal;
             this.actionGroupModal = actionGroupModal;
+            this.actionItemModal.map(function (item) {
+                if (item.check === undefined) {
+                    item.check = true;
+                }
+            });
             this.actionFolderGroupModal = actionFolderGroupModal;
             this.statusModel = {
                 title: "",
@@ -21,6 +26,7 @@ var AIP;
             };
             this.errorMessage = {};
             console.log(this.actionItemModal);
+            console.log(this.actionItemModal.check);
         }
         /*checkAll() {
              if (this.checkAll === true) {
@@ -33,6 +39,22 @@ var AIP;
                  });
              }
             }*/
+        PostAddModalCtrl.prototype.isCheckAll = function () {
+            var checked = this.actionItemModal.filter(function (item) {
+                return item.check && item.check === true;
+            });
+            if (checked.length === this.actionItemModal.length) {
+                this.checkAll = true;
+                return true;
+            }
+            else {
+                this.checkAll = false;
+                return false;
+            }
+        };
+        PostAddModalCtrl.prototype.changedAllValue = function () {
+            this.actionItemModal.map(function (item) { item.check = true; });
+        };
         PostAddModalCtrl.prototype.statusSave = function () {
             this.checkedCavllue = {};
             if (this.checkAll === true) {
