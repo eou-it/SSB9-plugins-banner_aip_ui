@@ -1207,6 +1207,10 @@ ol.selected-group > li > button  {
 .aip-modal .actionInstruction label  {
     margin-bottom:0px;
 }
+.aip-modal .selectAllActionItem  {
+    font-weight:bold;
+    font-size:16px;
+}
 
 #username  {
     padding-left:0.5em;

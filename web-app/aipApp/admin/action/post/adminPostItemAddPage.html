@@ -37,7 +37,7 @@ Copyright 2017 Ellucian Company L.P. and its affiliates.
                         </xe-ui-select-match>
 
                         <xe-ui-select-choices  group-by="vm.groupFunc" repeat="item in vm.groupList |
-                                    propsFilter: {groupName: $select.search, folderName: $select.search}">
+                                    propsFilter: {groupName: $select.search, folderName: $select.search,groupTitle:$select.search}">
                             <div ng-bind-html="item.groupName | highlight: $select.search"></div>
 
                         </xe-ui-select-choices>
@@ -55,7 +55,7 @@ Copyright 2017 Ellucian Company L.P. and its affiliates.
                 <div class="actionItemLength">
 
                     <div id="ActionItemGroup">
-                        <span ng-model="vm.itemLength" ng-if="vm.itemLength > 0">{{vm.itemLength}} items selected</span>
+                        <span ng-model="vm.itemLength" ng-if="vm.itemLength > 0">{{vm.itemLength}} {{"aip.admin.action.actionItems.itemsSelected"|i18n_aip}}</span>
                     </div>
                 </div>
 
@@ -125,10 +125,16 @@ Copyright 2017 Ellucian Company L.P. and its affiliates.
         </div>
 
         <div class="row actionItemInfoRow actionItemStatus">
-            <div class="" ><input type="radio" id="chkPost" ng-model="vm.postNow" data-ng-value="true" checked="checked"><label class="titleValue  required" for="chkPost"><span class="postChk">{{"aip.admin.action.postactionItem.post.now"|i18n_aip}}</span></label></div>
+            <div class="" ><input type="radio" id="chkPost" name="content" ng-model="vm.postNow" data-ng-value="true" checked="checked"><label class="titleValue  required" for="chkPost"><span class="postChk">{{"aip.admin.action.postactionItem.post.now"|i18n_aip}}</span></label></div>
+
             <div class=""  ><input type="checkbox" id="chkPopulation" ng-model="vm.regeneratePopulation"><label class="titleValue required" ><span class="postChk">{{"aip.admin.action.postactionItem.regenerate.Population"|i18n_aip}}</span></label></div>
 
         </div>
+
+
+
+
+
     </div>
  <div class="actionItemControl">
         <div class="row">

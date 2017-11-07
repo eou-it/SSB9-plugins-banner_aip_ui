@@ -63,6 +63,13 @@
     font-size: 12px;
     font-style: italic;
     margin:0px;border-bottom:1px solid #888181;}
+  .actiongroupModal{
+    line-height: 2.25em;
+    border-bottom: 2px solid #a7a4a4;
+    list-style-type: none;}
+  .actionFolderName{float: right;color: #1c8445;padding:10px;font-weight: bold;}
 
   .actionInstruction label{margin-bottom:0px;}
+  .selectAllActionItem{font-weight: bold;
+    font-size: 16px;color: #1c8445;margin-left: 10px;}
 }

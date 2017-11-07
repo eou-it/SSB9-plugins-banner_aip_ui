@@ -25,6 +25,7 @@ var AIP;
             this.modalResults = [];
             this.regeneratePopulation = false;
             this.itemLength;
+            this.scheduleDate = false;
             this.selectedPopulation = {};
             this.postNow = true;
             this.APP_ROOT = APP_ROOT;
@@ -63,6 +64,7 @@ var AIP;
             var _this = this;
             var groupId = this.$scope;
             console.log(this.$scope);
+            console.log(this.selected.folderName);
             this.adminActionService.getGroupActionItem(this.selected.groupId)
                 .then(function (response) {
                 _this.actionItemList = response.data;
@@ -82,8 +84,14 @@ var AIP;
                 resolve: {
                     actionItemModal: function () {
                         return _this.postActionItemInfo.groupAction;
+                    },
+                    actionGroupModal: function () {
+                        return _this.selected.groupName;
+                    },
+                    actionFolderGroupModal: function () {
+                        return _this.selected.folderName;
                     }
-                }
+                },
             });
             this.modalInstance.result.then(function (result) {
                 console.log(result);
@@ -104,14 +112,12 @@ var AIP;
                 return false;
             }
             if (!this.postActionItemInfo.name || this.postActionItemInfo.name === null || this.postActionItemInfo.name === "") {
-                console.log(this.postActionItemInfo.name);
                 this.errorMessage.name = "invalid title";
             }
             else {
                 delete this.errorMessage.name;
             }
             if (!this.postActionItemInfo.startDate || this.postActionItemInfo.startDate === null || this.postActionItemInfo.startDate === "") {
-                console.log(this.postActionItemInfo.startDate);
                 this.errorMessage.startDate = "invalid StartDate";
             }
             else {

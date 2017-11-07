@@ -7,25 +7,31 @@ declare var notifications: any;
 
 module AIP {
     export class PostAddModalCtrl {
-        $inject = ["$scope", "$uibModalInstance", "ENDPOINT", "AdminActionStatusService","actionItemModal", "APP_ROOT"];
+        $inject = ["$scope", "$uibModalInstance", "ENDPOINT", "AdminActionStatusService","actionItemModal", "actionGroupModal","actionFolderGroupModal","APP_ROOT"];
         $uibModalInstance;
         $scope;
         adminActionStatusService;
         actionItemModal;
+        actionGroupModal;
+        actionFolderGroupModal
         APP_ROOT;
         statusModel;
         ENDPOINT;
+        checkAll:boolean;
         checkedCavllue;
         errorMessage:any;
 
-        constructor($scope, $uibModalInstance, ENDPOINT, AdminActionStatusService,actionItemModal, APP_ROOT) {
+        constructor($scope, $uibModalInstance, ENDPOINT, AdminActionStatusService,actionItemModal, actionGroupModal,actionFolderGroupModal,APP_ROOT) {
             $scope.vm = this;
             this.$uibModalInstance = $uibModalInstance;
             this.ENDPOINT = ENDPOINT;   //ENDPOINT.admin.actionList
             this.adminActionStatusService = AdminActionStatusService;
             this.APP_ROOT = APP_ROOT;
             this.$scope = $scope;
+            this.checkAll=true;
             this.actionItemModal = actionItemModal;
+            this.actionGroupModal= actionGroupModal;
+            this.actionFolderGroupModal=actionFolderGroupModal;
             this.statusModel = {
                 title: "",
                 block: false
@@ -34,8 +40,25 @@ module AIP {
             console.log(this.actionItemModal);
         }
 
+        /*checkAll() {
+             if (this.checkAll === true) {
+                 angular.forEach(this.actionItemModal, (item) => {
+            item.check = true;
+                });
+                } else {
+             angular.forEach(this.actionItemModal, (item) => {
+            item.check = false;
+                 });
+             }
+            }*/
         statusSave() {
             this.checkedCavllue={};
+            if (this.checkAll===true){
+                this.actionItemModal.map((item)=> {
+                    return item["check"]=true;
+                })
+            }
+
             var checkedCavllue = this.actionItemModal.filter((item) => {
 
                 return item.check===true;

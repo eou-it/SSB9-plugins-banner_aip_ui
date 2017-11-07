@@ -45,6 +45,7 @@ module AIP {
         selectedPopulation;
         modalResults;
         itemLength;
+        scheduleDate:boolean;
         regeneratePopulation:boolean;
         APP_ROOT;
         modalInstance;
@@ -68,6 +69,7 @@ module AIP {
             this.modalResults=[];
             this.regeneratePopulation=false;
             this.itemLength;
+            this.scheduleDate=false;
             this.selectedPopulation={};
             this.postNow=true;
             this.APP_ROOT = APP_ROOT;
@@ -119,8 +121,9 @@ module AIP {
         changedValue(){
 
 var groupId = this.$scope;
-console.log(this.$scope);
+console.log(this.$scope); console.log(this.selected.folderName)
             this.adminActionService.getGroupActionItem(this.selected.groupId)
+
                 .then((response:AIP.IPostActionItemResponse) => {
                     this.actionItemList = response.data;
                     var postActionItemGroup:any = $("#ActionItemGroup");
@@ -141,8 +144,17 @@ console.log(this.$scope);
                 resolve: {
                     actionItemModal:() => {
                             return this.postActionItemInfo.groupAction;
+                    },
+
+                    actionGroupModal:() => {
+                        return this.selected.groupName;
+                    },
+                    actionFolderGroupModal:() => {
+                        return this.selected.folderName;
                     }
-                }
+
+                },
+
             });
             this.modalInstance.result.then((result) => {
                 console.log(result)
@@ -165,14 +177,12 @@ console.log(this.$scope);
             }
            if(!this.postActionItemInfo.name || this.postActionItemInfo.name === null || this.postActionItemInfo.name === "" ) {
 
-                console.log(this.postActionItemInfo.name)
                this.errorMessage.name = "invalid title";
              } else {
              delete this.errorMessage.name;
              }
 
             if(!this.postActionItemInfo.startDate || this.postActionItemInfo.startDate === null || this.postActionItemInfo.startDate === "" ) {
-                console.log(this.postActionItemInfo.startDate)
                 this.errorMessage.startDate = "invalid StartDate";
             } else {
                 delete this.errorMessage.startDate;

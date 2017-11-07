@@ -3,15 +3,18 @@
 var AIP;
 (function (AIP) {
     var PostAddModalCtrl = (function () {
-        function PostAddModalCtrl($scope, $uibModalInstance, ENDPOINT, AdminActionStatusService, actionItemModal, APP_ROOT) {
-            this.$inject = ["$scope", "$uibModalInstance", "ENDPOINT", "AdminActionStatusService", "actionItemModal", "APP_ROOT"];
+        function PostAddModalCtrl($scope, $uibModalInstance, ENDPOINT, AdminActionStatusService, actionItemModal, actionGroupModal, actionFolderGroupModal, APP_ROOT) {
+            this.$inject = ["$scope", "$uibModalInstance", "ENDPOINT", "AdminActionStatusService", "actionItemModal", "actionGroupModal", "actionFolderGroupModal", "APP_ROOT"];
             $scope.vm = this;
             this.$uibModalInstance = $uibModalInstance;
             this.ENDPOINT = ENDPOINT; //ENDPOINT.admin.actionList
             this.adminActionStatusService = AdminActionStatusService;
             this.APP_ROOT = APP_ROOT;
             this.$scope = $scope;
+            this.checkAll = true;
             this.actionItemModal = actionItemModal;
+            this.actionGroupModal = actionGroupModal;
+            this.actionFolderGroupModal = actionFolderGroupModal;
             this.statusModel = {
                 title: "",
                 block: false
@@ -19,8 +22,24 @@ var AIP;
             this.errorMessage = {};
             console.log(this.actionItemModal);
         }
+        /*checkAll() {
+             if (this.checkAll === true) {
+                 angular.forEach(this.actionItemModal, (item) => {
+            item.check = true;
+                });
+                } else {
+             angular.forEach(this.actionItemModal, (item) => {
+            item.check = false;
+                 });
+             }
+            }*/
         PostAddModalCtrl.prototype.statusSave = function () {
             this.checkedCavllue = {};
+            if (this.checkAll === true) {
+                this.actionItemModal.map(function (item) {
+                    return item["check"] = true;
+                });
+            }
             var checkedCavllue = this.actionItemModal.filter(function (item) {
                 return item.check === true;
             });
