@@ -163,13 +163,16 @@ aip-list .aip-list-container {
   padding: 10px;
   margin: 10px;
   cursor: pointer; }
+  .landingItem-container .landingItem {
+    float: left; }
   .landingItem-container:hover {
     background-color: #ffffff; }
   .landingItem-container .landing-icon {
     padding: 15px 0px;
     max-width: 100px;
     margin: 0;
-    height: auto; }
+    height: auto;
+    float: left; }
     .landingItem-container .landing-icon .well {
       background-color: transparent;
       border: none;

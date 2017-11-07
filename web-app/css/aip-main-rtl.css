@@ -195,6 +195,9 @@ aip-list .aip-list-container  {
     margin:10px;
     cursor:pointer;
 }
+  .landingItem-container .landingItem  {
+    float:right;
+}
   .landingItem-container:hover  {
     background-color:#ffffff;
 }
@@ -203,6 +206,7 @@ aip-list .aip-list-container  {
     max-width:100px;
     margin:0;
     height:auto;
+    float:right;
 }
     .landingItem-container .landing-icon .well  {
     background-color:transparent;
