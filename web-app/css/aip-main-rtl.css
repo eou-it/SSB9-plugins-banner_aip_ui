@@ -174,6 +174,7 @@ aip-list .aip-list-container  {
 }
         aip-list .aip-list-container .list-body-container .list-body .list-item .cell.completedDate span.data-label  {
     font-family:"OpenSans-bold";
+    display:inline-block;
 }
       aip-list .aip-list-container .list-body-container .list-body .list-item .cell.description  {
     font-size:1.3em;
@@ -1204,12 +1205,25 @@ ol.selected-group > li > button  {
     margin:0px;
     border-bottom:1px solid #888181;
 }
+.aip-modal .actiongroupModal  {
+    line-height:2.25em;
+    border-bottom:2px solid #a7a4a4;
+    list-style-type:none;
+}
+.aip-modal .actionFolderName  {
+    float:left;
+    color:#1c8445;
+    padding:1px;
+    font-weight:bold;
+}
 .aip-modal .actionInstruction label  {
     margin-bottom:0px;
 }
 .aip-modal .selectAllActionItem  {
     font-weight:bold;
     font-size:16px;
+    color:#1c8445;
+    margin-right:10px;
 }
 
 #username  {

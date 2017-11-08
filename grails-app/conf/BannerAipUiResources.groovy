@@ -18,7 +18,10 @@ modules = {
     }
     'bannerAIPUIRTL' {
         dependsOn 'bannerAIPUI'
-        dependsOn 'bannerSelfServiceCommonRTL, extensibilityAngularRTL, commonComponentsRTL, bootstrapRTL'
+        dependsOn 'bannerSelfServiceCommonRTL, extensibilityAngularRTL, commonComponentsRTL'
+        dependsOn "jquery"
+        resource url:[plugin: 'banner-ui-ss', file: 'bootstrap/css/bootstrap-rtl.css'],            attrs: [media: 'screen, projection']
+        resource url:[plugin: 'banner-ui-ss', file: 'css/bootstrap-fixes-rtl.css'],                attrs: [media: 'screen, projection']
         resource url:[plugin: 'banner-aip-ui', file: 'js/angular-ui-bootstrap/dist/ui-bootstrap-csp-rtl.css']
         resource url:[plugin: 'banner-aip-ui', file: 'css/aip-main-rtl.css']
     }
