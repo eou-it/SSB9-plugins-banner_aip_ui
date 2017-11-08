@@ -54,7 +54,7 @@ var AIPUI;
             };
             $scope.completedItem = function () {
                 var items = $scope.itemgroup.items.filter(function (_item) {
-                    return _item.state !== "Pending";
+                    return _item.status !== "Pending";
                 });
                 return items;
             };

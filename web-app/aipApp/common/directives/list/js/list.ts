@@ -62,7 +62,7 @@ module AIPUI {
             }
             $scope.completedItem = function() {
                 var items = $scope.itemgroup.items.filter((_item) => {
-                    return _item.state !== "Pending";
+                    return _item.status !== "Pending";
                 });
                 return items;
             }
