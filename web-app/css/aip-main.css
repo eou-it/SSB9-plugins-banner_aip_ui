@@ -137,7 +137,7 @@ aip-list .aip-list-container {
         border-bottom: none;
         padding: 25px 8px 0px 10px; }
         aip-list .aip-list-container .list-body-container .list-body .list-item .cell.completedDate span.data-label {
-          font-family: "OpenSans-bold"; }
+          font-family: "OpenSans-bold";display: inline-block }
       aip-list .aip-list-container .list-body-container .list-body .list-item .cell.description {
         font-size: 1.3em;
         border-bottom: 1px solid #A4C6E4;

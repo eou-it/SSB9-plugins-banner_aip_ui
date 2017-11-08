@@ -37,7 +37,7 @@ aip-list {
       border: 0;
     }
     .panel-heading {
-      background-color:$heading-background;
+      background-color: $heading-background;
       border: none;
       padding: 0;
       .panel-title {
@@ -208,6 +208,7 @@ aip-list {
             padding: 25px 8px 0px 10px;
             span.data-label {
               font-family: "OpenSans-bold";
+              display: inline-block;
             }
           }
           .cell.description {
