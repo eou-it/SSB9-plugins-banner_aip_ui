@@ -11,9 +11,9 @@ var AIP;
             }
             this.showing = show;
         };
+        SpinnerService.$inject = [];
         return SpinnerService;
     }());
-    SpinnerService.$inject = [];
     AIP.SpinnerService = SpinnerService;
 })(AIP || (AIP = {}));
 register("bannerAIP").service("SpinnerService", AIP.SpinnerService);

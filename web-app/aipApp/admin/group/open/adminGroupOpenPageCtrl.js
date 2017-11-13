@@ -146,7 +146,6 @@ var AIP;
         AdminGroupOpenPageCtrl.prototype.handleNotification = function (noti) {
             var _this = this;
             if (noti.notiType === "saveSuccess") {
-                var data = noti.data.group[0];
                 var n = new Notification({
                     message: this.$filter("i18n_aip")("aip.common.save.successful"),
                     type: "success",

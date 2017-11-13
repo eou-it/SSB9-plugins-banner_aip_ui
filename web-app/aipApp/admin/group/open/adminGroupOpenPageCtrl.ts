@@ -183,7 +183,6 @@ module AIP {
 
         handleNotification(noti) {
             if(noti.notiType === "saveSuccess") {
-                var data = noti.data.group[0];
                 var n = new Notification({
                     message: this.$filter("i18n_aip")("aip.common.save.successful"),
                     type: "success",
