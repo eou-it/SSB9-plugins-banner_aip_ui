@@ -178,7 +178,7 @@ var bannerAIPApp = angular.module("bannerAIP", [
             editActionItemContent: aipAppAbsPath + "aipAdmin/editActionItemContent",
             openActionItem: aipAppAbsPath + "aipAdmin/openActionItem",
             getGroupLov:aipAppAbsPath + "aipActionItemPosting/getGroupLov",
-            populationListForSendLov:aipAppAbsPath + "aipActionItemPosting/populationListForSendLov?searchParam=p",
+            populationListForSendLov:aipAppAbsPath + "aipActionItemPosting/populationListForSendLov",
             createPostActionItem:aipAppAbsPath + "aipActionItemPosting/addActionItemPosting ",
             getActionGroupActionItemLov:aipAppAbsPath + "aipActionItemPosting/getActionGroupActionItemLov",
             actionItemPostJobList:aipAppAbsPath + "aipActionItemPosting/actionItemPostJobList",
