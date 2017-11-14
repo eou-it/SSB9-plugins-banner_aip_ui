@@ -11,7 +11,6 @@
 package net.hedtech.banner.aip
 
 import grails.converters.JSON
-import net.hedtech.banner.general.communication.folder.CommunicationFolder
 import net.hedtech.banner.general.person.PersonUtility
 import net.hedtech.banner.testing.BaseIntegrationTestCase
 import org.junit.After
@@ -124,7 +123,7 @@ class AipControllerIntegrationTests extends BaseIntegrationTestCase {
 
     @Test
     void testFetchActionItemsUserHasNone() {
-        def person = PersonUtility.getPerson( "CSRSTU022" )
+        def person = PersonUtility.getPerson( "STUAFR301" ) // user from student tests
         assertNotNull person
         def auth = selfServiceBannerAuthenticationProvider.authenticate(
                 new UsernamePasswordAuthenticationToken( person.bannerId, '111111' ) )
@@ -132,8 +131,7 @@ class AipControllerIntegrationTests extends BaseIntegrationTestCase {
         controller.actionItems()
         assertEquals 200, controller.response.status
         def answer = JSON.parse( controller.response.contentAsString )
-        //TODO:: it will always 1 group (hardcoded) and gorup has no item for this user
-        assertNull(answer.groups[0].items)
+        assertEquals(0, answer.groups.size() )
     }
 
 
