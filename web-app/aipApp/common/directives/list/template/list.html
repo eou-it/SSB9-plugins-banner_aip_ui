@@ -12,7 +12,7 @@
                         <h2 id="group-title-heading" class="group-title-text">{{itemgroup.title|i18n_aip}}</h2>
                     </div>
                     <span class="badge" ng-if="!isOpen" aria-label="{{completedItem().length}} of {{itemgroup.items.length}} {{'aip.common.text.completed'|i18n_aip}}">
-                        {{completedItem().length + "/" + itemgroup.items.length}}
+                        <span >{{completedItem().length}}/</span> <span >{{itemgroup.items.length}}</span>
                     </span>
                     <i role="presentation" class="group-toggle-indicator fa col-xs-1" ng-class="{'fa-caret-up':isOpen, 'fa-caret-down':!isOpen}"></i>
                 </div>
@@ -21,7 +21,7 @@
             <div class="row">
                 <div class="group-progress col-sm-12" ng-if="isOpen">
                     <uib-progressbar ng-class="{'normal':completedItem().length+1>data.length/2}" max="itemgroup.items.length" value="completedItem().length">
-                        <span id="progressbar">{{'aip.progressbar.stats'|i18n_aip:[completedItem().length, itemgroup.items.length] }}</span>
+                        <span id="progressbar"><span   class="progress_bar_status_left" >{{completedItem().length}} {{'aip.progressbar.stats.of'|i18n_aip }}</span> <span >{{itemgroup.items.length}}</span></span>
                     </uib-progressbar>
                 </div>
             </div>

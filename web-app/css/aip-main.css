@@ -30,6 +30,10 @@ aip-list .aip-list-container {
       border-radius: 2px; }
     aip-list .aip-list-container .panel-heading .panel-title .accordion-toggle {
       color: #000000; }
+
+    aip-list .aip-list-container .progress_bar_status_left{
+    margin-right: 12px;}
+
     aip-list .aip-list-container .panel-heading .panel-title .item-group {
       padding: 16px 8px 8px 8px;
       margin: 2px; }

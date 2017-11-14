@@ -38,6 +38,9 @@ aip-list .aip-list-container  {
     aip-list .aip-list-container .panel-heading .panel-title .accordion-toggle  {
     color:#000000;
 }
+  aip-list .aip-list-container .progress_bar_status_left{
+  margin-left: 12px;
+    }
     aip-list .aip-list-container .panel-heading .panel-title .item-group  {
     padding:16px 8px 8px 8px;
     margin:2px;
@@ -181,8 +184,8 @@ aip-list .aip-list-container  {
     border-bottom:1px solid #A4C6E4;
     padding:10px 10px 15px 5px;
 }
-  
-  
+
+
 
 .AIP-landing-container  {
     padding:16px;
@@ -734,7 +737,7 @@ ol.selected-group > li > button  {
         .actionItemAddContainer .actionItemControl .actionItemButton span button  {
     min-width:100px;
 }
-  
+
 
 .actionItemOpenContainer  {
     border:1px solid #C0C0C0;
@@ -771,7 +774,7 @@ ol.selected-group > li > button  {
     border-right:2px solid #C0C0C0;
     height:100%;
 }
-        
+
         .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement .dividerContainer  {
     padding:16px;
 }
@@ -855,12 +858,12 @@ ol.selected-group > li > button  {
     padding:10px 0px;
     border-bottom:1px solid #C0C0C0;
 }
-              
+
             .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .status-rules button.delete, .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .status-rules button.sort  {
     color:#206E9F;
     border:none;
 }
-            
+
             .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .status-rules .add-link  {
     font-family:"OpenSans-semibold";
     margin:20px 15px 20px 0;
