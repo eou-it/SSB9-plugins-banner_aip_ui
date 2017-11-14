@@ -402,19 +402,6 @@ module AIP {
             return request;
         }
 
-        updateActionItemDetailsAndStatusRules( templateId, actionItemId, actionItemContent, rules ) {
-            var request = this.$http( {
-                method: "POST",
-                url: this.ENDPOINT.admin.updateActionItemStatusRule,
-                data: {
-                    templateId: templateId,
-                    actionItemId: actionItemId,
-                    actionItemContent: actionItemContent,
-                    rules: rules
-                }
-            } );
-            return request;
-        }
         updateBlockedProcessItems(actionItemId, blockItems) {
             var request = this.$http({
                 method: "POST",
