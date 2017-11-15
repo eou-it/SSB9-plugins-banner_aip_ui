@@ -144,10 +144,11 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
                 new UsernamePasswordAuthenticationToken( admin.bannerId, '111111' ) )
         SecurityContextHolder.getContext().setAuthentication( auth )
 
-        def folderId = CommunicationFolder.fetchByName( 'AIPGeneral' ).id
+        def folderId = CommunicationFolder.findByName( 'AIPGeneral' ).id
 
         def requestObj = [:]
         requestObj.groupTitle = "test1a2b" // Make sure title and folder create unique pair
+        requestObj.groupName = "myName"
         requestObj.folderId = folderId
         requestObj.groupStatus = "Pending"
         requestObj.groupDesc = "<p><strong>This is a group description</p></strong>"
@@ -173,10 +174,11 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
                 new UsernamePasswordAuthenticationToken( admin.bannerId, '111111' ) )
         SecurityContextHolder.getContext().setAuthentication( auth )
 
-        def folderId = CommunicationFolder.fetchByName( 'AIPGeneral' ).id
+        def folderId = CommunicationFolder.findByName( 'AIPGeneral' ).id
 
         def requestObj = [:]
         requestObj.groupTitle = "International Students" // group in AIPGeneral Folder with this name already exists
+        requestObj.groupName = "myName"
         requestObj.folderId = folderId
         requestObj.groupStatus = "pending"
         requestObj.groupDesc = "<p><strong>This is a group description</p></strong>"
@@ -201,10 +203,11 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
                 new UsernamePasswordAuthenticationToken( admin.bannerId, '111111' ) )
         SecurityContextHolder.getContext().setAuthentication( auth )
 
-        def folderId = CommunicationFolder.fetchByName( 'AIPGeneral' ).id
+        def folderId = CommunicationFolder.findByName( 'AIPGeneral' ).id
 
         def requestObj = [:]
         requestObj.groupTitle = null
+        requestObj.groupName = "myName"
         requestObj.folderId = folderId
         requestObj.groupStatus = null
         requestObj.groupDesc = "<p><strong>This is a group description</p></strong>"
@@ -229,10 +232,11 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
                 new UsernamePasswordAuthenticationToken( admin.bannerId, '111111' ) )
         SecurityContextHolder.getContext().setAuthentication( auth )
 
-        def folderId = CommunicationFolder.fetchByName( 'AIPGeneral' ).id
+        def folderId = CommunicationFolder.findByName( 'AIPGeneral' ).id
 
         def requestObj = [:]
         requestObj.groupTitle = ""
+        requestObj.groupName = "myName"
         requestObj.folderId = folderId
         requestObj.groupStatus = "pending"
         requestObj.groupDesc = "<p><strong>This is a group description</p></strong>"
@@ -257,10 +261,11 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
                 new UsernamePasswordAuthenticationToken( admin.bannerId, '111111' ) )
         SecurityContextHolder.getContext().setAuthentication( auth )
 
-        def folderId = CommunicationFolder.fetchByName( 'AIPGeneral' ).id
+        def folderId = CommunicationFolder.findByName( 'AIPGeneral' ).id
 
         def requestObj = [:]
         requestObj.groupTitle = "myTitle"
+        requestObj.groupName = "myName"
         requestObj.folderId = folderId
         requestObj.groupStatus = "pendingstatusoverthe30characterlimit"
         requestObj.groupDesc = "<p><strong>This is a group description</p></strong>"
@@ -287,6 +292,7 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
 
         def requestObj = [:]
         requestObj.groupTitle = "myTitle"
+        requestObj.groupName = "myName"
         requestObj.folderId = BAD_FOLDER_ID
         requestObj.groupStatus = "pending"
         requestObj.groupDesc = "<p><strong>This is a group description</p></strong>"
@@ -310,12 +316,13 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
                 new UsernamePasswordAuthenticationToken( admin.bannerId, '111111' ) )
         SecurityContextHolder.getContext().setAuthentication( auth )
 
-        def folderId = CommunicationFolder.fetchByName( 'AIPGeneral' ).id
+        def folderId = CommunicationFolder.findByName( 'AIPgeneral' ).id
 
         def requestObj = [:]
-        requestObj.status = "Pending"
+        requestObj.status = "Draft"
         requestObj.folderId = folderId
         requestObj.title = "a title"
+        requestObj.name = "myName"
         requestObj.description = "<p><strong>This is a group description</p></strong>"
 
         controller.request.method = "POST"
@@ -340,12 +347,13 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
                 new UsernamePasswordAuthenticationToken( admin.bannerId, '111111' ) )
         SecurityContextHolder.getContext().setAuthentication( auth )
 
-        def folderId = CommunicationFolder.fetchByName( 'AIPGeneral' ).id
+        def folderId = CommunicationFolder.findByName( 'AIPgeneral' ).id
 
         def requestObj = [:]
         requestObj.status = "123456789012345678901234567890123"
         requestObj.folderId = folderId
         requestObj.title = "max size title 4tr0"
+        requestObj.name = "myName"
         requestObj.description = "<p><strong>This is a group description</p></strong>"
 
         controller.request.method = "POST"
@@ -367,14 +375,14 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
                 new UsernamePasswordAuthenticationToken( admin.bannerId, '111111' ) )
         SecurityContextHolder.getContext().setAuthentication( auth )
 
-        def folderId = CommunicationFolder.fetchByName( 'AIPGeneral' ).id
+        def folderId = CommunicationFolder.findByName( 'AIPgeneral' ).id
 
         def requestObj = [:]
-        requestObj.status = "Pending"
+        requestObj.status = "Active"
         requestObj.folderId = folderId
         requestObj.title = "a title"
+        requestObj.name = "myName"
         requestObj.description = null
-        //requestObj.lastModifiedBy = "CSRADM001"
         controller.request.method = "POST"
         controller.request.json = requestObj
         controller.addActionItem()
@@ -390,12 +398,13 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
 
     @Test
     void testCreateActionItemNoSession() {
-        def folderId = CommunicationFolder.fetchByName( 'AIPGeneral' ).id
+        def folderId = CommunicationFolder.findByName( 'AIPgeneral' ).id
 
         def requestObj = [:]
-        requestObj.status = "Pending"
+        requestObj.status = "Active"
         requestObj.folderId = folderId
         requestObj.title = "a title"
+        requestObj.name = "myName"
         requestObj.description = null
 
         controller.request.method = "POST"
@@ -415,12 +424,13 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
                 new UsernamePasswordAuthenticationToken( admin.bannerId, '111111' ) )
         SecurityContextHolder.getContext().setAuthentication( auth )
 
-        def folderId = CommunicationFolder.fetchByName( 'AIPGeneral' ).id
+        def folderId = CommunicationFolder.findByName( 'AIPgeneral' ).id
 
         def requestObj = [:]
         requestObj.status = null
         requestObj.folderId = folderId
         requestObj.title = "a title"
+        requestObj.name = "myName"
         requestObj.description = null
         //requestObj.lastModifiedBy = "CSRADM001"
         controller.request.method = "POST"
@@ -442,12 +452,13 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
                 new UsernamePasswordAuthenticationToken( admin.bannerId, '111111' ) )
         SecurityContextHolder.getContext().setAuthentication( auth )
 
-        def folderId = CommunicationFolder.fetchByName( 'AIPGeneral' ).id
+        def folderId = CommunicationFolder.findByName( 'AIPGeneral' ).id
 
         def requestObj = [:]
-        requestObj.status = 'Pending'
+        requestObj.status = 'Inactive'
         requestObj.folderId = folderId
         requestObj.title = ''
+        requestObj.name = "myName"
         requestObj.description = null
 
         controller.request.method = "POST"
@@ -470,9 +481,10 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
         SecurityContextHolder.getContext().setAuthentication( auth )
 
         def requestObj = [:]
-        requestObj.status = 'Pending'
+        requestObj.status = 'Active'
         requestObj.folderId = ''
         requestObj.title = 'title 4238j'
+        requestObj.name = "myName"
         requestObj.description = null
 
         controller.request.method = "POST"
@@ -497,9 +509,10 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
         def ai = ActionItem.fetchActionItems()[7]
 
         def requestObj = [:]
-        requestObj.status = 'Pending'
+        requestObj.status = 'Draft'
         requestObj.folderId = ai.folderId
         requestObj.title = ai.title
+        requestObj.name = "myName"
         requestObj.description = null
 
         controller.request.method = "POST"
@@ -522,9 +535,10 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
         SecurityContextHolder.getContext().setAuthentication( auth )
 
         def requestObj = [:]
-        requestObj.status = 'Pending'
+        requestObj.status = 'Draft'
         requestObj.folderId = BAD_FOLDER_ID
         requestObj.title = 'a title 49rtu423'
+        requestObj.name = 'a name'
         requestObj.description = null
 
         controller.request.method = "POST"

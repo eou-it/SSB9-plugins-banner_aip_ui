@@ -57,9 +57,8 @@ class AipAdminController {
      * @return
      */
     def addActionItem() {
-        def map = [:]
-        map = request.JSON
-        map.studentId = params.studentId
+        def map = request.JSON
+
         def result = actionItemCompositeService.addActionItem( map )
         render result as JSON
     }
@@ -70,6 +69,12 @@ class AipAdminController {
      */
     def openGroup() {
         def success = false
+
+        if (!request.JSON.groupId) {
+            response.sendError( 403 )
+            return
+        }
+
         def model = [
                 success: success,
                 errors : [],
