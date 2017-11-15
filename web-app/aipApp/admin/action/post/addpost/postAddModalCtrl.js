@@ -53,7 +53,8 @@ var AIP;
             }
         };
         PostAddModalCtrl.prototype.changedAllValue = function () {
-            this.actionItemModal.map(function (item) { item.check = true; });
+            var _this = this;
+            this.actionItemModal.map(function (item) { item.check = _this.checkAll; });
         };
         PostAddModalCtrl.prototype.statusSave = function () {
             this.checkedCavllue = {};
