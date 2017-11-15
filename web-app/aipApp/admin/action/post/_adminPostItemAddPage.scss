@@ -43,6 +43,24 @@
   input.hasMultiCalendarPicker{height:35px;border-radius: 5px;
     padding-left: 15px;}
 
+    .actionItemControl {
+    position: relative;
+    width: 100%;
+    bottom: 10px;
+    margin-bottom: 15px;
+    height: 5em;
+    .actionItemButton {
+      float: right;
+      span {
+        padding-left: 24px;
+        button {
+          min-width: 100px;
+          margin-left: 3px;
+        }
+      }
+    }
+  }
+
   input[type="checkbox"]{
     -webkit-appearance: initial;
     appearance: initial;
