@@ -90,6 +90,8 @@ aip-list {
           .badge {
             //float: right;
             margin-left: 5px;
+            border: 1px solid #222222;
+            background-color: #555555;
             &.pending {
               border: 1px solid #B0ABD0;
               background-color: #DAD5FF;
