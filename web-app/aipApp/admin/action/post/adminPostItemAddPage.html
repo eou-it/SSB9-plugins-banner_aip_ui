@@ -102,13 +102,13 @@ Copyright 2017 Ellucian Company L.P. and its affiliates.
         </div>
 
         <div class="row actionItemInfoRow actionItemStatus">
-            <div class="col-sm-6 startdate">
+            <div class="col-sm-12 col-md-6 startdate">
                 <div class="col-sm-6 startdate">
                     <div class="actionItemElement row input-actionItem">
                         <label for="postActionItemDate" class="titleValue required">{{"aip.admin.action.postactionItem.start.date"|i18n_aip}}
                         </label>
                     </div>
-                    <div class="actionItemElement Datelement col-sm-6 dateRow form-container" role="textbox">
+                    <div class="actionItemElement Datelement col-sm-6  dateRow form-container" role="textbox">
 
                         <div class="row input-daterange form-group right-inner-addon">
                             <input type="text" id="date" date-picker ng-model="vm.postActionItemInfo.startDate"
@@ -154,13 +154,13 @@ Copyright 2017 Ellucian Company L.P. and its affiliates.
     </div>
     <div class="actionItemControl">
         <div class="row">
-            <div class="actionItemElement col-xs-12 col-sm-8">
-                <div class="col-sm-4 offset-sm-8 col-xs-12 actionItemButton">
+            <div class="actionItemElement col-xs-12 col-sm-12">
+                <div class="col-sm-8 offset-sm-8 col-xs-12 actionItemButton">
                     <span>
-                        <button name="Cancel" type="button" class="btn btn-default" ng-click="vm.cancel()">{{"aip.common.cancel"|i18n_aip}}</button>
+                        <button name="Cancel" type="button" class="btn btn-default col-sm-2" ng-click="vm.cancel()">{{"aip.common.cancel"|i18n_aip}}</button>
                     </span>
                     <span>
-                        <button name="Save" type="button" class="btn btn-primary" ng-disabled="!vm.validateInput()"
+                        <button name="Save" type="button" class="btn btn-primary col-sm-2" ng-disabled="!vm.validateInput()"
                                 ng-click="vm.save()">
                         {{"aip.common.submitandreturn"|i18n_aip}}</button>
                     </span>
