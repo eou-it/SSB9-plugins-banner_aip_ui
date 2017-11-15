@@ -10,7 +10,6 @@ import net.hedtech.banner.exceptions.ApplicationException
 import net.hedtech.banner.i18n.MessageHelper
 import org.apache.log4j.Logger
 import org.codehaus.groovy.grails.plugins.web.taglib.ValidationTagLib
-import org.omg.CORBA.portable.ApplicationException
 import org.springframework.security.core.context.SecurityContextHolder
 
 /**
@@ -277,6 +276,7 @@ class AipAdminController {
         } catch (ApplicationException e) {
             model = [fail: true]
             LOGGER.error( e.getMessage() )
+            model.success = false
             model.message = e.returnMap( {mapToLocalize -> new ValidationTagLib().message( mapToLocalize )} ).message
         }
         render model as JSON
@@ -413,6 +413,7 @@ class AipAdminController {
 
         render model as JSON
     }
+
 
     def blockedProcessList() {
 
