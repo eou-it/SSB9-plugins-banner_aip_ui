@@ -195,19 +195,6 @@ var AIP;
             });
             return request;
         };
-        AdminActionService.prototype.updateActionItemDetailsAndStatusRules = function (templateId, actionItemId, actionItemContent, rules) {
-            var request = this.$http({
-                method: "POST",
-                url: this.ENDPOINT.admin.updateActionItemStatusRule,
-                data: {
-                    templateId: templateId,
-                    actionItemId: actionItemId,
-                    actionItemContent: actionItemContent,
-                    rules: rules
-                }
-            });
-            return request;
-        };
         AdminActionService.prototype.updateBlockedProcessItems = function (actionItemId, blockItems) {
             var request = this.$http({
                 method: "POST",
