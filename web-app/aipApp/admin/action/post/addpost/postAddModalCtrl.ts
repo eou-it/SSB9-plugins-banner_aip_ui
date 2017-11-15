@@ -72,7 +72,7 @@ module AIP {
         }
 
         changedAllValue(){
-            this.actionItemModal.map((item) => {item.check=true;})
+            this.actionItemModal.map((item) => {item.check=this.checkAll;})
         }
 
         statusSave() {
