@@ -38,9 +38,11 @@ aip-list .aip-list-container  {
     aip-list .aip-list-container .panel-heading .panel-title .accordion-toggle  {
     color:#000000;
 }
-  aip-list .aip-list-container .progress_bar_status_left{
-  margin-left: 12px;
-    }
+
+    aip-list .aip-list-container .progress_bar_status_left {
+    margin-left:12px;
+}
+
     aip-list .aip-list-container .panel-heading .panel-title .item-group  {
     padding:16px 8px 8px 8px;
     margin:2px;
@@ -184,8 +186,8 @@ aip-list .aip-list-container  {
     border-bottom:1px solid #A4C6E4;
     padding:10px 10px 15px 5px;
 }
-
-
+  
+  
 
 .AIP-landing-container  {
     padding:16px;
@@ -737,7 +739,7 @@ ol.selected-group > li > button  {
         .actionItemAddContainer .actionItemControl .actionItemButton span button  {
     min-width:100px;
 }
-
+  
 
 .actionItemOpenContainer  {
     border:1px solid #C0C0C0;
@@ -774,7 +776,7 @@ ol.selected-group > li > button  {
     border-right:2px solid #C0C0C0;
     height:100%;
 }
-
+        
         .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement .dividerContainer  {
     padding:16px;
 }
@@ -858,12 +860,12 @@ ol.selected-group > li > button  {
     padding:10px 0px;
     border-bottom:1px solid #C0C0C0;
 }
-
+              
             .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .status-rules button.delete, .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .status-rules button.sort  {
     color:#206E9F;
     border:none;
 }
-
+            
             .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .status-rules .add-link  {
     font-family:"OpenSans-semibold";
     margin:20px 15px 20px 0;
@@ -1529,28 +1531,36 @@ ol.selected-group > li > button  {
 }
 
 .jobstateDefault  {
-    display:inline;
-    color:#000;
-    position:relative;
-    float:right;
-    padding:8px 21px;
-    font-size:80%;
-    font-weight:bold;
-    line-height:1;
+    border-radius:4px;
+    padding:5px;
     text-align:center;
-    white-space:nowrap;
-    vertical-align:baseline;
-    border-radius:.25em;
-    width:65%;
-}
-
-.jobStateQueued  {
-    background-color:#D8D8D8;
-}
-
-.jobStateNew  {
+    width:45%;
+    font-weight:bold;
+    font-size:14px;
+    display:inline-block;
     color:#000;
-    border:1px solid #000;
+}
+ .jobStateQueued {
+    background-color:#DAD5FF;
+    border:1px solid #B0ABD0;
+}
+
+.statusStopped  {
+    background-color:#EF6969;
+    border:1px solid red;
+}
+
+.statusCompleted   {
+    background-color:#c9f0c7;
+    border:1px solid #4ec76a;
+}
+  .statusScheduled  {
+    background-color:#c7c69f;
+    border:1px solid #c7c69f;
+}
+  .statusstatusError {
+    background-color:#FFFF00;
+    border:1px solid #CCCC00;
 }
 /*** Media Query Section ***/
 @media screen and (max-width: 768px) {
