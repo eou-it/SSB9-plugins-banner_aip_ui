@@ -1064,7 +1064,6 @@ ol.selected-group > li > button {
 .aip-modal .actionFolderName {
   float: right;
   color: #1c8445;
-  padding: 10px;
   font-weight: bold; }
 .aip-modal .actionInstruction label {
   margin-bottom: 0px; }
@@ -1073,6 +1072,14 @@ ol.selected-group > li > button {
   font-size: 16px;
   color: #1c8445;
   margin-left: 10px; }
+@media screen and (max-width: 480px) {
+  .aip-modal .actionFolder {
+    display: block;
+    float: none; }
+  .aip-modal .selectAllActionItem {
+    font-size: 13px; }
+  .aip-modal .actionFolderName {
+    font-size: 12px; } }
 
 #username {
   padding-right: 0.5em; }
