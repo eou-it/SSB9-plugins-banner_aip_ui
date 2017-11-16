@@ -1091,6 +1091,8 @@ ol.selected-group > li > button {
     #content .viewContainer {
       padding: 0 8px;
       overflow: auto; }
+    #content .jobstateDefault {
+      min-width: 10%; }
     #content .hidden-sm-down {
       display: none; } }
 @media screen and (max-width: 480px) {
@@ -1098,7 +1100,9 @@ ol.selected-group > li > button {
     top: 105px !important; }
     #content .viewContainer {
       padding: 0 8px;
-      overflow: auto; } }
+      overflow: auto; }
+    #content .actionItemAddContainer .enddate {
+      padding-left: 0px; } }
 #breadcrumbHeader a.breadcrumbButton.leaf-breadcrumb {
   text-decoration: none;
   cursor: default; }
@@ -1335,30 +1339,31 @@ ol.selected-group > li > button {
 
 .jobstateDefault {
   border-radius: 4px;
-    padding: 5px;
-    text-align: center;
-    width:45%;
-    font-weight: bold;
-    font-size: 14px;
-    display: inline-block;
-    color:#000;
- }
- .jobStateQueued{
-background-color: #DAD5FF;
-    border: 1px solid #B0ABD0;
+  padding: 5px;
+  text-align: center;
+  min-width: 45%;
+  font-weight: bold;
+  font-size: 14px;
+  display: inline-block;
+  color: #000; }
 
- }
+.jobStateQueued {
+  background-color: #DAD5FF;
+  border: 1px solid #B0ABD0; }
 
 .statusStopped {
-  background-color: #EF6969;border: 1px solid red; }
+  background-color: #EF6969;
+  border: 1px solid red; }
 
-.statusCompleted  {
+.statusCompleted {
   background-color: #c9f0c7;
   border: 1px solid #4ec76a; }
-  .statusScheduled {
+
+.statusScheduled {
   background-color: #c7c69f;
   border: 1px solid #c7c69f; }
-  .statusstatusError{
+
+.statusstatusError {
   background-color: #FFFF00;
   border: 1px solid #CCCC00; }
 

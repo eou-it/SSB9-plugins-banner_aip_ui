@@ -53,6 +53,7 @@ Copyright 2017 Ellucian Company L.P. and its affiliates.
       padding: 0 8px;
       overflow: auto;
     }
+    .jobstateDefault{min-width:10%;}
 
     .hidden-sm-down {
       display: none;
@@ -66,6 +67,7 @@ Copyright 2017 Ellucian Company L.P. and its affiliates.
       padding: 0 8px;
       overflow: auto;
     }
+    .actionItemAddContainer .enddate{    padding-left: 0px}
   }
 }
 #breadcrumbHeader {
@@ -366,23 +368,31 @@ ol.selected-group > li > button {
   margin-right: 5px; }
 
 
-.jobstateDefault{display: inline;
-  color: #000;
-  position: relative;
-  float: left;
-  padding: 8px 21px;
-  font-size: 80%;
-  font-weight: bold;
-  line-height: 1;
+.jobstateDefault {
+  border-radius: 4px;
+  padding: 5px;
   text-align: center;
-  white-space: nowrap;
-  vertical-align: baseline;
-  border-radius: .25em;
-  width: 65%;}
-.jobStateQueued{background-color: #D8D8D8;}
-.jobStateNew{color:#000;border: 1px solid #000;}
-.jobStateCalculating{}
-.jobStateProcessing{}
-.jobStateComplete{}
-.jobStateStopped{}
-.jobStateError{}
+  min-width: 45%;
+  font-weight: bold;
+  font-size: 14px;
+  display: inline-block;
+  color: #000;
+}
+.jobStateQueued{
+  background-color: #DAD5FF;
+  border: 1px solid #B0ABD0;
+
+}
+
+.statusStopped {
+  background-color: #EF6969;border: 1px solid red; }
+
+.statusCompleted  {
+  background-color: #c9f0c7;
+  border: 1px solid #4ec76a; }
+.statusScheduled {
+  background-color: #c7c69f;
+  border: 1px solid #c7c69f; }
+.statusstatusError{
+  background-color: #FFFF00;
+  border: 1px solid #CCCC00; }

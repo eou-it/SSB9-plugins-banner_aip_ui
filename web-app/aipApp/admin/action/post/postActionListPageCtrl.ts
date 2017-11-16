@@ -33,7 +33,7 @@ module AIP {
         actionListService: AIP.AdminActionService;
         draggableColumnNames;
         gridData;
-        header: [AIP.IActionItemHeader];
+        header;
         searchConfig;
         mobileConfig;
         mobileSize: boolean;
@@ -59,13 +59,13 @@ module AIP {
             this.gridData = {};
             this.draggableColumnNames = [];
             this.mobileConfig = {
-                jobStatus: 3,
-                postingTitle: 3,
-                postingStartScheduleDate: 3,
-                groupFolder: 3,
-                population: 3,
-                group: 3,
-                submittedBy: 3,
+                jobState: 3,
+                postingName: 3,
+                postingDisplayStartDate: 3,
+                groupFolderName: 3,
+                postingPopulation: 3,
+                groupName: 3,
+                postingCreatorId: 3,
                 action: 3
             };
 
@@ -74,7 +74,7 @@ module AIP {
             }
             this.mobileSize = angular.element("body").width() > 768 ? false : true;
             this.searchConfig = {
-                id: "groupDataTableSearch",
+                id: "groupDataTableSearch1",
                 delay: 300,
                 ariaLabel: this.$filter("i18n_aip")("aip.list.grid.search.actionItemPostJob"),
                 searchString: "",
@@ -83,7 +83,7 @@ module AIP {
             };
             this.header = [{
                 name: "postingId",
-                title: "postingId",
+                title: "id",
                 width: "0px",
                 options: {
                     sortable: true,
@@ -96,7 +96,8 @@ module AIP {
                 ariaLabel: this.$filter("i18n_aip")("aip.admin.actionItem.post.grid.job.status"),
                 width: "100px",
                 options: {
-                    sortable: false,
+                    sortable: true,
+                    ascending:true,
                     visible: true,
                     columnShowHide: true
                 }
