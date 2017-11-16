@@ -5,7 +5,6 @@
 package net.hedtech.banner.aip
 
 import grails.converters.JSON
-import net.hedtech.banner.MessageUtility
 
 /**
  * AIP Controller class to have all API endpoints
@@ -13,15 +12,7 @@ import net.hedtech.banner.MessageUtility
 class AipController {
 
     static defaultAction = "list"
-
     def userActionItemReadOnlyCompositeService
-
-    def actionItemContentService
-
-    def actionItemReadOnlyService
-
-    def groupFolderReadOnlyService
-
     def springSecurityService
 
 
@@ -76,52 +67,9 @@ class AipController {
      * Get Detail information
      * @return
      */
-
-    // FIXME: refactor to service
     def detailInfo() {
-        //TODO:: tie in groups and user in db and create an associated service
-        def itemDetailInfo = []
-        try {
-            if (params.searchType == "group") {
-                //itemDetailInfo = actionItemDetailService.getGroupDetailById(jsonObj.groupId)
-
-                def group = groupFolderReadOnlyService.getActionItemGroupById( Long.parseLong( params.groupId ) )
-                if (group.size() > 0) {
-                    def groupDesc
-                    if (!group.groupDesc) {
-                        groupDesc = MessageUtility.message( "aip.placeholder.nogroups" )
-                    } else {
-                        groupDesc = group.groupDesc
-                    }
-                    def groupItem = [
-                            id      : group.groupId,
-                            title   : group.groupTitle,
-                            status  : group.groupStatus,
-                            userId  : group.groupUserId,
-                            text    : groupDesc,
-                            activity: group.groupActivityDate,
-                            version : group.groupVersion
-                    ]
-                    itemDetailInfo << groupItem
-                }
-            } else if (params.searchType == "actionItem") {
-                def itemDetail = actionItemContentService.listActionItemContentById( Long.parseLong( params.actionItemId ) )
-                def templateInfo = actionItemReadOnlyService.getActionItemROById( Long.parseLong( params.actionItemId ) )
-
-                if (itemDetail) {
-                    itemDetailInfo << itemDetail
-                }
-                if (templateInfo) {
-                    itemDetailInfo << templateInfo
-                }
-
-            }
-        } catch (Exception e) {
-            org.codehaus.groovy.runtime.StackTraceUtils.sanitize( e ).printStackTrace()
-            throw e
-        } finally {
-            render itemDetailInfo as JSON
-        }
+        def itemDetailInfo = userActionItemReadOnlyCompositeService.actionItemOrGroupInfo( params )
+        render itemDetailInfo as JSON
     }
 
 }
