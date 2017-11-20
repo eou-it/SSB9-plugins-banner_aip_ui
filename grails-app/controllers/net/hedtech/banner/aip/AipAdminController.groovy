@@ -75,10 +75,15 @@ class AipAdminController {
             return
         }
 
+        GroupFolderReadOnly gfro = groupFolderReadOnlyService.getActionItemGroupById( request.JSON.groupId )
+        if (gfro) {
+            success = true
+        }
+
         def model = [
                 success: success,
                 errors : [],
-                group  : groupFolderReadOnlyService.getActionItemGroupById( request.JSON.groupId )
+                group  : gfro
         ]
         render model as JSON
     }
