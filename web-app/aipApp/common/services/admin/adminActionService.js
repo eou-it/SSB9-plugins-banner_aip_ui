@@ -107,8 +107,8 @@ var AIP;
         };
         AdminActionService.prototype.savePostActionItem = function (postActionItem, selected, modalResult, selectedPopulation, postNow, regeneratePopulation) {
             var params = {
-                name: postActionItem.name,
-                postGroupId: selected.groupId,
+                postingName: postActionItem.name,
+                postingActionItemGroupId: selected.groupId,
                 actionItemIds: modalResult,
                 populationId: selectedPopulation.id,
                 displayStartDate: postActionItem.startDate,
@@ -206,9 +206,9 @@ var AIP;
             });
             return request;
         };
-        AdminActionService.$inject = ["$http", "$q", "$filter", "ENDPOINT"];
         return AdminActionService;
     }());
+    AdminActionService.$inject = ["$http", "$q", "$filter", "ENDPOINT"];
     AIP.AdminActionService = AdminActionService;
 })(AIP || (AIP = {}));
 register("bannerAIP").service("AdminActionService", AIP.AdminActionService);
