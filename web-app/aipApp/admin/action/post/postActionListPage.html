@@ -36,7 +36,7 @@ Copyright 2017 Ellucian Company L.P. and its affiliates.
             <xe-cell-markup column-name="jobState" >
                 <div class="row jobState">
                     <div    ng-if="!isExtendedField(row, heading.name)">
-                        <span  ng-class='{"jobStateQueued jobstateDefault" : row.jobState == "Queued" || row.jobState == "Calculating"|| row.jobState == "New" || row.jobState == "Processing","statusCompleted jobstateDefault" : row.jobState == "Complete","statusStopped jobstateDefault" : row.jobState == "Stopped","statusError  jobstateDefault" : row.jobState == "Error","statusScheduled  jobstateDefault" : row.jobState == "Scheduled"}' ng-bind="getObjectValue(row, heading.name)" >
+                        <span  ng-class='{"jobStateQueued jobstateDefault" : row.jobState == "Queued" || row.jobState == "Calculating"|| row.jobState == "New" || row.jobState == "In Process","statusCompleted jobstateDefault" : row.jobState == "Complete","statusStopped jobstateDefault" : row.jobState == "Stopped","statusError  jobstateDefault" : row.jobState == "Error","statusScheduled  jobstateDefault" : row.jobState == "Scheduled"}' ng-bind="getObjectValue(row, heading.name)" >
 
                        </span></div>
 
