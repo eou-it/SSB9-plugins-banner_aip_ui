@@ -50,7 +50,8 @@
                             </span>
                         </span>
                         <span class="completedDate" ng-if="key==='completedDate'&&row[key]!==null">
-                            <span class="data-label">{{'aip.common.text.date'|i18n_aip}} {{row['status']}} {{'aip.common.text.colon'|i18n_aip}}</span>
+                            <span class="data-label" ng-if="row['status']==='Completed'">{{'aip.common.text.date.completed'|i18n_aip}}</span>
+                            <span class="data-label" ng-if="row['status']==='Rejected'">{{'aip.common.text.date.rejected'|i18n_aip}}</span>
                             {{row[key]}}</span>
                         <aip-readmore class="aipReadmore" ng-if="key==='description'">{{row[key]}}</aip-readmore>
                     </div>
