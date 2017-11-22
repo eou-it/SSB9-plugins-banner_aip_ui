@@ -1375,7 +1375,7 @@ ol.selected-group > li > button {
   background-color: #c7c69f;
   border: 1px solid #c7c69f; }
 
-.statusstatusError {
+.statusError {
   background-color: #FFFF00;
   border: 1px solid #CCCC00; }
 
