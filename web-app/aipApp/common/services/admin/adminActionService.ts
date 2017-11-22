@@ -310,8 +310,8 @@ module AIP {
         }
         savePostActionItem(postActionItem,selected,modalResult,selectedPopulation,postNow,regeneratePopulation) {
             var params = {
-                name: postActionItem.name,
-                postGroupId: selected.groupId,
+                postingName: postActionItem.name,
+                postingActionItemGroupId: selected.groupId,
                 actionItemIds: modalResult,
                 populationId: selectedPopulation.id,
                 displayStartDate:postActionItem.startDate,

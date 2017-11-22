@@ -1,6 +1,9 @@
 /*******************************************************************************
 Copyright 2017 Ellucian Company L.P. and its affiliates.
 ********************************************************************************/
+/*********************************************************************************
+ Copyright 2017 Ellucian Company L.P. and its affiliates.
+ **********************************************************************************/
 aip-list .aip-list-container {
   border: none;
   box-shadow: none; }
@@ -998,6 +1001,9 @@ ol.selected-group > li > button {
   color: #131212; }
 .actionItemAddContainer .placeholderDisplay > span {
   display: block; }
+.actionItemAddContainer .displayInstruction {
+  font-size: 13px;
+  width: 25%; }
 
 .aip-modal .modal-dialog .modal-header .row.blockProcess {
   padding: 16px; }
@@ -1369,7 +1375,7 @@ ol.selected-group > li > button {
   background-color: #c7c69f;
   border: 1px solid #c7c69f; }
 
-.statusstatusError {
+.statusError {
   background-color: #FFFF00;
   border: 1px solid #CCCC00; }
 
