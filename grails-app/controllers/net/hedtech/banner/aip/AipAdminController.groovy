@@ -23,6 +23,8 @@ class AipAdminController {
 
     def actionItemReadOnlyService
 
+    def actionItemReadOnlyCompositeService
+
     def actionItemTemplateService
 
     def actionItemContentService
@@ -105,34 +107,30 @@ class AipAdminController {
                         sortAscending: params.ascending ? params.ascending.toBoolean() : false,
                         max          : params.max.toInteger(),
                         offset       : params.offset ? params.offset.toInteger() : 0]
-        def results = actionItemReadOnlyService.listActionItemsPageSort( paramObj )
+        def results = actionItemReadOnlyCompositeService.listActionItemsPageSort( paramObj )
         render results as JSON
     }
 
 
-    def openActionItem() {
-        /* //TODO: determine access in later US
-        if (!hasAccess( 'read' )) {
-            response.sendError( 403 )
-            return
-        }
-        */
-        def actionItemId = params.actionItemId;
+    def deleteActionItem() {
+        def map = request.JSON
+        def result = actionItemCompositeService.deleteActionItem( map.actionItemId )
+        render result as JSON
+    }
 
+
+    def openActionItem() {
+        def actionItemId = params.actionItemId
         if (!actionItemId) {
             response.sendError( 403 )
             return
         }
-
         def success = false
         def errors = []
-
         ActionItemReadOnly actionItem = actionItemReadOnlyService.getActionItemROById( actionItemId.toInteger() )
-
         if (actionItem) {
             success = true
         }
-
         def model = [
                 success   : success,
                 errors    : errors,
@@ -161,7 +159,6 @@ class AipAdminController {
                         actionItemContent      : actionItem?.actionItemContent
                 ]
         ]
-
         render model as JSON
     }
 
