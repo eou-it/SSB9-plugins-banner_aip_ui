@@ -247,6 +247,9 @@ class AipAdminController {
 
         def aipUser = AipControllerUtils.getPersonForAip( params, user.pidm )
         ActionItemContent aic = actionItemContentService.listActionItemContentById( actionItemId )
+        if (!aic) {
+            aic = new ActionItemContent()
+        }
         aic.actionItemId = actionItemId
         aic.actionItemTemplateId = templateId
         aic.text = actionItemDetailText
