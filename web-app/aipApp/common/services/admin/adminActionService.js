@@ -105,6 +105,14 @@ var AIP;
             });
             return request;
         };
+        AdminActionService.prototype.deleteStatus = function (status) {
+            var request = this.$http({
+                method: "POST",
+                url: this.ENDPOINT.admin.deleteActionItem,
+                data: status
+            });
+            return request;
+        };
         AdminActionService.prototype.savePostActionItem = function (postActionItem, selected, modalResult, selectedPopulation, postNow, regeneratePopulation) {
             var params = {
                 postingName: postActionItem.name,

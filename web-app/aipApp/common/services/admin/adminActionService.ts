@@ -308,6 +308,14 @@ module AIP {
             });
             return request;
         }
+        deleteStatus (status:{actionItemId:number}) {
+            var request = this.$http({
+                method: "POST",
+                url: this.ENDPOINT.admin.deleteActionItem,
+                data: status
+            });
+            return request;
+        }
         savePostActionItem(postActionItem,selected,modalResult,selectedPopulation,postNow,regeneratePopulation) {
             var params = {
                 postingName: postActionItem.name,
