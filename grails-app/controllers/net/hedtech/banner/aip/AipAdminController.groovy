@@ -109,6 +109,15 @@ class AipAdminController {
         render results as JSON
     }
 
+    /**
+     * Delete a Group
+     * @return
+     */
+    def deleteGroup() {
+        def result = actionItemGroupCompositeService.deleteGroup( request.JSON )
+        render result as JSON
+    }
+
 
     def openActionItem() {
         /* //TODO: determine access in later US
