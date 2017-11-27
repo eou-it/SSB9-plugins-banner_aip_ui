@@ -21,30 +21,32 @@ class AipController {
         render( model: model, view: "index" )
     }
 
-
+    /**
+     * Informed list
+     * @return
+     */
     def informedList() {
         def model = [fragment: "/informedList"]
         render( model: model, view: "index" )
     }
 
-
+    /**
+     * Admin landing page
+     * @return
+     */
     def admin() {
         def model = [fragment: "/landing"]
         render( model: model, view: "index" )
     }
 
-
+    /**
+     * Logs out
+     * @return
+     */
     def logout() {
         redirect( url: "/logout" )
     }
-    // Check if user has pending action items or not.
-    def checkActionItem() {
-        def model = [:]
-        //TODO: get user's pending action items (service call), if exist, then return true
-        model.isActionItem = true;
-        render model as JSON;
-    }
-
+    
     /**
      * List action items
      * @return
