@@ -120,6 +120,14 @@ var AIP;
             });
             return deferred.promise;
         };
+        AdminGroupService.prototype.deleteGroup = function (status) {
+            var request = this.$http({
+                method: "POST",
+                url: this.ENDPOINT.admin.deleteGroup,
+                data: status
+            });
+            return request;
+        };
         AdminGroupService.prototype.getAssignedActionItemInGroup = function (groupId) {
             var request = this.$http({
                 method: "GET",
@@ -157,9 +165,9 @@ var AIP;
             });
             return request;
         };
-        AdminGroupService.$inject = ["$http", "$q", "$filter", "ENDPOINT", "$sce"];
         return AdminGroupService;
     }());
+    AdminGroupService.$inject = ["$http", "$q", "$filter", "ENDPOINT", "$sce"];
     AIP.AdminGroupService = AdminGroupService;
 })(AIP || (AIP = {}));
 register("bannerAIP").service("AdminGroupService", AIP.AdminGroupService);

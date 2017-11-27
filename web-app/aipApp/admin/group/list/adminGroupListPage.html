@@ -46,9 +46,16 @@ Copyright 2017 Ellucian Company L.P. and its affiliates.
                         <!--<span class="offscreen"></span>-->
                     <!--</div>-->
 
-                    <!--<div  class="icon icon-delete-CO" ng-click="vm.delete(row.id)" title="{{'aip.common.delete.group.jaws'|i18n_aip}}">-->
-                        <!--<span class="offscreen">{{'aip.common.delete.group.jaws'|i18n_aip}}</span>-->
-                    <!--</div>-->
+                    <div>
+                        <div  ng-if="row.deletable == false" class="icon icon-delete-CO" ng-click="vm.deleteBlock(row.cantDeleteMessage)" title="{{'aip.common.delete.group.jaws'|i18n_aip}}">
+                            <span class="offscreen">{{'aip.common.delete.group.jaws'|i18n_aip}}</span>
+                        </div>
+
+                        <div  ng-if="row.deletable == true" class="icon icon-delete-CO" ng-click="vm.deleteUnblock(row.groupId)" title="{{'aip.common.delete.group.jaws'|i18n_aip}}">
+                            <span class="offscreen">{{'aip.common.delete.group.jaws'|i18n_aip}}</span>
+                        </div>
+
+                    </div>
                 </div>
 
             </xe-cell-markup>
