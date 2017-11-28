@@ -186,6 +186,7 @@ var bannerAIPApp = angular.module("bannerAIP", [
             saveActionItemTemplate: aipAppAbsPath + "aipAdmin/updateActionItemDetailWithTemplate",
             statusSave: aipAppAbsPath + "aipAdmin/statusSave",
             removeStatus:aipAppAbsPath + "aipAdmin/removeStatus",
+            deleteActionItem:aipAppAbsPath + "aipAdmin/deleteActionItem",
             deleteGroup:aipAppAbsPath + "aipAdmin/deleteGroup",
             rulesByActionItem: aipAppAbsPath + "aipAdmin/actionItemStatusRulesByActionItemId",
             updateActionItemStatusRule: aipAppAbsPath + "aipAdmin/updateActionItemStatusRule",

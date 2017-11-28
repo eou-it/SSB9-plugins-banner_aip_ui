@@ -22,6 +22,7 @@ module AIP {
         $inject = ["$scope", "$state", "$window", "$filter", "$q", "ENDPOINT", "PAGINATIONCONFIG",
             "AdminActionService"];
         $state;
+        $scope;
         $filter;
         $q: ng.IQService;
         endPoint;
@@ -38,6 +39,7 @@ module AIP {
         constructor($scope: IActionListPageCtrlScope, $state, $window, $filter, $q, ENDPOINT, PAGINATIONCONFIG,
             AdminActionService: AIP.AdminActionService) {
             $scope.vm = this;
+            this.$scope = $scope;
             this.$state = $state;
             this.$filter = $filter;
             this.$q = $q;
@@ -177,9 +179,58 @@ module AIP {
             // this.actionListService.enableActionItemOpen(data.id);
             // this.$state.params.actionid = data.id;
         }
-        refreshGrid() {
+
+        deleteBlock(cantDeleteMessage) {
+            var n = new Notification({
+                message: cantDeleteMessage,
+                type: "error",
+                flash: true
+            });
+            notifications.addNotification(n);
+        }
+
+        deleteUnblock(map, name, $scope) {
+            var n = new Notification({
+                message: this.$filter("i18n_aip")("aip.common.action.item.action.delete.warning"),
+                type: "warning",
+            });
+            var actionService = this.actionListService;
+            var keyValue = {
+                actionItemId: map
+            };
+
+            var refreshGrid = this.$scope;
+            n.addPromptAction(this.$filter("i18n_aip")("aip.common.text.no"), function () {
+                notifications.remove(n);
+            })
+            n.addPromptAction(this.$filter("i18n_aip")("aip.common.text.yes"), function () {
+                actionService.deleteStatus(keyValue).then((response) => {
+                    if (response.data.success) {
+                        refreshGrid.refreshGrid(true);
+                        var n1 = new Notification({
+                            message: response.data.message,
+                            type: "success",
+                            flash: true
+                        });
+                        notifications.remove(n);
+                        notifications.addNotification(n1);
+                    }
+                    else {
+                        var n2 = new Notification({
+                            message: response.data.message,
+                            type: "error",
+                            flash: true
+                        });
+                        notifications.remove(n, n1);
+                        notifications.addNotification(n2);
+                    }
+
+                });
+            });
+            notifications.addNotification(n);
 
         }
+
         goAddPage() {
             this.$state.go("admin-action-add");
         }

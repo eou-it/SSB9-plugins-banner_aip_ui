@@ -1,6 +1,6 @@
 /*******************************************************************************
  Copyright 2017 Ellucian Company L.P. and its affiliates.
- ********************************************************************************/
+ *******************************************************************************/
 ///<reference path="../../../../typings/tsd.d.ts"/>
 var AIP;
 (function (AIP) {
@@ -102,6 +102,14 @@ var AIP;
             var request = this.$http({
                 method: "GET",
                 url: url
+            });
+            return request;
+        };
+        AdminActionService.prototype.deleteStatus = function (status) {
+            var request = this.$http({
+                method: "POST",
+                url: this.ENDPOINT.admin.deleteActionItem,
+                data: status
             });
             return request;
         };
