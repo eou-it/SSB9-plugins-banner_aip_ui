@@ -190,8 +190,6 @@ var AIP;
             });
             notifications.addNotification(n);
         };
-        AdminActionListPageCtrl.prototype.refreshGrid = function () {
-        };
         AdminActionListPageCtrl.prototype.goAddPage = function () {
             this.$state.go("admin-action-add");
         };

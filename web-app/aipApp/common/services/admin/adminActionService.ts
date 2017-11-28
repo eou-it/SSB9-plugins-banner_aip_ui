@@ -1,6 +1,6 @@
 /*******************************************************************************
  Copyright 2017 Ellucian Company L.P. and its affiliates.
- ********************************************************************************/
+ *******************************************************************************/
 ///<reference path="../../../../typings/tsd.d.ts"/>
 
 declare var register;
@@ -308,7 +308,7 @@ module AIP {
             });
             return request;
         }
-        deleteStatus (status:{actionItemId:number}) {
+        deleteStatus(status:{actionItemId:number}) {
             var request = this.$http({
                 method: "POST",
                 url: this.ENDPOINT.admin.deleteActionItem,
