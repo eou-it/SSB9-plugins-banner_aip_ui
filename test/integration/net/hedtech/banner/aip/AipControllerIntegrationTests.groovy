@@ -98,10 +98,10 @@ class AipControllerIntegrationTests extends BaseIntegrationTestCase {
         def auth = selfServiceBannerAuthenticationProvider.authenticate(
                 new UsernamePasswordAuthenticationToken( person.bannerId, '111111' ) )
         SecurityContextHolder.getContext().setAuthentication( auth )
-        controller.checkActionItem()
-        assertEquals 200, controller.response.status
-
-        def answer = JSON.parse( controller.response.contentAsString )
+        // endpoint was removed. We will re-enable for blocking User Story
+        //controller.checkActionItems()
+        //assertEquals 200, controller.response.status
+        //def answer = JSON.parse( controller.response.contentAsString )
         //assertEquals( 1, answer.items.size() )
     }
 
@@ -117,6 +117,7 @@ class AipControllerIntegrationTests extends BaseIntegrationTestCase {
         assertEquals 200, controller.response.status
 
         def answer = JSON.parse( controller.response.contentAsString )
+        // FIXME: test isn't really testing anything
         //assertEquals( 1, answer.items.size() )
     }
 
