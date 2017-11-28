@@ -11,6 +11,7 @@ var AIP;
                 "AdminGroupService"];
             $scope.vm = this;
             this.$state = $state;
+            this.$scope = $scope;
             this.$filter = $filter;
             this.$q = $q;
             this.endPoint = ENDPOINT; //ENDPOINT.admin.actionList
@@ -166,6 +167,52 @@ var AIP;
             // this.selectedRecord = data;
             // this.adminGroupService.enableGroupOpen(data.id);
             // this.$state.params.grp = data.id;
+        };
+        AdminGroupListPageCtrl.prototype.deleteBlock = function (cantDeleteMessage) {
+            var n = new Notification({
+                message: cantDeleteMessage,
+                type: "error",
+                flash: true
+            });
+            notifications.addNotification(n);
+        };
+        AdminGroupListPageCtrl.prototype.deleteUnblock = function (map, name, $scope) {
+            var n = new Notification({
+                message: this.$filter("i18n_aip")("aip.admin.group.delete.warning"),
+                type: "warning",
+            });
+            var actionService = this.adminGroupService;
+            var keyValue = {
+                groupId: map
+            };
+            var refreshGrid = this.$scope;
+            n.addPromptAction(this.$filter("i18n_aip")("aip.common.text.no"), function () {
+                notifications.remove(n);
+            });
+            n.addPromptAction(this.$filter("i18n_aip")("aip.common.text.yes"), function () {
+                actionService.deleteGroup(keyValue).then(function (response) {
+                    if (response.data.success) {
+                        refreshGrid.refreshGrid(true);
+                        var n1 = new Notification({
+                            message: response.data.message,
+                            type: "success",
+                            flash: true
+                        });
+                        notifications.remove(n);
+                        notifications.addNotification(n1);
+                    }
+                    else {
+                        var n2 = new Notification({
+                            message: response.data.message,
+                            type: "error",
+                            flash: true
+                        });
+                        notifications.remove(n, n1);
+                        notifications.addNotification(n2);
+                    }
+                });
+            });
+            notifications.addNotification(n);
         };
         AdminGroupListPageCtrl.prototype.refreshGrid = function () {
         };

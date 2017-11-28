@@ -206,6 +206,15 @@ module AIP {
             return deferred.promise;
         }
 
+        deleteGroup(status:{groupId:number}) {
+            var request = this.$http({
+                method: "POST",
+                url: this.ENDPOINT.admin.deleteGroup,
+                data: status
+            });
+            return request;
+        }
+
         getAssignedActionItemInGroup (groupId) {
             var request = this.$http({
                 method: "GET",
