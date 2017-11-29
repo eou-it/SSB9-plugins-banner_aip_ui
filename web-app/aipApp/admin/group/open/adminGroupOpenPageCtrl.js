@@ -105,6 +105,7 @@ var AIP;
             this.editMode = false;
             this.assignedActionItems = [];
             this.allActionItems = [];
+            this.selected = [];
             var deferred = this.$q.defer();
             var promises = [];
             this.spinnerService.showSpinner(true);
@@ -279,6 +280,7 @@ var AIP;
         };
         AdminGroupOpenPageCtrl.prototype.cancel = function () {
             this.editMode = false;
+            this.saving = false;
             this.openContentPanel();
         };
         AdminGroupOpenPageCtrl.prototype.isEqual = function (item1, item2) {

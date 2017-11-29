@@ -137,6 +137,7 @@ module AIP {
             this.editMode = false;
             this.assignedActionItems = [];
             this.allActionItems = [];
+            this.selected = [];
             var deferred = this.$q.defer();
             var promises = [];
             this.spinnerService.showSpinner( true );
@@ -318,6 +319,7 @@ module AIP {
         }
         cancel() {
             this.editMode = false;
+            this.saving = false;
             this.openContentPanel()
         }
         isEqual(item1, item2) {
