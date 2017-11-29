@@ -170,6 +170,12 @@ label {
               &.Fixed {
                 position: fixed;
               }
+              #PBContainer {
+                .btn {
+                  border: 1px solid;
+                  border-color: #d8d8d8 #d1d1d1 #babac4 #d1d1d1;
+                }
+              }
             }
           }
         }

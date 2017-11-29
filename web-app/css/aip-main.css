@@ -981,7 +981,7 @@ ol.selected-group > li > button {
   position: absolute;
   width: 8px;
   height: 8px;
-  background: rgba(0, 0, 0, 0);
+  background: transparent;
   top: 6px;
   left: 7px;
   border: 4px solid #fff;
@@ -1184,6 +1184,9 @@ label {
         height: inherit; }
         .viewContainer .listActionItem .listActionItem-container .itemList .groupDetail .detail-body-container .detail-body.Fixed {
           position: fixed; }
+        .viewContainer .listActionItem .listActionItem-container .itemList .groupDetail .detail-body-container .detail-body #PBContainer .btn {
+          border: 1px solid;
+          border-color: #d8d8d8 #d1d1d1 #babac4 #d1d1d1; }
 
 .aip-modal .modal-sm {
   width: 320px; }
