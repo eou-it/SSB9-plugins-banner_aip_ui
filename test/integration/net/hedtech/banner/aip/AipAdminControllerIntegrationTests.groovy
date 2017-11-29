@@ -100,7 +100,7 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
     }
 
     // using student. Fail on security?
-    @Test
+    // @Test Fix when/if updates get supported
     void testAddFolderEntryPointAsStudent() {
         def person = PersonUtility.getPerson( "CSRSTU002" )
         assertNotNull person
@@ -117,7 +117,7 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
     }
 
 
-    @Test
+    // @Test endpoint removed. Is this something we support of have a future story for?
     void testAddFolderEntryPointAsAdmin() {
         def person = PersonUtility.getPerson( "BCMADMIN" )
         assertNotNull person
@@ -411,7 +411,8 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
         controller.request.method = "POST"
         controller.request.json = requestObj
         controller.addActionItem()
-        assertEquals 403, controller.response.status
+        def answer = JSON.parse( controller.response.contentAsString )
+        assertEquals false, answer.success
     }
 
 
@@ -643,7 +644,7 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
         assertEquals 200, controller.response.status
         def answer = JSON.parse( controller.response.contentAsString )
         assertEquals( false, answer.success )
-        assertTrue( answer.group.groupId.equals( null ) )
+        assertTrue( answer.group.equals( null ) )
     }
 
 
@@ -839,7 +840,9 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
         controller.actionItemStatusList()
         def answer = JSON.parse( controller.response.contentAsString )
         assertEquals( statuses.size(), answer.size() )
-        assertEquals( statuses[0].id, answer[0].actionItemStatusId )
+        // same order
+        assertEquals( statuses[0].id, answer[0].id )
+        assertEquals( statuses[1].id, answer[1].id )
     }
 
 
@@ -952,7 +955,7 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
     }
 
 
-    @Test
+    // @Test Fix when/if updates get supported
     void testUpdateActionItemStatusRuleOrderChange() {
         def admin = PersonUtility.getPerson( "BCMADMIN" ) // role: admin
         assertNotNull admin
@@ -1016,7 +1019,7 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
     }
 
 
-    @Test
+    // @Test Fix when/if updates get supported
     void testUpdateActionItemStatusRuleRemoveRule() {
         def admin = PersonUtility.getPerson( "BCMADMIN" ) // role: admin
         assertNotNull admin
@@ -1063,7 +1066,7 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
     }
 
 
-    @Test
+    // @Test Fix when/if updates get supported
     void testUpdateActionItemStatusRuleAddRule() {
         def admin = PersonUtility.getPerson( "BCMADMIN" ) // role: admin
         assertNotNull admin
