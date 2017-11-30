@@ -254,7 +254,6 @@ class AipAdminController {
             return
         }
 
-        def aipUser = AipControllerUtils.getPersonForAip( params, user.pidm )
         ActionItemContent aic = actionItemContentService.listActionItemContentById( actionItemId )
         if (!aic) {
             aic = new ActionItemContent()
@@ -350,9 +349,6 @@ class AipAdminController {
         def message
 
         def inputRules = jsonObj.rules
-
-        def aipUser = AipControllerUtils.getPersonForAip( params, user.pidm )
-
 
         List<ActionItemStatusRule> currentRules = actionItemStatusRuleService.getActionItemStatusRuleByActionItemId( jsonObj.actionItemId )
 
@@ -455,7 +451,6 @@ value: value.aipBlock
                 }
                 success = true
             } catch (Exception e) {
-                println e.defaultMessage
                 LOGGER.error( e.getMessage() )
             }
         } else {
@@ -475,7 +470,6 @@ value: value.aipBlock
 
                 success = true
             } catch (Exception e) {
-                println e.defaultMessage
                 LOGGER.error( e.getMessage() )
             }
         }
