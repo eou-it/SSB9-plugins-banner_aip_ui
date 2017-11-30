@@ -13,7 +13,6 @@ import org.junit.Test
  * BCMControllerIntegrationTests.
  */
 class BCMControllerIntegrationTests extends BaseIntegrationTestCase {
-
     @Before
     void setUp() {
         formContext = ['GUAGMNU']
@@ -38,4 +37,17 @@ class BCMControllerIntegrationTests extends BaseIntegrationTestCase {
         def data = JSON.parse( actualJSON )
         assertNotNull data
     }
+
+
+    @Test
+    void testBCMLocationNoSessionValue() {
+        controller.request.contentType = "text/json"
+        controller.session['BCM_LOCATION'] = 'http:/test'
+        controller.BCMLocation
+        assertEquals 200, controller.response.status
+        String actualJSON = controller.response.contentAsString
+        def data = JSON.parse( actualJSON )
+        assertNotNull data
+    }
+
 }

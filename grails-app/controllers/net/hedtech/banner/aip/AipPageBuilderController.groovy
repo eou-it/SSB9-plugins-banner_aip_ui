@@ -12,7 +12,7 @@ class AipPageBuilderController {
      * Fetch Page Script
      * @return
      */
-    def pageScript = {
+    def pageScript() {
         def compiledJSCode = aipPageBuilderCompositeService.pageScript( params.id )
         render( text: compiledJSCode, contentType: "text/javascript" )
     }
@@ -21,7 +21,7 @@ class AipPageBuilderController {
      * Fetch Page
      * @return
      */
-    def page = {
+    def page() {
         def model = aipPageBuilderCompositeService.page( params.id )
         render model as JSON
     }

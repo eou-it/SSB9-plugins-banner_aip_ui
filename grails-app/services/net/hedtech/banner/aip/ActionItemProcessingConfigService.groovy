@@ -9,9 +9,9 @@ class ActionItemProcessingConfigService {
     def userActionItemReadOnlyService
 
     /**
-	* Check if Action Item present for logged in user
-    */
-    public def isActionItemPresentForUser() {
+     * Check if Action Item present for logged in user
+     */
+    def isActionItemPresentForUser() {
         userActionItemReadOnlyService.checkIfActionItemPresent( springSecurityService.getAuthentication()?.user.pidm )
     }
 }

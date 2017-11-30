@@ -3,6 +3,7 @@
  **********************************************************************************/
 package net.hedtech.banner.aip
 
+import grails.converters.JSON
 import net.hedtech.banner.testing.BaseIntegrationTestCase
 import org.junit.After
 import org.junit.Before
@@ -32,7 +33,8 @@ class AipPageBuilderControllerIntegrationTests extends BaseIntegrationTestCase {
     @Test
     void pageScript() {
         controller.request.contentType = "text/json"
-        controller.pageScript
+        controller.params.id = "AIPMasterTemplateSystemRequired"
+        controller.pageScript()
         assertEquals 200, controller.response.status
     }
 
@@ -40,7 +42,11 @@ class AipPageBuilderControllerIntegrationTests extends BaseIntegrationTestCase {
     @Test
     void page() {
         controller.request.contentType = "text/json"
-        controller.page
+        controller.params.id = "AIPMasterTemplateSystemRequired"
+        controller.page()
         assertEquals 200, controller.response.status
+        String actualJSON = controller.response.contentAsString
+        def data = JSON.parse( actualJSON )
+        assertNotNull data
     }
 }
