@@ -10,7 +10,7 @@ import org.junit.Before
 import org.junit.Test
 
 /**
- * AipTagLibIntegrationTests.
+ * AipPageBuilderControllerIntegrationTests.
  */
 class AipPageBuilderControllerIntegrationTests extends BaseIntegrationTestCase {
 
