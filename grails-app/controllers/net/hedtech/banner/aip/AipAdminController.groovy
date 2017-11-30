@@ -430,7 +430,7 @@ class AipAdminController {
     }
 
 
-    def blockedProcessList() {
+    /*def blockedProcessList() {//TODO Enable this and impleted as per requirement
 
         def success = false
         def message = ""
@@ -479,10 +479,10 @@ value: value.aipBlock
                 blockedProcesses: blockedList
         ]
         render model as JSON
-    }
+    }*/
 
 
-    def updateBlockedProcessItems() {
+    /*def updateBlockedProcessItems() {//TODO Enable this and impleted as per requirement
         def jsonObj = request.JSON
 
         def user = SecurityContextHolder?.context?.authentication?.principal
@@ -523,7 +523,7 @@ value: value.aipBlock
 
         render model as JSON
 
-    }
+    }*/
 
 
     def getAssignedActionItemInGroup() {
