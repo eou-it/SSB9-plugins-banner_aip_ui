@@ -6,7 +6,6 @@ grails.project.class.dir = "target/classes"
 grails.project.test.class.dir = "target/test-classes"
 grails.project.test.reports.dir = "target/test-reports"
 
-grails.plugin.location.'banner-sspb'                        = "../banner-sspb.git"
 grails.plugin.location.'banner-aip'                         = "../banner_aip.git"
 grails.plugin.location.'banner-ui-ss'                       = "../banner_ui_ss.git"
 grails.plugin.location.'i18n_core'                          = "../i18n_core.git"
