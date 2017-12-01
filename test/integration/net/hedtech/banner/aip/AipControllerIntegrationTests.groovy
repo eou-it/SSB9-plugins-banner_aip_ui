@@ -77,7 +77,7 @@ class AipControllerIntegrationTests extends BaseIntegrationTestCase {
         def answer = JSON.parse( controller.response.contentAsString )
         //TODO:: for now, it return one hardcoded group. When group assign done, fix this
         assertEquals( 1, answer.groups.size() )
-        assertTrue(answer.groups.items.size()>0)
+        assertTrue( answer.groups.items.size() > 0 )
     }
 
 
@@ -122,17 +122,34 @@ class AipControllerIntegrationTests extends BaseIntegrationTestCase {
         controller.actionItems()
         assertEquals 200, controller.response.status
         def answer = JSON.parse( controller.response.contentAsString )
-        assertEquals(0, answer.groups.size() )
+        assertEquals( 0, answer.groups.size() )
     }
 
 
-    //@Test //trust that endpoint can not be reached?
+    @Test
     void testFetchActionItemsNotLoggedIn() {
         def person = PersonUtility.getPerson( "CSRSTU002" )
+        def auth = selfServiceBannerAuthenticationProvider.authenticate(
+                new UsernamePasswordAuthenticationToken( person.bannerId, '111111' ) )
+        SecurityContextHolder.getContext().setAuthentication( auth )
         assertNotNull person
         controller.actionItems()
-        assertEquals 403, controller.response.status
+        assertEquals 200, controller.response.status
     }
+
+
+    @Test
+    void informedList() {
+        def person = PersonUtility.getPerson( "CSRSTU002" )
+        def auth = selfServiceBannerAuthenticationProvider.authenticate(
+                new UsernamePasswordAuthenticationToken( person.bannerId, '111111' ) )
+        SecurityContextHolder.getContext().setAuthentication( auth )
+        def result = controller.informedList()
+        assertEquals 200, controller.response.status
+        assertEquals( "/informedList", result.model.fragment )
+        assertEquals( "index", result.view )
+    }
+
 
     @Test
     void testLogout() {
@@ -144,6 +161,7 @@ class AipControllerIntegrationTests extends BaseIntegrationTestCase {
         controller.logout()
         assertEquals 200, controller.response.status
     }
+
 
     @Test
     void testDetailInfo() {
