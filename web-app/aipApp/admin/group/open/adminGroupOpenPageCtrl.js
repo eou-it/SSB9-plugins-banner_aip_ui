@@ -119,7 +119,16 @@ var AIP;
                 _this.assignedActionItems = [];
                 console.log(err);
             }));
-            promises.push(this.adminGroupService.getActionItemListForselect()
+            this.$q.all(promises).then(function () {
+                _this.spinnerService.showSpinner(false);
+                deferred.resolve(_this.openPanel("content"));
+            });
+            return deferred.promise;
+        };
+        AdminGroupOpenPageCtrl.prototype.edit = function () {
+            var _this = this;
+            console.log("edit");
+            this.adminGroupService.getActionItemListForselect()
                 .then(function (response) {
                 _this.allActionItems = response;
                 _this.assignedActionItems.forEach(function (item) {
@@ -131,18 +140,10 @@ var AIP;
                     })[0];
                 });
                 _this.originalAssign = angular.copy(_this.selected);
+                _this.editMode = true;
             }, function (err) {
                 console.log(err);
-            }));
-            this.$q.all(promises).then(function () {
-                _this.spinnerService.showSpinner(false);
-                deferred.resolve(_this.openPanel("content"));
             });
-            return deferred.promise;
-        };
-        AdminGroupOpenPageCtrl.prototype.edit = function () {
-            console.log("edit");
-            this.editMode = true;
         };
         AdminGroupOpenPageCtrl.prototype.handleNotification = function (noti) {
             var _this = this;

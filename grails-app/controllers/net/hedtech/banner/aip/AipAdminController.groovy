@@ -539,7 +539,8 @@ value: value.aipBlock
                     actionItemFolderName : it.actionItemFolderName,
                     actionItemTitle      : it.actionItemTitle,
                     actionItemDescription: it.actionItemDescription,
-                    actionItemFolderId   : it.actionItemFolderId
+                    actionItemFolderId   : it.actionItemFolderId,
+                    actionItemPostingIndicator: it.actionItemPostingIndicator
             ]
         }
         render resultMap as JSON
@@ -556,21 +557,7 @@ value: value.aipBlock
                     folderId               : actionItem.folderId,
                     folderName             : actionItem.folderName,
                     folderDesc             : actionItem.folderDesc,
-                    actionItemStatus       : actionItem.actionItemStatus ? MessageHelper.message( "aip.status.${actionItem.actionItemStatus.trim()}" ) : null,
-                    actionItemActivityDate : actionItem.actionItemActivityDate,
-                    actionItemUserId       : actionItem.actionItemUserId,
-                    actionItemContentUserId: actionItem.actionItemContentUserId,
-                    actionItemCreatorId    : actionItem.actionItemCreatorId,
-                    actionItemCreateDate   : actionItem.actionItemCreateDate,
-                    actionItemCompositeDate: actionItem.actionItemCompositeDate,
-                    actionItemLastUserId   : actionItem.actionItemLastUserId,
-                    actionItemVersion      : actionItem.actionItemVersion,
-                    actionItemTemplateId   : actionItem.actionItemTemplateId,
-                    actionItemTemplateName : actionItem.actionItemTemplateName,
-                    actionItemPageName     : actionItem.actionItemPageName,
-                    actionItemContentId    : actionItem.actionItemContentId,
-                    actionItemContentDate  : actionItem.actionItemContentDate,
-                    actionItemContent      : actionItem.actionItemContent
+                    actionItemStatus       : actionItem.actionItemStatus ? MessageHelper.message( "aip.status.${actionItem.actionItemStatus.trim()}" ) : null
             ]
         }
         render resultMap as JSON
