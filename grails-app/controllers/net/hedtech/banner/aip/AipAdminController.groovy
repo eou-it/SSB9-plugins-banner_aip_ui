@@ -164,8 +164,7 @@ class AipAdminController {
                         actionItemPageName     : actionItem?.actionItemPageName,
                         actionItemContentId    : actionItem?.actionItemContentId,
                         actionItemContentDate  : actionItem?.actionItemContentDate,
-                        actionItemContent      : actionItem?.actionItemContentm,
-                        postInd                : actionItem.actionItemPostedStatus,
+                        actionItemContent      : actionItem?.actionItemContent
                 ]
         ]
         render model as JSON
