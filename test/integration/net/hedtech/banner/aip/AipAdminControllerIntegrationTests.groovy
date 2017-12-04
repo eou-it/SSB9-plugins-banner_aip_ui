@@ -1164,4 +1164,33 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
         def data = JSON.parse( ret )
         assertTrue data.find {it.actionItemName == 'Meet with Advisor'}.actionItemName == 'Meet with Advisor'
     }
+
+
+    @Test
+    void adminGroupStatus() {
+        controller.request.contentType = "text/json"
+        String inputString = actionItemJSON()
+        controller.request.json = inputString
+        controller.adminGroupStatus()
+        assertEquals 200, controller.response.status
+        def ret = controller.response.contentAsString
+        def data = JSON.parse( ret )
+        assertTrue data.find {it.value == 'Draft'}.value == 'Draft'
+    }
+
+
+    @Test
+    void getAssignedActionItemInGroup() {
+        controller.request.contentType = "text/json"
+        String inputString = actionItemJSON()
+        controller.request.json = inputString
+        controller.params.groupId = "'" + ActionItemGroup.findByName( 'Security, Police and Fire' ).id + "'"
+        controller.getAssignedActionItemInGroup()
+        assertEquals 200, controller.response.status
+        def ret = controller.response.contentAsString
+        def data = JSON.parse( ret )
+        assertTrue data.find {
+            it.actionItemName == 'Registration Process Training'
+        }.actionItemName == 'Registration Process Training'
+    }
 }
