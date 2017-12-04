@@ -52,7 +52,7 @@ class AipActionItemPostingControllerIntegrationTests extends BaseIntegrationTest
     }
 
 
-    def getCreatActionItemJSONWithoutName() {
+    def getCreateActionItemJSONWithoutName() {
         def dynamicData = getDynamicData()
         """{
                 "postingName":"",
@@ -90,7 +90,7 @@ class AipActionItemPostingControllerIntegrationTests extends BaseIntegrationTest
     @Test
     void addActionItemPostingFailedCase() {
         controller.request.contentType = "text/json"
-        String inputString = getCreatActionItemJSONWithoutName()
+        String inputString = getCreateActionItemJSONWithoutName()
         controller.request.json = inputString
         controller.addActionItemPosting()
         assertEquals 200, controller.response.status

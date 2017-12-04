@@ -4,7 +4,6 @@
 package net.hedtech.banner.aip
 
 import grails.converters.JSON
-import groovy.json.JsonSlurper
 import net.hedtech.banner.MessageUtility
 import net.hedtech.banner.exceptions.ApplicationException
 import net.hedtech.banner.i18n.MessageHelper
@@ -41,7 +40,7 @@ class AipAdminController {
 
     def actionItemStatusRuleReadOnlyService
 
-    def actionItemBlockedProcessService
+    //def actionItemBlockedProcessService
     def actionItemProcessingCommonService
     def actionItemGroupAssignReadOnlyService
 
@@ -165,7 +164,8 @@ class AipAdminController {
                         actionItemPageName     : actionItem?.actionItemPageName,
                         actionItemContentId    : actionItem?.actionItemContentId,
                         actionItemContentDate  : actionItem?.actionItemContentDate,
-                        actionItemContent      : actionItem?.actionItemContent
+                        actionItemContent      : actionItem?.actionItemContentm,
+                        postInd                : actionItem.actionItemPostedStatus,
                 ]
         ]
         render model as JSON
@@ -429,7 +429,6 @@ class AipAdminController {
         render model as JSON
     }
 
-
     /*def blockedProcessList() {//TODO Enable this and impleted as per requirement
 
         def success = false
@@ -480,7 +479,6 @@ value: value.aipBlock
         ]
         render model as JSON
     }*/
-
 
     /*def updateBlockedProcessItems() {//TODO Enable this and impleted as per requirement
         def jsonObj = request.JSON
@@ -545,69 +543,21 @@ value: value.aipBlock
         render resultMap as JSON
     }
 
-
+    /**
+     * get Action Items List for LOV
+     * @return
+     */
     def getActionItemsListForSelect() {
-        def results = actionItemReadOnlyService.listActionItemRO()
-        def resultMap = results?.collect {actionItem ->
-            [
-                    actionItemId           : actionItem.actionItemId,
-                    actionItemName         : actionItem.actionItemName,
-                    actionItemTitle        : actionItem.actionItemTitle,
-                    folderId               : actionItem.folderId,
-                    folderName             : actionItem.folderName,
-                    folderDesc             : actionItem.folderDesc,
-                    actionItemStatus       : actionItem.actionItemStatus ? MessageHelper.message( "aip.status.${actionItem.actionItemStatus.trim()}" ) : null,
-                    actionItemActivityDate : actionItem.actionItemActivityDate,
-                    actionItemUserId       : actionItem.actionItemUserId,
-                    actionItemContentUserId: actionItem.actionItemContentUserId,
-                    actionItemCreatorId    : actionItem.actionItemCreatorId,
-                    actionItemCreateDate   : actionItem.actionItemCreateDate,
-                    actionItemCompositeDate: actionItem.actionItemCompositeDate,
-                    actionItemLastUserId   : actionItem.actionItemLastUserId,
-                    actionItemVersion      : actionItem.actionItemVersion,
-                    actionItemTemplateId   : actionItem.actionItemTemplateId,
-                    actionItemTemplateName : actionItem.actionItemTemplateName,
-                    actionItemPageName     : actionItem.actionItemPageName,
-                    actionItemContentId    : actionItem.actionItemContentId,
-                    actionItemContentDate  : actionItem.actionItemContentDate,
-                    actionItemContent      : actionItem.actionItemContent
-            ]
-        }
-        render resultMap as JSON
+        def results = actionItemCompositeService.getActionItemsListForSelect()
+        render results as JSON
     }
 
-
+    /**
+     * Update Action item Group Assignment
+     * @return
+     */
     def updateActionItemGroupAssignment() {
-        def model
-        try {
-            List<ActionItemGroupAssignReadOnly> assignActionItem = actionItemGroupCompositeService.updateActionItemGroupAssignment( request.JSON )
-            def resultMap
-
-            if (assignActionItem) {
-                resultMap = assignActionItem?.collect {it ->
-                    [
-                            id                  : it.id,
-                            actionItemId        : it.actionItemId,
-                            sequenceNumber      : it.sequenceNumber,
-                            actionItemName      : it.actionItemName,
-                            actionItemStatus    : it.actionItemStatus ? MessageHelper.message( "aip.status.${it.actionItemStatus.trim()}" ) : null,
-                            actionItemFolderName: it.actionItemFolderName,
-                            actionItemTitle     : it.actionItemTitle,
-                            actionItemFolderId  : it.actionItemFolderId
-                    ]
-                }
-            }
-            model = [
-                    success              : true,
-                    actionItemGroupAssign: resultMap
-            ]
-        } catch (ApplicationException ae) {
-            model = [
-                    success              : false,
-                    message              : MessageUtility.message( ae.getDefaultMessage() ),
-                    actionItemGroupAssign: ""
-            ]
-        }
+        def model = actionItemGroupCompositeService.updateActionItemGroupAssignment( request.JSON )
         render model as JSON
     }
 
