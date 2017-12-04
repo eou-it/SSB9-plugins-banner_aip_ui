@@ -1184,7 +1184,7 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
         controller.request.contentType = "text/json"
         String inputString = actionItemJSON()
         controller.request.json = inputString
-        controller.params.groupId = "'" + ActionItemGroup.findByName( 'Security, Police and Fire' ).id + "'"
+        controller.params.groupId = "${ActionItemGroup.findByName( 'Security, Police and Fire' ).id}"
         controller.getAssignedActionItemInGroup()
         assertEquals 200, controller.response.status
         def ret = controller.response.contentAsString
