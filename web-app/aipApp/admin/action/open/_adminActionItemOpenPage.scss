@@ -74,6 +74,9 @@ $link-color: #275c8a;
                     color: $button-color;
                     border: none;
                   }
+                  .no-edit{float: right;
+                    color: $button-color;
+                    border: none;}
                 }
               }
               .actionItemContent {
