@@ -166,7 +166,7 @@ class AipAdminController {
                         actionItemContentId    : actionItem?.actionItemContentId,
                         actionItemContentDate  : actionItem?.actionItemContentDate,
                         actionItemContent      : actionItem?.actionItemContent,
-                        actionItemPostedStatus:actionItem.actionItemPostedStatus
+                        actionItemPostedStatus : actionItem.actionItemPostedStatus
                 ]
         ]
         render model as JSON
@@ -245,6 +245,7 @@ class AipAdminController {
         def templateId = jsonObj.templateId.toInteger()
         def actionItemId = jsonObj.actionItemId.toInteger()
         def actionItemDetailText = jsonObj.actionItemContent
+
         def user = SecurityContextHolder?.context?.authentication?.principal
         if (!user.pidm) {
             response.sendError( 403 )
@@ -254,7 +255,15 @@ class AipAdminController {
             response.sendError( 403 )
             return
         }
-
+        def result = actionItemCompositeService.validateEditActionItemContent( actionItemId )
+        if (!result.editable) {
+            def model = [
+                    success: false,
+                    errors : result.message
+            ]
+            render model as JSON
+            return
+        }
         ActionItemContent aic = actionItemContentService.listActionItemContentById( actionItemId )
         if (!aic) {
             aic = new ActionItemContent()
@@ -350,7 +359,15 @@ class AipAdminController {
         def message
 
         def inputRules = jsonObj.rules
-
+        def result = actionItemCompositeService.validateEditActionItemContent( jsonObj.actionItemId )
+        if (!result.editable) {
+            def model = [
+                    success: false,
+                    errors : result.message
+            ]
+            render model as JSON
+            return
+        }
         List<ActionItemStatusRule> currentRules = actionItemStatusRuleService.getActionItemStatusRuleByActionItemId( jsonObj.actionItemId )
 
         List<Long> newRuleIdList = inputRules.statusRuleId.toList()
@@ -430,7 +447,6 @@ class AipAdminController {
         render model as JSON
     }
 
-
     /*def blockedProcessList() {//TODO Enable this and impleted as per requirement
 
         def success = false
@@ -482,7 +498,6 @@ value: value.aipBlock
         render model as JSON
     }*/
 
-
     /*def updateBlockedProcessItems() {//TODO Enable this and impleted as per requirement
         def jsonObj = request.JSON
 
@@ -532,15 +547,15 @@ value: value.aipBlock
         def assignedActionItems = actionItemGroupAssignReadOnlyService.getAssignedActionItemsInGroup( groupId )
         def resultMap = assignedActionItems?.collect {it ->
             [
-                    id                   : it.id,
-                    actionItemId         : it.actionItemId,
-                    sequenceNumber       : it.sequenceNumber,
-                    actionItemName       : it.actionItemName,
-                    actionItemStatus     : it.actionItemStatus ? MessageHelper.message( "aip.status.${it.actionItemStatus.trim()}" ) : null,
-                    actionItemFolderName : it.actionItemFolderName,
-                    actionItemTitle      : it.actionItemTitle,
-                    actionItemDescription: it.actionItemDescription,
-                    actionItemFolderId   : it.actionItemFolderId,
+                    id                        : it.id,
+                    actionItemId              : it.actionItemId,
+                    sequenceNumber            : it.sequenceNumber,
+                    actionItemName            : it.actionItemName,
+                    actionItemStatus          : it.actionItemStatus ? MessageHelper.message( "aip.status.${it.actionItemStatus.trim()}" ) : null,
+                    actionItemFolderName      : it.actionItemFolderName,
+                    actionItemTitle           : it.actionItemTitle,
+                    actionItemDescription     : it.actionItemDescription,
+                    actionItemFolderId        : it.actionItemFolderId,
                     actionItemPostingIndicator: it.actionItemPostingIndicator
             ]
         }
@@ -552,13 +567,13 @@ value: value.aipBlock
         def results = actionItemReadOnlyService.listActionItemRO()
         def resultMap = results?.collect {actionItem ->
             [
-                    actionItemId           : actionItem.actionItemId,
-                    actionItemName         : actionItem.actionItemName,
-                    actionItemTitle        : actionItem.actionItemTitle,
-                    folderId               : actionItem.folderId,
-                    folderName             : actionItem.folderName,
-                    folderDesc             : actionItem.folderDesc,
-                    actionItemStatus       : actionItem.actionItemStatus ? MessageHelper.message( "aip.status.${actionItem.actionItemStatus.trim()}" ) : null
+                    actionItemId    : actionItem.actionItemId,
+                    actionItemName  : actionItem.actionItemName,
+                    actionItemTitle : actionItem.actionItemTitle,
+                    folderId        : actionItem.folderId,
+                    folderName      : actionItem.folderName,
+                    folderDesc      : actionItem.folderDesc,
+                    actionItemStatus: actionItem.actionItemStatus ? MessageHelper.message( "aip.status.${actionItem.actionItemStatus.trim()}" ) : null
             ]
         }
         render resultMap as JSON

@@ -316,6 +316,7 @@ var AIP;
                     return { success: true, type: "template", data: response.data.actionItem };
                 }
                 else {
+                    _this.saveErrorCallback(response.data.error);
                     return { success: false };
                 }
             }, function (err) {
@@ -362,7 +363,7 @@ var AIP;
                     _this.openContentPanel();
                 }
                 else {
-                    _this.saveErrorCallback(response.data.message);
+                    _this.saveErrorCallback(response.data.error);
                     console.log("error:");
                 }
             }, function (err) {
