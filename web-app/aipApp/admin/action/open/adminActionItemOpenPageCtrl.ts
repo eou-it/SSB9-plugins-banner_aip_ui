@@ -29,6 +29,7 @@ module AIP {
         $timeout;
         $interpolate;
         actionItem;
+        actionItemPostedStatus;
         $scope;
         APP_ROOT;
         ckEditorConfig;
@@ -62,6 +63,7 @@ module AIP {
             this.APP_ROOT = APP_ROOT;
             this.ckEditorConfig = CKEDITORCONFIG;
             this.actionItem = {};
+            this.actionItemPostedStatus={};
             this.templateSelect = false;
             this.templates = [];
             this.blocks = [];
@@ -72,13 +74,13 @@ module AIP {
             this.saving = false;
             this.contentChanged;
             this.init();
-
             angular.element( $window ).bind( 'resize', function () {
                 // $scope.onResize();
                 if (!$scope.$root.$phase) {
                     $scope.$apply();
                 }
             } );
+            console.log(this.actionItemPostedStatus);
         };
 
         init() {
@@ -154,6 +156,8 @@ module AIP {
                 .then((response:AIP.IActionItemOpenResponse) => {
                     this.actionItem = response.data.actionItem;
                     this.selectedTemplate = this.actionItem.actionItemTemplateId;
+                    this.actionItemPostedStatus=this.actionItem.actionItemPostedStatus;
+                    console.log(this.actionItemPostedStatus);
                     if (this.templateSelect) {
                         this.selectTemplate();
                         //this.trustActionItemContent();
@@ -169,7 +173,7 @@ module AIP {
         openContentPanel() {
             var deferred = this.$q.defer();
             this.adminActionService.getActionItemTemplates()
-                .then((response) => {
+                .then((response:AIP.IActionItemOpenResponse) => {
                     this.templates = response.data;
                     deferred.resolve(this.openPanel("content"));
                     this.getTemplateSource();
