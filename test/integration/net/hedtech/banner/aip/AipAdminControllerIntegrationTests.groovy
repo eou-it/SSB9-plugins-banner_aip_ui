@@ -20,7 +20,7 @@ import org.springframework.security.core.context.SecurityContextHolder
 class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
     def selfServiceBannerAuthenticationProvider
 
-    def actionItemContentService
+    def actionItemStatusCompositeService
 
     def actionItemGroupService
 
@@ -39,10 +39,6 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
     def VALID_FOLDER_NAME = "My Folder"
 
     def VALID_FOLDER_DESCRIPTION = "My Folder"
-
-    def INVALID_FOLDER_NAME = "My Folder".padLeft( 1021 )
-
-    def INVALID_FOLDER_DESCRIPTION = "My Folder".padLeft( 4001 )
 
 
     @Before
@@ -1156,8 +1152,6 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
     @Test
     void getActionItemsListForSelect() {
         controller.request.contentType = "text/json"
-        String inputString = actionItemJSON()
-        controller.request.json = inputString
         controller.getActionItemsListForSelect()
         assertEquals 200, controller.response.status
         def ret = controller.response.contentAsString
@@ -1169,8 +1163,6 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
     @Test
     void adminGroupStatus() {
         controller.request.contentType = "text/json"
-        String inputString = actionItemJSON()
-        controller.request.json = inputString
         controller.adminGroupStatus()
         assertEquals 200, controller.response.status
         def ret = controller.response.contentAsString
@@ -1180,10 +1172,39 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
 
 
     @Test
+    void removeStatus() {
+        def title = 'TEST_TITLE'
+        ActionItemStatus actionItemStatus = actionItemStatusCompositeService.statusSave( title ).status
+        controller.request.contentType = "text/json"
+        String inputString = """{"id":${actionItemStatus.id}}"""
+        controller.request.json = inputString
+        controller.removeStatus()
+        assertEquals 200, controller.response.status
+        def ret = controller.response.contentAsString
+        def data = JSON.parse( ret )
+        assertTrue data.success
+        assert ActionItemStatus.findById( actionItemStatus.id ) == null
+    }
+
+
+    @Test
+    void removeStatusFailedCase() {
+        controller.request.contentType = "text/json"
+        def inputString = """{"id":-99}"""
+        controller.request.json = inputString
+        controller.removeStatus()
+        assertEquals 200, controller.response.status
+        def ret = controller.response.contentAsString
+        def data = JSON.parse( ret )
+        assertTrue data.fail
+        assert data.message == 'Action Item Status is not present in System.'
+    }
+
+
+    @Test
     void getAssignedActionItemInGroup() {
         controller.request.contentType = "text/json"
         String inputString = actionItemJSON()
-        controller.request.json = inputString
         controller.params.groupId = "${ActionItemGroup.findByName( 'Security, Police and Fire' ).id}"
         controller.getAssignedActionItemInGroup()
         assertEquals 200, controller.response.status
@@ -1192,5 +1213,26 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
         assertTrue data.find {
             it.actionItemName == 'Registration Process Training'
         }.actionItemName == 'Registration Process Training'
+    }
+
+
+    @Test
+    void updateActionItemStatusRule() {
+        controller.request.contentType = "text/json"
+        ActionItemStatus actionItemStatus = ActionItemStatus.findByActionItemStatus( 'Completed' )
+        ActionItem actionItem = ActionItem.findByName( 'Personal Information' )
+        String inputString = """{"rules":[{"statusName":"","status":{"id":${
+            actionItemStatus.id
+        },"actionItemStatus":"Completed","actionItemStatusActive":"Y"},"statusRuleLabelText":"sas","statusRuleSeqOrder":0}],"actionItemId":${
+            actionItem.id
+        }}"""
+        controller.request.json = inputString
+        controller.updateActionItemStatusRule()
+        assertEquals 200, controller.response.status
+        def ret = controller.response.contentAsString
+        def data = JSON.parse( ret )
+        assertTrue data.success
+        assertNull data.message
+        assert data.rules.size() > 0
     }
 }
