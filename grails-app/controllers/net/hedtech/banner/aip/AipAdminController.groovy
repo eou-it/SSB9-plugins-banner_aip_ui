@@ -17,13 +17,9 @@ class AipAdminController {
 
     def groupFolderReadOnlyService
 
-    def actionItemReadOnlyService
-
     def actionItemReadOnlyCompositeService
 
     def actionItemTemplateService
-
-    def actionItemContentService
 
     def actionItemCompositeService
 
@@ -35,7 +31,6 @@ class AipAdminController {
 
     def actionItemStatusRuleReadOnlyService
 
-    //def actionItemBlockedProcessService
     def actionItemProcessingCommonService
     def actionItemGroupAssignReadOnlyService
 
@@ -75,7 +70,6 @@ class AipAdminController {
         if (gfro) {
             success = true
         }
-
         def model = [
                 success: success,
                 errors : [],
@@ -93,7 +87,10 @@ class AipAdminController {
         render result as JSON
     }
 
-
+    /**
+     *
+     * @return
+     */
     def actionItemList() {
 
         def paramObj = [filterName   : params.searchString ?: "%",
@@ -114,14 +111,20 @@ class AipAdminController {
         render result as JSON
     }
 
-
+    /**
+     * Delets action item
+     * @return
+     */
     def deleteActionItem() {
         def map = request.JSON
         def result = actionItemCompositeService.deleteActionItem( map.actionItemId )
         render result as JSON
     }
 
-
+    /**
+     * Open action Item
+     * @return
+     */
     def openActionItem() {
         def model = actionItemReadOnlyCompositeService.openActionItem( params.actionItemId )
         render model as JSON
@@ -138,7 +141,10 @@ class AipAdminController {
         render results as JSON
     }
 
-
+    /**
+     *
+     * @return
+     */
     def actionItemStatusGridList() {
 
         def paramObj = [filterName   : params.searchString ?: "%",
@@ -151,82 +157,36 @@ class AipAdminController {
         render results as JSON
     }
 
-
+    /**
+     *
+     * @return
+     */
     def actionItemStatusList() {
         def statuses = actionItemStatusService.listActionItemStatuses()
         render statuses as JSON
     }
 
-
+    /**
+     *
+     * @return
+     */
     def actionItemTemplateList() {
         def templates = actionItemTemplateService.listActionItemTemplates()
         render templates as JSON
     }
 
-
-    def editActionItemContent() {
-        if (!params.actionItemId) {
-            response.sendError( 403 )
-            return
-        }
-        def actionItemContentId
-        try {
-            actionItemContentId = new Long( params.actionItemContentId )
-        } catch (NumberFormatException e) {
-            response.sendError( 403 )
-            return
-        }
-
-        try {
-
-            def actionItemText = params.actionItemContent?.toString()
-
-            actionItemContentService.updateTemplateContent( actionItemContentId, actionItemText )
-
-            def model = [
-                    success: true
-            ]
-            render model as JSON
-        } catch (ApplicationException ae) {
-            // UI doesn't do anything with error messages from here, just 403 it
-            response.sendError( 403 )
-            return
-        }
-    }
-
-
+    /**
+     *
+     * @return
+     */
     def updateActionItemDetailWithTemplate() {
         def jsonObj = request.JSON
-        def templateId = jsonObj.templateId.toInteger()
-        def actionItemId = jsonObj.actionItemId.toInteger()
-        def actionItemDetailText = jsonObj.actionItemContent
+        def actionItemId = jsonObj.actionItemId
         if (!actionItemId) {
             response.sendError( 403 )
             return
         }
-
-        ActionItemContent aic = actionItemContentService.listActionItemContentById( actionItemId )
-        if (!aic) {
-            aic = new ActionItemContent()
-        }
-        aic.actionItemId = actionItemId
-        aic.actionItemTemplateId = templateId
-        aic.text = actionItemDetailText
-
-        ActionItemContent newAic = actionItemContentService.createOrUpdate( aic )
-
-        def success = false
-        def errors = []
-        ActionItemReadOnly actionItemRO = actionItemReadOnlyService.getActionItemROById( newAic.actionItemId )
-        if (newAic) {
-            success = true
-        }
-        def model = [
-                success   : success,
-                errors    : errors,
-                actionItem: actionItemRO,
-        ]
-
+        def model = actionItemCompositeService.updateActionItemDetailWithTemplate( jsonObj )
         render model as JSON
     }
 

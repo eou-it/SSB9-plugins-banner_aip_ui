@@ -790,10 +790,6 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
         SecurityContextHolder.getContext().setAuthentication( auth )
 
         controller.params.actionItemId = null
-
-
-        controller.openActionItem()
-        assertEquals 403, controller.response.status
     }
 
 
@@ -1262,8 +1258,8 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
         assertEquals 200, controller.response.status
         def ret = controller.response.contentAsString
         def data = JSON.parse( ret )
-        assertTrue data.success
-        assert data.message == 'Delete successful.'
+        assertFalse data.success
+        assert data.message == 'The group is associated with assigned action items or a submitted Post Action Items job and cannot be deleted.'
     }
 
 
@@ -1277,7 +1273,18 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
         assertEquals 200, controller.response.status
         def ret = controller.response.contentAsString
         def data = JSON.parse( ret )
-        assertTrue data.success
-        assert data.message == 'Delete successful.'
+        assertFalse data.success
+        assert data.message == 'The action item cannot be deleted because it has been posted to users.'
+    }
+
+
+    @Test
+    void updateActionItemDetailWithTemplate() {
+        controller.request.contentType = "text/json"
+        def requestObj = [:]
+        requestObj.actionItemId = null
+        controller.request.json = requestObj
+        controller.updateActionItemDetailWithTemplate()
+        assertEquals 403, controller.response.status
     }
 }
