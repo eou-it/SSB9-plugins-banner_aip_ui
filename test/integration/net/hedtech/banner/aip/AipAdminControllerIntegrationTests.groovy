@@ -1234,4 +1234,50 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
         data.message.toString() == 'null'
         assert data.rules.size() > 0
     }
+
+
+    @Test
+    void statusSaveFailedCase() {
+        controller.request.contentType = "text/json"
+        def requestObj = [:]
+        requestObj.title = ActionItemStatus.findByActionItemStatus( 'Completed' ).actionItemStatus
+        controller.request.json = requestObj
+        controller.statusSave()
+        assertEquals 200, controller.response.status
+        def ret = controller.response.contentAsString
+        def data = JSON.parse( ret )
+        assertFalse data.success
+        assertTrue data.fail
+        assert data.message == 'Save failed. The status name must be unique.'
+    }
+
+
+    @Test
+    void deleteGroup() {
+        controller.request.contentType = "text/json"
+        def requestObj = [:]
+        requestObj.groupId = ActionItemGroup.findByName( 'Enrollment' ).id
+        controller.request.json = requestObj
+        controller.deleteGroup()
+        assertEquals 200, controller.response.status
+        def ret = controller.response.contentAsString
+        def data = JSON.parse( ret )
+        assertTrue data.success
+        assert data.message == 'Delete successful.'
+    }
+
+
+    @Test
+    void deleteActionItem() {
+        controller.request.contentType = "text/json"
+        def requestObj = [:]
+        requestObj.actionItemId = ActionItem.findByName( 'All staff: Prepare for winter snow' ).id
+        controller.request.json = requestObj
+        controller.deleteActionItem()
+        assertEquals 200, controller.response.status
+        def ret = controller.response.contentAsString
+        def data = JSON.parse( ret )
+        assertTrue data.success
+        assert data.message == 'Delete successful.'
+    }
 }

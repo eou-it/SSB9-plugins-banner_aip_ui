@@ -8,7 +8,6 @@ import net.hedtech.banner.exceptions.ApplicationException
 import net.hedtech.banner.i18n.MessageHelper
 import org.apache.log4j.Logger
 import org.codehaus.groovy.grails.plugins.web.taglib.ValidationTagLib
-import org.springframework.security.core.context.SecurityContextHolder
 
 /**
  * Controller class for AIP Admin
@@ -240,11 +239,6 @@ class AipAdminController {
         def templateId = jsonObj.templateId.toInteger()
         def actionItemId = jsonObj.actionItemId.toInteger()
         def actionItemDetailText = jsonObj.actionItemContent
-        def user = SecurityContextHolder?.context?.authentication?.principal
-        if (!user.pidm) {
-            response.sendError( 403 )
-            return
-        }
         if (!actionItemId) {
             response.sendError( 403 )
             return
@@ -262,14 +256,10 @@ class AipAdminController {
 
         def success = false
         def errors = []
-//        ActionItemContent newActionItemDetail = actionItemDetailService.listActionItemContentById(actionItemId)
-
-        //todo: add new method to service for action item detail to retreive an action item by detail id and action item id
         ActionItemReadOnly actionItemRO = actionItemReadOnlyService.getActionItemROById( newAic.actionItemId )
         if (newAic) {
             success = true
         }
-
         def model = [
                 success   : success,
                 errors    : errors,
