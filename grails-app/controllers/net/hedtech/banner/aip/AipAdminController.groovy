@@ -5,7 +5,6 @@ package net.hedtech.banner.aip
 
 import grails.converters.JSON
 import net.hedtech.banner.exceptions.ApplicationException
-import net.hedtech.banner.i18n.MessageHelper
 import org.apache.log4j.Logger
 import org.codehaus.groovy.grails.plugins.web.taglib.ValidationTagLib
 
@@ -124,45 +123,7 @@ class AipAdminController {
 
 
     def openActionItem() {
-        def actionItemId = params.actionItemId
-        if (!actionItemId) {
-            response.sendError( 403 )
-            return
-        }
-        def success = false
-        def errors = []
-        ActionItemReadOnly actionItem = actionItemReadOnlyService.getActionItemROById( actionItemId.toInteger() )
-        if (actionItem) {
-            success = true
-        }
-        def model = [
-                success   : success,
-                errors    : errors,
-                actionItem: [
-                        actionItemId           : actionItem?.actionItemId,
-                        actionItemName         : actionItem?.actionItemName,
-                        actionItemTitle        : actionItem?.actionItemTitle,
-                        actionItemDesc         : actionItem?.actionItemDesc,
-                        folderId               : actionItem?.folderId,
-                        folderName             : actionItem?.folderName,
-                        folderDesc             : actionItem?.folderDesc,
-                        actionItemStatus       : actionItem ? MessageHelper.message( "aip.status.${actionItem.actionItemStatus}" ) : null,
-                        actionItemActivityDate : actionItem?.actionItemActivityDate,
-                        actionItemUserId       : actionItem?.actionItemUserId,
-                        actionItemContentUserId: actionItem?.actionItemContentUserId,
-                        actionItemCreatorId    : actionItem?.actionItemCreatorId,
-                        actionItemCreateDate   : actionItem?.actionItemCreateDate,
-                        actionItemCompositeDate: actionItem?.actionItemCompositeDate,
-                        actionItemLastUserId   : actionItem?.actionItemLastUserId,
-                        actionItemVersion      : actionItem?.actionItemVersion,
-                        actionItemTemplateId   : actionItem?.actionItemTemplateId,
-                        actionItemTemplateName : actionItem?.actionItemTemplateName,
-                        actionItemPageName     : actionItem?.actionItemPageName,
-                        actionItemContentId    : actionItem?.actionItemContentId,
-                        actionItemContentDate  : actionItem?.actionItemContentDate,
-                        actionItemContent      : actionItem?.actionItemContent
-                ]
-        ]
+        def model = actionItemReadOnlyCompositeService.openActionItem( params.actionItemId )
         render model as JSON
     }
 
