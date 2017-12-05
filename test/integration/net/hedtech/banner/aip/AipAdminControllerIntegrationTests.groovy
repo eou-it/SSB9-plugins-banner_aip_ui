@@ -1204,7 +1204,6 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
     @Test
     void getAssignedActionItemInGroup() {
         controller.request.contentType = "text/json"
-        String inputString = actionItemJSON()
         controller.params.groupId = "${ActionItemGroup.findByName( 'Security, Police and Fire' ).id}"
         controller.getAssignedActionItemInGroup()
         assertEquals 200, controller.response.status
@@ -1232,7 +1231,7 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
         def ret = controller.response.contentAsString
         def data = JSON.parse( ret )
         assertTrue data.success
-        assertNull data.message
+        data.message.toString() == 'null'
         assert data.rules.size() > 0
     }
 }
