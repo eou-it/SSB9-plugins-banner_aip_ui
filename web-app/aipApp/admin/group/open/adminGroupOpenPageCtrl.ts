@@ -153,9 +153,17 @@ module AIP {
                         console.log(err);
                     })
             );
-            promises.push(
-                this.adminGroupService.getActionItemListForselect()
-                    .then((response) => {
+            this.$q.all( promises ).then(() => {
+                this.spinnerService.showSpinner( false );
+                deferred.resolve(this.openPanel("content"));
+            })
+            return deferred.promise;
+        }
+
+        edit() {
+            console.log("edit");
+            this.adminGroupService.getActionItemListForselect()
+                .then((response) => {
                     this.allActionItems = response;
                     this.assignedActionItems.forEach((item) => {
                         this.selected[item.sequenceNumber-1] = this.allActionItems.filter((_item) => {
@@ -166,20 +174,10 @@ module AIP {
                         })[0]
                     });
                     this.originalAssign =  angular.copy(this.selected);
-                    }, (err) => {
+                    this.editMode = true;
+                }, (err) => {
                     console.log(err);
-                    })
-            );
-            this.$q.all( promises ).then(() => {
-                this.spinnerService.showSpinner( false );
-                deferred.resolve(this.openPanel("content"));
-            })
-            return deferred.promise;
-        }
-
-        edit() {
-            console.log("edit");
-            this.editMode = true;
+                })
         }
 
         handleNotification(noti) {
