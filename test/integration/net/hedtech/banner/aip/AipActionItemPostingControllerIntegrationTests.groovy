@@ -4,8 +4,6 @@
 package net.hedtech.banner.aip
 
 import grails.converters.JSON
-import net.hedtech.banner.aip.post.grouppost.ActionItemPost
-import net.hedtech.banner.general.communication.population.CommunicationPopulation
 import net.hedtech.banner.general.communication.population.CommunicationPopulationListView
 import net.hedtech.banner.testing.BaseIntegrationTestCase
 import org.junit.After
@@ -54,7 +52,7 @@ class AipActionItemPostingControllerIntegrationTests extends BaseIntegrationTest
     }
 
 
-    def getCreatActionItemJSONWithoutName() {
+    def getCreateActionItemJSONWithoutName() {
         def dynamicData = getDynamicData()
         """{
                 "postingName":"",
@@ -92,7 +90,7 @@ class AipActionItemPostingControllerIntegrationTests extends BaseIntegrationTest
     @Test
     void addActionItemPostingFailedCase() {
         controller.request.contentType = "text/json"
-        String inputString = getCreatActionItemJSONWithoutName()
+        String inputString = getCreateActionItemJSONWithoutName()
         controller.request.json = inputString
         controller.addActionItemPosting()
         assertEquals 200, controller.response.status
@@ -142,8 +140,18 @@ class AipActionItemPostingControllerIntegrationTests extends BaseIntegrationTest
 
 
     @Test
+    void getActionGroupActionItemLovParam() {
+        controller.request.contentType = "text/json"
+        controller.getActionGroupActionItemLov()
+        assertEquals 200, controller.response.status
+        def ret = controller.response.contentAsString
+        def data = JSON.parse( ret )
+        assert data.size()==0
+    }
+
+
+    @Test
     void actionItemPostJobList() {
-        CommunicationPopulation population = CommunicationPopulation.findAllByPopulationName( 'Quinley Student Population' )[0]
         SimpleDateFormat testingDateFormat = new SimpleDateFormat( 'MM/dd/yyyy' )
         CommunicationPopulationListView populationListView = actionItemProcessingCommonService.fetchPopulationListForSend( 'p', [max: 10, offset: 0] )[0]
         List<ActionItemGroup> actionItemGroups = ActionItemGroup.fetchActionItemGroups()
