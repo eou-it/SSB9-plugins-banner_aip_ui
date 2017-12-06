@@ -316,8 +316,7 @@ var AIP;
                     return { success: true, type: "template", data: response.data.actionItem };
                 }
                 else {
-                    _this.saveErrorCallback(response.data.error);
-                    return { success: false };
+                    return { success: false , errors: response.data.errors};
                 }
             }, function (err) {
                 console.log(err);
@@ -335,7 +334,7 @@ var AIP;
                     return { success: true };
                 }
                 else {
-                    return { success: false };
+                    return { success: false, errors: response.data.errors};
                 }
             }, function (err) {
                 console.log(err);
@@ -363,7 +362,8 @@ var AIP;
                     _this.openContentPanel();
                 }
                 else {
-                    _this.saveErrorCallback(response.data.error);
+                    console.log("error:" +response[0].errors);
+                    _this.saveErrorCallback(response[0].errors);
                     console.log("error:");
                 }
             }, function (err) {

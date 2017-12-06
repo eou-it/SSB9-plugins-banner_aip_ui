@@ -362,9 +362,7 @@ module AIP {
                     if (response.data.success) {
                         return {success: true, type: "template", data: response.data.actionItem};
                     } else {
-                        this.saveErrorCallback(response.data.errors);
-                        console.log("error:");
-                        return {success: false};
+                        return {success: false, errors: response.data.errors};
                     }
                 }, (err) => {
                     console.log(err);
@@ -381,9 +379,7 @@ module AIP {
                         this.getRules();
                         return {success: true};
                     } else {
-                        this.saveErrorCallback(response.data.errors);
-                        console.log("error:");
-                        return {success: false};
+                        return {success: false, errors: response.data.errors};
                     }
                 }, (err) => {
                     console.log(err);
@@ -410,7 +406,7 @@ module AIP {
                         this.trustActionItemContent();
                         this.openContentPanel();
                     } else {
-                        this.saveErrorCallback(response.data.error);
+                        this.saveErrorCallback(response[0].error);
                         console.log("error:");
                     }
                 }, (err) => {
