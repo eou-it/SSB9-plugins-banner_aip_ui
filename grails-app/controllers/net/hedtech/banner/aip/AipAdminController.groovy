@@ -70,6 +70,7 @@ class AipAdminController {
         if (gfro) {
             success = true
         }
+
         def model = [
                 success: success,
                 errors : [],
@@ -249,6 +250,7 @@ class AipAdminController {
         def model = actionItemStatusCompositeService.updateActionItemStatusRule( jsonObj )
         render model as JSON
     }
+
 
     /*def blockedProcessList() {//TODO Enable this and impleted as per requirement
 
