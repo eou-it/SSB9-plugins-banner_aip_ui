@@ -4,9 +4,6 @@
 
 modules = {
 
-    'aipCheck' {
-        resource url:[plugin: 'banner-aip-ui', file: 'aipApp/aipCheck.js']
-    }
     'bannerAIPUI' {
         dependsOn 'angularApp'
         dependsOn 'bannerSelfServiceCommonLTR, extensibilityCommon, extensibilityAngular, commonComponents, commonComponentsLTR, bootstrap'

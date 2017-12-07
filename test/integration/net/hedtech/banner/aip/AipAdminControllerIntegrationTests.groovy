@@ -20,7 +20,7 @@ import org.springframework.security.core.context.SecurityContextHolder
 class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
     def selfServiceBannerAuthenticationProvider
 
-    def actionItemContentService
+    def actionItemStatusCompositeService
 
     def actionItemGroupService
 
@@ -39,10 +39,6 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
     def VALID_FOLDER_NAME = "My Folder"
 
     def VALID_FOLDER_DESCRIPTION = "My Folder"
-
-    def INVALID_FOLDER_NAME = "My Folder".padLeft( 1021 )
-
-    def INVALID_FOLDER_DESCRIPTION = "My Folder".padLeft( 4001 )
 
 
     @Before
@@ -108,7 +104,6 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
         assertTrue( answer.newFolder.equals( null ) )
         assertEquals( "Operation Not Permitted", answer.message )
     }
-
 
     // @Test endpoint removed. Is this something we support of have a future story for?
     void testAddFolderEntryPointAsAdmin() {
@@ -359,7 +354,8 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
         requestObj.status = "Draft"
         requestObj.folderId = folderId
         requestObj.title = "max size title 4tr0"
-        requestObj.name = "1234567890" + "1234567890" + "1234567890" + "1234567890" + "1234567890" + "1234567890" + "a" //60 max
+        requestObj.name = "1234567890" + "1234567890" + "1234567890" + "1234567890" + "1234567890" + "1234567890" + "a"
+        //60 max
         requestObj.description = "<p><strong>This is a group description</p></strong>"
 
         controller.request.method = "POST"
@@ -805,10 +801,6 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
         SecurityContextHolder.getContext().setAuthentication( auth )
 
         controller.params.actionItemId = null
-
-
-        controller.openActionItem()
-        assertEquals 403, controller.response.status
     }
 
 
@@ -864,11 +856,12 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
         def actionItemTemplate = templates.id[0]
 
         List<ActionItem> actionItems = actionItemService.listActionItems()
-        def actionItem = actionItems.id[0]
-
+        ActionItem actionItem = actionItems[0]
+        actionItem.postedIndicator = 'N'
+        actionItemService.update( actionItem )
         def requestObj = [:]
         requestObj.templateId = actionItemTemplate
-        requestObj.actionItemId = actionItem
+        requestObj.actionItemId = actionItem.id
 
         controller.request.method = "POST"
         controller.request.json = requestObj
@@ -959,7 +952,6 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
         assertEquals( actionItemStatusRules[0].statusRuleId, answer[0].statusRuleId )
     }
 
-
     // @Test Fix when/if updates get supported
     void testUpdateActionItemStatusRuleOrderChange() {
         def admin = PersonUtility.getPerson( "BCMADMIN" ) // role: admin
@@ -1023,7 +1015,6 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
         assertEquals( status1.seqOrder, statusRules[0].statusRuleSeqOrder )
     }
 
-
     // @Test Fix when/if updates get supported
     void testUpdateActionItemStatusRuleRemoveRule() {
         def admin = PersonUtility.getPerson( "BCMADMIN" ) // role: admin
@@ -1069,7 +1060,6 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
         assertEquals( statusRules[0].statusRuleId, answer.rules[0].id )
         assertEquals( answer.rules.size(), 1 )
     }
-
 
     // @Test Fix when/if updates get supported
     void testUpdateActionItemStatusRuleAddRule() {
@@ -1144,5 +1134,172 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
         assertEquals( status1.id, statusRules[1].statusRuleId )
 
         assertEquals( statusNew.labelText, "Test add rule" )
+    }
+
+
+    def actionItemJSON() {
+        """{"assignment":[{"actionItemId":${
+            ActionItem.findByName( 'Drug and Alcohol Policy' ).id
+        },"seq":1}],"groupId":${ActionItemGroup.findByName( 'Enrollment' ).id}}"""
+    }
+
+
+    @Test
+    void addActionItemPosting() {
+        controller.request.contentType = "text/json"
+        String inputString = actionItemJSON()
+        controller.request.json = inputString
+        controller.updateActionItemGroupAssignment()
+        assertEquals 200, controller.response.status
+        def ret = controller.response.contentAsString
+        def data = JSON.parse( ret )
+        assertTrue data.success
+    }
+
+
+    @Test
+    void getActionItemsListForSelect() {
+        controller.request.contentType = "text/json"
+        controller.getActionItemsListForSelect()
+        assertEquals 200, controller.response.status
+        def ret = controller.response.contentAsString
+        def data = JSON.parse( ret )
+        assertTrue data.find {it.actionItemName == 'Meet with Advisor'}.actionItemName == 'Meet with Advisor'
+    }
+
+
+    @Test
+    void adminGroupStatus() {
+        controller.request.contentType = "text/json"
+        controller.adminGroupStatus()
+        assertEquals 200, controller.response.status
+        def ret = controller.response.contentAsString
+        def data = JSON.parse( ret )
+        assertTrue data.find {it.value == 'Draft'}.value == 'Draft'
+    }
+
+
+    @Test
+    void removeStatus() {
+        def title = 'TEST_TITLE'
+        ActionItemStatus actionItemStatus = actionItemStatusCompositeService.statusSave( title ).status
+        controller.request.contentType = "text/json"
+        String inputString = """{"id":${actionItemStatus.id}}"""
+        controller.request.json = inputString
+        controller.removeStatus()
+        assertEquals 200, controller.response.status
+        def ret = controller.response.contentAsString
+        def data = JSON.parse( ret )
+        assertTrue data.success
+        assert ActionItemStatus.findById( actionItemStatus.id ) == null
+    }
+
+
+    @Test
+    void removeStatusFailedCase() {
+        controller.request.contentType = "text/json"
+        def inputString = """{"id":-99}"""
+        controller.request.json = inputString
+        controller.removeStatus()
+        assertEquals 200, controller.response.status
+        def ret = controller.response.contentAsString
+        def data = JSON.parse( ret )
+        assertTrue data.fail
+        assert data.message == 'Action Item Status is not present in System.'
+    }
+
+
+    @Test
+    void getAssignedActionItemInGroup() {
+        controller.request.contentType = "text/json"
+        controller.params.groupId = "${ActionItemGroup.findByName( 'Security, Police and Fire' ).id}"
+        controller.getAssignedActionItemInGroup()
+        assertEquals 200, controller.response.status
+        def ret = controller.response.contentAsString
+        def data = JSON.parse( ret )
+        assertTrue data.find {
+            it.actionItemName == 'Registration Process Training'
+        }.actionItemName == 'Registration Process Training'
+    }
+
+
+    @Test
+    void updateActionItemStatusRule() {
+        controller.request.contentType = "text/json"
+        ActionItemStatus actionItemStatus = ActionItemStatus.findByActionItemStatus( 'Completed' )
+        ActionItem actionItem = ActionItem.findByName( 'Personal Information' )
+        String inputString = """{"rules":[{"statusName":"","status":{"id":${
+            actionItemStatus.id
+        },"actionItemStatus":"Completed","actionItemStatusActive":"Y"},"statusRuleLabelText":"sas","statusRuleSeqOrder":0}],"actionItemId":${
+            actionItem.id
+        }}"""
+        ActionItem aim =ActionItem.findByName( 'Personal Information' )
+        aim.postedIndicator='N'
+        actionItemService.update( aim )
+        controller.request.json = inputString
+        controller.updateActionItemStatusRule()
+        assertEquals 200, controller.response.status
+        def ret = controller.response.contentAsString
+        def data = JSON.parse( ret )
+        assertTrue data.success
+        data.message.toString() == 'null'
+        assert data.rules.size() > 0
+    }
+
+
+    @Test
+    void statusSaveFailedCase() {
+        controller.request.contentType = "text/json"
+        def requestObj = [:]
+        requestObj.title = ActionItemStatus.findByActionItemStatus( 'Completed' ).actionItemStatus
+        controller.request.json = requestObj
+        controller.statusSave()
+        assertEquals 200, controller.response.status
+        def ret = controller.response.contentAsString
+        def data = JSON.parse( ret )
+        assertFalse data.success
+        assertTrue data.fail
+        assert data.message == 'Save failed. The status name must be unique.'
+    }
+
+
+    @Test
+    void deleteGroup() {
+        controller.request.contentType = "text/json"
+        def requestObj = [:]
+        requestObj.groupId = ActionItemGroup.findByName( 'Enrollment' ).id
+        controller.request.json = requestObj
+        controller.deleteGroup()
+        assertEquals 200, controller.response.status
+        def ret = controller.response.contentAsString
+        def data = JSON.parse( ret )
+        assertFalse data.success
+        assert data.message == 'The group is associated with assigned action items or a submitted Post Action Items job and cannot be deleted.'
+    }
+
+
+    @Test
+    void deleteActionItem() {
+        controller.request.contentType = "text/json"
+        def requestObj = [:]
+        requestObj.actionItemId = ActionItem.findByName( 'All staff: Prepare for winter snow' ).id
+        controller.request.json = requestObj
+        controller.deleteActionItem()
+        assertEquals 200, controller.response.status
+        def ret = controller.response.contentAsString
+        def data = JSON.parse( ret )
+        assertFalse data.success
+        assert data.message == 'The action item cannot be deleted because it has been posted to users.'
+    }
+
+
+    @Test
+    void updateActionItemDetailWithTemplate() {
+        controller.request.contentType = "text/json"
+        def requestObj = [:]
+        requestObj.actionItemId = null
+        controller.request.json = requestObj
+        controller.updateActionItemDetailWithTemplate()
+        assertEquals 403, controller.response.status
     }
 }

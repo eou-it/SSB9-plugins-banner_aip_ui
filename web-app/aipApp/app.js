@@ -183,7 +183,6 @@ var bannerAIPApp = angular.module("bannerAIP", [
             actionItemStatusList: aipAppAbsPath + "aipAdmin/actionItemStatusList", //simple list of statuses
             actionItemStatusGrid: aipAppAbsPath + "aipAdmin/actionItemStatusGridList", //filterable list for grid functionality
             createActionItem: aipAppAbsPath + "aipAdmin/addActionItem",
-            editActionItemContent: aipAppAbsPath + "aipAdmin/editActionItemContent",
             openActionItem: aipAppAbsPath + "aipAdmin/openActionItem",
             getGroupLov:aipAppAbsPath + "aipActionItemPosting/getGroupLov",
             populationListForSendLov:aipAppAbsPath + "aipActionItemPosting/populationListForSendLov",

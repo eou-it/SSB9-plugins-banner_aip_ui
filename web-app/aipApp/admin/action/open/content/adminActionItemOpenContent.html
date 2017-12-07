@@ -98,12 +98,16 @@ Copyright 2017 Ellucian Company L.P. and its affiliates.
                     <h2>{{'aip.common.text.template'|i18n_aip}}</h2>
                 </div>
                 <div class="control col-xs-2 col-sm-4">
-                    <div class="h2-container">
+                    <div class="h2-container"  ng-if="vm.actionItemPostedStatus == 'N'">
                         <button name="Edit" type="button" class="btn btn-default edit" ng-click="vm.selectTemplate()"
                                 aria-label="">
                             <span class="icon icon-edit-CO"></span>
                             <span class="button-text hidden-sm-down">{{'aip.admin.action.open.tab.content.edit'|i18n_aip}}</span>
                         </button>
+                    </div>
+
+                    <div class="h2-container" ng-if="vm.actionItemPostedStatus == 'Y'">
+                            <span class="button-text no-edit hidden-sm-down">{{'aip.admin.action.open.tab.content.posted'|i18n_aip}}</span>
                     </div>
                 </div>
             </div>

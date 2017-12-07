@@ -39,6 +39,7 @@ var AIP;
             this.APP_ROOT = APP_ROOT;
             this.ckEditorConfig = CKEDITORCONFIG;
             this.actionItem = {};
+            this.actionItemPostedStatus = {};
             this.templateSelect = false;
             this.templates = [];
             this.blocks = [];
@@ -55,6 +56,7 @@ var AIP;
                     $scope.$apply();
                 }
             });
+            console.log(this.actionItemPostedStatus);
         }
         ;
         AdminActionItemOpenPageCtrl.prototype.init = function () {
@@ -124,6 +126,8 @@ var AIP;
                 .then(function (response) {
                 _this.actionItem = response.data.actionItem;
                 _this.selectedTemplate = _this.actionItem.actionItemTemplateId;
+                _this.actionItemPostedStatus = _this.actionItem.actionItemPostedStatus;
+                console.log(_this.actionItemPostedStatus);
                 if (_this.templateSelect) {
                     _this.selectTemplate();
                     //this.trustActionItemContent();
@@ -312,7 +316,7 @@ var AIP;
                     return { success: true, type: "template", data: response.data.actionItem };
                 }
                 else {
-                    return { success: false };
+                    return { success: false , errors: response.data.errors};
                 }
             }, function (err) {
                 console.log(err);
@@ -330,7 +334,7 @@ var AIP;
                     return { success: true };
                 }
                 else {
-                    return { success: false };
+                    return { success: false, errors: response.data.errors};
                 }
             }, function (err) {
                 console.log(err);
@@ -358,7 +362,8 @@ var AIP;
                     _this.openContentPanel();
                 }
                 else {
-                    _this.saveErrorCallback(response.data.message);
+                    console.log("error:" +response[0].errors);
+                    _this.saveErrorCallback(response[0].errors);
                     console.log("error:");
                 }
             }, function (err) {

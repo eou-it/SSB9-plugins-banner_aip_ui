@@ -4,13 +4,9 @@
 package net.hedtech.banner.aip
 
 import grails.converters.JSON
-import groovy.json.JsonSlurper
-import net.hedtech.banner.MessageUtility
 import net.hedtech.banner.exceptions.ApplicationException
-import net.hedtech.banner.i18n.MessageHelper
 import org.apache.log4j.Logger
 import org.codehaus.groovy.grails.plugins.web.taglib.ValidationTagLib
-import org.springframework.security.core.context.SecurityContextHolder
 
 /**
  * Controller class for AIP Admin
@@ -21,13 +17,9 @@ class AipAdminController {
 
     def groupFolderReadOnlyService
 
-    def actionItemReadOnlyService
-
     def actionItemReadOnlyCompositeService
 
     def actionItemTemplateService
-
-    def actionItemContentService
 
     def actionItemCompositeService
 
@@ -37,11 +29,8 @@ class AipAdminController {
 
     def actionItemStatusService
 
-    def actionItemStatusRuleService
-
     def actionItemStatusRuleReadOnlyService
 
-    def actionItemBlockedProcessService
     def actionItemProcessingCommonService
     def actionItemGroupAssignReadOnlyService
 
@@ -99,7 +88,10 @@ class AipAdminController {
         render result as JSON
     }
 
-
+    /**
+     *
+     * @return
+     */
     def actionItemList() {
 
         def paramObj = [filterName   : params.searchString ?: "%",
@@ -120,54 +112,22 @@ class AipAdminController {
         render result as JSON
     }
 
-
+    /**
+     * Delets action item
+     * @return
+     */
     def deleteActionItem() {
         def map = request.JSON
         def result = actionItemCompositeService.deleteActionItem( map.actionItemId )
         render result as JSON
     }
 
-
+    /**
+     * Open action Item
+     * @return
+     */
     def openActionItem() {
-        def actionItemId = params.actionItemId
-        if (!actionItemId) {
-            response.sendError( 403 )
-            return
-        }
-        def success = false
-        def errors = []
-        ActionItemReadOnly actionItem = actionItemReadOnlyService.getActionItemROById( actionItemId.toInteger() )
-        if (actionItem) {
-            success = true
-        }
-        def model = [
-                success   : success,
-                errors    : errors,
-                actionItem: [
-                        actionItemId           : actionItem?.actionItemId,
-                        actionItemName         : actionItem?.actionItemName,
-                        actionItemTitle        : actionItem?.actionItemTitle,
-                        actionItemDesc         : actionItem?.actionItemDesc,
-                        folderId               : actionItem?.folderId,
-                        folderName             : actionItem?.folderName,
-                        folderDesc             : actionItem?.folderDesc,
-                        actionItemStatus       : actionItem ? MessageHelper.message( "aip.status.${actionItem.actionItemStatus}" ) : null,
-                        actionItemActivityDate : actionItem?.actionItemActivityDate,
-                        actionItemUserId       : actionItem?.actionItemUserId,
-                        actionItemContentUserId: actionItem?.actionItemContentUserId,
-                        actionItemCreatorId    : actionItem?.actionItemCreatorId,
-                        actionItemCreateDate   : actionItem?.actionItemCreateDate,
-                        actionItemCompositeDate: actionItem?.actionItemCompositeDate,
-                        actionItemLastUserId   : actionItem?.actionItemLastUserId,
-                        actionItemVersion      : actionItem?.actionItemVersion,
-                        actionItemTemplateId   : actionItem?.actionItemTemplateId,
-                        actionItemTemplateName : actionItem?.actionItemTemplateName,
-                        actionItemPageName     : actionItem?.actionItemPageName,
-                        actionItemContentId    : actionItem?.actionItemContentId,
-                        actionItemContentDate  : actionItem?.actionItemContentDate,
-                        actionItemContent      : actionItem?.actionItemContent
-                ]
-        ]
+        def model = actionItemReadOnlyCompositeService.openActionItem( params.actionItemId )
         render model as JSON
     }
 
@@ -182,7 +142,10 @@ class AipAdminController {
         render results as JSON
     }
 
-
+    /**
+     *
+     * @return
+     */
     def actionItemStatusGridList() {
 
         def paramObj = [filterName   : params.searchString ?: "%",
@@ -195,91 +158,36 @@ class AipAdminController {
         render results as JSON
     }
 
-
+    /**
+     *
+     * @return
+     */
     def actionItemStatusList() {
         def statuses = actionItemStatusService.listActionItemStatuses()
         render statuses as JSON
     }
 
-
+    /**
+     *
+     * @return
+     */
     def actionItemTemplateList() {
         def templates = actionItemTemplateService.listActionItemTemplates()
         render templates as JSON
     }
 
-
-    def editActionItemContent() {
-        if (!params.actionItemId) {
-            response.sendError( 403 )
-            return
-        }
-        def actionItemContentId
-        try {
-            actionItemContentId = new Long( params.actionItemContentId )
-        } catch (NumberFormatException e) {
-            response.sendError( 403 )
-            return
-        }
-
-        try {
-
-            def actionItemText = params.actionItemContent?.toString()
-
-            actionItemContentService.updateTemplateContent( actionItemContentId, actionItemText )
-
-            def model = [
-                    success: true
-            ]
-            render model as JSON
-        } catch (ApplicationException ae) {
-            // UI doesn't do anything with error messages from here, just 403 it
-            response.sendError( 403 )
-            return
-        }
-    }
-
-
+    /**
+     *
+     * @return
+     */
     def updateActionItemDetailWithTemplate() {
         def jsonObj = request.JSON
-        def templateId = jsonObj.templateId.toInteger()
-        def actionItemId = jsonObj.actionItemId.toInteger()
-        def actionItemDetailText = jsonObj.actionItemContent
-        def user = SecurityContextHolder?.context?.authentication?.principal
-        if (!user.pidm) {
-            response.sendError( 403 )
-            return
-        }
+        def actionItemId = jsonObj.actionItemId
         if (!actionItemId) {
             response.sendError( 403 )
             return
         }
-
-        ActionItemContent aic = actionItemContentService.listActionItemContentById( actionItemId )
-        if (!aic) {
-            aic = new ActionItemContent()
-        }
-        aic.actionItemId = actionItemId
-        aic.actionItemTemplateId = templateId
-        aic.text = actionItemDetailText
-
-        ActionItemContent newAic = actionItemContentService.createOrUpdate( aic )
-
-        def success = false
-        def errors = []
-//        ActionItemContent newActionItemDetail = actionItemDetailService.listActionItemContentById(actionItemId)
-
-        //todo: add new method to service for action item detail to retreive an action item by detail id and action item id
-        ActionItemReadOnly actionItemRO = actionItemReadOnlyService.getActionItemROById( newAic.actionItemId )
-        if (newAic) {
-            success = true
-        }
-
-        def model = [
-                success   : success,
-                errors    : errors,
-                actionItem: actionItemRO,
-        ]
-
+        def model = actionItemCompositeService.updateActionItemDetailWithTemplate( jsonObj )
         render model as JSON
     }
 
@@ -339,93 +247,7 @@ class AipAdminController {
 
     def updateActionItemStatusRule() {
         def jsonObj = request.JSON
-
-        def user = SecurityContextHolder?.context?.authentication?.principal
-        if (!user.pidm) {
-            response.sendError( 403 )
-            return
-        }
-        def success = false
-        def message
-
-        def inputRules = jsonObj.rules
-
-        List<ActionItemStatusRule> currentRules = actionItemStatusRuleService.getActionItemStatusRuleByActionItemId( jsonObj.actionItemId )
-
-        List<Long> newRuleIdList = inputRules.statusRuleId.toList()
-        List<Long> existingRuleIdList = currentRules.id.toList()
-
-        def deleteRules = existingRuleIdList.minus( newRuleIdList )
-
-        //delete those that have been removed
-        actionItemStatusRuleService.delete( deleteRules )
-
-        //create or update rules
-        try {
-            List<ActionItemStatusRule> ruleList = []
-            inputRules.each {rule ->
-                def statusRule
-                def statusId
-
-                if (rule.status.id) {
-                    statusId = rule.status.id
-
-                } else if (rule.status.actionItemStatusId) {
-                    statusId = rule.status.actionItemStatusId
-                } else {
-                    message = MessageUtility.message( "actionItemStatusRule.statusId.nullable.error" )
-                    throw new ApplicationException( message )
-                }
-
-                if (rule.statusRuleId) {
-                    statusRule = ActionItemStatusRule.get( rule.statusRuleId )
-                    statusRule.seqOrder = rule.statusRuleSeqOrder.toInteger()
-                    statusRule.labelText = rule.statusRuleLabelText
-                    statusRule.actionItemStatusId = statusId
-                    statusRule.actionItemId = jsonObj.actionItemId
-                    //TODO: future user story
-                    //statusRule.resbumitInd =  rule.resubmitInd
-                    //statusRule.userId = aipUser.bannerId
-                    // statusRule.activityDate = new Date()
-                    statusRule.version = rule.status.version
-                } else {
-                    statusRule = new ActionItemStatusRule(
-                            seqOrder: rule.statusRuleSeqOrder,
-                            labelText: rule.statusRuleLabelText,
-                            actionItemId: jsonObj.actionItemId,
-                            actionItemStatusId: statusId
-                            /*
-                            resubmitInd: 'N',
-                            userId: aipUser.bannerId,
-                            activityDate: new Date(),
-                            version: 0,
-                            dataOrigin: 'GRAILS'
-                            */
-                    )
-                }
-                ruleList.push( statusRule )
-            }
-
-            ruleList.each {rule ->
-                actionItemStatusRuleService.createOrUpdate( rule ) //list of domain objects to be updated or created
-            }
-
-            success = true
-
-        } catch (ApplicationException e) {
-            LOGGER.error( e.getMessage() )
-        }
-
-        List<ActionItemStatusRule> updatedActionItemStatusRules =
-                actionItemStatusRuleService.getActionItemStatusRuleByActionItemId( jsonObj.actionItemId )
-
-
-        def model = [
-                success: success,
-                message: message,
-                rules  : updatedActionItemStatusRules
-        ]
-
+        def model = actionItemStatusCompositeService.updateActionItemStatusRule( jsonObj )
         render model as JSON
     }
 
@@ -481,7 +303,6 @@ value: value.aipBlock
         render model as JSON
     }*/
 
-
     /*def updateBlockedProcessItems() {//TODO Enable this and impleted as per requirement
         def jsonObj = request.JSON
 
@@ -525,76 +346,31 @@ value: value.aipBlock
 
     }*/
 
-
+    /**
+     * Gets Assigned Action Items In the Group
+     * @param groupId
+     * @return
+     */
     def getAssignedActionItemInGroup() {
-        Long groupId = Long.parseLong( params.groupId )
-        def assignedActionItems = actionItemGroupAssignReadOnlyService.getAssignedActionItemsInGroup( groupId )
-        def resultMap = assignedActionItems?.collect {it ->
-            [
-                    id                   : it.id,
-                    actionItemId         : it.actionItemId,
-                    sequenceNumber       : it.sequenceNumber,
-                    actionItemName       : it.actionItemName,
-                    actionItemStatus     : it.actionItemStatus ? MessageHelper.message( "aip.status.${it.actionItemStatus.trim()}" ) : null,
-                    actionItemFolderName : it.actionItemFolderName,
-                    actionItemTitle      : it.actionItemTitle,
-                    actionItemDescription: it.actionItemDescription,
-                    actionItemFolderId   : it.actionItemFolderId,
-                    actionItemPostingIndicator: it.actionItemPostingIndicator
-            ]
-        }
+        def resultMap = actionItemGroupAssignReadOnlyService.getAssignedActionItemsInGroup( Long.parseLong( params.groupId ) )
         render resultMap as JSON
     }
 
-
+    /**
+     * get Action Items List for LOV
+     * @return
+     */
     def getActionItemsListForSelect() {
-        def results = actionItemReadOnlyService.listActionItemRO()
-        def resultMap = results?.collect {actionItem ->
-            [
-                    actionItemId           : actionItem.actionItemId,
-                    actionItemName         : actionItem.actionItemName,
-                    actionItemTitle        : actionItem.actionItemTitle,
-                    folderId               : actionItem.folderId,
-                    folderName             : actionItem.folderName,
-                    folderDesc             : actionItem.folderDesc,
-                    actionItemStatus       : actionItem.actionItemStatus ? MessageHelper.message( "aip.status.${actionItem.actionItemStatus.trim()}" ) : null
-            ]
-        }
-        render resultMap as JSON
+        def results = actionItemCompositeService.getActionItemsListForSelect()
+        render results as JSON
     }
 
-
+    /**
+     * Update Action item Group Assignment
+     * @return
+     */
     def updateActionItemGroupAssignment() {
-        def model
-        try {
-            List<ActionItemGroupAssignReadOnly> assignActionItem = actionItemGroupCompositeService.updateActionItemGroupAssignment( request.JSON )
-            def resultMap
-
-            if (assignActionItem) {
-                resultMap = assignActionItem?.collect {it ->
-                    [
-                            id                  : it.id,
-                            actionItemId        : it.actionItemId,
-                            sequenceNumber      : it.sequenceNumber,
-                            actionItemName      : it.actionItemName,
-                            actionItemStatus    : it.actionItemStatus ? MessageHelper.message( "aip.status.${it.actionItemStatus.trim()}" ) : null,
-                            actionItemFolderName: it.actionItemFolderName,
-                            actionItemTitle     : it.actionItemTitle,
-                            actionItemFolderId  : it.actionItemFolderId
-                    ]
-                }
-            }
-            model = [
-                    success              : true,
-                    actionItemGroupAssign: resultMap
-            ]
-        } catch (ApplicationException ae) {
-            model = [
-                    success              : false,
-                    message              : MessageUtility.message( ae.getDefaultMessage() ),
-                    actionItemGroupAssign: ""
-            ]
-        }
+        def model = actionItemGroupCompositeService.updateActionItemGroupAssignment( request.JSON )
         render model as JSON
     }
 
