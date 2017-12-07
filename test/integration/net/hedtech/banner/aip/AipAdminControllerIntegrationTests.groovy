@@ -845,11 +845,12 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
         def actionItemTemplate = templates.id[0]
 
         List<ActionItem> actionItems = actionItemService.listActionItems()
-        def actionItem = actionItems.id[0]
-
+        ActionItem actionItem = actionItems[0]
+        actionItem.postedIndicator = 'N'
+        actionItemService.update( actionItem )
         def requestObj = [:]
         requestObj.templateId = actionItemTemplate
-        requestObj.actionItemId = actionItem
+        requestObj.actionItemId = actionItem.id
 
         controller.request.method = "POST"
         controller.request.json = requestObj
@@ -1221,6 +1222,9 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
         },"actionItemStatus":"Completed","actionItemStatusActive":"Y"},"statusRuleLabelText":"sas","statusRuleSeqOrder":0}],"actionItemId":${
             actionItem.id
         }}"""
+        ActionItem aim =ActionItem.findByName( 'Personal Information' )
+        aim.postedIndicator='N'
+        actionItemService.update( aim )
         controller.request.json = inputString
         controller.updateActionItemStatusRule()
         assertEquals 200, controller.response.status
