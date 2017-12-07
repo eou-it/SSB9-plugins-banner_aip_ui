@@ -22,14 +22,15 @@ module AIP {
         cancel(): void;
     }
     interface IGroupSelect {
+        id?: number;
         title: string;
         name: string;
-        status: string|number;
-        folder: number|string;
+        status: any;
+        folder: any;
         description: string;
     }
     export class AdminGroupAddPageCtrl implements IAdminGroupAddPageCtrl{
-        $inject = ["$scope", "AdminGroupService", "$q", "SpinnerService", "$state", "$filter", "$sce", "CKEDITORCONFIG"];
+        $inject = ["$scope", "AdminGroupService", "$q", "SpinnerService", "$state", "$filter", "$sce", "$timeout", "CKEDITORCONFIG"];
         status: AIP.IStatus[];
         folders: AIP.IFolder[];
         groupInfo: IGroupSelect;
@@ -41,20 +42,28 @@ module AIP {
         $state;
         $filter;
         $sce;
+        $timeout;
         ckEditorConfig;
+        editMode: boolean;
+        existFolder: any;
+        duplicateGroup: boolean;
         constructor($scope, AdminGroupService:AIP.AdminGroupService,
-            $q:ng.IQService, SpinnerService, $state, $filter, $sce, CKEDITORCONFIG) {
+            $q:ng.IQService, SpinnerService, $state, $filter, $sce, $timeout, CKEDITORCONFIG) {
             $scope.vm = this;
             this.$q = $q;
             this.$state = $state;
             this.$filter = $filter;
             this.$sce = $sce;
+            this.$timeout = $timeout;
             this.ckEditorConfig = CKEDITORCONFIG
             this.adminGroupService = AdminGroupService;
             this.spinnerService = SpinnerService;
             this.saving = false;
             this.errorMessage = {};
             this.errorMessage = {};
+            this.editMode = false;
+            this.existFolder = {};
+            this.duplicateGroup = false;
             $scope.$watch(
                 "[vm.status, vm.folders, vm.groupInfo.folder, vm.groupInfo.status, vm.groupInfo.description]", function(newVal, oldVal) {
                     if(!$scope.$$phase) {
@@ -68,52 +77,63 @@ module AIP {
             this.spinnerService.showSpinner(true);
             var promises = [];
             this.groupInfo = <any>{};
+            this.editMode = this.$state.params.data?this.$state.params.data.isEdit:false;
             promises.push(
                 this.adminGroupService.getStatus().then((status) => {
                     this.status = status.map((item) => {
-                        item.value = "aip.status." + item.value.charAt(0);
+                        item.value = this.$filter("i18n_aip")( "aip.status." + item.value.charAt(0));
                         return item;
                     });
-                    var groupStatus:any = $("#groupStatus");
-                    this.groupInfo.status = this.status[0].id;
-                    groupStatus
-                        .select2({
-                        width: "25em",
-                        minimumResultsForSearch: Infinity,
-                        // placeholderOption:'first'
-                    });
-                    //TODO: find better and proper way to set defalut value in SELECT2 - current one is just dom object hack.
-                    $(".groupStatus .select2-container.groupSelect .select2-chosen")[0].innerHTML = this.$filter("i18n_aip")(this.status[0].value);
+                    this.groupInfo.status = this.status[0].value;
                 })
             );
             promises.push(
                 this.adminGroupService.getFolder().then((folders) => {
                     this.folders = folders;
-                    var groupFolder:any = $("#groupFolder");
-                    groupFolder.select2( {
-                        width: "25em",
-                        minimumResultsForSearch: Infinity,
-                        placeholderOption:'first'
-                    });
                 })
             );
             this.$q.all(promises).then(() => {
+                if (this.editMode) {
+                    this.adminGroupService.getGroupDetail(this.$state.params.data.group)
+                        .then((response) => {
+                            if(response.group) {
+                                this.groupInfo.id = parseInt(response.group.groupId);
+                                this.groupInfo.title = response.group.groupTitle;
+                                this.groupInfo.name = response.group.groupName;
+                                this.groupInfo.status = response.group.groupStatus;
+                                this.groupInfo.folder = this.folders.filter((item)=> {
+                                    return item.id === parseInt(response.group.folderId);
+                                })[0];
+                                this.existFolder = this.folders.filter((item)=> {
+                                    return item.id === parseInt(response.group.folderId);
+                                })[0];
+                                this.groupInfo.description = response.group.groupDesc;
+                            } else {
+                                //todo: output error in notification center?
+                                console.log("fail");
+                            }
+                        }, (err) => {
+                            //TODO:: handle error call
+                            console.log(err);
+                        })
+
+                }
                 this.spinnerService.showSpinner(false);
                 this.trustGroupDesc();
             });
         }
         save() {
             this.saving = true;
-            this.adminGroupService.saveGroup(this.groupInfo)
+            this.adminGroupService.saveGroup(this.groupInfo, this.editMode, this.duplicateGroup)
                 .then((response:IAddGroupResponse) => {
                     this.saving = false;
                     var notiParams = {};
                     if(response.success) {
                         notiParams = {
-                            notiType: "saveSuccess",
+                            notiType: this.editMode ? "editSuccess" : "saveSuccess",
                             data: response.group.groupId
                         };
-                        this.$state.go("admin-group-open", {noti: notiParams, data: response.group.groupId});
+                        this.$state.go("admin-group-open", {noti: notiParams, data: {group:response.group.groupId}});
                     } else {
                         this.saveErrorCallback(response.invalidField, response.errors, response.message);
                     }
@@ -156,7 +176,25 @@ module AIP {
                 return true;
             }
         }
-
+        selectGroupFolder(item, index) {
+            if (this.editMode && (this.existFolder.id!==item.id)) {
+                this.duplicateGroup = true;
+                var n = new Notification({
+                    message: this.$filter("i18n_aip")("aip.admin.group.content.edit.duplicate"),
+                    type: "warning"
+                });
+                n.addPromptAction(this.$filter("i18n_aip")("aip.common.text.ok"), () => {
+                    this.duplicateGroup = true;
+                    notifications.remove(n);
+                });
+                notifications.addNotification(n);
+            } else {
+                this.duplicateGroup = false;
+            }
+        }
+        selectStatus(item, index) {
+            this.groupInfo.status = item.value;
+        }
         trustGroupDesc = function() {
             this.groupInfo.description = this.groupInfo.description?this.$filter("html")(this.$sce.trustAsHtml(this.groupInfo.description)):"";
             return this.groupInfo.description;

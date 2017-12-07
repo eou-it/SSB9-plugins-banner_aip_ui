@@ -30,12 +30,14 @@ module AIP {
         groupTitle: string;
         groupName: string;
         folderName: string;
+        folderId: string;
         folderDesc?: string;
         groupActivityDate?: Date|string;
         groupUserId?: string;
         groupDesc?: string;
         groupId: string;
         groupStatus: string;
+        postedInd?: string;
         version?:number|string;
     }
 
@@ -134,19 +136,24 @@ module AIP {
             return request;
         }
 
-        saveGroup(groupInfo:any) {
+        saveGroup(groupInfo:any, edit, duplicate) {
             var params = {
-                groupTitle: groupInfo.title,
-                groupName: groupInfo.name,
-                folderId: groupInfo.folder,
-                groupStatus: Status[groupInfo.status],
-                groupDesc: groupInfo.description,
-                version: 0
+                group: {
+                    groupId: groupInfo.id,
+                    groupTitle: groupInfo.title,
+                    groupName: groupInfo.name,
+                    folderId: groupInfo.folder.id,
+                    groupStatus: groupInfo.status,
+                    groupDesc: groupInfo.description,
+                    version: 0
+                },
+                edit: edit,
+                duplicate: duplicate
             };
             var request = this.$http({
                 method: "POST",
                 data: params,
-                url: this.ENDPOINT.admin.createGroup
+                url: this.ENDPOINT.admin.createOrUpdateGroup
             })
                 .then((response) => {
                     return response.data;
