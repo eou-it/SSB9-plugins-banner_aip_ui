@@ -83,8 +83,8 @@ class AipAdminController {
      * Creates Group
      * @return
      */
-    def createGroup() {
-        def result = actionItemGroupCompositeService.createGroup( request.JSON )
+    def createOrUpdateGroup() {
+        def result = actionItemGroupCompositeService.createOrUpdateGroup( request.JSON )
         render result as JSON
     }
 

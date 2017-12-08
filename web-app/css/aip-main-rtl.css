@@ -315,6 +315,9 @@ aip-list .aip-list-container  {
     padding-right:8px;
     margin-bottom:8px;
 }
+        .groupAddContainer .groupInfo .groupInfoRow .groupElement .ui-select-container .select2-choice  {
+    background-color:#ffffff !important;
+}
         .groupAddContainer .groupInfo .groupInfoRow .groupElement .alert  {
     padding-top:8px;
     padding-bottom:8px;

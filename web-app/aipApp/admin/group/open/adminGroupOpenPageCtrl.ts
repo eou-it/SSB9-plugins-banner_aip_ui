@@ -66,12 +66,13 @@ module AIP {
             this.spinnerService.showSpinner( true );
             var promises = [];
             // this.openOverviewPanel();
-            this.groupFolder = this.$state.params.data;
+            this.groupFolder = this.$state.params.data && this.$state.params.data.hasOwnProperty("group") ?
+                this.$state.params.data.group : this.$state.previousParams.data.group;
             //var groupDescHtml = this.$sce.trustAsHtml(this.$state.params.data.description);
             //console.log(groupDescHtml);
             //todo: replace this temporary workaround for sce not working for description
-            $("p.openGroupDesc" ).html(this.$state.params.data.groupDesc);
-            $("#title-panel h1" ).html(this.$state.params.data.groupName);
+            $("p.openGroupDesc" ).html(this.groupFolder.groupDesc);
+            $("#title-panel h1" ).html(this.groupFolder.groupName);
 
             if (this.$state.params.noti) {
                 this.handleNotification( this.$state.params.noti );
@@ -118,7 +119,7 @@ module AIP {
             this.selected = [];
             this.assignedActionItems = [];
             var deferred = this.$q.defer();
-            this.adminGroupService.getGroupDetail(this.$state.params.data)
+            this.adminGroupService.getGroupDetail(this.groupFolder)
                 .then((response) => {
                 if(response.group) {
                     this.groupFolder = response.group;
@@ -142,7 +143,7 @@ module AIP {
             var promises = [];
             this.spinnerService.showSpinner( true );
             promises.push(
-                this.adminGroupService.getAssignedActionItemInGroup(this.$state.params.data)
+                this.adminGroupService.getAssignedActionItemInGroup(this.groupFolder)
                     .then((response) => {
                         this.assignedActionItems = response;
                         this.assignedActionItems.sort((a,b) => {
@@ -161,29 +162,61 @@ module AIP {
         }
 
         edit() {
-            console.log("edit");
             this.adminGroupService.getActionItemListForselect()
                 .then((response) => {
                     this.allActionItems = response;
                     this.assignedActionItems.forEach((item) => {
-                        this.selected[item.sequenceNumber-1] = this.allActionItems.filter((_item) => {
+                        this.selected[item.sequenceNumber - 1] = this.allActionItems.filter((_item) => {
                             if (_item.actionItemId === item.actionItemId) {
                                 _item.seq = item.sequenceNumber;
                                 return _item;
                             }
                         })[0]
                     });
-                    this.originalAssign =  angular.copy(this.selected);
+                    this.originalAssign = angular.copy(this.selected);
                     this.editMode = true;
                 }, (err) => {
                     console.log(err);
-                })
+                });
+
+        }
+        validateEdit(type) {
+            if (this.groupFolder.postedInd === "Y") {
+                var n = new Notification({
+                    message: this.$filter("i18n_aip")("aip.admin.group.content.edit.posted.warning"),
+                    type: "warning"
+                });
+                n.addPromptAction(this.$filter("i18n_aip")("aip.common.text.no"), () => {
+                    notifications.remove(n);
+                });
+                n.addPromptAction(this.$filter("i18n_aip")("aip.common.text.yes"), ()=> {
+                    notifications.remove(n);
+                    if(type === "overview") {
+                        this.$state.go("admin-group-edit", {data: {group:this.groupFolder.groupId, isEdit: true}});
+                    } else {
+                        this.edit();
+                    }
+                });
+                notifications.addNotification(n);
+            } else {
+                if(type === "overview") {
+                    this.$state.go("admin-group-edit", {data: {group:this.groupFolder.groupId, isEdit: true}});
+                } else {
+                    this.edit();
+                }
+            }
         }
 
         handleNotification(noti) {
-            if(noti.notiType === "saveSuccess") {
+            if(noti.notiType === "saveSuccess" || noti.notiType === "editSuccess") {
+                var message = "";
+                if (noti.notiType === "saveSuccess") {
+                    message = this.$filter("i18n_aip")("aip.common.save.successful");
+                } else if (noti.notiType === "editSuccess") {
+                    message = this.$filter("i18n_aip")("aip.common.edit.successful");
+                }
                 var n = new Notification({
-                    message: this.$filter("i18n_aip")("aip.common.save.successful"),
+                    message: message,
                     type: "success",
                     flash: true
                 });
@@ -335,7 +368,7 @@ module AIP {
         }
         save() {
             this.saving = true;
-            this.adminGroupService.updateActionItemGroupAssignment(this.selected, this.$state.params.data)
+            this.adminGroupService.updateActionItemGroupAssignment(this.selected, this.groupFolder)
                 .then((response) => {
                     this.saving = false;
                     console.log(response);
@@ -359,6 +392,36 @@ module AIP {
                         notifications.addNotification(n);
                         this.openContentPanel();
                     }, 500);
+                });
+        }
+        validateSave() {
+            this.adminGroupService.getGroupDetail(this.groupFolder)
+                .then((response) => {
+                    if(response.group) {
+                        this.groupFolder = response.group;
+                        if(this.groupFolder.postedInd === "Y") {
+                            var n = new Notification({
+                                message: this.$filter("i18n_aip")("aip.admin.group.content.edit.posted.warning"),
+                                type: "warning"
+                            });
+                            n.addPromptAction(this.$filter("i18n_aip")("aip.common.text.no"), () => {
+                                notifications.remove(n);
+                            });
+                            n.addPromptAction(this.$filter("i18n_aip")("aip.common.text.yes"), ()=> {
+                                notifications.remove(n);
+                                this.save();
+                            });
+                            notifications.addNotification(n);
+                        } else {
+                            this.save();
+                        }
+                    } else {
+                        //todo: output error in notification center?
+                        console.log("fail");
+                    }
+                }, (err) => {
+                    //TODO:: handle error call
+                    console.log(err);
                 });
         }
     }

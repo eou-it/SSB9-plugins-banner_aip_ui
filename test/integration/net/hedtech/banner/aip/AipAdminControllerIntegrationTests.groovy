@@ -134,16 +134,18 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
 
         def folderId = CommunicationFolder.findByName( 'AIPgeneral' ).id
 
-        def requestObj = [:]
-        requestObj.groupTitle = "test1a2b" // Make sure title and folder create unique pair
-        requestObj.groupName = "myName"
-        requestObj.folderId = folderId
-        requestObj.groupStatus = "Draft"
-        requestObj.groupDesc = "<p><strong>This is a group description</p></strong>"
+        def requestObj = [group:[], edit:[], duplicate:[]]
+        requestObj.group.groupTitle = "test1a2b" // Make sure title and folder create unique pair
+        requestObj.group.groupName = "myName"
+        requestObj.group.folderId = folderId
+        requestObj.group.groupStatus = "Draft"
+        requestObj.group.groupDesc = "<p><strong>This is a group description</p></strong>"
+        requestObj.edit = false
+        requestObj.duplicate = false
 
         controller.request.method = "POST"
         controller.request.json = requestObj
-        controller.createGroup()
+        controller.createOrUpdateGroup()
         def answer = JSON.parse( controller.response.contentAsString )
 
         assertTrue( answer.success )
@@ -164,16 +166,18 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
 
         def folderId = CommunicationFolder.findByName( 'AIPgeneral' ).id
 
-        def requestObj = [:]
-        requestObj.groupTitle = "International Students title"
-        requestObj.groupName = "International Students"  // group in AIPGeneral Folder with this name already exists
-        requestObj.folderId = folderId
-        requestObj.groupStatus = "Draft"
-        requestObj.groupDesc = "<p><strong>This is a group description</p></strong>"
+        def requestObj = [group:[], edit:[], duplicate:[]]
+        requestObj.group.groupTitle = "International Students title"
+        requestObj.group.groupName = "International Students"  // group in AIPGeneral Folder with this name already exists
+        requestObj.group.folderId = folderId
+        requestObj.group.groupStatus = "Draft"
+        requestObj.group.groupDesc = "<p><strong>This is a group description</p></strong>"
+        requestObj.edit = false
+        requestObj.duplicate = false
 
         controller.request.method = "POST"
         controller.request.json = requestObj
-        controller.createGroup()
+        controller.createOrUpdateGroup()
         def answer = JSON.parse( controller.response.contentAsString )
         assertFalse answer.success
         assertTrue( answer.group.equals( null ) )
@@ -193,17 +197,19 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
 
         def folderId = CommunicationFolder.findByName( 'AIPgeneral' ).id
 
-        def requestObj = [:]
-        requestObj.groupTitle = null
-        requestObj.groupName = "myName"
-        requestObj.folderId = folderId
-        requestObj.groupStatus = null
-        requestObj.groupDesc = "<p><strong>This is a group description</p></strong>"
+        def requestObj = [group:[], edit:[], duplicate:[]]
+        requestObj.group.groupTitle = null
+        requestObj.group.groupName = "myName"
+        requestObj.group.folderId = folderId
+        requestObj.group.groupStatus = null
+        requestObj.group.groupDesc = "<p><strong>This is a group description</p></strong>"
+        requestObj.edit = false
+        requestObj.duplicate = false
 
         controller.request.method = "POST"
         controller.request.json = requestObj
 
-        controller.createGroup()
+        controller.createOrUpdateGroup()
         def answer = JSON.parse( controller.response.contentAsString )
         assertEquals( "Save failed. The Title can not be null or empty.", answer.message )
         assertEquals( false, answer.success )
@@ -222,17 +228,19 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
 
         def folderId = CommunicationFolder.findByName( 'AIPgeneral' ).id
 
-        def requestObj = [:]
-        requestObj.groupTitle = null
-        requestObj.groupName = "myName"
-        requestObj.folderId = folderId
-        requestObj.groupStatus = "Draft"
-        requestObj.groupDesc = "<p><strong>This is a group description</p></strong>"
+        def requestObj = [group:[], edit:[], duplicate:[]]
+        requestObj.group.groupTitle = null
+        requestObj.group.groupName = "myName"
+        requestObj.group.folderId = folderId
+        requestObj.group.groupStatus = "Draft"
+        requestObj.group.groupDesc = "<p><strong>This is a group description</p></strong>"
+        requestObj.edit = false
+        requestObj.duplicate = false
 
         controller.request.method = "POST"
         controller.request.json = requestObj
 
-        controller.createGroup()
+        controller.createOrUpdateGroup()
         def answer = JSON.parse( controller.response.contentAsString )
         assertEquals( "Save failed. The Title can not be null or empty.", answer.message )
         assertEquals( false, answer.success )
@@ -251,19 +259,20 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
 
         def folderId = CommunicationFolder.findByName( 'AIPgeneral' ).id
 
-        def requestObj = [:]
-        requestObj.groupTitle = "myTitle"
-        requestObj.groupName = "1234567890" + "1234567890" + "1234567890" + "1234567890" + "1234567890" + "1234567890" + "a"
-        //60 max
-        requestObj.folderId = folderId
+        def requestObj = [group:[], edit:[], duplicate:[]]
+        requestObj.group.groupTitle = "myTitle"
+        requestObj.group.groupName = "1234567890" + "1234567890" + "1234567890" + "1234567890" + "1234567890" + "1234567890" + "a" //60 max
+        requestObj.group.folderId = folderId
         // FIXME: not max size. does not resolve
-        requestObj.groupStatus = "Draft"
-        requestObj.groupDesc = "<p><strong>This is a group description</p></strong>"
+        requestObj.group.groupStatus = "Draft"
+        requestObj.group.groupDesc = "<p><strong>This is a group description</p></strong>"
+        requestObj.edit = false
+        requestObj.duplicate = false
 
         controller.request.method = "POST"
         controller.request.json = requestObj
 
-        controller.createGroup()
+        controller.createOrUpdateGroup()
         def answer = JSON.parse( controller.response.contentAsString )
         assertEquals( 'Save failed. Max size exceeded.', answer.message )
         assertEquals( false, answer.success )
@@ -280,16 +289,18 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
                 new UsernamePasswordAuthenticationToken( admin.bannerId, '111111' ) )
         SecurityContextHolder.getContext().setAuthentication( auth )
 
-        def requestObj = [:]
-        requestObj.groupTitle = "myTitle"
-        requestObj.groupName = "myName"
-        requestObj.folderId = BAD_FOLDER_ID
-        requestObj.groupStatus = "Draft"
-        requestObj.groupDesc = "<p><strong>This is a group description</p></strong>"
+        def requestObj = [group:[], edit:[], duplicate:[]]
+        requestObj.group.groupTitle = "myTitle"
+        requestObj.group.groupName = "myName"
+        requestObj.group.folderId = BAD_FOLDER_ID
+        requestObj.group.groupStatus = "Draft"
+        requestObj.group.groupDesc = "<p><strong>This is a group description</p></strong>"
+        requestObj.edit = false
+        requestObj.duplicate = false
 
         controller.request.method = "POST"
         controller.request.json = requestObj
-        controller.createGroup()
+        controller.createOrUpdateGroup()
         def answer = JSON.parse( controller.response.contentAsString )
         assertFalse( answer.success )
         assertEquals( "Save failed. The Folder with Id " + BAD_FOLDER_ID + " does not exist.", answer.message )

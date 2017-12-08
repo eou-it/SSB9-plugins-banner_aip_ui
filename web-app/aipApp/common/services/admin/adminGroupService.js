@@ -53,19 +53,24 @@ var AIP;
             });
             return request;
         };
-        AdminGroupService.prototype.saveGroup = function (groupInfo) {
+        AdminGroupService.prototype.saveGroup = function (groupInfo, edit, duplicate) {
             var params = {
-                groupTitle: groupInfo.title,
-                groupName: groupInfo.name,
-                folderId: groupInfo.folder,
-                groupStatus: Status[groupInfo.status],
-                groupDesc: groupInfo.description,
-                version: 0
+                group: {
+                    groupId: groupInfo.id,
+                    groupTitle: groupInfo.title,
+                    groupName: groupInfo.name,
+                    folderId: groupInfo.folder.id,
+                    groupStatus: groupInfo.status,
+                    groupDesc: groupInfo.description,
+                    version: 0
+                },
+                edit: edit,
+                duplicate: duplicate
             };
             var request = this.$http({
                 method: "POST",
                 data: params,
-                url: this.ENDPOINT.admin.createGroup
+                url: this.ENDPOINT.admin.createOrUpdateGroup
             })
                 .then(function (response) {
                 return response.data;

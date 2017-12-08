@@ -146,19 +146,6 @@ var AIP;
             });
             return request;
         };
-        AdminActionService.prototype.updateActionItemContent = function (actionItem) {
-            var params = {
-                actionItemContentId: parseInt(actionItem.actionItemContentId),
-                actionItemContent: actionItem.actionItemContent,
-                templateId: parseInt(actionItem.templateId)
-            };
-            var request = this.$http({
-                method: "POST",
-                data: params,
-                url: this.ENDPOINT.admin.editActionItemContent
-            });
-            return request;
-        };
         AdminActionService.prototype.getActionItemDetail = function (actionItemId) {
             var request = this.$http({
                 method: "GET",

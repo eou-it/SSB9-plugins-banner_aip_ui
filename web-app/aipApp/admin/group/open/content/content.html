@@ -11,7 +11,7 @@ Copyright 2017 Ellucian Company L.P. and its affiliates.
                 {{vm.assignedActionItems.length === 0 ? 'aip.admin.group.open.noContent':'aip.admin.group.open.content' |i18n_aip}}
             </div>
             <div class="control col-xs-2 col-sm-2">
-                <button name="Edit" type="button" class="btn btn-default edit" ng-click="vm.edit()"
+                <button name="Edit" type="button" class="btn btn-default edit" ng-click="vm.validateEdit()"
                         aria-label="">
                     <span class="icon icon-edit-CO"></span>
                     <span class="button-text hidden-sm-down">{{'aip.common.text.edit'|i18n_aip}}</span>
@@ -110,7 +110,7 @@ Copyright 2017 Ellucian Company L.P. and its affiliates.
                             <button name="Cancel" type="button" class="btn btn-default" ng-click="vm.cancel()">{{"aip.common.cancel"|i18n_aip}}</button>
                         </div>
                         <div class="col-xs-6 col-sm-6 groupButton">
-                            <button name="Save" type="button" class="btn btn-primary" ng-disabled="!vm.validateInput()" ng-click="vm.save()">
+                            <button name="Save" type="button" class="btn btn-primary" ng-disabled="!vm.validateInput()" ng-click="vm.validateSave()">
                                 {{"aip.common.save"|i18n_aip}}
                             </button>
                         </div>

@@ -138,7 +138,7 @@ var AIP;
             console.log("Copy id: " + id);
         };
         AdminGroupListPageCtrl.prototype.open = function (id) {
-            this.$state.go("admin-group-open", { data: id });
+            this.$state.go("admin-group-open", { data: { group: id } });
         };
         AdminGroupListPageCtrl.prototype.getHeight = function () {
             var containerHeight = $(document).height() -

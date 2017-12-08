@@ -7,8 +7,8 @@
 var AIP;
 (function (AIP) {
     var AdminGroupAddPageCtrl = (function () {
-        function AdminGroupAddPageCtrl($scope, AdminGroupService, $q, SpinnerService, $state, $filter, $sce, CKEDITORCONFIG) {
-            this.$inject = ["$scope", "AdminGroupService", "$q", "SpinnerService", "$state", "$filter", "$sce", "CKEDITORCONFIG"];
+        function AdminGroupAddPageCtrl($scope, AdminGroupService, $q, SpinnerService, $state, $filter, $sce, $timeout, CKEDITORCONFIG) {
+            this.$inject = ["$scope", "AdminGroupService", "$q", "SpinnerService", "$state", "$filter", "$sce", "$timeout", "CKEDITORCONFIG"];
             this.trustGroupDesc = function () {
                 this.groupInfo.description = this.groupInfo.description ? this.$filter("html")(this.$sce.trustAsHtml(this.groupInfo.description)) : "";
                 return this.groupInfo.description;
@@ -18,12 +18,16 @@ var AIP;
             this.$state = $state;
             this.$filter = $filter;
             this.$sce = $sce;
+            this.$timeout = $timeout;
             this.ckEditorConfig = CKEDITORCONFIG;
             this.adminGroupService = AdminGroupService;
             this.spinnerService = SpinnerService;
             this.saving = false;
             this.errorMessage = {};
             this.errorMessage = {};
+            this.editMode = false;
+            this.existFolder = {};
+            this.duplicateGroup = false;
             $scope.$watch("[vm.status, vm.folders, vm.groupInfo.folder, vm.groupInfo.status, vm.groupInfo.description]", function (newVal, oldVal) {
                 if (!$scope.$$phase) {
                     $scope.apply();
@@ -36,31 +40,43 @@ var AIP;
             this.spinnerService.showSpinner(true);
             var promises = [];
             this.groupInfo = {};
+            this.editMode = this.$state.params.data ? this.$state.params.data.isEdit : false;
             promises.push(this.adminGroupService.getStatus().then(function (status) {
                 _this.status = status.map(function (item) {
-                    item.value = "aip.status." + item.value.charAt(0);
+                    item.value = _this.$filter("i18n_aip")("aip.status." + item.value.charAt(0));
                     return item;
                 });
-                var groupStatus = $("#groupStatus");
-                _this.groupInfo.status = _this.status[0].id;
-                groupStatus
-                    .select2({
-                    width: "25em",
-                    minimumResultsForSearch: Infinity,
-                });
-                //TODO: find better and proper way to set defalut value in SELECT2 - current one is just dom object hack.
-                $(".groupStatus .select2-container.groupSelect .select2-chosen")[0].innerHTML = _this.$filter("i18n_aip")(_this.status[0].value);
+                _this.groupInfo.status = _this.status[0].value;
             }));
             promises.push(this.adminGroupService.getFolder().then(function (folders) {
                 _this.folders = folders;
-                var groupFolder = $("#groupFolder");
-                groupFolder.select2({
-                    width: "25em",
-                    minimumResultsForSearch: Infinity,
-                    placeholderOption: 'first'
-                });
             }));
             this.$q.all(promises).then(function () {
+                if (_this.editMode) {
+                    _this.adminGroupService.getGroupDetail(_this.$state.params.data.group)
+                        .then(function (response) {
+                        if (response.group) {
+                            _this.groupInfo.id = parseInt(response.group.groupId);
+                            _this.groupInfo.title = response.group.groupTitle;
+                            _this.groupInfo.name = response.group.groupName;
+                            _this.groupInfo.status = response.group.groupStatus;
+                            _this.groupInfo.folder = _this.folders.filter(function (item) {
+                                return item.id === parseInt(response.group.folderId);
+                            })[0];
+                            _this.existFolder = _this.folders.filter(function (item) {
+                                return item.id === parseInt(response.group.folderId);
+                            })[0];
+                            _this.groupInfo.description = response.group.groupDesc;
+                        }
+                        else {
+                            //todo: output error in notification center?
+                            console.log("fail");
+                        }
+                    }, function (err) {
+                        //TODO:: handle error call
+                        console.log(err);
+                    });
+                }
                 _this.spinnerService.showSpinner(false);
                 _this.trustGroupDesc();
             });
@@ -68,16 +84,16 @@ var AIP;
         AdminGroupAddPageCtrl.prototype.save = function () {
             var _this = this;
             this.saving = true;
-            this.adminGroupService.saveGroup(this.groupInfo)
+            this.adminGroupService.saveGroup(this.groupInfo, this.editMode, this.duplicateGroup)
                 .then(function (response) {
                 _this.saving = false;
                 var notiParams = {};
                 if (response.success) {
                     notiParams = {
-                        notiType: "saveSuccess",
+                        notiType: _this.editMode ? "editSuccess" : "saveSuccess",
                         data: response.group.groupId
                     };
-                    _this.$state.go("admin-group-open", { noti: notiParams, data: response.group.groupId });
+                    _this.$state.go("admin-group-open", { noti: notiParams, data: { group: response.group.groupId } });
                 }
                 else {
                     _this.saveErrorCallback(response.invalidField, response.errors, response.message);
@@ -125,6 +141,27 @@ var AIP;
             else {
                 return true;
             }
+        };
+        AdminGroupAddPageCtrl.prototype.selectGroupFolder = function (item, index) {
+            var _this = this;
+            if (this.editMode && (this.existFolder.id !== item.id)) {
+                this.duplicateGroup = true;
+                var n = new Notification({
+                    message: this.$filter("i18n_aip")("aip.admin.group.content.edit.duplicate"),
+                    type: "warning"
+                });
+                n.addPromptAction(this.$filter("i18n_aip")("aip.common.text.ok"), function () {
+                    _this.duplicateGroup = true;
+                    notifications.remove(n);
+                });
+                notifications.addNotification(n);
+            }
+            else {
+                this.duplicateGroup = false;
+            }
+        };
+        AdminGroupAddPageCtrl.prototype.selectStatus = function (item, index) {
+            this.groupInfo.status = item.value;
         };
         AdminGroupAddPageCtrl.prototype.saveErrorCallback = function (invalidFields, errors, message) {
             var _this = this;

@@ -33,12 +33,13 @@ var AIP;
             this.spinnerService.showSpinner(true);
             var promises = [];
             // this.openOverviewPanel();
-            this.groupFolder = this.$state.params.data;
+            this.groupFolder = this.$state.params.data && this.$state.params.data.hasOwnProperty("group") ?
+                this.$state.params.data.group : this.$state.previousParams.data.group;
             //var groupDescHtml = this.$sce.trustAsHtml(this.$state.params.data.description);
             //console.log(groupDescHtml);
             //todo: replace this temporary workaround for sce not working for description
-            $("p.openGroupDesc").html(this.$state.params.data.groupDesc);
-            $("#title-panel h1").html(this.$state.params.data.groupName);
+            $("p.openGroupDesc").html(this.groupFolder.groupDesc);
+            $("#title-panel h1").html(this.groupFolder.groupName);
             if (this.$state.params.noti) {
                 this.handleNotification(this.$state.params.noti);
             }
@@ -84,7 +85,7 @@ var AIP;
             this.selected = [];
             this.assignedActionItems = [];
             var deferred = this.$q.defer();
-            this.adminGroupService.getGroupDetail(this.$state.params.data)
+            this.adminGroupService.getGroupDetail(this.groupFolder)
                 .then(function (response) {
                 if (response.group) {
                     _this.groupFolder = response.group;
@@ -109,7 +110,7 @@ var AIP;
             var deferred = this.$q.defer();
             var promises = [];
             this.spinnerService.showSpinner(true);
-            promises.push(this.adminGroupService.getAssignedActionItemInGroup(this.$state.params.data)
+            promises.push(this.adminGroupService.getAssignedActionItemInGroup(this.groupFolder)
                 .then(function (response) {
                 _this.assignedActionItems = response;
                 _this.assignedActionItems.sort(function (a, b) {
@@ -127,7 +128,6 @@ var AIP;
         };
         AdminGroupOpenPageCtrl.prototype.edit = function () {
             var _this = this;
-            console.log("edit");
             this.adminGroupService.getActionItemListForselect()
                 .then(function (response) {
                 _this.allActionItems = response;
@@ -145,11 +145,48 @@ var AIP;
                 console.log(err);
             });
         };
+        AdminGroupOpenPageCtrl.prototype.validateEdit = function (type) {
+            var _this = this;
+            if (this.groupFolder.postedInd === "Y") {
+                var n = new Notification({
+                    message: this.$filter("i18n_aip")("aip.admin.group.content.edit.posted.warning"),
+                    type: "warning"
+                });
+                n.addPromptAction(this.$filter("i18n_aip")("aip.common.text.no"), function () {
+                    notifications.remove(n);
+                });
+                n.addPromptAction(this.$filter("i18n_aip")("aip.common.text.yes"), function () {
+                    notifications.remove(n);
+                    if (type === "overview") {
+                        _this.$state.go("admin-group-edit", { data: { group: _this.groupFolder.groupId, isEdit: true } });
+                    }
+                    else {
+                        _this.edit();
+                    }
+                });
+                notifications.addNotification(n);
+            }
+            else {
+                if (type === "overview") {
+                    this.$state.go("admin-group-edit", { data: { group: this.groupFolder.groupId, isEdit: true } });
+                }
+                else {
+                    this.edit();
+                }
+            }
+        };
         AdminGroupOpenPageCtrl.prototype.handleNotification = function (noti) {
             var _this = this;
-            if (noti.notiType === "saveSuccess") {
+            if (noti.notiType === "saveSuccess" || noti.notiType === "editSuccess") {
+                var message = "";
+                if (noti.notiType === "saveSuccess") {
+                    message = this.$filter("i18n_aip")("aip.common.save.successful");
+                }
+                else if (noti.notiType === "editSuccess") {
+                    message = this.$filter("i18n_aip")("aip.common.edit.successful");
+                }
                 var n = new Notification({
-                    message: this.$filter("i18n_aip")("aip.common.save.successful"),
+                    message: message,
                     type: "success",
                     flash: true
                 });
@@ -299,7 +336,7 @@ var AIP;
         AdminGroupOpenPageCtrl.prototype.save = function () {
             var _this = this;
             this.saving = true;
-            this.adminGroupService.updateActionItemGroupAssignment(this.selected, this.$state.params.data)
+            this.adminGroupService.updateActionItemGroupAssignment(this.selected, this.groupFolder)
                 .then(function (response) {
                 _this.saving = false;
                 console.log(response);
@@ -323,6 +360,39 @@ var AIP;
                     notifications.addNotification(n);
                     _this.openContentPanel();
                 }, 500);
+            });
+        };
+        AdminGroupOpenPageCtrl.prototype.validateSave = function () {
+            var _this = this;
+            this.adminGroupService.getGroupDetail(this.groupFolder)
+                .then(function (response) {
+                if (response.group) {
+                    _this.groupFolder = response.group;
+                    if (_this.groupFolder.postedInd === "Y") {
+                        var n = new Notification({
+                            message: _this.$filter("i18n_aip")("aip.admin.group.content.edit.posted.warning"),
+                            type: "warning"
+                        });
+                        n.addPromptAction(_this.$filter("i18n_aip")("aip.common.text.no"), function () {
+                            notifications.remove(n);
+                        });
+                        n.addPromptAction(_this.$filter("i18n_aip")("aip.common.text.yes"), function () {
+                            notifications.remove(n);
+                            _this.save();
+                        });
+                        notifications.addNotification(n);
+                    }
+                    else {
+                        _this.save();
+                    }
+                }
+                else {
+                    //todo: output error in notification center?
+                    console.log("fail");
+                }
+            }, function (err) {
+                //TODO:: handle error call
+                console.log(err);
             });
         };
         return AdminGroupOpenPageCtrl;

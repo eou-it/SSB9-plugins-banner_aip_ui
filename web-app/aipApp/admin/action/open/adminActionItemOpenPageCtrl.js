@@ -264,21 +264,21 @@ var AIP;
                     }
                 }
                 /*
-                if(actionItemTemplate) {
-                    actionItemTemplate.select2({
-                        width: "25em",
-                        minimumResultsForSearch: Infinity,
-                        placeholderOption:'first'
-                    });
-                }*/
+                 if(actionItemTemplate) {
+                 actionItemTemplate.select2({
+                 width: "25em",
+                 minimumResultsForSearch: Infinity,
+                 placeholderOption:'first'
+                 });
+                 }*/
                 $(".actionItemContent").height($(".actionItemElement").height() - $(".xe-tab-nav").height());
                 //TODO: find better and proper way to set defalut value in SELECT2 - current one is just dom object hack.
                 //action item selected temlate
                 if (_this.selectedTemplate) {
                     if (_this.templates[0].sourceInd == "B") {
                         /*
-                        $(".select2-container.actionItemSelect .select2-chosen")[0].innerHTML = this.actionItem.actionItemTemplateName + " (" + this.$filter("i18n_aip")("aip.common.baseline") + ")";
-                        */
+                         $(".select2-container.actionItemSelect .select2-chosen")[0].innerHTML = this.actionItem.actionItemTemplateName + " (" + this.$filter("i18n_aip")("aip.common.baseline") + ")";
+                         */
                     }
                 }
             }, 500);
@@ -316,7 +316,7 @@ var AIP;
                     return { success: true, type: "template", data: response.data.actionItem };
                 }
                 else {
-                    return { success: false , errors: response.data.errors};
+                    return { success: false, errors: response.data.errors };
                 }
             }, function (err) {
                 console.log(err);
@@ -334,7 +334,7 @@ var AIP;
                     return { success: true };
                 }
                 else {
-                    return { success: false, errors: response.data.errors};
+                    return { success: false, errors: response.data.errors };
                 }
             }, function (err) {
                 console.log(err);
@@ -362,8 +362,7 @@ var AIP;
                     _this.openContentPanel();
                 }
                 else {
-                    console.log("error:" +response[0].errors);
-                    _this.saveErrorCallback(response[0].errors);
+                    _this.saveErrorCallback(response[0].error);
                     console.log("error:");
                 }
             }, function (err) {

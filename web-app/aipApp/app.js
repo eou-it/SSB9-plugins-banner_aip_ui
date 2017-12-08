@@ -111,6 +111,14 @@ var bannerAIPApp = angular.module("bannerAIP", [
                 label: "aip.admin.group.add",
                 url: "/aip/admin#/group/add"}
         },
+        "admin-group-edit": {
+            url: "/group/edit",
+            templateUrl:"admin/group/add/adminGroupAddPage.html",
+            controller:"AdminGroupAddPageCtrl",
+            breadcrumb: {
+                label: "aip.admin.group.edit",
+                url: "/aip/admin#/group/edit"}
+        },
         "admin-group-open": {
             url: "/group/open",
             templateUrl:"admin/group/open/adminGroupOpenPage.html",
@@ -167,7 +175,7 @@ var bannerAIPApp = angular.module("bannerAIP", [
             folders: aipAppAbsPath + "aipAdmin/folders",
             groupList: aipAppAbsPath + "aipAdmin/groupList",
             groupStatus: aipAppAbsPath + "aipAdmin/adminGroupStatus",
-            createGroup: aipAppAbsPath + "aipAdmin/createGroup",
+            createOrUpdateGroup: aipAppAbsPath + "aipAdmin/createOrUpdateGroup",
             openGroup: aipAppAbsPath + "aipAdmin/openGroup",
             // actionList: aipAppAbsPath + "aip/adminActionLists",
             actionItemList: aipAppAbsPath + "aipAdmin/actionItemList",

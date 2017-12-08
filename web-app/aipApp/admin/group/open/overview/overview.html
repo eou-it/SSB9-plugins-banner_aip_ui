@@ -3,16 +3,28 @@ Copyright 2017 Ellucian Company L.P. and its affiliates.
 *******************************************************************************-->
 <div id="openGroupDetail">
     <div class="groupElement groupDetail col-xs-12 col-sm-8">
-        <h3>{{"aip.common.group.name"|i18n_aip}}</h3>
-        <p class="openGroupTitle">{{vm.groupFolder.groupName}}</p>
-        <h3>{{"aip.common.folder"|i18n_aip}}</h3>
-        <p class="openGroupFolder">{{vm.groupFolder.folderName}}</p>
-        <h3>{{"aip.common.status"|i18n_aip}}</h3>
-        <p class="openGroupStatus">{{vm.groupFolder.groupStatus}}</p>
-        <h3>{{"aip.common.group.title"|i18n_aip}}</h3>
-        <p class="openGroupTitle">{{vm.groupFolder.groupTitle}}</p>
-        <h3>{{"aip.common.group.description"|i18n_aip}}</h3>
-        <p class="openGroupDesc">{{vm.groupFolder.groupDesc}}</p>
+        <div class="row">
+            <div class="col-xs-12 col-sm-10">
+                <h3>{{"aip.common.group.name"|i18n_aip}}</h3>
+                <p class="openGroupTitle">{{vm.groupFolder.groupName}}</p>
+                <h3>{{"aip.common.folder"|i18n_aip}}</h3>
+                <p class="openGroupFolder">{{vm.groupFolder.folderName}}</p>
+                <h3>{{"aip.common.status"|i18n_aip}}</h3>
+                <p class="openGroupStatus">{{vm.groupFolder.groupStatus}}</p>
+                <h3>{{"aip.common.group.title"|i18n_aip}}</h3>
+                <p class="openGroupTitle">{{vm.groupFolder.groupTitle}}</p>
+                <h3>{{"aip.common.group.description"|i18n_aip}}</h3>
+                <p class="openGroupDesc">{{vm.groupFolder.groupDesc}}</p>
+            </div>
+            <div class="col-xs-12 col-sm-2">
+                <button name="Edit" type="button" class="btn btn-default edit" ng-click="vm.validateEdit('overview')"
+                        aria-label="">
+                    <span class="icon icon-edit-CO"></span>
+                    <span class="button-text hidden-sm-down">{{'aip.common.text.edit'|i18n_aip}}</span>
+                </button>
+            </div>
+        </div>
+
     </div>
 
     <div class="groupElement col-xs-12 col-sm-4">
