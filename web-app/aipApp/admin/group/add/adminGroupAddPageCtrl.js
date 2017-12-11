@@ -9,9 +9,9 @@ var AIP;
     var AdminGroupAddPageCtrl = /** @class */ (function () {
         function AdminGroupAddPageCtrl($scope, AdminGroupService, $q, SpinnerService, $state, $filter, $sce, $timeout, CKEDITORCONFIG) {
             this.$inject = ["$scope", "AdminGroupService", "$q", "SpinnerService", "$state", "$filter", "$sce", "$timeout", "CKEDITORCONFIG"];
-            this.trustGroupDesc = function () {
-                this.groupInfo.description = this.groupInfo.description ? this.$filter("html")(this.$sce.trustAsHtml(this.groupInfo.description)) : "";
-                return this.groupInfo.description;
+            this.trustHTML = function (txtString) {
+                var sanitized = txtString ? this.$filter("html")(this.$sce.trustAsHtml(txtString)) : "";
+                return sanitized;
             };
             $scope.vm = this;
             this.$q = $q;
@@ -67,7 +67,7 @@ var AIP;
                             _this.existFolder = _this.folders.filter(function (item) {
                                 return item.id === parseInt(response.group.folderId);
                             })[0];
-                            _this.groupInfo.description = response.group.groupDesc;
+                            _this.groupInfo.description = _this.trustHTML(response.group.groupDesc);
                         }
                         else {
                             //todo: output error in notification center?
@@ -79,7 +79,6 @@ var AIP;
                     });
                 }
                 _this.spinnerService.showSpinner(false);
-                _this.trustGroupDesc();
             });
         };
         AdminGroupAddPageCtrl.prototype.checkGroupPost = function () {

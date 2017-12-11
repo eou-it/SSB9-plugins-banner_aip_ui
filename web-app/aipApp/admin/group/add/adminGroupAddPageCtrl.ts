@@ -109,7 +109,7 @@ module AIP {
                                 this.existFolder = this.folders.filter((item)=> {
                                     return item.id === parseInt(response.group.folderId);
                                 })[0];
-                                this.groupInfo.description = response.group.groupDesc;
+                                this.groupInfo.description = this.trustHTML(response.group.groupDesc);
                             } else {
                                 //todo: output error in notification center?
                                 console.log("fail");
@@ -121,7 +121,6 @@ module AIP {
 
                 }
                 this.spinnerService.showSpinner(false);
-                this.trustGroupDesc();
             });
         }
         checkGroupPost() {
@@ -221,9 +220,9 @@ module AIP {
         selectStatus(item, index) {
             this.groupInfo.status = item.value;
         }
-        trustGroupDesc = function() {
-            this.groupInfo.description = this.groupInfo.description?this.$filter("html")(this.$sce.trustAsHtml(this.groupInfo.description)):"";
-            return this.groupInfo.description;
+        trustHTML = function(txtString) {
+            var sanitized = txtString ? this.$filter("html")(this.$sce.trustAsHtml(txtString)):"";
+            return sanitized;
         }
 
         saveErrorCallback(invalidFields, errors, message) {

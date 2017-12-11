@@ -7,6 +7,10 @@ var AIP;
         function AdminGroupOpenPageCtrl($scope, AdminGroupService, $q, SpinnerService, $state, $filter, $sce, $templateRequest, $templateCache, $compile, $timeout, APP_ROOT) {
             this.$inject = ["$scope", "AdminGroupService", "$q", "SpinnerService", "$state", "$filter", "$sce", "$templateRequest", "$templateCache",
                 "$compile", "$timeout", "APP_ROOT"];
+            this.trustHTML = function (txtString) {
+                var sanitized = txtString ? this.$filter("html")(this.$sce.trustAsHtml(txtString)) : "";
+                return sanitized;
+            };
             $scope.vm = this;
             this.$scope = $scope;
             this.$q = $q;

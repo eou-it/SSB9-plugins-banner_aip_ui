@@ -161,6 +161,11 @@ module AIP {
             return deferred.promise;
         }
 
+        trustHTML = function(txtString) {
+            var sanitized = txtString ? this.$filter("html")(this.$sce.trustAsHtml(txtString)):"";
+            return sanitized;
+        }
+
         edit() {
             this.adminGroupService.getActionItemListForselect()
                 .then((response) => {
