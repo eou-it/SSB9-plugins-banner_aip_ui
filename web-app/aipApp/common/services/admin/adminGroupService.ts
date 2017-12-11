@@ -1,6 +1,7 @@
 /*******************************************************************************
  Copyright 2017 Ellucian Company L.P. and its affiliates.
  ****************************************************************************** */
+///<reference path="../../../../typings/tsd.d.ts"/>
 declare var register;
 
 module AIP {
@@ -71,7 +72,7 @@ module AIP {
         getFolder();
         //getGroupList();
         fetchData(query: string);
-        saveGroup(groupInfo:IGroupInfo);
+        saveGroup(groupInfo:IGroupInfo, edit?: boolean, duplicate?: boolean);
         getGroupDetail(groupId: number|string);
         enableGroupOpen(groupId: number|string);
     }
@@ -219,6 +220,19 @@ module AIP {
                 url: this.ENDPOINT.admin.deleteGroup,
                 data: status
             });
+            return request;
+        }
+
+        groupPosted(groupId) {
+            var request = this.$http({
+                method: "GET",
+                url: this.ENDPOINT.admin.groupPosted+"?groupId=" + groupId
+            })
+                .then((response: any) => {
+                    return response.data;
+                }, (err) => {
+                    throw new Error(err);
+                });
             return request;
         }
 

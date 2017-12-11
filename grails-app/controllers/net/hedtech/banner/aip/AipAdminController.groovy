@@ -33,7 +33,7 @@ class AipAdminController {
 
     def actionItemProcessingCommonService
     def actionItemGroupAssignReadOnlyService
-
+    def actionItemGroupService
     /**
      * API for folders LOV
      * @return
@@ -380,6 +380,15 @@ value: value.aipBlock
      */
     def adminGroupStatus() {
         def model = actionItemProcessingCommonService.listStatus()
+        render model as JSON
+    }
+
+    /**
+     * Check actionItem Group already posted
+     * @return
+     */
+    def groupPosted() {
+        def model = [posted: actionItemGroupService.checkGroupPosted( Long.parseLong( params.groupId ) )]
         render model as JSON
     }
 }

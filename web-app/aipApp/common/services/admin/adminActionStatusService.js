@@ -4,7 +4,7 @@ Copyright 2017 Ellucian Company L.P. and its affiliates.
 ///<reference path="../../../../typings/tsd.d.ts"/>
 var AIP;
 (function (AIP) {
-    var AdminActionStatusService = (function () {
+    var AdminActionStatusService = /** @class */ (function () {
         function AdminActionStatusService($http, $q, $filter, ENDPOINT) {
             this.$http = $http;
             this.$q = $q;

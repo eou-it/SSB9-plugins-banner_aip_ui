@@ -201,7 +201,8 @@ var bannerAIPApp = angular.module("bannerAIP", [
             updateBlockedProcessItems: aipAppAbsPath + "aipAdmin/updateBlockedProcessItems",
             getAssignedActionItemInGroup: aipAppAbsPath + "aipAdmin/getAssignedActionItemInGroup",
             listActionItemForSelect: aipAppAbsPath + "aipAdmin/getActionItemsListForSelect",
-            updateActionItemGroupAssignment: aipAppAbsPath + "aipAdmin/updateActionItemGroupAssignment"
+            updateActionItemGroupAssignment: aipAppAbsPath + "aipAdmin/updateActionItemGroupAssignment",
+            groupPosted: aipAppAbsPath + "aipAdmin/groupPosted"
 
         }
     })

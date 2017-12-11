@@ -1,3 +1,4 @@
+///<reference path="../../../../typings/tsd.d.ts"/>
 var AIP;
 (function (AIP) {
     var Status;
@@ -6,7 +7,7 @@ var AIP;
         Status[Status["Active"] = 2] = "Active";
         Status[Status["Inactive"] = 3] = "Inactive";
     })(Status || (Status = {}));
-    var AdminGroupService = (function () {
+    var AdminGroupService = /** @class */ (function () {
         function AdminGroupService($http, $q, $filter, ENDPOINT, $sce) {
             this.$http = $http;
             this.$q = $q;
@@ -130,6 +131,18 @@ var AIP;
                 method: "POST",
                 url: this.ENDPOINT.admin.deleteGroup,
                 data: status
+            });
+            return request;
+        };
+        AdminGroupService.prototype.groupPosted = function (groupId) {
+            var request = this.$http({
+                method: "GET",
+                url: this.ENDPOINT.admin.groupPosted + "?groupId=" + groupId
+            })
+                .then(function (response) {
+                return response.data;
+            }, function (err) {
+                throw new Error(err);
             });
             return request;
         };

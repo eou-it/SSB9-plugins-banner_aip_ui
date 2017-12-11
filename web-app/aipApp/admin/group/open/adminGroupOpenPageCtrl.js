@@ -3,7 +3,7 @@
 ///<reference path="../../../common/services/spinnerService.ts"/>
 var AIP;
 (function (AIP) {
-    var AdminGroupOpenPageCtrl = (function () {
+    var AdminGroupOpenPageCtrl = /** @class */ (function () {
         function AdminGroupOpenPageCtrl($scope, AdminGroupService, $q, SpinnerService, $state, $filter, $sce, $templateRequest, $templateCache, $compile, $timeout, APP_ROOT) {
             this.$inject = ["$scope", "AdminGroupService", "$q", "SpinnerService", "$state", "$filter", "$sce", "$templateRequest", "$templateCache",
                 "$compile", "$timeout", "APP_ROOT"];
@@ -147,15 +147,28 @@ var AIP;
         };
         AdminGroupOpenPageCtrl.prototype.validateEdit = function (type) {
             var _this = this;
-            if (this.groupFolder.postedInd === "Y") {
-                var n = new Notification({
-                    message: this.$filter("i18n_aip")("aip.admin.group.content.edit.posted.warning"),
-                    type: "warning"
-                });
-                n.addPromptAction(this.$filter("i18n_aip")("aip.common.text.no"), function () {
-                    notifications.remove(n);
-                });
-                n.addPromptAction(this.$filter("i18n_aip")("aip.common.text.yes"), function () {
+            this.adminGroupService.groupPosted(this.groupFolder.groupId)
+                .then(function (response) {
+                if (response.posted) {
+                    var n = new Notification({
+                        message: _this.$filter("i18n_aip")("aip.admin.group.content.edit.posted.warning"),
+                        type: "warning"
+                    });
+                    n.addPromptAction(_this.$filter("i18n_aip")("aip.common.text.no"), function () {
+                        notifications.remove(n);
+                    });
+                    n.addPromptAction(_this.$filter("i18n_aip")("aip.common.text.yes"), function () {
+                        notifications.remove(n);
+                        if (type === "overview") {
+                            _this.$state.go("admin-group-edit", { data: { group: _this.groupFolder.groupId, isEdit: true } });
+                        }
+                        else {
+                            _this.edit();
+                        }
+                    });
+                    notifications.addNotification(n);
+                }
+                else {
                     notifications.remove(n);
                     if (type === "overview") {
                         _this.$state.go("admin-group-edit", { data: { group: _this.groupFolder.groupId, isEdit: true } });
@@ -163,17 +176,10 @@ var AIP;
                     else {
                         _this.edit();
                     }
-                });
-                notifications.addNotification(n);
-            }
-            else {
-                if (type === "overview") {
-                    this.$state.go("admin-group-edit", { data: { group: this.groupFolder.groupId, isEdit: true } });
                 }
-                else {
-                    this.edit();
-                }
-            }
+            }, function (err) {
+                throw new Error(err);
+            });
         };
         AdminGroupOpenPageCtrl.prototype.handleNotification = function (noti) {
             var _this = this;

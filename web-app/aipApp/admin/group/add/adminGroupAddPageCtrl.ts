@@ -27,6 +27,7 @@ module AIP {
         name: string;
         status: any;
         folder: any;
+        postedInd: boolean;
         description: string;
     }
     export class AdminGroupAddPageCtrl implements IAdminGroupAddPageCtrl{
@@ -101,6 +102,7 @@ module AIP {
                                 this.groupInfo.title = response.group.groupTitle;
                                 this.groupInfo.name = response.group.groupName;
                                 this.groupInfo.status = response.group.groupStatus;
+                                this.groupInfo.postedInd = response.group.postedInd==="Y";
                                 this.groupInfo.folder = this.folders.filter((item)=> {
                                     return item.id === parseInt(response.group.folderId);
                                 })[0];
@@ -121,6 +123,30 @@ module AIP {
                 this.spinnerService.showSpinner(false);
                 this.trustGroupDesc();
             });
+        }
+        checkGroupPost() {
+            this.adminGroupService.groupPosted(this.groupInfo.id)
+                .then((response) => {
+                    if(!this.groupInfo.postedInd && response.posted) {
+                        var n = new Notification({
+                            message: this.$filter("i18n_aip")("aip.admin.group.content.edit.posted.warning"),
+                            type: "warning"
+                        });
+                        n.addPromptAction(this.$filter("i18n_aip")("aip.common.text.no"), () => {
+                            notifications.remove(n);
+                        });
+                        n.addPromptAction(this.$filter("i18n_aip")("aip.common.text.yes"), ()=> {
+                            notifications.remove(n);
+                            this.save();
+                        });
+                        notifications.addNotification(n);
+                    } else {
+                        this.save();
+                    }
+
+                }, (err) => {
+
+                });
         }
         save() {
             this.saving = true;
@@ -180,7 +206,7 @@ module AIP {
             if (this.editMode && (this.existFolder.id!==item.id)) {
                 this.duplicateGroup = true;
                 var n = new Notification({
-                    message: this.$filter("i18n_aip")("aip.admin.group.content.edit.duplicate"),
+                    message: this.$filter("i18n_aip")("aip.admin.group.content.edit.posted.warning"),
                     type: "warning"
                 });
                 n.addPromptAction(this.$filter("i18n_aip")("aip.common.text.ok"), () => {
