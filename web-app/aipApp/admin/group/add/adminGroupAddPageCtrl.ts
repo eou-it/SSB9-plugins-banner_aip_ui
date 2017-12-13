@@ -174,7 +174,7 @@ module AIP {
                     this.saving = false;
                     var n = new Notification({
                         message: this.$filter("i18n_aip")(err.message),
-                        type: "warning"
+                        type: "error"
                     });
                     n.addPromptAction(this.$filter("i18n_aip")("aip.common.text.yes"), () => {
                         notifications.remove(n);

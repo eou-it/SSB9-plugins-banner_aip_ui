@@ -136,7 +136,7 @@ var AIP;
                 _this.saving = false;
                 var n = new Notification({
                     message: _this.$filter("i18n_aip")(err.message),
-                    type: "warning"
+                    type: "error"
                 });
                 n.addPromptAction(_this.$filter("i18n_aip")("aip.common.text.yes"), function () {
                     notifications.remove(n);
