@@ -89,7 +89,7 @@ var AIP;
             this.selected = [];
             this.assignedActionItems = [];
             var deferred = this.$q.defer();
-            this.adminGroupService.getGroupDetail(this.groupFolder)
+            this.adminGroupService.getGroupDetail(this.groupFolder.groupId ? this.groupFolder.groupId : this.groupFolder)
                 .then(function (response) {
                 if (response.group) {
                     _this.groupFolder = response.group;
@@ -114,7 +114,7 @@ var AIP;
             var deferred = this.$q.defer();
             var promises = [];
             this.spinnerService.showSpinner(true);
-            promises.push(this.adminGroupService.getAssignedActionItemInGroup(this.groupFolder)
+            promises.push(this.adminGroupService.getAssignedActionItemInGroup(this.groupFolder.groupId ? this.groupFolder.groupId : this.groupFolder)
                 .then(function (response) {
                 _this.assignedActionItems = response;
                 _this.assignedActionItems.sort(function (a, b) {
@@ -346,7 +346,7 @@ var AIP;
         AdminGroupOpenPageCtrl.prototype.save = function () {
             var _this = this;
             this.saving = true;
-            this.adminGroupService.updateActionItemGroupAssignment(this.selected, this.groupFolder)
+            this.adminGroupService.updateActionItemGroupAssignment(this.selected, this.groupFolder.groupId ? this.groupFolder.groupId : this.groupFolder)
                 .then(function (response) {
                 _this.saving = false;
                 console.log(response);
@@ -374,7 +374,7 @@ var AIP;
         };
         AdminGroupOpenPageCtrl.prototype.validateSave = function () {
             var _this = this;
-            this.adminGroupService.getGroupDetail(this.groupFolder)
+            this.adminGroupService.getGroupDetail(this.groupFolder.groupId ? this.groupFolder.groupId : this.groupFolder)
                 .then(function (response) {
                 if (response.group) {
                     _this.groupFolder = response.group;

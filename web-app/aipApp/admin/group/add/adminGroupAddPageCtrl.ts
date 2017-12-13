@@ -124,36 +124,48 @@ module AIP {
             });
         }
         checkGroupPost() {
-            this.adminGroupService.groupPosted(this.groupInfo.id)
-                .then((response) => {
-                    if(!this.groupInfo.postedInd && response.posted) {
-                        var n = new Notification({
-                            message: this.$filter("i18n_aip")("aip.admin.group.content.edit.posted.warning"),
-                            type: "warning"
-                        });
-                        if (this.existFolder.id !== this.groupInfo.folder.id) {
-                            console.log("folder changed");
-                            n.set("message", this.$filter("i18n_aip")("aip.admin.group.content.edit.folder.disable"));
-                            n.addPromptAction(this.$filter("i18n_aip")("aip.common.text.yes"), ()=> {
-                                notifications.remove(n);
-                            });;
+            if(this.editMode) {
+                this.adminGroupService.groupPosted(this.groupInfo.id)
+                    .then((response) => {
+                        if (!this.groupInfo.postedInd && response.posted) {
+                            var n = new Notification({
+                                message: this.$filter("i18n_aip")("aip.admin.group.content.edit.posted.warning"),
+                                type: "warning"
+                            });
+                            if (this.existFolder.id !== this.groupInfo.folder.id) {
+                                console.log("folder changed");
+                                n.set("message", this.$filter("i18n_aip")("aip.admin.group.content.edit.folder.disable"));
+                                n.addPromptAction(this.$filter("i18n_aip")("aip.common.text.yes"), () => {
+                                    notifications.remove(n);
+                                });
+                                ;
+                            } else {
+                                n.addPromptAction(this.$filter("i18n_aip")("aip.common.text.no"), () => {
+                                    notifications.remove(n);
+                                });
+                                n.addPromptAction(this.$filter("i18n_aip")("aip.common.text.yes"), () => {
+                                    notifications.remove(n);
+                                    this.save();
+                                });
+                            }
+                            notifications.addNotification(n);
                         } else {
-                            n.addPromptAction(this.$filter("i18n_aip")("aip.common.text.no"), () => {
-                                notifications.remove(n);
-                            });
-                            n.addPromptAction(this.$filter("i18n_aip")("aip.common.text.yes"), () => {
-                                notifications.remove(n);
-                                this.save();
-                            });
+                            this.save();
                         }
+
+                    }, (err) => {
+                        var n = new Notification({
+                            message: this.$filter("i18n_aip")(err.message),
+                            type: "error"
+                        });
+                        n.addPromptAction(this.$filter("i18n_aip")("aip.common.text.ok"), () => {
+                            notifications.remove(n);
+                        });
                         notifications.addNotification(n);
-                    } else {
-                        this.save();
-                    }
-
-                }, (err) => {
-
-                });
+                    });
+            } else {
+                this.save();
+            }
         }
         save() {
             this.saving = true;
@@ -176,7 +188,7 @@ module AIP {
                         message: this.$filter("i18n_aip")(err.message),
                         type: "error"
                     });
-                    n.addPromptAction(this.$filter("i18n_aip")("aip.common.text.yes"), () => {
+                    n.addPromptAction(this.$filter("i18n_aip")("aip.common.text.ok"), () => {
                         notifications.remove(n);
                     });
                     notifications.addNotification(n);
@@ -272,6 +284,9 @@ module AIP {
                 message: message,
                 type: "error",
                 flash: true
+            });
+            n.addPromptAction(this.$filter("i18n_aip")("aip.common.text.ok"), () => {
+                notifications.remove(n);
             });
             notifications.addNotification(n);
         }

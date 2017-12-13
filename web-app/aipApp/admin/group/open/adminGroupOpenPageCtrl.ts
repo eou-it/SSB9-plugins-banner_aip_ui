@@ -119,7 +119,7 @@ module AIP {
             this.selected = [];
             this.assignedActionItems = [];
             var deferred = this.$q.defer();
-            this.adminGroupService.getGroupDetail(this.groupFolder)
+            this.adminGroupService.getGroupDetail(this.groupFolder.groupId?this.groupFolder.groupId:this.groupFolder)
                 .then((response) => {
                 if(response.group) {
                     this.groupFolder = response.group;
@@ -143,7 +143,7 @@ module AIP {
             var promises = [];
             this.spinnerService.showSpinner( true );
             promises.push(
-                this.adminGroupService.getAssignedActionItemInGroup(this.groupFolder)
+                this.adminGroupService.getAssignedActionItemInGroup(this.groupFolder.groupId?this.groupFolder.groupId:this.groupFolder)
                     .then((response) => {
                         this.assignedActionItems = response;
                         this.assignedActionItems.sort((a,b) => {
@@ -380,7 +380,7 @@ module AIP {
         }
         save() {
             this.saving = true;
-            this.adminGroupService.updateActionItemGroupAssignment(this.selected, this.groupFolder)
+            this.adminGroupService.updateActionItemGroupAssignment(this.selected, this.groupFolder.groupId?this.groupFolder.groupId:this.groupFolder)
                 .then((response) => {
                     this.saving = false;
                     console.log(response);
@@ -407,7 +407,7 @@ module AIP {
                 });
         }
         validateSave() {
-            this.adminGroupService.getGroupDetail(this.groupFolder)
+            this.adminGroupService.getGroupDetail(this.groupFolder.groupId?this.groupFolder.groupId:this.groupFolder)
                 .then((response) => {
                     if(response.group) {
                         this.groupFolder = response.group;

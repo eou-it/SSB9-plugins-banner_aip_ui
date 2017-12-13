@@ -83,37 +83,50 @@ var AIP;
         };
         AdminGroupAddPageCtrl.prototype.checkGroupPost = function () {
             var _this = this;
-            this.adminGroupService.groupPosted(this.groupInfo.id)
-                .then(function (response) {
-                if (!_this.groupInfo.postedInd && response.posted) {
-                    var n = new Notification({
-                        message: _this.$filter("i18n_aip")("aip.admin.group.content.edit.posted.warning"),
-                        type: "warning"
-                    });
-                    if (_this.existFolder.id !== _this.groupInfo.folder.id) {
-                        console.log("folder changed");
-                        n.set("message", _this.$filter("i18n_aip")("aip.admin.group.content.edit.folder.disable"));
-                        n.addPromptAction(_this.$filter("i18n_aip")("aip.common.text.yes"), function () {
-                            notifications.remove(n);
+            if (this.editMode) {
+                this.adminGroupService.groupPosted(this.groupInfo.id)
+                    .then(function (response) {
+                    if (!_this.groupInfo.postedInd && response.posted) {
+                        var n = new Notification({
+                            message: _this.$filter("i18n_aip")("aip.admin.group.content.edit.posted.warning"),
+                            type: "warning"
                         });
-                        ;
+                        if (_this.existFolder.id !== _this.groupInfo.folder.id) {
+                            console.log("folder changed");
+                            n.set("message", _this.$filter("i18n_aip")("aip.admin.group.content.edit.folder.disable"));
+                            n.addPromptAction(_this.$filter("i18n_aip")("aip.common.text.yes"), function () {
+                                notifications.remove(n);
+                            });
+                            ;
+                        }
+                        else {
+                            n.addPromptAction(_this.$filter("i18n_aip")("aip.common.text.no"), function () {
+                                notifications.remove(n);
+                            });
+                            n.addPromptAction(_this.$filter("i18n_aip")("aip.common.text.yes"), function () {
+                                notifications.remove(n);
+                                _this.save();
+                            });
+                        }
+                        notifications.addNotification(n);
                     }
                     else {
-                        n.addPromptAction(_this.$filter("i18n_aip")("aip.common.text.no"), function () {
-                            notifications.remove(n);
-                        });
-                        n.addPromptAction(_this.$filter("i18n_aip")("aip.common.text.yes"), function () {
-                            notifications.remove(n);
-                            _this.save();
-                        });
+                        _this.save();
                     }
+                }, function (err) {
+                    var n = new Notification({
+                        message: _this.$filter("i18n_aip")(err.message),
+                        type: "error"
+                    });
+                    n.addPromptAction(_this.$filter("i18n_aip")("aip.common.text.ok"), function () {
+                        notifications.remove(n);
+                    });
                     notifications.addNotification(n);
-                }
-                else {
-                    _this.save();
-                }
-            }, function (err) {
-            });
+                });
+            }
+            else {
+                this.save();
+            }
         };
         AdminGroupAddPageCtrl.prototype.save = function () {
             var _this = this;
@@ -138,7 +151,7 @@ var AIP;
                     message: _this.$filter("i18n_aip")(err.message),
                     type: "error"
                 });
-                n.addPromptAction(_this.$filter("i18n_aip")("aip.common.text.yes"), function () {
+                n.addPromptAction(_this.$filter("i18n_aip")("aip.common.text.ok"), function () {
                     notifications.remove(n);
                 });
                 notifications.addNotification(n);
@@ -236,6 +249,9 @@ var AIP;
                 message: message,
                 type: "error",
                 flash: true
+            });
+            n.addPromptAction(this.$filter("i18n_aip")("aip.common.text.ok"), function () {
+                notifications.remove(n);
             });
             notifications.addNotification(n);
         };
