@@ -30,7 +30,7 @@ Copyright 2017 Ellucian Company L.P. and its affiliates.
             </div>
             <div class="groupElement col-xs-12 col-sm-5">
                 <div class="row">
-                    <xe-ui-select id="groupFolder" ng-model="vm.groupInfo.folder" theme="select2" ng-disabled="vm.editMode"
+                    <xe-ui-select id="groupFolder" ng-model="vm.groupInfo.folder" theme="select2" ng-disabled="vm.groupInfo.postedInd"
                                   on-select="vm.selectGroupFolder($item, $index)">
                         <xe-ui-select-match placeholder="{{'aip.common.select.folder.default'|i18n_aip}}">
                             {{vm.groupInfo.folder.name}}

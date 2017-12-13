@@ -90,13 +90,23 @@ var AIP;
                         message: _this.$filter("i18n_aip")("aip.admin.group.content.edit.posted.warning"),
                         type: "warning"
                     });
-                    n.addPromptAction(_this.$filter("i18n_aip")("aip.common.text.no"), function () {
-                        notifications.remove(n);
-                    });
-                    n.addPromptAction(_this.$filter("i18n_aip")("aip.common.text.yes"), function () {
-                        notifications.remove(n);
-                        _this.save();
-                    });
+                    if (_this.existFolder.id !== _this.groupInfo.folder.id) {
+                        console.log("folder changed");
+                        n.set("message", _this.$filter("i18n_aip")("aip.admin.group.content.edit.folder.disable"));
+                        n.addPromptAction(_this.$filter("i18n_aip")("aip.common.text.yes"), function () {
+                            notifications.remove(n);
+                        });
+                        ;
+                    }
+                    else {
+                        n.addPromptAction(_this.$filter("i18n_aip")("aip.common.text.no"), function () {
+                            notifications.remove(n);
+                        });
+                        n.addPromptAction(_this.$filter("i18n_aip")("aip.common.text.yes"), function () {
+                            notifications.remove(n);
+                            _this.save();
+                        });
+                    }
                     notifications.addNotification(n);
                 }
                 else {
@@ -124,8 +134,14 @@ var AIP;
                 }
             }, function (err) {
                 _this.saving = false;
-                //TODO:: handle error call
-                console.log(err);
+                var n = new Notification({
+                    message: _this.$filter("i18n_aip")(err.message),
+                    type: "warning"
+                });
+                n.addPromptAction(_this.$filter("i18n_aip")("aip.common.text.yes"), function () {
+                    notifications.remove(n);
+                });
+                notifications.addNotification(n);
             });
         };
         AdminGroupAddPageCtrl.prototype.cancel = function () {

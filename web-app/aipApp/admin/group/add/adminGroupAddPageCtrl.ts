@@ -131,13 +131,21 @@ module AIP {
                             message: this.$filter("i18n_aip")("aip.admin.group.content.edit.posted.warning"),
                             type: "warning"
                         });
-                        n.addPromptAction(this.$filter("i18n_aip")("aip.common.text.no"), () => {
-                            notifications.remove(n);
-                        });
-                        n.addPromptAction(this.$filter("i18n_aip")("aip.common.text.yes"), ()=> {
-                            notifications.remove(n);
-                            this.save();
-                        });
+                        if (this.existFolder.id !== this.groupInfo.folder.id) {
+                            console.log("folder changed");
+                            n.set("message", this.$filter("i18n_aip")("aip.admin.group.content.edit.folder.disable"));
+                            n.addPromptAction(this.$filter("i18n_aip")("aip.common.text.yes"), ()=> {
+                                notifications.remove(n);
+                            });;
+                        } else {
+                            n.addPromptAction(this.$filter("i18n_aip")("aip.common.text.no"), () => {
+                                notifications.remove(n);
+                            });
+                            n.addPromptAction(this.$filter("i18n_aip")("aip.common.text.yes"), () => {
+                                notifications.remove(n);
+                                this.save();
+                            });
+                        }
                         notifications.addNotification(n);
                     } else {
                         this.save();
@@ -164,8 +172,14 @@ module AIP {
                     }
                 }, (err) => {
                     this.saving = false;
-                    //TODO:: handle error call
-                    console.log(err);
+                    var n = new Notification({
+                        message: this.$filter("i18n_aip")(err.message),
+                        type: "warning"
+                    });
+                    n.addPromptAction(this.$filter("i18n_aip")("aip.common.text.yes"), () => {
+                        notifications.remove(n);
+                    });
+                    notifications.addNotification(n);
                 });
         }
         cancel() {
