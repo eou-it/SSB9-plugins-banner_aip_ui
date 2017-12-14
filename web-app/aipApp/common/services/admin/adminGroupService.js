@@ -7,7 +7,7 @@ var AIP;
         Status[Status["Active"] = 2] = "Active";
         Status[Status["Inactive"] = 3] = "Inactive";
     })(Status || (Status = {}));
-    var AdminGroupService = /** @class */ (function () {
+    var AdminGroupService = (function () {
         function AdminGroupService($http, $q, $filter, ENDPOINT, $sce) {
             this.$http = $http;
             this.$q = $q;
