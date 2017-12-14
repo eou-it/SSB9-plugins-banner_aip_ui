@@ -146,6 +146,22 @@ var AIP;
             });
             return request;
         };
+        AdminActionService.prototype.editActionItems = function (actionItem) {
+            var params = {
+                title: actionItem.title,
+                name: actionItem.name,
+                folderId: parseInt(actionItem.folder.id),
+                description: actionItem.description,
+                status: actionItem.status,
+                actionItemId: actionItem.id,
+            };
+            var request = this.$http({
+                method: "POST",
+                data: params,
+                url: this.ENDPOINT.admin.editActionItem
+            });
+            return request;
+        };
         AdminActionService.prototype.getActionItemDetail = function (actionItemId) {
             var request = this.$http({
                 method: "GET",
@@ -201,9 +217,9 @@ var AIP;
             });
             return request;
         };
-        AdminActionService.$inject = ["$http", "$q", "$filter", "ENDPOINT"];
         return AdminActionService;
     }());
+    AdminActionService.$inject = ["$http", "$q", "$filter", "ENDPOINT"];
     AIP.AdminActionService = AdminActionService;
 })(AIP || (AIP = {}));
 register("bannerAIP").service("AdminActionService", AIP.AdminActionService);

@@ -45,6 +45,8 @@ var AIP;
             this.blocks = [];
             this.statuses = [];
             this.rules = [];
+            this.allActionItems = [];
+            this.originalAssign = [];
             this.selectedTemplate;
             this.templateSource;
             this.saving = false;
@@ -147,6 +149,7 @@ var AIP;
             this.adminActionService.getActionItemTemplates()
                 .then(function (response) {
                 _this.templates = response.data;
+                console.log(_this.templates);
                 deferred.resolve(_this.openPanel("content"));
                 _this.getTemplateSource();
                 _this.contentChanged = false;
@@ -213,6 +216,30 @@ var AIP;
                 }
                 else {
                     return false;
+                }
+            }
+        };
+        AdminActionItemOpenPageCtrl.prototype.validateEdit = function (type) {
+            var _this = this;
+            if (this.actionItem.actionItemPostedStatus === "Y") {
+                var n = new Notification({
+                    message: this.$filter("i18n_aip")("aip.admin.group.content.edit.posted.warning"),
+                    type: "warning"
+                });
+                n.addPromptAction(this.$filter("i18n_aip")("aip.common.text.no"), function () {
+                    notifications.remove(n);
+                });
+                n.addPromptAction(this.$filter("i18n_aip")("aip.common.text.yes"), function () {
+                    notifications.remove(n);
+                    if (type === "overview") {
+                        _this.$state.go("admin-action-edit", { data: { group: _this.actionItem.actionItemId, isEdit: true } });
+                    }
+                });
+                notifications.addNotification(n);
+            }
+            else {
+                if (type === "overview") {
+                    this.$state.go("admin-action-edit", { data: { group: this.actionItem.actionItemId, isEdit: true } });
                 }
             }
         };

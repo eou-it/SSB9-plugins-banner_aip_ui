@@ -42,6 +42,8 @@ module AIP {
         saving;
         contentChanged;
         templateSource;
+        allActionItems;
+        originalAssign;
 
         constructor($scope, $q: ng.IQService, $state, $filter, $sce, $window, $templateRequest, $templateCache, $compile,
                     $timeout, $interpolate, SpinnerService, AdminActionService, AdminActionStatusService, APP_ROOT, CKEDITORCONFIG) {
@@ -69,6 +71,8 @@ module AIP {
             this.blocks = [];
             this.statuses = [];
             this.rules = [];
+            this.allActionItems = [];
+            this.originalAssign = [];
             this.selectedTemplate;
             this.templateSource;
             this.saving = false;
@@ -177,6 +181,7 @@ module AIP {
             this.adminActionService.getActionItemTemplates()
                 .then((response: AIP.IActionItemOpenResponse) => {
                     this.templates = response.data;
+                    console.log(this.templates)
                     deferred.resolve(this.openPanel("content"));
                     this.getTemplateSource();
                     this.contentChanged = false;
@@ -243,6 +248,28 @@ module AIP {
                     return true;
                 } else {
                     return false;
+                }
+            }
+        }
+        validateEdit(type) {
+            if (this.actionItem.actionItemPostedStatus === "Y") {
+                var n = new Notification({
+                    message: this.$filter("i18n_aip")("aip.admin.group.content.edit.posted.warning"),
+                    type: "warning"
+                });
+                n.addPromptAction(this.$filter("i18n_aip")("aip.common.text.no"), () => {
+                    notifications.remove(n);
+                });
+                n.addPromptAction(this.$filter("i18n_aip")("aip.common.text.yes"), ()=> {
+                    notifications.remove(n);
+                    if(type === "overview") {
+                        this.$state.go("admin-action-edit", {data: {group:this.actionItem.actionItemId, isEdit: true}});
+                    }
+                });
+                notifications.addNotification(n);
+            } else {
+                if(type === "overview") {
+                    this.$state.go("admin-action-edit", {data: {group:this.actionItem.actionItemId, isEdit: true}});
                 }
             }
         }
