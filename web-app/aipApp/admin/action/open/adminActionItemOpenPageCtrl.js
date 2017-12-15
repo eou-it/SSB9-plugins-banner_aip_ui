@@ -48,6 +48,7 @@ var AIP;
             this.allActionItems = [];
             this.originalAssign = [];
             this.selectedTemplate;
+            this.actionFolder;
             this.templateSource;
             this.saving = false;
             this.contentChanged;
@@ -65,10 +66,8 @@ var AIP;
             var _this = this;
             this.spinnerService.showSpinner(true);
             var promises = [];
+            this.actionFolder = this.$state.params.data || this.$state.previousParams.data.group;
             this.openOverviewPanel();
-            if (this.$state.params.noti) {
-                this.handleNotification(this.$state.params.noti);
-            }
             promises.push(this.getStatus());
             promises.push(this.getRules());
             this.$q.all(promises).then(function () {
@@ -130,7 +129,7 @@ var AIP;
         AdminActionItemOpenPageCtrl.prototype.openOverviewPanel = function () {
             var _this = this;
             var deferred = this.$q.defer();
-            this.adminActionService.getActionItemDetail(this.$state.params.data)
+            this.adminActionService.getActionItemDetail(this.actionFolder)
                 .then(function (response) {
                 _this.actionItem = response.data.actionItem;
                 _this.selectedTemplate = _this.actionItem.actionItemTemplateId;

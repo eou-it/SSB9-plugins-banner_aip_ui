@@ -44,6 +44,7 @@ module AIP {
         templateSource;
         allActionItems;
         originalAssign;
+        actionFolder;
 
         constructor($scope, $q: ng.IQService, $state, $filter, $sce, $window, $templateRequest, $templateCache, $compile,
                     $timeout, $interpolate, SpinnerService, AdminActionService, AdminActionStatusService, APP_ROOT, CKEDITORCONFIG) {
@@ -74,6 +75,7 @@ module AIP {
             this.allActionItems = [];
             this.originalAssign = [];
             this.selectedTemplate;
+            this.actionFolder;
             this.templateSource;
             this.saving = false;
             this.contentChanged;
@@ -90,11 +92,9 @@ module AIP {
         init() {
             this.spinnerService.showSpinner(true);
             var promises = [];
+            this.actionFolder = this.$state.params.data || this.$state.previousParams.data.group;
+                this.openOverviewPanel();
 
-            this.openOverviewPanel();
-            if (this.$state.params.noti) {
-                this.handleNotification(this.$state.params.noti);
-            }
             promises.push(this.getStatus());
             promises.push(this.getRules());
             this.$q.all(promises).then(() => {
@@ -162,7 +162,7 @@ module AIP {
 
         openOverviewPanel() {
             var deferred = this.$q.defer();
-            this.adminActionService.getActionItemDetail(this.$state.params.data)
+            this.adminActionService.getActionItemDetail(this.actionFolder)
                 .then((response: AIP.IActionItemOpenResponse) => {
                     this.actionItem = response.data.actionItem;
                     this.selectedTemplate = this.actionItem.actionItemTemplateId;
