@@ -108,7 +108,7 @@ module AIP {
                                 /*this.existFolder = this.folders.filter((item)=> {
                                     return item.id === parseInt(this.actionItem1.folderId);
                                 })[0];*/
-                                this.actionItemInfo.description = this.trustHTML(this.actionItem1.actionItemDesc);
+                                this.actionItemInfo.description = this.actionItem1.actionItemDesc;
                             } else {
                                 //todo: output error in notification center?
                                 console.log("fail");
@@ -139,7 +139,7 @@ module AIP {
             }
         }
         selectStatus(item, index) {
-            this.actionItemInfo.status = item.value;
+            this.actionItemInfo.status = this.$filter("i18n_aip")(item.value);
         }
         trustHTML = function(txtString) {
             var sanitized = txtString ? this.$filter("html")(this.$sce.trustAsHtml(txtString)):"";
@@ -188,7 +188,7 @@ module AIP {
                         var notiParams = {};
                         if (response.data.success) {
                             notiParams = {
-                                notiType: "saveSuccess",
+                                notiType: "editSuccess",
                                 data: response.data
                             };
                             this.$state.go("admin-action-open", {
@@ -216,7 +216,7 @@ module AIP {
                             };
                             this.$state.go("admin-action-open", {
                                 noti: notiParams,
-                                data: response.data.id
+                                data: response.data.newActionItem.id
                             });
                         } else {
                             this.saveErrorCallback(response.data.message);

@@ -29,16 +29,7 @@
                 </label>
             </div>
             <div class="actionItemElement col-xs-12 col-sm-5">
-               <!-- <div class="row">
-                    <select id="actionItemFolder" class="actionItemSelect" xe-data="" aria-label="Folder" required
-                            aria-required="true"
-                            ng-model="vm.actionItemInfo.folder"
-                            ng-options="item as item.name for item in vm.folders track by item.id">
-                        <option selected="selected" value="">{{"aip.common.select.folder.default"|i18n_aip}}</option>
-                    </select>
-                </div>-->
-
-                <div class="row">
+                     <div class="row">
                     <xe-ui-select id="actionItemFolder" ng-model="vm.actionItemInfo.folder" theme="select2"
                                   on-select="vm.actionItemInfo($item, $index)">
                         <xe-ui-select-match placeholder="{{'aip.common.select.folder.default'|i18n_aip}}">
@@ -58,22 +49,13 @@
                 </label>
             </div>
             <div class="actionItemElement col-xs-12 col-sm-5">
-                <!--<div class="row">
-                    <select id="actionItemStatus" class="actionItemSelect" xe-data="" aria-label="Status" required
-                            aria-required="true"
-                            ng-model="vm.actionItemInfo.status"
-                            ng-options="item as (item.value|i18n_aip) for item in vm.status track by item.id">
-                    </select>
-                </div>-->
-
-
-                <div class="row">
+                                <div class="row">
                     <xe-ui-select id="actionItemStatus" ng-model="vm.actionItemInfo.status" theme="select2" ng-disabled="disabled" search-enabled="false"
                                   on-select="vm.selectStatus($item, $index)">
                         <xe-ui-select-match>
                             {{vm.actionItemInfo.status|i18n_aip}}
                         </xe-ui-select-match>
-                        <xe-ui-select-choices repeat="item in vm.status ">
+                        <xe-ui-select-choices repeat="item in vm.status">
                             <div ng-bind-html="item.value|i18n_aip"></div>
                         </xe-ui-select-choices>
                     </xe-ui-select>
@@ -116,7 +98,7 @@
             <div class="actionItemElement col-xs-12 col-sm-8">
 
                     <textarea id="actionItemDesc" aria-required="true" name="actionItemDesc"
-                              placeholder="{{'aip.admin.action.add.description.placeholder'|i18n_aip}}" rows="20"
+                              placeholder="{{'aip.admin.action.add.description.placeholder'|i18n_aip}}" rows="20" cols="35"
                               ng-model="vm.actionItemInfo.description" aria-label="Description"></textarea>
 
             </div>

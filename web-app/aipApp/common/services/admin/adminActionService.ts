@@ -342,7 +342,7 @@ module AIP {
                 name: actionItem.name,
                 folderId: parseInt(actionItem.folder.id),
                 description: actionItem.description,
-                status: Status[actionItem.status.id],
+                status: actionItem.status,
 
             };
             var request = this.$http({

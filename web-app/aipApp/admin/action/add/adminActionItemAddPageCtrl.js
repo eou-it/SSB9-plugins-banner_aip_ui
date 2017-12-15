@@ -74,7 +74,7 @@ var AIP;
                             /*this.existFolder = this.folders.filter((item)=> {
                                 return item.id === parseInt(this.actionItem1.folderId);
                             })[0];*/
-                            _this.actionItemInfo.description = _this.trustHTML(_this.actionItem1.actionItemDesc);
+                            _this.actionItemInfo.description = _this.actionItem1.actionItemDesc;
                         }
                         else {
                             //todo: output error in notification center?
@@ -107,7 +107,7 @@ var AIP;
             }
         };
         AdminActionItemAddPageCtrl.prototype.selectStatus = function (item, index) {
-            this.actionItemInfo.status = item.value;
+            this.actionItemInfo.status = this.$filter("i18n_aip")(item.value);
         };
         AdminActionItemAddPageCtrl.prototype.validateInput = function () {
             if (this.saving) {
@@ -156,7 +156,7 @@ var AIP;
                     var notiParams = {};
                     if (response.data.success) {
                         notiParams = {
-                            notiType: "saveSuccess",
+                            notiType: "editSuccess",
                             data: response.data
                         };
                         _this.$state.go("admin-action-open", {
@@ -185,7 +185,7 @@ var AIP;
                         };
                         _this.$state.go("admin-action-open", {
                             noti: notiParams,
-                            data: response.data.id
+                            data: response.data.newActionItem.id
                         });
                     }
                     else {
