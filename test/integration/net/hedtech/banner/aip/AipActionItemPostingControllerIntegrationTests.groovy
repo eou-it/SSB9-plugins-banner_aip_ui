@@ -109,8 +109,8 @@ class AipActionItemPostingControllerIntegrationTests extends BaseIntegrationTest
         def ret = controller.response.contentAsString
         def data = JSON.parse( ret )
         assert data.find {
-            it.description.contains( 'Quinley Population' )
-        }.description.contains( 'Quinley Population' ) == true
+            it.description.contains( 'AIP Student Population' )
+        }.description.contains( 'AIP Student Population' ) == true
     }
 
 
