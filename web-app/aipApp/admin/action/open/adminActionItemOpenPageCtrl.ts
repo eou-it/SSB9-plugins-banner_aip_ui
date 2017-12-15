@@ -94,7 +94,9 @@ module AIP {
             var promises = [];
             this.actionFolder = this.$state.params.data || this.$state.previousParams.data.group;
                 this.openOverviewPanel();
-
+            if (this.$state.params.noti) {
+                this.handleNotification(this.$state.params.noti);
+            }
             promises.push(this.getStatus());
             promises.push(this.getRules());
             this.$q.all(promises).then(() => {
@@ -405,7 +407,7 @@ module AIP {
                 item.statusRuleSeqOrder = this.rules.indexOf(item);
                 item.statusId = item.statusId;
             });
-            allDefer.push(this.adminActionService.updateActionItemStatusRule(this.rules, this.$state.params.data)
+            allDefer.push(this.adminActionService.updateActionItemStatusRule(this.rules, this.actionFolder)
                 .then((response: any) => {
                     if (response.data.success) {
                         this.getRules();
@@ -449,7 +451,7 @@ module AIP {
         }
 
         getRules() {
-            this.adminActionStatusService.getRules(this.$state.params.data)
+            this.adminActionStatusService.getRules(this.actionFolder)
                 .then((response) => {
                     this.rules = response.data;
                     angular.forEach(this.rules, (item) => {

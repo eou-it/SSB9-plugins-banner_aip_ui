@@ -68,6 +68,9 @@ var AIP;
             var promises = [];
             this.actionFolder = this.$state.params.data || this.$state.previousParams.data.group;
             this.openOverviewPanel();
+            if (this.$state.params.noti) {
+                this.handleNotification(this.$state.params.noti);
+            }
             promises.push(this.getStatus());
             promises.push(this.getRules());
             this.$q.all(promises).then(function () {
@@ -359,7 +362,7 @@ var AIP;
                 item.statusRuleSeqOrder = _this.rules.indexOf(item);
                 item.statusId = item.statusId;
             });
-            allDefer.push(this.adminActionService.updateActionItemStatusRule(this.rules, this.$state.params.data)
+            allDefer.push(this.adminActionService.updateActionItemStatusRule(this.rules, this.actionFolder)
                 .then(function (response) {
                 if (response.data.success) {
                     _this.getRules();
@@ -405,7 +408,7 @@ var AIP;
         };
         AdminActionItemOpenPageCtrl.prototype.getRules = function () {
             var _this = this;
-            this.adminActionStatusService.getRules(this.$state.params.data)
+            this.adminActionStatusService.getRules(this.actionFolder)
                 .then(function (response) {
                 _this.rules = response.data;
                 angular.forEach(_this.rules, function (item) {
