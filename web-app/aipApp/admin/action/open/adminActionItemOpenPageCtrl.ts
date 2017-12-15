@@ -114,10 +114,15 @@ module AIP {
 
 
         handleNotification(noti) {
-            if (noti.notiType === "saveSuccess") {
-                // var data = noti.data.newActionItem||noti.data.actionItem;
+            if(noti.notiType === "saveSuccess" || noti.notiType === "editSuccess") {
+                var message = "";
+                if (noti.notiType === "saveSuccess") {
+                    message = this.$filter("i18n_aip")("aip.common.save.successful");
+                } else if (noti.notiType === "editSuccess") {
+                    message = this.$filter("i18n_aip")("aip.common.edit.successful");
+                }
                 var n = new Notification({
-                    message: this.$filter("i18n_aip")("aip.common.save.successful"), //+
+                    message: message, //+
                     type: "success",
                     flash: true
                 });
