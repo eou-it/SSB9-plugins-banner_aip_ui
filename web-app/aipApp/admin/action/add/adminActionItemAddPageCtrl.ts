@@ -81,14 +81,6 @@ module AIP {
                 this.adminActionService.getFolder()
                     .then((response:AIP.IActionItemFolderResponse) => {
                         this.folders = response.data;
-                        var actionItemFolder:any = $("#actionItemFolder");
-                        this.actionItemInfo.folder = this.folders;
-                        this.$timeout(() => {
-                            actionItemFolder.select2( {
-                                width: "25em",
-                                minimumResultsForSearch:Infinity
-                            });
-                        }, 50);
                     })
             );
             this.$q.all(allPromises).then(() => {
@@ -109,6 +101,7 @@ module AIP {
                                     return item.id === parseInt(this.actionItem1.folderId);
                                 })[0];*/
                                 this.actionItemInfo.description = this.actionItem1.actionItemDesc;
+                                this.trustActionItemContent();
                             } else {
                                 //todo: output error in notification center?
                                 console.log("fail");
@@ -141,9 +134,13 @@ module AIP {
         selectStatus(item, index) {
             this.actionItemInfo.status = this.$filter("i18n_aip")(item.value);
         }
-        trustHTML = function(txtString) {
-            var sanitized = txtString ? this.$filter("html")(this.$sce.trustAsHtml(txtString)):"";
-            return sanitized;
+        trustAsHtml = function (string) {
+            return this.$sce.trustAsHtml(string);
+        }
+
+        trustActionItemContent = function () {
+            this.actionItemInfo.description = this.$sce.trustAsHtml(this.$filter("html")(this.actionItemInfo.description)).toString();
+            return this.actionItemInfo.description;
         }
         validateInput() {
             if(this.saving) {

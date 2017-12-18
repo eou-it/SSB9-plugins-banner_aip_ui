@@ -9,9 +9,12 @@ var AIP;
     var AdminActionItemAddPageCtrl = (function () {
         function AdminActionItemAddPageCtrl($scope, $q, $state, $filter, $sce, $timeout, SpinnerService, AdminActionService) {
             this.$inject = ["$scope", "$q", "$state", "$filter", "$sce", "$timeout", "SpinnerService", "AdminActionService"];
-            this.trustHTML = function (txtString) {
-                var sanitized = txtString ? this.$filter("html")(this.$sce.trustAsHtml(txtString)) : "";
-                return sanitized;
+            this.trustAsHtml = function (string) {
+                return this.$sce.trustAsHtml(string);
+            };
+            this.trustActionItemContent = function () {
+                this.actionItemInfo.description = this.$sce.trustAsHtml(this.$filter("html")(this.actionItemInfo.description)).toString();
+                return this.actionItemInfo.description;
             };
             $scope.vm = this;
             this.$q = $q;
@@ -48,14 +51,6 @@ var AIP;
             allPromises.push(this.adminActionService.getFolder()
                 .then(function (response) {
                 _this.folders = response.data;
-                var actionItemFolder = $("#actionItemFolder");
-                _this.actionItemInfo.folder = _this.folders;
-                _this.$timeout(function () {
-                    actionItemFolder.select2({
-                        width: "25em",
-                        minimumResultsForSearch: Infinity
-                    });
-                }, 50);
             }));
             this.$q.all(allPromises).then(function () {
                 if (_this.editMode) {
@@ -75,6 +70,7 @@ var AIP;
                                 return item.id === parseInt(this.actionItem1.folderId);
                             })[0];*/
                             _this.actionItemInfo.description = _this.actionItem1.actionItemDesc;
+                            _this.trustActionItemContent();
                         }
                         else {
                             //todo: output error in notification center?
