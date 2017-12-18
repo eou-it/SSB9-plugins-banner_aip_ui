@@ -55,6 +55,16 @@ class AipAdminController {
     }
 
     /**
+     * Edit Action Item
+     * @return
+     */
+    def editActionItem() {
+        def map = request.JSON
+        def result = actionItemCompositeService.editActionItem( map )
+        render result as JSON
+    }
+
+    /**
      * Provides group information for specified id
      * @return
      */
@@ -250,7 +260,6 @@ class AipAdminController {
         def model = actionItemStatusCompositeService.updateActionItemStatusRule( jsonObj )
         render model as JSON
     }
-
 
     /*def blockedProcessList() {//TODO Enable this and impleted as per requirement
 

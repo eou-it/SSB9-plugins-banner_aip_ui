@@ -22,7 +22,7 @@ module AIP {
     }
 
     export class AdminActionItemAddPageCtrl implements IAdminActionItemAddPageCtrl{
-        $inject = ["$scope", "$q", "$state", "$filter", "$timeout", "SpinnerService", "AdminActionService" ];
+        $inject = ["$scope", "$q", "$state", "$filter","$sce", "$timeout", "SpinnerService", "AdminActionService" ];
         status: [AIP.IStatus];
         folders: [AIP.IFolder];
         actionItemInfo: AIP.IActionItemParam|any;
@@ -33,11 +33,17 @@ module AIP {
         $q: ng.IQService;
         $state;
         $filter;
+        $sce;
+        actionItem1;
+        editMode: boolean;
+        existFolder: any;
+        duplicateGroup: boolean;
         $timeout;
-        constructor($scope:IActionItemAddPageScope, $q:ng.IQService, $state, $filter, $timeout,
+        constructor($scope:IActionItemAddPageScope, $q:ng.IQService, $state, $filter,$sce, $timeout,
                     SpinnerService:AIP.SpinnerService, AdminActionService:AIP.AdminActionService) {
             $scope.vm = this;
             this.$q = $q;
+            this.$sce = $sce;
             this.$state = $state;
             this.$filter = $filter;
             this.$timeout = $timeout;
@@ -45,13 +51,18 @@ module AIP {
             this.adminActionService = AdminActionService;
             this.saving = false;
             this.errorMessage = {};
+            this.actionItem1={};
+            this.editMode = false;
+            this.existFolder = {};
+            this.duplicateGroup = false;
             this.init();
         }
 
         init() {
             this.spinnerService.showSpinner(true);
             var allPromises = [];
-            this.actionItemInfo = {};
+            this.actionItemInfo = <any>{};
+            this.editMode = this.$state.params.data?this.$state.params.data.isEdit:false;
             allPromises.push(
                 this.adminActionService.getStatus()
                     .then((response: AIP.IActionItemStatusResponse) => {
@@ -61,14 +72,9 @@ module AIP {
                             console.log(key.value)
                             return value;
                         });
-                        var actionItemStatus:any = $("#actionItemStatus");
-                        this.actionItemInfo.status = this.status[0];
-                        this.$timeout(()=> {
-                            actionItemStatus.select2({
-                                width: "25em",
-                                minimumResultsForSearch: Infinity
-                            });
-                        }, 50);
+
+                     this.actionItemInfo.status = this.status[0].value;
+
                     })
             );
             allPromises.push(
@@ -86,8 +92,58 @@ module AIP {
                     })
             );
             this.$q.all(allPromises).then(() => {
+                if (this.editMode) {
+                    this.adminActionService.getActionItemDetail(this.$state.params.data.group)
+                        .then((response) => {
+                            if(response.data) {
+                                this.actionItem1=response.data.actionItem;
+                                this.actionItemInfo.id = parseInt(this.actionItem1.actionItemId);
+                                this.actionItemInfo.title = this.actionItem1.actionItemTitle;
+                                this.actionItemInfo.name = this.actionItem1.actionItemName;
+                                this.actionItemInfo.status = this.actionItem1.actionItemStatus;
+                                this.actionItemInfo.postedInd = this.actionItem1.postedInd==="Y";
+                                this.actionItemInfo.folder = this.folders.filter((item)=> {
+                                    return item.id === parseInt(this.actionItem1.folderId);
+                                })[0];
+                                /*this.existFolder = this.folders.filter((item)=> {
+                                    return item.id === parseInt(this.actionItem1.folderId);
+                                })[0];*/
+                                this.actionItemInfo.description = this.actionItem1.actionItemDesc;
+                            } else {
+                                //todo: output error in notification center?
+                                console.log("fail");
+                            }
+                        }, (err) => {
+                            //TODO:: handle error call
+                            console.log(err);
+                        })
+
+                }
                 this.spinnerService.showSpinner(false);
             });
+        }
+        selectGroupFolder(item, index) {
+            if (this.editMode && (this.existFolder.id!==item.id)) {
+                this.duplicateGroup = true;
+                var n = new Notification({
+                    message: this.$filter("i18n_aip")("aip.admin.group.content.edit.posted.warning"),
+                    type: "warning"
+                });
+                n.addPromptAction(this.$filter("i18n_aip")("aip.common.text.ok"), () => {
+                    this.duplicateGroup = true;
+                    notifications.remove(n);
+                });
+                notifications.addNotification(n);
+            } else {
+                this.duplicateGroup = false;
+            }
+        }
+        selectStatus(item, index) {
+            this.actionItemInfo.status = this.$filter("i18n_aip")(item.value);
+        }
+        trustHTML = function(txtString) {
+            var sanitized = txtString ? this.$filter("html")(this.$sce.trustAsHtml(txtString)):"";
+            return sanitized;
         }
         validateInput() {
             if(this.saving) {
@@ -125,24 +181,52 @@ module AIP {
         }
         save() {
             this.saving = true;
-            this.adminActionService.saveActionItem(this.actionItemInfo)
-                .then((response:AIP.IActionItemSaveResponse) => {
-                    this.saving = false;
-                    var notiParams = {};
-                    if(response.data.success) {
-                        notiParams = {
-                            notiType: "saveSuccess",
-                            data: response.data
-                        };
-                        this.$state.go("admin-action-open", {noti: notiParams, data: response.data.newActionItem.id});
-                    } else {
-                        this.saveErrorCallback(response.data.message);
-                    }
-                }, (err) => {
-                    this.saving = false;
-                    //TODO:: handle error call
-                    console.log(err);
-                });
+            if (this.editMode) {
+                this.adminActionService.editActionItems(this.actionItemInfo)
+                    .then((response: AIP.IActionItemSaveResponse) => {
+                        this.saving = false;
+                        var notiParams = {};
+                        if (response.data.success) {
+                            notiParams = {
+                                notiType: "editSuccess",
+                                data: response.data
+                            };
+                            this.$state.go("admin-action-open", {
+                                noti: notiParams,
+                                data: response.data.updatedActionItem.id,
+                            });
+                        } else {
+                            this.saveErrorCallback(response.data.message);
+                        }
+                    }, (err) => {
+                        this.saving = false;
+                        //TODO:: handle error call
+                        console.log(err);
+                    });
+            }
+            else {
+                this.adminActionService.saveActionItem(this.actionItemInfo)
+                    .then((response: AIP.IActionItemSaveResponse) => {
+                        this.saving = false;
+                        var notiParams = {};
+                        if (response.data.success) {
+                            notiParams = {
+                                notiType: "saveSuccess",
+                                data: response.data
+                            };
+                            this.$state.go("admin-action-open", {
+                                noti: notiParams,
+                                data: response.data.newActionItem.id
+                            });
+                        } else {
+                            this.saveErrorCallback(response.data.message);
+                        }
+                    }, (err) => {
+                        this.saving = false;
+                        //TODO:: handle error call
+                        console.log(err);
+                    });
+            }
         }
         saveErrorCallback(message) {
             var n = new Notification({

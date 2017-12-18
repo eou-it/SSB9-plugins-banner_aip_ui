@@ -45,7 +45,10 @@ var AIP;
             this.blocks = [];
             this.statuses = [];
             this.rules = [];
+            this.allActionItems = [];
+            this.originalAssign = [];
             this.selectedTemplate;
+            this.actionFolder;
             this.templateSource;
             this.saving = false;
             this.contentChanged;
@@ -63,6 +66,7 @@ var AIP;
             var _this = this;
             this.spinnerService.showSpinner(true);
             var promises = [];
+            this.actionFolder = this.$state.params.data || this.$state.previousParams.data.group;
             this.openOverviewPanel();
             if (this.$state.params.noti) {
                 this.handleNotification(this.$state.params.noti);
@@ -82,10 +86,16 @@ var AIP;
         };
         AdminActionItemOpenPageCtrl.prototype.handleNotification = function (noti) {
             var _this = this;
-            if (noti.notiType === "saveSuccess") {
-                // var data = noti.data.newActionItem||noti.data.actionItem;
+            if (noti.notiType === "saveSuccess" || noti.notiType === "editSuccess") {
+                var message = "";
+                if (noti.notiType === "saveSuccess") {
+                    message = this.$filter("i18n_aip")("aip.common.save.successful");
+                }
+                else if (noti.notiType === "editSuccess") {
+                    message = this.$filter("i18n_aip")("aip.common.edit.successful");
+                }
                 var n = new Notification({
-                    message: this.$filter("i18n_aip")("aip.common.save.successful"),
+                    message: message,
                     type: "success",
                     flash: true
                 });
@@ -122,7 +132,7 @@ var AIP;
         AdminActionItemOpenPageCtrl.prototype.openOverviewPanel = function () {
             var _this = this;
             var deferred = this.$q.defer();
-            this.adminActionService.getActionItemDetail(this.$state.params.data)
+            this.adminActionService.getActionItemDetail(this.actionFolder)
                 .then(function (response) {
                 _this.actionItem = response.data.actionItem;
                 _this.selectedTemplate = _this.actionItem.actionItemTemplateId;
@@ -147,6 +157,7 @@ var AIP;
             this.adminActionService.getActionItemTemplates()
                 .then(function (response) {
                 _this.templates = response.data;
+                console.log(_this.templates);
                 deferred.resolve(_this.openPanel("content"));
                 _this.getTemplateSource();
                 _this.contentChanged = false;
@@ -213,6 +224,30 @@ var AIP;
                 }
                 else {
                     return false;
+                }
+            }
+        };
+        AdminActionItemOpenPageCtrl.prototype.validateEdit = function (type) {
+            var _this = this;
+            if (this.actionItem.actionItemPostedStatus === "Y") {
+                var n = new Notification({
+                    message: this.$filter("i18n_aip")("aip.admin.group.content.edit.posted.warning"),
+                    type: "warning"
+                });
+                n.addPromptAction(this.$filter("i18n_aip")("aip.common.text.no"), function () {
+                    notifications.remove(n);
+                });
+                n.addPromptAction(this.$filter("i18n_aip")("aip.common.text.yes"), function () {
+                    notifications.remove(n);
+                    if (type === "overview") {
+                        _this.$state.go("admin-action-edit", { data: { group: _this.actionItem.actionItemId, isEdit: true } });
+                    }
+                });
+                notifications.addNotification(n);
+            }
+            else {
+                if (type === "overview") {
+                    this.$state.go("admin-action-edit", { data: { group: this.actionItem.actionItemId, isEdit: true } });
                 }
             }
         };
@@ -327,7 +362,7 @@ var AIP;
                 item.statusRuleSeqOrder = _this.rules.indexOf(item);
                 item.statusId = item.statusId;
             });
-            allDefer.push(this.adminActionService.updateActionItemStatusRule(this.rules, this.$state.params.data)
+            allDefer.push(this.adminActionService.updateActionItemStatusRule(this.rules, this.actionFolder)
                 .then(function (response) {
                 if (response.data.success) {
                     _this.getRules();
@@ -373,7 +408,7 @@ var AIP;
         };
         AdminActionItemOpenPageCtrl.prototype.getRules = function () {
             var _this = this;
-            this.adminActionStatusService.getRules(this.$state.params.data)
+            this.adminActionStatusService.getRules(this.actionFolder)
                 .then(function (response) {
                 _this.rules = response.data;
                 angular.forEach(_this.rules, function (item) {

@@ -94,6 +94,14 @@ var bannerAIPApp = angular.module("bannerAIP", [
                 url: "/aip/admin#/action/open",
             }
         },
+        "admin-action-edit": {
+            url: "/action/edit",
+            templateUrl:"admin/action/add/adminActionItemAddPage.html",
+            controller:"AdminActionItemAddPageCtrl",
+            breadcrumb: {
+                label: "aip.admin.action.edit.actionItem",
+                url: "/aip/admin#/action/edit"}
+        },
         "admin-group-list": {
             url: "/group",
             templateUrl: "admin/group/list/adminGroupListPage.html",
@@ -194,6 +202,7 @@ var bannerAIPApp = angular.module("bannerAIP", [
             statusSave: aipAppAbsPath + "aipAdmin/statusSave",
             removeStatus:aipAppAbsPath + "aipAdmin/removeStatus",
             deleteActionItem:aipAppAbsPath + "aipAdmin/deleteActionItem",
+            editActionItem:aipAppAbsPath + "aipAdmin/editActionItem",
             deleteGroup:aipAppAbsPath + "aipAdmin/deleteGroup",
             rulesByActionItem: aipAppAbsPath + "aipAdmin/actionItemStatusRulesByActionItemId",
             updateActionItemStatusRule: aipAppAbsPath + "aipAdmin/updateActionItemStatusRule",

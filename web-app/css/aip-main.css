@@ -635,6 +635,9 @@ ol.selected-group > li > button {
         .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement .h2-container {
           margin-top: 0px;
           margin-bottom: 10px; }
+        .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement .overviewEdit {
+          text-align: right;
+          padding: 8px; }
         .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement .activity {
           margin-top: 30px;
           border-left: 2px solid #C0C0C0;
@@ -990,7 +993,7 @@ ol.selected-group > li > button {
   position: absolute;
   width: 8px;
   height: 8px;
-  background: transparent;
+  background: rgba(0, 0, 0, 0);
   top: 6px;
   left: 7px;
   border: 4px solid #fff;
@@ -1033,12 +1036,8 @@ ol.selected-group > li > button {
 .aip-modal input[type="checkbox"]:checked {
   background: #1c8445; }
 .aip-modal input[type="checkbox"]:checked:after {
-  /* Heres your symbol replacement - this is a tick in Unicode. */
   content: '';
   color: #fff;
-  /* The following positions my tick in the center,
-   * but you could just overlay the entire box
-   * with a full after element with a background if you want to */
   position: absolute;
   border: 3px solid #fff;
   border-top: none;

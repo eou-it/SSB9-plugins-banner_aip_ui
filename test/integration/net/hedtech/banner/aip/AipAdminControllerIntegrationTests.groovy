@@ -134,7 +134,7 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
 
         def folderId = CommunicationFolder.findByName( 'AIPgeneral' ).id
 
-        def requestObj = [group:[], edit:[], duplicate:[]]
+        def requestObj = [group: [], edit: [], duplicate: []]
         requestObj.group.groupTitle = "test1a2b" // Make sure title and folder create unique pair
         requestObj.group.groupName = "myName"
         requestObj.group.folderId = folderId
@@ -166,9 +166,10 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
 
         def folderId = CommunicationFolder.findByName( 'AIPgeneral' ).id
 
-        def requestObj = [group:[], edit:[], duplicate:[]]
+        def requestObj = [group: [], edit: [], duplicate: []]
         requestObj.group.groupTitle = "International Students title"
-        requestObj.group.groupName = "International Students"  // group in AIPGeneral Folder with this name already exists
+        requestObj.group.groupName = "International Students"
+        // group in AIPGeneral Folder with this name already exists
         requestObj.group.folderId = folderId
         requestObj.group.groupStatus = "Draft"
         requestObj.group.groupDesc = "<p><strong>This is a group description</p></strong>"
@@ -197,7 +198,7 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
 
         def folderId = CommunicationFolder.findByName( 'AIPgeneral' ).id
 
-        def requestObj = [group:[], edit:[], duplicate:[]]
+        def requestObj = [group: [], edit: [], duplicate: []]
         requestObj.group.groupTitle = null
         requestObj.group.groupName = "myName"
         requestObj.group.folderId = folderId
@@ -228,7 +229,7 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
 
         def folderId = CommunicationFolder.findByName( 'AIPgeneral' ).id
 
-        def requestObj = [group:[], edit:[], duplicate:[]]
+        def requestObj = [group: [], edit: [], duplicate: []]
         requestObj.group.groupTitle = null
         requestObj.group.groupName = "myName"
         requestObj.group.folderId = folderId
@@ -259,9 +260,10 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
 
         def folderId = CommunicationFolder.findByName( 'AIPgeneral' ).id
 
-        def requestObj = [group:[], edit:[], duplicate:[]]
+        def requestObj = [group: [], edit: [], duplicate: []]
         requestObj.group.groupTitle = "myTitle"
-        requestObj.group.groupName = "1234567890" + "1234567890" + "1234567890" + "1234567890" + "1234567890" + "1234567890" + "a" //60 max
+        requestObj.group.groupName = "1234567890" + "1234567890" + "1234567890" + "1234567890" + "1234567890" + "1234567890" + "a"
+        //60 max
         requestObj.group.folderId = folderId
         // FIXME: not max size. does not resolve
         requestObj.group.groupStatus = "Draft"
@@ -289,7 +291,7 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
                 new UsernamePasswordAuthenticationToken( admin.bannerId, '111111' ) )
         SecurityContextHolder.getContext().setAuthentication( auth )
 
-        def requestObj = [group:[], edit:[], duplicate:[]]
+        def requestObj = [group: [], edit: [], duplicate: []]
         requestObj.group.groupTitle = "myTitle"
         requestObj.group.groupName = "myName"
         requestObj.group.folderId = BAD_FOLDER_ID
@@ -336,6 +338,43 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
         assertTrue( answer.message.equals( null ) )
         assertEquals( "BCMADMIN", answer.newActionItem.creatorId )
         assertEquals( "BCMADMIN", answer.newActionItem.lastModifiedBy )
+    }
+
+
+    @Test
+    void testEditActionItem() {
+        def admin = PersonUtility.getPerson( "BCMADMIN" ) // role: advisor
+        assertNotNull admin
+        def auth = selfServiceBannerAuthenticationProvider.authenticate(
+                new UsernamePasswordAuthenticationToken( admin.bannerId, '111111' ) )
+        SecurityContextHolder.getContext().setAuthentication( auth )
+        def folderId = CommunicationFolder.findByName( 'AIPgeneral' ).id
+        ActionItem actionItem = new ActionItem(
+                folderId: folderId,
+                name: 'myName',
+                description: '<p><strong>This is a group description</p></strong>',
+                title: 'a title',
+                postedIndicator: 'N',
+                status: 'D',
+                creatorId: 'BCMADMIN'
+        )
+        actionItem = actionItemService.create(actionItem)
+        def requestObj = [:]
+        requestObj.actionItemId = actionItem.id
+        requestObj.status = "Active"
+        requestObj.folderId = folderId
+        requestObj.title = "a title"
+        requestObj.name = "myName"
+        requestObj.description = "<p><strong>This is a group description</p></strong>"
+        controller.request.method = "POST"
+        controller.request.json = requestObj
+        controller.editActionItem()
+        def answer = JSON.parse( controller.response.contentAsString )
+        assertTrue( answer.success )
+        assertNotNull( answer.updatedActionItem )
+        assertTrue( answer.message.equals( null ) )
+        assertEquals( "BCMADMIN", answer.updatedActionItem.creatorId )
+        assertEquals( "BCMADMIN", answer.updatedActionItem.lastModifiedBy )
     }
 
 
@@ -1233,8 +1272,8 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
         },"actionItemStatus":"Completed","actionItemStatusActive":"Y"},"statusRuleLabelText":"sas","statusRuleSeqOrder":0}],"actionItemId":${
             actionItem.id
         }}"""
-        ActionItem aim =ActionItem.findByName( 'Personal Information' )
-        aim.postedIndicator='N'
+        ActionItem aim = ActionItem.findByName( 'Personal Information' )
+        aim.postedIndicator = 'N'
         actionItemService.update( aim )
         controller.request.json = inputString
         controller.updateActionItemStatusRule()

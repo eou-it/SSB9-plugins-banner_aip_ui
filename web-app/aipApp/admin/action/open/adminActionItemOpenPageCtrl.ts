@@ -42,6 +42,9 @@ module AIP {
         saving;
         contentChanged;
         templateSource;
+        allActionItems;
+        originalAssign;
+        actionFolder;
 
         constructor($scope, $q: ng.IQService, $state, $filter, $sce, $window, $templateRequest, $templateCache, $compile,
                     $timeout, $interpolate, SpinnerService, AdminActionService, AdminActionStatusService, APP_ROOT, CKEDITORCONFIG) {
@@ -69,7 +72,10 @@ module AIP {
             this.blocks = [];
             this.statuses = [];
             this.rules = [];
+            this.allActionItems = [];
+            this.originalAssign = [];
             this.selectedTemplate;
+            this.actionFolder;
             this.templateSource;
             this.saving = false;
             this.contentChanged;
@@ -86,8 +92,8 @@ module AIP {
         init() {
             this.spinnerService.showSpinner(true);
             var promises = [];
-
-            this.openOverviewPanel();
+            this.actionFolder = this.$state.params.data || this.$state.previousParams.data.group;
+                this.openOverviewPanel();
             if (this.$state.params.noti) {
                 this.handleNotification(this.$state.params.noti);
             }
@@ -110,10 +116,15 @@ module AIP {
 
 
         handleNotification(noti) {
-            if (noti.notiType === "saveSuccess") {
-                // var data = noti.data.newActionItem||noti.data.actionItem;
+            if(noti.notiType === "saveSuccess" || noti.notiType === "editSuccess") {
+                var message = "";
+                if (noti.notiType === "saveSuccess") {
+                    message = this.$filter("i18n_aip")("aip.common.save.successful");
+                } else if (noti.notiType === "editSuccess") {
+                    message = this.$filter("i18n_aip")("aip.common.edit.successful");
+                }
                 var n = new Notification({
-                    message: this.$filter("i18n_aip")("aip.common.save.successful"), //+
+                    message: message, //+
                     type: "success",
                     flash: true
                 });
@@ -153,7 +164,7 @@ module AIP {
 
         openOverviewPanel() {
             var deferred = this.$q.defer();
-            this.adminActionService.getActionItemDetail(this.$state.params.data)
+            this.adminActionService.getActionItemDetail(this.actionFolder)
                 .then((response: AIP.IActionItemOpenResponse) => {
                     this.actionItem = response.data.actionItem;
                     this.selectedTemplate = this.actionItem.actionItemTemplateId;
@@ -177,6 +188,7 @@ module AIP {
             this.adminActionService.getActionItemTemplates()
                 .then((response: AIP.IActionItemOpenResponse) => {
                     this.templates = response.data;
+                    console.log(this.templates)
                     deferred.resolve(this.openPanel("content"));
                     this.getTemplateSource();
                     this.contentChanged = false;
@@ -243,6 +255,28 @@ module AIP {
                     return true;
                 } else {
                     return false;
+                }
+            }
+        }
+        validateEdit(type) {
+            if (this.actionItem.actionItemPostedStatus === "Y") {
+                var n = new Notification({
+                    message: this.$filter("i18n_aip")("aip.admin.group.content.edit.posted.warning"),
+                    type: "warning"
+                });
+                n.addPromptAction(this.$filter("i18n_aip")("aip.common.text.no"), () => {
+                    notifications.remove(n);
+                });
+                n.addPromptAction(this.$filter("i18n_aip")("aip.common.text.yes"), ()=> {
+                    notifications.remove(n);
+                    if(type === "overview") {
+                        this.$state.go("admin-action-edit", {data: {group:this.actionItem.actionItemId, isEdit: true}});
+                    }
+                });
+                notifications.addNotification(n);
+            } else {
+                if(type === "overview") {
+                    this.$state.go("admin-action-edit", {data: {group:this.actionItem.actionItemId, isEdit: true}});
                 }
             }
         }
@@ -373,7 +407,7 @@ module AIP {
                 item.statusRuleSeqOrder = this.rules.indexOf(item);
                 item.statusId = item.statusId;
             });
-            allDefer.push(this.adminActionService.updateActionItemStatusRule(this.rules, this.$state.params.data)
+            allDefer.push(this.adminActionService.updateActionItemStatusRule(this.rules, this.actionFolder)
                 .then((response: any) => {
                     if (response.data.success) {
                         this.getRules();
@@ -417,7 +451,7 @@ module AIP {
         }
 
         getRules() {
-            this.adminActionStatusService.getRules(this.$state.params.data)
+            this.adminActionStatusService.getRules(this.actionFolder)
                 .then((response) => {
                     this.rules = response.data;
                     angular.forEach(this.rules, (item) => {

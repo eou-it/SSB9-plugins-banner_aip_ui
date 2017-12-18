@@ -137,12 +137,28 @@ var AIP;
                 name: actionItem.name,
                 folderId: parseInt(actionItem.folder.id),
                 description: actionItem.description,
-                status: Status[actionItem.status.id],
+                status: actionItem.status,
             };
             var request = this.$http({
                 method: "POST",
                 data: params,
                 url: this.ENDPOINT.admin.createActionItem
+            });
+            return request;
+        };
+        AdminActionService.prototype.editActionItems = function (actionItem) {
+            var params = {
+                title: actionItem.title,
+                name: actionItem.name,
+                folderId: parseInt(actionItem.folder.id),
+                description: actionItem.description,
+                status: actionItem.status,
+                actionItemId: actionItem.id,
+            };
+            var request = this.$http({
+                method: "POST",
+                data: params,
+                url: this.ENDPOINT.admin.editActionItem
             });
             return request;
         };
@@ -201,9 +217,9 @@ var AIP;
             });
             return request;
         };
-        AdminActionService.$inject = ["$http", "$q", "$filter", "ENDPOINT"];
         return AdminActionService;
     }());
+    AdminActionService.$inject = ["$http", "$q", "$filter", "ENDPOINT"];
     AIP.AdminActionService = AdminActionService;
 })(AIP || (AIP = {}));
 register("bannerAIP").service("AdminActionService", AIP.AdminActionService);

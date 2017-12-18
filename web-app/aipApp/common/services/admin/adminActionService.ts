@@ -168,6 +168,7 @@ module AIP {
             success: boolean;
             message: string;
             newActionItem: IActionItem2;
+            newActionItem1:IActionItem3;
         };
     }
     export interface IPostActionItemSaveResponse {
@@ -341,7 +342,7 @@ module AIP {
                 name: actionItem.name,
                 folderId: parseInt(actionItem.folder.id),
                 description: actionItem.description,
-                status: Status[actionItem.status.id],
+                status: actionItem.status,
 
             };
             var request = this.$http({
@@ -351,6 +352,26 @@ module AIP {
             });
             return request;
         }
+
+        editActionItems(actionItem) {
+                var params = {
+                    title: actionItem.title,
+                    name: actionItem.name,
+                    folderId: parseInt(actionItem.folder.id),
+                    description: actionItem.description,
+                    status: actionItem.status,
+                    actionItemId:actionItem.id,
+
+
+                };
+                var request = this.$http({
+                    method: "POST",
+                    data: params,
+                    url: this.ENDPOINT.admin.editActionItem
+                });
+                return request;
+            }
+
         getActionItemDetail(actionItemId) {
             var request = this.$http({
                 method: "GET",
