@@ -26,7 +26,7 @@ class AipActionItemPostingControllerIntegrationTests extends BaseIntegrationTest
         formContext = ['GUAGMNU']
         super.setUp()
         controller = new AipActionItemPostingController()
-        loginSSB( 'CSRADM001', '111111' )
+        loginSSB( 'AIPADM001', '111111' )
     }
 
 
@@ -79,8 +79,8 @@ class AipActionItemPostingControllerIntegrationTests extends BaseIntegrationTest
         assertTrue data.success
         assertNotNull data.savedJob.id
         assertNotNull data.savedJob.id
-        assert data.savedJob.lastModifiedBy == 'CSRADM001'
-        assert data.savedJob.postingCreatorId == 'CSRAOR001'
+        assert data.savedJob.lastModifiedBy == 'AIPADM001'
+        assert data.savedJob.postingCreatorId == 'AIPADM001'
         assert data.savedJob.postingName == 'TEST_INTEGRATION_TEST'
         assert data.savedJob.populationListId == dynamicData.populationId
         assert data.savedJob.postingActionItemGroupId == dynamicData.postingActionItemGroupId
@@ -109,8 +109,8 @@ class AipActionItemPostingControllerIntegrationTests extends BaseIntegrationTest
         def ret = controller.response.contentAsString
         def data = JSON.parse( ret )
         assert data.find {
-            it.description.contains( 'Quinley Population' )
-        }.description.contains( 'Quinley Population' ) == true
+            it.description.contains( 'AIP Student Population' )
+        }.description.contains( 'AIP Student Population' ) == true
     }
 
 
