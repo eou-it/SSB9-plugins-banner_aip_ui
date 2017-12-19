@@ -75,7 +75,7 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
 
     @Test
     void testFoldersEntryPointAsAdmin() {
-        def person = PersonUtility.getPerson( "BCMADMIN" )
+        def person = PersonUtility.getPerson( "AIPADM001" )
         assertNotNull person
         def auth = selfServiceBannerAuthenticationProvider.authenticate(
                 new UsernamePasswordAuthenticationToken( person.bannerId, '111111' ) )
@@ -107,7 +107,7 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
 
     // @Test endpoint removed. Is this something we support of have a future story for?
     void testAddFolderEntryPointAsAdmin() {
-        def person = PersonUtility.getPerson( "BCMADMIN" )
+        def person = PersonUtility.getPerson( "AIPADM001" )
         assertNotNull person
         def auth = selfServiceBannerAuthenticationProvider.authenticate(
                 new UsernamePasswordAuthenticationToken( person.bannerId, '111111' ) )
@@ -115,7 +115,7 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
         controller.addFolder( VALID_FOLDER_NAME, VALID_FOLDER_DESCRIPTION )
         def answer = JSON.parse( controller.response.contentAsString )
         // TODO: verify something
-        //TODO: fix BCMADMIN test in general app
+        //TODO: fix AIPADM001 test in general app
         //assertTrue( answer.success )
         //assertNotNull( answer.newFolder )
         //assertTrue( answer.message.equals(null) )
@@ -125,7 +125,7 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
     @Test
     void testCreateActionItemGroup() {
 
-        def admin = PersonUtility.getPerson( "BCMADMIN" ) // role: advisor
+        def admin = PersonUtility.getPerson( "AIPADM001" ) // role: advisor
         assertNotNull admin
 
         def auth = selfServiceBannerAuthenticationProvider.authenticate(
@@ -157,7 +157,7 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
     @Test
     void testCreateActionGroupNameFolderIdDuplicateConstraint() {
 
-        def admin = PersonUtility.getPerson( "BCMADMIN" ) // role: advisor
+        def admin = PersonUtility.getPerson( "AIPADM001" ) // role: advisor
         assertNotNull admin
 
         def auth = selfServiceBannerAuthenticationProvider.authenticate(
@@ -189,7 +189,7 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
     @Test
     void testCreateActionItemGroupConstraintNull() {
 
-        def admin = PersonUtility.getPerson( "BCMADMIN" ) // role: advisor
+        def admin = PersonUtility.getPerson( "AIPADM001" ) // role: advisor
         assertNotNull admin
 
         def auth = selfServiceBannerAuthenticationProvider.authenticate(
@@ -220,7 +220,7 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
     @Test
     void testCreateActionItemGroupConstraintEmpty() {
 
-        def admin = PersonUtility.getPerson( "BCMADMIN" ) // role: advisor
+        def admin = PersonUtility.getPerson( "AIPADM001" ) // role: advisor
         assertNotNull admin
 
         def auth = selfServiceBannerAuthenticationProvider.authenticate(
@@ -251,7 +251,7 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
     @Test
     void testCreateActionItemGroupConstraintMaxSize() {
 
-        def admin = PersonUtility.getPerson( "BCMADMIN" ) // role: advisor
+        def admin = PersonUtility.getPerson( "AIPADM001" ) // role: advisor
         assertNotNull admin
 
         def auth = selfServiceBannerAuthenticationProvider.authenticate(
@@ -284,7 +284,7 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
     @Test
     void testCreateActionItemGroupFolderValidationError() {
         def BAD_FOLDER_ID = 9842374
-        def admin = PersonUtility.getPerson( "BCMADMIN" ) // role: advisor
+        def admin = PersonUtility.getPerson( "AIPADM001" ) // role: advisor
         assertNotNull admin
 
         def auth = selfServiceBannerAuthenticationProvider.authenticate(
@@ -312,7 +312,7 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
     @Test
     void testCreateActionItem() {
 
-        def admin = PersonUtility.getPerson( "BCMADMIN" ) // role: advisor
+        def admin = PersonUtility.getPerson( "AIPADM001" ) // role: advisor
         assertNotNull admin
 
         def auth = selfServiceBannerAuthenticationProvider.authenticate(
@@ -336,8 +336,8 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
         assertTrue( answer.success )
         assertNotNull( answer.newActionItem )
         assertTrue( answer.message.equals( null ) )
-        assertEquals( "BCMADMIN", answer.newActionItem.creatorId )
-        assertEquals( "BCMADMIN", answer.newActionItem.lastModifiedBy )
+        assertEquals( "AIPADM001", answer.newActionItem.creatorId )
+        assertEquals( "AIPADM001", answer.newActionItem.lastModifiedBy )
     }
 
 
@@ -380,7 +380,7 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
 
     @Test
     void testCreateActionItemMaxSizeError() {
-        def admin = PersonUtility.getPerson( "BCMADMIN" ) // role: advisor
+        def admin = PersonUtility.getPerson( "AIPADM001" ) // role: advisor
         assertNotNull admin
 
         def auth = selfServiceBannerAuthenticationProvider.authenticate(
@@ -409,7 +409,7 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
     @Test
     void testCreateActionItemNoDescription() {
 
-        def admin = PersonUtility.getPerson( "BCMADMIN" ) // role: advisor
+        def admin = PersonUtility.getPerson( "AIPADM001" ) // role: advisor
         assertNotNull admin
 
         def auth = selfServiceBannerAuthenticationProvider.authenticate(
@@ -432,8 +432,8 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
         assertTrue( answer.success )
         assertNotNull( answer.newActionItem )
         assertTrue( answer.message.equals( null ) )
-        assertEquals( "BCMADMIN", answer.newActionItem.creatorId )
-        assertEquals( "BCMADMIN", answer.newActionItem.lastModifiedBy )
+        assertEquals( "AIPADM001", answer.newActionItem.creatorId )
+        assertEquals( "AIPADM001", answer.newActionItem.lastModifiedBy )
     }
 
 
@@ -459,7 +459,7 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
     @Test
     void testCreateActionItemNoStatus() {
 
-        def admin = PersonUtility.getPerson( "BCMADMIN" ) // role: advisor
+        def admin = PersonUtility.getPerson( "AIPADM001" ) // role: advisor
         assertNotNull admin
 
         def auth = selfServiceBannerAuthenticationProvider.authenticate(
@@ -474,7 +474,7 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
         requestObj.title = "a title"
         requestObj.name = "myName"
         requestObj.description = null
-        //requestObj.lastModifiedBy = "CSRADM001"
+        //requestObj.lastModifiedBy = "AIPADM001"
         controller.request.method = "POST"
         controller.request.json = requestObj
         controller.addActionItem()
@@ -487,7 +487,7 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
     @Test
     void testCreateActionItemNoTitle() {
 
-        def admin = PersonUtility.getPerson( "BCMADMIN" ) // role: advisor
+        def admin = PersonUtility.getPerson( "AIPADM001" ) // role: advisor
         assertNotNull admin
 
         def auth = selfServiceBannerAuthenticationProvider.authenticate(
@@ -515,7 +515,7 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
     @Test
     void testCreateActionItemNoFolderId() {
 
-        def admin = PersonUtility.getPerson( "BCMADMIN" ) // role: advisor
+        def admin = PersonUtility.getPerson( "AIPADM001" ) // role: advisor
         assertNotNull admin
 
         def auth = selfServiceBannerAuthenticationProvider.authenticate(
@@ -541,7 +541,7 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
     @Test
     void testCreateActionItemNameNotUniqueInFolder() {
 
-        def admin = PersonUtility.getPerson( "BCMADMIN" ) // role: advisor
+        def admin = PersonUtility.getPerson( "AIPADM001" ) // role: advisor
         assertNotNull admin
 
         def auth = selfServiceBannerAuthenticationProvider.authenticate(
@@ -569,7 +569,7 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
     @Test
     void testCreateActionItemFolderValidationError() {
         def BAD_FOLDER_ID = 9842374
-        def admin = PersonUtility.getPerson( "BCMADMIN" ) // role: advisor
+        def admin = PersonUtility.getPerson( "AIPADM001" ) // role: advisor
         assertNotNull admin
 
         def auth = selfServiceBannerAuthenticationProvider.authenticate(
@@ -594,7 +594,7 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
 
     @Test
     void testAipGroupAsAdmin() {
-        def admin = PersonUtility.getPerson( "BCMADMIN" ) // role: advisor
+        def admin = PersonUtility.getPerson( "AIPADM001" ) // role: advisor
         assertNotNull admin
 
         List<ActionItemGroup> actionItemGroups = actionItemGroupService.listActionItemGroups()
@@ -667,7 +667,7 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
 
     @Test
     void testAipGroupBadParam() {
-        def admin = PersonUtility.getPerson( "BCMADMIN" ) // role: advisor
+        def admin = PersonUtility.getPerson( "AIPADM001" ) // role: advisor
         assertNotNull admin
 
         def auth = selfServiceBannerAuthenticationProvider.authenticate(
@@ -690,7 +690,7 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
 
     @Test
     void testAipGroupNoParam() {
-        def admin = PersonUtility.getPerson( "BCMADMIN" ) // role: advisor
+        def admin = PersonUtility.getPerson( "AIPADM001" ) // role: advisor
         assertNotNull admin
 
         List<ActionItemGroup> actionItemGroups = actionItemGroupService.listActionItemGroups()
@@ -810,7 +810,7 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
 
     @Test
     void testOpenActionItem() {
-        def admin = PersonUtility.getPerson( "BCMADMIN" ) // role: admin
+        def admin = PersonUtility.getPerson( "AIPADM001" ) // role: admin
         assertNotNull admin
 
         def auth = selfServiceBannerAuthenticationProvider.authenticate(
@@ -832,7 +832,7 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
 
     @Test
     void testOpenActionItemNoId() {
-        def admin = PersonUtility.getPerson( "BCMADMIN" ) // role: admin
+        def admin = PersonUtility.getPerson( "AIPADM001" ) // role: admin
         assertNotNull admin
 
         def auth = selfServiceBannerAuthenticationProvider.authenticate(
@@ -845,7 +845,7 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
 
     @Test
     void testOpenActionItemBadId() {
-        def admin = PersonUtility.getPerson( "BCMADMIN" ) // role: admin
+        def admin = PersonUtility.getPerson( "AIPADM001" ) // role: admin
         assertNotNull admin
 
         def auth = selfServiceBannerAuthenticationProvider.authenticate(
@@ -942,7 +942,7 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
 
     @Test
     void testActionItemStatusRule() {
-        def admin = PersonUtility.getPerson( "CSRADM001" ) // role: admin
+        def admin = PersonUtility.getPerson( "AIPADM001" ) // role: admin
         assertNotNull admin
 
         def auth = selfServiceBannerAuthenticationProvider.authenticate(
@@ -958,7 +958,7 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
 
     @Test
     void testActionItemStatusRuleById() {
-        def admin = PersonUtility.getPerson( "BCMADMIN" ) // role: admin
+        def admin = PersonUtility.getPerson( "AIPADM001" ) // role: admin
         assertNotNull admin
 
         def auth = selfServiceBannerAuthenticationProvider.authenticate(
@@ -975,7 +975,7 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
 
     @Test
     void testActionItemStatusRuleByActionItemId() {
-        def admin = PersonUtility.getPerson( "BCMADMIN" ) // role: admin
+        def admin = PersonUtility.getPerson( "AIPADM001" ) // role: admin
         assertNotNull admin
 
         def auth = selfServiceBannerAuthenticationProvider.authenticate(
@@ -993,7 +993,7 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
 
     // @Test Fix when/if updates get supported
     void testUpdateActionItemStatusRuleOrderChange() {
-        def admin = PersonUtility.getPerson( "BCMADMIN" ) // role: admin
+        def admin = PersonUtility.getPerson( "AIPADM001" ) // role: admin
         assertNotNull admin
 
         def auth = selfServiceBannerAuthenticationProvider.authenticate(
@@ -1056,7 +1056,7 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
 
     // @Test Fix when/if updates get supported
     void testUpdateActionItemStatusRuleRemoveRule() {
-        def admin = PersonUtility.getPerson( "BCMADMIN" ) // role: admin
+        def admin = PersonUtility.getPerson( "AIPADM001" ) // role: admin
         assertNotNull admin
 
         def auth = selfServiceBannerAuthenticationProvider.authenticate(
@@ -1102,7 +1102,7 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
 
     // @Test Fix when/if updates get supported
     void testUpdateActionItemStatusRuleAddRule() {
-        def admin = PersonUtility.getPerson( "BCMADMIN" ) // role: admin
+        def admin = PersonUtility.getPerson( "AIPADM001" ) // role: admin
         assertNotNull admin
 
         def auth = selfServiceBannerAuthenticationProvider.authenticate(
