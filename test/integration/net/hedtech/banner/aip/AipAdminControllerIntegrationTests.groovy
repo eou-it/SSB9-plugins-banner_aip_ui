@@ -166,7 +166,7 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
 
         def folderId = CommunicationFolder.findByName( 'AIPgeneral' ).id
 
-        def requestObj = [group: [], edit: [], duplicate: []]
+        def requestObj = [group: [:], edit: [:], duplicate: [:]]
         requestObj.group.groupTitle = "International Students title"
         requestObj.group.groupName = "International Students"
         // group in AIPGeneral Folder with this name already exists
@@ -260,7 +260,7 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
 
         def folderId = CommunicationFolder.findByName( 'AIPgeneral' ).id
 
-        def requestObj = [group: [], edit: [], duplicate: []]
+        def requestObj = [group: [:], edit: [:], duplicate: [:]]
         requestObj.group.groupTitle = "myTitle"
         requestObj.group.groupName = "1234567890" + "1234567890" + "1234567890" + "1234567890" + "1234567890" + "1234567890" + "a"
         //60 max
@@ -358,7 +358,7 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
                 status: 'D',
                 creatorId: 'BCMADMIN'
         )
-        actionItem = actionItemService.create(actionItem)
+        actionItem = actionItemService.create( actionItem )
         def requestObj = [:]
         requestObj.actionItemId = actionItem.id
         requestObj.status = "Active"
@@ -1340,5 +1340,38 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
         controller.request.json = requestObj
         controller.updateActionItemDetailWithTemplate()
         assertEquals 403, controller.response.status
+    }
+
+
+    @Test
+    void fetchCurrentDateInLocaleFormat() {
+        controller.request.contentType = "text/json"
+        controller.fetchCurrentDateInLocaleFormat()
+        assertEquals 200, controller.response.status
+        def ret = controller.response.contentAsString
+        def data = JSON.parse( ret )
+        assert data.dateFormat == 'MM/dd/yyyy'
+    }
+
+
+    @Test
+    void is12HourClock() {
+        controller.request.contentType = "text/json"
+        controller.is12HourClock()
+        assertEquals 200, controller.response.status
+        def ret = controller.response.contentAsString
+        def data = JSON.parse( ret )
+        assert data.use12HourClock == true
+    }
+
+
+    @Test
+    void listAvailableTimezones() {
+        controller.request.contentType = "text/json"
+        controller.listAvailableTimezones()
+        assertEquals 200, controller.response.status
+        def ret = controller.response.contentAsString
+        def data = JSON.parse( ret )
+        assert data.timezones.length > 0
     }
 }
