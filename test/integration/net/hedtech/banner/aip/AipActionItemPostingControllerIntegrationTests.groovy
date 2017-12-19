@@ -26,7 +26,7 @@ class AipActionItemPostingControllerIntegrationTests extends BaseIntegrationTest
         formContext = ['GUAGMNU']
         super.setUp()
         controller = new AipActionItemPostingController()
-        loginSSB( 'CSRADM001', '111111' )
+        loginSSB( 'AIPADM001', '111111' )
     }
 
 
@@ -47,6 +47,25 @@ class AipActionItemPostingControllerIntegrationTests extends BaseIntegrationTest
             "displayStartDate":"${dynamicData.displayStartDate}",
             "displayEndDate":"${dynamicData.displayEndDate}",
             "postNow":"true",
+            "populationRegenerateIndicator":false
+            }"""
+    }
+
+
+    def getCreateActionItemForScheduleJSON() {
+        def dynamicData = getDynamicDataForScheduledPosting()
+        """{
+            "postingName":"TEST_INTEGRATION_TEST",
+            "postingActionItemGroupId":${dynamicData.postingActionItemGroupId},
+            "actionItemIds":[${dynamicData.actionItemIds}],
+            "populationId":${dynamicData.populationId},
+            "displayStartDate":"${dynamicData.displayStartDate}",
+            "displayEndDate":"${dynamicData.displayEndDate}",
+            "postNow":"false",
+            "scheduled":"true",
+            "scheduledStartDate":"${dynamicData.scheduledStartDate}", 
+            "scheduledStartTime":"${dynamicData.scheduledStartTime}", 
+            "timezoneStringOffset":"${dynamicData.timezoneStringOffset}",
             "populationRegenerateIndicator":false
             }"""
     }
@@ -79,8 +98,28 @@ class AipActionItemPostingControllerIntegrationTests extends BaseIntegrationTest
         assertTrue data.success
         assertNotNull data.savedJob.id
         assertNotNull data.savedJob.id
-        assert data.savedJob.lastModifiedBy == 'CSRADM001'
+        assert data.savedJob.lastModifiedBy == 'AIPADM001'
         assert data.savedJob.postingCreatorId == 'CSRAOR001'
+        assert data.savedJob.postingName == 'TEST_INTEGRATION_TEST'
+        assert data.savedJob.populationListId == dynamicData.populationId
+        assert data.savedJob.postingActionItemGroupId == dynamicData.postingActionItemGroupId
+    }
+
+
+    @Test
+    void addActionItemPostingWithScheduleDate() {
+        controller.request.contentType = "text/json"
+        String inputString = getCreateActionItemForScheduleJSON()
+        controller.request.json = inputString
+        controller.addActionItemPosting()
+        assertEquals 200, controller.response.status
+        def ret = controller.response.contentAsString
+        def data = JSON.parse( ret )
+        assertTrue data.success
+        assertNotNull data.savedJob.id
+        assertNotNull data.savedJob.id
+        assert data.savedJob.lastModifiedBy == 'AIPADM001'
+        assert data.savedJob.postingCreatorId == 'AIPADM001'
         assert data.savedJob.postingName == 'TEST_INTEGRATION_TEST'
         assert data.savedJob.populationListId == dynamicData.populationId
         assert data.savedJob.postingActionItemGroupId == dynamicData.postingActionItemGroupId
@@ -146,7 +185,7 @@ class AipActionItemPostingControllerIntegrationTests extends BaseIntegrationTest
         assertEquals 200, controller.response.status
         def ret = controller.response.contentAsString
         def data = JSON.parse( ret )
-        assert data.size()==0
+        assert data.size() == 0
     }
 
 
@@ -194,6 +233,25 @@ class AipActionItemPostingControllerIntegrationTests extends BaseIntegrationTest
         dynamicData.postingActionItemGroupId = actionItemGroup.id
         dynamicData.displayStartDate = testingDateFormat.format( new Date() )
         dynamicData.displayEndDate = testingDateFormat.format( new Date() + 50 )
+        dynamicData
+    }
+
+
+    private getDynamicDataForScheduledPosting() {
+        def dynamicData = [:]
+        SimpleDateFormat testingDateFormat = new SimpleDateFormat( 'MM/dd/yyyy' )
+        CommunicationPopulationListView populationListView = actionItemProcessingCommonService.fetchPopulationListForSend( 'p', [max: 10, offset: 0] )[0]
+        List<ActionItemGroup> actionItemGroups = ActionItemGroup.fetchActionItemGroups()
+        def actionItemGroup = actionItemGroups[0]
+        List<Long> actionItemIds = ActionItemGroupAssign.fetchByGroupId( actionItemGroup.id ).collect {it.actionItemId}
+        dynamicData.actionItemIds = actionItemIds[0]
+        dynamicData.populationId = populationListView.id
+        dynamicData.postingActionItemGroupId = actionItemGroup.id
+        dynamicData.displayStartDate = testingDateFormat.format( new Date() )
+        dynamicData.displayEndDate = testingDateFormat.format( new Date() + 50 )
+        dynamicData.scheduledStartDate = testingDateFormat.format( new Date() )
+        dynamicData.scheduledStartTime = "2230"
+        dynamicData.timezoneStringOffset = "Etc/GMT+10"
         dynamicData
     }
 

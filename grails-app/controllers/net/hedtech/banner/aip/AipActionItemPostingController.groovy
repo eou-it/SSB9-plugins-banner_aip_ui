@@ -25,7 +25,7 @@ class AipActionItemPostingController {
         def map = [:]
         map = request.JSON
         map.postNow = 'true' == map.postNow
-        map.schedule = 'true' == map.schedule
+        map.scheduled = 'true' == map.scheduled
         def model
         try {
             model = actionItemPostCompositeService.sendAsynchronousPostItem( map )

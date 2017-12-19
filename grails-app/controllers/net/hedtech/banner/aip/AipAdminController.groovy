@@ -4,6 +4,7 @@
 package net.hedtech.banner.aip
 
 import grails.converters.JSON
+import net.hedtech.banner.aip.common.AipTimezone
 import net.hedtech.banner.exceptions.ApplicationException
 import org.apache.log4j.Logger
 import org.codehaus.groovy.grails.plugins.web.taglib.ValidationTagLib
@@ -61,6 +62,34 @@ class AipAdminController {
     def editActionItem() {
         def map = request.JSON
         def result = actionItemCompositeService.editActionItem( map )
+        render result as JSON
+    }
+
+    /**
+     * Fetch Current Date In Locale format
+     * @return
+     */
+    def fetchCurrentDateInLocaleFormat() {
+        def map = actionItemProcessingCommonService.fetchCurrentDateInLocaleFormat()
+        render map as JSON
+    }
+
+    /**
+     *
+     * @return
+     */
+    def is12HourClock() {
+        def result = actionItemProcessingCommonService.is12HourClock()
+        render result as JSON
+    }
+
+    /**
+     *
+     * @return
+     */
+    def listAvailableTimezones() {
+        List<AipTimezone> timezoneList = actionItemProcessingCommonService.populateAvailableTimezones()
+        def result = ['timezones': timezoneList.toArray()]
         render result as JSON
     }
 
