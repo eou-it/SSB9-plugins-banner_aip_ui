@@ -134,7 +134,7 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
 
         def folderId = CommunicationFolder.findByName( 'AIPgeneral' ).id
 
-        def requestObj = [group: [], edit: [], duplicate: []]
+        def requestObj = [group: [:], edit: [:], duplicate: [:]]
         requestObj.group.groupTitle = "test1a2b" // Make sure title and folder create unique pair
         requestObj.group.groupName = "myName"
         requestObj.group.folderId = folderId
@@ -198,7 +198,7 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
 
         def folderId = CommunicationFolder.findByName( 'AIPgeneral' ).id
 
-        def requestObj = [group: [], edit: [], duplicate: []]
+        def requestObj = [group: [:], edit: [:], duplicate: [:]]
         requestObj.group.groupTitle = null
         requestObj.group.groupName = "myName"
         requestObj.group.folderId = folderId
@@ -229,7 +229,7 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
 
         def folderId = CommunicationFolder.findByName( 'AIPgeneral' ).id
 
-        def requestObj = [group: [], edit: [], duplicate: []]
+        def requestObj = [group: [:], edit: [:], duplicate: [:]]
         requestObj.group.groupTitle = null
         requestObj.group.groupName = "myName"
         requestObj.group.folderId = folderId
@@ -291,7 +291,7 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
                 new UsernamePasswordAuthenticationToken( admin.bannerId, '111111' ) )
         SecurityContextHolder.getContext().setAuthentication( auth )
 
-        def requestObj = [group: [], edit: [], duplicate: []]
+        def requestObj = [group: [:], edit: [:], duplicate: [:]]
         requestObj.group.groupTitle = "myTitle"
         requestObj.group.groupName = "myName"
         requestObj.group.folderId = BAD_FOLDER_ID
@@ -1372,6 +1372,6 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
         assertEquals 200, controller.response.status
         def ret = controller.response.contentAsString
         def data = JSON.parse( ret )
-        assert data.timezones.length > 0
+        assert data.timezones.length() > 0
     }
 }
