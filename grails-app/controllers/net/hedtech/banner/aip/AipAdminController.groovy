@@ -34,6 +34,7 @@ class AipAdminController {
     def actionItemProcessingCommonService
     def actionItemGroupAssignReadOnlyService
     def actionItemGroupService
+    def actionItemService
     /**
      * API for folders LOV
      * @return
@@ -380,6 +381,15 @@ value: value.aipBlock
      */
     def updateActionItemGroupAssignment() {
         def model = actionItemGroupCompositeService.updateActionItemGroupAssignment( request.JSON )
+        render model as JSON
+    }
+
+    /**
+     * Check If Action Item is Posted
+     * @return
+     */
+    def checkActionItemPosted() {
+        def model = [posted: actionItemService.checkActionItemPosted( Long.parseLong( params.actionItemId ) )]
         render model as JSON
     }
 
