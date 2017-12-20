@@ -78,7 +78,7 @@ module AIP {
             this.spinnerService.showSpinner(true);
             var promises = [];
             this.groupInfo = <any>{};
-            this.editMode = this.$state.params.data?this.$state.params.data.isEdit:false;
+            this.editMode = this.$state.params?this.$state.params.isEdit:false;
             promises.push(
                 this.adminGroupService.getStatus().then((status) => {
                     this.status = status.map((item) => {
@@ -95,7 +95,7 @@ module AIP {
             );
             this.$q.all(promises).then(() => {
                 if (this.editMode) {
-                    this.adminGroupService.getGroupDetail(this.$state.params.data.group)
+                    this.adminGroupService.getGroupDetail(this.$state.params.groupId)
                         .then((response) => {
                             if(response.group) {
                                 this.groupInfo.id = parseInt(response.group.groupId);
@@ -178,7 +178,7 @@ module AIP {
                             notiType: this.editMode ? "editSuccess" : "saveSuccess",
                             data: response.group.groupId
                         };
-                        this.$state.go("admin-group-open", {noti: notiParams, data: {group:response.group.groupId}});
+                        this.$state.go("admin-group-open", {noti: notiParams, groupId:response.group.groupId});
                     } else {
                         this.saveErrorCallback(response.invalidField, response.errors, response.message);
                     }

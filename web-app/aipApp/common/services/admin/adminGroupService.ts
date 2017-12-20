@@ -167,9 +167,8 @@ module AIP {
 
         getGroupDetail(groupId) {
             var request = this.$http({
-                    method: "POST",
-                    url: this.ENDPOINT.admin.openGroup,
-                    data: { groupId: groupId }
+                    method: "GET",
+                    url: this.ENDPOINT.admin.openGroup + "?groupId="+groupId
                 })
                 .then((response:any) => {
                     return <IGroupDetailResponse>response.data;

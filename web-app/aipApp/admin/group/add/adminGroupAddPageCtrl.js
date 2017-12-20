@@ -6,7 +6,7 @@
 ///<reference path="../../../common/services/spinnerService.ts"/>
 var AIP;
 (function (AIP) {
-    var AdminGroupAddPageCtrl = (function () {
+    var AdminGroupAddPageCtrl = /** @class */ (function () {
         function AdminGroupAddPageCtrl($scope, AdminGroupService, $q, SpinnerService, $state, $filter, $sce, $timeout, CKEDITORCONFIG) {
             this.$inject = ["$scope", "AdminGroupService", "$q", "SpinnerService", "$state", "$filter", "$sce", "$timeout", "CKEDITORCONFIG"];
             this.trustHTML = function (txtString) {
@@ -40,7 +40,7 @@ var AIP;
             this.spinnerService.showSpinner(true);
             var promises = [];
             this.groupInfo = {};
-            this.editMode = this.$state.params.data ? this.$state.params.data.isEdit : false;
+            this.editMode = this.$state.params ? this.$state.params.isEdit : false;
             promises.push(this.adminGroupService.getStatus().then(function (status) {
                 _this.status = status.map(function (item) {
                     item.value = _this.$filter("i18n_aip")("aip.status." + item.value.charAt(0));
@@ -53,7 +53,7 @@ var AIP;
             }));
             this.$q.all(promises).then(function () {
                 if (_this.editMode) {
-                    _this.adminGroupService.getGroupDetail(_this.$state.params.data.group)
+                    _this.adminGroupService.getGroupDetail(_this.$state.params.groupId)
                         .then(function (response) {
                         if (response.group) {
                             _this.groupInfo.id = parseInt(response.group.groupId);
@@ -140,7 +140,7 @@ var AIP;
                         notiType: _this.editMode ? "editSuccess" : "saveSuccess",
                         data: response.group.groupId
                     };
-                    _this.$state.go("admin-group-open", { noti: notiParams, data: { group: response.group.groupId } });
+                    _this.$state.go("admin-group-open", { noti: notiParams, groupId: response.group.groupId });
                 }
                 else {
                     _this.saveErrorCallback(response.invalidField, response.errors, response.message);

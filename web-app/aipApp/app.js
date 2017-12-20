@@ -115,22 +115,33 @@ var bannerAIPApp = angular.module("bannerAIP", [
             url: "/group/add",
             templateUrl:"admin/group/add/adminGroupAddPage.html",
             controller:"AdminGroupAddPageCtrl",
+            params: {
+                groupId:null
+            },
             breadcrumb: {
                 label: "aip.admin.group.add",
                 url: "/aip/admin#/group/add"}
         },
         "admin-group-edit": {
-            url: "/group/edit",
+            url: "/group/edit/:groupId/:isEdit",
             templateUrl:"admin/group/add/adminGroupAddPage.html",
             controller:"AdminGroupAddPageCtrl",
+            params: {
+                groupId:null,
+                isEdit: null
+            },
             breadcrumb: {
                 label: "aip.admin.group.edit",
                 url: "/aip/admin#/group/edit"}
         },
         "admin-group-open": {
-            url: "/group/open",
+            url: "/group/open/:groupId",
             templateUrl:"admin/group/open/adminGroupOpenPage.html",
             controller:"AdminGroupOpenPageCtrl",
+            params: {
+                groupId: null,
+                noti: null
+            },
             breadcrumb: {
                 label: "aip.admin.group.open",
                 url: "/aip/admin#/group/open",
@@ -255,7 +266,7 @@ var bannerAIPApp = angular.module("bannerAIP", [
                     url: item.url,
                     templateUrl: APP_ROOT + item.templateUrl,
                     controller: item.controller,
-                    params: {noti:undefined, data:undefined, inform: item.inform, saved:undefined},
+                    params: item.params ? item.params : {noti:undefined, data:undefined, inform: item.inform, saved:undefined},
                     onEnter: function($stateParams, $filter) {
                         this.data.breadcrumbs.url = item.breadcrumb.url;
                         this.data.breadcrumbs.title = item.breadcrumb.label;

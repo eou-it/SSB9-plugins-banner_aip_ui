@@ -778,6 +778,10 @@ ol.selected-group > li > button  {
     margin-top:0px;
     margin-bottom:10px;
 }
+        .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement .overviewEdit  {
+    text-align:left;
+    padding:8px;
+}
         .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement .activity  {
     margin-top:30px;
     border-right:2px solid #C0C0C0;
@@ -1151,7 +1155,7 @@ ol.selected-group > li > button  {
     position:absolute;
     width:8px;
     height:8px;
-    background:transparent;
+    background:rgba(0, 0, 0, 0);
     top:6px;
     right:7px;
     border:4px solid #fff;
