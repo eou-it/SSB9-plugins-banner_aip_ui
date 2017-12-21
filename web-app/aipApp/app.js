@@ -269,6 +269,18 @@ var bannerAIPApp = angular.module("bannerAIP", [
                     params: item.params ? item.params : {noti:undefined, data:undefined, inform: item.inform, saved:undefined},
                     onEnter: function($stateParams, $filter) {
                         this.data.breadcrumbs.url = item.breadcrumb.url;
+                        if($stateParams.groupId) {
+                            var params = item.url.split("/").filter(function(_item) {
+                                return _item.startsWith(":");
+                            });
+                            var me = this;
+                            angular.forEach(params, function(param) {
+                                var key = param.replace(":","");
+                                if($stateParams[key]) {
+                                    me.data.breadcrumbs.url+="/"+$stateParams[key];
+                                }
+                            });
+                        }
                         this.data.breadcrumbs.title = item.breadcrumb.label;
                     },
                     data: {
