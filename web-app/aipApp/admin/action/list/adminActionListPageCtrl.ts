@@ -239,7 +239,7 @@ module AIP {
         // }
 
         openActionItem(id) {
-            this.$state.go("admin-action-open", { data: id});
+            this.$state.go("admin-action-open", { actionItemId: id});
         }
     }
 }

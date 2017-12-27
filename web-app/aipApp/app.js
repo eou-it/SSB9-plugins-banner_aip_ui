@@ -86,18 +86,26 @@ var bannerAIPApp = angular.module("bannerAIP", [
                 url: "/aip/admin#/action/add"}
         },
         "admin-action-open": {
-            url: "/action/open",
+            url: "/action/open/:actionItemId",
             templateUrl:"admin/action/open/adminActionItemOpenPage.html",
             controller:"AdminActionItemOpenPageCtrl",
+            params: {
+                actionItemId: null,
+                noti: null
+            },
             breadcrumb: {
                 label: "aip.admin.action.open",
                 url: "/aip/admin#/action/open",
             }
         },
         "admin-action-edit": {
-            url: "/action/edit",
+            url: "/action/edit/:actionItemId/:isEdit",
             templateUrl:"admin/action/add/adminActionItemAddPage.html",
             controller:"AdminActionItemAddPageCtrl",
+            params: {
+                actionItemId:null,
+                isEdit: null
+            },
             breadcrumb: {
                 label: "aip.admin.action.edit.actionItem",
                 url: "/aip/admin#/action/edit"}
@@ -269,7 +277,7 @@ var bannerAIPApp = angular.module("bannerAIP", [
                     params: item.params ? item.params : {noti:undefined, data:undefined, inform: item.inform, saved:undefined},
                     onEnter: function($stateParams, $filter) {
                         this.data.breadcrumbs.url = item.breadcrumb.url;
-                        if($stateParams.groupId) {
+                        if($stateParams.groupId || $stateParams.actionItemId) {
                             var params = item.url.split("/").filter(function(_item) {
                                 return _item.startsWith(":");
                             });
