@@ -1,7 +1,7 @@
 ///<reference path="../../typings/tsd.d.ts"/>
 var AIP;
 (function (AIP) {
-    var AdminLandingPageCtrl = (function () {
+    var AdminLandingPageCtrl = /** @class */ (function () {
         function AdminLandingPageCtrl($scope, $state) {
             this.$inject = ["$scope", "$state"];
             $scope.vm = this;

@@ -3,7 +3,7 @@
 ///<reference path="../../../common/services/spinnerService.ts"/>
 var AIP;
 (function (AIP) {
-    var AdminGroupOpenPageCtrl = (function () {
+    var AdminGroupOpenPageCtrl = /** @class */ (function () {
         function AdminGroupOpenPageCtrl($scope, AdminGroupService, $q, SpinnerService, $state, $filter, $sce, $templateRequest, $templateCache, $compile, $timeout, APP_ROOT) {
             this.$inject = ["$scope", "AdminGroupService", "$q", "SpinnerService", "$state", "$filter", "$sce", "$templateRequest", "$templateCache",
                 "$compile", "$timeout", "APP_ROOT"];
@@ -30,20 +30,19 @@ var AIP;
             this.allActionItems = [];
             this.originalAssign = [];
             this.saving = false;
+            this.groupDetailDefer = null;
             this.init();
         }
         AdminGroupOpenPageCtrl.prototype.init = function () {
             var _this = this;
             this.spinnerService.showSpinner(true);
             var promises = [];
-            // this.openOverviewPanel();
-            this.groupFolder = this.$state.params.data && this.$state.params.data.hasOwnProperty("group") ?
-                this.$state.params.data.group : this.$state.previousParams.data.group;
-            //var groupDescHtml = this.$sce.trustAsHtml(this.$state.params.data.description);
-            //console.log(groupDescHtml);
-            //todo: replace this temporary workaround for sce not working for description
-            $("p.openGroupDesc").html(this.groupFolder.groupDesc);
-            $("#title-panel h1").html(this.groupFolder.groupName);
+            this.groupDetailDefer = this.getGroupDetailDefer(this.$state.params.groupId).then(function () {
+                $("p.openGroupDesc").html(_this.groupFolder.groupDesc);
+                $("#title-panel h1").html(_this.groupFolder.groupName);
+            }, function (err) {
+                console.log(err);
+            });
             if (this.$state.params.noti) {
                 this.handleNotification(this.$state.params.noti);
             }
@@ -83,13 +82,9 @@ var AIP;
             });
             return deferred.promise;
         };
-        AdminGroupOpenPageCtrl.prototype.openOverviewPanel = function () {
+        AdminGroupOpenPageCtrl.prototype.getGroupDetailDefer = function (id) {
             var _this = this;
-            this.editMode = false;
-            this.selected = [];
-            this.assignedActionItems = [];
-            var deferred = this.$q.defer();
-            this.adminGroupService.getGroupDetail(this.groupFolder.groupId ? this.groupFolder.groupId : this.groupFolder)
+            var request = this.adminGroupService.getGroupDetail(id)
                 .then(function (response) {
                 if (response.group) {
                     _this.groupFolder = response.group;
@@ -98,10 +93,20 @@ var AIP;
                     //todo: output error in notification center?
                     console.log("fail");
                 }
-                deferred.resolve(_this.openPanel("overview"));
             }, function (err) {
                 //TODO:: handle error call
                 console.log(err);
+            });
+            return request;
+        };
+        AdminGroupOpenPageCtrl.prototype.openOverviewPanel = function () {
+            var _this = this;
+            this.editMode = false;
+            this.selected = [];
+            this.assignedActionItems = [];
+            var deferred = this.$q.defer();
+            this.groupDetailDefer.then(function (group) {
+                deferred.resolve(_this.openPanel("overview"));
             });
             return deferred.promise;
         };
@@ -114,6 +119,7 @@ var AIP;
             var deferred = this.$q.defer();
             var promises = [];
             this.spinnerService.showSpinner(true);
+            promises.push(this.groupDetailDefer);
             promises.push(this.adminGroupService.getAssignedActionItemInGroup(this.groupFolder.groupId ? this.groupFolder.groupId : this.groupFolder)
                 .then(function (response) {
                 _this.assignedActionItems = response;
@@ -164,7 +170,7 @@ var AIP;
                     n.addPromptAction(_this.$filter("i18n_aip")("aip.common.text.yes"), function () {
                         notifications.remove(n);
                         if (type === "overview") {
-                            _this.$state.go("admin-group-edit", { data: { group: _this.groupFolder.groupId, isEdit: true } });
+                            _this.$state.go("admin-group-edit", { groupId: _this.groupFolder.groupId, isEdit: true });
                         }
                         else {
                             _this.edit();
@@ -175,7 +181,7 @@ var AIP;
                 else {
                     notifications.remove(n);
                     if (type === "overview") {
-                        _this.$state.go("admin-group-edit", { data: { group: _this.groupFolder.groupId, isEdit: true } });
+                        _this.$state.go("admin-group-edit", { groupId: _this.groupFolder.groupId, isEdit: true });
                     }
                     else {
                         _this.edit();

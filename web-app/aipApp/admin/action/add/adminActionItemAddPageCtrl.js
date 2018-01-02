@@ -6,7 +6,7 @@
 ///<reference path="../../../common/services/admin/adminActionService.ts"/>
 var AIP;
 (function (AIP) {
-    var AdminActionItemAddPageCtrl = (function () {
+    var AdminActionItemAddPageCtrl = /** @class */ (function () {
         function AdminActionItemAddPageCtrl($scope, $q, $state, $filter, $sce, $timeout, SpinnerService, AdminActionService) {
             this.$inject = ["$scope", "$q", "$state", "$filter", "$sce", "$timeout", "SpinnerService", "AdminActionService"];
             this.trustAsHtml = function (string) {
@@ -37,7 +37,7 @@ var AIP;
             this.spinnerService.showSpinner(true);
             var allPromises = [];
             this.actionItemInfo = {};
-            this.editMode = this.$state.params.data ? this.$state.params.data.isEdit : false;
+            this.editMode = this.$state.params.isEdit === "true" ? true : false;
             allPromises.push(this.adminActionService.getStatus()
                 .then(function (response) {
                 _this.status = response.data;
@@ -54,7 +54,7 @@ var AIP;
             }));
             this.$q.all(allPromises).then(function () {
                 if (_this.editMode) {
-                    _this.adminActionService.getActionItemDetail(_this.$state.params.data.group)
+                    _this.adminActionService.getActionItemDetail(_this.$state.params.actionItemId)
                         .then(function (response) {
                         if (response.data) {
                             _this.actionItem1 = response.data.actionItem;
@@ -157,7 +157,7 @@ var AIP;
                         };
                         _this.$state.go("admin-action-open", {
                             noti: notiParams,
-                            data: response.data.updatedActionItem.id,
+                            actionItemId: response.data.updatedActionItem.id,
                         });
                     }
                     else {
@@ -181,7 +181,7 @@ var AIP;
                         };
                         _this.$state.go("admin-action-open", {
                             noti: notiParams,
-                            data: response.data.newActionItem.id
+                            actionItemId: response.data.newActionItem.id
                         });
                     }
                     else {

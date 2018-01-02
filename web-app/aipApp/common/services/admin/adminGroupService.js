@@ -7,7 +7,7 @@ var AIP;
         Status[Status["Active"] = 2] = "Active";
         Status[Status["Inactive"] = 3] = "Inactive";
     })(Status || (Status = {}));
-    var AdminGroupService = (function () {
+    var AdminGroupService = /** @class */ (function () {
         function AdminGroupService($http, $q, $filter, ENDPOINT, $sce) {
             this.$http = $http;
             this.$q = $q;
@@ -83,9 +83,8 @@ var AIP;
         };
         AdminGroupService.prototype.getGroupDetail = function (groupId) {
             var request = this.$http({
-                method: "POST",
-                url: this.ENDPOINT.admin.openGroup,
-                data: { groupId: groupId }
+                method: "GET",
+                url: this.ENDPOINT.admin.openGroup + "?groupId=" + groupId
             })
                 .then(function (response) {
                 return response.data;

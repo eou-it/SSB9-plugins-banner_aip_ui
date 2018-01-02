@@ -5,7 +5,7 @@
 ///<reference path="../../../common/services/admin/adminGroupService.ts"/>
 var AIP;
 (function (AIP) {
-    var AdminGroupListPageCtrl = (function () {
+    var AdminGroupListPageCtrl = /** @class */ (function () {
         function AdminGroupListPageCtrl($scope, $state, $window, $filter, $q, ENDPOINT, PAGINATIONCONFIG, AdminGroupService) {
             this.$inject = ["$scope", "$state", "$window", "$filter", "$q", "ENDPOINT", "PAGINATIONCONFIG",
                 "AdminGroupService"];
@@ -138,7 +138,7 @@ var AIP;
             console.log("Copy id: " + id);
         };
         AdminGroupListPageCtrl.prototype.open = function (id) {
-            this.$state.go("admin-group-open", { data: { group: id } });
+            this.$state.go("admin-group-open", { groupId: id });
         };
         AdminGroupListPageCtrl.prototype.getHeight = function () {
             var containerHeight = $(document).height() -

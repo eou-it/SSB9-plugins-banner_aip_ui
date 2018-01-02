@@ -62,7 +62,7 @@ module AIP {
             this.spinnerService.showSpinner(true);
             var allPromises = [];
             this.actionItemInfo = <any>{};
-            this.editMode = this.$state.params.data?this.$state.params.data.isEdit:false;
+            this.editMode = this.$state.params.isEdit==="true" ? true : false;
             allPromises.push(
                 this.adminActionService.getStatus()
                     .then((response: AIP.IActionItemStatusResponse) => {
@@ -85,7 +85,7 @@ module AIP {
             );
             this.$q.all(allPromises).then(() => {
                 if (this.editMode) {
-                    this.adminActionService.getActionItemDetail(this.$state.params.data.group)
+                    this.adminActionService.getActionItemDetail(this.$state.params.actionItemId)
                         .then((response) => {
                             if(response.data) {
                                 this.actionItem1=response.data.actionItem;
@@ -190,7 +190,7 @@ module AIP {
                             };
                             this.$state.go("admin-action-open", {
                                 noti: notiParams,
-                                data: response.data.updatedActionItem.id,
+                                actionItemId: response.data.updatedActionItem.id,
                             });
                         } else {
                             this.saveErrorCallback(response.data.message);
@@ -213,7 +213,7 @@ module AIP {
                             };
                             this.$state.go("admin-action-open", {
                                 noti: notiParams,
-                                data: response.data.newActionItem.id
+                                actionItemId: response.data.newActionItem.id
                             });
                         } else {
                             this.saveErrorCallback(response.data.message);

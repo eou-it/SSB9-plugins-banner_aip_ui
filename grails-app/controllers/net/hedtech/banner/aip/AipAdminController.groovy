@@ -35,6 +35,7 @@ class AipAdminController {
     def actionItemProcessingCommonService
     def actionItemGroupAssignReadOnlyService
     def actionItemGroupService
+    def actionItemService
     /**
      * API for folders LOV
      * @return
@@ -100,12 +101,12 @@ class AipAdminController {
     def openGroup() {
         def success = false
 
-        if (!request.JSON.groupId) {
+        if (!params.groupId) {
             response.sendError( 403 )
             return
         }
 
-        GroupFolderReadOnly gfro = groupFolderReadOnlyService.getActionItemGroupById( request.JSON.groupId )
+        GroupFolderReadOnly gfro = groupFolderReadOnlyService.getActionItemGroupById( Long.parseLong(params.groupId) )
         if (gfro) {
             success = true
         }
@@ -409,6 +410,15 @@ value: value.aipBlock
      */
     def updateActionItemGroupAssignment() {
         def model = actionItemGroupCompositeService.updateActionItemGroupAssignment( request.JSON )
+        render model as JSON
+    }
+
+    /**
+     * Check If Action Item is Posted
+     * @return
+     */
+    def checkActionItemPosted() {
+        def model = [posted: actionItemService.checkActionItemPosted( Long.parseLong( params.actionItemId ) )]
         render model as JSON
     }
 

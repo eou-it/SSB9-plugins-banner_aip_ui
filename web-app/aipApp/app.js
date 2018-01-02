@@ -86,18 +86,26 @@ var bannerAIPApp = angular.module("bannerAIP", [
                 url: "/aip/admin#/action/add"}
         },
         "admin-action-open": {
-            url: "/action/open",
+            url: "/action/open/:actionItemId",
             templateUrl:"admin/action/open/adminActionItemOpenPage.html",
             controller:"AdminActionItemOpenPageCtrl",
+            params: {
+                actionItemId: null,
+                noti: null
+            },
             breadcrumb: {
                 label: "aip.admin.action.open",
                 url: "/aip/admin#/action/open",
             }
         },
         "admin-action-edit": {
-            url: "/action/edit",
+            url: "/action/edit/:actionItemId/:isEdit",
             templateUrl:"admin/action/add/adminActionItemAddPage.html",
             controller:"AdminActionItemAddPageCtrl",
+            params: {
+                actionItemId:null,
+                isEdit: null
+            },
             breadcrumb: {
                 label: "aip.admin.action.edit.actionItem",
                 url: "/aip/admin#/action/edit"}
@@ -115,22 +123,33 @@ var bannerAIPApp = angular.module("bannerAIP", [
             url: "/group/add",
             templateUrl:"admin/group/add/adminGroupAddPage.html",
             controller:"AdminGroupAddPageCtrl",
+            params: {
+                groupId:null
+            },
             breadcrumb: {
                 label: "aip.admin.group.add",
                 url: "/aip/admin#/group/add"}
         },
         "admin-group-edit": {
-            url: "/group/edit",
+            url: "/group/edit/:groupId/:isEdit",
             templateUrl:"admin/group/add/adminGroupAddPage.html",
             controller:"AdminGroupAddPageCtrl",
+            params: {
+                groupId:null,
+                isEdit: null
+            },
             breadcrumb: {
                 label: "aip.admin.group.edit",
                 url: "/aip/admin#/group/edit"}
         },
         "admin-group-open": {
-            url: "/group/open",
+            url: "/group/open/:groupId",
             templateUrl:"admin/group/open/adminGroupOpenPage.html",
             controller:"AdminGroupOpenPageCtrl",
+            params: {
+                groupId: null,
+                noti: null
+            },
             breadcrumb: {
                 label: "aip.admin.group.open",
                 url: "/aip/admin#/group/open",
@@ -255,9 +274,21 @@ var bannerAIPApp = angular.module("bannerAIP", [
                     url: item.url,
                     templateUrl: APP_ROOT + item.templateUrl,
                     controller: item.controller,
-                    params: {noti:undefined, data:undefined, inform: item.inform, saved:undefined},
+                    params: item.params ? item.params : {noti:undefined, data:undefined, inform: item.inform, saved:undefined},
                     onEnter: function($stateParams, $filter) {
                         this.data.breadcrumbs.url = item.breadcrumb.url;
+                        if($stateParams.groupId || $stateParams.actionItemId) {
+                            var params = item.url.split("/").filter(function(_item) {
+                                return _item.startsWith(":");
+                            });
+                            var me = this;
+                            angular.forEach(params, function(param) {
+                                var key = param.replace(":","");
+                                if($stateParams[key]) {
+                                    me.data.breadcrumbs.url+="/"+$stateParams[key];
+                                }
+                            });
+                        }
                         this.data.breadcrumbs.title = item.breadcrumb.label;
                     },
                     data: {

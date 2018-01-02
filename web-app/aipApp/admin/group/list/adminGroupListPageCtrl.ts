@@ -162,7 +162,7 @@ module AIP {
         }
 
         open(id:number) {
-            this.$state.go("admin-group-open", {data: {group:id}});
+            this.$state.go("admin-group-open", { groupId:id});
         }
 
         getHeight() {

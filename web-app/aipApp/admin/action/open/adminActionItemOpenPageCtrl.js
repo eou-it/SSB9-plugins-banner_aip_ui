@@ -7,7 +7,7 @@
 ///<reference path="../../../common/services/spinnerService.ts"/>
 var AIP;
 (function (AIP) {
-    var AdminActionItemOpenPageCtrl = (function () {
+    var AdminActionItemOpenPageCtrl = /** @class */ (function () {
         function AdminActionItemOpenPageCtrl($scope, $q, $state, $filter, $sce, $window, $templateRequest, $templateCache, $compile, $timeout, $interpolate, SpinnerService, AdminActionService, AdminActionStatusService, APP_ROOT, CKEDITORCONFIG) {
             this.$inject = ["$scope", "$q", "$state", "$filter", "$sce", "$window", "$templateRequest", "$templateCache", "$compile", "$timeout", "$interpolate", "SpinnerService", "AdminActionService", "AdminActionStatusService", "APP_ROOT", "CKEDITORCONFIG"];
             this.trustAsHtml = function (string) {
@@ -66,7 +66,7 @@ var AIP;
             var _this = this;
             this.spinnerService.showSpinner(true);
             var promises = [];
-            this.actionFolder = this.$state.params.data || this.$state.previousParams.data.group;
+            this.actionFolder = this.$state.params.actionItemId || this.$state.previousParams.actionItemId;
             this.openOverviewPanel();
             if (this.$state.params.noti) {
                 this.handleNotification(this.$state.params.noti);
@@ -240,14 +240,14 @@ var AIP;
                 n.addPromptAction(this.$filter("i18n_aip")("aip.common.text.yes"), function () {
                     notifications.remove(n);
                     if (type === "overview") {
-                        _this.$state.go("admin-action-edit", { data: { group: _this.actionItem.actionItemId, isEdit: true } });
+                        _this.$state.go("admin-action-edit", { actionItemId: _this.actionItem.actionItemId, isEdit: true });
                     }
                 });
                 notifications.addNotification(n);
             }
             else {
                 if (type === "overview") {
-                    this.$state.go("admin-action-edit", { data: { group: this.actionItem.actionItemId, isEdit: true } });
+                    this.$state.go("admin-action-edit", { actionItemId: this.actionItem.actionItemId, isEdit: true });
                 }
             }
         };
@@ -322,7 +322,7 @@ var AIP;
             var _this = this;
             this.init();
             var deferred = this.$q.defer();
-            this.adminActionService.getActionItemDetail(this.$state.params.data)
+            this.adminActionService.getActionItemDetail(this.$state.params.actionItemId)
                 .then(function (response) {
                 _this.actionItem = response.data.actionItem;
                 _this.selectedTemplate = _this.actionItem.actionItemTemplateId;

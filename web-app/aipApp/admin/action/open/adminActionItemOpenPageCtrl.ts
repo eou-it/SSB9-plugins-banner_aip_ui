@@ -92,7 +92,7 @@ module AIP {
         init() {
             this.spinnerService.showSpinner(true);
             var promises = [];
-            this.actionFolder = this.$state.params.data || this.$state.previousParams.data.group;
+            this.actionFolder = this.$state.params.actionItemId || this.$state.previousParams.actionItemId;
                 this.openOverviewPanel();
             if (this.$state.params.noti) {
                 this.handleNotification(this.$state.params.noti);
@@ -270,13 +270,13 @@ module AIP {
                 n.addPromptAction(this.$filter("i18n_aip")("aip.common.text.yes"), ()=> {
                     notifications.remove(n);
                     if(type === "overview") {
-                        this.$state.go("admin-action-edit", {data: {group:this.actionItem.actionItemId, isEdit: true}});
+                        this.$state.go("admin-action-edit", {actionItemId: this.actionItem.actionItemId, isEdit: true});
                     }
                 });
                 notifications.addNotification(n);
             } else {
                 if(type === "overview") {
-                    this.$state.go("admin-action-edit", {data: {group:this.actionItem.actionItemId, isEdit: true}});
+                    this.$state.go("admin-action-edit", {actionItemId: this.actionItem.actionItemId, isEdit: true});
                 }
             }
         }
@@ -367,7 +367,7 @@ module AIP {
         cancel(option) {
             this.init();
             var deferred = this.$q.defer();
-            this.adminActionService.getActionItemDetail(this.$state.params.data)
+            this.adminActionService.getActionItemDetail(this.$state.params.actionItemId)
                 .then((response: AIP.IActionItemOpenResponse) => {
                     this.actionItem = response.data.actionItem;
                     this.selectedTemplate = this.actionItem.actionItemTemplateId;
