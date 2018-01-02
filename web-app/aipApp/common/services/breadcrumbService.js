@@ -4,13 +4,20 @@
 ///<reference path = "../../../typings/tsd.d.ts"/>
 var AIP;
 (function (AIP) {
-    var AIPBreadcrumbService = (function () {
+    var AIPBreadcrumbService = /** @class */ (function () {
         function AIPBreadcrumbService($location, $filter) {
             this.$inject = ["$location", "$filter"];
             this.$location = $location;
             this.$filter = $filter;
             this.breadcrumbs = {};
+            this.callingUrl = sessionStorage.getItem('genAppCallingPage');
+            this.init();
         }
+        AIPBreadcrumbService.prototype.init = function () {
+            if (this.callingUrl) {
+                this.breadcrumbs = JSON.parse(this.callingUrl);
+            }
+        };
         AIPBreadcrumbService.prototype.updateBreadcrumb = function (item) {
             var _this = this;
             var existItemTitle = Object.keys(this.breadcrumbs);
@@ -30,6 +37,7 @@ var AIP;
                 this.breadcrumbs = temp;
             }
             this.draw(item.title);
+            sessionStorage.setItem('genAppCallingPage', JSON.stringify(this.breadcrumbs));
         };
         AIPBreadcrumbService.prototype.checkSkip = function (newVal, oldVal) {
             if (oldVal === "aip.admin.group.add" && newVal === "aip.admin.group.open") {
@@ -63,7 +71,11 @@ var AIP;
             };
             BreadCrumbAndPageTitle.draw(updatedHeaderAttributes);
         };
-        AIPBreadcrumbService.prototype.removeLastUrl = function () {
+        AIPBreadcrumbService.prototype.drawAll = function () {
+            var _this = this;
+            angular.forEach(this.breadcrumbs, function (value, key) {
+                _this.draw(key);
+            });
         };
         return AIPBreadcrumbService;
     }());

@@ -44,49 +44,49 @@ var bannerAIPApp = angular.module("bannerAIP", [
 //constants for page information
     .constant("PAGES", {
         "admin-landing": {
-            url: "/landing",
+            url: "/aipAdmin/landing",
             templateUrl:"admin/adminLandingPage.html",
             controller: "AdminLandingPageCtrl",
             breadcrumb: {
                 label: "aip.admin.landing",
-                url: "/aip/admin#/landing"
+                url: "/aipAdmin/landing"
             }
         },
         "admin-action-list": {
-            url: "/action",
+            url: "/aipAdmin/action",
             templateUrl: "admin/action/list/adminActionListPage.html",
             breadcrumb: {
                 label: "aip.admin.action",
-                url: "/aip/admin#/action"
+                url: "/aipAdmin/action"
             }
         },
         "admin-post-list": {
-            url: "/post",
+            url: "/aipAdmin/post",
             templateUrl: "admin/action/post/postActionListPage.html",
             breadcrumb: {
                 label: "aip.admin.action.item.post.item",
-                url: "/aip/admin#/post"
+                url: "/aipAdmin/post"
 
             }
         },
         "admin-post-add": {
-            url: "/action/addjob",
+            url: "/aipAdmin/action/addjob",
             templateUrl:"admin/action/post/adminPostItemAddPage.html",
             controller:"AdminPostItemAddPageCtrl",
             breadcrumb: {
                 label: "aip.admin.action.actionItem.Addjob",
-                url: "/aip/admin#/action/add"}
+                url: "/aipAdmin/action/add"}
         },
         "admin-action-add": {
-            url: "/action/add",
+            url: "/aipAdmin/action/add",
             templateUrl:"admin/action/add/adminActionItemAddPage.html",
             controller:"AdminActionItemAddPageCtrl",
             breadcrumb: {
                 label: "aip.admin.action.add.actionItem",
-                url: "/aip/admin#/action/add"}
+                url: "/aipAdmin/action/add"}
         },
         "admin-action-open": {
-            url: "/action/open/:actionItemId",
+            url: "/aipAdmin/action/open/:actionItemId",
             templateUrl:"admin/action/open/adminActionItemOpenPage.html",
             controller:"AdminActionItemOpenPageCtrl",
             params: {
@@ -95,11 +95,11 @@ var bannerAIPApp = angular.module("bannerAIP", [
             },
             breadcrumb: {
                 label: "aip.admin.action.open",
-                url: "/aip/admin#/action/open",
+                url: "/aipAdmin/action/open",
             }
         },
         "admin-action-edit": {
-            url: "/action/edit/:actionItemId/:isEdit",
+            url: "/aipAdmin/action/edit/:actionItemId/:isEdit",
             templateUrl:"admin/action/add/adminActionItemAddPage.html",
             controller:"AdminActionItemAddPageCtrl",
             params: {
@@ -108,19 +108,19 @@ var bannerAIPApp = angular.module("bannerAIP", [
             },
             breadcrumb: {
                 label: "aip.admin.action.edit.actionItem",
-                url: "/aip/admin#/action/edit"}
+                url: "/aipAdmin/action/edit"}
         },
         "admin-group-list": {
-            url: "/group",
+            url: "/aipAdmin/group",
             templateUrl: "admin/group/list/adminGroupListPage.html",
-            //controller: "AdminGroupListPageCtrl",
+            controller: "AdminGroupListPageCtrl",
             breadcrumb: {
                 label: "aip.admin.groups",
-                url: "/aip/admin#/group"
+                url: "/aipAdmin/group"
             }
         },
         "admin-group-add": {
-            url: "/group/add",
+            url: "/aipAdmin/group/add",
             templateUrl:"admin/group/add/adminGroupAddPage.html",
             controller:"AdminGroupAddPageCtrl",
             params: {
@@ -128,10 +128,10 @@ var bannerAIPApp = angular.module("bannerAIP", [
             },
             breadcrumb: {
                 label: "aip.admin.group.add",
-                url: "/aip/admin#/group/add"}
+                url: "/aipAdmin/group/add"}
         },
         "admin-group-edit": {
-            url: "/group/edit/:groupId/:isEdit",
+            url: "/aipAdmin/group/edit/:groupId/:isEdit",
             templateUrl:"admin/group/add/adminGroupAddPage.html",
             controller:"AdminGroupAddPageCtrl",
             params: {
@@ -140,10 +140,10 @@ var bannerAIPApp = angular.module("bannerAIP", [
             },
             breadcrumb: {
                 label: "aip.admin.group.edit",
-                url: "/aip/admin#/group/edit"}
+                url: "/aipAdmin/group/edit"}
         },
         "admin-group-open": {
-            url: "/group/open/:groupId",
+            url: "/aipAdmin/group/open/:groupId",
             templateUrl:"admin/group/open/adminGroupOpenPage.html",
             controller:"AdminGroupOpenPageCtrl",
             params: {
@@ -152,17 +152,17 @@ var bannerAIPApp = angular.module("bannerAIP", [
             },
             breadcrumb: {
                 label: "aip.admin.group.open",
-                url: "/aip/admin#/group/open",
+                url: "/aipAdmin/group/open",
 
             }
         },
         "admin-status-list": {
-            url: "/status",
+            url: "/aipAdmin/status",
             templateUrl: "admin/status/list/adminStatusListPage.html",
             //controller: "AdminGroupListPageCtrl",
             breadcrumb: {
                 label: "aip.admin.status",
-                url: "/aip/admin#/status"
+                url: "/aipAdmin/status"
             }
         },
         "admin-manage-list": {
@@ -176,22 +176,22 @@ var bannerAIPApp = angular.module("bannerAIP", [
         },
 
         "list": {
-            url: "/list",
+            url: "/aip/list",
             templateUrl:"listItem/listItemPage.html",
             controller: "ListItemPageCtrl",
             breadcrumb: {
                 label: "aip.user.actionItem.list",
-                url: "/aip/list#/list"
+                url: "/aip/list/list"
             }
         },
 
         "informedList": {
-            url: "/informedList",
+            url: "/aip/informedList",
             templateUrl: "listItem/listItemPage.html",
             controller: "ListItemPageCtrl",
             breadcrumb: {
                 label: "aip.user.actionItem.list",
-                url: "/aip/list#/list"
+                url: "/aip/list/list"
             },
             inform: true
         }
@@ -266,9 +266,9 @@ var bannerAIPApp = angular.module("bannerAIP", [
                  PAGES, APP_ROOT, APP_ABS_PATH) {
 // TODO: should this be HTML5 in HashBang mode with a base defined in the HTML?
             //$qProvider.errorOnUnhandledRejections(false);
-            $locationProvider.html5Mode(false);
+            $locationProvider.html5Mode(true);
             $locationProvider.hashPrefix('');
-            $urlRouteProvider.otherwise("/list");
+            $urlRouteProvider.otherwise("/aip/list");
             angular.forEach(PAGES, function(item, state) {
                 $stateProvider.state(state, {
                     url: item.url,
