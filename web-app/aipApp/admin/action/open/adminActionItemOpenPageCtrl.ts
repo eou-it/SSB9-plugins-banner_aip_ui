@@ -259,7 +259,7 @@ module AIP {
             }
         }
         validateEdit(type) {
-            if (this.actionItem.actionItemPostedStatus === "Y") {
+     /*       if (this.actionItem.actionItemPostedStatus === "Y") {
                 var n = new Notification({
                     message: this.$filter("i18n_aip")("aip.admin.group.content.edit.posted.warning"),
                     type: "warning"
@@ -270,16 +270,16 @@ module AIP {
                 n.addPromptAction(this.$filter("i18n_aip")("aip.common.text.yes"), ()=> {
                     notifications.remove(n);
                     if(type === "overview") {
-                        this.$state.go("admin-action-edit", {actionItemId: this.actionItem.actionItemId, isEdit: true});
+                        this.$state.go("admin-action-edit", {data: {group:this.actionItem.actionItemId, isEdit: true}});
                     }
                 });
                 notifications.addNotification(n);
-            } else {
+            } else {*/
                 if(type === "overview") {
                     this.$state.go("admin-action-edit", {actionItemId: this.actionItem.actionItemId, isEdit: true});
                 }
             }
-        }
+
 
         isNoContent() {
             if (this.templateSelect) {
@@ -367,7 +367,7 @@ module AIP {
         cancel(option) {
             this.init();
             var deferred = this.$q.defer();
-            this.adminActionService.getActionItemDetail(this.$state.params.actionItemId)
+            this.adminActionService.getActionItemDetail(this.$state.params.data)
                 .then((response: AIP.IActionItemOpenResponse) => {
                     this.actionItem = response.data.actionItem;
                     this.selectedTemplate = this.actionItem.actionItemTemplateId;

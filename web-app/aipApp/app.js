@@ -230,7 +230,8 @@ var bannerAIPApp = angular.module("bannerAIP", [
             getAssignedActionItemInGroup: aipAppAbsPath + "aipAdmin/getAssignedActionItemInGroup",
             listActionItemForSelect: aipAppAbsPath + "aipAdmin/getActionItemsListForSelect",
             updateActionItemGroupAssignment: aipAppAbsPath + "aipAdmin/updateActionItemGroupAssignment",
-            groupPosted: aipAppAbsPath + "aipAdmin/groupPosted"
+            groupPosted: aipAppAbsPath + "aipAdmin/groupPosted",
+            checkActionItemPosted: aipAppAbsPath + "aipAdmin/checkActionItemPosted"
 
         }
     })
