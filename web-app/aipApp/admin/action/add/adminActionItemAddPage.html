@@ -29,7 +29,7 @@
                 </label>
             </div>
             <div class="actionItemElement col-xs-12 col-sm-5">
-                     <div class="row">
+                <div class="row">
                     <xe-ui-select id="actionItemFolder" ng-model="vm.actionItemInfo.folder" theme="select2"
                                   on-select="vm.actionItemInfo($item, $index)">
                         <xe-ui-select-match placeholder="{{'aip.common.select.folder.default'|i18n_aip}}">
@@ -49,7 +49,7 @@
                 </label>
             </div>
             <div class="actionItemElement col-xs-12 col-sm-5">
-                                <div class="row">
+                <div class="row">
                     <xe-ui-select id="actionItemStatus" ng-model="vm.actionItemInfo.status" theme="select2" ng-disabled="disabled" search-enabled="false"
                                   on-select="vm.selectStatus($item, $index)">
                         <xe-ui-select-match>
@@ -113,7 +113,7 @@
                     </span>
                     <span>
                         <button name="Save" type="button" class="btn btn-primary" ng-disabled="!vm.validateInput()"
-                                ng-click="vm.save()">
+                                ng-click="vm.checkActionPost()">
                         {{"aip.common.saveandreturn"|i18n_aip}}</button>
                     </span>
                 </div>
