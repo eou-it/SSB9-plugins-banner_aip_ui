@@ -40,7 +40,7 @@ var AIP;
             this.spinnerService.showSpinner(true);
             var promises = [];
             this.groupInfo = {};
-            this.editMode = this.$state.params ? this.$state.params.isEdit : false;
+            this.editMode = this.$state.params.isEdit === "true" ? true : false;
             promises.push(this.adminGroupService.getStatus().then(function (status) {
                 _this.status = status.map(function (item) {
                     item.value = _this.$filter("i18n_aip")("aip.status." + item.value.charAt(0));
@@ -86,7 +86,7 @@ var AIP;
             if (this.editMode) {
                 this.adminGroupService.groupPosted(this.groupInfo.id)
                     .then(function (response) {
-                    if (!_this.groupInfo.postedInd && response.posted) {
+                    if (response.posted) {
                         var n = new Notification({
                             message: _this.$filter("i18n_aip")("aip.admin.group.content.edit.posted.warning"),
                             type: "warning"
