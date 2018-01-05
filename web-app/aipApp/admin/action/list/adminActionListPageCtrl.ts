@@ -113,6 +113,16 @@ module AIP {
                     columnShowHide: true
                 }
             }, {
+                name: "actionItemPostedStatus",
+                title: this.$filter("i18n_aip")("aip.list.grid.postInd"),
+                ariaLabel: this.$filter("i18n_aip")("aip.list.grid.postInd"),
+                width: "100px",
+                options: {
+                    sortable: true,
+                    visible: true,
+                    columnShowHide: true
+                }
+            }, {
                 name: "actionItemLastUserId",
                 title: this.$filter("i18n_aip")("aip.list.grid.lastUpdated"),
                 ariaLabel: this.$filter("i18n_aip")("aip.list.grid.lastUpdated"),
