@@ -93,6 +93,16 @@ var AIP;
                         columnShowHide: true
                     }
                 }, {
+                    name: "postedInd",
+                    title: this.$filter("i18n_aip")("aip.list.grid.postInd"),
+                    ariaLabel: this.$filter("i18n_aip")("aip.list.grid.postInd"),
+                    // width: "100px",
+                    options: {
+                        sortable: true,
+                        visible: true,
+                        columnShowHide: true
+                    }
+                }, {
                     name: "groupUserId",
                     title: this.$filter("i18n_aip")("aip.list.grid.lastUpdated"),
                     ariaLabel: this.$filter("i18n_aip")("aip.list.grid.lastUpdated"),

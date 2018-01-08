@@ -1,6 +1,6 @@
 /*******************************************************************************
-Copyright 2017 Ellucian Company L.P. and its affiliates.
-********************************************************************************/
+ Copyright 2017 Ellucian Company L.P. and its affiliates.
+ ********************************************************************************/
 ///<reference path="../../../../typings/tsd.d.ts"/>
 
 declare var register;
@@ -49,25 +49,25 @@ module AIP {
         description: string;
     }
     /*
-    export interface IActionItemStatusSaveResponse {
-        data: {
-            success: boolean;
-            message: string;
-            newActionItem: IActionItemStatus;
-        };
-    }
-    export interface IActionItemStatusOpenResponse {
-        data: {
-            success: boolean;
-            errors: [any];
-            actionItem: IActionItemStatus;
-        };
-    }
-    */
+     export interface IActionItemStatusSaveResponse {
+     data: {
+     success: boolean;
+     message: string;
+     newActionItem: IActionItemStatus;
+     };
+     }
+     export interface IActionItemStatusOpenResponse {
+     data: {
+     success: boolean;
+     errors: [any];
+     actionItem: IActionItemStatus;
+     };
+     }
+     */
     interface IAdminActionStatusService {
         fetchData(query:IActionItemStatusListQuery):ng.IPromise<{}>;
         //saveActionItem(actionItemStatus: IActionItemStatusParam): ng.IHttpPromise<IActionItemStatusSaveResponse>;
-       // getActionItemStatusDetail(id:number): ng.IHttpPromise<IActionItemStatusOpenResponse>;
+        // getActionItemStatusDetail(id:number): ng.IHttpPromise<IActionItemStatusOpenResponse>;
     }
 
     export class AdminActionStatusService implements IAdminActionStatusService{
@@ -104,13 +104,13 @@ module AIP {
             return deferred.promise;
         }
         saveStatus (status:{title:string, block:boolean}) {
-                var request = this.$http({
-                    method: "POST",
-                    url: this.ENDPOINT.admin.statusSave,
-                    data: status
-                });
-        return request;
-    }
+            var request = this.$http({
+                method: "POST",
+                url: this.ENDPOINT.admin.statusSave,
+                data: status
+            });
+            return request;
+        }
         removeStatus (status:{id:number}) {
             var request = this.$http({
                 method: "POST",
@@ -138,40 +138,40 @@ module AIP {
         }
 
         /*
-        getFolder() {
-            var request = this.$http({
-                method: "GET",
-                url: this.ENDPOINT.admin.folders
-            });
-            return request;
-        };
+         getFolder() {
+         var request = this.$http({
+         method: "GET",
+         url: this.ENDPOINT.admin.folders
+         });
+         return request;
+         };
 
-        */
+         */
         /*
-        saveActionItem(actionItemStatus) {
-            var params = {
-                actionItemStatus: actionItemStatus.actionItemStatus,
-                actionItemBlockedProcess: actionItemStatus.actionItemStatusBlockedProcess,
-                actionItemSystemRequired: actionItemStatus.actionItemSystemRequired,
-                actionItemActive: actionItemStatus.actionItemActive
-            };
-            var request = this.$http({
-                method: "POST",
-                data: params,
-                url: this.ENDPOINT.admin.createActionItem
-            });
-            return request;
-        }
+         saveActionItem(actionItemStatus) {
+         var params = {
+         actionItemStatus: actionItemStatus.actionItemStatus,
+         actionItemBlockedProcess: actionItemStatus.actionItemStatusBlockedProcess,
+         actionItemSystemRequired: actionItemStatus.actionItemSystemRequired,
+         actionItemActive: actionItemStatus.actionItemActive
+         };
+         var request = this.$http({
+         method: "POST",
+         data: params,
+         url: this.ENDPOINT.admin.createActionItem
+         });
+         return request;
+         }
 
 
-        getActionItemStatusDetail(id) {
-            var request = this.$http({
-                method: "GET",
-                url: this.ENDPOINT.admin.openActionItemStatus + "?id=" + id.toString()
-            });
-            return request;
-        }
-        */
+         getActionItemStatusDetail(id) {
+         var request = this.$http({
+         method: "GET",
+         url: this.ENDPOINT.admin.openActionItemStatus + "?id=" + id.toString()
+         });
+         return request;
+         }
+         */
     }
 }
 

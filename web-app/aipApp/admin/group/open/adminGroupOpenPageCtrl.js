@@ -159,34 +159,32 @@ var AIP;
             var _this = this;
             this.adminGroupService.groupPosted(this.groupFolder.groupId)
                 .then(function (response) {
-                if (response.posted) {
-                    var n = new Notification({
-                        message: _this.$filter("i18n_aip")("aip.admin.group.content.edit.posted.warning"),
-                        type: "warning"
-                    });
-                    n.addPromptAction(_this.$filter("i18n_aip")("aip.common.text.no"), function () {
-                        notifications.remove(n);
-                    });
-                    n.addPromptAction(_this.$filter("i18n_aip")("aip.common.text.yes"), function () {
-                        notifications.remove(n);
-                        if (type === "overview") {
-                            _this.$state.go("admin-group-edit", { groupId: _this.groupFolder.groupId, isEdit: true });
-                        }
-                        else {
-                            _this.edit();
-                        }
-                    });
-                    notifications.addNotification(n);
+                // if(response.posted) {
+                //     var n = new Notification({
+                //         message: this.$filter("i18n_aip")("aip.admin.group.content.edit.posted.warning"),
+                //         type: "warning"
+                //     });
+                //     n.addPromptAction(this.$filter("i18n_aip")("aip.common.text.no"), () => {
+                //         notifications.remove(n);
+                //     });
+                //     n.addPromptAction(this.$filter("i18n_aip")("aip.common.text.yes"), ()=> {
+                //         notifications.remove(n);
+                //         if(type === "overview") {
+                //             this.$state.go("admin-group-edit", {groupId:this.groupFolder.groupId, isEdit: true});
+                //         } else {
+                //             this.edit();
+                //         }
+                //     });
+                //     notifications.addNotification(n);
+                // } else {
+                //     notifications.remove(n);
+                if (type === "overview") {
+                    _this.$state.go("admin-group-edit", { groupId: _this.groupFolder.groupId, isEdit: true });
                 }
                 else {
-                    notifications.remove(n);
-                    if (type === "overview") {
-                        _this.$state.go("admin-group-edit", { groupId: _this.groupFolder.groupId, isEdit: true });
-                    }
-                    else {
-                        _this.edit();
-                    }
+                    _this.edit();
                 }
+                // }
             }, function (err) {
                 throw new Error(err);
             });

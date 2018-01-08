@@ -17,7 +17,7 @@ class AipController {
 
 
     def list() {
-        def model = [fragment: "/list"]
+        def model = []
         render( model: model, view: "index" )
     }
 
@@ -26,7 +26,7 @@ class AipController {
      * @return
      */
     def informedList() {
-        def model = [fragment: "/informedList"]
+        def model = []
         render( model: model, view: "index" )
     }
 
@@ -34,10 +34,10 @@ class AipController {
      * Admin landing page
      * @return
      */
-    def admin() {
-        def model = [fragment: "/landing"]
-        render( model: model, view: "index" )
-    }
+//    def admin() {
+//        def model = [fragment: "/landing"]
+//        render( model: model, view: "index" )
+//    }
 
     /**
      * Logs out

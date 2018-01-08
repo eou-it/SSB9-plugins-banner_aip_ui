@@ -13,7 +13,9 @@ module AIP {
     interface IAIPBreadcrumbService {
         breadcrumbs: {};
         updateBreadcrumb(item:IBreadcrumbItem): void;
-        draw(title: string): void
+        draw(title: string): void;
+        drawAll(): void;
+        init(): void;
     }
 
     export class AIPBreadcrumbService implements IAIPBreadcrumbService{
@@ -21,10 +23,18 @@ module AIP {
         breadcrumbs: {};
         $location;
         $filter;
+        callingUrl: any;
         constructor($location, $filter) {
             this.$location = $location;
             this.$filter = $filter;
             this.breadcrumbs = {};
+            this.callingUrl = sessionStorage.getItem('genAppCallingPage');
+            this.init();
+        }
+        init() {
+            if(this.callingUrl) {
+                this.breadcrumbs = JSON.parse(this.callingUrl);
+            }
         }
         updateBreadcrumb(item: IBreadcrumbItem) {
             var existItemTitle = Object.keys(this.breadcrumbs);
@@ -43,6 +53,7 @@ module AIP {
                 this.breadcrumbs = temp;
             }
             this.draw(item.title);
+            sessionStorage.setItem('genAppCallingPage', JSON.stringify(this.breadcrumbs));
         }
         checkSkip(newVal, oldVal) {
             if (oldVal === "aip.admin.group.add" && newVal === "aip.admin.group.open") {
@@ -76,8 +87,10 @@ module AIP {
             };
             BreadCrumbAndPageTitle.draw(updatedHeaderAttributes);
         }
-        removeLastUrl() {
-
+        drawAll() {
+            angular.forEach(this.breadcrumbs, (value, key) => {
+                this.draw(key);
+            });
         }
     }
 }

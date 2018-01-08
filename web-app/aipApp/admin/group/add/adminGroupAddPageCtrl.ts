@@ -78,7 +78,7 @@ module AIP {
             this.spinnerService.showSpinner(true);
             var promises = [];
             this.groupInfo = <any>{};
-            this.editMode = this.$state.params?this.$state.params.isEdit:false;
+            this.editMode = this.$state.params.isEdit==="true"?true:false;
             promises.push(
                 this.adminGroupService.getStatus().then((status) => {
                     this.status = status.map((item) => {
@@ -127,7 +127,7 @@ module AIP {
             if(this.editMode) {
                 this.adminGroupService.groupPosted(this.groupInfo.id)
                     .then((response) => {
-                        if (!this.groupInfo.postedInd && response.posted) {
+                        if (response.posted) {
                             var n = new Notification({
                                 message: this.$filter("i18n_aip")("aip.admin.group.content.edit.posted.warning"),
                                 type: "warning"

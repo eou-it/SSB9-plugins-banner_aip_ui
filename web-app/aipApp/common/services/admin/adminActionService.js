@@ -138,11 +138,24 @@ var AIP;
                 folderId: parseInt(actionItem.folder.id),
                 description: actionItem.description,
                 status: actionItem.status,
+                actionItemId: actionItem.id
             };
             var request = this.$http({
                 method: "POST",
                 data: params,
                 url: this.ENDPOINT.admin.createActionItem
+            });
+            return request;
+        };
+        AdminActionService.prototype.checkActionItemPosted = function (actionItemId) {
+            var request = this.$http({
+                method: "GET",
+                url: this.ENDPOINT.admin.checkActionItemPosted + "?actionItemId=" + actionItemId
+            })
+                .then(function (response) {
+                return response.data;
+            }, function (err) {
+                throw new Error(err);
             });
             return request;
         };
@@ -163,9 +176,13 @@ var AIP;
             return request;
         };
         AdminActionService.prototype.getActionItemDetail = function (actionItemId) {
+            var params = {
+                actionItemId: actionItemId
+            };
             var request = this.$http({
                 method: "GET",
-                url: this.ENDPOINT.admin.openActionItem + "?actionItemId=" + actionItemId.toString()
+                data: params,
+                url: this.ENDPOINT.admin.openActionItem + "?actionItemId=" + actionItemId
             });
             return request;
         };

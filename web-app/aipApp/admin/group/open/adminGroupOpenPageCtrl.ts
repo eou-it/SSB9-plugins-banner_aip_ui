@@ -195,31 +195,31 @@ module AIP {
         validateEdit(type) {
             this.adminGroupService.groupPosted(this.groupFolder.groupId)
                 .then((response) => {
-                    if(response.posted) {
-                        var n = new Notification({
-                            message: this.$filter("i18n_aip")("aip.admin.group.content.edit.posted.warning"),
-                            type: "warning"
-                        });
-                        n.addPromptAction(this.$filter("i18n_aip")("aip.common.text.no"), () => {
-                            notifications.remove(n);
-                        });
-                        n.addPromptAction(this.$filter("i18n_aip")("aip.common.text.yes"), ()=> {
-                            notifications.remove(n);
-                            if(type === "overview") {
-                                this.$state.go("admin-group-edit", {groupId:this.groupFolder.groupId, isEdit: true});
-                            } else {
-                                this.edit();
-                            }
-                        });
-                        notifications.addNotification(n);
-                    } else {
-                        notifications.remove(n);
+                    // if(response.posted) {
+                    //     var n = new Notification({
+                    //         message: this.$filter("i18n_aip")("aip.admin.group.content.edit.posted.warning"),
+                    //         type: "warning"
+                    //     });
+                    //     n.addPromptAction(this.$filter("i18n_aip")("aip.common.text.no"), () => {
+                    //         notifications.remove(n);
+                    //     });
+                    //     n.addPromptAction(this.$filter("i18n_aip")("aip.common.text.yes"), ()=> {
+                    //         notifications.remove(n);
+                    //         if(type === "overview") {
+                    //             this.$state.go("admin-group-edit", {groupId:this.groupFolder.groupId, isEdit: true});
+                    //         } else {
+                    //             this.edit();
+                    //         }
+                    //     });
+                    //     notifications.addNotification(n);
+                    // } else {
+                    //     notifications.remove(n);
                         if(type === "overview") {
                             this.$state.go("admin-group-edit", {groupId:this.groupFolder.groupId, isEdit: true});
                         } else {
                             this.edit();
                         }
-                    }
+                    // }
                 }, (err) => {
                     throw new Error(err);
                 });

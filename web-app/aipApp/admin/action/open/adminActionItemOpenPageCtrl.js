@@ -228,27 +228,24 @@ var AIP;
             }
         };
         AdminActionItemOpenPageCtrl.prototype.validateEdit = function (type) {
-            var _this = this;
-            if (this.actionItem.actionItemPostedStatus === "Y") {
-                var n = new Notification({
-                    message: this.$filter("i18n_aip")("aip.admin.group.content.edit.posted.warning"),
-                    type: "warning"
-                });
-                n.addPromptAction(this.$filter("i18n_aip")("aip.common.text.no"), function () {
-                    notifications.remove(n);
-                });
-                n.addPromptAction(this.$filter("i18n_aip")("aip.common.text.yes"), function () {
-                    notifications.remove(n);
-                    if (type === "overview") {
-                        _this.$state.go("admin-action-edit", { actionItemId: _this.actionItem.actionItemId, isEdit: true });
-                    }
-                });
-                notifications.addNotification(n);
-            }
-            else {
-                if (type === "overview") {
-                    this.$state.go("admin-action-edit", { actionItemId: this.actionItem.actionItemId, isEdit: true });
-                }
+            /*       if (this.actionItem.actionItemPostedStatus === "Y") {
+                       var n = new Notification({
+                           message: this.$filter("i18n_aip")("aip.admin.group.content.edit.posted.warning"),
+                           type: "warning"
+                       });
+                       n.addPromptAction(this.$filter("i18n_aip")("aip.common.text.no"), () => {
+                           notifications.remove(n);
+                       });
+                       n.addPromptAction(this.$filter("i18n_aip")("aip.common.text.yes"), ()=> {
+                           notifications.remove(n);
+                           if(type === "overview") {
+                               this.$state.go("admin-action-edit", {data: {group:this.actionItem.actionItemId, isEdit: true}});
+                           }
+                       });
+                       notifications.addNotification(n);
+                   } else {*/
+            if (type === "overview") {
+                this.$state.go("admin-action-edit", { actionItemId: this.actionItem.actionItemId, isEdit: true });
             }
         };
         AdminActionItemOpenPageCtrl.prototype.isNoContent = function () {
@@ -322,7 +319,7 @@ var AIP;
             var _this = this;
             this.init();
             var deferred = this.$q.defer();
-            this.adminActionService.getActionItemDetail(this.$state.params.actionItemId)
+            this.adminActionService.getActionItemDetail(this.$state.params.data)
                 .then(function (response) {
                 _this.actionItem = response.data.actionItem;
                 _this.selectedTemplate = _this.actionItem.actionItemTemplateId;

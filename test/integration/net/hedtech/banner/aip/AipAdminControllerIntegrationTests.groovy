@@ -134,7 +134,7 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
 
         def folderId = CommunicationFolder.findByName( 'AIPgeneral' ).id
 
-        def requestObj = [group: [:], edit: [:], duplicate: [:]]
+        def requestObj = [group: [:], edit: [], duplicate: []]
         requestObj.group.groupTitle = "test1a2b" // Make sure title and folder create unique pair
         requestObj.group.groupName = "myName"
         requestObj.group.folderId = folderId
@@ -166,7 +166,7 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
 
         def folderId = CommunicationFolder.findByName( 'AIPgeneral' ).id
 
-        def requestObj = [group: [:], edit: [:], duplicate: [:]]
+        def requestObj = [group: [:], edit: [], duplicate: []]
         requestObj.group.groupTitle = "International Students title"
         requestObj.group.groupName = "International Students"
         // group in AIPGeneral Folder with this name already exists
@@ -198,7 +198,7 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
 
         def folderId = CommunicationFolder.findByName( 'AIPgeneral' ).id
 
-        def requestObj = [group: [:], edit: [:], duplicate: [:]]
+        def requestObj = [group: [:], edit: [], duplicate: []]
         requestObj.group.groupTitle = null
         requestObj.group.groupName = "myName"
         requestObj.group.folderId = folderId
@@ -229,7 +229,7 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
 
         def folderId = CommunicationFolder.findByName( 'AIPgeneral' ).id
 
-        def requestObj = [group: [:], edit: [:], duplicate: [:]]
+        def requestObj = [group: [:], edit: [], duplicate: []]
         requestObj.group.groupTitle = null
         requestObj.group.groupName = "myName"
         requestObj.group.folderId = folderId
@@ -260,7 +260,7 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
 
         def folderId = CommunicationFolder.findByName( 'AIPgeneral' ).id
 
-        def requestObj = [group: [:], edit: [:], duplicate: [:]]
+        def requestObj = [group: [:], edit: [], duplicate: []]
         requestObj.group.groupTitle = "myTitle"
         requestObj.group.groupName = "1234567890" + "1234567890" + "1234567890" + "1234567890" + "1234567890" + "1234567890" + "a"
         //60 max
@@ -291,7 +291,7 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
                 new UsernamePasswordAuthenticationToken( admin.bannerId, '111111' ) )
         SecurityContextHolder.getContext().setAuthentication( auth )
 
-        def requestObj = [group: [:], edit: [:], duplicate: [:]]
+        def requestObj = [group: [:], edit: [], duplicate: []]
         requestObj.group.groupTitle = "myTitle"
         requestObj.group.groupName = "myName"
         requestObj.group.folderId = BAD_FOLDER_ID
@@ -305,7 +305,7 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
         controller.createOrUpdateGroup()
         def answer = JSON.parse( controller.response.contentAsString )
         assertFalse( answer.success )
-        assertEquals( "Save failed. The Folder with Id " + BAD_FOLDER_ID + " does not exist.", answer.message )
+        assertEquals( "Save failed. The Folder does not exist.", answer.message )
     }
 
 
@@ -588,7 +588,7 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
         controller.addActionItem()
         def answer = JSON.parse( controller.response.contentAsString )
         assertFalse( answer.success )
-        assertEquals( "Save failed. The Folder with Id " + BAD_FOLDER_ID + " does not exist.", answer.message )
+        assertEquals( "Save failed. The Folder does not exist.", answer.message )
     }
 
 
@@ -605,10 +605,7 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
                 new UsernamePasswordAuthenticationToken( admin.bannerId, '111111' ) )
         SecurityContextHolder.getContext().setAuthentication( auth )
 
-        def requestObj = [:]
-        requestObj.groupId = actionItemGroupId
-        controller.request.method = "POST"
-        controller.request.json = requestObj
+        controller.params.groupId = actionItemGroupId.toString()
 
         controller.openGroup()
         assertEquals 200, controller.response.status
@@ -631,11 +628,7 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
                 new UsernamePasswordAuthenticationToken( admin.bannerId, '111111' ) )
         SecurityContextHolder.getContext().setAuthentication( auth )
 
-        def requestObj = [:]
-        requestObj.groupId = actionItemGroupId
-        controller.request.method = "POST"
-        controller.request.json = requestObj
-
+        controller.params.groupId = actionItemGroupId.toString()
         controller.openGroup()
 
         assertEquals 200, controller.response.status
@@ -650,11 +643,7 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
         List<ActionItemGroup> actionItemGroups = actionItemGroupService.listActionItemGroups()
         def actionItemGroupId = actionItemGroups[0].id
         def actionItemGroupTitle = actionItemGroups[0].title
-
-        def requestObj = [:]
-        requestObj.groupId = actionItemGroupId
-        controller.request.method = "POST"
-        controller.request.json = requestObj
+        controller.params.groupId = actionItemGroupId.toString()
 
         controller.openGroup()
 
@@ -674,10 +663,7 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
                 new UsernamePasswordAuthenticationToken( admin.bannerId, '111111' ) )
         SecurityContextHolder.getContext().setAuthentication( auth )
 
-        def requestObj = [:]
-        requestObj.groupId = 1234567895
-        controller.request.method = "POST"
-        controller.request.json = requestObj
+        controller.params.groupId = "1234567895"
 
         controller.openGroup()
 
@@ -699,10 +685,7 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
                 new UsernamePasswordAuthenticationToken( admin.bannerId, '111111' ) )
         SecurityContextHolder.getContext().setAuthentication( auth )
 
-        def requestObj = [:]
-        requestObj.groupId = null
-        controller.request.method = "POST"
-        controller.request.json = requestObj
+        controller.params.groupId = null
 
         controller.openGroup()
         assertEquals 403, controller.response.status
