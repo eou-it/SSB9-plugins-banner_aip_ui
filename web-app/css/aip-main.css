@@ -871,151 +871,245 @@ ol.selected-group > li > button {
 .aip-modal .modal-dialog .modal-body .modal-control .btn-forward {
   width: 50%; }
 
-.actionItemAddContainer input.hasMultiCalendarPicker {
-  height: 35px;
-  border-radius: 5px;
-  padding-left: 15px; }
-.actionItemAddContainer .ui-select-choices .select2-result-label {
-  font-size: 1.25em; }
-.actionItemAddContainer .ui-select-container {
-  font-family: "Open Sans";
-  width: 21em;
-  background: #fff; }
-.actionItemAddContainer .ui-select-dropdown {
-  width: 21.35em; }
-.actionItemAddContainer .ui-select-dropdown .select2-search input {
-  width: 20em !important; }
-.actionItemAddContainer .actionItemEdit {
-  font-size: 14px;
-  margin-left: 15px;
-  color: #524e4e;
-  text-decoration: underline; }
-.actionItemAddContainer .actionItemEdit {
-  font-size: 14px;
-  margin-left: 15px;
-  color: #565e96;
-  text-decoration: underline; }
-.actionItemAddContainer .calendar-img {
-  background: url(./images/datepicker_icon.png) no-repeat scroll !important; }
-.actionItemAddContainer input.hasMultiCalendarPicker + span {
-  background-position: 0px 1px; }
-.actionItemAddContainer input.hasMultiCalendarPicker:hover .calendar-img, .actionItemAddContainer .calendar-img:hover {
-  background-position: 2px 0px; }
-.actionItemAddContainer .startdate {
-  padding-left: 0px;
-  position: relative; }
-.actionItemAddContainer .calendar-img {
-  float: right;
-  margin-right: 10px;
-  top: -28px;
-  position: relative; }
-.actionItemAddContainer .startdate {
-  padding-left: 0px;
-  position: relative; }
-.actionItemAddContainer .calendar-img {
-  float: right;
-  margin-right: 10px;
-  top: -28px;
-  position: relative; }
-.actionItemAddContainer input.hasMultiCalendarPicker {
-  height: 35px;
-  border-radius: 5px;
-  padding-left: 15px; }
-.actionItemAddContainer .actionItemControl {
-  position: relative;
-  width: 100%;
-  bottom: 10px;
-  margin-bottom: 15px;
-  height: 5em; }
-  .actionItemAddContainer .actionItemControl .actionItemButton {
-    float: right; }
-    .actionItemAddContainer .actionItemControl .actionItemButton span {
-      padding-left: 24px; }
-      .actionItemAddContainer .actionItemControl .actionItemButton span button {
-        min-width: 100px;
-        margin-left: 3px; }
-.actionItemAddContainer input[type="checkbox"] {
-  -webkit-appearance: initial;
-  appearance: initial;
-  background: white;
-  width: 20px;
-  height: 20px;
-  border: 1px solid #a4a4ca;
-  background: white;
-  position: relative;
-  border-radius: 4px;
-  vertical-align: -40%;
-  box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.25); }
-.actionItemAddContainer input[type="checkbox"]:checked {
-  background: #1c8445; }
-.actionItemAddContainer input[type="checkbox"]:checked:after {
-  /* Heres your symbol replacement - this is a tick in Unicode. */
-  content: '';
-  color: #fff;
-  /* The following positions my tick in the center,
-   * but you could just overlay the entire box
-   * with a full after element with a background if you want to */
-  position: absolute;
-  border: 3px solid #fff;
-  border-top: none;
-  border-right: none;
-  -webkit-transform: rotate(-45deg);
-  -moz-transform: rotate(-45deg);
-  -o-transform: rotate(-45deg);
-  -ms-transform: rotate(-45deg);
-  transform: rotate(-45deg);
-  width: 12px;
-  height: 6px;
-  top: 5px;
-  left: 4px; }
-.actionItemAddContainer input[type="radio"] {
-  line-height: 2.1ex; }
-.actionItemAddContainer input[type="radio"] {
-  position: absolute;
-  left: -999em; }
-.actionItemAddContainer input[type="radio"] + label {
-  position: relative;
-  overflow: hidden;
-  cursor: pointer; }
-.actionItemAddContainer input[type="radio"] + label::before {
-  content: "";
-  display: inline-block;
-  vertical-align: -25%;
-  height: 21px;
-  width: 21px;
-  background-color: #1c8445;
-  border: 1px solid #a4a4ca;
-  border-radius: 25px;
-  box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.25);
-  margin-right: 0.5em; }
-.actionItemAddContainer input[type="radio"]:checked + label::after {
-  content: '';
-  position: absolute;
-  width: 8px;
-  height: 8px;
-  background: rgba(0, 0, 0, 0);
-  top: 6px;
-  left: 7px;
-  border: 4px solid #fff;
-  border-radius: 25px;
-  -webkit-transform: rotate(0deg);
-  -moz-transform: rotate(0deg);
-  -o-transform: rotate(0deg);
-  -ms-transform: rotate(0deg);
-  transform: rotate(0deg); }
-.actionItemAddContainer .postChk {
-  font-size: 1.5em;
-  font-weight: bold;
-  margin-left: 12px; }
-.actionItemAddContainer .actionItemLength {
-  padding: 0px;
-  font-size: 13px;
-  color: #131212; }
-.actionItemAddContainer .placeholderDisplay > span {
-  display: block; }
-.actionItemAddContainer .displayInstruction {
-  font-size: 13px;
-  width: 25%; }
+.actionItemAddContainer {
+ /* input[type="radio"] {
+    line-height: 2.1ex;
+  }
+
+  input[type="radio"]
+ {
+    position: absolute;
+    left: -999em;
+  }
+
+  input[type="radio"] + label {
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+  }
+
+  input[type="radio"] + label::before {
+    content: "";
+    display: inline-block;
+    vertical-align: -25%;
+    height: 21px;
+    width: 21px;
+    background-color: #fff;
+    border: 1px solid #a4a4ca;
+    border-radius: 25px;
+    box-shadow: inset 0 2px 5px rgba(0,0,0,0.25);
+    margin-right: 0.5em;
+  }
+  input[type="radio"]:checked + label::after {
+    content: '';
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    background: #1c8445;;
+    top: 6px;
+    left: 7px;
+    border: 4px solid #fff;
+    border-radius: 25px;
+    -webkit-transform: rotate(-0deg);
+    -moz-transform: rotate(-0deg);
+    -o-transform: rotate(-0deg);
+    -ms-transform: rotate(-0deg);
+    transform: rotate(-0deg);
+  }*/ }
+  .actionItemAddContainer input.hasMultiCalendarPicker {
+    height: 35px;
+    border-radius: 5px;
+    padding-left: 15px; }
+  .actionItemAddContainer .ui-select-choices .select2-result-label {
+    font-size: 1.25em; }
+  .actionItemAddContainer .ui-select-container {
+    font-family: "Open Sans";
+    width: 21em;
+    background: #fff; }
+  .actionItemAddContainer .ui-select-dropdown {
+    width: 21.35em; }
+  .actionItemAddContainer .ui-select-dropdown .select2-search input {
+    width: 20em !important; }
+  .actionItemAddContainer .actionItemEdit {
+    font-size: 14px;
+    margin-left: 15px;
+    color: #524e4e;
+    text-decoration: underline; }
+  .actionItemAddContainer .actionItemEdit {
+    font-size: 14px;
+    margin-left: 15px;
+    color: #565e96;
+    text-decoration: underline; }
+  .actionItemAddContainer .calendar-img {
+    background: url(./images/datepicker_icon.png) no-repeat scroll !important; }
+  .actionItemAddContainer input.hasMultiCalendarPicker + span {
+    background-position: 0px 1px; }
+  .actionItemAddContainer input.hasMultiCalendarPicker:hover .calendar-img, .actionItemAddContainer .calendar-img:hover {
+    background-position: 2px 0px; }
+  .actionItemAddContainer .startdate {
+    padding-left: 0px;
+    position: relative; }
+  .actionItemAddContainer .calendar-img {
+    float: right;
+    margin-right: 10px;
+    top: -28px;
+    position: relative; }
+  .actionItemAddContainer .startdate {
+    padding-left: 0px;
+    position: relative; }
+  .actionItemAddContainer .calendar-img {
+    float: right;
+    margin-right: 10px;
+    top: -28px;
+    position: relative; }
+  .actionItemAddContainer input.hasMultiCalendarPicker {
+    height: 35px;
+    border-radius: 5px;
+    padding-left: 15px; }
+  .actionItemAddContainer .actionItemControl {
+    position: relative;
+    width: 100%;
+    bottom: 10px;
+    margin-bottom: 15px;
+    height: 5em; }
+    .actionItemAddContainer .actionItemControl .actionItemButton {
+      float: right; }
+      .actionItemAddContainer .actionItemControl .actionItemButton span {
+        padding-left: 24px; }
+        .actionItemAddContainer .actionItemControl .actionItemButton span button {
+          min-width: 100px;
+          margin-left: 3px; }
+  .actionItemAddContainer input[type="checkbox"] {
+    -webkit-appearance: initial;
+    appearance: initial;
+    background: white;
+    width: 20px;
+    height: 20px;
+    border: 1px solid #a4a4ca;
+    background: white;
+    position: relative;
+    border-radius: 4px;
+    vertical-align: -40%;
+    box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.25); }
+  .actionItemAddContainer input[type="checkbox"]:checked {
+    background: #1c8445; }
+  .actionItemAddContainer input[type="checkbox"]:checked:after {
+    /* Heres your symbol replacement - this is a tick in Unicode. */
+    content: '';
+    color: #fff;
+    position: absolute;
+    border: 3px solid #fff;
+    border-top: none;
+    border-right: none;
+    -webkit-transform: rotate(-45deg);
+    -moz-transform: rotate(-45deg);
+    -o-transform: rotate(-45deg);
+    -ms-transform: rotate(-45deg);
+    transform: rotate(-45deg);
+    width: 12px;
+    height: 6px;
+    top: 5px;
+    left: 4px; }
+  .actionItemAddContainer input[type="radio"] {
+    -webkit-appearance: initial;
+    appearance: initial;
+    background: white;
+    width: 20px;
+    height: 20px;
+    border: 1px solid #a4a4ca;
+    background: white;
+    position: relative;
+    border-radius: 15px;
+    vertical-align: -40%;
+    box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.25); }
+  .actionItemAddContainer input[type="radio"]:checked {
+    background: #1c8445; }
+  .actionItemAddContainer input[type="radio"]:checked:after {
+    /* Heres your symbol replacement - this is a tick in Unicode. */
+    content: '';
+    color: #fff;
+    position: absolute;
+    border: 1px solid #fff;
+    /* border-top: none; */
+    /* border-right: none; */
+    -webkit-transform: rotate(0deg);
+    -moz-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    -ms-transform: rotate(0deg);
+    /* transform: rotate(-16deg); */
+    width: 7px;
+    height: 7px;
+    top: 5px;
+    left: 6px;
+    border-radius: 16px;
+    background: #fff; }
+  .actionItemAddContainer .postChk {
+    font-size: 1.5em;
+    font-weight: bold;
+    margin-left: 12px; }
+  .actionItemAddContainer .actionItemLength {
+    padding: 0px;
+    font-size: 13px;
+    color: #131212; }
+  .actionItemAddContainer .placeholderDisplay > span {
+    display: block; }
+  .actionItemAddContainer .displayInstruction {
+    font-size: 13px;
+    width: 25%; }
+  .actionItemAddContainer .xe-timepicker-popup.dropdown-menu li a .active {
+    background-color: #428bca;
+    color: #262626; }
+  .actionItemAddContainer .xe-timepicker-input-field {
+    border-color: #CCCCCC;
+    background-color: #FFFFFF !important; }
+  .actionItemAddContainer .xe-timepicker-input-field:disabled {
+    background-color: #F1F4F6 !important; }
+  .actionItemAddContainer .xe-timepicker-input-field.ng-invalid, .actionItemAddContainer .xe-timepicker-input-field:invalid, .actionItemAddContainer .submitted .xe-timepicker-input-field:invalid {
+    border-color: #CD3B3E !important; }
+  .actionItemAddContainer .xe-timepicker-popup.dropdown-menu {
+    width: auto;
+    right: 0;
+    margin-right: 1em;
+    height: 110px;
+    overflow-y: scroll; }
+  .actionItemAddContainer .xe-timepicker-popup.dropdown-menu li {
+    padding: 0; }
+  .actionItemAddContainer .xe-timepicker-popup.dropdown-menu li a .active {
+    background-color: #428bca;
+    color: #262626;
+    padding: 3px 10px; }
+  .actionItemAddContainer .xe-timepicker-display-block {
+    display: block !important;
+    box-shadow: none !important; }
+  .actionItemAddContainer .xe-timepicker-display-none {
+    display: none !important; }
+  .actionItemAddContainer .xe-timepicker-input-field {
+    padding: 10px;
+    border: 1px solid #cccccc;
+    border-radius: 4px;
+    height: 34px !important;
+    background: #ffffff url("./images/clock.svg") right 4px center no-repeat !important; }
+  .actionItemAddContainer .xe-timepicker-input-field::-ms-clear {
+    display: none; }
+  .actionItemAddContainer .xe-timepicker-input-field:disabled {
+    background-color: #F1F4F6 !important;
+    opacity: 100%; }
+  .actionItemAddContainer .xe-timepicker-input-field.ng-invalid, .actionItemAddContainer .xe-timepicker-input-field:invalid, .actionItemAddContainer .submitted .xe-timepicker-input-field:invalid {
+    background-color: inherit !important;
+    /* background-image: url("../../../images/error.png") !important;*/
+    -moz-box-shadow: none !important;
+    -webkit-box-shadow: none !important;
+    box-shadow: none !important;
+    color: inherit !important;
+    border: 2px solid #cd3b3e !important;
+    outline: none !important;
+    background-size: 18px !important;
+    height: 34px !important; }
+  .actionItemAddContainer .timezone-btn {
+    height: 20px;
+    background: url(./images/showTimezoneIcon.png) center center no-repeat;
+    border: 0;
+    padding: 5px; }
 
 .aip-modal .modal-dialog .modal-header .row.blockProcess {
   padding: 16px; }
@@ -1036,8 +1130,12 @@ ol.selected-group > li > button {
 .aip-modal input[type="checkbox"]:checked {
   background: #1c8445; }
 .aip-modal input[type="checkbox"]:checked:after {
+  /* Heres your symbol replacement - this is a tick in Unicode. */
   content: '';
   color: #fff;
+  /* The following positions my tick in the center,
+   * but you could just overlay the entire box
+   * with a full after element with a background if you want to */
   position: absolute;
   border: 3px solid #fff;
   border-top: none;

@@ -289,13 +289,33 @@ module AIP {
             return request;
         }
         getPopulationlist(){
+        var request = this.$http({
+            method: "GET",
+            url: this.ENDPOINT.admin.populationListForSendLov
+        });
+        return request;
+    }
+        getCurrentDateLocale(){
             var request = this.$http({
                 method: "GET",
-                url: this.ENDPOINT.admin.populationListForSendLov
+                url: this.ENDPOINT.admin.fetchCurrentDateInLocaleFormat
             });
             return request;
         }
-
+        getCurrentTimeLocale(){
+            var request = this.$http({
+                method: "GET",
+                url: this.ENDPOINT.admin.is12HourClock
+            });
+            return request;
+        }
+        getCurrentTimeZoneLocale(){
+            var request = this.$http({
+                method: "GET",
+                url: this.ENDPOINT.admin.listAvailableTimezones
+            });
+            return request;
+        }
         getStatus() {
             var request = this.$http({
                 method: "GET",
@@ -320,7 +340,7 @@ module AIP {
             });
             return request;
         }
-        savePostActionItem(postActionItem,selected,modalResult,selectedPopulation,postNow,regeneratePopulation) {
+        savePostActionItem(postActionItem,selected,modalResult,selectedPopulation,postNow,sendTime,regeneratePopulation) {
             var params = {
                 postingName: postActionItem.name,
                 postingActionItemGroupId: selected.groupId,
@@ -329,6 +349,10 @@ module AIP {
                 displayStartDate:postActionItem.startDate,
                 displayEndDate:postActionItem.endDate,
                 postNow:''+postNow+'',
+                scheduleDate:''+!postNow+'',
+                scheduledStartDate:postActionItem.localeDate,
+                scheduledStartTime:sendTime,
+                timezoneStringOffset:"Asia/Singapore",
                 populationRegenerateIndicator:regeneratePopulation
             };
             var request = this.$http({

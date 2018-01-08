@@ -20,14 +20,20 @@ var AIP;
             this.spinnerService = SpinnerService;
             this.adminActionService = AdminActionService;
             this.saving = false;
+            this.IsVisible = false;
+            this.localeDate = {};
+            this.localeTimezone = {};
             this.selected = {};
+            this.localeTime = {};
             this.modalResult = {};
             this.modalResults = [];
             this.regeneratePopulation = false;
             this.itemLength;
-            this.scheduleDate = false;
-            this.selectedPopulation = {};
+            this.sendTime;
+            this.scheduleDate;
             this.postNow = true;
+            this.showTimezoneIcon = true;
+            this.selectedPopulation = {};
             this.APP_ROOT = APP_ROOT;
             this.errorMessage = {};
             this.init();
@@ -42,6 +48,7 @@ var AIP;
             var _this = this;
             this.spinnerService.showSpinner(true);
             var allPromises = [];
+            var deferred = this.$q.defer();
             this.postActionItemInfo = {};
             allPromises.push(this.adminActionService.getGrouplist()
                 .then(function (response) {
@@ -56,10 +63,45 @@ var AIP;
                 var postActionItemPopulation = $("#postActionItemPopulation");
                 _this.postActionItemInfo.population = _this.populationList;
             }));
+            allPromises.push(this.adminActionService.getCurrentDateLocale()
+                .then(function (response) {
+                _this.localeDate = response.data;
+                _this.postActionItemInfo.localeDate = _this.localeDate.date;
+            }));
+            allPromises.push(this.adminActionService.getCurrentTimeLocale()
+                .then(function (response) {
+                _this.localeTime = response.data.use12HourClock;
+                _this.postActionItemInfo.localeTime = _this.localeTime;
+                console.log(_this.postActionItemInfo.localeTime);
+                _this.today();
+            }));
+            allPromises.push(this.adminActionService.getCurrentTimeZoneLocale()
+                .then(function (response) {
+                _this.timezones = response.data.timezones;
+                console.log(_this.timezones);
+                var offset = new Date().getTimezoneOffset();
+                offset = "(GMT" + ((offset < 0 ? '+' : '-') + _this.pad(Math.abs(offset / 60), 2) + ":" + _this.pad(Math.abs(offset % 60), 2)) + ")";
+                console.log(offset);
+                _this.defaultTimeZone = offset;
+                angular.forEach(_this.timezones, function (key, value) {
+                    console.log(key);
+                    var GMTString = key.stringOffset;
+                    console.log(GMTString);
+                    if (offset == GMTString) {
+                        this.setTimezone(key);
+                        this.defaultTimeZone = '( ' + key.displayNameWithoutOffset + ' )';
+                        console.log(this.defaultTimeZone);
+                    }
+                });
+            }));
             this.$q.all(allPromises).then(function () {
                 _this.spinnerService.showSpinner(false);
             });
         };
+        /*ShowPassport(value) {
+        this.IsVisible = value == "Y";
+                console.log(value)
+    }*/
         AdminPostItemAddPageCtrl.prototype.changedValue = function () {
             var _this = this;
             this.itemLength = 0;
@@ -74,6 +116,35 @@ var AIP;
                 _this.postActionItemInfo["groupAction"] = [];
                 _this.postActionItemInfo.groupAction = _this.actionItemList;
             });
+        };
+        AdminPostItemAddPageCtrl.prototype.today = function () {
+            this.sendTime = new Date();
+            this.sendTime.setMinutes(Math.ceil(this.sendTime.getMinutes() / 30) * 30);
+            console.log(this.sendTime.setMinutes(Math.ceil(this.sendTime.getMinutes() / 30) * 30));
+            this.sendTime = this.$filter('date')(this.sendTime, 'HHmm');
+            console.log(this.sendTime);
+        };
+        ;
+        AdminPostItemAddPageCtrl.prototype.setTime = function (time) {
+            this.sendTime = time;
+            this.sendTime = this.$filter('date')(this.sendTime, 'HHmm');
+            console.log(this.sendTime);
+        };
+        ;
+        AdminPostItemAddPageCtrl.prototype.setTimezone = function (timezone) {
+            this.timezone = timezone;
+        };
+        ;
+        AdminPostItemAddPageCtrl.prototype.showTimeZoneList = function () {
+            this.showTimezoneIcon = false;
+        };
+        ;
+        AdminPostItemAddPageCtrl.prototype.pad = function (number, length) {
+            var str = "" + number;
+            while (str.length < length) {
+                str = '0' + str;
+            }
+            return str;
         };
         AdminPostItemAddPageCtrl.prototype.editPage = function () {
             var _this = this;
@@ -165,7 +236,7 @@ var AIP;
         AdminPostItemAddPageCtrl.prototype.save = function () {
             var _this = this;
             this.saving = true;
-            this.adminActionService.savePostActionItem(this.postActionItemInfo, this.selected, this.modalResults, this.selectedPopulation, this.postNow, this.regeneratePopulation)
+            this.adminActionService.savePostActionItem(this.postActionItemInfo, this.selected, this.modalResults, this.selectedPopulation, this.postNow, this.sendTime, this.regeneratePopulation)
                 .then(function (response) {
                 _this.saving = false;
                 var notiParams = {};

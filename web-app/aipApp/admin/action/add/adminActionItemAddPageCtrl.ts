@@ -62,18 +62,22 @@ module AIP {
             this.spinnerService.showSpinner(true);
             var allPromises = [];
             this.actionItemInfo = <any>{};
-            this.editMode = this.$state.params.actionItemId?this.$state.params.isEdit:false;
+            this.editMode = this.$state.params.isEdit==="true" ? true : false;
             allPromises.push(
                 this.adminActionService.getStatus()
                     .then((response: AIP.IActionItemStatusResponse) => {
                         this.status = response.data;
+                        console.log(this.status)
                         angular.forEach(this.status,function(key,value){
+                            console.log(key)
+                            console.log(value)
                             key.value =  "aip.status." + key.value.charAt(0);
-                            console.log(key.value)
+
                             return value;
                         });
 
-                        this.actionItemInfo.status = this.status[0].value;
+                     this.actionItemInfo.status = this.status[0].value;
+                     console.log(this.actionItemInfo.status)
 
                     })
             );
@@ -98,8 +102,8 @@ module AIP {
                                     return item.id === parseInt(this.actionItem1.folderId);
                                 })[0];
                                 /*this.existFolder = this.folders.filter((item)=> {
-                                 return item.id === parseInt(this.actionItem1.folderId);
-                                 })[0];*/
+                                    return item.id === parseInt(this.actionItem1.folderId);
+                                })[0];*/
                                 this.actionItemInfo.description = this.actionItem1.actionItemDesc;
                                 this.trustActionItemContent();
                             } else {
@@ -147,10 +151,10 @@ module AIP {
                 return false;
             }
             /*if(!this.actionItemInfo.name || this.actionItemInfo.name === null || this.actionItemInfo.name === "" || this.actionItemInfo.title.name > 300) {
-             this.errorMessage.name = "invalid title";
-             } else {
-             delete this.errorMessage.name;
-             }*/
+                this.errorMessage.name = "invalid title";
+            } else {
+                delete this.errorMessage.name;
+            }*/
 
             if(!this.actionItemInfo.folder) {
                 this.errorMessage.folder = "invalid folder";
@@ -176,69 +180,22 @@ module AIP {
         cancel() {
             this.$state.go("admin-action-list");
         }
-
-
-        checkActionPost() {
-            if(this.editMode) {
-                this.adminActionService.checkActionItemPosted(this.actionItemInfo.id)
-                    .then((response) => {
-                        if (!this.actionItemInfo.actionItemPostedStatus && response.posted) {
-                            var n = new Notification({
-                                message: this.$filter("i18n_aip")("aip.admin.action.content.edit.posted.warning"),
-                                type: "warning"
-                            });
-                            n.addPromptAction(this.$filter("i18n_aip")("aip.common.text.yes"), () => {
-                                notifications.remove(n);
-                                this.save()
-
-                            });
-                            n.addPromptAction(this.$filter("i18n_aip")("aip.common.text.no"), () => {
-                                notifications.remove(n);
-                            });
-
-                            notifications.addNotification(n);
-                        } else {
-                            this.save();
-                        }
-
-                    }, (err) => {
-                        var n = new Notification({
-                            message: this.$filter("i18n_aip")(err.message),
-                            type: "error"
-                        });
-                        n.addPromptAction(this.$filter("i18n_aip")("aip.common.text.ok"), () => {
-                            notifications.remove(n);
-                        });
-                        notifications.addNotification(n);
-                    });
-            } else {
-                this.save();
-            }
-        }
-
-
         save() {
             this.saving = true;
             if (this.editMode) {
                 this.adminActionService.editActionItems(this.actionItemInfo)
                     .then((response: AIP.IActionItemSaveResponse) => {
                         this.saving = false;
-
+                        var notiParams = {};
                         if (response.data.success) {
-
-                            var notiParams = {};
                             notiParams = {
                                 notiType: "editSuccess",
                                 data: response.data
                             };
                             this.$state.go("admin-action-open", {
                                 noti: notiParams,
-                                data: response.data.updatedActionItem.id,
+                                actionItemId: response.data.updatedActionItem.id,
                             });
-
-
-
-
                         } else {
                             this.saveErrorCallback(response.data.message);
                         }

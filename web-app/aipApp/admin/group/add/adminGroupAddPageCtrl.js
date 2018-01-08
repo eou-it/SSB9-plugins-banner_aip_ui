@@ -6,7 +6,7 @@
 ///<reference path="../../../common/services/spinnerService.ts"/>
 var AIP;
 (function (AIP) {
-    var AdminGroupAddPageCtrl = /** @class */ (function () {
+    var AdminGroupAddPageCtrl = (function () {
         function AdminGroupAddPageCtrl($scope, AdminGroupService, $q, SpinnerService, $state, $filter, $sce, $timeout, CKEDITORCONFIG) {
             this.$inject = ["$scope", "AdminGroupService", "$q", "SpinnerService", "$state", "$filter", "$sce", "$timeout", "CKEDITORCONFIG"];
             this.trustHTML = function (txtString) {

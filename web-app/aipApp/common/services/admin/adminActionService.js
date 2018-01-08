@@ -10,7 +10,7 @@ var AIP;
         Status[Status["Active"] = 2] = "Active";
         Status[Status["Inactive"] = 3] = "Inactive";
     })(Status || (Status = {}));
-    var AdminActionService = /** @class */ (function () {
+    var AdminActionService = (function () {
         function AdminActionService($http, $q, $filter, ENDPOINT) {
             this.$http = $http;
             this.$q = $q;
@@ -89,6 +89,27 @@ var AIP;
             });
             return request;
         };
+        AdminActionService.prototype.getCurrentDateLocale = function () {
+            var request = this.$http({
+                method: "GET",
+                url: this.ENDPOINT.admin.fetchCurrentDateInLocaleFormat
+            });
+            return request;
+        };
+        AdminActionService.prototype.getCurrentTimeLocale = function () {
+            var request = this.$http({
+                method: "GET",
+                url: this.ENDPOINT.admin.is12HourClock
+            });
+            return request;
+        };
+        AdminActionService.prototype.getCurrentTimeZoneLocale = function () {
+            var request = this.$http({
+                method: "GET",
+                url: this.ENDPOINT.admin.listAvailableTimezones
+            });
+            return request;
+        };
         AdminActionService.prototype.getStatus = function () {
             var request = this.$http({
                 method: "GET",
@@ -113,7 +134,7 @@ var AIP;
             });
             return request;
         };
-        AdminActionService.prototype.savePostActionItem = function (postActionItem, selected, modalResult, selectedPopulation, postNow, regeneratePopulation) {
+        AdminActionService.prototype.savePostActionItem = function (postActionItem, selected, modalResult, selectedPopulation, postNow, sendTime, regeneratePopulation) {
             var params = {
                 postingName: postActionItem.name,
                 postingActionItemGroupId: selected.groupId,
@@ -122,6 +143,10 @@ var AIP;
                 displayStartDate: postActionItem.startDate,
                 displayEndDate: postActionItem.endDate,
                 postNow: '' + postNow + '',
+                scheduleDate: '' + !postNow + '',
+                scheduledStartDate: postActionItem.localeDate,
+                scheduledStartTime: sendTime,
+                timezoneStringOffset: "Asia/Singapore",
                 populationRegenerateIndicator: regeneratePopulation
             };
             var request = this.$http({
@@ -234,9 +259,9 @@ var AIP;
             });
             return request;
         };
-        AdminActionService.$inject = ["$http", "$q", "$filter", "ENDPOINT"];
         return AdminActionService;
     }());
+    AdminActionService.$inject = ["$http", "$q", "$filter", "ENDPOINT"];
     AIP.AdminActionService = AdminActionService;
 })(AIP || (AIP = {}));
 register("bannerAIP").service("AdminActionService", AIP.AdminActionService);

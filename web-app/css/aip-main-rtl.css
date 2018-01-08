@@ -1011,89 +1011,91 @@ ol.selected-group > li > button  {
     width:50%;
 }
 
-.actionItemAddContainer input.hasMultiCalendarPicker  {
+.actionItemAddContainer  {
+}
+  .actionItemAddContainer input.hasMultiCalendarPicker  {
     height:35px;
     border-radius:5px;
     padding-right:15px;
 }
-.actionItemAddContainer .ui-select-choices .select2-result-label  {
+  .actionItemAddContainer .ui-select-choices .select2-result-label  {
     font-size:1.25em;
 }
-.actionItemAddContainer .ui-select-container  {
+  .actionItemAddContainer .ui-select-container  {
     font-family:"Open Sans";
     width:21em;
     background:#fff;
 }
-.actionItemAddContainer .ui-select-dropdown  {
+  .actionItemAddContainer .ui-select-dropdown  {
     width:21.35em;
 }
-.actionItemAddContainer .ui-select-dropdown .select2-search input  {
+  .actionItemAddContainer .ui-select-dropdown .select2-search input  {
     width:20em !important;
 }
-.actionItemAddContainer .actionItemEdit  {
+  .actionItemAddContainer .actionItemEdit  {
     font-size:14px;
     margin-right:15px;
     color:#524e4e;
     text-decoration:underline;
 }
-.actionItemAddContainer .actionItemEdit  {
+  .actionItemAddContainer .actionItemEdit  {
     font-size:14px;
     margin-right:15px;
     color:#565e96;
     text-decoration:underline;
 }
-.actionItemAddContainer .calendar-img  {
+  .actionItemAddContainer .calendar-img  {
     background:url(./images/datepicker_icon.png) no-repeat scroll !important;
 }
-.actionItemAddContainer input.hasMultiCalendarPicker + span  {
+  .actionItemAddContainer input.hasMultiCalendarPicker + span  {
     background-position:0px 1px;
 }
-.actionItemAddContainer input.hasMultiCalendarPicker:hover .calendar-img, .actionItemAddContainer .calendar-img:hover  {
+  .actionItemAddContainer input.hasMultiCalendarPicker:hover .calendar-img, .actionItemAddContainer .calendar-img:hover  {
     background-position:2px 0px;
 }
-.actionItemAddContainer .startdate  {
+  .actionItemAddContainer .startdate  {
     padding-right:0px;
     position:relative;
 }
-.actionItemAddContainer .calendar-img  {
+  .actionItemAddContainer .calendar-img  {
     float:left;
     margin-left:10px;
     top:-28px;
     position:relative;
 }
-.actionItemAddContainer .startdate  {
+  .actionItemAddContainer .startdate  {
     padding-right:0px;
     position:relative;
 }
-.actionItemAddContainer .calendar-img  {
+  .actionItemAddContainer .calendar-img  {
     float:left;
     margin-left:10px;
     top:-28px;
     position:relative;
 }
-.actionItemAddContainer input.hasMultiCalendarPicker  {
+  .actionItemAddContainer input.hasMultiCalendarPicker  {
     height:35px;
     border-radius:5px;
     padding-right:15px;
 }
-.actionItemAddContainer .actionItemControl  {
+  .actionItemAddContainer .actionItemControl  {
     position:relative;
     width:100%;
     bottom:10px;
     margin-bottom:15px;
     height:5em;
 }
-  .actionItemAddContainer .actionItemControl .actionItemButton  {
+    .actionItemAddContainer .actionItemControl .actionItemButton  {
     float:left;
 }
-    .actionItemAddContainer .actionItemControl .actionItemButton span  {
+      .actionItemAddContainer .actionItemControl .actionItemButton span  {
     padding-right:24px;
 }
-      .actionItemAddContainer .actionItemControl .actionItemButton span button  {
+        .actionItemAddContainer .actionItemControl .actionItemButton span button  {
     min-width:100px;
     margin-right:3px;
 }
-.actionItemAddContainer input[type="checkbox"]  {
+  .actionItemAddContainer input[type="checkbox"]  {
     -webkit-appearance:initial;
     appearance:initial;
     background:white;
@@ -1106,10 +1108,10 @@ ol.selected-group > li > button  {
     vertical-align:-40%;
     box-shadow:inset 0 2px 5px rgba(0, 0, 0, 0.25);
 }
-.actionItemAddContainer input[type="checkbox"]:checked  {
+  .actionItemAddContainer input[type="checkbox"]:checked  {
     background:#1c8445;
 }
-.actionItemAddContainer input[type="checkbox"]:checked:after  {
+  .actionItemAddContainer input[type="checkbox"]:checked:after  {
     content:'';
     color:#fff;
     position:absolute;
@@ -1126,62 +1128,121 @@ ol.selected-group > li > button  {
     top:5px;
     right:4px;
 }
-.actionItemAddContainer input[type="radio"]  {
-    line-height:2.1ex;
-}
-.actionItemAddContainer input[type="radio"]  {
-    position:absolute;
-    right:-999em;
-}
-.actionItemAddContainer input[type="radio"] + label  {
-    position:relative;
-    overflow:hidden;
-    cursor:pointer;
-}
-.actionItemAddContainer input[type="radio"] + label::before  {
-    content:"";
-    display:inline-block;
-    vertical-align:-25%;
-    height:21px;
-    width:21px;
-    background-color:#1c8445;
+  .actionItemAddContainer input[type="radio"]  {
+    -webkit-appearance:initial;
+    appearance:initial;
+    background:white;
+    width:20px;
+    height:20px;
     border:1px solid #a4a4ca;
-    border-radius:25px;
+    background:white;
+    position:relative;
+    border-radius:15px;
+    vertical-align:-40%;
     box-shadow:inset 0 2px 5px rgba(0, 0, 0, 0.25);
-    margin-left:0.5em;
 }
-.actionItemAddContainer input[type="radio"]:checked + label::after  {
+  .actionItemAddContainer input[type="radio"]:checked  {
+    background:#1c8445;
+}
+  .actionItemAddContainer input[type="radio"]:checked:after  {
     content:'';
+    color:#fff;
     position:absolute;
-    width:8px;
-    height:8px;
-    background:rgba(0, 0, 0, 0);
-    top:6px;
-    right:7px;
-    border:4px solid #fff;
-    border-radius:25px;
+    border:1px solid #fff;
     -webkit-transform:rotate(0deg);
     -moz-transform:rotate(0deg);
     -o-transform:rotate(0deg);
     -ms-transform:rotate(0deg);
-    transform:rotate(0deg);
+    width:7px;
+    height:7px;
+    top:5px;
+    right:6px;
+    border-radius:16px;
+    background:#fff;
 }
-.actionItemAddContainer .postChk  {
+  .actionItemAddContainer .postChk  {
     font-size:1.5em;
     font-weight:bold;
     margin-right:12px;
 }
-.actionItemAddContainer .actionItemLength  {
+  .actionItemAddContainer .actionItemLength  {
     padding:0px;
     font-size:13px;
     color:#131212;
 }
-.actionItemAddContainer .placeholderDisplay > span  {
+  .actionItemAddContainer .placeholderDisplay > span  {
     display:block;
 }
-.actionItemAddContainer .displayInstruction  {
+  .actionItemAddContainer .displayInstruction  {
     font-size:13px;
     width:25%;
+}
+  .actionItemAddContainer .xe-timepicker-popup.dropdown-menu li a .active  {
+    background-color:#428bca;
+    color:#262626;
+}
+  .actionItemAddContainer .xe-timepicker-input-field  {
+    border-color:#CCCCCC;
+    background-color:#FFFFFF !important;
+}
+  .actionItemAddContainer .xe-timepicker-input-field:disabled  {
+    background-color:#F1F4F6 !important;
+}
+  .actionItemAddContainer .xe-timepicker-input-field.ng-invalid, .actionItemAddContainer .xe-timepicker-input-field:invalid, .actionItemAddContainer .submitted .xe-timepicker-input-field:invalid  {
+    border-color:#CD3B3E !important;
+}
+  .actionItemAddContainer .xe-timepicker-popup.dropdown-menu  {
+    width:auto;
+    left:0;
+    margin-left:1em;
+    height:110px;
+    overflow-y:scroll;
+}
+  .actionItemAddContainer .xe-timepicker-popup.dropdown-menu li  {
+    padding:0;
+}
+  .actionItemAddContainer .xe-timepicker-popup.dropdown-menu li a .active  {
+    background-color:#428bca;
+    color:#262626;
+    padding:3px 10px;
+}
+  .actionItemAddContainer .xe-timepicker-display-block  {
+    display:block !important;
+    box-shadow:none !important;
+}
+  .actionItemAddContainer .xe-timepicker-display-none  {
+    display:none !important;
+}
+  .actionItemAddContainer .xe-timepicker-input-field  {
+    padding:10px;
+    border:1px solid #cccccc;
+    border-radius:4px;
+    height:34px !important;
+    background:#ffffff url("./images/clock.svg") left 4px center no-repeat !important;
+}
+  .actionItemAddContainer .xe-timepicker-input-field::-ms-clear  {
+    display:none;
+}
+  .actionItemAddContainer .xe-timepicker-input-field:disabled  {
+    background-color:#F1F4F6 !important;
+    opacity:100%;
+}
+  .actionItemAddContainer .xe-timepicker-input-field.ng-invalid, .actionItemAddContainer .xe-timepicker-input-field:invalid, .actionItemAddContainer .submitted .xe-timepicker-input-field:invalid  {
+    background-color:inherit !important;
+    -moz-box-shadow:none !important;
+    -webkit-box-shadow:none !important;
+    box-shadow:none !important;
+    color:inherit !important;
+    border:2px solid #cd3b3e !important;
+    outline:none !important;
+    background-size:18px !important;
+    height:34px !important;
+}
+  .actionItemAddContainer .timezone-btn  {
+    height:20px;
+    background:url(./images/showtimezoneicon.png) center center no-repeat;
+    border:0;
+    padding:5px;
 }
 
 .aip-modal .modal-dialog .modal-header .row.blockProcess  {

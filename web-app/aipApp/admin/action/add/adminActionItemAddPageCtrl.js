@@ -6,7 +6,7 @@
 ///<reference path="../../../common/services/admin/adminActionService.ts"/>
 var AIP;
 (function (AIP) {
-    var AdminActionItemAddPageCtrl = /** @class */ (function () {
+    var AdminActionItemAddPageCtrl = (function () {
         function AdminActionItemAddPageCtrl($scope, $q, $state, $filter, $sce, $timeout, SpinnerService, AdminActionService) {
             this.$inject = ["$scope", "$q", "$state", "$filter", "$sce", "$timeout", "SpinnerService", "AdminActionService"];
             this.trustAsHtml = function (string) {
@@ -41,12 +41,15 @@ var AIP;
             allPromises.push(this.adminActionService.getStatus()
                 .then(function (response) {
                 _this.status = response.data;
+                console.log(_this.status);
                 angular.forEach(_this.status, function (key, value) {
+                    console.log(key);
+                    console.log(value);
                     key.value = "aip.status." + key.value.charAt(0);
-                    console.log(key.value);
                     return value;
                 });
                 _this.actionItemInfo.status = _this.status[0].value;
+                console.log(_this.actionItemInfo.status);
             }));
             allPromises.push(this.adminActionService.getFolder()
                 .then(function (response) {

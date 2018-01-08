@@ -73,6 +73,8 @@ modules = {
 
         resource url:[plugin: 'banner-aip-ui', file: 'aipApp/common/filters/blockProcessItem-filter.js']
         resource url:[plugin: 'banner-aip-ui', file: 'aipApp/common/filters/select2-groupAssign-filter.js']
+        resource url:[plugin: 'banner-aip-ui', file: 'aipApp/cm-timepicker.js']
+        resource url:[plugin: 'banner-aip-ui', file: 'aipApp/angular-dateparser.min.js']
     }
 
     // Resources for PageBuilder

@@ -44,16 +44,25 @@ module AIP {
         $state;
         $filter;
         selected;
+        IsVisible;
         modalResult;
-        postNow: boolean;
+        localeDate;
+        localeTimezone;
+        postNow:boolean;
         selectedPopulation;
         modalResults;
         itemLength;
-        scheduleDate: boolean;
+        scheduleDate;
         regeneratePopulation: boolean;
         APP_ROOT;
+        sendTime;
         modalInstance;
         $timeout;
+        localeTime;
+        timezone;
+        timezones;
+        defaultTimeZone;
+        showTimezoneIcon;
 
         constructor($scope: IActionItemAddPageScope, $q: ng.IQService, $state, $uibModal, $filter, $timeout,
                     SpinnerService: AIP.SpinnerService, APP_ROOT, AdminActionService: AIP.AdminActionService) {
@@ -68,19 +77,27 @@ module AIP {
             this.spinnerService = SpinnerService;
             this.adminActionService = AdminActionService;
             this.saving = false;
+            this.IsVisible=false;
+            this.localeDate={};
+            this.localeTimezone={};
             this.selected = {};
+            this.localeTime={};
             this.modalResult = {};
             this.modalResults = [];
             this.regeneratePopulation = false;
             this.itemLength;
-            this.scheduleDate = false;
+            this.sendTime;
+            this.scheduleDate;
+            this.postNow=true;
+            this.showTimezoneIcon = true;
             this.selectedPopulation = {};
-            this.postNow = true;
             this.APP_ROOT = APP_ROOT;
             this.errorMessage = {};
 
             this.init();
         }
+
+
 
 
         groupFunc(item) {
@@ -94,6 +111,7 @@ module AIP {
         init() {
             this.spinnerService.showSpinner(true);
             var allPromises = [];
+            var deferred = this.$q.defer();
             this.postActionItemInfo = {};
 
 
@@ -119,12 +137,58 @@ module AIP {
                     })
             );
 
+            allPromises.push(
+                this.adminActionService.getCurrentDateLocale()
+                    .then((response) => {
+                        this.localeDate = response.data;
+                        this.postActionItemInfo.localeDate = this.localeDate.date;
+                    })
+            );
+            allPromises.push(
+                this.adminActionService.getCurrentTimeLocale()
+                    .then((response:any) => {
+                        this.localeTime = response.data.use12HourClock;
+                        this.postActionItemInfo.localeTime = this.localeTime;
+                        console.log(this.postActionItemInfo.localeTime)
+                        this.today();
+                    })
+            );
+            allPromises.push(
+
+                this.adminActionService.getCurrentTimeZoneLocale()
+                    .then((response:any) => {
+                        this.timezones = response.data.timezones;
+                        console.log(this.timezones)
+                        var offset = new Date().getTimezoneOffset();
+                        offset = "(GMT"+((offset<0? '+':'-')+ this.pad(Math.abs(offset/60), 2)+ ":" + this.pad(Math.abs(offset%60), 2)) + ")";
+                        console.log(offset)
+                        this.defaultTimeZone = offset;
+                        angular.forEach(this.timezones,function(key,value){
+                            console.log(key)
+                          var GMTString = key.stringOffset;
+                            console.log(GMTString)
+                            if (offset==GMTString) {
+                                this.setTimezone(key);
+                                this.defaultTimeZone = '( '+ key.displayNameWithoutOffset + ' )';
+                                console.log(this.defaultTimeZone )
+                            }
+                        });
+
+
+
+                    })
+            );
+
 
             this.$q.all(allPromises).then(() => {
                 this.spinnerService.showSpinner(false);
             });
         }
 
+        /*ShowPassport(value) {
+        this.IsVisible = value == "Y";
+                console.log(value)
+    }*/
         changedValue() {
             this.itemLength = 0;
             this.modalResult = [];
@@ -141,7 +205,32 @@ module AIP {
                 })
 
         }
+        today(){
+            this.sendTime = new Date();
+            this.sendTime.setMinutes(Math.ceil(this.sendTime.getMinutes() / 30) * 30);
+            console.log(this.sendTime.setMinutes(Math.ceil(this.sendTime.getMinutes() / 30) * 30))
+            this.sendTime =this.$filter('date')(this.sendTime, 'HHmm');
+            console.log(this.sendTime)
+        };
+        setTime(time){
+            this.sendTime = time;
+            this.sendTime =this.$filter('date')(this.sendTime, 'HHmm');
+            console.log(this.sendTime)
+        };
+        setTimezone(timezone) {
+        this.timezone = timezone;
+    };
 
+       showTimeZoneList() {
+        this.showTimezoneIcon = false;
+    };
+        pad(number, length){
+        var str = "" + number
+        while (str.length < length) {
+            str = '0'+str
+        }
+        return str
+    }
 
         editPage() {
             this.modalInstance = this.$uibModal.open({
@@ -236,7 +325,7 @@ module AIP {
 
         save() {
             this.saving = true;
-            this.adminActionService.savePostActionItem(this.postActionItemInfo, this.selected, this.modalResults, this.selectedPopulation, this.postNow, this.regeneratePopulation)
+            this.adminActionService.savePostActionItem(this.postActionItemInfo, this.selected, this.modalResults, this.selectedPopulation, this.postNow,this.sendTime, this.regeneratePopulation)
                 .then((response: AIP.IPostActionItemSaveResponse) => {
                     this.saving = false;
                     var notiParams = {};
