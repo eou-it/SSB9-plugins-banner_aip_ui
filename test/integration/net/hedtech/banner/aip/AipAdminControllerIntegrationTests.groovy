@@ -42,16 +42,15 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
 
 
     @Before
-    public void setUp() {
+    void setUp() {
         formContext = ['GUAGMNU']
-        //formContext = ['SELFSERVICE']
         super.setUp()
         controller = new AipAdminController()
     }
 
 
     @After
-    public void tearDown() {
+    void tearDown() {
         super.tearDown()
         logout()
     }
