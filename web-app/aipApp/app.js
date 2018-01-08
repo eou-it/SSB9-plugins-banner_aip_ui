@@ -31,7 +31,7 @@ var bannerAIPApp = angular.module("bannerAIP", [
     "pbrun.directives",
     'dateParser',
     'cm.timepicker',
-    'ui.select'
+    'ui.select',
 
     ])
 
@@ -234,13 +234,10 @@ var bannerAIPApp = angular.module("bannerAIP", [
             listActionItemForSelect: aipAppAbsPath + "aipAdmin/getActionItemsListForSelect",
             updateActionItemGroupAssignment: aipAppAbsPath + "aipAdmin/updateActionItemGroupAssignment",
             groupPosted: aipAppAbsPath + "aipAdmin/groupPosted",
-<<<<<<< Updated upstream
-            checkActionItemPosted: aipAppAbsPath + "aipAdmin/checkActionItemPosted"
-=======
             fetchCurrentDateInLocaleFormat:aipAppAbsPath + "aipAdmin/fetchCurrentDateInLocaleFormat",
             is12HourClock :aipAppAbsPath + "aipAdmin/is12HourClock",
             listAvailableTimezones :aipAppAbsPath + "aipAdmin/listAvailableTimezones"
->>>>>>> Stashed changes
+
 
         }
     })
