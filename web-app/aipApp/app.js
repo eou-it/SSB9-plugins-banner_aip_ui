@@ -30,8 +30,8 @@ var bannerAIPApp = angular.module("bannerAIP", [
     "I18nAIP",
     "pbrun.directives",
     'dateParser',
-    'cm.timepicker',
-    'ui.select',
+    'cm.timepicker'
+
 
     ])
 

@@ -263,6 +263,22 @@
     background: url(./images/showTimezoneIcon.png) center center no-repeat;
     border: 0;
     padding: 5px;
+    margin-top: 3px;
+  }
+  .timeZone{
+    border: 1px solid #cccccc;
+    border-radius: 4px;
+    height: 30px !important;
+    background: #ffffff;
+  }
+  .defaultTimezone{
+    font-size: 11px;
+    padding-left: 5px;
+    padding-top: 8px;
+  }
+  .timeZoneChange{
+    padding-left:0px;
+    padding-right:0px;
   }
 
 }

@@ -15,7 +15,7 @@ var AIP;
             this.$state = $state;
             this.$filter = $filter;
             this.$uibModal = $uibModal;
-            this.modalInstance;
+            this.modalInstance = null;
             this.$timeout = $timeout;
             this.spinnerService = SpinnerService;
             this.adminActionService = AdminActionService;
@@ -28,9 +28,9 @@ var AIP;
             this.modalResult = {};
             this.modalResults = [];
             this.regeneratePopulation = false;
-            this.itemLength;
-            this.sendTime;
-            this.scheduleDate;
+            this.itemLength = 0;
+            this.sendTime = {};
+            this.scheduleDate = null;
             this.postNow = true;
             this.showTimezoneIcon = true;
             this.selectedPopulation = {};
@@ -38,12 +38,11 @@ var AIP;
             this.errorMessage = {};
             this.init();
         }
-        AdminPostItemAddPageCtrl.prototype.groupFunc = function (item) {
-            return item.folderName;
+        AdminPostItemAddPageCtrl.prototype.today = function () {
+            this.sendTime = new Date();
+            this.sendTime.setMinutes(Math.ceil(this.sendTime.getMinutes() / 30) * 30);
         };
-        AdminPostItemAddPageCtrl.prototype.populationFunc = function (item) {
-            return item.populationFolderName;
-        };
+        ;
         AdminPostItemAddPageCtrl.prototype.init = function () {
             var _this = this;
             this.spinnerService.showSpinner(true);
@@ -72,27 +71,24 @@ var AIP;
                 .then(function (response) {
                 _this.localeTime = response.data.use12HourClock;
                 _this.postActionItemInfo.localeTime = _this.localeTime;
-                console.log(_this.postActionItemInfo.localeTime);
                 _this.today();
             }));
             allPromises.push(this.adminActionService.getCurrentTimeZoneLocale()
                 .then(function (response) {
+                var that = _this;
                 _this.timezones = response.data.timezones;
-                console.log(_this.timezones);
-                var offset = new Date().getTimezoneOffset();
-                offset = "(GMT" + ((offset < 0 ? '+' : '-') + _this.pad(Math.abs(offset / 60), 2) + ":" + _this.pad(Math.abs(offset % 60), 2)) + ")";
-                console.log(offset);
-                _this.defaultTimeZone = offset;
+                var timeZoneOffset = new Date().getTimezoneOffset();
+                var offset = "(GMT" + ((timeZoneOffset < 0 ? '+' : '-') + _this.pad(parseInt(Math.abs(timeZoneOffset / 60)), 2) + ":" + _this.pad(Math.abs(timeZoneOffset % 60), 2)) + ")";
+                //this.defaultTimeZone = offset;
+                var finalValue = '';
                 angular.forEach(_this.timezones, function (key, value) {
-                    console.log(key);
                     var GMTString = key.stringOffset;
-                    console.log(GMTString);
-                    if (offset == GMTString) {
-                        this.setTimezone(key);
-                        this.defaultTimeZone = '( ' + key.displayNameWithoutOffset + ' )';
-                        console.log(this.defaultTimeZone);
+                    if (offset === GMTString) {
+                        that.setTimezone(key);
+                        finalValue = '( ' + key.displayNameWithoutOffset + ' )';
                     }
                 });
+                _this.defaultTimeZone = finalValue;
             }));
             this.$q.all(allPromises).then(function () {
                 _this.spinnerService.showSpinner(false);
@@ -117,22 +113,10 @@ var AIP;
                 _this.postActionItemInfo.groupAction = _this.actionItemList;
             });
         };
-        AdminPostItemAddPageCtrl.prototype.today = function () {
-            this.sendTime = new Date();
-            this.sendTime.setMinutes(Math.ceil(this.sendTime.getMinutes() / 30) * 30);
-            console.log(this.sendTime.setMinutes(Math.ceil(this.sendTime.getMinutes() / 30) * 30));
-            this.sendTime = this.$filter('date')(this.sendTime, 'HHmm');
-            console.log(this.sendTime);
-        };
-        ;
         AdminPostItemAddPageCtrl.prototype.setTime = function (time) {
             this.sendTime = time;
             this.sendTime = this.$filter('date')(this.sendTime, 'HHmm');
             console.log(this.sendTime);
-        };
-        ;
-        AdminPostItemAddPageCtrl.prototype.setTimezone = function (timezone) {
-            this.timezone = timezone;
         };
         ;
         AdminPostItemAddPageCtrl.prototype.showTimeZoneList = function () {
@@ -146,6 +130,11 @@ var AIP;
             }
             return str;
         };
+        AdminPostItemAddPageCtrl.prototype.setTimezone = function (timezone) {
+            this.timezone = timezone;
+            console.log(this.timezone);
+        };
+        ;
         AdminPostItemAddPageCtrl.prototype.editPage = function () {
             var _this = this;
             this.modalInstance = this.$uibModal.open({
@@ -236,7 +225,8 @@ var AIP;
         AdminPostItemAddPageCtrl.prototype.save = function () {
             var _this = this;
             this.saving = true;
-            this.adminActionService.savePostActionItem(this.postActionItemInfo, this.selected, this.modalResults, this.selectedPopulation, this.postNow, this.sendTime, this.regeneratePopulation)
+            this.sendTime = this.$filter("date")(this.sendTime, "HHmm");
+            this.adminActionService.savePostActionItem(this.postActionItemInfo, this.selected, this.modalResults, this.selectedPopulation, this.postNow, this.sendTime, this.timezone, this.regeneratePopulation)
                 .then(function (response) {
                 _this.saving = false;
                 var notiParams = {};

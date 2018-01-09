@@ -19,6 +19,8 @@ module AIP {
         save(): void;
 
         saveErrorCallback(message: string): void;
+
+        setTimezone(timezone:any): void;
     }
 
     interface IActionItemAddPageScope {
@@ -72,7 +74,7 @@ module AIP {
             this.$state = $state;
             this.$filter = $filter;
             this.$uibModal = $uibModal;
-            this.modalInstance;
+            this.modalInstance=null;
             this.$timeout = $timeout;
             this.spinnerService = SpinnerService;
             this.adminActionService = AdminActionService;
@@ -85,9 +87,9 @@ module AIP {
             this.modalResult = {};
             this.modalResults = [];
             this.regeneratePopulation = false;
-            this.itemLength;
-            this.sendTime;
-            this.scheduleDate;
+            this.itemLength=0;
+            this.sendTime={};
+            this.scheduleDate=null;
             this.postNow=true;
             this.showTimezoneIcon = true;
             this.selectedPopulation = {};
@@ -97,16 +99,11 @@ module AIP {
             this.init();
         }
 
+        today(){
+            this.sendTime = new Date();
+            this.sendTime.setMinutes(Math.ceil(this.sendTime.getMinutes() / 30) * 30);
+        };
 
-
-
-        groupFunc(item) {
-            return item.folderName;
-        }
-
-        populationFunc(item) {
-            return item.populationFolderName;
-        }
 
         init() {
             this.spinnerService.showSpinner(true);
@@ -149,7 +146,6 @@ module AIP {
                     .then((response:any) => {
                         this.localeTime = response.data.use12HourClock;
                         this.postActionItemInfo.localeTime = this.localeTime;
-                        console.log(this.postActionItemInfo.localeTime)
                         this.today();
                     })
             );
@@ -157,25 +153,20 @@ module AIP {
 
                 this.adminActionService.getCurrentTimeZoneLocale()
                     .then((response:any) => {
+                    var that=this;
                         this.timezones = response.data.timezones;
-                        console.log(this.timezones)
-                        var offset = new Date().getTimezoneOffset();
-                        offset = "(GMT"+((offset<0? '+':'-')+ this.pad(Math.abs(offset/60), 2)+ ":" + this.pad(Math.abs(offset%60), 2)) + ")";
-                        console.log(offset)
-                        this.defaultTimeZone = offset;
+                        var timeZoneOffset = new Date().getTimezoneOffset();
+                        var offset = "(GMT"+((timeZoneOffset<0? '+':'-')+ this.pad(parseInt(Math.abs(timeZoneOffset/60)), 2)+ ":" + this.pad(Math.abs(timeZoneOffset%60), 2)) + ")";
+                        //this.defaultTimeZone = offset;
+                        var finalValue=''
                         angular.forEach(this.timezones,function(key,value){
-                            console.log(key)
                           var GMTString = key.stringOffset;
-                            console.log(GMTString)
-                            if (offset==GMTString) {
-                                this.setTimezone(key);
-                                this.defaultTimeZone = '( '+ key.displayNameWithoutOffset + ' )';
-                                console.log(this.defaultTimeZone )
+                            if (offset===GMTString) {
+                                that.setTimezone(key);
+                                finalValue = '( '+ key.displayNameWithoutOffset + ' )';
                             }
                         });
-
-
-
+                        this.defaultTimeZone = finalValue;
                     })
             );
 
@@ -205,21 +196,13 @@ module AIP {
                 })
 
         }
-        today(){
-            this.sendTime = new Date();
-            this.sendTime.setMinutes(Math.ceil(this.sendTime.getMinutes() / 30) * 30);
-            console.log(this.sendTime.setMinutes(Math.ceil(this.sendTime.getMinutes() / 30) * 30))
-            this.sendTime =this.$filter('date')(this.sendTime, 'HHmm');
-            console.log(this.sendTime)
-        };
+
         setTime(time){
             this.sendTime = time;
             this.sendTime =this.$filter('date')(this.sendTime, 'HHmm');
             console.log(this.sendTime)
         };
-        setTimezone(timezone) {
-        this.timezone = timezone;
-    };
+
 
        showTimeZoneList() {
         this.showTimezoneIcon = false;
@@ -231,7 +214,10 @@ module AIP {
         }
         return str
     }
-
+        setTimezone(timezone) {
+            this.timezone = timezone;
+            console.log(this.timezone)
+        };
         editPage() {
             this.modalInstance = this.$uibModal.open({
                 templateUrl: this.APP_ROOT + "admin/action/post/addpost/postAddTemplate.html",
@@ -325,7 +311,8 @@ module AIP {
 
         save() {
             this.saving = true;
-            this.adminActionService.savePostActionItem(this.postActionItemInfo, this.selected, this.modalResults, this.selectedPopulation, this.postNow,this.sendTime, this.regeneratePopulation)
+            this.sendTime =this.$filter("date")(this.sendTime, "HHmm");
+            this.adminActionService.savePostActionItem(this.postActionItemInfo, this.selected, this.modalResults, this.selectedPopulation, this.postNow,this.sendTime,this.timezone, this.regeneratePopulation)
                 .then((response: AIP.IPostActionItemSaveResponse) => {
                     this.saving = false;
                     var notiParams = {};

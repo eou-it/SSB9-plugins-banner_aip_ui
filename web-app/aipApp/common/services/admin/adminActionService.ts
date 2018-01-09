@@ -340,7 +340,7 @@ module AIP {
             });
             return request;
         }
-        savePostActionItem(postActionItem,selected,modalResult,selectedPopulation,postNow,sendTime,regeneratePopulation) {
+        savePostActionItem(postActionItem,selected,modalResult,selectedPopulation,postNow,sendTime,timeZone,regeneratePopulation) {
             var params = {
                 postingName: postActionItem.name,
                 postingActionItemGroupId: selected.groupId,
@@ -349,10 +349,10 @@ module AIP {
                 displayStartDate:postActionItem.startDate,
                 displayEndDate:postActionItem.endDate,
                 postNow:''+postNow+'',
-                scheduleDate:''+!postNow+'',
+                scheduled:''+!postNow+'',
                 scheduledStartDate:postActionItem.localeDate,
                 scheduledStartTime:sendTime,
-                timezoneStringOffset:"Asia/Singapore",
+                timezoneStringOffset:timeZone.timezoneId,
                 populationRegenerateIndicator:regeneratePopulation
             };
             var request = this.$http({
