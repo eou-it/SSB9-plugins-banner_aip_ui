@@ -146,7 +146,7 @@ var AIP;
                 scheduled: '' + !postNow + '',
                 scheduledStartDate: postActionItem.localeDate,
                 scheduledStartTime: sendTime,
-                timezoneStringOffset: timeZone.timezoneId,
+                timezoneStringOffset: timeZone,
                 populationRegenerateIndicator: regeneratePopulation
             };
             var request = this.$http({
