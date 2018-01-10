@@ -225,8 +225,12 @@ var AIP;
         AdminPostItemAddPageCtrl.prototype.save = function () {
             var _this = this;
             this.saving = true;
+            if (this.postNow === true) {
+                this.sendTime = null;
+                this.timezone.timezoneId = null;
+            }
             this.sendTime = this.$filter("date")(this.sendTime, "HHmm");
-            this.adminActionService.savePostActionItem(this.postActionItemInfo, this.selected, this.modalResults, this.selectedPopulation, this.postNow, this.sendTime, this.timezone, this.regeneratePopulation)
+            this.adminActionService.savePostActionItem(this.postActionItemInfo, this.selected, this.modalResults, this.selectedPopulation, this.postNow, this.sendTime, this.timezone.timezoneId, this.regeneratePopulation)
                 .then(function (response) {
                 _this.saving = false;
                 var notiParams = {};
