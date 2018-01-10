@@ -71,11 +71,9 @@ module AIP {
             this.groupDetailDefer = this.getGroupDetailDefer(this.$state.params.groupId).then(()=> {
                 $("p.openGroupDesc" ).html(this.groupFolder.groupDesc);
                 if(this.groupFolder.postedInd=="Y"){
-                    $("#title-panel h1" ).html(this.groupFolder.groupName+"(has posted items)");
-                    console.log(this.groupFolder.groupName+"(has posted items)")
+                    $("#title-panel h1" ).html(this.groupFolder.groupName+this.$filter("i18n_aip")("aip.admin.group.title.posted"));
                 }else{
                 $("#title-panel h1" ).html(this.groupFolder.groupName);
-                console.log(this.groupFolder.groupName)
                 }
 
             }, (err) => {
@@ -114,7 +112,7 @@ module AIP {
                     deferred.resolve(compiled);
                     if(panelName === "overview") {
                         if(this.groupFolder.postedInd=="Y"){
-                            $("#title-panel h1" ).html(this.groupFolder.groupName+"(has posted items)");
+                            $("#title-panel h1" ).html(this.groupFolder.groupName+this.$filter("i18n_aip")("aip.admin.group.title.posted"));
                         }
                         else {
                             $("#title-panel").children()[0].innerHTML = this.groupFolder.groupTitle;
