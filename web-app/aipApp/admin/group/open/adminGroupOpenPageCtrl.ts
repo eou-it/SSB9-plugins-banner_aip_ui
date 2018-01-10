@@ -70,7 +70,14 @@ module AIP {
             var promises = [];
             this.groupDetailDefer = this.getGroupDetailDefer(this.$state.params.groupId).then(()=> {
                 $("p.openGroupDesc" ).html(this.groupFolder.groupDesc);
+                if(this.groupFolder.postedInd=="Y"){
+                    $("#title-panel h1" ).html(this.groupFolder.groupName+"(has posted items)");
+                    console.log(this.groupFolder.groupName+"(has posted items)")
+                }else{
                 $("#title-panel h1" ).html(this.groupFolder.groupName);
+                console.log(this.groupFolder.groupName)
+                }
+
             }, (err) => {
                 console.log(err);
             })
@@ -106,7 +113,12 @@ module AIP {
                     var compiled = this.$compile(template)(newScope);
                     deferred.resolve(compiled);
                     if(panelName === "overview") {
-                        $("#title-panel").children()[0].innerHTML = this.groupFolder.groupTitle;
+                        if(this.groupFolder.postedInd=="Y"){
+                            $("#title-panel h1" ).html(this.groupFolder.groupName+"(has posted items)");
+                        }
+                        else {
+                            $("#title-panel").children()[0].innerHTML = this.groupFolder.groupTitle;
+                        }
                     }
                 }, (error) => {
                     console.log(error);
