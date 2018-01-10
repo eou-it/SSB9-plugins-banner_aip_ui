@@ -207,7 +207,12 @@ var AIP;
                 var compiled = _this.$compile(template)(newScope);
                 deferred.resolve(compiled);
                 if (panelName === "overview") {
-                    $("#title-panel").children()[0].innerHTML = _this.actionItem.actionItemName;
+                    if (_this.actionItem.actionItemPostedStatus == "Y") {
+                        $("#title-panel h1").html(_this.actionItem.actionItemName + _this.$filter("i18n_aip")("aip.admin.group.title.posted"));
+                    }
+                    else {
+                        $("#title-panel").children()[0].innerHTML = _this.actionItem.actionItemName;
+                    }
                 }
             }, function (error) {
                 console.log(error);
