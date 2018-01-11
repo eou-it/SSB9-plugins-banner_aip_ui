@@ -17,6 +17,12 @@ Copyright 2017 Ellucian Company L.P. and its affiliates.
         <div class="row">
             <input maxlength="30" aria-valuemax="30" class="form-control" type="text" ng-model="vm.statusModel.title">
         </div>
+        <div class="row blockProcess">
+            <label>
+                <input type="checkbox" ng-model="vm.statusModel.block" ng-disabled="!vm.validate()">
+                {{"aip.admin.status.block"|i18n_aip}}
+            </label>
+        </div>
     </div>
     <div class="modal-control">
         <button type="button" class="btn btn-default" ng-click="vm.statusSave()" ng-disabled="!vm.validate()">
