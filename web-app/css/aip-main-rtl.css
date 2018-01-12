@@ -1175,7 +1175,6 @@ ol.selected-group > li > button  {
 }
   .actionItemAddContainer .displayInstruction  {
     font-size:13px;
-    width:25%;
 }
   .actionItemAddContainer .xe-timepicker-popup.dropdown-menu li a .active  {
     background-color:#428bca;
@@ -1243,6 +1242,25 @@ ol.selected-group > li > button  {
     background:url(./images/showtimezoneicon.png) center center no-repeat;
     border:0;
     padding:5px;
+    margin-top:3px;
+}
+  .actionItemAddContainer .timeZone  {
+    border:1px solid #cccccc;
+    border-radius:4px;
+    height:30px !important;
+    background:#ffffff;
+    webkit-box-shadow:inset 0 1px 1px rgba(0, 0, 0, 0.075);
+    box-shadow:inset 0 1px 1px rgba(0, 0, 0, 0.075);
+    -webkit-transition:border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+}
+  .actionItemAddContainer .defaultTimezone  {
+    font-size:11px;
+    padding-right:5px;
+    padding-top:8px;
+}
+  .actionItemAddContainer .timeZoneChange  {
+    padding-right:0px;
+    padding-left:0px;
 }
 
 .aip-modal .modal-dialog .modal-header .row.blockProcess  {

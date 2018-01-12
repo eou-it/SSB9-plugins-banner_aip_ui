@@ -103,6 +103,18 @@ module AIP {
                 }
             },
                 {
+                    name: "actionItemStatusBlockedProcess",
+                    title: this.$filter("i18n_aip")("aip.list.grid.blockedProcess"),
+                    ariaLabel: this.$filter("i18n_aip")("aip.list.grid.blockedProcess"),
+                    width: "100px",
+                    options: {
+                        sortable: true,
+                        visible: true,
+                        ascending: true,
+                        columnShowHide: false
+                    }
+                },
+                {
                     name: "actionItemStatusSystemRequired",
                     title: this.$filter("i18n_aip")("aip.list.grid.systemRequired"),
                     ariaLabel: this.$filter("i18n_aip")("aip.list.grid.systemRequired"),

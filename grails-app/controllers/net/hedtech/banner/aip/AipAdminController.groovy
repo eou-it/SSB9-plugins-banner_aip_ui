@@ -263,8 +263,9 @@ class AipAdminController {
      */
     def statusSave() {
         def model
+        def map=request.JSON
         try {
-            model = actionItemStatusCompositeService.statusSave( request.JSON.title );
+            model = actionItemStatusCompositeService.statusSave( map );
         } catch (ApplicationException e) {
             model = [fail: true]
             LOGGER.error( e.getMessage() )

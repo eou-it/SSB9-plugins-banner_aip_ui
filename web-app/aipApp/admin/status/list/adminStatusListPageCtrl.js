@@ -4,7 +4,7 @@
 ///<reference path="../../../common/services/admin/adminActionStatusService.ts"/>
 var AIP;
 (function (AIP) {
-    var AdminStatusListPageCtrl = /** @class */ (function () {
+    var AdminStatusListPageCtrl = (function () {
         function AdminStatusListPageCtrl($scope, $state, $window, $filter, $q, $http, $uibModal, ENDPOINT, PAGINATIONCONFIG, AdminActionStatusService, APP_ROOT) {
             this.$inject = ["$scope", "$state", "$window", "$filter", "$http", "$q", "$uibModal",
                 "ENDPOINT", "PAGINATIONCONFIG", "AdminActionStatusService", "APP_ROOT"];
@@ -64,6 +64,18 @@ var AIP;
                     name: "actionItemStatus",
                     title: this.$filter("i18n_aip")("aip.list.grid.status"),
                     ariaLabel: this.$filter("i18n_aip")("aip.list.grid.status"),
+                    width: "100px",
+                    options: {
+                        sortable: true,
+                        visible: true,
+                        ascending: true,
+                        columnShowHide: false
+                    }
+                },
+                {
+                    name: "actionItemStatusBlockedProcess",
+                    title: this.$filter("i18n_aip")("aip.list.grid.blockedProcess"),
+                    ariaLabel: this.$filter("i18n_aip")("aip.list.grid.blockedProcess"),
                     width: "100px",
                     options: {
                         sortable: true,

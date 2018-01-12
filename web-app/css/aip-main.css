@@ -846,10 +846,12 @@ ol.selected-group > li > button {
         .statusOpenContainer .statusInfo .statusInfoRow .statusElement .statusDetail {
           border-right: 1px solid #444444; }
 
-.aip-modal .modal-dialog .modal-header .row.blockProcess {
-  padding: 16px; }
-  .aip-modal .modal-dialog .modal-header .row.blockProcess input {
-    margin-right: 8px; }
+.aip-modal .modal-dialog .modal-header {
+  border-bottom: 1px solid #e5e5e5; }
+  .aip-modal .modal-dialog .modal-header .row.blockProcess {
+    padding: 16px; }
+    .aip-modal .modal-dialog .modal-header .row.blockProcess input {
+      margin-right: 8px; }
 
 .aip-modal .modal-dialog .modal-header {
   border-bottom: none; }

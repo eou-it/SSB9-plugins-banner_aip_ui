@@ -1203,7 +1203,7 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
     @Test
     void removeStatus() {
         def title = 'TEST_TITLE'
-        ActionItemStatus actionItemStatus = actionItemStatusCompositeService.statusSave( title ).status
+        ActionItemStatus actionItemStatus = actionItemStatusCompositeService.statusSave([title: title]).status
         controller.request.contentType = "text/json"
         String inputString = """{"id":${actionItemStatus.id}}"""
         controller.request.json = inputString
