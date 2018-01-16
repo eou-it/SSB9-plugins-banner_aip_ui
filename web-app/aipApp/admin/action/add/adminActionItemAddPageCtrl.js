@@ -37,7 +37,7 @@ var AIP;
             this.spinnerService.showSpinner(true);
             var allPromises = [];
             this.actionItemInfo = {};
-            this.editMode = this.$state.params.actionItemId ? this.$state.params.isEdit : false;
+            this.editMode = this.$state.params.isEdit === "true" ? true : false;
             allPromises.push(this.adminActionService.getStatus()
                 .then(function (response) {
                 _this.status = response.data;
@@ -70,8 +70,8 @@ var AIP;
                                 return item.id === parseInt(_this.actionItem1.folderId);
                             })[0];
                             /*this.existFolder = this.folders.filter((item)=> {
-                             return item.id === parseInt(this.actionItem1.folderId);
-                             })[0];*/
+                                return item.id === parseInt(this.actionItem1.folderId);
+                            })[0];*/
                             _this.actionItemInfo.description = _this.actionItem1.actionItemDesc;
                             _this.trustActionItemContent();
                         }
@@ -113,10 +113,10 @@ var AIP;
                 return false;
             }
             /*if(!this.actionItemInfo.name || this.actionItemInfo.name === null || this.actionItemInfo.name === "" || this.actionItemInfo.title.name > 300) {
-             this.errorMessage.name = "invalid title";
-             } else {
-             delete this.errorMessage.name;
-             }*/
+                this.errorMessage.name = "invalid title";
+            } else {
+                delete this.errorMessage.name;
+            }*/
             if (!this.actionItemInfo.folder) {
                 this.errorMessage.folder = "invalid folder";
             }
