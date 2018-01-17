@@ -172,10 +172,10 @@ var bannerAIPApp = angular.module("bannerAIP", [
             //url: "/status",
             //templateUrl: "admin/status/list/adminStatusListPage.html",
             //controller: "AdminGroupListPageCtrl",
-            breadcrumb: {
-                label: "aip.admin.status",
-                url: "/aip/admin#/status"
-            }
+           // breadcrumb: {
+              //  label: "aip.admin.status",
+             //   url: "/aip/admin#/status"
+           // }
         },
 
         "list": {
