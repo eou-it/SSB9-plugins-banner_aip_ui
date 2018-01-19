@@ -327,12 +327,12 @@ var bannerAIPApp = angular.module("bannerAIP", [
                 $state.previousParams = fromParams;
                 BreadcrumbService.updateBreadcrumb(toState.data.breadcrumbs);
             });
-            $rootScope.$on("$stateChangeStart", function(event, toState, toParams, fromState, fromParams) {
-                //console.log("state change start");
-            });
-            $rootScope.$on("$stateNotFound", function(err) {
-
-            });
+            // $rootScope.$on("$stateChangeStart", function(event, toState, toParams, fromState, fromParams) {
+            //     //console.log("state change start");
+            // });
+            // $rootScope.$on("$stateNotFound", function(err) {
+            //
+            // });
 
 
             // $templateCache.put('adminActionItemOpenOverview.html', '<div class="actionItemElement actionItemDetail col-xs-12 col-sm-8"><h3>{{"aip.list.grid.itemTitle"|i18n_aip}}</h3><p class="openActionItemTitle">{{vm.actionItem.title}}</p><h3>{{"aip.common.folder"|i18n_aip}}</h3></div><div class="hidden-xs col-sm-1 dividerContainer" ng-style="vm.getSaparatorHeight()"><div class="divider"></div></div><div class="actionItemElement col-xs-12 col-sm-3"><h3>{{"aip.common.activity"|i18n_aip}}</h3><hr /><div class="actionItemElement"><h4>{{"aip.common.last.updated.by"|i18n_aip}}</h4><p class="openActionItemLastUpdatedBy">{{vm.actionItem.creatorId}}</p></div><hr /><div class="actionItemElement"> <h4>{{"aip.common.activity.date"|i18n_aip}}</h4><p class="openActionItemActivityDate">{{vm.actionItem.activityDate}}</p></div></div>');

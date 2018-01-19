@@ -3,9 +3,9 @@
 ///<reference path="../../../common/services/spinnerService.ts"/>
 var AIP;
 (function (AIP) {
-    var AdminGroupOpenPageCtrl = (function () {
-        function AdminGroupOpenPageCtrl($scope, AdminGroupService, $q, SpinnerService, $state, $filter, $sce, $templateRequest, $templateCache, $compile, $timeout, APP_ROOT) {
-            this.$inject = ["$scope", "AdminGroupService", "$q", "SpinnerService", "$state", "$filter", "$sce", "$templateRequest", "$templateCache",
+    var AdminGroupOpenPageCtrl = /** @class */ (function () {
+        function AdminGroupOpenPageCtrl($scope, $window, AdminGroupService, $q, SpinnerService, $state, $filter, $sce, $templateRequest, $templateCache, $compile, $timeout, APP_ROOT) {
+            this.$inject = ["$scope", "$window", "AdminGroupService", "$q", "SpinnerService", "$state", "$filter", "$sce", "$templateRequest", "$templateCache",
                 "$compile", "$timeout", "APP_ROOT"];
             this.trustHTML = function (txtString) {
                 var sanitized = txtString ? this.$filter("html")(this.$sce.trustAsHtml(txtString)) : "";
@@ -13,6 +13,7 @@ var AIP;
             };
             $scope.vm = this;
             this.$scope = $scope;
+            this.$window = $window;
             this.$q = $q;
             this.$state = $state;
             this.$filter = $filter;
@@ -25,6 +26,7 @@ var AIP;
             this.$timeout = $timeout;
             this.APP_ROOT = APP_ROOT;
             this.assignedActionItems = [];
+            this.initialAssigned = [];
             this.editMode = false;
             this.selected = [];
             this.allActionItems = [];
@@ -38,7 +40,7 @@ var AIP;
             this.spinnerService.showSpinner(true);
             var promises = [];
             this.groupDetailDefer = this.getGroupDetailDefer(this.$state.params.groupId).then(function () {
-                $("p.openGroupDesc").html(_this.groupFolder.groupDesc);
+                // $("p.openGroupDesc" ).html(decodeURI(this.groupFolder.groupDesc));
                 if (_this.groupFolder.postedInd == "Y") {
                     $("#title-panel h1").html(_this.groupFolder.groupName + _this.$filter("i18n_aip")("aip.admin.group.title.posted"));
                 }
@@ -58,6 +60,7 @@ var AIP;
         };
         AdminGroupOpenPageCtrl.prototype.openPanel = function (panelName) {
             var _this = this;
+            this.$window.onbeforeunload = null;
             var deferred = this.$q.defer();
             var url = "";
             switch (panelName) {
@@ -114,6 +117,7 @@ var AIP;
             this.editMode = false;
             this.selected = [];
             this.assignedActionItems = [];
+            this.initialAssigned = [];
             var deferred = this.$q.defer();
             this.groupDetailDefer.then(function (group) {
                 deferred.resolve(_this.openPanel("overview"));
@@ -124,6 +128,7 @@ var AIP;
             var _this = this;
             this.editMode = false;
             this.assignedActionItems = [];
+            this.initialAssigned = [];
             this.allActionItems = [];
             this.selected = [];
             var deferred = this.$q.defer();
@@ -138,6 +143,7 @@ var AIP;
                 });
             }, function (err) {
                 _this.assignedActionItems = [];
+                _this.initialAssigned = [];
                 console.log(err);
             }));
             this.$q.all(promises).then(function () {
@@ -160,10 +166,37 @@ var AIP;
                     })[0];
                 });
                 _this.originalAssign = angular.copy(_this.selected);
+                _this.initialAssigned = angular.copy(_this.assignedActionItems);
                 _this.editMode = true;
+                _this.$window.onbeforeunload = function (event) {
+                    if (_this.isChanged()) {
+                        // reset to default event listener
+                        return _this.$filter("i18n_aip")("aip.common.admin.unsaved");
+                    }
+                    // reset to default event listener
+                    _this.$window.onbeforeunload = null;
+                };
             }, function (err) {
                 console.log(err);
             });
+        };
+        AdminGroupOpenPageCtrl.prototype.isChanged = function () {
+            var changed = false;
+            if (this.assignedActionItems.length !== this.initialAssigned.length) {
+                return true;
+            }
+            for (var i = 0; i < this.assignedActionItems.length; i++) {
+                var item = this.assignedActionItems[i];
+                var initial = this.initialAssigned.filter(function (_item) {
+                    return _item.id === item.id;
+                });
+                if (initial.length === 0 ||
+                    ((item.actionItemId !== initial[0].actionItemId) || (item.sequenceNumber !== initial[0].sequenceNumber))) {
+                    changed = true;
+                    break;
+                }
+            }
+            return changed;
         };
         AdminGroupOpenPageCtrl.prototype.validateEdit = function (type) {
             var _this = this;

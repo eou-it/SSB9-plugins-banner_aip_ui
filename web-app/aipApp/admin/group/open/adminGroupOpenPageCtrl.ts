@@ -14,7 +14,7 @@ module AIP {
         groupFolder: IGroupFolder;
     }
     export class AdminGroupOpenPageCtrl implements IAdminGroupOpenPageCtrl{
-        $inject = ["$scope", "AdminGroupService", "$q", "SpinnerService", "$state", "$filter", "$sce", "$templateRequest", "$templateCache",
+        $inject = ["$scope", "$window", "AdminGroupService", "$q", "SpinnerService", "$state", "$filter", "$sce", "$templateRequest", "$templateCache",
             "$compile", "$timeout", "APP_ROOT"];
         groupInfo:IGroupInfo;
         groupFolder: IGroupFolder;
@@ -32,18 +32,21 @@ module AIP {
         $scope;
         APP_ROOT;
         assignedActionItems;
+        initialAssigned;
         editMode;
         selected;
         allActionItems;
         originalAssign;
         saving:boolean;
         groupDetailDefer:ng.IPromise<any>;
+        $window;
 
 
-        constructor($scope, AdminGroupService:AIP.AdminGroupService, $q:ng.IQService, SpinnerService, $state, $filter, $sce, $templateRequest, $templateCache,
+        constructor($scope, $window, AdminGroupService:AIP.AdminGroupService, $q:ng.IQService, SpinnerService, $state, $filter, $sce, $templateRequest, $templateCache,
                     $compile, $timeout, APP_ROOT) {
             $scope.vm = this;
             this.$scope = $scope;
+            this.$window = $window;
             this.$q = $q;
             this.$state = $state;
             this.$filter = $filter;
@@ -56,12 +59,14 @@ module AIP {
             this.$timeout = $timeout;
             this.APP_ROOT = APP_ROOT;
             this.assignedActionItems = [];
+            this.initialAssigned = [];
             this.editMode = false;
             this.selected = [];
             this.allActionItems = [];
             this.originalAssign = [];
             this.saving = false;
             this.groupDetailDefer = null;
+
             this.init();
         }
 
@@ -69,7 +74,7 @@ module AIP {
             this.spinnerService.showSpinner( true );
             var promises = [];
             this.groupDetailDefer = this.getGroupDetailDefer(this.$state.params.groupId).then(()=> {
-                $("p.openGroupDesc" ).html(this.groupFolder.groupDesc);
+                // $("p.openGroupDesc" ).html(decodeURI(this.groupFolder.groupDesc));
                 if(this.groupFolder.postedInd=="Y"){
                     $("#title-panel h1" ).html(this.groupFolder.groupName+this.$filter("i18n_aip")("aip.admin.group.title.posted"));
                 }else{
@@ -89,6 +94,7 @@ module AIP {
         }
 
         openPanel(panelName) {
+            this.$window.onbeforeunload = null;
             var deferred=this.$q.defer();
             var url = "";
             switch (panelName) {
@@ -143,6 +149,7 @@ module AIP {
             this.editMode = false;
             this.selected = [];
             this.assignedActionItems = [];
+            this.initialAssigned = [];
             var deferred = this.$q.defer();
             this.groupDetailDefer.then((group) => {
                  deferred.resolve( this.openPanel("overview") );
@@ -153,6 +160,7 @@ module AIP {
         openContentPanel() {
             this.editMode = false;
             this.assignedActionItems = [];
+            this.initialAssigned = [];
             this.allActionItems = [];
             this.selected = [];
             var deferred = this.$q.defer();
@@ -168,6 +176,7 @@ module AIP {
                         });
                     }, (err) => {
                         this.assignedActionItems = [];
+                        this.initialAssigned = [];
                         console.log(err);
                     })
             );
@@ -196,12 +205,41 @@ module AIP {
                         })[0]
                     });
                     this.originalAssign = angular.copy(this.selected);
+                    this.initialAssigned = angular.copy(this.assignedActionItems);
                     this.editMode = true;
+                    this.$window.onbeforeunload = (event)=> {
+                        if (this.isChanged()) {
+                            // reset to default event listener
+                            return this.$filter("i18n_aip")("aip.common.admin.unsaved");
+                        }
+                        // reset to default event listener
+                        this.$window.onbeforeunload = null;
+                    };
                 }, (err) => {
                     console.log(err);
                 });
 
         }
+
+        isChanged() {
+            var changed = false;
+            if(this.assignedActionItems.length !== this.initialAssigned.length) {
+                return true;
+            }
+            for (var i = 0; i < this.assignedActionItems.length; i++) {
+                var item = this.assignedActionItems[i];
+                var initial = this.initialAssigned.filter((_item) => {
+                    return _item.id === item.id;
+                });
+                if (initial.length === 0 ||
+                    ((item.actionItemId !== initial[0].actionItemId) || (item.sequenceNumber !== initial[0].sequenceNumber))) {
+                    changed = true;
+                    break;
+                }
+            }
+            return changed;
+        }
+
         validateEdit(type) {
             this.adminGroupService.groupPosted(this.groupFolder.groupId)
                 .then((response) => {

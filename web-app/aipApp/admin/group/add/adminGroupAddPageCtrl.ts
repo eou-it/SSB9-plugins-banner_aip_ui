@@ -31,10 +31,11 @@ module AIP {
         description: string;
     }
     export class AdminGroupAddPageCtrl implements IAdminGroupAddPageCtrl{
-        $inject = ["$scope", "AdminGroupService", "$q", "SpinnerService", "$state", "$filter", "$sce", "$timeout", "CKEDITORCONFIG"];
+        $inject = ["$scope", "$window", "AdminGroupService", "$q", "SpinnerService", "$state", "$filter", "$sce", "$timeout", "CKEDITORCONFIG"];
         status: AIP.IStatus[];
         folders: AIP.IFolder[];
         groupInfo: IGroupSelect;
+        groupInfoInitial: IGroupSelect;
         errorMessage;
         saving: boolean;
         adminGroupService: AIP.AdminGroupService;
@@ -44,11 +45,12 @@ module AIP {
         $filter;
         $sce;
         $timeout;
+        $rootScope:ng.IRootScopeService;
         ckEditorConfig;
         editMode: boolean;
         existFolder: any;
         duplicateGroup: boolean;
-        constructor($scope, AdminGroupService:AIP.AdminGroupService,
+        constructor($scope, $window:ng.IWindowService, AdminGroupService:AIP.AdminGroupService,
             $q:ng.IQService, SpinnerService, $state, $filter, $sce, $timeout, CKEDITORCONFIG) {
             $scope.vm = this;
             this.$q = $q;
@@ -65,12 +67,30 @@ module AIP {
             this.editMode = false;
             this.existFolder = {};
             this.duplicateGroup = false;
+            this.groupInfoInitial = {
+                id: undefined,
+                title: undefined,
+                name: undefined,
+                status: undefined,
+                postedInd: undefined,
+                folder: undefined,
+                description: undefined
+            };
             $scope.$watch(
                 "[vm.status, vm.folders, vm.groupInfo.folder, vm.groupInfo.status, vm.groupInfo.description]", function(newVal, oldVal) {
                     if(!$scope.$$phase) {
                         $scope.apply();
                     }
                 }, true);
+            $window.onbeforeunload = (event)=> {
+                if(this.isChanged()) {
+                    // reset to default event listener
+                    $window.onbeforeunload = null;
+                    return this.$filter("i18n_aip")("aip.common.admin.unsaved");
+                }
+                // reset to default event listener
+                $window.onbeforeunload = null;
+            };
             this.init();
         }
 
@@ -110,6 +130,7 @@ module AIP {
                                     return item.id === parseInt(response.group.folderId);
                                 })[0];
                                 this.groupInfo.description = this.trustHTML(response.group.groupDesc);
+                                this.groupInfoInitial = angular.copy(this.groupInfo);
                             } else {
                                 //todo: output error in notification center?
                                 console.log("fail");
@@ -196,6 +217,41 @@ module AIP {
         }
         cancel() {
             this.$state.go("admin-group-list");
+        }
+        isChanged() {
+            var changed = false;
+            if(this.editMode) {
+                var keys = Object.keys(this.groupInfoInitial);
+                for (var i = 0; i < keys.length; i++) {
+                    if (this.groupInfo[keys[i]]) {
+                        if (keys[i] === "folder") {
+                            if (this.groupInfo.folder.id !== this.groupInfoInitial.folder.id) {
+                                changed = true;
+                                break;
+                            }
+                        } else if (keys[i] = "description") {
+                            var dom = document.createElement("DIV"), domInitial = document.createElement("DIV");
+                            dom.innerHTML = CKEDITOR.instances.groupDesc.getSnapshot(), domInitial.innerHTML = this.groupInfoInitial[keys[i]];
+                            var current = (dom.textContent || dom.innerHTML).replace(/\s\s/g, ""),
+                                initial = (domInitial.textContent || domInitial.innerHTML).replace(/\s\s/g, "");
+                            if (current.trim() !== initial.trim()) {
+                                changed = true;
+                                break;
+                            }
+                        } else if (this.groupInfo[keys[i]] !== this.groupInfoInitial[keys[i]]) {
+                            changed = true;
+                            break;
+                        }
+                    }
+                }
+            } else {
+                if (this.groupInfo.name || this.groupInfo.title || (this.groupInfo.folder && this.groupInfo.folder.id) || this.groupInfo.description ) {
+                    changed  = true;
+                } else if (this.groupInfo.status!=="Draft") {
+                    changed = true;
+                }
+            }
+            return changed;
         }
         validateInput() {
             if(this.saving) {

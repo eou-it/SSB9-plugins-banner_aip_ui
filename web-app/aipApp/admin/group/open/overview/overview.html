@@ -14,7 +14,7 @@ Copyright 2017 Ellucian Company L.P. and its affiliates.
                 <h3>{{"aip.common.group.title"|i18n_aip}}</h3>
                 <p class="openGroupTitle">{{vm.groupFolder.groupTitle}}</p>
                 <h3>{{"aip.common.group.description"|i18n_aip}}</h3>
-                <p class="openGroupDesc">{{vm.trustHTML(vm.groupFolder.groupDesc)}}</p>
+                <div class="openGroupDesc" ng-bind-html = "vm.trustHTML(vm.groupFolder.groupDesc)"></div>
             </div>
             <div class="col-xs-12 col-sm-2 overviewEdit">
                 <button name="Edit" type="button" class="btn btn-default edit" ng-click="vm.validateEdit('overview')"

@@ -6,9 +6,10 @@
 ///<reference path="../../../common/services/spinnerService.ts"/>
 var AIP;
 (function (AIP) {
-    var AdminGroupAddPageCtrl = (function () {
-        function AdminGroupAddPageCtrl($scope, AdminGroupService, $q, SpinnerService, $state, $filter, $sce, $timeout, CKEDITORCONFIG) {
-            this.$inject = ["$scope", "AdminGroupService", "$q", "SpinnerService", "$state", "$filter", "$sce", "$timeout", "CKEDITORCONFIG"];
+    var AdminGroupAddPageCtrl = /** @class */ (function () {
+        function AdminGroupAddPageCtrl($scope, $window, AdminGroupService, $q, SpinnerService, $state, $filter, $sce, $timeout, CKEDITORCONFIG) {
+            var _this = this;
+            this.$inject = ["$scope", "$window", "AdminGroupService", "$q", "SpinnerService", "$state", "$filter", "$sce", "$timeout", "CKEDITORCONFIG"];
             this.trustHTML = function (txtString) {
                 var sanitized = txtString ? this.$filter("html")(this.$sce.trustAsHtml(txtString)) : "";
                 return sanitized;
@@ -28,11 +29,29 @@ var AIP;
             this.editMode = false;
             this.existFolder = {};
             this.duplicateGroup = false;
+            this.groupInfoInitial = {
+                id: undefined,
+                title: undefined,
+                name: undefined,
+                status: undefined,
+                postedInd: undefined,
+                folder: undefined,
+                description: undefined
+            };
             $scope.$watch("[vm.status, vm.folders, vm.groupInfo.folder, vm.groupInfo.status, vm.groupInfo.description]", function (newVal, oldVal) {
                 if (!$scope.$$phase) {
                     $scope.apply();
                 }
             }, true);
+            $window.onbeforeunload = function (event) {
+                if (_this.isChanged()) {
+                    // reset to default event listener
+                    $window.onbeforeunload = null;
+                    return _this.$filter("i18n_aip")("aip.common.admin.unsaved");
+                }
+                // reset to default event listener
+                $window.onbeforeunload = null;
+            };
             this.init();
         }
         AdminGroupAddPageCtrl.prototype.init = function () {
@@ -68,6 +87,7 @@ var AIP;
                                 return item.id === parseInt(response.group.folderId);
                             })[0];
                             _this.groupInfo.description = _this.trustHTML(response.group.groupDesc);
+                            _this.groupInfoInitial = angular.copy(_this.groupInfo);
                         }
                         else {
                             //todo: output error in notification center?
@@ -159,6 +179,44 @@ var AIP;
         };
         AdminGroupAddPageCtrl.prototype.cancel = function () {
             this.$state.go("admin-group-list");
+        };
+        AdminGroupAddPageCtrl.prototype.isChanged = function () {
+            var changed = false;
+            if (this.editMode) {
+                var keys = Object.keys(this.groupInfoInitial);
+                for (var i = 0; i < keys.length; i++) {
+                    if (this.groupInfo[keys[i]]) {
+                        if (keys[i] === "folder") {
+                            if (this.groupInfo.folder.id !== this.groupInfoInitial.folder.id) {
+                                changed = true;
+                                break;
+                            }
+                        }
+                        else if (keys[i] = "description") {
+                            var dom = document.createElement("DIV"), domInitial = document.createElement("DIV");
+                            dom.innerHTML = CKEDITOR.instances.groupDesc.getSnapshot(), domInitial.innerHTML = this.groupInfoInitial[keys[i]];
+                            var current = (dom.textContent || dom.innerHTML).replace(/\s\s/g, ""), initial = (domInitial.textContent || domInitial.innerHTML).replace(/\s\s/g, "");
+                            if (current.trim() !== initial.trim()) {
+                                changed = true;
+                                break;
+                            }
+                        }
+                        else if (this.groupInfo[keys[i]] !== this.groupInfoInitial[keys[i]]) {
+                            changed = true;
+                            break;
+                        }
+                    }
+                }
+            }
+            else {
+                if (this.groupInfo.name || this.groupInfo.title || (this.groupInfo.folder && this.groupInfo.folder.id) || this.groupInfo.description) {
+                    changed = true;
+                }
+                else if (this.groupInfo.status !== "Draft") {
+                    changed = true;
+                }
+            }
+            return changed;
         };
         AdminGroupAddPageCtrl.prototype.validateInput = function () {
             if (this.saving) {
