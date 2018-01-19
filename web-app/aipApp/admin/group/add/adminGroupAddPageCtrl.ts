@@ -84,8 +84,6 @@ module AIP {
                 }, true);
             $window.onbeforeunload = (event)=> {
                 if(this.isChanged()) {
-                    // reset to default event listener
-                    $window.onbeforeunload = null;
                     return this.$filter("i18n_aip")("aip.common.admin.unsaved");
                 }
                 // reset to default event listener
@@ -229,7 +227,7 @@ module AIP {
                                 changed = true;
                                 break;
                             }
-                        } else if (keys[i] = "description") {
+                        } else if (keys[i] === "description") {
                             var dom = document.createElement("DIV"), domInitial = document.createElement("DIV");
                             dom.innerHTML = CKEDITOR.instances.groupDesc.getSnapshot(), domInitial.innerHTML = this.groupInfoInitial[keys[i]];
                             var current = (dom.textContent || dom.innerHTML).replace(/\s\s/g, ""),
