@@ -2,7 +2,7 @@
  Copyright 2017 Ellucian Company L.P. and its affiliates.
  ****************************************************************************** */
 package net.hedtech.banner.aip
-
+import groovy.json.JsonSlurper
 import grails.converters.JSON
 import net.hedtech.banner.aip.common.AipTimezone
 import net.hedtech.banner.exceptions.ApplicationException
@@ -318,7 +318,7 @@ class AipAdminController {
         render model as JSON
     }
 
-    /*def blockedProcessList() {//TODO Enable this and impleted as per requirement
+    def blockedProcessList() {//TODO Enable this and impleted as per requirement
 
         def success = false
         def message = ""
@@ -331,7 +331,7 @@ class AipAdminController {
                 tempBlockedList.each {item ->
                     def value = jsonSlurper.parseText( item.value.replaceAll( "[\n\r]", "" ) )
                     def block = [
-//                            id: item.id,
+                            id: item.id,
 name : item.name,
 value: value.aipBlock
                     ]
@@ -347,7 +347,7 @@ value: value.aipBlock
                 def tempBlockedList = actionItemBlockedProcessService.listBlockedProcessByActionItemId( Long.parseLong( actionItemId ) )
                 tempBlockedList.each {item ->
                     def configurationData = actionItemBlockedProcessService.listBlockedProcessesByNameAndType( item.blockConfigName )
-//                    def value = jsonSlurper.parseText(item.value.replaceAll("[\n\r]",""))
+                    def value = jsonSlurper.parseText(item.value.replaceAll("[\n\r]",""))
                     def block = [
                             id   : item.blockId,
                             name : item.blockConfigName,
@@ -367,9 +367,9 @@ value: value.aipBlock
                 blockedProcesses: blockedList
         ]
         render model as JSON
-    }*/
+    }
 
-    /*def updateBlockedProcessItems() {//TODO Enable this and impleted as per requirement
+    def updateBlockedProcessItems() {//TODO Enable this and impleted as per requirement
         def jsonObj = request.JSON
 
         def user = SecurityContextHolder?.context?.authentication?.principal
@@ -410,7 +410,7 @@ value: value.aipBlock
 
         render model as JSON
 
-    }*/
+    }
 
     /**
      * Gets Assigned Action Items In the Group

@@ -172,10 +172,10 @@ var bannerAIPApp = angular.module("bannerAIP", [
             //url: "/status",
             //templateUrl: "admin/status/list/adminStatusListPage.html",
             //controller: "AdminGroupListPageCtrl",
-            breadcrumb: {
-                label: "aip.admin.status",
-                url: "/aip/admin#/status"
-            }
+           // breadcrumb: {
+              //  label: "aip.admin.status",
+             //   url: "/aip/admin#/status"
+           // }
         },
 
         "list": {
@@ -236,7 +236,8 @@ var bannerAIPApp = angular.module("bannerAIP", [
             groupPosted: aipAppAbsPath + "aipAdmin/groupPosted",
             fetchCurrentDateInLocaleFormat:aipAppAbsPath + "aipAdmin/fetchCurrentDateInLocaleFormat",
             is12HourClock :aipAppAbsPath + "aipAdmin/is12HourClock",
-            listAvailableTimezones :aipAppAbsPath + "aipAdmin/listAvailableTimezones"
+            listAvailableTimezones :aipAppAbsPath + "aipAdmin/listAvailableTimezones",
+            checkActionItemPosted: aipAppAbsPath + "aipAdmin/checkActionItemPosted"
 
 
         }

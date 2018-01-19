@@ -180,22 +180,68 @@ module AIP {
         cancel() {
             this.$state.go("admin-action-list");
         }
+
+        checkActionPost() {
+            if(this.editMode) {
+                this.adminActionService.checkActionItemPosted(this.actionItemInfo.id)
+                    .then((response) => {
+                        if (!this.actionItemInfo.actionItemPostedStatus && response.posted) {
+                            var n = new Notification({
+                                message: this.$filter("i18n_aip")("aip.admin.action.content.edit.posted.warning"),
+                                type: "warning"
+                            });
+                            n.addPromptAction(this.$filter("i18n_aip")("aip.common.text.yes"), () => {
+                                notifications.remove(n);
+                                this.save()
+
+                            });
+                            n.addPromptAction(this.$filter("i18n_aip")("aip.common.text.no"), () => {
+                                notifications.remove(n);
+                            });
+
+                            notifications.addNotification(n);
+                        } else {
+                            this.save();
+                        }
+
+                    }, (err) => {
+                        var n = new Notification({
+                            message: this.$filter("i18n_aip")(err.message),
+                            type: "error"
+                        });
+                        n.addPromptAction(this.$filter("i18n_aip")("aip.common.text.ok"), () => {
+                            notifications.remove(n);
+                        });
+                        notifications.addNotification(n);
+                    });
+            } else {
+                this.save();
+            }
+        }
+
+
         save() {
             this.saving = true;
             if (this.editMode) {
                 this.adminActionService.editActionItems(this.actionItemInfo)
                     .then((response: AIP.IActionItemSaveResponse) => {
                         this.saving = false;
-                        var notiParams = {};
+
                         if (response.data.success) {
+
+                            var notiParams = {};
                             notiParams = {
                                 notiType: "editSuccess",
                                 data: response.data
                             };
                             this.$state.go("admin-action-open", {
                                 noti: notiParams,
-                                actionItemId: response.data.updatedActionItem.id,
+                                data: response.data.updatedActionItem.id,
                             });
+
+
+
+
                         } else {
                             this.saveErrorCallback(response.data.message);
                         }
