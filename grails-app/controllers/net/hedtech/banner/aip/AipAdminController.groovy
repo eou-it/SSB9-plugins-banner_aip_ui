@@ -2,8 +2,10 @@
  Copyright 2017 Ellucian Company L.P. and its affiliates.
  ****************************************************************************** */
 package net.hedtech.banner.aip
-import groovy.json.JsonSlurper
+
 import grails.converters.JSON
+import grails.util.Holders
+import groovy.json.JsonSlurper
 import net.hedtech.banner.aip.common.AipTimezone
 import net.hedtech.banner.exceptions.ApplicationException
 import org.apache.log4j.Logger
@@ -17,6 +19,7 @@ class AipAdminController {
     static defaultAction = "landing"
 
     def groupFolderReadOnlyService
+    def blockingProcessCompositeService
 
     def actionItemReadOnlyCompositeService
     def actionItemBlockedProcessService
@@ -38,25 +41,30 @@ class AipAdminController {
     def actionItemGroupService
     def actionItemService
 
+
     def landing() {
         def model = []
         render( model: model, view: "../aip/index" )
     }
+
 
     def group() {
         def model = []
         render( model: model, view: "../aip/index" )
     }
 
+
     def action() {
         def model = []
         render( model: model, view: "../aip/index" )
     }
 
+
     def status() {
         def model = []
         render( model: model, view: "../aip/index" )
     }
+
 
     def post() {
         def model = []
@@ -133,7 +141,7 @@ class AipAdminController {
             return
         }
 
-        GroupFolderReadOnly gfro = groupFolderReadOnlyService.getActionItemGroupById( Long.parseLong(params.groupId) )
+        GroupFolderReadOnly gfro = groupFolderReadOnlyService.getActionItemGroupById( Long.parseLong( params.groupId ) )
         if (gfro) {
             success = true
         }
@@ -264,7 +272,7 @@ class AipAdminController {
      */
     def statusSave() {
         def model
-        def map=request.JSON
+        def map = request.JSON
         try {
             model = actionItemStatusCompositeService.statusSave( map );
         } catch (ApplicationException e) {
@@ -319,6 +327,7 @@ class AipAdminController {
         render model as JSON
     }
 
+
     def blockedProcessList() {//TODO Enable this and impleted as per requirement
 
         def success = false
@@ -332,9 +341,9 @@ class AipAdminController {
                 tempBlockedList.each {item ->
                     def value = jsonSlurper.parseText( item.value.replaceAll( "[\n\r]", "" ) )
                     def block = [
-                            id: item.id,
-name : item.name,
-value: value.aipBlock
+                            id   : item.id,
+                            name : item.name,
+                            value: value.aipBlock
                     ]
                     blockedList.push( block )
                 }
@@ -348,7 +357,7 @@ value: value.aipBlock
                 def tempBlockedList = actionItemBlockedProcessService.listBlockedProcessByActionItemId( Long.parseLong( actionItemId ) )
                 tempBlockedList.each {item ->
                     def configurationData = actionItemBlockedProcessService.listBlockedProcessesByNameAndType( item.blockConfigName )
-                    def value = jsonSlurper.parseText(item.value.replaceAll("[\n\r]",""))
+                    def value = jsonSlurper.parseText( item.value.replaceAll( "[\n\r]", "" ) )
                     def block = [
                             id   : item.blockId,
                             name : item.blockConfigName,
@@ -369,6 +378,7 @@ value: value.aipBlock
         ]
         render model as JSON
     }
+
 
     def updateBlockedProcessItems() {//TODO Enable this and impleted as per requirement
         def jsonObj = request.JSON
@@ -467,4 +477,14 @@ value: value.aipBlock
         def model = [posted: actionItemGroupService.checkGroupPosted( Long.parseLong( params.groupId ) )]
         render model as JSON
     }
+
+    /**
+     * LOV information process , URL and Persona
+     * @return
+     */
+    def loadBlockingProcessLov() {
+        def result = blockingProcessCompositeService.loadBlockingProcessLov()
+        render result as JSON
+    }
+
 }
