@@ -19,6 +19,7 @@ class AipAdminController {
     def groupFolderReadOnlyService
 
     def actionItemReadOnlyCompositeService
+    def actionItemBlockedProcessService
 
     def actionItemTemplateService
 
