@@ -4,8 +4,6 @@
 package net.hedtech.banner.aip
 
 import grails.converters.JSON
-import grails.util.Holders
-import groovy.json.JsonSlurper
 import net.hedtech.banner.aip.common.AipTimezone
 import net.hedtech.banner.exceptions.ApplicationException
 import org.apache.log4j.Logger
@@ -40,6 +38,7 @@ class AipAdminController {
     def actionItemGroupAssignReadOnlyService
     def actionItemGroupService
     def actionItemService
+    def actionItemBlockedProcessCompositeService
 
 
     def landing() {
@@ -328,59 +327,13 @@ class AipAdminController {
     }
 
 
-    def blockedProcessList() {//TODO Enable this and impleted as per requirement
-
-        def success = false
-        def message = ""
-        def blockedList = []
-        def jsonSlurper = new JsonSlurper()
-        if (!params.actionItemId) {
-            //rerun all as list
-            try {
-                def tempBlockedList = actionItemBlockedProcessService.listBlockedProcessesByType()
-                tempBlockedList.each {item ->
-                    def value = jsonSlurper.parseText( item.value.replaceAll( "[\n\r]", "" ) )
-                    def block = [
-                            id   : item.id,
-                            name : item.name,
-                            value: value.aipBlock
-                    ]
-                    blockedList.push( block )
-                }
-                success = true
-            } catch (Exception e) {
-                LOGGER.error( e.getMessage() )
-            }
-        } else {
-            def actionItemId = params.actionItemId
-            try {
-                def tempBlockedList = actionItemBlockedProcessService.listBlockedProcessByActionItemId( Long.parseLong( actionItemId ) )
-                tempBlockedList.each {item ->
-                    def configurationData = actionItemBlockedProcessService.listBlockedProcessesByNameAndType( item.blockConfigName )
-                    def value = jsonSlurper.parseText( item.value.replaceAll( "[\n\r]", "" ) )
-                    def block = [
-                            id   : item.blockId,
-                            name : item.blockConfigName,
-                            value: configurationData
-                    ]
-                    blockedList.push( block )
-                }
-
-                success = true
-            } catch (Exception e) {
-                LOGGER.error( e.getMessage() )
-            }
-        }
-        def model = [
-                success         : success,
-                message         : message,
-                blockedProcesses: blockedList
-        ]
+    def blockedProcessList() {
+        def actionItemId = params.long( 'actionItemId' )
+        def model = actionItemBlockedProcessCompositeService.getBlockedProcessForSpecifiedActionItem( actionItemId)
         render model as JSON
     }
 
-
-    def updateBlockedProcessItems() {//TODO Enable this and impleted as per requirement
+    /*def updateBlockedProcessItems() {//TODO Enable this and impleted as per requirement
         def jsonObj = request.JSON
 
         def user = SecurityContextHolder?.context?.authentication?.principal
@@ -421,7 +374,7 @@ class AipAdminController {
 
         render model as JSON
 
-    }
+    }*/
 
     /**
      * Gets Assigned Action Items In the Group
