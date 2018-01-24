@@ -41,15 +41,8 @@ var AIP;
             allPromises.push(this.adminActionService.getStatus()
                 .then(function (response) {
                 _this.status = response.data;
-                console.log(_this.status);
-                angular.forEach(_this.status, function (key, value) {
-                    console.log(key);
-                    console.log(value);
-                    key.value = "aip.status." + key.value.charAt(0);
-                    return value;
-                });
+                _this.status.map(function (item) { return item.value = _this.$filter("i18n_aip")(item.value); });
                 _this.actionItemInfo.status = _this.status[0].value;
-                console.log(_this.actionItemInfo.status);
             }));
             allPromises.push(this.adminActionService.getFolder()
                 .then(function (response) {
@@ -106,7 +99,7 @@ var AIP;
             }
         };
         AdminActionItemAddPageCtrl.prototype.selectStatus = function (item, index) {
-            this.actionItemInfo.status = this.$filter("i18n_aip")(item.value);
+            this.actionItemInfo.status = item.value;
         };
         AdminActionItemAddPageCtrl.prototype.validateInput = function () {
             if (this.saving) {
@@ -145,6 +138,43 @@ var AIP;
         AdminActionItemAddPageCtrl.prototype.cancel = function () {
             this.$state.go("admin-action-list");
         };
+        AdminActionItemAddPageCtrl.prototype.checkActionPost = function () {
+            var _this = this;
+            if (this.editMode) {
+                this.adminActionService.checkActionItemPosted(this.actionItemInfo.id)
+                    .then(function (response) {
+                    if (!_this.actionItemInfo.actionItemPostedStatus && response.posted) {
+                        var n = new Notification({
+                            message: _this.$filter("i18n_aip")("aip.admin.action.content.edit.posted.warning"),
+                            type: "warning"
+                        });
+                        n.addPromptAction(_this.$filter("i18n_aip")("aip.common.text.yes"), function () {
+                            notifications.remove(n);
+                            _this.save();
+                        });
+                        n.addPromptAction(_this.$filter("i18n_aip")("aip.common.text.no"), function () {
+                            notifications.remove(n);
+                        });
+                        notifications.addNotification(n);
+                    }
+                    else {
+                        _this.save();
+                    }
+                }, function (err) {
+                    var n = new Notification({
+                        message: _this.$filter("i18n_aip")(err.message),
+                        type: "error"
+                    });
+                    n.addPromptAction(_this.$filter("i18n_aip")("aip.common.text.ok"), function () {
+                        notifications.remove(n);
+                    });
+                    notifications.addNotification(n);
+                });
+            }
+            else {
+                this.save();
+            }
+        };
         AdminActionItemAddPageCtrl.prototype.save = function () {
             var _this = this;
             this.saving = true;
@@ -152,15 +182,15 @@ var AIP;
                 this.adminActionService.editActionItems(this.actionItemInfo)
                     .then(function (response) {
                     _this.saving = false;
-                    var notiParams = {};
                     if (response.data.success) {
+                        var notiParams = {};
                         notiParams = {
                             notiType: "editSuccess",
                             data: response.data
                         };
                         _this.$state.go("admin-action-open", {
                             noti: notiParams,
-                            actionItemId: response.data.updatedActionItem.id,
+                            data: response.data.updatedActionItem.id,
                         });
                     }
                     else {
