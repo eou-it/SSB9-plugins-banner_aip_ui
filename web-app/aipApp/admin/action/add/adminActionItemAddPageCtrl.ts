@@ -66,19 +66,9 @@ module AIP {
             allPromises.push(
                 this.adminActionService.getStatus()
                     .then((response: AIP.IActionItemStatusResponse) => {
-                        this.status = response.data;
-                        console.log(this.status)
-                        angular.forEach(this.status,function(key,value){
-                            console.log(key)
-                            console.log(value)
-                            key.value =  "aip.status." + key.value.charAt(0);
-
-                            return value;
-                        });
-
+                     this.status = response.data;
+                     this.status.map(item=>item.value=this.$filter("i18n_aip")(item.value));
                      this.actionItemInfo.status = this.status[0].value;
-                     console.log(this.actionItemInfo.status)
-
                     })
             );
             allPromises.push(
@@ -90,7 +80,7 @@ module AIP {
             this.$q.all(allPromises).then(() => {
                 if (this.editMode) {
                     this.adminActionService.getActionItemDetail(this.$state.params.actionItemId)
-                        .then((response) => {
+                        .then((response:any) => {
                             if(response.data) {
                                 this.actionItem1=response.data.actionItem;
                                 this.actionItemInfo.id = parseInt(this.actionItem1.actionItemId);
@@ -136,7 +126,7 @@ module AIP {
             }
         }
         selectStatus(item, index) {
-            this.actionItemInfo.status = this.$filter("i18n_aip")(item.value);
+            this.actionItemInfo.status = item.value;
         }
         trustAsHtml = function (string) {
             return this.$sce.trustAsHtml(string);

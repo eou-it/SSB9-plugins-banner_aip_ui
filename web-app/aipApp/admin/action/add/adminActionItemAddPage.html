@@ -31,7 +31,7 @@
             <div class="actionItemElement col-xs-12 col-sm-5">
                 <div class="row">
                     <xe-ui-select id="actionItemFolder" ng-model="vm.actionItemInfo.folder" theme="select2"
-                                  on-select="vm.actionItemInfo($item, $index)">
+                                  >
                         <xe-ui-select-match placeholder="{{'aip.common.select.folder.default'|i18n_aip}}">
                             {{vm.actionItemInfo.folder.name}}
                         </xe-ui-select-match>
@@ -53,10 +53,10 @@
                     <xe-ui-select id="actionItemStatus" ng-model="vm.actionItemInfo.status" theme="select2" ng-disabled="disabled" search-enabled="false"
                                   on-select="vm.selectStatus($item, $index)">
                         <xe-ui-select-match>
-                            {{vm.actionItemInfo.status|i18n_aip}}
+                            {{vm.actionItemInfo.status}}
                         </xe-ui-select-match>
                         <xe-ui-select-choices repeat="item in vm.status">
-                            <div ng-bind-html="item.value|i18n_aip"></div>
+                            <div ng-bind-html="item.value"></div>
                         </xe-ui-select-choices>
                     </xe-ui-select>
                 </div>
