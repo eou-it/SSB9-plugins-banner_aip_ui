@@ -22,7 +22,7 @@ module AIP {
     }
 
     export class AdminActionItemAddPageCtrl implements IAdminActionItemAddPageCtrl{
-        $inject = ["$scope", "$q", "$state", "$filter","$sce", "$timeout", "SpinnerService", "AdminActionService" ];
+        $inject = ["$scope", "$q", "$state", "$filter","$sce", "$timeout", "$window", "SpinnerService", "AdminActionService" ];
         status: [AIP.IStatus];
         folders: [AIP.IFolder];
         actionItemInfo: AIP.IActionItemParam|any;
@@ -39,7 +39,8 @@ module AIP {
         existFolder: any;
         duplicateGroup: boolean;
         $timeout;
-        constructor($scope:IActionItemAddPageScope, $q:ng.IQService, $state, $filter,$sce, $timeout,
+        actionItemInitial;
+        constructor($scope:IActionItemAddPageScope, $q:ng.IQService, $state, $filter,$sce, $timeout, $window,
                     SpinnerService:AIP.SpinnerService, AdminActionService:AIP.AdminActionService) {
             $scope.vm = this;
             this.$q = $q;
@@ -55,6 +56,23 @@ module AIP {
             this.editMode = false;
             this.existFolder = {};
             this.duplicateGroup = false;
+            this.actionItemInitial = {
+                id: undefined,
+                title: undefined,
+                name: undefined,
+                status: undefined,
+                postedInd: undefined,
+                folder: undefined,
+                description: undefined
+            }
+            $window.onbeforeunload = (event)=> {
+                if(this.isChanged()) {
+                    return this.$filter("i18n_aip")("aip.common.admin.unsaved");
+                }
+                // reset to default event listener
+                $window.onbeforeunload = null;
+            };
+
             this.init();
         }
 
@@ -95,6 +113,7 @@ module AIP {
                                     return item.id === parseInt(this.actionItem1.folderId);
                                 })[0];*/
                                 this.actionItemInfo.description = this.actionItem1.actionItemDesc;
+                                this.actionItemInitial = angular.copy(this.actionItemInfo);
                                 this.trustActionItemContent();
                             } else {
                                 //todo: output error in notification center?
@@ -169,6 +188,34 @@ module AIP {
         }
         cancel() {
             this.$state.go("admin-action-list");
+        }
+
+        isChanged() {
+            var changed = false;
+            if(this.editMode) {
+                var keys = Object.keys(this.actionItemInitial);
+                for (var i = 0; i < keys.length; i++) {
+                    if (this.actionItemInfo[keys[i]]) {
+                        if (keys[i] === "folder") {
+                            if (this.actionItemInfo.folder.id !== this.actionItemInitial.folder.id) {
+                                changed = true;
+                                break;
+                            }
+                        } else if (this.actionItemInfo[keys[i]] !== this.actionItemInitial[keys[i]]) {
+                            changed = true;
+                            break;
+                        }
+                    }
+                }
+            } else {
+                if (this.actionItemInfo.name || this.actionItemInfo.title || (this.actionItemInfo.folder && this.actionItemInfo.folder.id) ||
+                this.actionItemInfo.description) {
+                    changed = true;
+                } else if (this.actionItemInfo.status!=="Draft") {
+                    changed = true;
+                }
+            }
+            return changed;
         }
 
         checkActionPost() {
