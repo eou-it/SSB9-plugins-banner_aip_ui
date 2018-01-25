@@ -35,21 +35,6 @@ class AipControllerIntegrationTests extends BaseIntegrationTestCase {
         logout()
     }
 
-    // using student. Fail on security?
-    @Test
-    void testAdminEntryPoint() {
-        def person = PersonUtility.getPerson( "CSRSTU002" )
-        assertNotNull person
-        def auth = selfServiceBannerAuthenticationProvider.authenticate(
-                new UsernamePasswordAuthenticationToken( person.bannerId, '111111' ) )
-        SecurityContextHolder.getContext().setAuthentication( auth )
-        def result = controller.admin()
-        assertEquals 200, controller.response.status
-
-        assertEquals( "/landing", result.model.fragment )
-        assertEquals( "index", result.view )
-    }
-
 
     @Test
     void testListEntryPoint() {
@@ -60,7 +45,6 @@ class AipControllerIntegrationTests extends BaseIntegrationTestCase {
         SecurityContextHolder.getContext().setAuthentication( auth )
         def result = controller.list()
         assertEquals 200, controller.response.status
-        assertEquals( "/list", result.model.fragment )
         assertEquals( "index", result.view )
     }
 
@@ -146,7 +130,6 @@ class AipControllerIntegrationTests extends BaseIntegrationTestCase {
         SecurityContextHolder.getContext().setAuthentication( auth )
         def result = controller.informedList()
         assertEquals 200, controller.response.status
-        assertEquals( "/informedList", result.model.fragment )
         assertEquals( "index", result.view )
     }
 
