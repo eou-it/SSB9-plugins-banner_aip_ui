@@ -6,6 +6,7 @@ package net.hedtech.banner.aip
 import grails.converters.JSON
 import net.hedtech.banner.aip.common.AipTimezone
 import net.hedtech.banner.exceptions.ApplicationException
+import net.hedtech.banner.i18n.MessageHelper
 import org.apache.log4j.Logger
 import org.codehaus.groovy.grails.plugins.web.taglib.ValidationTagLib
 
@@ -333,48 +334,31 @@ class AipAdminController {
         render model as JSON
     }
 
-    /*def updateBlockedProcessItems() {//TODO Enable this and impleted as per requirement
-        def jsonObj = request.JSON
-
-        def user = SecurityContextHolder?.context?.authentication?.principal
-        if (!user.pidm) {
-            response.sendError( 403 )
-            return
-        }
-        def aipUser = AipControllerUtils.getPersonForAip( params, user.pidm )
-        def actionItemId = new Long( jsonObj.actionItemId )
-        def blockItems = jsonObj.blockItems
-
-        def success = false
-        def message
+    /**
+     * AIP to assocate action item to process
+     * @return
+     */
+    def updateBlockedProcessItems() {
         def model
         try {
-            def actionItemBlockedProcess = actionItemCompositeService.updateBlockedProcess( aipUser, actionItemId, blockItems )
-            if (actionItemBlockedProcess) {
-                success = true
-            }
-            model = [
-                    success                 : success,
-                    message                 : message,
-                    actionItemBlockedProcess: actionItemBlockedProcess
-            ]
+            def paramMap = request.JSON
+            model = actionItemBlockedProcessCompositeService.updateBlockedProcessItems( paramMap )
         } catch (ApplicationException ae) {
+            ae.printStackTrace(  )
             model = [
-                    success                 : success,
-                    message                 : MessageUtility.message( ae.getDefaultMessate() ),
-                    actionItemBlockedProcess: ""
+                    success: false,
+                    message: MessageHelper.message( ae.defaultMessage ),
             ]
         } catch (Exception e) {
+            e.printStackTrace(  )
             model = [
-                    success                 : success,
-                    message                 : message,
+                    success                 : false,
+                    message                 : e.message,
                     actionItemBlockedProcess: ""
             ]
         }
-
         render model as JSON
-
-    }*/
+    }
 
     /**
      * Gets Assigned Action Items In the Group
