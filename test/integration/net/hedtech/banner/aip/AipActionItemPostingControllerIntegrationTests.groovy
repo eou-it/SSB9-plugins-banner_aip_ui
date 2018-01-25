@@ -249,9 +249,9 @@ class AipActionItemPostingControllerIntegrationTests extends BaseIntegrationTest
         dynamicData.postingActionItemGroupId = actionItemGroup.id
         dynamicData.displayStartDate = testingDateFormat.format( new Date() )
         dynamicData.displayEndDate = testingDateFormat.format( new Date() + 50 )
-        dynamicData.scheduledStartDate = testingDateFormat.format( new Date() )
+        dynamicData.scheduledStartDate = testingDateFormat.format( new Date() +1 )
         dynamicData.scheduledStartTime = "2230"
-        dynamicData.timezoneStringOffset = "Etc/GMT+10"
+        dynamicData.timezoneStringOffset = "Asia/Kolkata"
         dynamicData
     }
 
