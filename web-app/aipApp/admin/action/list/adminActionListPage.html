@@ -27,8 +27,9 @@
                 mobile-layout="vm.mobileConfig"
                 refresh-grid="refreshGrid"
                 draggable-column-names="vm.draggableColumnNames"
-                continuous-scrolling="vm.mobileSize"
-                continuous-scroll-parent="adminActionListPage">
+                continuous-scrolling="false"
+                height="20em"
+                >
             <xe-cell-markup column-name="actionStatus">
                 <div class="row actionItemActions">
                     <div class="icon icon-view-CO" ng-click="vm.openActionItem(row.id)"
