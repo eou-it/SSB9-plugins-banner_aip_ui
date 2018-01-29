@@ -1,9 +1,12 @@
+/*******************************************************************************
+ Copyright 2018 Ellucian Company L.P. and its affiliates.
+ ********************************************************************************/
 ///<reference path="../../../../typings/tsd.d.ts"/>
 ///<reference path="../../../common/services/admin/adminGroupService.ts"/>
 ///<reference path="../../../common/services/spinnerService.ts"/>
 var AIP;
 (function (AIP) {
-    var AdminGroupOpenPageCtrl = /** @class */ (function () {
+    var AdminGroupOpenPageCtrl = (function () {
         function AdminGroupOpenPageCtrl($scope, $window, AdminGroupService, $q, SpinnerService, $state, $filter, $sce, $templateRequest, $templateCache, $compile, $timeout, APP_ROOT) {
             this.$inject = ["$scope", "$window", "AdminGroupService", "$q", "SpinnerService", "$state", "$filter", "$sce", "$templateRequest", "$templateCache",
                 "$compile", "$timeout", "APP_ROOT"];

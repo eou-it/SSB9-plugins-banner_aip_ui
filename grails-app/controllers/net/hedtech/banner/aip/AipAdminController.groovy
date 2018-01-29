@@ -1,11 +1,12 @@
 /*******************************************************************************
- Copyright 2017 Ellucian Company L.P. and its affiliates.
+ Copyright 2018 Ellucian Company L.P. and its affiliates.
  ****************************************************************************** */
 package net.hedtech.banner.aip
-import groovy.json.JsonSlurper
+
 import grails.converters.JSON
 import net.hedtech.banner.aip.common.AipTimezone
 import net.hedtech.banner.exceptions.ApplicationException
+import net.hedtech.banner.i18n.MessageHelper
 import org.apache.log4j.Logger
 import org.codehaus.groovy.grails.plugins.web.taglib.ValidationTagLib
 
@@ -17,6 +18,7 @@ class AipAdminController {
     static defaultAction = "landing"
 
     def groupFolderReadOnlyService
+    def blockingProcessCompositeService
 
     def actionItemReadOnlyCompositeService
     def actionItemBlockedProcessService
@@ -37,26 +39,32 @@ class AipAdminController {
     def actionItemGroupAssignReadOnlyService
     def actionItemGroupService
     def actionItemService
+    def actionItemBlockedProcessCompositeService
+
 
     def landing() {
         def model = []
         render( model: model, view: "../aip/index" )
     }
 
+
     def group() {
         def model = []
         render( model: model, view: "../aip/index" )
     }
+
 
     def action() {
         def model = []
         render( model: model, view: "../aip/index" )
     }
 
+
     def status() {
         def model = []
         render( model: model, view: "../aip/index" )
     }
+
 
     def post() {
         def model = []
@@ -133,7 +141,7 @@ class AipAdminController {
             return
         }
 
-        GroupFolderReadOnly gfro = groupFolderReadOnlyService.getActionItemGroupById( Long.parseLong(params.groupId) )
+        GroupFolderReadOnly gfro = groupFolderReadOnlyService.getActionItemGroupById( Long.parseLong( params.groupId ) )
         if (gfro) {
             success = true
         }
@@ -264,7 +272,7 @@ class AipAdminController {
      */
     def statusSave() {
         def model
-        def map=request.JSON
+        def map = request.JSON
         try {
             model = actionItemStatusCompositeService.statusSave( map );
         } catch (ApplicationException e) {
@@ -319,98 +327,37 @@ class AipAdminController {
         render model as JSON
     }
 
-    def blockedProcessList() {//TODO Enable this and impleted as per requirement
 
-        def success = false
-        def message = ""
-        def blockedList = []
-        def jsonSlurper = new JsonSlurper()
-        if (!params.actionItemId) {
-            //rerun all as list
-            try {
-                def tempBlockedList = actionItemBlockedProcessService.listBlockedProcessesByType()
-                tempBlockedList.each {item ->
-                    def value = jsonSlurper.parseText( item.value.replaceAll( "[\n\r]", "" ) )
-                    def block = [
-                            id: item.id,
-name : item.name,
-value: value.aipBlock
-                    ]
-                    blockedList.push( block )
-                }
-                success = true
-            } catch (Exception e) {
-                LOGGER.error( e.getMessage() )
-            }
-        } else {
-            def actionItemId = params.actionItemId
-            try {
-                def tempBlockedList = actionItemBlockedProcessService.listBlockedProcessByActionItemId( Long.parseLong( actionItemId ) )
-                tempBlockedList.each {item ->
-                    def configurationData = actionItemBlockedProcessService.listBlockedProcessesByNameAndType( item.blockConfigName )
-                    def value = jsonSlurper.parseText(item.value.replaceAll("[\n\r]",""))
-                    def block = [
-                            id   : item.blockId,
-                            name : item.blockConfigName,
-                            value: configurationData
-                    ]
-                    blockedList.push( block )
-                }
-
-                success = true
-            } catch (Exception e) {
-                LOGGER.error( e.getMessage() )
-            }
-        }
-        def model = [
-                success         : success,
-                message         : message,
-                blockedProcesses: blockedList
-        ]
+    def blockedProcessList() {
+        def actionItemId = params.long( 'actionItemId' )
+        def model = actionItemBlockedProcessCompositeService.getBlockedProcessForSpecifiedActionItem( actionItemId)
         render model as JSON
     }
 
-    def updateBlockedProcessItems() {//TODO Enable this and impleted as per requirement
-        def jsonObj = request.JSON
-
-        def user = SecurityContextHolder?.context?.authentication?.principal
-        if (!user.pidm) {
-            response.sendError( 403 )
-            return
-        }
-        def aipUser = AipControllerUtils.getPersonForAip( params, user.pidm )
-        def actionItemId = new Long( jsonObj.actionItemId )
-        def blockItems = jsonObj.blockItems
-
-        def success = false
-        def message
+    /**
+     * AIP to assocate action item to process
+     * @return
+     */
+    def updateBlockedProcessItems() {
         def model
         try {
-            def actionItemBlockedProcess = actionItemCompositeService.updateBlockedProcess( aipUser, actionItemId, blockItems )
-            if (actionItemBlockedProcess) {
-                success = true
-            }
-            model = [
-                    success                 : success,
-                    message                 : message,
-                    actionItemBlockedProcess: actionItemBlockedProcess
-            ]
+            def paramMap = request.JSON
+            model = actionItemBlockedProcessCompositeService.updateBlockedProcessItems( paramMap )
         } catch (ApplicationException ae) {
+            ae.printStackTrace(  )
             model = [
-                    success                 : success,
-                    message                 : MessageUtility.message( ae.getDefaultMessate() ),
-                    actionItemBlockedProcess: ""
+                    success: false,
+                    message: MessageHelper.message( ae.defaultMessage ),
             ]
         } catch (Exception e) {
+            e.printStackTrace(  )
             model = [
-                    success                 : success,
-                    message                 : message,
+                    success                 : false,
+                    message                 : e.message,
                     actionItemBlockedProcess: ""
             ]
         }
-
         render model as JSON
-
     }
 
     /**
@@ -467,4 +414,14 @@ value: value.aipBlock
         def model = [posted: actionItemGroupService.checkGroupPosted( Long.parseLong( params.groupId ) )]
         render model as JSON
     }
+
+    /**
+     * LOV information process , URL and Persona
+     * @return
+     */
+    def loadBlockingProcessLov() {
+        def result = blockingProcessCompositeService.loadBlockingProcessLov()
+        render result as JSON
+    }
+
 }

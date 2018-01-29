@@ -1,9 +1,11 @@
 /*********************************************************************************
- Copyright 2017 Ellucian Company L.P. and its affiliates.
+ Copyright 2018 Ellucian Company L.P. and its affiliates.
  **********************************************************************************/
 package net.hedtech.banner.aip
 
 import grails.converters.JSON
+import grails.util.Holders
+import net.hedtech.banner.aip.block.process.BlockingProcess
 import net.hedtech.banner.general.communication.folder.CommunicationFolder
 import net.hedtech.banner.general.person.PersonUtility
 import net.hedtech.banner.testing.BaseIntegrationTestCase
@@ -46,6 +48,7 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
         formContext = ['GUAGMNU']
         super.setUp()
         controller = new AipAdminController()
+        Holders.config.BANNER_AIP_BLOCK_PROCESS_PERSONA = ['EVERYONE', 'STUDENT', 'REGISTRAR', 'FACULTYINSTRUCTOR', 'FACULTYADVISOR', 'FACULTYBOTH']
     }
 
 
@@ -710,6 +713,43 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
         def answer = JSON.parse( controller.response.contentAsString )
 
         assertEquals 200, controller.response.status
+    }
+
+
+    @Test
+    void testActionItemStatusGridList() {
+        def admin = PersonUtility.getPerson( "CSRSTU002" ) // role: student
+        assertNotNull admin
+
+        def auth = selfServiceBannerAuthenticationProvider.authenticate(
+                new UsernamePasswordAuthenticationToken( admin.bannerId, '111111' ) )
+        SecurityContextHolder.getContext().setAuthentication( auth )
+        controller.params.searchString = null
+        controller.params.sortColumnName = null
+        controller.params.ascending = false
+        controller.params.max = 20
+        controller.actionItemStatusGridList()
+        def answer = JSON.parse( controller.response.contentAsString )
+        assertEquals 200, controller.response.status
+        // TODO: verify something
+    }
+
+
+    @Test
+    void testActionItemList() {
+        def admin = PersonUtility.getPerson( "CSRSTU002" ) // role: student
+        assertNotNull admin
+
+        def auth = selfServiceBannerAuthenticationProvider.authenticate(
+                new UsernamePasswordAuthenticationToken( admin.bannerId, '111111' ) )
+        SecurityContextHolder.getContext().setAuthentication( auth )
+        controller.params.searchString = null
+        controller.params.sortColumnName = null
+        controller.params.ascending = false
+        controller.params.max = 20
+        controller.actionItemList()
+        def answer = JSON.parse( controller.response.contentAsString )
+        assertEquals 200, controller.response.status
         // TODO: verify something
     }
 
@@ -1203,7 +1243,7 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
     @Test
     void removeStatus() {
         def title = 'TEST_TITLE'
-        ActionItemStatus actionItemStatus = actionItemStatusCompositeService.statusSave([title: title]).status
+        ActionItemStatus actionItemStatus = actionItemStatusCompositeService.statusSave( [title: title] ).status
         controller.request.contentType = "text/json"
         String inputString = """{"id":${actionItemStatus.id}}"""
         controller.request.json = inputString
@@ -1355,5 +1395,71 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
         def ret = controller.response.contentAsString
         def data = JSON.parse( ret )
         assert data.timezones.length() > 0
+    }
+
+
+    @Test
+    void loadBlockingProcessLov() {
+        controller.request.contentType = "text/json"
+        controller.loadBlockingProcessLov()
+        assertEquals 200, controller.response.status
+        def data = JSON.parse( controller.response.contentAsString )
+        assert data.persona != null
+    }
+
+
+    @Test
+    void groupPosted() {
+        controller.request.contentType = "text/json"
+        controller.params.groupId = ActionItemGroup.findByName( 'International Students' ).id.toString()
+        controller.groupPosted()
+        assertEquals 200, controller.response.status
+        def data = JSON.parse( controller.response.contentAsString )
+        assert data.posted == true
+    }
+
+
+    @Test
+    void checkActionItemPosted() {
+        controller.request.contentType = "text/json"
+        controller.params.actionItemId = ActionItem.findByName( 'Personal Information' ).id.toString()
+        controller.checkActionItemPosted()
+        assertEquals 200, controller.response.status
+        def data = JSON.parse( controller.response.contentAsString )
+        assert data.posted == true
+    }
+
+
+    @Test
+    void blockedProcessList() {
+        controller.request.contentType = "text/json"
+        controller.params.actionItemId = ActionItem.findByName( 'Please Review the Attendance Policy' ).id.toString()
+        controller.blockedProcessList()
+        assertEquals 200, controller.response.status
+        def data = JSON.parse( controller.response.contentAsString )
+        assert data.actionItem.name == 'Please Review the Attendance Policy'
+    }
+
+
+    @Test
+    void updateBlockedProcessItems() {
+        controller.request.contentType = "text/json"
+        ActionItem actionItem = ActionItem.findByName( 'The Declaration of Independence' )
+        BlockingProcess blockingProcess = BlockingProcess.findByProcessName( 'Prepare for Registration' )
+        [actionItemId: actionItem.id.toString(), globalBlockProcess: false, blockedProcesses: [[processId: blockingProcess.id, persona: 'STUDENT']]]
+        String inputString = """{
+        	"actionItemId": "${actionItem.id.toString()}",
+        	"globalBlockProcess": false,
+        	"blockedProcesses": [{
+        			"processId": ${blockingProcess.id},
+        			"persona": "EVERYONE"
+        		}
+        	]
+        }"""
+        controller.request.json = inputString
+        controller.updateBlockedProcessItems()
+        assertEquals 200, controller.response.status
+        def data = JSON.parse( controller.response.contentAsString )
+        assert data.success == true
     }
 }

@@ -1,7 +1,6 @@
-/**
- * Created by jshin on 2/9/16.
- */
-
+/*******************************************************************************
+ Copyright 2018 Ellucian Company L.P. and its affiliates.
+ ********************************************************************************/
 // Mock for Global object
 var BreadCrumbAndPageTitle = {draw: function(obj) {
     //console.log(obj);

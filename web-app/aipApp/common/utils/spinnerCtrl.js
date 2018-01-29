@@ -1,3 +1,6 @@
+/*******************************************************************************
+ Copyright 2018 Ellucian Company L.P. and its affiliates.
+ ********************************************************************************/
 ///<reference path="../../../typings/tsd.d.ts"/>
 var AIP;
 (function (AIP) {
@@ -13,9 +16,9 @@ var AIP;
                 _this.showing = newVal;
             }, true);
         }
-        SpinnerCtrl.$inject = ["$scope", "SpinnerService", "$rootScope"];
         return SpinnerCtrl;
     }());
+    SpinnerCtrl.$inject = ["$scope", "SpinnerService", "$rootScope"];
     AIP.SpinnerCtrl = SpinnerCtrl;
 })(AIP || (AIP = {}));
 register("bannerAIP").controller("SpinnerCtrl", AIP.SpinnerCtrl);
