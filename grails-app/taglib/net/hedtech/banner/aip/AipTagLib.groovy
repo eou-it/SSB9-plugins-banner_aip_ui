@@ -1,3 +1,6 @@
+/*******************************************************************************
+ Copyright 2018 Ellucian Company L.P. and its affiliates.
+ *******************************************************************************/
 package net.hedtech.banner.aip
 
 import grails.converters.JSON
@@ -29,11 +32,11 @@ class AipTagLib {
     }
 
 
-    def i18n_aip_setup = { attrs ->
+    def i18n_aip_setup = {attrs ->
 
         Set keys = []
-        grailsApplication.mainContext.getBean( 'messageSource' ).getMergedPluginProperties( LocaleContextHolder.getLocale() ).properties.each { key ->
-            if (key.key.startsWith("aip.")){
+        grailsApplication.mainContext.getBean( 'messageSource' ).getMergedPluginProperties( LocaleContextHolder.getLocale() ).properties.each {key ->
+            if (key.key.startsWith( "aip." )) {
                 keys.add( key.key )
             }
         }
@@ -79,14 +82,13 @@ class AipTagLib {
     }
 
 
-
-    def aipVersion = { attrs ->
-        def plugin = grailsApplication.mainContext.pluginManager.getGrailsPlugin("banner-aip-ui")
+    def aipVersion = {attrs ->
+        def plugin = grailsApplication.mainContext.pluginManager.getGrailsPlugin( "banner-aip-ui" )
         def map = [
-                name: plugin.getName(),
-                version: plugin.getVersion(),
+                name          : plugin.getName(),
+                version       : plugin.getVersion(),
                 fileSystemName: plugin.getFileSystemName()
-                ]
+        ]
         out << "window.aipApp = ${map as JSON};\n"
     }
 }

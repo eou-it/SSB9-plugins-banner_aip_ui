@@ -1,4 +1,3 @@
-///<reference path="../../typings/tsd.d.ts"/>
 var AIP;
 (function (AIP) {
     var AdminLandingPageCtrl = (function () {
