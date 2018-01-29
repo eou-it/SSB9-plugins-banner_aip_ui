@@ -1,6 +1,6 @@
 ///<reference path="../../typings/tsd.d.ts"/>
 /*******************************************************************************
- Copyright 2017 Ellucian Company L.P. and its affiliates.
+ Copyright 2018 Ellucian Company L.P. and its affiliates.
  ********************************************************************************/
 declare var register;
 

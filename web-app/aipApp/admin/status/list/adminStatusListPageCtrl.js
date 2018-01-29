@@ -1,5 +1,5 @@
 /*******************************************************************************
- Copyright 2017 Ellucian Company L.P. and its affiliates.
+ Copyright 2018 Ellucian Company L.P. and its affiliates.
  ********************************************************************************/
 ///<reference path="../../../common/services/admin/adminActionStatusService.ts"/>
 var AIP;

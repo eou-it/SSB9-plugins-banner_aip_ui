@@ -1,12 +1,12 @@
 /*******************************************************************************
- Copyright 2017 Ellucian Company L.P. and its affiliates.
+ Copyright 2018 Ellucian Company L.P. and its affiliates.
  ********************************************************************************/
 ///<reference path="../../../../typings/tsd.d.ts"/>
 ///<reference path="../../../common/services/spinnerService.ts"/>
 ///<reference path="../../../common/services/admin/adminActionService.ts"/>
 var AIP;
 (function (AIP) {
-    var AdminActionItemAddPageCtrl = /** @class */ (function () {
+    var AdminActionItemAddPageCtrl = (function () {
         function AdminActionItemAddPageCtrl($scope, $q, $state, $filter, $sce, $timeout, $window, SpinnerService, AdminActionService) {
             var _this = this;
             this.$inject = ["$scope", "$q", "$state", "$filter", "$sce", "$timeout", "$window", "SpinnerService", "AdminActionService"];
