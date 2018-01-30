@@ -240,7 +240,8 @@ var bannerAIPApp = angular.module("bannerAIP", [
             fetchCurrentDateInLocaleFormat:aipAppAbsPath + "aipAdmin/fetchCurrentDateInLocaleFormat",
             is12HourClock :aipAppAbsPath + "aipAdmin/is12HourClock",
             listAvailableTimezones :aipAppAbsPath + "aipAdmin/listAvailableTimezones",
-            checkActionItemPosted: aipAppAbsPath + "aipAdmin/checkActionItemPosted"
+            checkActionItemPosted: aipAppAbsPath + "aipAdmin/checkActionItemPosted",
+            loadBlockingProcessLov:aipAppAbsPath + "aipAdmin/loadBlockingProcessLov"
 
 
         }

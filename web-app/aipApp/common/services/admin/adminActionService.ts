@@ -332,6 +332,16 @@ module AIP {
             });
             return request;
         }
+
+        loadBlockingProcessLov1(){
+            {
+                var request = this.$http({
+                    method: "GET",
+                    url: this.ENDPOINT.admin.loadBlockingProcessLov
+                });
+                return request;
+            }
+        }
         deleteStatus(status:{actionItemId:number}) {
             var request = this.$http({
                 method: "POST",
@@ -461,13 +471,15 @@ module AIP {
             return request;
         }
 
-        updateBlockedProcessItems(actionItemId, blockItems) {
+        updateBlockedProcessItems(actionItemId,globalBlockProcess, blockedProcesses) {
+
             var request = this.$http({
                 method: "POST",
                 url: this.ENDPOINT.admin.updateBlockedProcessItems,
                 data: {
                     actionItemId: actionItemId,
-                    blockItems: blockItems
+                    globalBlockProcess:globalBlockProcess,
+                    blockedProcesses: []
                 }
             });
             return request;

@@ -206,7 +206,7 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
                                     <div class="actionItemElement col-sm-6" id="">
                                         <div class="row timeZone">
                                             <span class="col-xs-11 col-sm-10 defaultTimezone" ng-if="vm.showTimezoneIcon" ng-bind-html="vm.defaultTimeZone"></span>
-                                            <button type="button" class="col-xs-1 col-sm-2 timezone-btn" ng-hide="vm.!showTimezoneIcon" ng-show="vm.showTimezoneIcon" ng-click="vm.showTimeZoneList()"></button>
+                                            <button type="button" class="col-xs-1 col-sm-2 timezone-btn" ng-hide="!vm.showTimezoneIcon" ng-show="vm.showTimezoneIcon" ng-click="vm.showTimeZoneList()"></button>
                                             <xe-ui-select class="col-xs-12 col-sm-12 timeZoneChange" ng-model="vm.timezone" ng-change="vm.setTimezone(vm.timezone)" theme="select2" ng-hide="vm.showTimezoneIcon" ng-show="vm.showTimezoneIcon">
                                                 <xe-ui-select-match placeholder="{{'aip.admin.communication.sendMessage.timezonePlaceHolder' | i18n_aip}}" ng-bind-html="vm.timezone.displayName"></xe-ui-select-match>
                                                 <xe-ui-select-choices repeat="timezone in vm.timezones | filter: $select.search">

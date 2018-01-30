@@ -1,5 +1,5 @@
 /*******************************************************************************
- Copyright 2018 Ellucian Company L.P. and its affiliates.
+ Copyright 2017 Ellucian Company L.P. and its affiliates.
  ********************************************************************************/
 ///<reference path="../../../../typings/tsd.d.ts"/>
 ///<reference path="../../../common/services/spinnerService.ts"/>
@@ -7,9 +7,8 @@
 var AIP;
 (function (AIP) {
     var AdminActionItemAddPageCtrl = (function () {
-        function AdminActionItemAddPageCtrl($scope, $q, $state, $filter, $sce, $timeout, $window, SpinnerService, AdminActionService) {
-            var _this = this;
-            this.$inject = ["$scope", "$q", "$state", "$filter", "$sce", "$timeout", "$window", "SpinnerService", "AdminActionService"];
+        function AdminActionItemAddPageCtrl($scope, $q, $state, $filter, $sce, $timeout, SpinnerService, AdminActionService) {
+            this.$inject = ["$scope", "$q", "$state", "$filter", "$sce", "$timeout", "SpinnerService", "AdminActionService"];
             this.trustAsHtml = function (string) {
                 return this.$sce.trustAsHtml(string);
             };
@@ -31,22 +30,6 @@ var AIP;
             this.editMode = false;
             this.existFolder = {};
             this.duplicateGroup = false;
-            this.actionItemInitial = {
-                id: undefined,
-                title: undefined,
-                name: undefined,
-                status: undefined,
-                postedInd: undefined,
-                folder: undefined,
-                description: undefined
-            };
-            $window.onbeforeunload = function (event) {
-                if (_this.isChanged()) {
-                    return _this.$filter("i18n_aip")("aip.common.admin.unsaved");
-                }
-                // reset to default event listener
-                $window.onbeforeunload = null;
-            };
             this.init();
         }
         AdminActionItemAddPageCtrl.prototype.init = function () {
@@ -83,7 +66,6 @@ var AIP;
                                 return item.id === parseInt(this.actionItem1.folderId);
                             })[0];*/
                             _this.actionItemInfo.description = _this.actionItem1.actionItemDesc;
-                            _this.actionItemInitial = angular.copy(_this.actionItemInfo);
                             _this.trustActionItemContent();
                         }
                         else {
@@ -155,36 +137,6 @@ var AIP;
         };
         AdminActionItemAddPageCtrl.prototype.cancel = function () {
             this.$state.go("admin-action-list");
-        };
-        AdminActionItemAddPageCtrl.prototype.isChanged = function () {
-            var changed = false;
-            if (this.editMode) {
-                var keys = Object.keys(this.actionItemInitial);
-                for (var i = 0; i < keys.length; i++) {
-                    if (this.actionItemInfo[keys[i]]) {
-                        if (keys[i] === "folder") {
-                            if (this.actionItemInfo.folder.id !== this.actionItemInitial.folder.id) {
-                                changed = true;
-                                break;
-                            }
-                        }
-                        else if (this.actionItemInfo[keys[i]] !== this.actionItemInitial[keys[i]]) {
-                            changed = true;
-                            break;
-                        }
-                    }
-                }
-            }
-            else {
-                if (this.actionItemInfo.name || this.actionItemInfo.title || (this.actionItemInfo.folder && this.actionItemInfo.folder.id) ||
-                    this.actionItemInfo.description) {
-                    changed = true;
-                }
-                else if (this.actionItemInfo.status !== "Draft") {
-                    changed = true;
-                }
-            }
-            return changed;
         };
         AdminActionItemAddPageCtrl.prototype.checkActionPost = function () {
             var _this = this;

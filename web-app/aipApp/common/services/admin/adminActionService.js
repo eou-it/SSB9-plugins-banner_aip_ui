@@ -126,6 +126,15 @@ var AIP;
             });
             return request;
         };
+        AdminActionService.prototype.loadBlockingProcessLov1 = function () {
+            {
+                var request = this.$http({
+                    method: "GET",
+                    url: this.ENDPOINT.admin.loadBlockingProcessLov
+                });
+                return request;
+            }
+        };
         AdminActionService.prototype.deleteStatus = function (status) {
             var request = this.$http({
                 method: "POST",
@@ -248,13 +257,14 @@ var AIP;
             });
             return request;
         };
-        AdminActionService.prototype.updateBlockedProcessItems = function (actionItemId, blockItems) {
+        AdminActionService.prototype.updateBlockedProcessItems = function (actionItemId, globalBlockProcess, blockedProcesses) {
             var request = this.$http({
                 method: "POST",
                 url: this.ENDPOINT.admin.updateBlockedProcessItems,
                 data: {
                     actionItemId: actionItemId,
-                    blockItems: blockItems
+                    globalBlockProcess: globalBlockProcess,
+                    blockedProcesses: []
                 }
             });
             return request;
