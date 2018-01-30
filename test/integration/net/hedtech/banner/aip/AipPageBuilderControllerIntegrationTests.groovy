@@ -32,6 +32,9 @@ class AipPageBuilderControllerIntegrationTests extends BaseIntegrationTestCase {
 
     @Test
     void pageScript() {
+        String query = """ INSERT INTO PAGE ( CONSTANT_NAME, VERSION, ID, MODEL_VIEW ) VALUES ('TestAIPMasterTemplateSystemRequired', 0, -9999, '{"name": "TestAIPMasterTemplateSystemRequired", "type" : "page"}') """
+        println query
+        sessionFactory.currentSession.createSQLQuery( query ).executeUpdate()
         controller.request.contentType = "text/json"
         controller.params.id = "AIPMasterTemplateSystemRequired"
         controller.pageScript()
@@ -41,6 +44,9 @@ class AipPageBuilderControllerIntegrationTests extends BaseIntegrationTestCase {
 
     @Test
     void page() {
+        String query = """ INSERT INTO PAGE ( CONSTANT_NAME, VERSION, ID, MODEL_VIEW ) VALUES ('TestAIPMasterTemplateSystemRequired', 0, -9999, :clob) """
+        println query
+        sessionFactory.currentSession.createSQLQuery( query ).setString( 'clob', '{ "name":"TestAIPMasterTemplateSystemRequired","type":"page" }' ).executeUpdate()
         controller.request.contentType = "text/json"
         controller.params.id = "AIPMasterTemplateSystemRequired"
         controller.page()
