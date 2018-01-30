@@ -1,10 +1,10 @@
 /*******************************************************************************
- Copyright 2017 Ellucian Company L.P. and its affiliates.
+ Copyright 2018 Ellucian Company L.P. and its affiliates.
  ********************************************************************************/
 ///<reference path="../../../../typings/tsd.d.ts"/>
 var AIP;
 (function (AIP) {
-    var AdminActionStatusService = (function () {
+    var AdminActionStatusService = /** @class */ (function () {
         function AdminActionStatusService($http, $q, $filter, ENDPOINT) {
             this.$http = $http;
             this.$q = $q;
@@ -60,9 +60,9 @@ var AIP;
             });
             return request;
         };
+        AdminActionStatusService.$inject = ["$http", "$q", "$filter", "ENDPOINT"];
         return AdminActionStatusService;
     }());
-    AdminActionStatusService.$inject = ["$http", "$q", "$filter", "ENDPOINT"];
     AIP.AdminActionStatusService = AdminActionStatusService;
 })(AIP || (AIP = {}));
 register("bannerAIP").service("AdminActionStatusService", AIP.AdminActionStatusService);

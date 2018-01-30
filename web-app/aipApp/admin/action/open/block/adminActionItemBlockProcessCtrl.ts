@@ -1,3 +1,6 @@
+/*******************************************************************************
+ Copyright 2018 Ellucian Company L.P. and its affiliates.
+ ********************************************************************************/
 ///<reference path="../../../../../typings/tsd.d.ts"/>
 ///<reference path="../../../../common/services/admin/adminActionService.ts"/>
 ///<reference path="../../../../common/services/admin/adminActionStatusService.ts"/>
@@ -63,6 +66,14 @@ module AIP {
             this.editMode = false;
             this.isSaving = false;
 
+            $window.onbeforeunload = (event)=> {
+                if(this.isChanged()) {
+                    return this.$filter("i18n_aip")("aip.common.admin.unsaved");
+                }
+                // reset to default event listener
+                $window.onbeforeunload = null;
+            };
+
             this.init();
             angular.element( $window ).bind( 'resize', function () {
                 if (!$scope.$root.$$phase) {
@@ -77,8 +88,8 @@ module AIP {
             if (this.$state.params.noti) {
                 this.handleNotification( this.$state.params.noti );
             }
-            promises.push(this.getBlockedProcessList(this.$state.params.data));
-            promises.push(this.getBlockedProcessList());
+            promises.push(this.getBlockedProcessList(this.$state.params.actionItemId));
+            // promises.push(this.getBlockedProcessList());
             //if needed, add more deferred job into promises list
             this.$q.all( promises ).then( () => {
                 this.spinnerService.showSpinner( false );
@@ -106,6 +117,17 @@ module AIP {
             return deferred.promise;
         }
 
+        isChanged() {
+            var changed = false;
+            //TODO:: implement code to check any input data change.
+            if (this.editMode) {
+                //TODO:: check initial data and input block process data.
+                // check length first, ff same length, then compare each array data
+            } else {
+                //TODO:: check block process added (check block process array length > 0 )
+            }
+            return changed;
+        }
         addNewItem() {
             var available = this.getAvailable();
             if(available.length > 0) {
@@ -126,6 +148,7 @@ module AIP {
                 }
             });
         }
+
         isEmpty(obj) {
             if (Object.keys(obj).length===0) {
                 return true;
@@ -137,7 +160,7 @@ module AIP {
             if(noti.notiType === "saveSuccess") {
                 // var data = noti.data.newActionItem||noti.data.actionItem;
                 var n = new Notification({
-                    message: this.$filter("i18n_aip")("aip.common.save.successful"), //+
+                    message: this.$filter("i18n_aip")("aip.common.save.successful"),
                     type: "success",
                     flash: true
                 });
@@ -183,7 +206,7 @@ module AIP {
         }
         cancel() {
             //reset selected items then exit edit mode
-            this.getBlockedProcessList(this.$state.params.data)
+            this.getBlockedProcessList(this.$state.params.actionItemId)
                 .then((response) => {
                     this.alreadyGenerated = [];
                     this.editMode = false;
@@ -206,7 +229,7 @@ module AIP {
             this.isSaving = true;
             // items: this.alreadyGenerated[{id:id, name: "name", value:{processNamei18n:"i18n", urls:["url"]}}]
             // actionItemId: this.$state.params.data
-            this.adminActionService.updateBlockedProcessItems(this.$state.params.data, this.alreadyGenerated)
+            this.adminActionService.updateBlockedProcessItems(this.$state.params.actionItemId, this.alreadyGenerated)
                 .then((response) => {
                     this.isSaving = false;
                 }, (error) => {

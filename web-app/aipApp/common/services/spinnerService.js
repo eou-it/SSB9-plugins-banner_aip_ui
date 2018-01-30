@@ -1,7 +1,10 @@
+/*******************************************************************************
+ Copyright 2018 Ellucian Company L.P. and its affiliates.
+ ********************************************************************************/
 ///<reference path="../../../typings/tsd.d.ts"/>
 var AIP;
 (function (AIP) {
-    var SpinnerService = /** @class */ (function () {
+    var SpinnerService = (function () {
         function SpinnerService() {
             this.showing = false;
         }
@@ -11,9 +14,9 @@ var AIP;
             }
             this.showing = show;
         };
-        SpinnerService.$inject = [];
         return SpinnerService;
     }());
+    SpinnerService.$inject = [];
     AIP.SpinnerService = SpinnerService;
 })(AIP || (AIP = {}));
 register("bannerAIP").service("SpinnerService", AIP.SpinnerService);

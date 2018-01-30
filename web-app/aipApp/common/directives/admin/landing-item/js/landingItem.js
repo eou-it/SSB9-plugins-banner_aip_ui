@@ -1,6 +1,6 @@
-/**
- * Created by jshin on 1/21/16.
- */
+/*******************************************************************************
+ Copyright 2018 Ellucian Company L.P. and its affiliates.
+ ********************************************************************************/
 angular.module('bannerAIPUI')
     .directive('aipLandingItem', [function() {
         return {

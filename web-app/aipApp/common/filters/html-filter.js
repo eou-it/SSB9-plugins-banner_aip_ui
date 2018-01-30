@@ -1,3 +1,6 @@
+/*******************************************************************************
+ Copyright 2018 Ellucian Company L.P. and its affiliates.
+ ********************************************************************************/
 ///<reference path="../../../typings/tsd.d.ts"/>
 angular.module('SCEAIP', []).
     filter('html', ['$sce', function ($sce) {
@@ -7,4 +10,4 @@ angular.module('SCEAIP', []).
             return elem.childNodes.length === 0 ? '' : elem.childNodes[0].nodeValue;
         };
     }]);
-//# sourceMappingURL=html-filter.js.map 
+//# sourceMappingURL=html-filter.js.map

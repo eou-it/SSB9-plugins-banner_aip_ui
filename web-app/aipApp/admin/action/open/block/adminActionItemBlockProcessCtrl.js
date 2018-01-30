@@ -1,11 +1,15 @@
+/*******************************************************************************
+ Copyright 2018 Ellucian Company L.P. and its affiliates.
+ ********************************************************************************/
 ///<reference path="../../../../../typings/tsd.d.ts"/>
 ///<reference path="../../../../common/services/admin/adminActionService.ts"/>
 ///<reference path="../../../../common/services/admin/adminActionStatusService.ts"/>
 ///<reference path="../../../../common/services/spinnerService.ts"/>
 var AIP;
 (function (AIP) {
-    var AdminActionItemBlockCtrl = (function () {
+    var AdminActionItemBlockCtrl = /** @class */ (function () {
         function AdminActionItemBlockCtrl($scope, $q, $state, $filter, $sce, $window, $templateRequest, $templateCache, $compile, $timeout, $interpolate, SpinnerService, AdminActionService, AdminActionStatusService, APP_ROOT, CKEDITORCONFIG) {
+            var _this = this;
             this.$inject = ["$scope", "$q", "$state", "$filter", "$sce", "$window", "$templateRequest", "$templateCache", "$compile",
                 "$timeout", "$interpolate", "SpinnerService", "AdminActionService", "AdminActionStatusService", "APP_ROOT", "CKEDITORCONFIG"];
             this.trustAsHtml = function (string) {
@@ -41,6 +45,13 @@ var AIP;
             this.alreadyGenerated = [];
             this.editMode = false;
             this.isSaving = false;
+            $window.onbeforeunload = function (event) {
+                if (_this.isChanged()) {
+                    return _this.$filter("i18n_aip")("aip.common.admin.unsaved");
+                }
+                // reset to default event listener
+                $window.onbeforeunload = null;
+            };
             this.init();
             angular.element($window).bind('resize', function () {
                 if (!$scope.$root.$$phase) {
@@ -56,8 +67,8 @@ var AIP;
             if (this.$state.params.noti) {
                 this.handleNotification(this.$state.params.noti);
             }
-            promises.push(this.getBlockedProcessList(this.$state.params.data));
-            promises.push(this.getBlockedProcessList());
+            promises.push(this.getBlockedProcessList(this.$state.params.actionItemId));
+            // promises.push(this.getBlockedProcessList());
             //if needed, add more deferred job into promises list
             this.$q.all(promises).then(function () {
                 _this.spinnerService.showSpinner(false);
@@ -86,6 +97,18 @@ var AIP;
                 deferred.reject(error);
             });
             return deferred.promise;
+        };
+        AdminActionItemBlockCtrl.prototype.isChanged = function () {
+            var changed = false;
+            //TODO:: implement code to check any input data change.
+            if (this.editMode) {
+                //TODO:: check initial data and input block process data.
+                // check length first, ff same length, then compare each array data
+            }
+            else {
+                //TODO:: check block process added (check block process array length > 0 )
+            }
+            return changed;
         };
         AdminActionItemBlockCtrl.prototype.addNewItem = function () {
             var available = this.getAvailable();
@@ -151,7 +174,7 @@ var AIP;
         AdminActionItemBlockCtrl.prototype.cancel = function () {
             var _this = this;
             //reset selected items then exit edit mode
-            this.getBlockedProcessList(this.$state.params.data)
+            this.getBlockedProcessList(this.$state.params.actionItemId)
                 .then(function (response) {
                 _this.alreadyGenerated = [];
                 _this.editMode = false;
@@ -174,7 +197,7 @@ var AIP;
             this.isSaving = true;
             // items: this.alreadyGenerated[{id:id, name: "name", value:{processNamei18n:"i18n", urls:["url"]}}]
             // actionItemId: this.$state.params.data
-            this.adminActionService.updateBlockedProcessItems(this.$state.params.data, this.alreadyGenerated)
+            this.adminActionService.updateBlockedProcessItems(this.$state.params.actionItemId, this.alreadyGenerated)
                 .then(function (response) {
                 _this.isSaving = false;
             }, function (error) {

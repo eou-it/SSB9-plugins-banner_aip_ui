@@ -1,5 +1,5 @@
 /*******************************************************************************
- Copyright 2015-2016 Ellucian Company L.P. and its affiliates.
+ Copyright 2018 Ellucian Company L.P. and its affiliates.
  *******************************************************************************/
 angular.module('bannerAIPUI').directive('datePicker', ['dateFormatService', '$filter', datePicker]);
 

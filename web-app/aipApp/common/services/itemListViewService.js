@@ -1,5 +1,5 @@
 /*********************************************************************************
- Copyright 2017 Ellucian Company L.P. and its affiliates.
+ Copyright 2018 Ellucian Company L.P. and its affiliates.
  **********************************************************************************/
 ///<reference path="../../../typings/tsd.d.ts"/>
 var AIP;
@@ -101,9 +101,9 @@ var AIP;
             //    });
             //});
         };
-        ItemListViewService.$inject = ["$http", "$q", "APP_PATH"];
         return ItemListViewService;
     }());
+    ItemListViewService.$inject = ["$http", "$q", "APP_PATH"];
     AIP.ItemListViewService = ItemListViewService;
 })(AIP || (AIP = {}));
 register("bannerAIP").service("ItemListViewService", AIP.ItemListViewService);

@@ -1,3 +1,6 @@
+/*******************************************************************************
+ Copyright 2018 Ellucian Company L.P. and its affiliates.
+ ********************************************************************************/
 ///<reference path="../../../typings/tsd.d.ts"/>
 var AIP;
 (function (AIP) {
@@ -17,9 +20,9 @@ var AIP;
             });
             return userRequest;
         };
-        UserService.$inject = ["$http", "$q", "APP_PATH"];
         return UserService;
     }());
+    UserService.$inject = ["$http", "$q", "APP_PATH"];
     AIP.UserService = UserService;
 })(AIP || (AIP = {}));
 register("bannerAIP").service("AIPUserService", AIP.UserService);
