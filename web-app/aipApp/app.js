@@ -144,7 +144,19 @@ var bannerAIPApp = angular.module("bannerAIP", [
             breadcrumb: {
                 label: "aip.admin.group.edit",
                 url: "/aipAdmin/group/edit"}
-        },
+        },		  
+		"admin-post-edit": {
+	        url: "/aipAdmin/action/editjob/:postIdval/:isEdit",
+	        templateUrl:"admin/action/post/adminPostItemAddPage.html",
+	        controller:"AdminPostItemAddPageCtrl",
+	        params: {
+	            postIdval:null,
+	            isEdit: null
+	        },
+	        breadcrumb: {
+	            label: "aip.admin.action.actionItem.Editjob",
+	            url: "/aipAdmin/action/editjob"}
+	    },
         "admin-group-open": {
             url: "/aipAdmin/group/open/:groupId",
             templateUrl:"admin/group/open/adminGroupOpenPage.html",
@@ -237,8 +249,8 @@ var bannerAIPApp = angular.module("bannerAIP", [
             fetchCurrentDateInLocaleFormat:aipAppAbsPath + "aipAdmin/fetchCurrentDateInLocaleFormat",
             is12HourClock :aipAppAbsPath + "aipAdmin/is12HourClock",
             listAvailableTimezones :aipAppAbsPath + "aipAdmin/listAvailableTimezones",
-            checkActionItemPosted: aipAppAbsPath + "aipAdmin/checkActionItemPosted"
-
+            checkActionItemPosted: aipAppAbsPath + "aipAdmin/checkActionItemPosted",
+			statusPosted:aipAppAbsPath + "aipActionItemPosting/getStatusValue"
 
         }
     })

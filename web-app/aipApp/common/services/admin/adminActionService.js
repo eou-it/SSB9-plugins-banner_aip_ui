@@ -10,7 +10,7 @@ var AIP;
         Status[Status["Active"] = 2] = "Active";
         Status[Status["Inactive"] = 3] = "Inactive";
     })(Status || (Status = {}));
-    var AdminActionService = /** @class */ (function () {
+    var AdminActionService = (function () {
         function AdminActionService($http, $q, $filter, ENDPOINT) {
             this.$http = $http;
             this.$q = $q;
@@ -60,6 +60,18 @@ var AIP;
                 deferred.reject(data);
             });
             return deferred.promise;
+        };
+        AdminActionService.prototype.getPostStatus = function (postID) {
+            var request = this.$http({
+                method: "GET",
+                url: this.ENDPOINT.admin.statusPosted + "?postID=" + postID
+            })
+                .then(function (response) {
+                return response.data;
+            }, function (err) {
+                throw new Error(err);
+            });
+            return request;
         };
         AdminActionService.prototype.getFolder = function () {
             var request = this.$http({

@@ -129,6 +129,17 @@ var AIP;
                         visible: true,
                         columnShowHide: true
                     }
+                },
+                {
+                    name: "postingActionStatus",
+                    title: this.$filter("i18n_aip")("aip.admin.actionItem.post.grid.job.actionstatus"),
+                    ariaLabel: this.$filter("i18n_aip")("aip.admin.actionItem.post.grid.job.actionstatus"),
+                    width: "100px",
+                    options: {
+                        sortable: false,
+                        visible: true,
+                        columnShowHide: true
+                    }
                 }
             ];
         };
@@ -186,6 +197,29 @@ var AIP;
         // }
         PostActionListPageCtrl.prototype.openActionItem = function () {
             this.$state.go("admin-action-open", { data: this.selectedRecord.id });
+        };
+        PostActionListPageCtrl.prototype.editActionItem = function (postId) {
+            var _this = this;
+            this.actionListService.getPostStatus(postId)
+                .then(function (response) {
+                if (response === "Y") {
+                    _this.$state.go("admin-post-edit", { postIdval: postId, isEdit: true });
+                }
+                else {
+                    var n = new Notification({
+                        message: _this.$filter("i18n_aip")("aip.common.post.edit.noaccess"),
+                        type: "error",
+                        flash: true
+                    });
+                    setTimeout(function () {
+                        notifications.addNotification(n);
+                        _this.$state.params.noti = undefined;
+                        $(".actionItemAddContainer").focus();
+                    }, 500);
+                }
+            }, function (err) {
+                throw new Error(err);
+            });
         };
         return PostActionListPageCtrl;
     }());

@@ -166,8 +166,20 @@ module AIP {
                         visible: true,
                         columnShowHide: true
                     }
+                },
+                {
+                    name: "postingActionStatus",
+                    title: this.$filter("i18n_aip")("aip.admin.actionItem.post.grid.job.actionstatus"),
+                    ariaLabel: this.$filter("i18n_aip")("aip.admin.actionItem.post.grid.job.actionstatus"),
+                    width: "100px",
+                    options: {
+                        sortable: false,
+                        visible: true,
+                        columnShowHide: true
+                    }
                 }
-                ];
+
+            ];
 
 
         }
@@ -198,6 +210,7 @@ module AIP {
                 }, 500);
             }
         }
+
         fetchTableData(query: AIP.IPostActionItemListQuery) {
 
             var deferred = this.$q.defer();
@@ -234,6 +247,35 @@ module AIP {
         openActionItem() {
             this.$state.go("admin-action-open", {data: this.selectedRecord.id});
         }
+
+        editActionItem(postId) {
+            this.actionListService.getPostStatus(postId)
+                .then((response) => {
+
+                    if (response === "Y")
+                    {
+                        this.$state.go("admin-post-edit", {postIdval: postId, isEdit: true});
+
+                    }
+                    else
+                    {
+                        var n = new Notification({
+                            message: this.$filter("i18n_aip")("aip.common.post.edit.noaccess"), //+
+                            type: "error",
+                            flash: true
+                        });
+                        setTimeout(() => {
+                            notifications.addNotification(n);
+                            this.$state.params.noti = undefined;
+                            $(".actionItemAddContainer").focus();
+                        }, 500);
+                    }
+
+                }, (err) => {
+                    throw new Error(err);
+                });
+        }
+
     }
 }
 
