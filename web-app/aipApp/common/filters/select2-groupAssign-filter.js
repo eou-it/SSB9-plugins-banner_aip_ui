@@ -1,3 +1,6 @@
+/*******************************************************************************
+ Copyright 2018 Ellucian Company L.P. and its affiliates.
+ ********************************************************************************/
 ///<reference path="../../../typings/tsd.d.ts"/>
 angular.module('bannerAIP').
     filter('groupAssignFilter', function () {

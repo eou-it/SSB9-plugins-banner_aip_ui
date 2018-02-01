@@ -1,5 +1,5 @@
 /*******************************************************************************
- Copyright 2015-2018 Ellucian Company L.P. and its affiliates.
+ Copyright 2018 Ellucian Company L.P. and its affiliates.
  *******************************************************************************/
 import java.text.ParseException
 import java.text.SimpleDateFormat
@@ -71,7 +71,7 @@ def doCheckCopyrightXe(fixIt){
 
         def excludedFileExts = ["rst", "properties", "svg", "scss", "ttf", "woff", "woff2", "eot", "png", "gif", "map",
                                 "jar"]
-        def excludedFiles = "CheckCopyrightXe.groovy|.git|xe-ui-components|ckeditor|d3.min.js"
+        def excludedFiles = "CheckCopyrightXe.groovy|package.json|jquery.d.ts|.git|xe-ui-components|ckeditor|d3.min.js|angular-dateparser.min.js|cm-timepicker.js|bower.json|iconFonts-rtl.css|angular-aria.js|ui-bootstrap-csp-rtl.css|ui-bootstrap-csp.css|ui-bootstrap-tpls.js|ui-bootstrap.js|karma.conf.js"
 
         changes.unique().each {
             def filename_dir_txt = directoryname.toString() + ln + it

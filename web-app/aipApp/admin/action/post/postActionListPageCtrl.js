@@ -1,5 +1,6 @@
-///<reference path="../../../../typings/tsd.d.ts"/>
-///<reference path="../../../common/services/admin/adminActionService.ts"/>
+/*******************************************************************************
+ Copyright 2018 Ellucian Company L.P. and its affiliates.
+ ********************************************************************************/
 var AIP;
 (function (AIP) {
     var PostActionListPageCtrl = (function () {

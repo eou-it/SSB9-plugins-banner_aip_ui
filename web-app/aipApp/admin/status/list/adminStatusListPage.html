@@ -1,5 +1,5 @@
 <!--*******************************************************************************
-Copyright 2017 Ellucian Company L.P. and its affiliates.
+Copyright 2018 Ellucian Company L.P. and its affiliates.
 *******************************************************************************-->
 <div class="statusListContainer" id="adminStatusListPage" ng-controller="AdminStatusListPageCtrl">
     <div class="row controls">
@@ -37,8 +37,8 @@ Copyright 2017 Ellucian Company L.P. and its affiliates.
                 mobile-layout="vm.mobileConfig"
                 refresh-grid="refreshGrid"
                 draggable-column-names="vm.draggableColumnNames"
-                continuous-scrolling="vm.mobileSize"
-                continuous-scroll-parent="adminStatusListPage">
+                continuous-scrolling="false"
+                height="20em">
                 <xe-cell-markup column-name="actionItemStatusBlockedProcess" aria-label="{{'aip.common.text.yes'|i18n_aip}}">
                     <div ng-if="row.actionItemStatusBlockedProcess === 'Y'" class="icon icon-success-CF icon-green">
                         <span class="offscreen">{{'aip.common.block.process.indicator.is'|i18n_aip}} {{'aip.common.text.yes'|i18n_aip}}</span>

@@ -1,5 +1,5 @@
 <!--*******************************************************************************
-Copyright 2017 Ellucian Company L.P. and its affiliates.
+Copyright 2018 Ellucian Company L.P. and its affiliates.
 *******************************************************************************-->
 <div class="actionListContainer" id="postActionListPage" ng-controller="PostActionListPageCtrl">
     <div class="row">
@@ -29,8 +29,8 @@ Copyright 2017 Ellucian Company L.P. and its affiliates.
                 mobile-layout="vm.mobileConfig"
                 refresh-grid="refreshGrid"
                 draggable-column-names="vm.draggableColumnNames"
-                continuous-scrolling="vm.mobileSize"
-                continuous-scroll-parent="postActionListPage">
+                continuous-scrolling="false"
+                height="20em">
 
 
             <xe-cell-markup column-name="jobState" >

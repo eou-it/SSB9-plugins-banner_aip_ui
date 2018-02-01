@@ -1,3 +1,6 @@
+<!--*******************************************************************************
+Copyright 2018 Ellucian Company L.P. and its affiliates.
+*******************************************************************************-->
 <div id="actionItemBlockProcess" ng-controller="AdminActionItemBlockCtrl">
 
     <!--Read-Only View-->
@@ -10,16 +13,41 @@
                         {{"aip.admin.block.no.processes.blocked"|i18n_aip}} <br />
                         {{"aip.admin.block.select.edit"|i18n_aip}}
                     </div>
+
                     <div ng-if="!vm.isEmpty(vm.blockedProcess)">
-                        <div class="row blockedItem" ng-repeat="item in vm.blockedProcess">
-                            <div class="col-xs-12 col-sm-5">
-                                <span class="blockedProcessTitle">{{item.value.processNamei18n|i18n_aip}}</span>
+                        <div class="row blockedItem" >
+
+                            <div class="row overallAccess" ng-if="vm.globalBlockProcess == false ">
+                                <input type="checkbox" id="overalledit" ng-checked="false" >
+                                <label class="titleValue required"><span class="overall">{{"aip.admin.block.prevent.processes.noOverall"|i18n_aip}}</span></label>
+
+                                <div class="row overallAccess" ng-if="vm.globalBlockProcess == true ">
+                                <input type="checkbox" ng-checked="true" >
+                                    <label class="titleValue required"><span class="overall">{{"aip.admin.block.prevent.processes.noOverall"|i18n_aip}}</span></label>
+                                </div>
+
                             </div>
-                            <div class="col-xs-12 col-sm-7">
-                                <!--<div class="row blockedUrl" ng-repeat="url in item.value.urls">-->
-                                    <!--<span>{{url}}</span>-->
-                                <!--</div>-->
-                            </div>
+                            <table class="adminGroupOpenContent">
+                                <!--<caption area-label="Group Action Items">
+                                    {{'aip.common.group.actionItems'|i18n_aip}}
+                                </caption>-->
+                                <thead>
+                                <th class="">
+                                    {{'aip.admin.addBlockProcessData.process'|i18n_aip}}
+                                </th>
+                                <th class="">
+                                    {{'aip.admin.addBlockProcessData.process.url'|i18n_aip}}
+                                </th>
+
+                                </thead>
+                                <tbody>
+                                <tr ng-repeat="item in vm.blockedProcess">
+                                    <td width="50%">{{item.processName}}</td>
+                                    <td width="50%" >{{item.urls}}</td>
+                                </tr>
+
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
@@ -44,21 +72,79 @@
                 </div>
             </div>
             <div class="row blockedItem" ng-repeat="item in vm.blockedProcess">
-                <aip-blocked-process
-                        currentitem="item"
-                        generated="vm.alreadyGenerated"
-                        selected="vm.blockedProcess"
-                        all="vm.allBlockProcessList">
-                </aip-blocked-process>
+
             </div>
-            <div class="row">
-                <div class="col-xs-12 xol-sm-12">
-                    <button type="button" class="iconButton" aria-label="Add new item"
-                            ng-click="vm.addNewItem()"
-                            ng-disabled="vm.getAvailable().length < 1">
-                        <div class="icon icon-add"></div>
-                        <div class="iconText"> Block Another Processes</div>
-                    </button>
+            <div class="row existActionItems" >
+                <div class="row overallAccess">
+                    <input type="checkbox" id="overall" ng-model="vm.globalBlockProcess"><label
+                        class="titleValue required"><span class="overall">{{"aip.admin.block.prevent.processes.noOverall"|i18n_aip}}</span></label>
+                </div>
+
+                <div class="row actionItemBlock"  ng-repeat="(index, item) in vm.selected">
+                    <div class="col-xs-8 col-sm-3">
+                        <label for="" class="titleValue" >{{"aip.admin.addBlockProcessData.process"|i18n_aip}}:</label>
+                        <xe-ui-select id="select2actionItems" ng-model="vm.selected[index].process" theme="select2" ng-disabled="disabled"
+                                      on-select="vm.selectActionItem($item, $index)">
+                            <xe-ui-select-match placeholder="Select">
+                                <div class="row actionItemName">{{vm.selected[index].process.name}}</div>
+                            </xe-ui-select-match>
+                            <xe-ui-select-choices group-by="vm.groupFn" repeat="item in vm.allActionItems.process">
+                                <div ng-bind-html="item.name | highlight: $select.search"></div>
+                            </xe-ui-select-choices>
+                        </xe-ui-select>
+                    </div>
+
+
+                    <div class="row urldata  col-sm-4">
+                        <ul>
+                            <label for="" class="titleValue" id="template-content">{{"aip.admin.addBlockProcessData.process.url"|i18n_aip}}:</label>
+                            <li class="personadata" ng-repeat="urlItem in vm.selected[index].process.urls">{{urlItem}}</li></ul>
+                    </div>
+
+
+                    <div class="row col-sm-4"  ng-if="vm.allActionItems.process.personAllowed ='Y' ">
+                        <label for="" class="titleValue" >{{"aip.admin.addBlockProcessData.process.persona"|i18n_aip}}:</label>
+                        <xe-ui-select id="postActionItemPopulation" ng-model="vm.selected[index].persona" theme="select2">
+
+                            <xe-ui-select-match placeholder="Select">
+                                <div class="row actionItemName">{{vm.selected[index].persona}}</div>
+                                <div>Select</div>
+                            </xe-ui-select-match>
+
+                            <xe-ui-select-choices repeat="item in vm.personaData">
+                                <div ng-bind-html="vm.allActionItems.persona[item]" value="item"></div>
+
+                            </xe-ui-select-choices>
+
+                        </xe-ui-select>
+
+                    </div>
+
+
+                   <!-- <div class="col-xs-2 col-sm-push-1">
+                        <div type="button" class="btn btn-default vertical" ng-click="vm.goUp(item, $event)" aria-label="{{'aip.admin.group.actionItem.up'|i18n_aip}}"
+                             ng-disabled="$index===0" title="{{'aip.admin.group.actionItem.up'|i18n_aip}}"
+                             tabindex="{{$index===0?-1:0}}">
+                            <i class="icon icon-arrowTop-C" aria-hidden="true"></i>
+                        </div>
+                        <div type="button" class="btn btn-default vertical" ng-click="vm.goDown(item, $event)" aria-label="{{'aip.admin.group.actionItem.down'|i18n_aip}}"
+                             ng-disabled="$index===vm.selected.length-1" title="{{'aip.admin.group.actionItem.down'|i18n_aip}}"
+                             tabindex="{{$index===vm.selected.length-1?-1:0}}">
+                            <i class="icon icon-arrowBottom-C" aria-hidden="true"></i>
+                        </div>
+                    </div>-->
+                    <div class="col-xs-2 col-sm-1">
+                        <div type="button" class="btn btn-default vertical" ng-click="vm.delete(item)" aria-label="{{'aip.admin.group.actionItem.delete'|i18n_aip}}"
+                             title="{{'aip.admin.group.actionItem.delete'|i18n_aip}}">
+                            <i class="icon icon-delete-CO" aria-hidden="true"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row add">
+                <div type="button" class="btn btn-default noBorder" ng-click="vm.addNew()" ng-disabled="vm.validateAddInput()" aria-label="{{'aip.admin.group.actionItem.addActionItem'|i18n_aip}}">
+                    <i class="icon icon-add-CO" aria-hidden="true"></i>
+                    <span class="groupAssignAddButtonText">{{"aip.admin.block.another.process"|i18n_aip}}</span>
                 </div>
             </div>
         </div>

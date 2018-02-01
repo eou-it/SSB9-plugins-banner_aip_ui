@@ -1,5 +1,5 @@
 /*********************************************************************************
- Copyright 2017 Ellucian Company L.P. and its affiliates.
+ Copyright 2018 Ellucian Company L.P. and its affiliates.
  **********************************************************************************/
 
 package net.hedtech.banner.aip
@@ -46,7 +46,7 @@ class AipController {
     def logout() {
         redirect( url: "/logout" )
     }
-    
+
     /**
      * List action items
      * @return
