@@ -879,6 +879,11 @@ ol.selected-group > li > button {
     #actionItemBlockProcess table th {
       padding: 8px;
       line-height: 1.3em; }
+  #actionItemBlockProcess input[type="checkbox"][readonly] {
+    pointer-events: none; }
+  #actionItemBlockProcess .urlsplit {
+    padding-top: 8px;
+    display: inline-block; }
 
 .statusListContainer {
   overflow-y: auto;

@@ -46,15 +46,13 @@ var AIP;
             this.initialAssigned = [];
             this.allActionItems = [];
             this.globalBlockProcess = false;
+            console.log(this.globalBlockProcess);
             this.blockedProcess = [];
-            console.log(this.allActionItems);
+            console.log(this.blockedProcess);
             this.allBlockProcessList = [];
             this.alreadyGenerated = [];
             this.selected = [];
             this.originalAssign = [];
-            console.log(this.allActionItems);
-            console.log(this.assignedActionItems);
-            console.log(this.selected);
             this.editMode = false;
             this.isSaving = false;
             this.init();
@@ -87,10 +85,13 @@ var AIP;
                 .then(function (response) {
                 if (response.data) {
                     if (actionItemId) {
-                        _this.blockedProcess = response.data.blockedProcess;
+                        _this.blockedProcess = response.data.blockedProcess || response.data;
+                        _this.globalBlockProcess = response.data.globalBlockProcess;
+                        console.log(_this.blockedProcess);
                     }
                     else {
                         _this.allBlockProcessList = response.data.blockedProcess;
+                        console.log(_this.blockedProcess);
                     }
                 }
                 else {
@@ -116,18 +117,30 @@ var AIP;
                         _this.personaData.push(key);
                     }
                 });
-                _this.selected.forEach(function (item) {
-                    _this.selected[item.sequenceNumber] = _this.allActionItems.filter(function (_item) {
-                        if (_item.actionItemId === item.actionItemId) {
-                            _item.seq = item.sequenceNumber;
-                            return _item;
+                if (_this.blockedProcess.length !== 0) {
+                    _this.editMode = true;
+                    console.log(_this.allBlockProcessList);
+                    var editBlockData = [];
+                    var name;
+                    var persona;
+                    var urls;
+                    var id;
+                    _this.globalBlockProcess;
+                    console.log(_this.globalBlockProcess);
+                    angular.forEach(_this.blockedProcess, function (key) {
+                        console.log(key);
+                        {
+                            editBlockData.push({ process: { id: key.id.blockingProcessId, name: key.processName, urls: key.urls }, persona: key.blockedProcessAppRole });
                         }
-                    })[0];
-                });
-                _this.originalAssign = angular.copy(_this.selected);
-                _this.initialAssigned = angular.copy(_this.assignedActionItems);
-                _this.editMode = true;
-                _this.addNew();
+                    });
+                    _this.selected = editBlockData;
+                    console.log(_this.selected);
+                    _this.originalAssign = angular.copy(_this.selected);
+                }
+                else {
+                    _this.editMode = true;
+                    _this.addNew();
+                }
                 _this.$window.onbeforeunload = function (event) {
                     if (_this.isChanged()) {
                         // reset to default event listener
@@ -157,49 +170,6 @@ var AIP;
                 }
             }
             return changed;
-        };
-        AdminActionItemBlockCtrl.prototype.goUp = function (item, evt) {
-            var preItemIdx = this.assignedActionItems.indexOf(item) - 1;
-            var preItem = this.assignedActionItems[preItemIdx];
-            this.assignedActionItems[preItemIdx] = item;
-            this.assignedActionItems[preItemIdx + 1] = preItem;
-            var preSelected = this.selected[preItemIdx];
-            this.selected[preItemIdx] = this.selected[preItemIdx + 1];
-            this.selected[preItemIdx + 1] = preSelected;
-            this.reAssignSeqnumber();
-            if (preItemIdx > 0) {
-                this.$timeout(function () {
-                    evt.currentTarget.focus();
-                }, 0);
-            }
-            else if (preItemIdx === 0) {
-                this.$timeout(function () {
-                    evt.target.nextElementSibling.focus();
-                }, 0);
-            }
-        };
-        AdminActionItemBlockCtrl.prototype.goDown = function (item, evt) {
-            var nextItemIdx = this.assignedActionItems.indexOf(item) + 1;
-            if (nextItemIdx === this.selected.length) {
-                return;
-            }
-            var nextItem = this.assignedActionItems[nextItemIdx];
-            this.assignedActionItems[nextItemIdx] = item;
-            this.assignedActionItems[nextItemIdx - 1] = nextItem;
-            var nextSelected = this.selected[nextItemIdx];
-            this.selected[nextItemIdx] = this.selected[nextItemIdx - 1];
-            this.selected[nextItemIdx - 1] = nextSelected;
-            this.reAssignSeqnumber();
-            if (nextItemIdx + 1 < this.selected.length) {
-                this.$timeout(function () {
-                    evt.currentTarget.focus();
-                }, 0);
-            }
-            else if (nextItemIdx + 1 === this.selected.length) {
-                this.$timeout(function () {
-                    evt.target.previousElementSibling.focus();
-                }, 0);
-            }
         };
         AdminActionItemBlockCtrl.prototype.reAssignSeqnumber = function () {
             this.selected.map(function (item, index) {
@@ -235,12 +205,12 @@ var AIP;
         AdminActionItemBlockCtrl.prototype.validateActionBlockProcess = function () {
             var validation = true;
             var unassigned = this.selected.filter(function (item) {
-                if (item.process && item.process.personAllowed == "Y") {
+                if (item.process && item.process.personAllowed !== "N") {
                     return !item.persona;
                 }
                 return !item.process;
             });
-            if (this.isEqual(this.selected, this.originalAssign)) {
+            if (this.originalAssign.length > 0 && this.isEqual(this.selected, this.originalAssign)) {
                 validation = false;
             }
             if (unassigned.length !== 0) {
@@ -248,7 +218,7 @@ var AIP;
             }
             return validation;
         };
-        AdminActionItemBlockCtrl.prototype.selectActionItem = function (item, index) {
+        /*selectActionItem(item, index) {
             var currentAssigned = this.assignedActionItems[index];
             if (currentAssigned.actionItemId === item.actionItemId) {
                 return;
@@ -261,15 +231,15 @@ var AIP;
             currentAssigned.actionItemName = item.actionItemName;
             currentAssigned.actionItemStatus = item.actionItemStatus;
             this.assignedActionItems[index] = currentAssigned;
-            if (!this.selected[index].actionItemId) {
+            if(!this.selected[index].actionItemId) {
                 item.seq = index + 1;
                 this.selected[index] = item;
             }
-            this.selected = this.selected.filter(function (item, idx) {
+            this.selected = this.selected.filter((item, idx) => {
                 return true;
             });
-            this.reAssignSeqnumber();
-        };
+            this.reAssignSeqnumber()
+        }*/
         AdminActionItemBlockCtrl.prototype.addNewItem = function () {
             var available = this.getAvailable();
             if (available.length > 0) {
@@ -343,10 +313,10 @@ var AIP;
         };
         AdminActionItemBlockCtrl.prototype.isEqual = function (item1, item2) {
             var item1Properties = item1.map(function (item) {
-                return [item.actionItemId, item.folderId, item.seq];
+                return [item.process.name, item.persona];
             });
             var item2Properties = item2.map(function (item) {
-                return [item.actionItemId, item.folderId, item.seq];
+                return [item.process.name, item.persona];
             });
             if (angular.equals(item1Properties, item2Properties)) {
                 return true;
@@ -360,8 +330,12 @@ var AIP;
             this.isSaving = true;
             // items: this.alreadyGenerated[{id:id, name: "name", value:{processNamei18n:"i18n", urls:["url"]}}]
             // actionItemId: this.$state.params.data
-            this.adminActionService.updateBlockedProcessItems(this.$state.params.actionItemId, this.globalBlockProcess, this.selected)
+            var saveData = this.selected.map(function (item) {
+                return { processId: item.process.id, persona: item.persona };
+            });
+            this.adminActionService.updateBlockedProcessItems(this.$state.params.actionItemId, this.globalBlockProcess, saveData)
                 .then(function (response) {
+                _this.getBlockedProcessList(_this.$state.params.actionItemId);
                 _this.isSaving = false;
             }, function (error) {
                 _this.isSaving = false;

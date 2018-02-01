@@ -115,4 +115,9 @@ $button-color: #206E9F;
       line-height: 1.3em;
     }
   }
+  input[type="checkbox"][readonly] {
+    pointer-events: none;
+  }
+  .urlsplit{padding-top: 8px;
+    display: inline-block;}
 }
