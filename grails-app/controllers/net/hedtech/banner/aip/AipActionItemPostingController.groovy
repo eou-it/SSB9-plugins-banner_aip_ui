@@ -74,4 +74,16 @@ class AipActionItemPostingController {
         def results = actionItemPostReadOnlyService.listActionItemPostJobList( [searchParam: params.searchParam], [max: params.max as int, offset: params.offset as int] )
         render results as JSON
     }
+
+    /**
+     * status item post jobs
+     * @return
+     */
+
+    def getStatusValue() {
+        def value = actionItemPostReadOnlyService.statusPosted( (params.postID ?: 0) as long )
+        render value as String
+    }
+
+
 }

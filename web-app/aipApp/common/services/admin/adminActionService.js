@@ -61,6 +61,18 @@ var AIP;
             });
             return deferred.promise;
         };
+        AdminActionService.prototype.getPostStatus = function (postID) {
+            var request = this.$http({
+                method: "GET",
+                url: this.ENDPOINT.admin.statusPosted + "?postID=" + postID
+            })
+                .then(function (response) {
+                return response.data;
+            }, function (err) {
+                throw new Error(err);
+            });
+            return request;
+        };
         AdminActionService.prototype.getFolder = function () {
             var request = this.$http({
                 method: "GET",

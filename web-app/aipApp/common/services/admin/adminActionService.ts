@@ -199,6 +199,7 @@ module AIP {
         fetchTableData(query:IPostActionItemListQuery):ng.IPromise<{}>;
         getFolder(): ng.IHttpPromise<{}>;
         getStatus(): ng.IHttpPromise<{}>;
+        getPostStatus():ng.IHttpPromise<{}>;
         savePostActionItem(actionItem: IActionItemParam): ng.IHttpPromise<{}>;
         getActionItemDetail(actionItemId:number): ng.IHttpPromise<{}>;
     }
@@ -267,6 +268,22 @@ module AIP {
 
             return deferred.promise;
         }
+
+        getPostStatus(postID)
+        {
+            var request = this.$http({
+                method: "GET",
+                url: this.ENDPOINT.admin.statusPosted+"?postID=" + postID
+            })
+                .then((response: any) => {
+                    return response.data;
+                }, (err) => {
+                    throw new Error(err);
+                });
+            return request;
+
+        }
+
         getFolder() {
             var request = this.$http({
                 method: "GET",
@@ -289,12 +306,12 @@ module AIP {
             return request;
         }
         getPopulationlist(){
-        var request = this.$http({
-            method: "GET",
-            url: this.ENDPOINT.admin.populationListForSendLov
-        });
-        return request;
-    }
+            var request = this.$http({
+                method: "GET",
+                url: this.ENDPOINT.admin.populationListForSendLov
+            });
+            return request;
+        }
         getCurrentDateLocale(){
             var request = this.$http({
                 method: "GET",
