@@ -83,7 +83,21 @@ var bannerAIPApp = angular.module("bannerAIP", [
                 label: "aip.admin.action.actionItem.Addjob",
                 url: "/aipAdmin/action/add"}
         },
-        "admin-action-add": {
+"admin-post-edit": {
+    url: "/aipAdmin/action/editjob/:postIdval/:isEdit",
+        templateUrl:"admin/action/post/adminPostItemAddPage.html",
+        controller:"AdminPostItemAddPageCtrl",
+        params: {
+        postIdval:null,
+            isEdit: null
+    },
+    breadcrumb: {
+        label: "aip.admin.action.actionItem.Editjob",
+            url: "/aipAdmin/action/editjob"}
+},
+
+
+"admin-action-add": {
             url: "/aipAdmin/action/add",
             templateUrl:"admin/action/add/adminActionItemAddPage.html",
             controller:"AdminActionItemAddPageCtrl",
@@ -201,6 +215,7 @@ var bannerAIPApp = angular.module("bannerAIP", [
             },
             inform: true
         }
+
     })
 //constant for endpoint
     .constant("ENDPOINT", {
