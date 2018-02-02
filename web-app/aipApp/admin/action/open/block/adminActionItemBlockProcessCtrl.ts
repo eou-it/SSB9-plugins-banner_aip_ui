@@ -76,11 +76,10 @@ module AIP {
             this.initialAssigned = [];
             this.allActionItems = [];
             this.globalBlockProcess=false;
-            console.log(this.globalBlockProcess)
 
             this.blockedProcess = [];
-            console.log( this.blockedProcess);
             this.allBlockProcessList = [];
+            console.log
             this.alreadyGenerated = [];
             this.selected = [];
             this.originalAssign = [];
@@ -122,6 +121,7 @@ module AIP {
                         if (actionItemId) {
                             this.blockedProcess = <any[]>response.data.blockedProcess || response.data;
                             this.globalBlockProcess=response.data.globalBlockProcess;
+                            this.allBlockProcessList=response.data;
                             console.log( this.blockedProcess);
                         } else {
                             this.allBlockProcessList = <any[]>response.data.blockedProcess;
@@ -168,16 +168,16 @@ module AIP {
                     console.log(this.globalBlockProcess)
 
                     angular.forEach(this.blockedProcess,(key) => {
-console.log(key)
+
 
                         {
-                            editBlockData.push ({process:{id:key.id.blockingProcessId,name: key.processName,urls: key.urls}, persona: key.blockedProcessAppRole})
+                            editBlockData.push ({process:{id:key.id.blockingProcessId,name: key.processName,urls: key.urls,personAllowed: key.processPersonaBlockAllowedInd}})
                         }
 
                     })
                     this.selected=editBlockData;
                     console.log(this.selected)
-                    this.originalAssign = angular.copy(this.selected);
+                    //this.originalAssign = angular.copy(this.selected);
 
                 }
                 else {

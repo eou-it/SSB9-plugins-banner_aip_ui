@@ -46,10 +46,9 @@ var AIP;
             this.initialAssigned = [];
             this.allActionItems = [];
             this.globalBlockProcess = false;
-            console.log(this.globalBlockProcess);
             this.blockedProcess = [];
-            console.log(this.blockedProcess);
             this.allBlockProcessList = [];
+            console.log;
             this.alreadyGenerated = [];
             this.selected = [];
             this.originalAssign = [];
@@ -87,6 +86,7 @@ var AIP;
                     if (actionItemId) {
                         _this.blockedProcess = response.data.blockedProcess || response.data;
                         _this.globalBlockProcess = response.data.globalBlockProcess;
+                        _this.allBlockProcessList = response.data;
                         console.log(_this.blockedProcess);
                     }
                     else {
@@ -128,14 +128,13 @@ var AIP;
                     _this.globalBlockProcess;
                     console.log(_this.globalBlockProcess);
                     angular.forEach(_this.blockedProcess, function (key) {
-                        console.log(key);
                         {
-                            editBlockData.push({ process: { id: key.id.blockingProcessId, name: key.processName, urls: key.urls }, persona: key.blockedProcessAppRole });
+                            editBlockData.push({ process: { id: key.id.blockingProcessId, name: key.processName, urls: key.urls, personAllowed: key.processPersonaBlockAllowedInd } });
                         }
                     });
                     _this.selected = editBlockData;
                     console.log(_this.selected);
-                    _this.originalAssign = angular.copy(_this.selected);
+                    //this.originalAssign = angular.copy(this.selected);
                 }
                 else {
                     _this.editMode = true;

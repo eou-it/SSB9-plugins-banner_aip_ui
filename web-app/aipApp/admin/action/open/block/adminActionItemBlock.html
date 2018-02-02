@@ -9,12 +9,12 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
             <div class="row">
                 <div class="col-xs-10 col-sm-8">
                     <h2>{{'Blocked Process(es)'|i18n_aip}}</h2>
-                    <div ng-if="vm.blockedProcess.length===0">
+                    <div ng-if="vm.allBlockProcessList.length===0">
                         {{"aip.admin.block.no.processes.blocked"|i18n_aip}} <br />
                         {{"aip.admin.block.select.edit"|i18n_aip}}
                     </div>
 
-                    <div ng-if="vm.blockedProcess.length !==0">
+                    <div ng-if="vm.allBlockProcessList.length !==0">
                         <div class="row blockedItem" >
 
                             <div class="row overallAccess">
@@ -23,8 +23,8 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
 
 
 
-                            </div>{{vm.globalBlockProcess}}
-                            <table class="adminGroupOpenContent">
+                            </div>
+                            <table class="adminGroupOpenContent" ng-if="vm.blockedProcess.length !==0">
                                 <!--<caption area-label="Group Action Items">
                                     {{'aip.common.group.actionItems'|i18n_aip}}
                                 </caption>-->
@@ -84,7 +84,9 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
                             <xe-ui-select-match placeholder="Select">
                                 <div class="row actionItemName">{{vm.selected[index].process.name}}</div>
                             </xe-ui-select-match>
-                            <xe-ui-select-choices group-by="vm.groupFn" repeat="item in vm.allActionItems.process | propsFilter: {name: $select.search}">
+                            <xe-ui-select-choices group-by="vm.groupFn" repeat="item in vm.allActionItems.process | propsFilter:{name: $select.search} ">
+
+
                                 <div ng-bind-html="item.name | highlight: $select.search"></div>
                             </xe-ui-select-choices>
                         </xe-ui-select>
@@ -92,11 +94,11 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
 
                     <div class="row urldata  col-sm-4">
                         <ul>
-                            <label for="" class="titleValue" id="template-content">{{"aip.admin.addBlockProcessData.process.url"|i18n_aip}}:</label>
-                            <li class="personadata" ng-repeat="urlItem in vm.selected[index].process.urls">{{urlItem}}</li></ul>
+                            <div class="urllabel"> <label for="" class="titleValue" id="template-content">{{"aip.admin.addBlockProcessData.process.url"|i18n_aip}}:</label></div>
+                            <div class="urldata"><li class="personadata" ng-repeat="urlItem in vm.selected[index].process.urls">{{urlItem}}</li></div></ul>
                     </div>
 
-                    <div class="row col-sm-4"  ng-if="vm.selected[index].personAllowed !=='N' ">
+                    <div class="row col-sm-4"  ng-if="vm.selected[index].process.personAllowed !=='N' ">
                         <label for="" class="titleValue" >{{"aip.admin.addBlockProcessData.process.persona"|i18n_aip}}:</label>
                         <xe-ui-select id="postActionItemPopulation" ng-model="vm.selected[index].persona" theme="select2">
 
