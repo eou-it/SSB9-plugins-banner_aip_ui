@@ -855,7 +855,14 @@ ol.selected-group > li > button {
     min-height: 8em;
     margin-bottom: 15px; }
   #actionItemBlockProcess .personadata {
-    list-style-type: none; }
+    list-style-type: none;
+    padding: 2px 0px; }
+  #actionItemBlockProcess .urllabel {
+    float: left;
+    /* width: 15%; */
+    margin-top: 10px; }
+  #actionItemBlockProcess .urldata {
+    float: left; }
   #actionItemBlockProcess .titleValue {
     margin-right: 10px; }
   #actionItemBlockProcess table {
@@ -879,6 +886,11 @@ ol.selected-group > li > button {
     #actionItemBlockProcess table th {
       padding: 8px;
       line-height: 1.3em; }
+  #actionItemBlockProcess input[type="checkbox"][readonly] {
+    pointer-events: none; }
+  #actionItemBlockProcess .urlsplit {
+    padding-top: 8px;
+    display: block; }
 
 .statusListContainer {
   overflow-y: auto;

@@ -496,7 +496,7 @@ module AIP {
                 data: {
                     actionItemId: actionItemId,
                     globalBlockProcess:globalBlockProcess,
-                    blockedProcesses: []
+                    blockedProcesses:blockedProcesses
                 }
             });
             return request;

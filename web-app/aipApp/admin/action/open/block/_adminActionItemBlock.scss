@@ -85,7 +85,11 @@ $button-color: #206E9F;
   .actionItemBlock{border-bottom: 1px solid #B9B9B9;
     border-top: 1px solid #B9B9B9;
     padding: 20px;  min-height: 8em;  margin-bottom: 15px;}
-  .personadata{list-style-type: none;}
+  .personadata{list-style-type: none;    padding: 2px 0px;}
+  .urllabel{float: left;
+    /* width: 15%; */
+    margin-top: 10px;}
+  .urldata{    float: left;}
   .titleValue{margin-right:10px;}
   table {
     width: 100%;
@@ -115,4 +119,9 @@ $button-color: #206E9F;
       line-height: 1.3em;
     }
   }
+  input[type="checkbox"][readonly] {
+    pointer-events: none;
+  }
+  .urlsplit{padding-top: 8px;
+    display:block;}
 }

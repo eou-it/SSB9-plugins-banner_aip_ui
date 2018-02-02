@@ -49,6 +49,7 @@ module AIP {
         editMode: boolean;
         isSaving: boolean;
 
+
         constructor($scope, $q:ng.IQService, $state, $filter, $sce, $window, $templateRequest, $templateCache, $compile,
                     $timeout, $interpolate, SpinnerService, AdminActionService, AdminActionStatusService, APP_ROOT, CKEDITORCONFIG) {
             $scope.vm = this;
@@ -77,14 +78,12 @@ module AIP {
             this.globalBlockProcess=false;
 
             this.blockedProcess = [];
-            console.log( this.allActionItems);
             this.allBlockProcessList = [];
+            console.log
             this.alreadyGenerated = [];
             this.selected = [];
             this.originalAssign = [];
-            console.log(this.allActionItems);
-            console.log(this.assignedActionItems);
-            console.log(this.selected);
+
             this.editMode = false;
             this.isSaving = false;
             this.init();
@@ -103,7 +102,7 @@ module AIP {
                 this.handleNotification( this.$state.params.noti );
             }
             promises.push(this.getBlockedProcessList(this.$state.params.actionItemId));
-          /*  promises.push(this.getBlockedProcessList());*/
+            /*  promises.push(this.getBlockedProcessList());*/
             //if needed, add more deferred job into promises list
             this.$q.all( promises ).then( () => {
                 this.spinnerService.showSpinner( false );
@@ -120,10 +119,15 @@ module AIP {
                 .then((response:any) => {
                     if(response.data) {
                         if (actionItemId) {
-                            this.blockedProcess = <any[]>response.data.blockedProcess;
+                            this.blockedProcess = <any[]>response.data.blockedProcess || response.data;
+                            this.globalBlockProcess=response.data.globalBlockProcess;
+                            this.allBlockProcessList=response.data;
+                            console.log( this.blockedProcess);
                         } else {
                             this.allBlockProcessList = <any[]>response.data.blockedProcess;
+                            console.log( this.blockedProcess);
                         }
+
                     } else {
                         console.log( this.blockedProcess);
                         this.blockedProcess = []
@@ -146,25 +150,41 @@ module AIP {
                 this.personaData=[];
 
                 angular.forEach(this.allActionItems.persona, (value,key) => {
-                      {
-                          this.personaData.push(key);
+                    {
+                        this.personaData.push(key);
                     }
 
                 })
 
+                if(this.blockedProcess.length!==0){
+                    this.editMode=true;
+                    console.log(this.allBlockProcessList)
+                    var editBlockData=[];
+                    var name;
+                    var persona;
+                    var urls;
+                    var id;
+                    this.globalBlockProcess;
+                    console.log(this.globalBlockProcess)
 
-                this.selected.forEach((item) => {
-                    this.selected[item.sequenceNumber] = this.allActionItems.filter((_item) => {
-                        if (_item.actionItemId === item.actionItemId) {
-                            _item.seq = item.sequenceNumber;
-                            return _item;
+                    angular.forEach(this.blockedProcess,(key) => {
+
+
+                        {
+                            editBlockData.push ({process:{id:key.id.blockingProcessId,name: key.processName,urls: key.urls,personAllowed: key.processPersonaBlockAllowedInd}})
                         }
-                    })[0]
-                });
-                this.originalAssign = angular.copy(this.selected);
-                this.initialAssigned = angular.copy(this.assignedActionItems);
-                this.editMode=true;
-                this.addNew();
+
+                    })
+                    this.selected=editBlockData;
+                    console.log(this.selected)
+                    //this.originalAssign = angular.copy(this.selected);
+
+                }
+                else {
+                    this.editMode=true;
+                    this.addNew();
+
+                }
                 this.$window.onbeforeunload = (event)=> {
                     if (this.isChanged()) {
                         // reset to default event listener
@@ -196,50 +216,7 @@ module AIP {
             return changed;
         }
 
-        goUp(item, evt) {
-            var preItemIdx = this.assignedActionItems.indexOf(item) - 1;
-            var preItem = this.assignedActionItems[preItemIdx];
-            this.assignedActionItems[preItemIdx] = item;
-            this.assignedActionItems[preItemIdx + 1] = preItem
 
-            var preSelected = this.selected[preItemIdx];
-            this.selected[preItemIdx] = this.selected[preItemIdx + 1];
-            this.selected[preItemIdx + 1 ] = preSelected;
-            this.reAssignSeqnumber();
-            if(preItemIdx  > 0 ) {
-                this.$timeout(() => {
-                    evt.currentTarget.focus();
-                }, 0);
-            } else if(preItemIdx === 0) {
-                this.$timeout(() => {
-                    evt.target.nextElementSibling.focus();
-                }, 0);
-            }
-        }
-        goDown(item, evt) {
-            var nextItemIdx = this.assignedActionItems.indexOf(item) + 1;
-            if(nextItemIdx  === this.selected.length) {
-                return;
-            }
-
-            var nextItem = this.assignedActionItems[nextItemIdx];
-            this.assignedActionItems[nextItemIdx] = item;
-            this.assignedActionItems[nextItemIdx - 1] = nextItem
-
-            var nextSelected = this.selected[nextItemIdx];
-            this.selected[nextItemIdx] = this.selected[nextItemIdx - 1];
-            this.selected[nextItemIdx - 1 ] = nextSelected ;
-            this.reAssignSeqnumber();
-            if(nextItemIdx + 1  < this.selected.length) {
-                this.$timeout(() => {
-                    evt.currentTarget.focus();
-                }, 0);
-            } else if (nextItemIdx + 1 === this.selected.length) {
-                this.$timeout(() => {
-                    evt.target.previousElementSibling.focus();
-                }, 0);
-            }
-        }
         reAssignSeqnumber() {
             this.selected.map((item, index) => {
                 item.seq = index + 1;
@@ -257,6 +234,7 @@ module AIP {
             this.reAssignSeqnumber();
         }
         addNew() {
+
             this.selected.push({});
         }
         validateAddInput() {
@@ -275,22 +253,25 @@ module AIP {
         validateActionBlockProcess() {
             var validation = true;
             var unassigned = this.selected.filter((item) => {
-                if(item.process && item.process.personAllowed=="Y"){
+                if(item.process && item.process.personAllowed !=="N" ){
                     return !item.persona;
                 }
                 return !item.process;
             });
 
-            if (this.isEqual(this.selected, this.originalAssign)) {
-                validation = false;
-            }
-            if (unassigned.length!==0) {
-                validation = false;
-            }
-            return validation;
+
+
+                if (this.originalAssign.length>0 && this.isEqual(this.selected, this.originalAssign)) {
+                    validation = false;
+                }
+                if (unassigned.length !== 0) {
+                    validation = false;
+                }
+                return validation;
+
         }
 
-        selectActionItem(item, index) {
+        /*selectActionItem(item, index) {
             var currentAssigned = this.assignedActionItems[index];
             if (currentAssigned.actionItemId === item.actionItemId) {
                 return;
@@ -311,7 +292,7 @@ module AIP {
                 return true;
             });
             this.reAssignSeqnumber()
-        }
+        }*/
 
 
 
@@ -404,10 +385,10 @@ module AIP {
 
         isEqual(item1, item2) {
             var item1Properties = item1.map((item) => {
-                return [item.actionItemId, item.folderId, item.seq];
+                return [item.process.name, item.persona];
             });
             var item2Properties = item2.map((item) => {
-                return [item.actionItemId, item.folderId, item.seq];
+                return [item.process.name, item.persona];
             })
 
             if ( angular.equals(item1Properties, item2Properties)) {
@@ -422,8 +403,15 @@ module AIP {
             this.isSaving = true;
             // items: this.alreadyGenerated[{id:id, name: "name", value:{processNamei18n:"i18n", urls:["url"]}}]
             // actionItemId: this.$state.params.data
-            this.adminActionService.updateBlockedProcessItems(this.$state.params.actionItemId,this.globalBlockProcess, this.selected)
+
+            var saveData = this.selected.map((item)=>
+            {
+                return {processId:item.process.id, persona: item.persona};
+            });
+            this.adminActionService.updateBlockedProcessItems(this.$state.params.actionItemId,this.globalBlockProcess,saveData)
                 .then((response) => {
+                    this.getBlockedProcessList(this.$state.params.actionItemId);
+
                     this.isSaving = false;
                 }, (error) => {
                     this.isSaving = false;

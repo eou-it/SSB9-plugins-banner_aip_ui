@@ -1,6 +1,9 @@
 /*******************************************************************************
-Copyright 2018 Ellucian Company L.P. and its affiliates.
+Copyright 2017 Ellucian Company L.P. and its affiliates.
 ********************************************************************************/
+/*********************************************************************************
+ Copyright 2017 Ellucian Company L.P. and its affiliates.
+ **********************************************************************************/
 aip-list .aip-list-container  {
     border:none;
     box-shadow:none;
@@ -183,8 +186,8 @@ aip-list .aip-list-container  {
     border-bottom:1px solid #A4C6E4;
     padding:10px 10px 15px 5px;
 }
-
-
+  
+  
 
 .AIP-landing-container  {
     padding:16px;
@@ -743,7 +746,7 @@ ol.selected-group > li > button  {
         .actionItemAddContainer .actionItemControl .actionItemButton span button  {
     min-width:100px;
 }
-
+  
 
 .actionItemOpenContainer  {
     border:1px solid #C0C0C0;
@@ -784,7 +787,7 @@ ol.selected-group > li > button  {
     border-right:2px solid #C0C0C0;
     height:100%;
 }
-
+        
         .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement .dividerContainer  {
     padding:16px;
 }
@@ -873,12 +876,12 @@ ol.selected-group > li > button  {
     padding:10px 0px;
     border-bottom:1px solid #C0C0C0;
 }
-
+              
             .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .status-rules button.delete, .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .status-rules button.sort  {
     color:#206E9F;
     border:none;
 }
-
+            
             .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .status-rules .add-link  {
     font-family:"OpenSans-semibold";
     margin:20px 15px 20px 0;
@@ -981,6 +984,40 @@ ol.selected-group > li > button  {
 }
   #actionItemBlockProcess .titleValue  {
     margin-left:10px;
+}
+  #actionItemBlockProcess table  {
+    width:100%;
+    border:1px solid #b3b3b3;
+}
+    #actionItemBlockProcess table caption  {
+    text-align:right;
+    font-size:1.4em;
+    line-height:1.5em;
+    border:1px solid #b3b3b3;
+    border-bottom:none;
+    padding:8px;
+}
+    #actionItemBlockProcess table tr  {
+    border:1px solid #b3b3b3;
+}
+      #actionItemBlockProcess table tr .actionItemDescroption  {
+    font-size:0.8em;
+    line-height:0.8em;
+    padding:0;
+}
+    #actionItemBlockProcess table td  {
+    padding:8px;
+}
+    #actionItemBlockProcess table th  {
+    padding:8px;
+    line-height:1.3em;
+}
+  #actionItemBlockProcess input[type="checkbox"][readonly]  {
+    pointer-events:none;
+}
+  #actionItemBlockProcess .urlsplit  {
+    padding-top:8px;
+    display:inline-block;
 }
 
 .statusListContainer  {
