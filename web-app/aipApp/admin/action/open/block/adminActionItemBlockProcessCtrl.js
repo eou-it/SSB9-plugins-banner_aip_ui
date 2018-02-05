@@ -128,8 +128,9 @@ var AIP;
                     _this.globalBlockProcess;
                     console.log(_this.globalBlockProcess);
                     angular.forEach(_this.blockedProcess, function (key) {
+                        console.log(_this.blockedProcess);
                         {
-                            editBlockData.push({ process: { id: key.id.blockingProcessId, name: key.processName, urls: key.urls, personAllowed: key.processPersonaBlockAllowedInd } });
+                            editBlockData.push({ process: { id: key.id.blockingProcessId, name: key.processName, urls: key.urls, personAllowed: key.processPersonaBlockAllowedInd }, persona: key.blockedProcessAppRole });
                         }
                     });
                     _this.selected = editBlockData;

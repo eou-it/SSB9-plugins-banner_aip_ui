@@ -858,9 +858,7 @@ ol.selected-group > li > button {
     list-style-type: none;
     padding: 2px 0px; }
   #actionItemBlockProcess .urllabel {
-    float: left;
-    /* width: 15%; */
-    margin-top: 10px; }
+    float: left; }
   #actionItemBlockProcess .urldata {
     float: left; }
   #actionItemBlockProcess .titleValue {

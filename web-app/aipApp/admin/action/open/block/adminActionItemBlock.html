@@ -8,7 +8,7 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
         <div class="contentText">
             <div class="row">
                 <div class="col-xs-10 col-sm-8">
-                    <h2>{{'Blocked Process(es)'|i18n_aip}}</h2>
+                    <h2>{{'aip.admin.block.no.block.process'|i18n_aip}}</h2>
                     <div ng-if="vm.allBlockProcessList.length===0">
                         {{"aip.admin.block.no.processes.blocked"|i18n_aip}} <br />
                         {{"aip.admin.block.select.edit"|i18n_aip}}
@@ -65,7 +65,7 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
         <div class="contentText">
             <div class="row">
                 <div class="col-xs-10 col-sm-8">
-                    <h2>{{'Blocked Process(es)'|i18n_aip}}</h2>
+                    <h2>{{'aip.admin.block.no.block.process'|i18n_aip}}</h2>
                 </div>
             </div>
             <div class="row blockedItem" ng-repeat="item in vm.blockedProcess">
@@ -98,7 +98,7 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
                             <div class="urldata"><li class="personadata" ng-repeat="urlItem in vm.selected[index].process.urls">{{urlItem}}</li></div></ul>
                     </div>
 
-                    <div class="row col-sm-4"  ng-if="vm.selected[index].process.personAllowed !=='N' ">
+                    <div class="row col-sm-4"  ng-if="vm.selected[index].process.personAllowed !=='N' && vm.selected[index].process.processPersonaBlockAllowedInd !=='N'">
                         <label for="" class="titleValue" >{{"aip.admin.addBlockProcessData.process.persona"|i18n_aip}}:</label>
                         <xe-ui-select id="postActionItemPopulation" ng-model="vm.selected[index].persona" theme="select2">
 

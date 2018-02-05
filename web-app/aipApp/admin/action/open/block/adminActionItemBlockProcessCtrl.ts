@@ -168,10 +168,11 @@ module AIP {
                     console.log(this.globalBlockProcess)
 
                     angular.forEach(this.blockedProcess,(key) => {
+                        console.log(this.blockedProcess)
 
 
                         {
-                            editBlockData.push ({process:{id:key.id.blockingProcessId,name: key.processName,urls: key.urls,personAllowed: key.processPersonaBlockAllowedInd}})
+                            editBlockData.push ({process:{id:key.id.blockingProcessId,name: key.processName,urls: key.urls,personAllowed:key.processPersonaBlockAllowedInd}, persona: key.blockedProcessAppRole})
                         }
 
                     })
