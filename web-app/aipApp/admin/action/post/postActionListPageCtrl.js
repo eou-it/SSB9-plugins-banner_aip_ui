@@ -203,10 +203,19 @@ var AIP;
             var _this = this;
             this.actionListService.getPostStatus(postId)
                 .then(function (response) {
+				 while (notifications.length != 0) {
+                        notifications.remove(notifications.first())
+                    }
+							
                 if (response === "Y") {
                     _this.$state.go("admin-post-edit", { postIdval: postId, isEdit: true });
                 }
                 else {
+					
+					while (notifications.length != 0) {
+    					notifications.remove(notifications.first())
+					}
+					
                     var n = new Notification({
                         message: _this.$filter("i18n_aip")("aip.common.post.edit.noaccess"),
                         type: "error",
@@ -216,7 +225,7 @@ var AIP;
                         notifications.addNotification(n);
                         _this.$state.params.noti = undefined;
                         $(".actionItemAddContainer").focus();
-                    }, 500);
+                    }, 100);
                 }
             }, function (err) {
                 throw new Error(err);

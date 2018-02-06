@@ -1,5 +1,6 @@
+
 /*******************************************************************************
- Copyright 2018 Ellucian Company L.P. and its affiliates.
+ Copyright 2017-2018 Ellucian Company L.P. and its affiliates.
  ********************************************************************************/
 declare var register: any;
 
@@ -177,7 +178,7 @@ module AIP {
                     }
                 }
 
-            ];
+                ];
 
 
         }
@@ -247,26 +248,34 @@ module AIP {
         }
 
         editActionItem(postId) {
-            this.actionListService.getPostStatus(postId)
+                this.actionListService.getPostStatus(postId)
                 .then((response) => {
 
+                    while (notifications.length != 0) {
+                        notifications.remove(notifications.first())
+                    }
                     if (response === "Y")
                     {
                         this.$state.go("admin-post-edit", {postIdval: postId, isEdit: true});
-
                     }
                     else
                     {
+                        while (notifications.length != 0) {
+                            notifications.remove(notifications.first())
+                        }
+
                         var n = new Notification({
                             message: this.$filter("i18n_aip")("aip.common.post.edit.noaccess"), //+
                             type: "error",
                             flash: true
                         });
+                    
                         setTimeout(() => {
                             notifications.addNotification(n);
                             this.$state.params.noti = undefined;
                             $(".actionItemAddContainer").focus();
-                        }, 500);
+                        }, 100);
+
                     }
 
                 }, (err) => {
