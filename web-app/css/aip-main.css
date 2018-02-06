@@ -852,8 +852,8 @@ ol.selected-group > li > button {
     border-bottom: 1px solid #B9B9B9;
     border-top: 1px solid #B9B9B9;
     padding: 20px;
-    min-height: 8em;
-    margin-bottom: 15px; }
+    min-height: 7em;
+    margin-bottom: 10px; }
   #actionItemBlockProcess .personadata {
     list-style-type: none;
     padding: 2px 0px; }
@@ -889,6 +889,11 @@ ol.selected-group > li > button {
   #actionItemBlockProcess .urlsplit {
     padding-top: 8px;
     display: block; }
+  @media (max-width: 850px) {
+    #actionItemBlockProcess .smalldevicefix {
+      padding: 0px; }
+    #actionItemBlockProcess .smalldeviceglobal {
+      margin-bottom: 20px; } }
 
 .statusListContainer {
   overflow-y: auto;

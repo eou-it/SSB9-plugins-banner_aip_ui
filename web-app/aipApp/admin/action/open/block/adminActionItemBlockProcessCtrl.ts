@@ -338,6 +338,18 @@ module AIP {
                     $(".actionItemAddContainer").focus();
                 }, 500);
             }
+            else if(noti.notiType === "saveFailed"){
+                var n1 = new Notification({
+                    message: noti.data, //+
+                    type: "error",
+                    flash: true
+                });
+                setTimeout(() => {
+                    notifications.addNotification(n1);
+                    this.$state.params.noti = undefined;
+                    $(".actionItemAddContainer").focus();
+                }, 500);
+            }
         }
 
 
@@ -412,6 +424,29 @@ module AIP {
             this.adminActionService.updateBlockedProcessItems(this.$state.params.actionItemId,this.globalBlockProcess,saveData)
                 .then((response) => {
                     this.getBlockedProcessList(this.$state.params.actionItemId);
+
+                    if(response.data.success){
+                        var notiParams = {};
+
+                        notiParams = {
+                            notiType: "saveSuccess",
+                            noti: notiParams,
+                            data: response.data.success
+                        };
+                        this.handleNotification( notiParams);
+
+                    }
+                    else{
+                        var notiParams = {};
+
+                        notiParams = {
+                            notiType: "saveFailed",
+                            noti: notiParams,
+                            data: response.data.message
+                        };
+                        this.handleNotification( notiParams);
+                        this.editMode = true;
+                    }
 
                     this.isSaving = false;
                 }, (error) => {
