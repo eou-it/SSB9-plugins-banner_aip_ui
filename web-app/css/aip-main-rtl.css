@@ -976,11 +976,18 @@ ol.selected-group > li > button  {
     border-bottom:1px solid #B9B9B9;
     border-top:1px solid #B9B9B9;
     padding:20px;
-    min-height:8em;
-    margin-bottom:15px;
+    min-height:7em;
+    margin-bottom:10px;
 }
   #actionItemBlockProcess .personadata  {
     list-style-type:none;
+    padding:2px 0px;
+}
+  #actionItemBlockProcess .urllabel  {
+    float:right;
+}
+  #actionItemBlockProcess .urldata  {
+    float:right;
 }
   #actionItemBlockProcess .titleValue  {
     margin-left:10px;
@@ -1017,8 +1024,9 @@ ol.selected-group > li > button  {
 }
   #actionItemBlockProcess .urlsplit  {
     padding-top:8px;
-    display:inline-block;
+    display:block;
 }
+  
 
 .statusListContainer  {
     overflow-y:auto;
@@ -1914,6 +1922,14 @@ ol.selected-group > li > button  {
     font-weight:bold;
     padding-left:8px;
     text-indent:0;
+}
+}
+@media (max-width: 850px) {
+    #actionItemBlockProcess .smalldevicefix  {
+    padding:0px;
+}
+    #actionItemBlockProcess .smalldeviceglobal  {
+    margin-bottom:20px;
 }
 }
 @media screen and (max-width: 480px) {

@@ -128,8 +128,9 @@ var AIP;
                     _this.globalBlockProcess;
                     console.log(_this.globalBlockProcess);
                     angular.forEach(_this.blockedProcess, function (key) {
+                        console.log(_this.blockedProcess);
                         {
-                            editBlockData.push({ process: { id: key.id.blockingProcessId, name: key.processName, urls: key.urls, personAllowed: key.processPersonaBlockAllowedInd } });
+                            editBlockData.push({ process: { id: key.id.blockingProcessId, name: key.processName, urls: key.urls, personAllowed: key.processPersonaBlockAllowedInd }, persona: key.blockedProcessAppRole });
                         }
                     });
                     _this.selected = editBlockData;
@@ -282,6 +283,18 @@ var AIP;
                     $(".actionItemAddContainer").focus();
                 }, 500);
             }
+            else if (noti.notiType === "saveFailed") {
+                var n1 = new Notification({
+                    message: noti.data,
+                    type: "error",
+                    flash: true
+                });
+                setTimeout(function () {
+                    notifications.addNotification(n1);
+                    _this.$state.params.noti = undefined;
+                    $(".actionItemAddContainer").focus();
+                }, 500);
+            }
         };
         AdminActionItemBlockCtrl.prototype.getHeight = function () {
             var containerHeight = $(document).height() -
@@ -335,6 +348,25 @@ var AIP;
             this.adminActionService.updateBlockedProcessItems(this.$state.params.actionItemId, this.globalBlockProcess, saveData)
                 .then(function (response) {
                 _this.getBlockedProcessList(_this.$state.params.actionItemId);
+                if (response.data.success) {
+                    var notiParams = {};
+                    notiParams = {
+                        notiType: "saveSuccess",
+                        noti: notiParams,
+                        data: response.data.success
+                    };
+                    _this.handleNotification(notiParams);
+                }
+                else {
+                    var notiParams = {};
+                    notiParams = {
+                        notiType: "saveFailed",
+                        noti: notiParams,
+                        data: response.data.message
+                    };
+                    _this.handleNotification(notiParams);
+                    _this.editMode = true;
+                }
                 _this.isSaving = false;
             }, function (error) {
                 _this.isSaving = false;
