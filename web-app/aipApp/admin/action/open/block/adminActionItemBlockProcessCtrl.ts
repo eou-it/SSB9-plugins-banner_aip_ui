@@ -421,37 +421,75 @@ module AIP {
             {
                 return {processId:item.process.id, persona: item.persona};
             });
-            this.adminActionService.updateBlockedProcessItems(this.$state.params.actionItemId,this.globalBlockProcess,saveData)
+            this.adminActionService.checkActionItemPosted(this.$state.params.actionItemId)
                 .then((response) => {
-                    this.getBlockedProcessList(this.$state.params.actionItemId);
+                    if (response.posted) {
+                        var n = new Notification({
+                            message: this.$filter("i18n_aip")("aip.admin.action.content.edit.posted.warning"),
+                            type: "warning"
+                        });
+                        n.addPromptAction(this.$filter("i18n_aip")("aip.common.text.yes"), () => {
+                            notifications.remove(n);
+                            this.adminActionService.updateBlockedProcessItems(this.$state.params.actionItemId,this.globalBlockProcess,saveData)
+                                .then((response) => {
+                                    this.getBlockedProcessList(this.$state.params.actionItemId);
 
-                    if(response.data.success){
-                        var notiParams = {};
 
-                        notiParams = {
-                            notiType: "saveSuccess",
-                            noti: notiParams,
-                            data: response.data.success
-                        };
-                        this.handleNotification( notiParams);
+                                    if(response.data.success){
+                                        var notiParams = {};
 
+                                        notiParams = {
+                                            notiType: "saveSuccess",
+                                            noti: notiParams,
+                                            data: response.data.success
+                                        };
+                                        this.handleNotification( notiParams);
+
+                                    }
+
+
+
+                                    if(response.data.success){
+                                        var notiParams = {};
+
+                                        notiParams = {
+                                            notiType: "saveSuccess",
+                                            noti: notiParams,
+                                            data: response.data.success
+                                        };
+                                        this.handleNotification( notiParams);
+
+                                    }
+                                    else{
+                                        var notiParams = {};
+
+                                        notiParams = {
+                                            notiType: "saveFailed",
+                                            noti: notiParams,
+                                            data: response.data.message
+                                        };
+                                        this.handleNotification( notiParams);
+                                        this.editMode = true;
+                                    }
+
+                                    this.isSaving = false;
+                                }, (error) => {
+                                    this.isSaving = false;
+                                });
+
+
+                        });
+                        n.addPromptAction(this.$filter("i18n_aip")("aip.common.text.no"), () => {
+                            notifications.remove(n);
+                            this.editMode = true;
+                        });
+
+                        notifications.addNotification(n);
                     }
-                    else{
-                        var notiParams = {};
+                })
 
-                        notiParams = {
-                            notiType: "saveFailed",
-                            noti: notiParams,
-                            data: response.data.message
-                        };
-                        this.handleNotification( notiParams);
-                        this.editMode = true;
-                    }
 
-                    this.isSaving = false;
-                }, (error) => {
-                    this.isSaving = false;
-                });
+
         }
     }
 }

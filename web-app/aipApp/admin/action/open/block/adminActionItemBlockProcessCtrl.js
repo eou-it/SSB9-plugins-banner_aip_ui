@@ -345,31 +345,57 @@ var AIP;
             var saveData = this.selected.map(function (item) {
                 return { processId: item.process.id, persona: item.persona };
             });
-            this.adminActionService.updateBlockedProcessItems(this.$state.params.actionItemId, this.globalBlockProcess, saveData)
+            this.adminActionService.checkActionItemPosted(this.$state.params.actionItemId)
                 .then(function (response) {
-                _this.getBlockedProcessList(_this.$state.params.actionItemId);
-                if (response.data.success) {
-                    var notiParams = {};
-                    notiParams = {
-                        notiType: "saveSuccess",
-                        noti: notiParams,
-                        data: response.data.success
-                    };
-                    _this.handleNotification(notiParams);
+                if (response.posted) {
+                    var n = new Notification({
+                        message: _this.$filter("i18n_aip")("aip.admin.action.content.edit.posted.warning"),
+                        type: "warning"
+                    });
+                    n.addPromptAction(_this.$filter("i18n_aip")("aip.common.text.yes"), function () {
+                        notifications.remove(n);
+                        _this.adminActionService.updateBlockedProcessItems(_this.$state.params.actionItemId, _this.globalBlockProcess, saveData)
+                            .then(function (response) {
+                            _this.getBlockedProcessList(_this.$state.params.actionItemId);
+                            if (response.data.success) {
+                                var notiParams = {};
+                                notiParams = {
+                                    notiType: "saveSuccess",
+                                    noti: notiParams,
+                                    data: response.data.success
+                                };
+                                _this.handleNotification(notiParams);
+                            }
+                            if (response.data.success) {
+                                var notiParams = {};
+                                notiParams = {
+                                    notiType: "saveSuccess",
+                                    noti: notiParams,
+                                    data: response.data.success
+                                };
+                                _this.handleNotification(notiParams);
+                            }
+                            else {
+                                var notiParams = {};
+                                notiParams = {
+                                    notiType: "saveFailed",
+                                    noti: notiParams,
+                                    data: response.data.message
+                                };
+                                _this.handleNotification(notiParams);
+                                _this.editMode = true;
+                            }
+                            _this.isSaving = false;
+                        }, function (error) {
+                            _this.isSaving = false;
+                        });
+                    });
+                    n.addPromptAction(_this.$filter("i18n_aip")("aip.common.text.no"), function () {
+                        notifications.remove(n);
+                        _this.editMode = true;
+                    });
+                    notifications.addNotification(n);
                 }
-                else {
-                    var notiParams = {};
-                    notiParams = {
-                        notiType: "saveFailed",
-                        noti: notiParams,
-                        data: response.data.message
-                    };
-                    _this.handleNotification(notiParams);
-                    _this.editMode = true;
-                }
-                _this.isSaving = false;
-            }, function (error) {
-                _this.isSaving = false;
             });
         };
         return AdminActionItemBlockCtrl;
