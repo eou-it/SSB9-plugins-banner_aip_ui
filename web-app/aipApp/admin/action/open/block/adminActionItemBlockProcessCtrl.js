@@ -335,16 +335,56 @@ var AIP;
             }
             return false;
         };
-        AdminActionItemBlockCtrl.prototype.saveBlocks = function () {
+        AdminActionItemBlockCtrl.prototype.saveSucess = function () {
             var _this = this;
-            //save selected items then exit edit mode
-            this.editMode = false;
-            this.isSaving = true;
-            // items: this.alreadyGenerated[{id:id, name: "name", value:{processNamei18n:"i18n", urls:["url"]}}]
-            // actionItemId: this.$state.params.data
             var saveData = this.selected.map(function (item) {
                 return { processId: item.process.id, persona: item.persona };
             });
+            this.adminActionService.updateBlockedProcessItems(this.$state.params.actionItemId, this.globalBlockProcess, saveData)
+                .then(function (response) {
+                _this.getBlockedProcessList(_this.$state.params.actionItemId);
+                if (response.data.success) {
+                    var notiParams = {};
+                    notiParams = {
+                        notiType: "saveSuccess",
+                        noti: notiParams,
+                        data: response.data.success
+                    };
+                    _this.handleNotification(notiParams);
+                }
+                if (response.data.success) {
+                    var notiParams = {};
+                    notiParams = {
+                        notiType: "saveSuccess",
+                        noti: notiParams,
+                        data: response.data.success
+                    };
+                    _this.handleNotification(notiParams);
+                }
+                else {
+                    var notiParams = {};
+                    notiParams = {
+                        notiType: "saveFailed",
+                        noti: notiParams,
+                        data: response.data.message
+                    };
+                    _this.handleNotification(notiParams);
+                    _this.editMode = true;
+                }
+                _this.isSaving = false;
+            }, function (error) {
+                _this.isSaving = false;
+            });
+            this.editMode = false;
+        };
+        AdminActionItemBlockCtrl.prototype.saveBlocks = function () {
+            var _this = this;
+            var that = this;
+            //save selected items then exit edit mode
+            //this.editMode = false;
+            this.isSaving = true;
+            // items: this.alreadyGenerated[{id:id, name: "name", value:{processNamei18n:"i18n", urls:["url"]}}]
+            // actionItemId: this.$state.params.data
             this.adminActionService.checkActionItemPosted(this.$state.params.actionItemId)
                 .then(function (response) {
                 if (response.posted) {
@@ -354,47 +394,16 @@ var AIP;
                     });
                     n.addPromptAction(_this.$filter("i18n_aip")("aip.common.text.yes"), function () {
                         notifications.remove(n);
-                        _this.adminActionService.updateBlockedProcessItems(_this.$state.params.actionItemId, _this.globalBlockProcess, saveData)
-                            .then(function (response) {
-                            _this.getBlockedProcessList(_this.$state.params.actionItemId);
-                            if (response.data.success) {
-                                var notiParams = {};
-                                notiParams = {
-                                    notiType: "saveSuccess",
-                                    noti: notiParams,
-                                    data: response.data.success
-                                };
-                                _this.handleNotification(notiParams);
-                            }
-                            if (response.data.success) {
-                                var notiParams = {};
-                                notiParams = {
-                                    notiType: "saveSuccess",
-                                    noti: notiParams,
-                                    data: response.data.success
-                                };
-                                _this.handleNotification(notiParams);
-                            }
-                            else {
-                                var notiParams = {};
-                                notiParams = {
-                                    notiType: "saveFailed",
-                                    noti: notiParams,
-                                    data: response.data.message
-                                };
-                                _this.handleNotification(notiParams);
-                                _this.editMode = true;
-                            }
-                            _this.isSaving = false;
-                        }, function (error) {
-                            _this.isSaving = false;
-                        });
+                        _this.saveSucess();
                     });
                     n.addPromptAction(_this.$filter("i18n_aip")("aip.common.text.no"), function () {
                         notifications.remove(n);
                         _this.editMode = true;
                     });
                     notifications.addNotification(n);
+                }
+                else {
+                    _this.saveSucess();
                 }
             });
         };

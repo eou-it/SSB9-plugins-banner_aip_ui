@@ -41,7 +41,7 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
 
                                 </thead>
                                 <tbody>
-                                <tr ng-repeat="item in vm.blockedProcess">
+                                <tr ng-repeat="item in vm.blockedProcess | orderBy:'item.processName'">
                                     <td width="40%">{{item.processName}}</td>
                                     <td width="50%"><span class="urlsplit" ng-repeat="blockedurl in item.urls">{{blockedurl}}</span></td>
                                     <td width="40%">{{item.blockedProcessAppRoleDisplay}}</td>
@@ -72,9 +72,7 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
                     <h2>{{'aip.admin.block.no.block.process'|i18n_aip}}</h2>
                 </div>
             </div>
-            <div class="row blockedItem" ng-repeat="item in vm.blockedProcess">
 
-            </div>
             <div class="row existActionItems" >
                 <div class="row overallAccess col-xs-12">
                     <input type="checkbox" id="overall" ng-model="vm.globalBlockProcess"><label
