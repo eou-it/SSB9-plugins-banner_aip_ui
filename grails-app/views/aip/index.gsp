@@ -53,7 +53,6 @@
         }
         </g:javascript>
     </script>
-    <g:bannerMessages/>
 </head>
 
 <body>
