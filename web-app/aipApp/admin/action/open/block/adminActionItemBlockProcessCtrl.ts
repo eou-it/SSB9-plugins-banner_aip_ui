@@ -388,11 +388,11 @@ module AIP {
             this.getBlockedProcessList(this.$state.params.actionItemId)
                 .then((response) => {
                     this.alreadyGenerated = [];
-                    this.editMode = false;
+                    this.editMode = true;
                 }, (error) => {
                     console.log("something wrong");
                     this.alreadyGenerated = [];
-                    this.editMode = false;
+                    this.editMode = true;
                 });
         }
 

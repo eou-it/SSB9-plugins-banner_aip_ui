@@ -316,11 +316,11 @@ var AIP;
             this.getBlockedProcessList(this.$state.params.actionItemId)
                 .then(function (response) {
                 _this.alreadyGenerated = [];
-                _this.editMode = false;
+                _this.editMode = true;
             }, function (error) {
                 console.log("something wrong");
                 _this.alreadyGenerated = [];
-                _this.editMode = false;
+                _this.editMode = true;
             });
         };
         AdminActionItemBlockCtrl.prototype.isEqual = function (item1, item2) {
