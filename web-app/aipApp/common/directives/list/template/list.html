@@ -9,7 +9,7 @@
                     <div aria-label="{{itemgroup.title}} {{completedItem().length}} of {{itemgroup.items.length}} {{'aip.common.text.completed'|i18n_aip}}"
                         id="h2-{{itemgroup.id}}" class="group-title-text col-xs-9" tabindex="-1"
                         ng-click="openGroup(itemgroup.id)" aria-expanded="{{isOpen}}">
-                        <h2 id="group-title-heading-{{itemgroup.id}}" class="group-title-text">{{itemgroup.title|i18n_aip}}</h2>
+                        <h2 id="group-title-heading-{{itemgroup.id}}" class="group-title-text" ng-bind-html="itemgroup.title"></h2>
                     </div>
                     <span class="badge" ng-if="!isOpen" aria-label="{{completedItem().length}} of {{itemgroup.items.length}} {{'aip.common.text.completed'|i18n_aip}}">
                         <span >{{completedItem().length}}/</span> <span >{{itemgroup.items.length}}</span>
@@ -42,7 +42,7 @@
                      class="row list-item" ng-repeat="row in itemgroup.items" ng-click="selectItem(itemgroup, row, $event)">
                     <div ng-repeat="key in itemgroup.header" class="{{getStyle(key)}}">
 
-                        <h3 ng-if="key==='title'">{{row[key]|i18n_aip}}</h3>
+                        <h3 ng-if="key==='title'" ng-bind-html="row[key]"></h3>
                            <span ng-if="key==='status'">
                             <span ng-class="{'badge pending':key==='status'&&row[key]==='Pending',
                             'badge approve':key==='status'&&row[key]==='Completed'||(key==='status'&&row[key]!=='Completed'&&row[key]!=='Rejected'&&row[key]!=='Pending'), 'badge reject':key==='status'&&row[key]==='Rejected'}">
@@ -53,7 +53,7 @@
                             <span class="data-label" ng-if="row['status']==='Completed'">{{'aip.common.text.date.completed'|i18n_aip}}</span>
                             <span class="data-label" ng-if="row['status']==='Rejected'">{{'aip.common.text.date.rejected'|i18n_aip}}</span>
                             {{row[key]}}</span>
-                        <aip-readmore class="aipReadmore" ng-if="key==='description'">{{row[key]}}</aip-readmore>
+                        <aip-readmore class="aipReadmore" ng-if="key==='description'" ng-bind-html="row[key]"></aip-readmore>
                     </div>
                 </div>
             </div>
