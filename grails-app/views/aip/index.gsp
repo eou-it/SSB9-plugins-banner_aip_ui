@@ -4,7 +4,7 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <html>
 <head>
-    <base href="${createLink(uri: '/ssb')}/">
+
     <meta name="headerAttributes" content=""/>
     <title></title>
     <meta name="layout" content="bannerSelfServicePage"/>
@@ -15,30 +15,7 @@
     <meta name="menuEndPoint" content="${g.createLink(controller: 'selfServiceMenu', action: 'data')}"/>
     <meta name="menuBaseURL" content="${createLink(uri: '/ssb')}" />
     <ckeditor:resources/>
-    <script type="text/javascript">
-        // Track calling page for breadcrumbs
-        (function () {
-            // URLs to exclude from updating genAppCallingPage, because they're actually either the authentication
-            // page or App Nav, and are not "calling pages."
-            var referrerUrl = document.referrer,
-                excludedRegex = [
-                    /\${applicationContextRoot}\/login\/auth?/,
-                    /\/seamless/
-                ],
-                isExcluded;
 
-            if (referrerUrl) {
-                isExcluded = _.find(excludedRegex, function (regex) {
-                    return regex.test(referrerUrl);
-                });
-
-                if (!isExcluded) {
-                    // Track this page
-                    sessionStorage.setItem('genAppCallingPage', referrerUrl);
-                }
-            }
-        })();
-    </script>
     <script type="text/javascript">
         var pageControllers = {};
 
@@ -53,7 +30,7 @@
         }
         </g:javascript>
     </script>
-    <g:bannerMessages/>
+
 </head>
 
 <body>
