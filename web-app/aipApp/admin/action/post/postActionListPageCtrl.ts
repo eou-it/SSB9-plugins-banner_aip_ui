@@ -1,6 +1,7 @@
-
+///<reference path="../../../../typings/tsd.d.ts"/>
+///<reference path="../../../common/services/admin/adminActionService.ts"/>
 /*******************************************************************************
- Copyright 2017-2018 Ellucian Company L.P. and its affiliates.
+ Copyright 2018 Ellucian Company L.P. and its affiliates.
  ********************************************************************************/
 declare var register: any;
 
@@ -37,6 +38,7 @@ module AIP {
         mobileConfig;
         mobileSize: boolean;
         selectedRecord;
+
 
         constructor($scope: IActionListPageCtrlScope, $state, $window, $filter, $q, ENDPOINT, PAGINATIONCONFIG,
                     AdminActionService: AIP.AdminActionService) {
@@ -269,7 +271,7 @@ module AIP {
                             type: "error",
                             flash: true
                         });
-                    
+                      
                         setTimeout(() => {
                             notifications.addNotification(n);
                             this.$state.params.noti = undefined;

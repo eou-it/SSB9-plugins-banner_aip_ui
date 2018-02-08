@@ -29,8 +29,8 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
                 mobile-layout="vm.mobileConfig"
                 refresh-grid="refreshGrid"
                 draggable-column-names="vm.draggableColumnNames"
-                continuous-scrolling="false"
-                height="20em">
+                continuous-scrolling="vm.mobileSize"
+                continuous-scroll-parent="postActionListPage">
 
 
             <xe-cell-markup column-name="jobState" >
@@ -39,8 +39,6 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
                         <span  ng-class='{"jobStateQueued jobstateDefault" : row.postingCurrentState == "Queued" || row.postingCurrentState == "Calculating"|| row.postingCurrentState == "New" || row.postingCurrentState == "Processing","statusCompleted jobstateDefault" : row.postingCurrentState == "Complete","statusStopped jobstateDefault" : row.postingCurrentState == "Stopped","statusError  jobstateDefault" : row.postingCurrentState == "Error","statusScheduled  jobstateDefault" : row.postingCurrentState == "Scheduled"}' ng-bind="getObjectValue(row, heading.name)" >
 
                        </span></div>
-
-
                     </div>
 
             </xe-cell-markup>

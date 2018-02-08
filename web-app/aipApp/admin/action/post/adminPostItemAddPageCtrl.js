@@ -6,9 +6,9 @@
 ///<reference path="../../../common/services/admin/adminActionService.ts"/>
 var AIP;
 (function (AIP) {
-    var AdminPostItemAddPageCtrl = (function () {
-        function AdminPostItemAddPageCtrl($scope, $q, $state, $uibModal, $filter, $timeout, SpinnerService, APP_ROOT, AdminActionService) {
-            this.$inject = ["$scope", "$q", "$state", "$filter", "$timeout", "SpinnerService", "AdminActionService", "$uibModal", "APP_ROOT", "datePicker"];
+    var AdminPostItemAddPageCtrl = /** @class */ (function () {
+        function AdminPostItemAddPageCtrl($scope, $q, $state, $uibModal, $filter, $timeout, SpinnerService, APP_ROOT, AdminActionStatusService, AdminActionService) {
+            this.$inject = ["$scope", "$q", "$state", "$filter", "$timeout", "SpinnerService", "AdminActionStatusService", "AdminActionService", "$uibModal", "APP_ROOT", "datePicker"];
             $scope.vm = this;
             this.$q = $q;
             this.$scope = $scope;
@@ -19,6 +19,7 @@ var AIP;
             this.$timeout = $timeout;
             this.spinnerService = SpinnerService;
             this.adminActionService = AdminActionService;
+            this.adminActionStatusService = AdminActionStatusService;
             this.saving = false;
             this.IsVisible = false;
             this.localeDate = {};
@@ -36,6 +37,12 @@ var AIP;
             this.selectedPopulation = {};
             this.APP_ROOT = APP_ROOT;
             this.errorMessage = {};
+            this.editMode = false;
+            this.changeFlag = false;
+            this.actionPost1 = {};
+            this.postIDvalue = 0;
+            this.dirtyFlag = false;
+            this.selectedActionListVal = [];
             this.init();
         }
         AdminPostItemAddPageCtrl.prototype.today = function () {
@@ -49,6 +56,8 @@ var AIP;
             var allPromises = [];
             var deferred = this.$q.defer();
             this.postActionItemInfo = {};
+            this.editMode = this.$state.params.isEdit === "true" ? true : false;
+            this.postIDvalue = this.$state.params.postIdval;
             allPromises.push(this.adminActionService.getGrouplist()
                 .then(function (response) {
                 _this.groupList = response.data;
@@ -91,20 +100,71 @@ var AIP;
                 _this.defaultTimeZone = finalValue;
             }));
             this.$q.all(allPromises).then(function () {
+                
+                if (_this.editMode) {
+                    _this.adminActionService.getJobDetails(_this.$state.params.postIdval)
+                        .then(function (response) {
+                        if (response) {
+                            _this.$scope.group = {};
+                            _this.$scope.population = {};
+                            _this.actionPost1 = response;
+                            _this.postActionItemInfo.name = _this.actionPost1.postingName;
+                            for (var i = 0; i < _this.postActionItemInfo.group.length; i++) {
+                                if (_this.postActionItemInfo.group[i].groupName === _this.actionPost1.groupName) {
+                                    _this.$scope.group = _this.postActionItemInfo.group[i];
+                                }
+                            }
+                            for (var k = 0; k < _this.postActionItemInfo.population.length; k++) {
+                                if (_this.postActionItemInfo.population[k].name === _this.actionPost1.postingPopulation) {
+                                    _this.$scope.population = _this.postActionItemInfo.population[k];
+                                }
+                            }
+                            _this.selected = _this.$scope.group;
+                            _this.selectedPopulation = _this.$scope.population;
+                            _this.postActionItemInfo.groupName = _this.actionPost1.groupName;
+                            _this.postActionItemInfo.startDate = _this.actionPost1.postingDisplayStartDate;
+                            _this.postActionItemInfo.endDate = _this.actionPost1.postingDisplayEndDate;
+                            _this.postActionItemInfo.localeDate = _this.actionPost1.postingScheduleDateTime;
+                            _this.postNow = false;
+                            _this.regeneratePopulation = _this.actionPost1.populationRegenerateIndicator;
+                            if (_this.postActionItemInfo.localeTime) {
+                                var timeString = _this.actionPost1.scheduledStartTime;
+                                var hourEnd = timeString.indexOf(":");
+                                var H = +timeString.substr(0, hourEnd);
+                                var h = H % 12 || 12;
+                                var ampm = H < 12 ? "AM" : "PM";
+                                timeString = h + timeString.substr(hourEnd, 3) + ampm;
+                                _this.sendTime = timeString;
+                            }
+                            else {
+                                _this.sendTime = _this.actionPost1.scheduledStartTime;
+                            }
+                            _this.timezone = _this.actionPost1.timezoneStringOffset.ID;
+                            _this.changedValue();
+                            _this.adminActionStatusService.getActionItemsById(_this.$state.params.postIdval)
+                                .then(function (response) {
+                                _this.selectedActionListVal = response.data;
+                                _this.itemLength = _this.selectedActionListVal.length;
+                            });
+                        }
+                        else {
+                            //todo: output error in notification center?
+                            console.log("fail");
+                        }
+                    }, function (err) {
+                        //TODO:: handle error call
+                        console.log(err);
+                    });
+                }
                 _this.spinnerService.showSpinner(false);
             });
         };
-        /*ShowPassport(value) {
-        this.IsVisible = value == "Y";
-                console.log(value)
-    }*/
         AdminPostItemAddPageCtrl.prototype.changedValue = function () {
             var _this = this;
+            this.changeFlag = true;
             this.itemLength = 0;
             this.modalResult = [];
             var groupId = this.$scope;
-            console.log(this.$scope);
-            console.log(this.selected.folderName);
             this.adminActionService.getGroupActionItem(this.selected.groupId)
                 .then(function (response) {
                 _this.actionItemList = response.data;
@@ -116,7 +176,6 @@ var AIP;
         AdminPostItemAddPageCtrl.prototype.setTime = function (time) {
             this.sendTime = time;
             this.sendTime = this.$filter('date')(this.sendTime, 'HHmm');
-            console.log(this.sendTime);
         };
         ;
         AdminPostItemAddPageCtrl.prototype.showTimeZoneList = function () {
@@ -132,7 +191,6 @@ var AIP;
         };
         AdminPostItemAddPageCtrl.prototype.setTimezone = function (timezone) {
             this.timezone = timezone;
-            console.log(this.timezone);
         };
         ;
         AdminPostItemAddPageCtrl.prototype.editPage = function () {
@@ -152,6 +210,18 @@ var AIP;
                     },
                     actionFolderGroupModal: function () {
                         return _this.selected.folderName;
+                    },
+                    EditMode: function () {
+                        return _this.editMode;
+                    },
+                    PostId: function () {
+                        return _this.postIDvalue;
+                    },
+                    selectedActionItemList: function () {
+                        return _this.selectedActionListVal;
+                    },
+                    ChangeFlag: function () {
+                        return _this.changeFlag;
                     }
                 },
             });
@@ -162,6 +232,9 @@ var AIP;
                     _this.modalResult = item;
                     _this.modalResults.push(_this.modalResult.actionItemId);
                 });
+                if (_this.editMode) {
+                    _this.dirtyFlag = true;
+                }
             }, function (error) {
                 console.log(error);
             });
@@ -219,8 +292,30 @@ var AIP;
                 return true;
             }
         };
+        AdminPostItemAddPageCtrl.prototype.checkChanges = function () {
+            var that = this;
+            if (that.editMode) {
+                that.dirtyFlag = true;
+            }
+        };
         AdminPostItemAddPageCtrl.prototype.cancel = function () {
-            this.$state.go("admin-post-list");
+            var that = this;
+            if (that.editMode === true && that.dirtyFlag === true) {
+                var n = new Notification({
+                    message: this.$filter("i18n_aip")("aip.common.action.post.status.edit.warning"),
+                    type: "warning",
+                });
+                n.addPromptAction(this.$filter("i18n_aip")("aip.common.text.no"), function () {
+                    that.$state.go("admin-post-list");
+                    notifications.remove(n);
+                });
+                n.addPromptAction(this.$filter("i18n_aip")("aip.common.text.yes"), function () {
+                });
+                notifications.addNotification(n);
+            }
+            else {
+                that.$state.go("admin-post-list");
+            }
         };
         AdminPostItemAddPageCtrl.prototype.save = function () {
             var _this = this;

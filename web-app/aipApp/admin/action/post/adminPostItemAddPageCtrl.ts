@@ -28,7 +28,7 @@ module AIP {
     }
 
     export class AdminPostItemAddPageCtrl implements IAdminPostItemAddPageCtrl {
-        $inject = ["$scope", "$q", "$state", "$filter", "$timeout", "SpinnerService", "AdminActionService", "$uibModal", "APP_ROOT", "datePicker"];
+        $inject = ["$scope", "$q", "$state", "$filter", "$timeout", "SpinnerService","AdminActionStatusService", "AdminActionService", "$uibModal", "APP_ROOT", "datePicker"];
         $scope;
         $uibModal;
         status: [AIP.IStatus];
@@ -40,6 +40,7 @@ module AIP {
         postActionItemInfo: AIP.IPostActionItemParam | any;
         errorMessage: any;
         adminActionService: AIP.AdminActionService;
+        adminActionStatusService:AIP.AdminActionStatusService
         spinnerService: AIP.SpinnerService;
         saving: boolean;
         $q: ng.IQService;
@@ -65,9 +66,15 @@ module AIP {
         timezones;
         defaultTimeZone;
         showTimezoneIcon;
+        actionPost1;
+        editMode: boolean;
+        postIDvalue;
+        selectedActionListVal;
+        changeFlag:boolean
+        dirtyFlag:boolean
 
         constructor($scope: IActionItemAddPageScope, $q: ng.IQService, $state, $uibModal, $filter, $timeout,
-                    SpinnerService: AIP.SpinnerService, APP_ROOT, AdminActionService: AIP.AdminActionService) {
+                    SpinnerService: AIP.SpinnerService, APP_ROOT,AdminActionStatusService, AdminActionService: AIP.AdminActionService) {
             $scope.vm = this;
             this.$q = $q;
             this.$scope = $scope;
@@ -78,6 +85,7 @@ module AIP {
             this.$timeout = $timeout;
             this.spinnerService = SpinnerService;
             this.adminActionService = AdminActionService;
+            this.adminActionStatusService=AdminActionStatusService;
             this.saving = false;
             this.IsVisible=false;
             this.localeDate={};
@@ -95,6 +103,12 @@ module AIP {
             this.selectedPopulation = {};
             this.APP_ROOT = APP_ROOT;
             this.errorMessage = {};
+            this.editMode = false;
+            this.changeFlag=false;
+            this.actionPost1 ={};
+            this.postIDvalue=0;
+            this.dirtyFlag=false;
+            this.selectedActionListVal=[];
 
             this.init();
         }
@@ -110,7 +124,8 @@ module AIP {
             var allPromises = [];
             var deferred = this.$q.defer();
             this.postActionItemInfo = {};
-
+            this.editMode = this.$state.params.isEdit==="true" ? true : false;
+            this.postIDvalue=this.$state.params.postIdval;
 
             allPromises.push(
                 this.adminActionService.getGrouplist()
@@ -122,7 +137,6 @@ module AIP {
 
                     })
             );
-
 
             allPromises.push(
                 this.adminActionService.getPopulationlist()
@@ -172,20 +186,90 @@ module AIP {
 
 
             this.$q.all(allPromises).then(() => {
+               
+                if (this.editMode) {
+                    this.adminActionService.getJobDetails(this.$state.params.postIdval)
+                        .then((response) => {
+                            if(response) {
+
+                                this.$scope.group={};
+                                this.$scope.population={};
+                                this.actionPost1=response;
+                                this.postActionItemInfo.name = this.actionPost1.postingName
+
+                                for ( var i=0; i<this.postActionItemInfo.group.length; i++)
+                                {
+                                    if (this.postActionItemInfo.group[i].groupName === this.actionPost1.groupName)
+                                    {
+                                        this.$scope.group = this.postActionItemInfo.group[i]
+                                    }
+                                }
+
+                                for ( var k=0; k<this.postActionItemInfo.population.length; k++)
+                                {
+                                    if (this.postActionItemInfo.population[k].name === this.actionPost1.postingPopulation)
+                                    {
+                                        this.$scope.population = this.postActionItemInfo.population[k]
+                                    }
+                                }
+
+                                this.selected= this.$scope.group
+                                this.selectedPopulation =   this.$scope.population
+                                this.postActionItemInfo.groupName = this.actionPost1.groupName
+                                this.postActionItemInfo.startDate = this.actionPost1.postingDisplayStartDate
+                                this.postActionItemInfo.endDate =  this.actionPost1.postingDisplayEndDate
+                                this.postActionItemInfo.localeDate = this.actionPost1.postingScheduleDateTime
+                                this.postNow = false
+                                this.regeneratePopulation=this.actionPost1.populationRegenerateIndicator
+
+                                if(this.postActionItemInfo.localeTime)
+                                {
+                                  var timeString = this.actionPost1.scheduledStartTime;
+                                  var hourEnd = timeString.indexOf(":");
+                                  var H = +timeString.substr(0, hourEnd);
+                                  var h = H % 12 || 12;
+                                  var ampm = H < 12 ? "AM" : "PM";
+                                  timeString = h + timeString.substr(hourEnd, 3) + ampm;
+                                  this.sendTime=timeString;
+                                }
+                                else
+                                {
+                                    this.sendTime=this.actionPost1.scheduledStartTime;
+                                }
+
+                                this.timezone=this.actionPost1.timezoneStringOffset.ID
+                                this.changedValue();
+
+                                this.adminActionStatusService.getActionItemsById(this.$state.params.postIdval)
+                                    .then((response) => {
+                                        this.selectedActionListVal=response.data;
+                                        this.itemLength = this.selectedActionListVal.length;
+
+                                    });
+
+
+
+                                    } else {
+                                //todo: output error in notification center?
+                                console.log("fail");
+                            }
+                        }, (err) => {
+                            //TODO:: handle error call
+                            console.log(err);
+                        })
+
+                }
                 this.spinnerService.showSpinner(false);
             });
         }
 
-        /*ShowPassport(value) {
-        this.IsVisible = value == "Y";
-                console.log(value)
-    }*/
+
         changedValue() {
+
+            this.changeFlag=true;
             this.itemLength = 0;
             this.modalResult = [];
             var groupId = this.$scope;
-            console.log(this.$scope);
-            console.log(this.selected.folderName)
             this.adminActionService.getGroupActionItem(this.selected.groupId)
 
                 .then((response: AIP.IPostActionItemResponse) => {
@@ -200,13 +284,14 @@ module AIP {
         setTime(time){
             this.sendTime = time;
             this.sendTime =this.$filter('date')(this.sendTime, 'HHmm');
-            console.log(this.sendTime)
+
         };
 
 
        showTimeZoneList() {
         this.showTimezoneIcon = false;
-    };
+       };
+
         pad(number, length){
         var str = "" + number
         while (str.length < length) {
@@ -216,9 +301,10 @@ module AIP {
     }
         setTimezone(timezone) {
             this.timezone = timezone;
-            console.log(this.timezone)
+
         };
         editPage() {
+
             this.modalInstance = this.$uibModal.open({
                 templateUrl: this.APP_ROOT + "admin/action/post/addpost/postAddTemplate.html",
                 controller: "PostAddModalCtrl",
@@ -235,6 +321,18 @@ module AIP {
                     },
                     actionFolderGroupModal: () => {
                         return this.selected.folderName;
+                    },
+                    EditMode: () => {
+                        return this.editMode
+                    },
+                    PostId: () => {
+                        return this.postIDvalue
+                    },
+                    selectedActionItemList: () =>{
+                        return this.selectedActionListVal
+                    },
+                    ChangeFlag: () =>{
+                        return this.changeFlag
                     }
 
                 },
@@ -247,6 +345,9 @@ module AIP {
                     this.modalResult = item;
                     this.modalResults.push(this.modalResult.actionItemId);
                 });
+                if (this.editMode) {
+                    this.dirtyFlag = true
+                }
 
             }, (error) => {
                 console.log(error);
@@ -305,9 +406,38 @@ module AIP {
             }
         }
 
+         checkChanges() {
+
+             var that = this;
+             if (that.editMode) {
+                 that.dirtyFlag = true
+             }
+         }
+
         cancel() {
-            this.$state.go("admin-post-list");
+
+            var that=this;
+
+            if (that.editMode === true && that.dirtyFlag === true) {
+
+                var n = new Notification({
+                    message: this.$filter("i18n_aip")("aip.common.action.post.status.edit.warning"),
+                    type: "warning",
+                });
+                n.addPromptAction(this.$filter("i18n_aip")("aip.common.text.no"), function () {
+                    that.$state.go("admin-post-list");
+                    notifications.remove(n);
+                })
+                n.addPromptAction(this.$filter("i18n_aip")("aip.common.text.yes"), function () {
+                })
+                notifications.addNotification(n);
+            }
+            else
+            {
+                that.$state.go("admin-post-list");
+            }
         }
+
 
         save() {
             this.saving = true;
