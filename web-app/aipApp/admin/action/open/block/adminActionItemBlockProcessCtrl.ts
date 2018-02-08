@@ -474,7 +474,7 @@ module AIP {
                 .then((response) => {
                     if (response.posted) {
                         var n = new Notification({
-                            message: this.$filter("i18n_aip")("aip.admin.action.content.edit.posted.warning"),
+                            message: this.$filter("i18n_aip")("aip.admin.halt.content.save.warning"),
                             type: "warning"
                         });
                         n.addPromptAction(this.$filter("i18n_aip")("aip.common.text.yes"), () => {

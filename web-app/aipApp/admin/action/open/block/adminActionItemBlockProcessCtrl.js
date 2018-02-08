@@ -389,7 +389,7 @@ var AIP;
                 .then(function (response) {
                 if (response.posted) {
                     var n = new Notification({
-                        message: _this.$filter("i18n_aip")("aip.admin.action.content.edit.posted.warning"),
+                        message: _this.$filter("i18n_aip")("aip.admin.halt.content.save.warning"),
                         type: "warning"
                     });
                     n.addPromptAction(_this.$filter("i18n_aip")("aip.common.text.yes"), function () {
