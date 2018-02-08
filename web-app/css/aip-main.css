@@ -889,7 +889,7 @@ ol.selected-group > li > button {
   #actionItemBlockProcess .urlsplit {
     padding-top: 8px;
     display: block; }
-  @media (max-width: 850px) {
+  @media (max-width: 1200px) {
     #actionItemBlockProcess .smalldevicefix {
       padding: 0px; }
     #actionItemBlockProcess .smalldeviceglobal {
