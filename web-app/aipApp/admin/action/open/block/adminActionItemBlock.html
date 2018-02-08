@@ -23,7 +23,7 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
 
 
 
-                            </div>
+                            </div>{{vm.blockedProcess.actionItemId}}
                             <table class="adminGroupOpenContent" ng-if="vm.blockedProcess.length !==0">
                                 <!--<caption area-label="Group Action Items">
                                     {{'aip.common.group.actionItems'|i18n_aip}}
@@ -35,7 +35,7 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
                                 <th class="">
                                     {{'aip.admin.addBlockProcessData.process.url'|i18n_aip}}
                                 </th>
-                                <th class="">
+                                <th class=""  ng-repeat="item in vm.blockedProcess" ng-if="item.blockedProcessAppRoleDisplay !=null">
                                     {{'aip.admin.addBlockProcessData.process.persona'|i18n_aip}}
                                 </th>
 
@@ -44,7 +44,7 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
                                 <tr ng-repeat="item in vm.blockedProcess | orderBy:'item.processName'">
                                     <td width="40%">{{item.processName}}</td>
                                     <td width="50%"><span class="urlsplit" ng-repeat="blockedurl in item.urls">{{blockedurl}}</span></td>
-                                    <td width="40%">{{item.blockedProcessAppRoleDisplay}}</td>
+                                    <td width="40%" ng-if="item.blockedProcessAppRoleDisplay !=null">{{item.blockedProcessAppRoleDisplay}}</td>
                                 </tr>
 
                                 </tbody>
