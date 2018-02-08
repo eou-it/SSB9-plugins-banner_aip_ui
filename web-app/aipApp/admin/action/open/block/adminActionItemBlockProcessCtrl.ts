@@ -79,7 +79,7 @@ module AIP {
 
             this.blockedProcess = [];
             this.allBlockProcessList = [];
-            console.log
+
             this.alreadyGenerated = [];
             this.selected = [];
             this.originalAssign = [];
@@ -122,14 +122,14 @@ module AIP {
                             this.blockedProcess = <any[]>response.data.blockedProcess || response.data;
                             this.globalBlockProcess=response.data.globalBlockProcess;
                             this.allBlockProcessList=response.data;
-                            console.log( this.blockedProcess);
+
                         } else {
                             this.allBlockProcessList = <any[]>response.data.blockedProcess;
-                            console.log( this.blockedProcess);
+
                         }
 
                     } else {
-                        console.log( this.blockedProcess);
+
                         this.blockedProcess = []
                     }
                     deferred.resolve(response.data.blockedProcess);
@@ -145,7 +145,7 @@ module AIP {
         enterEditMode() {
             this.adminActionService.loadBlockingProcessLov1().then((response:any) => {
                 this.allActionItems = response.data;
-                console.log(this.allActionItems)
+
                 var that = this;
                 this.personaData=[];
 
@@ -158,24 +158,28 @@ module AIP {
 
                 if(this.blockedProcess.length!==0){
                     this.editMode=true;
-                    console.log(this.allBlockProcessList)
+
                     var editBlockData=[];
                     var name;
                     var persona;
+                    var personAllowed;
                     var urls;
                     var id;
                     this.globalBlockProcess;
-                    console.log(this.globalBlockProcess)
+
 
                     angular.forEach(this.blockedProcess,(key) => {
-                        console.log(this.blockedProcess)
 
+                        if(key.processPersonaBlockAllowedInd==='N'){
+                            key.blockedProcessAppRole="";
+                        }
 
                         {
                             editBlockData.push ({process:{id:key.id.blockingProcessId,name: key.processName,urls: key.urls,personAllowed:key.processPersonaBlockAllowedInd}, persona: key.blockedProcessAppRole})
                         }
 
                     })
+
                     this.selected=editBlockData;
                     console.log(this.selected)
                     //this.originalAssign = angular.copy(this.selected);
