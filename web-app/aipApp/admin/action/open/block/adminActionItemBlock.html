@@ -80,7 +80,7 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
                 </div>
 
                 <div class="row actionItemBlock"  ng-repeat="(index, item) in vm.selected">
-                    <div class="col-xs-8 col-sm-3 smalldeviceglobal">
+                    <div class="col-xs-8 col-sm-12 col-md-12  col-lg-3 smalldeviceglobal">
                         <label for="" class="titleValue" >{{"aip.admin.addBlockProcessData.process"|i18n_aip}}:</label>
                         <xe-ui-select id="select2actionItems" ng-model="vm.selected[index].process" theme="select2" ng-disabled="disabled">
                             <xe-ui-select-match placeholder="Select">
@@ -94,13 +94,13 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
                         </xe-ui-select>
                     </div>
 
-                    <div class="row urldata  col-sm-4 smalldeviceglobal">
+                    <div class="row urldata  col-sm-12 col-md-12 col-xs-8 col-lg-4 smalldeviceglobal">
                         <ul class="col-xs-12 smalldevicefix">
                             <div class="urllabel"> <label for="" class="titleValue" id="template-content">{{"aip.admin.addBlockProcessData.process.url"|i18n_aip}}:</label></div>
                             <div class="urldata"><li class="personadata" ng-repeat="urlItem in vm.selected[index].process.urls">{{urlItem}}</li></div></ul>
                     </div>
 
-                    <div class="row col-sm-4 col-xs-8 smalldeviceglobal"  ng-if="vm.selected[index].process.personAllowed !=='N' && vm.selected[index].process.processPersonaBlockAllowedInd !=='N'">
+                    <div class="row col-sm-12 col-xs-8 col-md-12  col-lg-4 smalldeviceglobal"  ng-if="vm.selected[index].process.personAllowed !=='N' && vm.selected[index].process.processPersonaBlockAllowedInd !=='N'">
                         <label for="" class="titleValue" >{{"aip.admin.addBlockProcessData.process.persona"|i18n_aip}}:</label>
                         <xe-ui-select id="postActionItemPopulation" ng-model="vm.selected[index].persona" theme="select2">
 
@@ -130,7 +130,7 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
                             <i class="icon icon-arrowBottom-C" aria-hidden="true"></i>
                         </div>
                     </div>-->
-                    <div class="col-xs-12 col-sm-1">
+                    <div class="col-xs-4 col-sm-4 col-lg-1">
                         <div type="button" class="btn btn-default vertical col-xs-6" ng-click="vm.delete(item)" aria-label="{{'aip.admin.group.actionItem.delete'|i18n_aip}}"
                              title="{{'aip.admin.group.actionItem.delete'|i18n_aip}}">
                             <i class="icon icon-delete-CO" aria-hidden="true"></i>
