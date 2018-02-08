@@ -7,6 +7,9 @@ import grails.converters.JSON
 import net.hedtech.banner.exceptions.ApplicationException
 import org.apache.log4j.Logger
 import org.codehaus.groovy.grails.plugins.web.taglib.ValidationTagLib
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import  net.hedtech.banner.i18n.MessageHelper
 
 /**
  * Controller class for AIP Action Item Posting
@@ -17,6 +20,7 @@ class AipActionItemPostingController {
     def actionItemGroupAssignReadOnlyService
     def actionItemProcessingCommonService
     def actionItemPostReadOnlyService
+    def actionItemPostDetailService
     /**
      * Add Action Item Post
      * @return
@@ -75,15 +79,18 @@ class AipActionItemPostingController {
         render results as JSON
     }
 
-    /**
-     * status item post jobs
-     * @return
-     */
-
     def getStatusValue() {
         def value = actionItemPostReadOnlyService.statusPosted( (params.postID ?: 0) as long )
         render value as String
     }
 
+    def getJobDetailsByPostId() {
+        def result = actionItemPostReadOnlyService.JobDetailsByPostId( (params.postID ?: 0) as long )
+        render result as JSON
+    }
 
+    def getActionItemByPostId() {
+        def result = actionItemPostDetailService.fetchByActionItemPostId( (params.postID ?: 0) as long )
+        render result as JSON
+    }
 }

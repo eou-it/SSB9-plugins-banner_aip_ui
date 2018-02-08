@@ -21,7 +21,7 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
             <div class="actionItemElement col-xs-12 col-md-8">
                 <div class="row">
                     <input id="actionItemName" type="text" class="form-control"
-                           ng-model="vm.postActionItemInfo.name"
+                           ng-model="vm.postActionItemInfo.name" ng-change="vm.checkChanges()"
                            placeholder='{{"aip.admin.action.actionItem.Postingjob"|i18n_aip}}'
                            aria-label='{{"aip.admin.action.actionItem.Postingjob"|i18n_aip}}'
                            aria-required="true">
@@ -36,7 +36,7 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
             </div>
             <div class="actionItemElement col-xs-8 col-sm-8">
                 <div class="row">
-                    <xe-ui-select id="postActionItemGroup" ng-change="vm.changedValue()" ng-model="vm.selected"
+                    <xe-ui-select id="postActionItemGroup" ng-change="vm.changedValue();vm.checkChanges()" ng-model="vm.selected"
                                   theme="select2" ng-disabled="disabled">
 
                         <xe-ui-select-match class="placeholderDisplay" placeholder="Select">
@@ -79,7 +79,7 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
 
             <div class="actionItemElement col-xs-12 col-sm-5">
                 <div class="row">
-                    <xe-ui-select id="postActionItemPopulation" ng-model="vm.selectedPopulation" theme="select2"
+                    <xe-ui-select id="postActionItemPopulation" ng-model="vm.selectedPopulation"  ng-change="vm.checkChanges()" theme="select2"
                                   ng-disabled="disabled">
 
                         <xe-ui-select-match placeholder="Select">
@@ -127,7 +127,7 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
 
                         <div class="row input-daterange form-group right-inner-addon">
                             <input type="text" id="date" date-picker ng-model="vm.postActionItemInfo.startDate"
-                                   today="{{today}}"
+                                   today="{{today}}" ng-change="vm.checkChanges()"
                                    class="form-control  Datelement" name="deliveryDate"
                                    aria-required="true" required autocomplete="off"
                                    placeholder='{{"aip.postaction.dateFormatWaterMark"|i18n_aip}}'/>
@@ -144,8 +144,7 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
                         <div class="row">
                             <input type="text" date-picker id="deliveryDate1"
                                    class="form-control  Datelement" name="deliveryDate"
-                                   ng-model="vm.postActionItemInfo.endDate"
-
+                                   ng-model="vm.postActionItemInfo.endDate" ng-change="vm.checkChanges()"
                                    aria-required="true" required autocomplete="off"
                                    placeholder='{{"aip.postaction.dateFormatWaterMark"|i18n_aip}}'/>
                         </div>
@@ -156,11 +155,11 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
 
         <div class="row actionItemInfoRow actionItemStatus">
             <div class="">
-                <input type="radio" id="chkPost" name="content"  ng-model="vm.postNow" data-ng-value="true" >
+                <input type="radio" id="chkPost" name="content"  ng-model="vm.postNow" data-ng-value="true"  ng-change="vm.checkChanges()">
                 <label class="titleValue  required" for="chkPost"><span class="postChk">{{"aip.admin.action.postactionItem.post.now"|i18n_aip}}</span></label>
 
                <br/>
-                <input type="radio" id="chkDate" name="content"  ng-model="vm.postNow" data-ng-value="false" >
+                <input type="radio" id="chkDate" name="content"  ng-model="vm.postNow" data-ng-value="false" ng-change="vm.checkChanges()">
                 <label class="titleValue  required" for="chkDate">
                     <span class="postChk">{{"aip.admin.action.postactionItem.scheduleDate"|i18n_aip}}</span></label>
 
@@ -173,7 +172,7 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
                         <div class="actionItemElement Datelement col-sm-4 col-md-2  dateRow form-container" role="textbox">
 
                             <div class="row input-daterange right-inner-addon">
-                                <input type="text" id="date1" date-picker ng-model="vm.postActionItemInfo.localeDate"
+                                <input type="text" id="date1" date-picker ng-model="vm.postActionItemInfo.localeDate" ng-change="vm.checkChanges()"
                                        class="form-control  Datelement" name="deliveryDate"
                                        aria-required="true" required autocomplete="off"
                                        placeholder='{{"aip.postaction.dateFormatWaterMark"|i18n_aip}}'/>
@@ -193,7 +192,7 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
 
                                         <div class="row input-daterange form-group right-inner-addon col-sm-6">
                                             <input type="text" class="form-control  " name="" aria-required="true" xe-time-picker-box input_24_hr_string="{{vm.localeTime ? 'N' : 'Y'}}" hour-format-12="{{vm.localeTime ? 'Y' : 'N'}}"
-                                                   am-label='{{"aip.admin.communication.timepicker.time.am.label"|i18n_aip}}'  pm-label='{{"aip.admin.communication.timepicker.time.pm.label"|i18n_aip}}' ng-model="vm.sendTime"/>
+                                                   am-label='{{"aip.admin.communication.timepicker.time.am.label"|i18n_aip}}'  pm-label='{{"aip.admin.communication.timepicker.time.pm.label"|i18n_aip}}' ng-model="vm.sendTime" ng-change="vm.checkChanges()"/>
 
                                         </div>
                                     </div>
@@ -206,8 +205,8 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
                                     <div class="actionItemElement col-sm-6" id="">
                                         <div class="row timeZone">
                                             <span class="col-xs-11 col-sm-10 defaultTimezone" ng-if="vm.showTimezoneIcon" ng-bind-html="vm.defaultTimeZone"></span>
-                                            <button type="button" class="col-xs-1 col-sm-2 timezone-btn" ng-hide="!vm.showTimezoneIcon" ng-show="vm.showTimezoneIcon" ng-click="vm.showTimeZoneList()"></button>
-                                            <xe-ui-select class="col-xs-12 col-sm-12 timeZoneChange" ng-model="vm.timezone" ng-change="vm.setTimezone(vm.timezone)" theme="select2" ng-hide="vm.showTimezoneIcon" ng-show="vm.showTimezoneIcon">
+                                            <button type="button" class="col-xs-1 col-sm-2 timezone-btn" ng-hide="vm.!showTimezoneIcon" ng-show="vm.showTimezoneIcon" ng-click="vm.showTimeZoneList()"></button>
+                                            <xe-ui-select class="col-xs-12 col-sm-12 timeZoneChange" ng-model="vm.timezone" ng-change="vm.setTimezone(vm.timezone);vm.checkChanges()" theme="select2" ng-hide="vm.showTimezoneIcon" ng-show="vm.showTimezoneIcon">
                                                 <xe-ui-select-match placeholder="{{'aip.admin.communication.sendMessage.timezonePlaceHolder' | i18n_aip}}" ng-bind-html="vm.timezone.displayName"></xe-ui-select-match>
                                                 <xe-ui-select-choices repeat="timezone in vm.timezones | filter: $select.search">
                                                     <div ng-bind-html="timezone.displayName | highlight: $select.search"></div>
@@ -224,7 +223,7 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
             </div>
 
         </div>
-        <div class="clear-both"><input type="checkbox" id="chkPopulation" ng-model="vm.regeneratePopulation"><label
+        <div class="clear-both"><input type="checkbox" id="chkPopulation" ng-model="vm.regeneratePopulation" ng-change="vm.checkChanges()"><label
                 class="titleValue required"><span class="postChk">{{"aip.admin.action.postactionItem.regenerate.Population"|i18n_aip}}</span></label>
         </div>
 
@@ -238,7 +237,12 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
                         <button name="Cancel" type="button" class="btn btn-default col-sm-2" ng-click="vm.cancel()">{{"aip.common.cancel"|i18n_aip}}</button>
                     </span>
                     <span>
-                        <button name="Save" type="button" class="btn btn-primary col-sm-2" ng-disabled="!vm.validateInput()"
+                        <button name="Save" type="button" class="btn btn-primary col-sm-2" ng-if="vm.editMode==false" ng-disabled=" !vm.validateInput() "
+                                ng-click="vm.save()">
+                        {{"aip.common.submitandreturn"|i18n_aip}}</button>
+                    </span>
+                    <span>
+                        <button name="Save" type="button" class="btn btn-primary col-sm-2"  ng-if="vm.editMode==true" ng-disabled=" !vm.dirtyFlag || !vm.validateInput() "
                                 ng-click="vm.save()">
                         {{"aip.common.submitandreturn"|i18n_aip}}</button>
                     </span>

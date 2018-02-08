@@ -60,6 +60,13 @@ var AIP;
             });
             return request;
         };
+        AdminActionStatusService.prototype.getActionItemsById = function (PostId) {
+            var request = this.$http({
+                method: "GET",
+                url: this.ENDPOINT.admin.actionItemById + "?postID=" + PostId
+            });
+            return request;
+        };
         AdminActionStatusService.$inject = ["$http", "$q", "$filter", "ENDPOINT"];
         return AdminActionStatusService;
     }());

@@ -137,6 +137,15 @@ module AIP {
             return request;
         }
 
+        getActionItemsById(PostId)
+        {
+            var request = this.$http({
+                method: "GET",
+                url: this.ENDPOINT.admin.actionItemById + "?postID=" + PostId
+            });
+            return request;
+        }
+
         /*
          getFolder() {
          var request = this.$http({
