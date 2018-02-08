@@ -4,7 +4,7 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <html>
 <head>
-
+    <base href="${createLink(uri: '/ssb')}/">
     <meta name="headerAttributes" content=""/>
     <title></title>
     <meta name="layout" content="bannerSelfServicePage"/>
@@ -30,7 +30,7 @@
         }
         </g:javascript>
     </script>
-
+    <g:bannerMessages/>
 </head>
 
 <body>

@@ -48,7 +48,6 @@ var AIP;
             this.globalBlockProcess = false;
             this.blockedProcess = [];
             this.allBlockProcessList = [];
-            console.log;
             this.alreadyGenerated = [];
             this.selected = [];
             this.originalAssign = [];
@@ -87,15 +86,12 @@ var AIP;
                         _this.blockedProcess = response.data.blockedProcess || response.data;
                         _this.globalBlockProcess = response.data.globalBlockProcess;
                         _this.allBlockProcessList = response.data;
-                        console.log(_this.blockedProcess);
                     }
                     else {
                         _this.allBlockProcessList = response.data.blockedProcess;
-                        console.log(_this.blockedProcess);
                     }
                 }
                 else {
-                    console.log(_this.blockedProcess);
                     _this.blockedProcess = [];
                 }
                 deferred.resolve(response.data.blockedProcess);
@@ -109,7 +105,6 @@ var AIP;
             var _this = this;
             this.adminActionService.loadBlockingProcessLov1().then(function (response) {
                 _this.allActionItems = response.data;
-                console.log(_this.allActionItems);
                 var that = _this;
                 _this.personaData = [];
                 angular.forEach(_this.allActionItems.persona, function (value, key) {
@@ -119,16 +114,17 @@ var AIP;
                 });
                 if (_this.blockedProcess.length !== 0) {
                     _this.editMode = true;
-                    console.log(_this.allBlockProcessList);
                     var editBlockData = [];
                     var name;
                     var persona;
+                    var personAllowed;
                     var urls;
                     var id;
                     _this.globalBlockProcess;
-                    console.log(_this.globalBlockProcess);
                     angular.forEach(_this.blockedProcess, function (key) {
-                        console.log(_this.blockedProcess);
+                        if (key.processPersonaBlockAllowedInd === 'N') {
+                            key.blockedProcessAppRole = "";
+                        }
                         {
                             editBlockData.push({ process: { id: key.id.blockingProcessId, name: key.processName, urls: key.urls, personAllowed: key.processPersonaBlockAllowedInd }, persona: key.blockedProcessAppRole });
                         }
@@ -316,11 +312,11 @@ var AIP;
             this.getBlockedProcessList(this.$state.params.actionItemId)
                 .then(function (response) {
                 _this.alreadyGenerated = [];
-                _this.editMode = false;
+                _this.editMode = true;
             }, function (error) {
                 console.log("something wrong");
                 _this.alreadyGenerated = [];
-                _this.editMode = false;
+                _this.editMode = true;
             });
         };
         AdminActionItemBlockCtrl.prototype.isEqual = function (item1, item2) {
@@ -335,66 +331,75 @@ var AIP;
             }
             return false;
         };
-        AdminActionItemBlockCtrl.prototype.saveBlocks = function () {
+        AdminActionItemBlockCtrl.prototype.saveSucess = function () {
             var _this = this;
-            //save selected items then exit edit mode
-            this.editMode = false;
-            this.isSaving = true;
-            // items: this.alreadyGenerated[{id:id, name: "name", value:{processNamei18n:"i18n", urls:["url"]}}]
-            // actionItemId: this.$state.params.data
             var saveData = this.selected.map(function (item) {
                 return { processId: item.process.id, persona: item.persona };
             });
+            this.adminActionService.updateBlockedProcessItems(this.$state.params.actionItemId, this.globalBlockProcess, saveData)
+                .then(function (response) {
+                _this.getBlockedProcessList(_this.$state.params.actionItemId);
+                if (response.data.success) {
+                    var notiParams = {};
+                    notiParams = {
+                        notiType: "saveSuccess",
+                        noti: notiParams,
+                        data: response.data.success
+                    };
+                    _this.handleNotification(notiParams);
+                }
+                if (response.data.success) {
+                    var notiParams = {};
+                    notiParams = {
+                        notiType: "saveSuccess",
+                        noti: notiParams,
+                        data: response.data.success
+                    };
+                    _this.handleNotification(notiParams);
+                }
+                else {
+                    var notiParams = {};
+                    notiParams = {
+                        notiType: "saveFailed",
+                        noti: notiParams,
+                        data: response.data.message
+                    };
+                    _this.handleNotification(notiParams);
+                    _this.editMode = true;
+                }
+                _this.isSaving = false;
+            }, function (error) {
+                _this.isSaving = false;
+            });
+            this.editMode = false;
+        };
+        AdminActionItemBlockCtrl.prototype.saveBlocks = function () {
+            var _this = this;
+            var that = this;
+            //save selected items then exit edit mode
+            //this.editMode = false;
+            this.isSaving = true;
+            // items: this.alreadyGenerated[{id:id, name: "name", value:{processNamei18n:"i18n", urls:["url"]}}]
+            // actionItemId: this.$state.params.data
             this.adminActionService.checkActionItemPosted(this.$state.params.actionItemId)
                 .then(function (response) {
                 if (response.posted) {
                     var n = new Notification({
-                        message: _this.$filter("i18n_aip")("aip.admin.action.content.edit.posted.warning"),
+                        message: _this.$filter("i18n_aip")("aip.admin.halt.content.save.warning"),
                         type: "warning"
                     });
                     n.addPromptAction(_this.$filter("i18n_aip")("aip.common.text.yes"), function () {
                         notifications.remove(n);
-                        _this.adminActionService.updateBlockedProcessItems(_this.$state.params.actionItemId, _this.globalBlockProcess, saveData)
-                            .then(function (response) {
-                            _this.getBlockedProcessList(_this.$state.params.actionItemId);
-                            if (response.data.success) {
-                                var notiParams = {};
-                                notiParams = {
-                                    notiType: "saveSuccess",
-                                    noti: notiParams,
-                                    data: response.data.success
-                                };
-                                _this.handleNotification(notiParams);
-                            }
-                            if (response.data.success) {
-                                var notiParams = {};
-                                notiParams = {
-                                    notiType: "saveSuccess",
-                                    noti: notiParams,
-                                    data: response.data.success
-                                };
-                                _this.handleNotification(notiParams);
-                            }
-                            else {
-                                var notiParams = {};
-                                notiParams = {
-                                    notiType: "saveFailed",
-                                    noti: notiParams,
-                                    data: response.data.message
-                                };
-                                _this.handleNotification(notiParams);
-                                _this.editMode = true;
-                            }
-                            _this.isSaving = false;
-                        }, function (error) {
-                            _this.isSaving = false;
-                        });
+                        _this.saveSucess();
                     });
                     n.addPromptAction(_this.$filter("i18n_aip")("aip.common.text.no"), function () {
                         notifications.remove(n);
                         _this.editMode = true;
                     });
                     notifications.addNotification(n);
+                }
+                else {
+                    _this.saveSucess();
                 }
             });
         };

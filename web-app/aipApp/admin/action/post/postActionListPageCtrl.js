@@ -1,6 +1,5 @@
-/*******************************************************************************
- Copyright 2018 Ellucian Company L.P. and its affiliates.
- ********************************************************************************/
+///<reference path="../../../../typings/tsd.d.ts"/>
+///<reference path="../../../common/services/admin/adminActionService.ts"/>
 var AIP;
 (function (AIP) {
     var PostActionListPageCtrl = (function () {
@@ -203,19 +202,16 @@ var AIP;
             var _this = this;
             this.actionListService.getPostStatus(postId)
                 .then(function (response) {
-				 while (notifications.length != 0) {
-                        notifications.remove(notifications.first())
-                    }
-							
+                while (notifications.length != 0) {
+                    notifications.remove(notifications.first());
+                }
                 if (response === "Y") {
                     _this.$state.go("admin-post-edit", { postIdval: postId, isEdit: true });
                 }
                 else {
-					
-					while (notifications.length != 0) {
-    					notifications.remove(notifications.first())
-					}
-					
+                    while (notifications.length != 0) {
+                        notifications.remove(notifications.first());
+                    }
                     var n = new Notification({
                         message: _this.$filter("i18n_aip")("aip.common.post.edit.noaccess"),
                         type: "error",

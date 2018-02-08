@@ -79,7 +79,7 @@ module AIP {
 
             this.blockedProcess = [];
             this.allBlockProcessList = [];
-            console.log
+
             this.alreadyGenerated = [];
             this.selected = [];
             this.originalAssign = [];
@@ -122,14 +122,14 @@ module AIP {
                             this.blockedProcess = <any[]>response.data.blockedProcess || response.data;
                             this.globalBlockProcess=response.data.globalBlockProcess;
                             this.allBlockProcessList=response.data;
-                            console.log( this.blockedProcess);
+
                         } else {
                             this.allBlockProcessList = <any[]>response.data.blockedProcess;
-                            console.log( this.blockedProcess);
+
                         }
 
                     } else {
-                        console.log( this.blockedProcess);
+
                         this.blockedProcess = []
                     }
                     deferred.resolve(response.data.blockedProcess);
@@ -145,7 +145,7 @@ module AIP {
         enterEditMode() {
             this.adminActionService.loadBlockingProcessLov1().then((response:any) => {
                 this.allActionItems = response.data;
-                console.log(this.allActionItems)
+
                 var that = this;
                 this.personaData=[];
 
@@ -158,24 +158,28 @@ module AIP {
 
                 if(this.blockedProcess.length!==0){
                     this.editMode=true;
-                    console.log(this.allBlockProcessList)
+
                     var editBlockData=[];
                     var name;
                     var persona;
+                    var personAllowed;
                     var urls;
                     var id;
                     this.globalBlockProcess;
-                    console.log(this.globalBlockProcess)
+
 
                     angular.forEach(this.blockedProcess,(key) => {
-                        console.log(this.blockedProcess)
 
+                        if(key.processPersonaBlockAllowedInd==='N'){
+                            key.blockedProcessAppRole="";
+                        }
 
                         {
                             editBlockData.push ({process:{id:key.id.blockingProcessId,name: key.processName,urls: key.urls,personAllowed:key.processPersonaBlockAllowedInd}, persona: key.blockedProcessAppRole})
                         }
 
                     })
+
                     this.selected=editBlockData;
                     console.log(this.selected)
                     //this.originalAssign = angular.copy(this.selected);
@@ -388,11 +392,11 @@ module AIP {
             this.getBlockedProcessList(this.$state.params.actionItemId)
                 .then((response) => {
                     this.alreadyGenerated = [];
-                    this.editMode = false;
+                    this.editMode = true;
                 }, (error) => {
                     console.log("something wrong");
                     this.alreadyGenerated = [];
-                    this.editMode = false;
+                    this.editMode = true;
                 });
         }
 
@@ -410,72 +414,77 @@ module AIP {
             return false;
         }
 
-        saveBlocks() {
-            //save selected items then exit edit mode
-            this.editMode = false;
-            this.isSaving = true;
-            // items: this.alreadyGenerated[{id:id, name: "name", value:{processNamei18n:"i18n", urls:["url"]}}]
-            // actionItemId: this.$state.params.data
-
+        saveSucess(){
             var saveData = this.selected.map((item)=>
             {
                 return {processId:item.process.id, persona: item.persona};
             });
+            this.adminActionService.updateBlockedProcessItems(this.$state.params.actionItemId,this.globalBlockProcess,saveData)
+                .then((response) => {
+                    this.getBlockedProcessList(this.$state.params.actionItemId);
+
+
+                    if(response.data.success){
+                        var notiParams = {};
+
+                        notiParams = {
+                            notiType: "saveSuccess",
+                            noti: notiParams,
+                            data: response.data.success
+                        };
+                        this.handleNotification( notiParams);
+
+                    }
+                    if(response.data.success){
+                        var notiParams = {};
+
+                        notiParams = {
+                            notiType: "saveSuccess",
+                            noti: notiParams,
+                            data: response.data.success
+                        };
+                        this.handleNotification( notiParams);
+
+                    }
+                    else{
+                        var notiParams = {};
+
+                        notiParams = {
+                            notiType: "saveFailed",
+                            noti: notiParams,
+                            data: response.data.message
+                        };
+                        this.handleNotification( notiParams);
+                        this.editMode = true;
+                    }
+
+                    this.isSaving = false;
+                }, (error) => {
+                    this.isSaving = false;
+                });
+            this.editMode = false;
+        }
+
+        saveBlocks() {
+            var that=this;
+            //save selected items then exit edit mode
+            //this.editMode = false;
+            this.isSaving = true;
+            // items: this.alreadyGenerated[{id:id, name: "name", value:{processNamei18n:"i18n", urls:["url"]}}]
+            // actionItemId: this.$state.params.data
+
+
             this.adminActionService.checkActionItemPosted(this.$state.params.actionItemId)
                 .then((response) => {
                     if (response.posted) {
                         var n = new Notification({
-                            message: this.$filter("i18n_aip")("aip.admin.action.content.edit.posted.warning"),
+                            message: this.$filter("i18n_aip")("aip.admin.halt.content.save.warning"),
                             type: "warning"
                         });
                         n.addPromptAction(this.$filter("i18n_aip")("aip.common.text.yes"), () => {
+
                             notifications.remove(n);
-                            this.adminActionService.updateBlockedProcessItems(this.$state.params.actionItemId,this.globalBlockProcess,saveData)
-                                .then((response) => {
-                                    this.getBlockedProcessList(this.$state.params.actionItemId);
-
-
-                                    if(response.data.success){
-                                        var notiParams = {};
-
-                                        notiParams = {
-                                            notiType: "saveSuccess",
-                                            noti: notiParams,
-                                            data: response.data.success
-                                        };
-                                        this.handleNotification( notiParams);
-
-                                    }
-
-
-
-                                    if(response.data.success){
-                                        var notiParams = {};
-
-                                        notiParams = {
-                                            notiType: "saveSuccess",
-                                            noti: notiParams,
-                                            data: response.data.success
-                                        };
-                                        this.handleNotification( notiParams);
-
-                                    }
-                                    else{
-                                        var notiParams = {};
-
-                                        notiParams = {
-                                            notiType: "saveFailed",
-                                            noti: notiParams,
-                                            data: response.data.message
-                                        };
-                                        this.handleNotification( notiParams);
-                                        this.editMode = true;
-                                    }
-
-                                    this.isSaving = false;
-                                }, (error) => {
-                                    this.isSaving = false;
-                                });
+                            this.saveSucess()
 
 
                         });
@@ -485,6 +494,10 @@ module AIP {
                         });
 
                         notifications.addNotification(n);
+                    }
+
+                    else{
+                        this.saveSucess()
                     }
                 })
 

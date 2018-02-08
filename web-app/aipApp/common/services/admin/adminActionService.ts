@@ -200,6 +200,7 @@ module AIP {
         getFolder(): ng.IHttpPromise<{}>;
         getStatus(): ng.IHttpPromise<{}>;
         getPostStatus():ng.IHttpPromise<{}>;
+        getJobDetails():ng.IHttpPromise<{}>;
         savePostActionItem(actionItem: IActionItemParam): ng.IHttpPromise<{}>;
         getActionItemDetail(actionItemId:number): ng.IHttpPromise<{}>;
     }
@@ -274,6 +275,21 @@ module AIP {
             var request = this.$http({
                 method: "GET",
                 url: this.ENDPOINT.admin.statusPosted+"?postID=" + postID
+            })
+                .then((response: any) => {
+                    return response.data;
+                }, (err) => {
+                    throw new Error(err);
+                });
+            return request;
+
+        }
+
+        getJobDetails(postID)
+        {
+            var request = this.$http({
+                method: "GET",
+                url: this.ENDPOINT.admin.jobDetailsById+"?postID=" + postID
             })
                 .then((response: any) => {
                     return response.data;

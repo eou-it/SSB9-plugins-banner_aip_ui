@@ -73,6 +73,18 @@ var AIP;
             });
             return request;
         };
+        AdminActionService.prototype.getJobDetails = function (postID) {
+            var request = this.$http({
+                method: "GET",
+                url: this.ENDPOINT.admin.jobDetailsById + "?postID=" + postID
+            })
+                .then(function (response) {
+                return response.data;
+            }, function (err) {
+                throw new Error(err);
+            });
+            return request;
+        };
         AdminActionService.prototype.getFolder = function () {
             var request = this.$http({
                 method: "GET",

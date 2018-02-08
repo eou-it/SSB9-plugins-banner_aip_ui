@@ -1,13 +1,11 @@
-/*******************************************************************************
- Copyright 2018 Ellucian Company L.P. and its affiliates.
- ********************************************************************************/
 //<reference path="../../../../../typings/tsd.d.ts"/>
 ///<reference path="../../../../common/services/admin/adminActionStatusService.ts"/>
 var AIP;
 (function (AIP) {
     var PostAddModalCtrl = (function () {
-        function PostAddModalCtrl($scope, $uibModalInstance, ENDPOINT, AdminActionStatusService, actionItemModal, actionGroupModal, actionFolderGroupModal, APP_ROOT) {
-            this.$inject = ["$scope", "$uibModalInstance", "ENDPOINT", "AdminActionStatusService", "actionItemModal", "actionGroupModal", "actionFolderGroupModal", "APP_ROOT"];
+        function PostAddModalCtrl($scope, $uibModalInstance, ENDPOINT, AdminActionStatusService, EditMode, PostId, ChangeFlag, selectedActionItemList, actionItemModal, actionGroupModal, actionFolderGroupModal, APP_ROOT) {
+            var _this = this;
+            this.$inject = ["$scope", "$uibModalInstance", "ENDPOINT", "AdminActionStatusService", "EditMode", "PostId", "ChangeFlag", "selectedActionItemList", "actionItemModal", "actionGroupModal", "actionFolderGroupModal", "APP_ROOT"];
             $scope.vm = this;
             this.$uibModalInstance = $uibModalInstance;
             this.ENDPOINT = ENDPOINT; //ENDPOINT.admin.actionList
@@ -15,11 +13,31 @@ var AIP;
             this.APP_ROOT = APP_ROOT;
             this.$scope = $scope;
             this.checkAll = true;
+            this.EditMode = EditMode;
+            this.PostId = PostId;
             this.actionItemModal = actionItemModal;
             this.actionGroupModal = actionGroupModal;
+            this.selectedActionItemList = selectedActionItemList;
+            this.ChangeFlag = ChangeFlag;
             this.actionItemModal.map(function (item) {
-                if (item.check === undefined) {
-                    item.check = true;
+                if (_this.EditMode === false || _this.ChangeFlag === true) {
+                    if (item.check === undefined) {
+                        item.check = true;
+                    }
+                }
+                else {
+                    if (_this.actionItemModal.length === _this.selectedActionItemList.length) {
+                        item.check = true;
+                    }
+                    else {
+                        for (var i = 0; i < _this.actionItemModal.length; i++) {
+                            for (var j = 0; j < _this.selectedActionItemList.length; j++) {
+                                if (_this.actionItemModal[i].actionItemId === _this.selectedActionItemList[j].actionItemId) {
+                                    actionItemModal[i].check = true;
+                                }
+                            }
+                        }
+                    }
                 }
             });
             this.actionFolderGroupModal = actionFolderGroupModal;
@@ -28,8 +46,6 @@ var AIP;
                 block: false
             };
             this.errorMessage = {};
-            console.log(this.actionItemModal);
-            console.log(this.actionItemModal.check);
         }
         /*checkAll() {
              if (this.checkAll === true) {

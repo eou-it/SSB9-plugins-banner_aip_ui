@@ -257,7 +257,10 @@ var bannerAIPApp = angular.module("bannerAIP", [
             listAvailableTimezones :aipAppAbsPath + "aipAdmin/listAvailableTimezones",
             checkActionItemPosted: aipAppAbsPath + "aipAdmin/checkActionItemPosted",
             loadBlockingProcessLov:aipAppAbsPath + "aipAdmin/loadBlockingProcessLov",
-            statusPosted:aipAppAbsPath + "aipActionItemPosting/getStatusValue"
+            statusPosted:aipAppAbsPath + "aipActionItemPosting/getStatusValue",
+			jobDetailsById:aipAppAbsPath + "aipActionItemPosting/getJobDetailsByPostId",
+            actionItemById:aipAppAbsPath + "aipActionItemPosting/getActionItemByPostId"
+
 
         }
     })
