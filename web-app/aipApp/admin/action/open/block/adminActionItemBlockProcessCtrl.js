@@ -215,27 +215,27 @@ var AIP;
             return validation;
         };
         /*selectActionItem(item, index) {
-            var currentAssigned = this.assignedActionItems[index];
-            if (currentAssigned.actionItemId === item.actionItemId) {
-                return;
-            }
-            if (!currentAssigned.actionItemId) {
-                currentAssigned.sequenceNumber = index + 1;
-            }
-            currentAssigned.actionItemId = item.actionItemId;
-            currentAssigned.actionItemFolderName = item.folderName;
-            currentAssigned.actionItemName = item.actionItemName;
-            currentAssigned.actionItemStatus = item.actionItemStatus;
-            this.assignedActionItems[index] = currentAssigned;
-            if(!this.selected[index].actionItemId) {
-                item.seq = index + 1;
-                this.selected[index] = item;
-            }
-            this.selected = this.selected.filter((item, idx) => {
-                return true;
-            });
-            this.reAssignSeqnumber()
-        }*/
+         var currentAssigned = this.assignedActionItems[index];
+         if (currentAssigned.actionItemId === item.actionItemId) {
+         return;
+         }
+         if (!currentAssigned.actionItemId) {
+         currentAssigned.sequenceNumber = index + 1;
+         }
+         currentAssigned.actionItemId = item.actionItemId;
+         currentAssigned.actionItemFolderName = item.folderName;
+         currentAssigned.actionItemName = item.actionItemName;
+         currentAssigned.actionItemStatus = item.actionItemStatus;
+         this.assignedActionItems[index] = currentAssigned;
+         if(!this.selected[index].actionItemId) {
+         item.seq = index + 1;
+         this.selected[index] = item;
+         }
+         this.selected = this.selected.filter((item, idx) => {
+         return true;
+         });
+         this.reAssignSeqnumber()
+         }*/
         AdminActionItemBlockCtrl.prototype.addNewItem = function () {
             var available = this.getAvailable();
             if (available.length > 0) {
@@ -334,6 +334,9 @@ var AIP;
         AdminActionItemBlockCtrl.prototype.saveSucess = function () {
             var _this = this;
             var saveData = this.selected.map(function (item) {
+                if (item.process.personAllowed === "N") {
+                    item.persona = "";
+                }
                 return { processId: item.process.id, persona: item.persona };
             });
             this.adminActionService.updateBlockedProcessItems(this.$state.params.actionItemId, this.globalBlockProcess, saveData)
