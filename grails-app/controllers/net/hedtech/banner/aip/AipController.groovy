@@ -15,9 +15,9 @@ class AipController {
     def userActionItemReadOnlyCompositeService
     def springSecurityService
 
-
+    static String ACTIONITEMADMIN_ROLE='SELFSERVICE-ACTIONITEMADMIN'
     def list() {
-        def model = []
+        def model = [isActionItemAdmin:isLoggedInActionItemAdmin()]
         render( model: model, view: "index" )
     }
 
@@ -72,6 +72,10 @@ class AipController {
     def detailInfo() {
         def itemDetailInfo = userActionItemReadOnlyCompositeService.actionItemOrGroupInfo( params )
         render itemDetailInfo as JSON
+    }
+    private boolean isLoggedInActionItemAdmin() {
+        def userAuthorities = springSecurityService.getAuthentication()?.user?.authorities?.objectName
+        return userAuthorities?.contains(ACTIONITEMADMIN_ROLE)
     }
 
 }

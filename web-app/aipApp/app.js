@@ -55,7 +55,7 @@ var bannerAIPApp = angular.module("bannerAIP", [
             controller: "AdminLandingPageCtrl",
             breadcrumb: {
                 label: "aip.admin.landing",
-                url: "/aip/admin#/landing"
+                url: "/aip/#/landing"
 }
         },
         "admin-action-list": {
@@ -63,7 +63,7 @@ var bannerAIPApp = angular.module("bannerAIP", [
             templateUrl: "admin/action/list/adminActionListPage.html",
             breadcrumb: {
                 label: "aip.admin.action",
-                url: "/aip/admin#/action"
+                url: "/aip/#/action"
             }
         },
         "admin-post-list": {
@@ -71,7 +71,7 @@ var bannerAIPApp = angular.module("bannerAIP", [
             templateUrl: "admin/action/post/postActionListPage.html",
             breadcrumb: {
                 label: "aip.admin.action.item.post.item",
-                url: "/aip/admin#/post"
+                url: "/aip/#/post"
 
             }
         },
@@ -81,7 +81,7 @@ var bannerAIPApp = angular.module("bannerAIP", [
             controller:"AdminPostItemAddPageCtrl",
             breadcrumb: {
                 label: "aip.admin.action.actionItem.Addjob",
-                url: "/aip/admin#/action/add"}
+                url: "/aip/#/action/add"}
         },
 "admin-post-edit": {
     url: "/action/editjob/:postIdval/:isEdit",
@@ -93,7 +93,7 @@ var bannerAIPApp = angular.module("bannerAIP", [
     },
     breadcrumb: {
         label: "aip.admin.action.actionItem.Editjob",
-            url: "/aip/admin#/action/editjob"}
+            url: "/aip/#/action/editjob"}
 },
 
 
@@ -103,7 +103,7 @@ var bannerAIPApp = angular.module("bannerAIP", [
             controller:"AdminActionItemAddPageCtrl",
             breadcrumb: {
                 label: "aip.admin.action.add.actionItem",
-                url: "/aip/admin#/action/add"}
+                url: "/aip/#/action/add"}
         },
         "admin-action-open": {
             url: "/action/open/:actionItemId",
@@ -115,7 +115,7 @@ var bannerAIPApp = angular.module("bannerAIP", [
             },
             breadcrumb: {
                 label: "aip.admin.action.open",
-                url: "/aip/admin#/action/open",
+                url: "/aip/#/action/open",
             }
         },
         "admin-action-edit": {
@@ -128,7 +128,7 @@ var bannerAIPApp = angular.module("bannerAIP", [
             },
             breadcrumb: {
                 label: "aip.admin.action.edit.actionItem",
-                url: "/aip/admin#/action/edit"}
+                url: "/aip/#/action/edit"}
         },
         "admin-group-list": {
             url: "/group",
@@ -136,7 +136,7 @@ var bannerAIPApp = angular.module("bannerAIP", [
             //controller: "AdminGroupListPageCtrl",
             breadcrumb: {
                 label: "aip.admin.groups",
-                url: "/aip/admin#/group"
+                url: "/aip/#/group"
             }
         },
         "admin-group-add": {
@@ -148,7 +148,7 @@ var bannerAIPApp = angular.module("bannerAIP", [
             },
             breadcrumb: {
                 label: "aip.admin.group.add",
-                url: "/aip/admin#/group/add"}
+                url: "/aip/#/group/add"}
         },
         "admin-group-edit": {
             url: "/group/edit/:groupId/:isEdit",
@@ -160,7 +160,7 @@ var bannerAIPApp = angular.module("bannerAIP", [
             },
             breadcrumb: {
                 label: "aip.admin.group.edit",
-                url: "/aip/admin#/group/edit"}
+                url: "/aip/#/group/edit"}
         },
         "admin-group-open": {
             url: "/group/open/:groupId",
@@ -172,7 +172,7 @@ var bannerAIPApp = angular.module("bannerAIP", [
             },
             breadcrumb: {
                 label: "aip.admin.group.open",
-                url: "/aip/admin#/group/open",
+                url: "/aip/#/group/open",
 
             }
         },
@@ -191,7 +191,7 @@ var bannerAIPApp = angular.module("bannerAIP", [
             //controller: "AdminGroupListPageCtrl",
             breadcrumb: {
                 label: "aip.admin.status",
-                url: "/aip/admin#/status"
+                url: "/aip/#/status"
             }
         },
 
@@ -343,6 +343,13 @@ var bannerAIPApp = angular.module("bannerAIP", [
         function($rootScope, $state, $stateParams, $filter, $sce, $templateCache, BreadcrumbService) {
             $rootScope.$state = $state;
             $rootScope.$stateParams = $stateParams;
+
+            $rootScope.$on('$stateChangeStart', function(e, to) {
+            if(isActionItemAdmin===false && to.name==='admin-landing'){
+                e.preventDefault()
+                $rootScope.$state.go('list')
+            }
+            });
 
             //when state successfully changed, update breadcrumbs
             $rootScope.$on("$stateChangeSuccess", function(event, toState, toParams, fromState, fromParams) {
