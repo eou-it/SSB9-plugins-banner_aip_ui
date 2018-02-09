@@ -42,6 +42,27 @@ class AipActionItemPostingController {
     }
 
     /**
+     * update Action Item Post
+     * @return
+     */
+    def updateActionItemPosting() {
+        def map = [:]
+        map = request.JSON
+        map.postNow = 'true' == map.postNow
+        map.scheduled = 'true' == map.scheduled
+        def model
+        try {
+            model = actionItemPostCompositeService.updateAsynchronousPostItem( map )
+        } catch (ApplicationException e) {
+            model = [fail: true]
+            LOGGER.error( e.getMessage() )
+            model.message = e.returnMap( {mapToLocalize -> new ValidationTagLib().message( mapToLocalize )} ).message
+        }
+        render model as JSON
+    }
+
+
+    /**
      * API for folders LOV
      * @return
      */

@@ -79,10 +79,10 @@ var AIP;
                 url: this.ENDPOINT.admin.jobDetailsById + "?postID=" + postID
             })
                 .then(function (response) {
-                    return response.data;
-                }, function (err) {
-                    throw new Error(err);
-                });
+                return response.data;
+            }, function (err) {
+                throw new Error(err);
+            });
             return request;
         };
         AdminActionService.prototype.getFolder = function () {
@@ -169,6 +169,7 @@ var AIP;
         };
         AdminActionService.prototype.savePostActionItem = function (postActionItem, selected, modalResult, selectedPopulation, postNow, sendTime, timeZone, regeneratePopulation) {
             var params = {
+                di: postActionItem.id,
                 postingName: postActionItem.name,
                 postingActionItemGroupId: selected.groupId,
                 actionItemIds: modalResult,
@@ -185,7 +186,7 @@ var AIP;
             var request = this.$http({
                 method: "POST",
                 data: params,
-                url: this.ENDPOINT.admin.createPostActionItem
+                url: postActionItem.id ? this.ENDPOINT.admin.updateActionItemPosting : this.ENDPOINT.admin.createPostActionItem
             });
             return request;
         };
@@ -293,9 +294,9 @@ var AIP;
             });
             return request;
         };
+        AdminActionService.$inject = ["$http", "$q", "$filter", "ENDPOINT"];
         return AdminActionService;
     }());
-    AdminActionService.$inject = ["$http", "$q", "$filter", "ENDPOINT"];
     AIP.AdminActionService = AdminActionService;
 })(AIP || (AIP = {}));
 register("bannerAIP").service("AdminActionService", AIP.AdminActionService);

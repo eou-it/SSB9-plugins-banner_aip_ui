@@ -259,7 +259,8 @@ var bannerAIPApp = angular.module("bannerAIP", [
             loadBlockingProcessLov:aipAppAbsPath + "aipAdmin/loadBlockingProcessLov",
             statusPosted:aipAppAbsPath + "aipActionItemPosting/getStatusValue",
 			jobDetailsById:aipAppAbsPath + "aipActionItemPosting/getJobDetailsByPostId",
-            actionItemById:aipAppAbsPath + "aipActionItemPosting/getActionItemByPostId"
+            actionItemById:aipAppAbsPath + "aipActionItemPosting/getActionItemByPostId",
+            updateActionItemPosting:aipAppAbsPath + "aipActionItemPosting/updateActionItemPosting"
 
 
         }

@@ -6,7 +6,7 @@
 ///<reference path="../../../common/services/admin/adminActionService.ts"/>
 var AIP;
 (function (AIP) {
-    var AdminPostItemAddPageCtrl = /** @class */ (function () {
+    var AdminPostItemAddPageCtrl = (function () {
         function AdminPostItemAddPageCtrl($scope, $q, $state, $uibModal, $filter, $timeout, SpinnerService, APP_ROOT, AdminActionStatusService, AdminActionService) {
             this.$inject = ["$scope", "$q", "$state", "$filter", "$timeout", "SpinnerService", "AdminActionStatusService", "AdminActionService", "$uibModal", "APP_ROOT", "datePicker"];
             $scope.vm = this;
@@ -100,7 +100,6 @@ var AIP;
                 _this.defaultTimeZone = finalValue;
             }));
             this.$q.all(allPromises).then(function () {
-                
                 if (_this.editMode) {
                     _this.adminActionService.getJobDetails(_this.$state.params.postIdval)
                         .then(function (response) {
@@ -108,6 +107,7 @@ var AIP;
                             _this.$scope.group = {};
                             _this.$scope.population = {};
                             _this.actionPost1 = response;
+                            _this.postActionItemInfo.id = _this.actionPost1.postingId;
                             _this.postActionItemInfo.name = _this.actionPost1.postingName;
                             for (var i = 0; i < _this.postActionItemInfo.group.length; i++) {
                                 if (_this.postActionItemInfo.group[i].groupName === _this.actionPost1.groupName) {

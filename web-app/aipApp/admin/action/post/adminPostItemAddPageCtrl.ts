@@ -195,6 +195,7 @@ module AIP {
                                 this.$scope.group={};
                                 this.$scope.population={};
                                 this.actionPost1=response;
+                                this.postActionItemInfo.id = this.actionPost1.postingId
                                 this.postActionItemInfo.name = this.actionPost1.postingName
 
                                 for ( var i=0; i<this.postActionItemInfo.group.length; i++)
