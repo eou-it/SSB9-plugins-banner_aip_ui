@@ -15,7 +15,6 @@ import org.codehaus.groovy.grails.plugins.web.taglib.ValidationTagLib
  */
 class AipAdminController {
     private static final def LOGGER = Logger.getLogger( this.class )
-    static defaultAction = "folders"
 
     def groupFolderReadOnlyService
     def blockingProcessCompositeService

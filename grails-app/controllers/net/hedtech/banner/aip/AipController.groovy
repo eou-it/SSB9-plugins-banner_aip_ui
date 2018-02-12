@@ -5,6 +5,7 @@
 package net.hedtech.banner.aip
 
 import grails.converters.JSON
+import  net.hedtech.banner.aip.common.AIPConstants
 
 /**
  * AIP Controller class to have all API endpoints
@@ -14,6 +15,7 @@ class AipController {
     static defaultAction = "list"
     def userActionItemReadOnlyCompositeService
     def springSecurityService
+
 
     static String ACTIONITEMADMIN_ROLE='SELFSERVICE-ACTIONITEMADMIN'
     def list() {
@@ -73,9 +75,14 @@ class AipController {
         def itemDetailInfo = userActionItemReadOnlyCompositeService.actionItemOrGroupInfo( params )
         render itemDetailInfo as JSON
     }
+    /**
+     * Gets boolean value whether the user is an Action Item admin or not
+     * @return
+     */
     private boolean isLoggedInActionItemAdmin() {
+
         def userAuthorities = springSecurityService.getAuthentication()?.user?.authorities?.objectName
-        return userAuthorities?.contains(ACTIONITEMADMIN_ROLE)
+        return userAuthorities?.contains(AIPConstants.ACTIONITEMADMIN_ROLE)
     }
 
 }
