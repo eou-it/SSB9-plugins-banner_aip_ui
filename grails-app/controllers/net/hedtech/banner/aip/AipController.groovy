@@ -17,7 +17,6 @@ class AipController {
     def springSecurityService
 
 
-    static String ACTIONITEMADMIN_ROLE='SELFSERVICE-ACTIONITEMADMIN'
     def list() {
         def model = [isActionItemAdmin:isLoggedInActionItemAdmin()]
         render( model: model, view: "index" )
@@ -28,7 +27,7 @@ class AipController {
      * @return
      */
     def informedList() {
-        def model = []
+        def model = [isActionItemAdmin:isLoggedInActionItemAdmin()]
         render( model: model, view: "index" )
     }
 
