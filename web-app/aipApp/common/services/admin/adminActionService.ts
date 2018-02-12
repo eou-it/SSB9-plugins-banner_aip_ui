@@ -385,7 +385,7 @@ module AIP {
         }
         savePostActionItem(postActionItem,selected,modalResult,selectedPopulation,postNow,sendTime,timeZone,regeneratePopulation) {
             var params = {
-                di:postActionItem.id,
+                postId:postActionItem.postId,
                 postingName: postActionItem.name,
                 postingActionItemGroupId: selected.groupId,
                 actionItemIds: modalResult,
@@ -402,7 +402,7 @@ module AIP {
             var request = this.$http({
                 method: "POST",
                 data: params,
-                url:  postActionItem.id? this.ENDPOINT.admin.updateActionItemPosting : this.ENDPOINT.admin.createPostActionItem
+                url:  postActionItem.postId? this.ENDPOINT.admin.updateActionItemPosting : this.ENDPOINT.admin.createPostActionItem
             });
             return request;
         }

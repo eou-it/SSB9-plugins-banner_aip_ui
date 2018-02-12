@@ -107,7 +107,7 @@ var AIP;
                             _this.$scope.group = {};
                             _this.$scope.population = {};
                             _this.actionPost1 = response;
-                            _this.postActionItemInfo.id = _this.actionPost1.postingId;
+                            _this.postActionItemInfo.postId = _this.actionPost1.postingId;
                             _this.postActionItemInfo.name = _this.actionPost1.postingName;
                             for (var i = 0; i < _this.postActionItemInfo.group.length; i++) {
                                 if (_this.postActionItemInfo.group[i].groupName === _this.actionPost1.groupName) {
