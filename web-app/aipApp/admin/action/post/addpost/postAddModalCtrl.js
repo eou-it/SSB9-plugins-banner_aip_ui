@@ -1,11 +1,8 @@
-/*******************************************************************************
- Copyright 2018 Ellucian Company L.P. and its affiliates.
- ********************************************************************************/
 //<reference path="../../../../../typings/tsd.d.ts"/>
 ///<reference path="../../../../common/services/admin/adminActionStatusService.ts"/>
 var AIP;
 (function (AIP) {
-    var PostAddModalCtrl = /** @class */ (function () {
+    var PostAddModalCtrl = (function () {
         function PostAddModalCtrl($scope, $uibModalInstance, ENDPOINT, AdminActionStatusService, EditMode, PostId, ChangeFlag, selectedActionItemList, actionItemModal, actionGroupModal, actionFolderGroupModal, APP_ROOT) {
             var _this = this;
             this.$inject = ["$scope", "$uibModalInstance", "ENDPOINT", "AdminActionStatusService", "EditMode", "PostId", "ChangeFlag", "selectedActionItemList", "actionItemModal", "actionGroupModal", "actionFolderGroupModal", "APP_ROOT"];
@@ -23,7 +20,6 @@ var AIP;
             this.selectedActionItemList = selectedActionItemList;
             this.ChangeFlag = ChangeFlag;
             this.actionItemModal.map(function (item) {
-                
                 if (_this.EditMode === false || _this.ChangeFlag === true) {
                     if (item.check === undefined) {
                         item.check = true;
@@ -37,14 +33,11 @@ var AIP;
                         for (var i = 0; i < _this.actionItemModal.length; i++) {
                             for (var j = 0; j < _this.selectedActionItemList.length; j++) {
                                 if (_this.actionItemModal[i].actionItemId === _this.selectedActionItemList[j].actionItemId) {
-                                    
                                     actionItemModal[i].check = true;
                                 }
                             }
                         }
                     }
-                    
-                    
                 }
             });
             this.actionFolderGroupModal = actionFolderGroupModal;
@@ -53,7 +46,6 @@ var AIP;
                 block: false
             };
             this.errorMessage = {};
-           
         }
         /*checkAll() {
              if (this.checkAll === true) {

@@ -1,11 +1,8 @@
-/*******************************************************************************
- Copyright 2018 Ellucian Company L.P. and its affiliates.
- ********************************************************************************/
 ///<reference path="../../../../typings/tsd.d.ts"/>
 ///<reference path="../../../common/services/admin/adminActionService.ts"/>
 var AIP;
 (function (AIP) {
-    var PostActionListPageCtrl = /** @class */ (function () {
+    var PostActionListPageCtrl = (function () {
         function PostActionListPageCtrl($scope, $state, $window, $filter, $q, ENDPOINT, PAGINATIONCONFIG, AdminActionService) {
             this.$inject = ["$scope", "$state", "$window", "$filter", "$q", "ENDPOINT", "PAGINATIONCONFIG",
                 "AdminActionService"];
@@ -220,7 +217,6 @@ var AIP;
                         type: "error",
                         flash: true
                     });
-                    
                     setTimeout(function () {
                         notifications.addNotification(n);
                         _this.$state.params.noti = undefined;

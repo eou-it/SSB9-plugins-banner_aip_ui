@@ -15,30 +15,7 @@
     <meta name="menuEndPoint" content="${g.createLink(controller: 'selfServiceMenu', action: 'data')}"/>
     <meta name="menuBaseURL" content="${createLink(uri: '/ssb')}" />
     <ckeditor:resources/>
-    <script type="text/javascript">
-        // Track calling page for breadcrumbs
-        (function () {
-            // URLs to exclude from updating genAppCallingPage, because they're actually either the authentication
-            // page or App Nav, and are not "calling pages."
-            var referrerUrl = document.referrer,
-                excludedRegex = [
-                    /\${applicationContextRoot}\/login\/auth?/,
-                    /\/seamless/
-                ],
-                isExcluded;
 
-            if (referrerUrl) {
-                isExcluded = _.find(excludedRegex, function (regex) {
-                    return regex.test(referrerUrl);
-                });
-
-                if (!isExcluded) {
-                    // Track this page
-                    sessionStorage.setItem('genAppCallingPage', referrerUrl);
-                }
-            }
-        })();
-    </script>
     <script type="text/javascript">
         var pageControllers = {};
 
@@ -48,11 +25,13 @@
             window.aip?window.aip.dev="development":window.aip={dev:"development"};
         </g:if>
         <g:javascript>
+        var isActionItemAdmin = ${isActionItemAdmin};
         if ("${fragment}") {
             window.location.href = "${fragment}";
         }
         </g:javascript>
     </script>
+
 </head>
 
 <body>
