@@ -139,12 +139,17 @@ var AIP;
                             else {
                                 _this.sendTime = _this.actionPost1.scheduledStartTime;
                             }
-                            _this.timezone = _this.actionPost1.timezoneStringOffset.ID;
+                            _this.actionPost1.timezoneStringOffset["timezoneId"] = _this.actionPost1.timezoneStringOffset.ID;
+                            _this.timezone = _this.actionPost1.timezoneStringOffset;
                             _this.changedValue();
                             _this.adminActionStatusService.getActionItemsById(_this.$state.params.postIdval)
                                 .then(function (response) {
                                 _this.selectedActionListVal = response.data;
                                 _this.itemLength = _this.selectedActionListVal.length;
+                                _this.selectedActionListVal.forEach((item, index) => {
+                                    _this.modalResult = item;
+                                    _this.modalResults.push(_this.modalResult.actionItemId);
+                                });
                             });
                         }
                         else {
@@ -226,7 +231,7 @@ var AIP;
                 },
             });
             this.modalInstance.result.then(function (result) {
-                console.log(result);
+                _this.modalResults = [];
                 _this.itemLength = result.length;
                 result.forEach(function (item, index) {
                     _this.modalResult = item;

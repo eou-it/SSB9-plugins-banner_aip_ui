@@ -237,20 +237,22 @@ module AIP {
                                 {
                                     this.sendTime=this.actionPost1.scheduledStartTime;
                                 }
-
-                                this.timezone=this.actionPost1.timezoneStringOffset.ID
+                                this.actionPost1.timezoneStringOffset["timezoneId"] = this.actionPost1.timezoneStringOffset.ID;
+                                this.timezone=this.actionPost1.timezoneStringOffset;
                                 this.changedValue();
 
                                 this.adminActionStatusService.getActionItemsById(this.$state.params.postIdval)
                                     .then((response) => {
                                         this.selectedActionListVal=response.data;
                                         this.itemLength = this.selectedActionListVal.length;
+                                        this.selectedActionListVal.forEach((item, index) => {
+                                            this.modalResult = item;
+                                            this.modalResults.push(this.modalResult.actionItemId);
+                                        });
 
                                     });
 
-
-
-                                    } else {
+                            } else {
                                 //todo: output error in notification center?
                                 console.log("fail");
                             }
@@ -340,7 +342,7 @@ module AIP {
 
             });
             this.modalInstance.result.then((result) => {
-                console.log(result)
+                this.modalResults = [];
                 this.itemLength = result.length;
                 result.forEach((item, index) => {
                     this.modalResult = item;
