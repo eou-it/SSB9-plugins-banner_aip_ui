@@ -44,7 +44,7 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
                                 <tr ng-repeat="item in vm.blockedProcess | orderBy:'item.processName'">
                                     <td width="40%">{{item.processName}}</td>
                                     <td width="50%"><span class="urlsplit" ng-repeat="blockedurl in item.urls">{{blockedurl}}</span></td>
-                                    <td width="40%" ng-if="item.blockedProcessAppRoleDisplay !=null">{{item.blockedProcessAppRoleDisplay}}</td>
+                                    <td width="40%">{{item.blockedProcessAppRoleDisplay}}</td>
                                 </tr>
 
                                 </tbody>
@@ -86,7 +86,7 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
                             <xe-ui-select-match placeholder="Select">
                                 <div class="row actionItemName">{{vm.selected[index].process.name}}</div>
                             </xe-ui-select-match>
-                            <xe-ui-select-choices group-by="vm.groupFn" repeat="item in vm.allActionItems.process | propsFilter:{name: $select.search} ">
+                            <xe-ui-select-choices group-by="vm.groupFn" repeat="item in vm.allActionItems.process | orderBy:'item.processName' | propsFilter:{name: $select.search} ">
 
 
                                 <div ng-bind-html="item.name | highlight: $select.search"></div>
