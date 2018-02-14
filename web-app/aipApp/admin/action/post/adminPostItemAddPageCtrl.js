@@ -146,7 +146,7 @@ var AIP;
                                 .then(function (response) {
                                 _this.selectedActionListVal = response.data;
                                 _this.itemLength = _this.selectedActionListVal.length;
-                                _this.selectedActionListVal.forEach((item, index) => {
+                                _this.selectedActionListVal.forEach(function (item, index) {
                                     _this.modalResult = item;
                                     _this.modalResults.push(_this.modalResult.actionItemId);
                                 });

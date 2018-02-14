@@ -40,7 +40,7 @@ module AIP {
         postActionItemInfo: AIP.IPostActionItemParam | any;
         errorMessage: any;
         adminActionService: AIP.AdminActionService;
-        adminActionStatusService:AIP.AdminActionStatusService
+        adminActionStatusService:AIP.AdminActionStatusService;
         spinnerService: AIP.SpinnerService;
         saving: boolean;
         $q: ng.IQService;
