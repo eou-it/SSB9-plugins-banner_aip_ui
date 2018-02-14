@@ -313,6 +313,7 @@ var AIP;
                 .then(function (response) {
                 _this.alreadyGenerated = [];
                 _this.editMode = false;
+                _this.selected = [];
             }, function (error) {
                 console.log("something wrong");
                 _this.alreadyGenerated = [];

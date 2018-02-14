@@ -393,6 +393,8 @@ module AIP {
                 .then((response) => {
                     this.alreadyGenerated = [];
                     this.editMode = false;
+                    this.selected = [];
+
                 }, (error) => {
                     console.log("something wrong");
                     this.alreadyGenerated = [];
