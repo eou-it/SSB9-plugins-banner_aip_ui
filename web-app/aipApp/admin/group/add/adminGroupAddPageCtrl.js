@@ -74,8 +74,8 @@ var AIP;
                         .then(function (response) {
                         if (response.group) {
                             _this.groupInfo.id = parseInt(response.group.groupId);
-                            _this.groupInfo.title = response.group.groupTitle;
-                            _this.groupInfo.name = response.group.groupName;
+                            _this.groupInfo.title = _this.trustHTML(response.group.groupTitle);
+                            _this.groupInfo.name = _this.trustHTML(response.group.groupName);
                             _this.groupInfo.status = response.group.groupStatus;
                             _this.groupInfo.postedInd = response.group.postedInd === "Y";
                             _this.groupInfo.folder = _this.folders.filter(function (item) {
