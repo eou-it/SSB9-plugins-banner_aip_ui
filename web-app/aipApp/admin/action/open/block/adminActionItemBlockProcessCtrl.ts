@@ -224,19 +224,19 @@ module AIP {
 
         reAssignSeqnumber() {
             this.selected.map((item, index) => {
-                item.seq = index + 1;
+                item.seq = index;
                 return item;
             });
             this.assignedActionItems.map((item, index) => {
-                item.sequenceNumber = index + 1;
+                item.sequenceNumber = index;
                 return item;
             });
         }
         delete(item) {
-            var itemIdx = this.assignedActionItems.indexOf(item);
-            this.assignedActionItems.splice(itemIdx, 1);
+            var itemIdx = this.selected.indexOf(item);
             this.selected.splice(itemIdx, 1);
-            this.reAssignSeqnumber();
+            //this.selected.splice(itemIdx, 1);
+            /*this.reAssignSeqnumber();*/
         }
         addNew() {
 
@@ -329,6 +329,9 @@ module AIP {
             }
         }
         handleNotification(noti) {
+            while (notifications.length != 0) {
+                notifications.remove(notifications.first())
+            }
             if(noti.notiType === "saveSuccess") {
                 // var data = noti.data.newActionItem||noti.data.actionItem;
                 var n = new Notification({

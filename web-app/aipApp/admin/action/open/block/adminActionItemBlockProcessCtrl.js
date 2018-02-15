@@ -169,19 +169,19 @@ var AIP;
         };
         AdminActionItemBlockCtrl.prototype.reAssignSeqnumber = function () {
             this.selected.map(function (item, index) {
-                item.seq = index + 1;
+                item.seq = index;
                 return item;
             });
             this.assignedActionItems.map(function (item, index) {
-                item.sequenceNumber = index + 1;
+                item.sequenceNumber = index;
                 return item;
             });
         };
         AdminActionItemBlockCtrl.prototype.delete = function (item) {
-            var itemIdx = this.assignedActionItems.indexOf(item);
-            this.assignedActionItems.splice(itemIdx, 1);
+            var itemIdx = this.selected.indexOf(item);
             this.selected.splice(itemIdx, 1);
-            this.reAssignSeqnumber();
+            //this.selected.splice(itemIdx, 1);
+            /*this.reAssignSeqnumber();*/
         };
         AdminActionItemBlockCtrl.prototype.addNew = function () {
             this.selected.push({});
@@ -266,6 +266,9 @@ var AIP;
         };
         AdminActionItemBlockCtrl.prototype.handleNotification = function (noti) {
             var _this = this;
+            while (notifications.length != 0) {
+                notifications.remove(notifications.first());
+            }
             if (noti.notiType === "saveSuccess") {
                 // var data = noti.data.newActionItem||noti.data.actionItem;
                 var n = new Notification({
