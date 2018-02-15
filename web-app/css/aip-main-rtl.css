@@ -1924,7 +1924,7 @@ ol.selected-group > li > button  {
     text-indent:0;
 }
 }
-@media (max-width: 850px) {
+@media (max-width: 1200px) {
     #actionItemBlockProcess .smalldevicefix  {
     padding:0px;
 }
