@@ -191,7 +191,7 @@ module AIP {
         }
 
         trustHTML = function(txtString) {
-            var sanitized = txtString ? this.$filter("html")(this.$sce.trustAsHtml(txtString)):"";
+            var sanitized = txtString ? this.$sce.trustAsHtml(this.$filter("html")(txtString)):"";
             return sanitized;
         }
 

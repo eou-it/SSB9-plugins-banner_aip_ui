@@ -7,8 +7,12 @@
 var AIP;
 (function (AIP) {
     var ListItemPageCtrl = (function () {
-        function ListItemPageCtrl($scope, $state, ItemListViewService, AIPUserService, SpinnerService, $timeout, $q, $uibModal, APP_ROOT) {
-            this.$inject = ["$scope", "$state", "ItemListViewService", "AIPUserService", "SpinnerService", "$timeout", "$q", "$uibModal", , "APP_ROOT"];
+        function ListItemPageCtrl($scope, $state, ItemListViewService, AIPUserService, SpinnerService, $timeout, $q, $uibModal, APP_ROOT, $sce) {
+            this.$inject = ["$scope", "$state", "ItemListViewService", "AIPUserService", "SpinnerService", "$timeout", "$q", "$uibModal", , "APP_ROOT", "$sce"];
+            this.trustHTML = function (txtString) {
+                var sanitized = txtString ? this.$sce.trustAsHtml(txtString) : "";
+                return sanitized;
+            };
             $scope.vm = this;
             this.$state = $state;
             this.itemListViewService = ItemListViewService;
@@ -18,6 +22,7 @@ var AIP;
             this.$q = $q;
             this.$uibModal = $uibModal;
             this.APP_ROOT = APP_ROOT;
+            this.$sce = $sce;
             this.modalInstance;
             this.initialOpenGroup = -1;
             $scope.$watch("vm.detailView", function (newVal, oldVal) {
@@ -67,6 +72,7 @@ var AIP;
                         _this.itemListViewService.getDetailInformation(_this.actionItems.groups[_this.initialOpenGroup].id, "group", null)
                             .then(function (response) {
                             _this.selectedData = response;
+                            _this.selectedData.info.content = _this.trustHTML(response.info.content);
                         });
                     }
                     ;
@@ -197,6 +203,7 @@ var AIP;
             });
             this.itemListViewService.getDetailInformation(groupId, selectionType, itemId).then(function (response) {
                 _this.selectedData = response;
+                _this.selectedData.info.content = _this.trustHTML(response.info.content);
                 if (selectionType === "actionItem") {
                     var group = _this.actionItems.groups.filter(function (item) { return item.id === groupId; });
                     var acitonItem = group[0].items.filter(function (item) { return item.actionItemId === itemId; });
@@ -229,6 +236,7 @@ var AIP;
                 this.itemListViewService.getDetailInformation(state.groupId, "group", null)
                     .then(function (response) {
                     _this.selectedData = response;
+                    _this.selectedData.info.content = _this.trustHTML(response.info.content);
                 });
             }
             else {

@@ -34,7 +34,7 @@ module AIP {
 
     export class ListItemPageCtrl implements IListItemPageCtrl{
 
-        $inject = ["$scope", "$state", "ItemListViewService", "AIPUserService", "SpinnerService", "$timeout", "$q", "$uibModal", , "APP_ROOT"];
+        $inject = ["$scope", "$state", "ItemListViewService", "AIPUserService", "SpinnerService", "$timeout", "$q", "$uibModal", , "APP_ROOT", "$sce"];
         itemListViewService:AIP.ItemListViewService;
         userService:AIP.UserService;
         actionItems:IUserItem;
@@ -42,6 +42,7 @@ module AIP {
         initialOpenGroup;
         spinnerService;
         userName;
+        $sce;
         selectedData: ISelectedData;
         $timeout;
         $state;
@@ -49,7 +50,7 @@ module AIP {
         APP_ROOT;
         modalInstance;
 
-        constructor($scope, $state, ItemListViewService, AIPUserService, SpinnerService, $timeout, $q, $uibModal, APP_ROOT) {
+        constructor($scope, $state, ItemListViewService, AIPUserService, SpinnerService, $timeout, $q, $uibModal, APP_ROOT, $sce) {
             $scope.vm = this;
             this.$state = $state;
             this.itemListViewService = ItemListViewService;
@@ -59,6 +60,7 @@ module AIP {
             this.$q = $q;
             this.$uibModal = $uibModal;
             this.APP_ROOT = APP_ROOT;
+            this.$sce = $sce;
             this.modalInstance;
 
             this.initialOpenGroup = -1;
@@ -114,6 +116,7 @@ module AIP {
                         this.itemListViewService.getDetailInformation(this.actionItems.groups[this.initialOpenGroup].id, "group", null)
                             .then((response:ISelectedData) => {
                                 this.selectedData = response;
+                                this.selectedData.info.content = this.trustHTML(response.info.content);
                         });
                     };
                 });
@@ -156,6 +159,10 @@ module AIP {
             } )
         }
 
+        trustHTML = function(txtString) {
+            var sanitized = txtString ? this.$sce.trustAsHtml(txtString):"";
+            return sanitized;
+        }
 
         getInitialSelection() {
             var defaultSelection = 0;
@@ -251,6 +258,7 @@ module AIP {
 
             this.itemListViewService.getDetailInformation(groupId, selectionType, itemId).then((response:ISelectedData) => {
                 this.selectedData = response;
+                this.selectedData.info.content = this.trustHTML(response.info.content);
                 if (selectionType==="actionItem") {
                     var group = this.actionItems.groups.filter((item) => {return item.id === groupId;});
                     var acitonItem = group[0].items.filter((item) => {return item.actionItemId===itemId;});
@@ -288,6 +296,7 @@ module AIP {
                 this.itemListViewService.getDetailInformation(state.groupId, "group", null)
                     .then((response:ISelectedData) => {
                         this.selectedData = response;
+                        this.selectedData.info.content = this.trustHTML(response.info.content);
                     })
 
             } else {
