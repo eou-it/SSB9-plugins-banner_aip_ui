@@ -41,7 +41,7 @@ grails.project.dependency.resolution = {
     dependencies {
     }
 
-    plugins {
+/*    plugins {
 // TODO: evaluate if these are really needed
 //        runtime ':font-awesome-resources:5.0.0.0'
         runtime "org.grails.plugins:font-awesome-resources:4.4.0"
@@ -51,7 +51,7 @@ grails.project.dependency.resolution = {
 //        compile ':cache-headers:1.1.5'
         test ':code-coverage:2.0.3-3'
         compile ":ckeditor:4.5.4.1"
-    }
+    }*/
 
 
 }
