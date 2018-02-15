@@ -117,8 +117,8 @@ module AIP {
                         .then((response) => {
                             if(response.group) {
                                 this.groupInfo.id = parseInt(response.group.groupId);
-                                this.groupInfo.title = response.group.groupTitle;
-                                this.groupInfo.name = response.group.groupName;
+                                this.groupInfo.title = this.trustHTML(response.group.groupTitle);
+                                this.groupInfo.name = this.trustHTML(response.group.groupName);
                                 this.groupInfo.status = response.group.groupStatus;
                                 this.groupInfo.postedInd = response.group.postedInd==="Y";
                                 this.groupInfo.folder = this.folders.filter((item)=> {
