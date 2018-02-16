@@ -21,6 +21,8 @@ module AIP {
         saveErrorCallback(message: string): void;
 
         setTimezone(timezone:any): void;
+
+        specialCharacterTranslation():void;
     }
 
     interface IActionItemAddPageScope {
@@ -197,6 +199,7 @@ module AIP {
                                 this.actionPost1=response;
                                 this.postActionItemInfo.postId = this.actionPost1.postingId
                                 this.postActionItemInfo.name = this.actionPost1.postingName
+                                this.specialCharacterTranslation();
 
                                 for ( var i=0; i<this.postActionItemInfo.group.length; i++)
                                 {
@@ -264,6 +267,39 @@ module AIP {
                 }
                 this.spinnerService.showSpinner(false);
             });
+        }
+
+
+        specialCharacterTranslation()
+        {
+            for (var j=0;j<this.postActionItemInfo.population.length;j++)
+            {
+                if (this.postActionItemInfo.population[j].name.indexOf('&amp;') > -1 )
+                {
+                    this.postActionItemInfo.population[j].name=this.postActionItemInfo.population[j].name.replace("&amp;", "&");
+                }
+                if (this.postActionItemInfo.population[j].name.indexOf('&quot;') > -1 )
+                {
+                    this.postActionItemInfo.population[j].name= this.postActionItemInfo.population[j].name.replace("&quot;", "\"");
+
+                }
+                if ((this.postActionItemInfo.population[j].name.indexOf('&#039;') > -1)  || (this.postActionItemInfo.population[j].name.indexOf('&#39;') > -1 ))
+                {
+                    this.postActionItemInfo.population[j].name= this.postActionItemInfo.population[j].name.replace("&#039;", "\'");
+                    this.postActionItemInfo.population[j].name= this.postActionItemInfo.population[j].name.replace("&#39;", "\'");
+                }
+                if (this.postActionItemInfo.population[j].name.indexOf('&lt;') > -1 )
+                {
+                    this.postActionItemInfo.population[j].name=  this.postActionItemInfo.population[j].name.replace("&lt;", "<");
+
+                }
+                if (this.postActionItemInfo.population[j].name.indexOf('&gt;') > -1 )
+                {
+                    this.postActionItemInfo.population[j].name=this.postActionItemInfo.population[j].name.replace("&gt;", ">");
+
+                }
+            }
+
         }
 
 

@@ -167,6 +167,7 @@ module AIP {
             this.adminActionService.getActionItemDetail(this.actionFolder)
                 .then((response: AIP.IActionItemOpenResponse) => {
                     this.actionItem = response.data.actionItem;
+                    this.actionItem.actionItemContent = this.trustAsHtml(response.data.actionItem.actionItemContent);
                     this.selectedTemplate = this.actionItem.actionItemTemplateId;
                     this.actionItemPostedStatus = this.actionItem.actionItemPostedStatus;
                     console.log(this.actionItemPostedStatus);
@@ -327,7 +328,7 @@ module AIP {
         }
 
         trustActionItemContent = function () {
-            this.actionItem.actionItemContent = this.$sce.trustAsHtml(this.$filter("html")(this.actionItem.actionItemContent)).toString();
+            this.actionItem.actionItemContent = this.$sce.trustAsHtml(this.$filter("html")(this.actionItem.actionItemContent));
             return this.actionItem.actionItemContent;
         }
 
