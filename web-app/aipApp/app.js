@@ -299,7 +299,7 @@ var bannerAIPApp = angular.module("bannerAIP", [
             //$qProvider.errorOnUnhandledRejections(false);
             $locationProvider.html5Mode(false);
             $locationProvider.hashPrefix('');
-            $urlRouteProvider.otherwise("/list");
+            $urlRouteProvider.otherwise("/landing");
             angular.forEach(PAGES, function(item, state) {
                 $stateProvider.state(state, {
                     url: item.url,
