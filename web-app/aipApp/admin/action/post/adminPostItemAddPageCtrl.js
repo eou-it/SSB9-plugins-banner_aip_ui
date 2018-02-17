@@ -6,7 +6,7 @@
 ///<reference path="../../../common/services/admin/adminActionService.ts"/>
 var AIP;
 (function (AIP) {
-    var AdminPostItemAddPageCtrl =  (function () {
+    var AdminPostItemAddPageCtrl = /** @class */ (function () {
         function AdminPostItemAddPageCtrl($scope, $q, $state, $uibModal, $filter, $timeout, SpinnerService, APP_ROOT, AdminActionStatusService, AdminActionService) {
             this.$inject = ["$scope", "$q", "$state", "$filter", "$timeout", "SpinnerService", "AdminActionStatusService", "AdminActionService", "$uibModal", "APP_ROOT", "datePicker"];
             $scope.vm = this;
@@ -60,107 +60,108 @@ var AIP;
             this.postIDvalue = this.$state.params.postIdval;
             allPromises.push(this.adminActionService.getGrouplist()
                 .then(function (response) {
-                    _this.groupList = response.data;
-                    var postActionItemGroup = $("#postActionItemGroup");
-                    //this.postActionItemInfo["group"] = [];
-                    _this.postActionItemInfo.group = _this.groupList;
-                }));
+                _this.groupList = response.data;
+                var postActionItemGroup = $("#postActionItemGroup");
+                //this.postActionItemInfo["group"] = [];
+                _this.postActionItemInfo.group = _this.groupList;
+            }));
             allPromises.push(this.adminActionService.getPopulationlist()
                 .then(function (response) {
-                    _this.populationList = response.data;
-                    var postActionItemPopulation = $("#postActionItemPopulation");
-                    _this.postActionItemInfo.population = _this.populationList;
-                }));
+                _this.populationList = response.data;
+                var postActionItemPopulation = $("#postActionItemPopulation");
+                _this.postActionItemInfo.population = _this.populationList;
+            }));
             allPromises.push(this.adminActionService.getCurrentDateLocale()
                 .then(function (response) {
-                    _this.localeDate = response.data;
-                    _this.postActionItemInfo.localeDate = _this.localeDate.date;
-                }));
+                _this.localeDate = response.data;
+                _this.postActionItemInfo.localeDate = _this.localeDate.date;
+            }));
             allPromises.push(this.adminActionService.getCurrentTimeLocale()
                 .then(function (response) {
-                    _this.localeTime = response.data.use12HourClock;
-                    _this.postActionItemInfo.localeTime = _this.localeTime;
-                    _this.today();
-                }));
+                _this.localeTime = response.data.use12HourClock;
+                _this.postActionItemInfo.localeTime = _this.localeTime;
+                _this.today();
+            }));
             allPromises.push(this.adminActionService.getCurrentTimeZoneLocale()
                 .then(function (response) {
-                    var that = _this;
-                    _this.timezones = response.data.timezones;
-                    var timeZoneOffset = new Date().getTimezoneOffset();
-                    var offset = "(GMT" + ((timeZoneOffset < 0 ? '+' : '-') + _this.pad(parseInt(Math.abs(timeZoneOffset / 60)), 2) + ":" + _this.pad(Math.abs(timeZoneOffset % 60), 2)) + ")";
-                    //this.defaultTimeZone = offset;
-                    var finalValue = '';
-                    angular.forEach(_this.timezones, function (key, value) {
-                        var GMTString = key.stringOffset;
-                        if (offset === GMTString) {
-                            that.setTimezone(key);
-                            finalValue = '( ' + key.displayNameWithoutOffset + ' )';
-                        }
-                    });
-                    _this.defaultTimeZone = finalValue;
-                }));
+                var that = _this;
+                _this.timezones = response.data.timezones;
+                var timeZoneOffset = new Date().getTimezoneOffset();
+                var offset = "(GMT" + ((timeZoneOffset < 0 ? '+' : '-') + _this.pad(parseInt(Math.abs(timeZoneOffset / 60)), 2) + ":" + _this.pad(Math.abs(timeZoneOffset % 60), 2)) + ")";
+                //this.defaultTimeZone = offset;
+                var finalValue = '';
+                angular.forEach(_this.timezones, function (key, value) {
+                    var GMTString = key.stringOffset;
+                    if (offset === GMTString) {
+                        that.setTimezone(key);
+                        finalValue = '( ' + key.displayNameWithoutOffset + ' )';
+                    }
+                });
+                _this.defaultTimeZone = finalValue;
+            }));
             this.$q.all(allPromises).then(function () {
                 if (_this.editMode) {
                     _this.adminActionService.getJobDetails(_this.$state.params.postIdval)
                         .then(function (response) {
-                            if (response) {
-                                _this.$scope.group = {};
-                                _this.$scope.population = {};
-                                _this.actionPost1 = response;
-                                _this.postActionItemInfo.postId = _this.actionPost1.postingId;
-                                _this.postActionItemInfo.name = _this.actionPost1.postingName;
-                                _this.specialCharacterTranslation();
-                                for (var i = 0; i < _this.postActionItemInfo.group.length; i++) {
-                                    if (_this.postActionItemInfo.group[i].groupName === _this.actionPost1.groupName) {
-                                        _this.$scope.group = _this.postActionItemInfo.group[i];
-                                    }
+                        if (response) {
+                            _this.$scope.group = {};
+                            _this.$scope.population = {};
+                            _this.actionPost1 = response;
+                            _this.postActionItemInfo.postId = _this.actionPost1.postingId;
+                            _this.postActionItemInfo.name = _this.actionPost1.postingName;
+                            _this.specialCharacterTranslation();
+                            for (var i = 0; i < _this.postActionItemInfo.group.length; i++) {
+                                if (_this.postActionItemInfo.group[i].groupName === _this.actionPost1.groupName) {
+                                    _this.$scope.group = _this.postActionItemInfo.group[i];
                                 }
-                                for (var k = 0; k < _this.postActionItemInfo.population.length; k++) {
-                                    if (_this.postActionItemInfo.population[k].name === _this.actionPost1.postingPopulation) {
-                                        _this.$scope.population = _this.postActionItemInfo.population[k];
-                                    }
+                            }
+                            for (var k = 0; k < _this.postActionItemInfo.population.length; k++) {
+                                if (_this.postActionItemInfo.population[k].name === _this.actionPost1.postingPopulation) {
+                                    _this.$scope.population = _this.postActionItemInfo.population[k];
                                 }
-                                _this.selected = _this.$scope.group;
-                                _this.selectedPopulation = _this.$scope.population;
-                                _this.postActionItemInfo.groupName = _this.actionPost1.groupName;
-                                _this.postActionItemInfo.startDate = _this.actionPost1.postingDisplayStartDate;
-                                _this.postActionItemInfo.endDate = _this.actionPost1.postingDisplayEndDate;
-                                _this.postActionItemInfo.localeDate = _this.actionPost1.postingScheduleDateTime;
-                                _this.postNow = false;
-                                _this.regeneratePopulation = _this.actionPost1.populationRegenerateIndicator;
-                                if (_this.postActionItemInfo.localeTime) {
-                                    var timeString = _this.actionPost1.scheduledStartTime;
-                                    var hourEnd = timeString.indexOf(":");
-                                    var H = +timeString.substr(0, hourEnd);
-                                    var h = H % 12 || 12;
-                                    var ampm = H < 12 ? "AM" : "PM";
-                                    timeString = h + timeString.substr(hourEnd, 3) + ampm;
-                                    _this.sendTime = timeString;
-                                }
-                                else {
-                                    _this.sendTime = _this.actionPost1.scheduledStartTime;
-                                }
-                                _this.actionPost1.timezoneStringOffset["timezoneId"] = _this.actionPost1.timezoneStringOffset.ID;
-                                _this.timezone = _this.actionPost1.timezoneStringOffset;
-                                _this.changedValue();
-                                _this.adminActionStatusService.getActionItemsById(_this.$state.params.postIdval)
-                                    .then(function (response) {
-                                        _this.selectedActionListVal = response.data;
-                                        _this.itemLength = _this.selectedActionListVal.length;
-                                        _this.selectedActionListVal.forEach(function (item, index) {
-                                            _this.modalResult = item;
-                                            _this.modalResults.push(_this.modalResult.actionItemId);
-                                        });
-                                    });
+                            }
+                            _this.selected = _this.$scope.group;
+                            _this.selectedPopulation = _this.$scope.population;
+                            _this.postActionItemInfo.groupName = _this.actionPost1.groupName;
+                            _this.postActionItemInfo.startDate = _this.actionPost1.postingDisplayStartDate;
+                            _this.postActionItemInfo.endDate = _this.actionPost1.postingDisplayEndDate;
+                            _this.postActionItemInfo.localeDate = _this.actionPost1.postingScheduleDateTime;
+                            _this.postNow = false;
+                            _this.regeneratePopulation = _this.actionPost1.populationRegenerateIndicator;
+                            if (_this.postActionItemInfo.localeTime) {
+                                var timeString = _this.actionPost1.scheduledStartTime;
+                                var hourEnd = timeString.indexOf(":");
+                                var H = +timeString.substr(0, hourEnd);
+                                var h = H % 12 || 12;
+                                var ampm = H < 12 ? " AM" : " PM";
+                                var hoursStr = h < 10 ? "0" + h : h;
+                                timeString = hoursStr + timeString.substr(hourEnd, 3) + ampm;
+                                _this.sendTime = timeString;
                             }
                             else {
-                                //todo: output error in notification center?
-                                console.log("fail");
+                                _this.sendTime = _this.actionPost1.scheduledStartTime;
                             }
-                        }, function (err) {
-                            //TODO:: handle error call
-                            console.log(err);
-                        });
+                            _this.actionPost1.timezoneStringOffset["timezoneId"] = _this.actionPost1.timezoneStringOffset.ID;
+                            _this.timezone = _this.actionPost1.timezoneStringOffset;
+                            _this.changedValue();
+                            _this.adminActionStatusService.getActionItemsById(_this.$state.params.postIdval)
+                                .then(function (response) {
+                                _this.selectedActionListVal = response.data;
+                                _this.itemLength = _this.selectedActionListVal.length;
+                                _this.selectedActionListVal.forEach(function (item, index) {
+                                    _this.modalResult = item;
+                                    _this.modalResults.push(_this.modalResult.actionItemId);
+                                });
+                            });
+                        }
+                        else {
+                            //todo: output error in notification center?
+                            console.log("fail");
+                        }
+                    }, function (err) {
+                        //TODO:: handle error call
+                        console.log(err);
+                    });
                 }
                 _this.spinnerService.showSpinner(false);
             });
@@ -193,11 +194,11 @@ var AIP;
             var groupId = this.$scope;
             this.adminActionService.getGroupActionItem(this.selected.groupId)
                 .then(function (response) {
-                    _this.actionItemList = response.data;
-                    var postActionItemGroup = $("#ActionItemGroup");
-                    _this.postActionItemInfo["groupAction"] = [];
-                    _this.postActionItemInfo.groupAction = _this.actionItemList;
-                });
+                _this.actionItemList = response.data;
+                var postActionItemGroup = $("#ActionItemGroup");
+                _this.postActionItemInfo["groupAction"] = [];
+                _this.postActionItemInfo.groupAction = _this.actionItemList;
+            });
         };
         AdminPostItemAddPageCtrl.prototype.setTime = function (time) {
             this.sendTime = time;
@@ -350,26 +351,35 @@ var AIP;
                 this.sendTime = null;
                 this.timezone.timezoneId = null;
             }
-            this.sendTime = this.$filter("date")(this.sendTime, "HHmm");
+            if (this.editMode && !(this.sendTime instanceof Date)) {
+                var hourEnd = this.sendTime.indexOf(":");
+                var H = +this.sendTime.substr(0, hourEnd);
+                var h = H % 12 || 12;
+                var hoursStr = h < 10 ? "0" + h : h;
+                this.sendTime = hoursStr + this.sendTime.substr(hourEnd + 1, 2);
+            }
+            else {
+                this.sendTime = this.$filter("date")(this.sendTime, "HHmm");
+            }
             this.adminActionService.savePostActionItem(this.postActionItemInfo, this.selected, this.modalResults, this.selectedPopulation, this.postNow, this.sendTime, this.timezone.timezoneId, this.regeneratePopulation)
                 .then(function (response) {
-                    _this.saving = false;
-                    var notiParams = {};
-                    if (response.data.success) {
-                        notiParams = {
-                            notiType: "saveSuccess",
-                            data: response.data
-                        };
-                        _this.$state.go("admin-post-list", { noti: notiParams, data: response.data.savedJob.id });
-                    }
-                    else {
-                        _this.saveErrorCallback(response.data.message);
-                    }
-                }, function (err) {
-                    _this.saving = false;
-                    //TODO:: handle error call
-                    console.log(err);
-                });
+                _this.saving = false;
+                var notiParams = {};
+                if (response.data.success) {
+                    notiParams = {
+                        notiType: "saveSuccess",
+                        data: response.data
+                    };
+                    _this.$state.go("admin-post-list", { noti: notiParams, data: response.data.savedJob.id });
+                }
+                else {
+                    _this.saveErrorCallback(response.data.message);
+                }
+            }, function (err) {
+                _this.saving = false;
+                //TODO:: handle error call
+                console.log(err);
+            });
         };
         AdminPostItemAddPageCtrl.prototype.saveErrorCallback = function (message) {
             var n = new Notification({
