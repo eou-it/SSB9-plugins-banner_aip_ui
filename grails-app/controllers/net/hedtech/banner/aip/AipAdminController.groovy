@@ -20,7 +20,6 @@ class AipAdminController {
     def blockingProcessCompositeService
 
     def actionItemReadOnlyCompositeService
-    def actionItemBlockedProcessService
 
     def actionItemTemplateService
 
@@ -39,8 +38,6 @@ class AipAdminController {
     def actionItemGroupService
     def actionItemService
     def actionItemBlockedProcessCompositeService
-
-
 
     /**
      * API for folders LOV
@@ -301,7 +298,7 @@ class AipAdminController {
 
     def blockedProcessList() {
         def actionItemId = params.long( 'actionItemId' )
-        def model = actionItemBlockedProcessCompositeService.getBlockedProcessForSpecifiedActionItem( actionItemId)
+        def model = actionItemBlockedProcessCompositeService.getBlockedProcessForSpecifiedActionItem( actionItemId )
         render model as JSON
     }
 
@@ -315,13 +312,13 @@ class AipAdminController {
             def paramMap = request.JSON
             model = actionItemBlockedProcessCompositeService.updateBlockedProcessItems( paramMap )
         } catch (ApplicationException ae) {
-            ae.printStackTrace(  )
+            ae.printStackTrace()
             model = [
                     success: false,
                     message: MessageHelper.message( ae.defaultMessage ),
             ]
         } catch (Exception e) {
-            e.printStackTrace(  )
+            e.printStackTrace()
             model = [
                     success                 : false,
                     message                 : e.message,
