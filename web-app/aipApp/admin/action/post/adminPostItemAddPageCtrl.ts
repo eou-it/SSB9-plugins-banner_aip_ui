@@ -469,6 +469,8 @@ module AIP {
                     notifications.remove(n);
                 })
                 n.addPromptAction(this.$filter("i18n_aip")("aip.common.text.yes"), function () {
+                    that.save();
+                    notifications.remove(n);
                 })
                 notifications.addNotification(n);
             }
