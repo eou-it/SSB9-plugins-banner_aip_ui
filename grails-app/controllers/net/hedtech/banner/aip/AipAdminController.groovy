@@ -312,13 +312,11 @@ class AipAdminController {
             def paramMap = request.JSON
             model = actionItemBlockedProcessCompositeService.updateBlockedProcessItems( paramMap )
         } catch (ApplicationException ae) {
-            ae.printStackTrace()
             model = [
                     success: false,
                     message: MessageHelper.message( ae.defaultMessage ),
             ]
         } catch (Exception e) {
-            e.printStackTrace()
             model = [
                     success                 : false,
                     message                 : e.message,

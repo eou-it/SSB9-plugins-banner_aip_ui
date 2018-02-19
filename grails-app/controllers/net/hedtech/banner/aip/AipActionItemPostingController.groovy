@@ -7,9 +7,6 @@ import grails.converters.JSON
 import net.hedtech.banner.exceptions.ApplicationException
 import org.apache.log4j.Logger
 import org.codehaus.groovy.grails.plugins.web.taglib.ValidationTagLib
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import  net.hedtech.banner.i18n.MessageHelper
 
 /**
  * Controller class for AIP Action Item Posting
