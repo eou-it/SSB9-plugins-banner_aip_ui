@@ -16,7 +16,7 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
                 <div class="row" ng-class="{'has-error':vm.actionItemInfo.name.length>60}">
                     <input id="actionItemName" maxlength="60" aria-valuemax="60" type="text" class="form-control"
                            ng-model="vm.actionItemInfo.name" ng-disabled="vm.editMode"
-                           placeholder="{{'aip.admin.action.actionItem.name'|i18n_aip}}" aria-label="Action Item Name"
+                           placeholder="{{'aip.admin.action.actionItem.name'|i18n_aip}}" aria-label="{{'aip.admin.action.actionItem.name'|i18n_aip}}"
                            aria-required="true">
                 </div>
                 <div class="alert alert-danger" role="alert" ng-if="vm.actionItemInfo.title.name>60">
@@ -80,7 +80,7 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
                 <div class="row" ng-class="{'has-error':vm.actionItemInfo.title.length>300}">
                     <input id="actionItemTitle" maxlength="300" aria-valuemax="300" type="text" class="form-control"
                            ng-model="vm.actionItemInfo.title"
-                           placeholder="{{'aip.admin.action.actionItem.title'|i18n_aip}}" aria-label="Action Item Title"
+                           placeholder="{{'aip.admin.action.actionItem.title'|i18n_aip}}" aria-label="{{'aip.admin.action.actionItem.title'|i18n_aip}}"
                            aria-required="true">
                 </div>
                 <div class="alert alert-danger" role="alert" ng-if="vm.actionItemInfo.title.length>300">
