@@ -241,7 +241,7 @@ module AIP {
                     deferred.resolve(compiled);
                     if (panelName === "overview") {
                         if(this.actionItem.actionItemPostedStatus=="Y"){
-                            $("#title-panel h1" ).html(this.actionItem.actionItemName+this.$filter("i18n_aip")("aip.admin.actionItem.title.posted"));
+                            $("#title-panel h1" ).html(this.actionItem.actionItemName+' ' + this.$filter("i18n_aip")("aip.admin.actionItem.title.posted"));
                         }
                         else {
                             $("#title-panel").children()[0].innerHTML = this.actionItem.actionItemName;

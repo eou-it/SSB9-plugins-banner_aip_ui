@@ -7,7 +7,7 @@
 ///<reference path="../../../common/services/spinnerService.ts"/>
 var AIP;
 (function (AIP) {
-    var AdminActionItemOpenPageCtrl =  (function () {
+    var AdminActionItemOpenPageCtrl = (function () {
         function AdminActionItemOpenPageCtrl($scope, $q, $state, $filter, $sce, $window, $templateRequest, $templateCache, $compile, $timeout, $interpolate, SpinnerService, AdminActionService, AdminActionStatusService, APP_ROOT, CKEDITORCONFIG) {
             this.$inject = ["$scope", "$q", "$state", "$filter", "$sce", "$window", "$templateRequest", "$templateCache", "$compile", "$timeout", "$interpolate", "SpinnerService", "AdminActionService", "AdminActionStatusService", "APP_ROOT", "CKEDITORCONFIG"];
             this.trustAsHtml = function (string) {
@@ -134,22 +134,22 @@ var AIP;
             var deferred = this.$q.defer();
             this.adminActionService.getActionItemDetail(this.actionFolder)
                 .then(function (response) {
-                    _this.actionItem = response.data.actionItem;
-                    _this.actionItem.actionItemContent = _this.trustAsHtml(response.data.actionItem.actionItemContent);
-                    _this.selectedTemplate = _this.actionItem.actionItemTemplateId;
-                    _this.actionItemPostedStatus = _this.actionItem.actionItemPostedStatus;
-                    console.log(_this.actionItemPostedStatus);
-                    if (_this.templateSelect) {
-                        _this.selectTemplate();
-                        //this.trustActionItemContent();
-                    }
-                    else {
-                        //this.trustActionItemContent();
-                    }
-                    deferred.resolve(_this.openPanel("overview"));
-                }, function (err) {
-                    console.log(err);
-                });
+                _this.actionItem = response.data.actionItem;
+                _this.actionItem.actionItemContent = _this.trustAsHtml(response.data.actionItem.actionItemContent);
+                _this.selectedTemplate = _this.actionItem.actionItemTemplateId;
+                _this.actionItemPostedStatus = _this.actionItem.actionItemPostedStatus;
+                console.log(_this.actionItemPostedStatus);
+                if (_this.templateSelect) {
+                    _this.selectTemplate();
+                    //this.trustActionItemContent();
+                }
+                else {
+                    //this.trustActionItemContent();
+                }
+                deferred.resolve(_this.openPanel("overview"));
+            }, function (err) {
+                console.log(err);
+            });
             return deferred.promise;
         };
         AdminActionItemOpenPageCtrl.prototype.openContentPanel = function () {
@@ -157,18 +157,18 @@ var AIP;
             var deferred = this.$q.defer();
             this.adminActionService.getActionItemTemplates()
                 .then(function (response) {
-                    _this.templates = response.data;
-                    console.log(_this.templates);
-                    deferred.resolve(_this.openPanel("content"));
-                    _this.getTemplateSource();
-                    _this.contentChanged = false;
-                    if (_this.templateSelect) {
-                        _this.selectTemplate();
-                        _this.selectTemplate();
-                    }
-                }, function (error) {
-                    console.log(error);
-                });
+                _this.templates = response.data;
+                console.log(_this.templates);
+                deferred.resolve(_this.openPanel("content"));
+                _this.getTemplateSource();
+                _this.contentChanged = false;
+                if (_this.templateSelect) {
+                    _this.selectTemplate();
+                    _this.selectTemplate();
+                }
+            }, function (error) {
+                console.log(error);
+            });
             return deferred.promise;
         };
         AdminActionItemOpenPageCtrl.prototype.openBlockPanel = function () {
@@ -176,11 +176,11 @@ var AIP;
             var deferred = this.$q.defer();
             this.adminActionService.getActionItemBlocks()
                 .then(function (response) {
-                    _this.blocks = response.data;
-                    deferred.resolve(_this.openPanel("block"));
-                }, function (error) {
-                    console.log(error);
-                });
+                _this.blocks = response.data;
+                deferred.resolve(_this.openPanel("block"));
+            }, function (error) {
+                console.log(error);
+            });
             return deferred.promise;
         };
         AdminActionItemOpenPageCtrl.prototype.openPanel = function (panelName) {
@@ -205,19 +205,19 @@ var AIP;
             var templateUrl = this.$sce.getTrustedResourceUrl(url);
             this.$templateRequest(templateUrl)
                 .then(function (template) {
-                    var compiled = _this.$compile(template)(newScope);
-                    deferred.resolve(compiled);
-                    if (panelName === "overview") {
-                        if (_this.actionItem.actionItemPostedStatus == "Y") {
-                            $("#title-panel h1").html(_this.actionItem.actionItemName + _this.$filter("i18n_aip")("aip.admin.actionItem.title.posted"));
-                        }
-                        else {
-                            $("#title-panel").children()[0].innerHTML = _this.actionItem.actionItemName;
-                        }
+                var compiled = _this.$compile(template)(newScope);
+                deferred.resolve(compiled);
+                if (panelName === "overview") {
+                    if (_this.actionItem.actionItemPostedStatus == "Y") {
+                        $("#title-panel h1").html(_this.actionItem.actionItemName + ' ' + _this.$filter("i18n_aip")("aip.admin.actionItem.title.posted"));
                     }
-                }, function (error) {
-                    console.log(error);
-                });
+                    else {
+                        $("#title-panel").children()[0].innerHTML = _this.actionItem.actionItemName;
+                    }
+                }
+            }, function (error) {
+                console.log(error);
+            });
             return deferred.promise;
         };
         AdminActionItemOpenPageCtrl.prototype.isNoTemplate = function () {
@@ -327,20 +327,20 @@ var AIP;
             var deferred = this.$q.defer();
             this.adminActionService.getActionItemDetail(this.$state.params.data)
                 .then(function (response) {
-                    _this.actionItem = response.data.actionItem;
-                    _this.selectedTemplate = _this.actionItem.actionItemTemplateId;
-                    _this.trustActionItemContent();
-                    switch (option) {
-                        case "content":
-                            _this.templateSelect = false;
-                            break;
-                        default:
-                            break;
-                    }
-                    deferred.resolve(_this.openPanel("overview"));
-                }, function (err) {
-                    console.log(err);
-                });
+                _this.actionItem = response.data.actionItem;
+                _this.selectedTemplate = _this.actionItem.actionItemTemplateId;
+                _this.trustActionItemContent();
+                switch (option) {
+                    case "content":
+                        _this.templateSelect = false;
+                        break;
+                    default:
+                        break;
+                }
+                deferred.resolve(_this.openPanel("overview"));
+            }, function (err) {
+                console.log(err);
+            });
             return deferred.promise;
         };
         AdminActionItemOpenPageCtrl.prototype.saveTemplate = function () {
@@ -350,16 +350,16 @@ var AIP;
             this.saving = true;
             allDefer.push(this.adminActionService.saveActionItemTemplate(this.selectedTemplate, this.actionItem.actionItemId, this.actionItem.actionItemContent)
                 .then(function (response) {
-                    if (response.data.success) {
-                        return { success: true, type: "template", data: response.data.actionItem };
-                    }
-                    else {
-                        return { success: false, errors: response.data.errors };
-                    }
-                }, function (err) {
-                    console.log(err);
-                    return { success: false };
-                }));
+                if (response.data.success) {
+                    return { success: true, type: "template", data: response.data.actionItem };
+                }
+                else {
+                    return { success: false, errors: response.data.errors };
+                }
+            }, function (err) {
+                console.log(err);
+                return { success: false };
+            }));
             // set seq order in rule array with it's index
             angular.forEach(this.rules, function (item) {
                 item.statusRuleSeqOrder = _this.rules.indexOf(item);
@@ -367,86 +367,86 @@ var AIP;
             });
             allDefer.push(this.adminActionService.updateActionItemStatusRule(this.rules, this.actionFolder)
                 .then(function (response) {
-                    if (response.data.success) {
-                        _this.getRules();
-                        return { success: true };
-                    }
-                    else {
-                        return { success: false, errors: response.data.errors };
-                    }
-                }, function (err) {
-                    console.log(err);
-                    return { success: false };
-                }));
+                if (response.data.success) {
+                    _this.getRules();
+                    return { success: true };
+                }
+                else {
+                    return { success: false, errors: response.data.errors };
+                }
+            }, function (err) {
+                console.log(err);
+                return { success: false };
+            }));
             this.$q.all(allDefer)
                 .then(function (response) {
-                    _this.saving = false;
-                    var notiParams = {};
-                    var errorItem = response.filter(function (item) {
-                        return item.success === false;
-                    });
-                    var newData = response.filter(function (item) {
-                        return item.type && item.type === "template";
-                    });
-                    if (errorItem.length === 0) {
-                        notiParams = {
-                            notiType: "saveSuccess",
-                            data: newData[0].data
-                        };
-                        _this.handleNotification(notiParams);
-                        _this.templateSelect = false;
-                        _this.actionItem = newData[0].data;
-                        _this.trustActionItemContent();
-                        _this.openContentPanel();
-                    }
-                    else {
-                        _this.saveErrorCallback(response[0].error);
-                        console.log("error:");
-                    }
-                }, function (err) {
-                    _this.saveErrorCallback(err);
-                    console.log(err);
-                    _this.saving = false;
+                _this.saving = false;
+                var notiParams = {};
+                var errorItem = response.filter(function (item) {
+                    return item.success === false;
                 });
+                var newData = response.filter(function (item) {
+                    return item.type && item.type === "template";
+                });
+                if (errorItem.length === 0) {
+                    notiParams = {
+                        notiType: "saveSuccess",
+                        data: newData[0].data
+                    };
+                    _this.handleNotification(notiParams);
+                    _this.templateSelect = false;
+                    _this.actionItem = newData[0].data;
+                    _this.trustActionItemContent();
+                    _this.openContentPanel();
+                }
+                else {
+                    _this.saveErrorCallback(response[0].error);
+                    console.log("error:");
+                }
+            }, function (err) {
+                _this.saveErrorCallback(err);
+                console.log(err);
+                _this.saving = false;
+            });
         };
         AdminActionItemOpenPageCtrl.prototype.getRules = function () {
             var _this = this;
             this.adminActionStatusService.getRules(this.actionFolder)
                 .then(function (response) {
-                    _this.rules = response.data;
-                    angular.forEach(_this.rules, function (item) {
-                        //item.statusRuleLabelText = this.trustActionItemRules(item.statusRuleLabelText);
-                        item.statusRuleLabelText = _this.$sce.trustAsHtml(_this.$filter("html")(item.statusRuleLabelText)).toString();
-                        item["status"] = {
-                            actionItemStatus: item.statusName,
-                            actionItemStatusId: item.statusId ? item.statusId : item.status.id
-                        };
-                    });
-                    _this.rules.sort(function (a, b) {
-                        return a.statusRuleSeqOrder - b.statusRuleSeqOrder;
-                    });
-                }, function (err) {
-                    _this.saveErrorCallback(err);
-                    console.log("error:" + err);
+                _this.rules = response.data;
+                angular.forEach(_this.rules, function (item) {
+                    //item.statusRuleLabelText = this.trustActionItemRules(item.statusRuleLabelText);
+                    item.statusRuleLabelText = _this.$sce.trustAsHtml(_this.$filter("html")(item.statusRuleLabelText)).toString();
+                    item["status"] = {
+                        actionItemStatus: item.statusName,
+                        actionItemStatusId: item.statusId ? item.statusId : item.status.id
+                    };
                 });
+                _this.rules.sort(function (a, b) {
+                    return a.statusRuleSeqOrder - b.statusRuleSeqOrder;
+                });
+            }, function (err) {
+                _this.saveErrorCallback(err);
+                console.log("error:" + err);
+            });
         };
         AdminActionItemOpenPageCtrl.prototype.getStatus = function () {
             var _this = this;
             var deferred = this.$q.defer();
             this.adminActionStatusService.getRuleStatus()
                 .then(function (response) {
-                    _this.statuses = response.data;
-                    angular.forEach(_this.statuses, function (item) {
-                        if (item.actionItemStatusActive == "N" || item.actionItemStatusDefault == 'Y') {
-                            var index = _this.statuses.indexOf(item);
-                            _this.statuses.splice(index, 1);
-                        }
-                    });
-                    deferred.resolve();
-                    // deferred.resolve(this.openPanel("content"));
-                }, function (error) {
-                    console.log(error);
+                _this.statuses = response.data;
+                angular.forEach(_this.statuses, function (item) {
+                    if (item.actionItemStatusActive == "N" || item.actionItemStatusDefault == 'Y') {
+                        var index = _this.statuses.indexOf(item);
+                        _this.statuses.splice(index, 1);
+                    }
                 });
+                deferred.resolve();
+                // deferred.resolve(this.openPanel("content"));
+            }, function (error) {
+                console.log(error);
+            });
             return deferred.promise;
         };
         AdminActionItemOpenPageCtrl.prototype.validateActionItemRule = function () {

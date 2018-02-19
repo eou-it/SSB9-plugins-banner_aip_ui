@@ -79,7 +79,7 @@ module AIP {
             this.groupDetailDefer = this.getGroupDetailDefer(this.$state.params.groupId).then(()=> {
                 // $("p.openGroupDesc" ).html(decodeURI(this.groupFolder.groupDesc));
                 if(this.groupFolder.postedInd=="Y"){
-                    $("#title-panel h1" ).html(this.groupFolder.groupName+this.$filter("i18n_aip")("aip.admin.group.title.posted"));
+                    $("#title-panel h1" ).html(this.groupFolder.groupName + ' ' + this.$filter("i18n_aip")("aip.admin.group.title.posted"));
                 }else{
                 $("#title-panel h1" ).html(this.groupFolder.groupName);
                 }
@@ -121,7 +121,7 @@ module AIP {
                     deferred.resolve(compiled);
                     if(panelName === "overview") {
                         if(this.groupFolder.postedInd=="Y"){
-                            $("#title-panel h1" ).html(this.groupFolder.groupName+this.$filter("i18n_aip")("aip.admin.group.title.posted"));
+                            $("#title-panel h1" ).html(this.groupFolder.groupName + ' ' + this.$filter("i18n_aip")("aip.admin.group.title.posted"));
                         }
                         else {
                             $("#title-panel").children()[0].innerHTML = this.groupFolder.groupTitle;
