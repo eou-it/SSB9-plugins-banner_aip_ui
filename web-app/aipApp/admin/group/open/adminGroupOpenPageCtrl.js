@@ -11,7 +11,7 @@ var AIP;
             this.$inject = ["$scope", "$window", "AdminGroupService", "$q", "SpinnerService", "$state", "$filter", "$sce", "$templateRequest", "$templateCache",
                 "$compile", "$timeout", "APP_ROOT"];
             this.trustHTML = function (txtString) {
-                var sanitized = txtString ? this.$filter("html")(this.$sce.trustAsHtml(txtString)) : "";
+                var sanitized = txtString ? this.$sce.trustAsHtml(this.$filter("html")(txtString)) : "";
                 return sanitized;
             };
             $scope.vm = this;
