@@ -141,7 +141,6 @@ var AIP;
                             else {
                                 _this.sendTime = _this.actionPost1.scheduledStartTime;
                             }
-                            _this.actionPost1.timezoneStringOffset["timezoneId"] = _this.actionPost1.timezoneStringOffset.ID;
                             _this.timezone = _this.actionPost1.timezoneStringOffset;
                             _this.changedValue();
                             _this.adminActionStatusService.getActionItemsById(_this.$state.params.postIdval)

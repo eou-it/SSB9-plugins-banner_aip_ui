@@ -241,7 +241,6 @@ module AIP {
                                 {
                                     this.sendTime=this.actionPost1.scheduledStartTime;
                                 }
-                                this.actionPost1.timezoneStringOffset["timezoneId"] = this.actionPost1.timezoneStringOffset.ID;
                                 this.timezone=this.actionPost1.timezoneStringOffset;
                                 this.changedValue();
 
