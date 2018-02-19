@@ -397,6 +397,9 @@ module AIP {
             //TODO:: implement to save rules
             var allDefer = [];
             this.saving = true;
+            if(this.actionItem.actionItemContent && $.type(this.actionItem.actionItemContent) != 'string'){
+                this.actionItem.actionItemContent = this.$sce.getTrustedHtml(this.actionItem.actionItemContent)
+            }
             allDefer.push(this.adminActionService.saveActionItemTemplate(this.selectedTemplate, this.actionItem.actionItemId, this.actionItem.actionItemContent)
                 .then((response: any) => {
                     if (response.data.success) {
