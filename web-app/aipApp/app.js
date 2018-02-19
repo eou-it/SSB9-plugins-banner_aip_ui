@@ -430,6 +430,7 @@ var bannerAIPUI = angular.module("bannerAIPUI", [])
         $provide.decorator('uibAccordionGroupDirective', function($delegate) {
             var directive = $delegate[0];
             directive.templateUrl = APP_ROOT + "common/directives/list/template/listAccordionHeader.html";
+            directive.replace=false;
             return $delegate;
         });
         $provide.decorator("aipListDirective", function($delegate) {
