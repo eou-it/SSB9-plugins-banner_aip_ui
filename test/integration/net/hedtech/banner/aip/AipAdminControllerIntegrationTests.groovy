@@ -1335,7 +1335,7 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
         def ret = controller.response.contentAsString
         def data = JSON.parse( ret )
         assertFalse data.success
-        assert data.message == 'The group is associated with assigned action items or a submitted Post Action Items job and cannot be deleted.'
+        assert data.message == 'The group is associated with a submitted Post Action Items job and cannot be deleted.'
     }
 
 
