@@ -242,6 +242,7 @@ module AIP {
                                     this.sendTime=this.actionPost1.scheduledStartTime;
                                 }
                                 this.timezone=this.actionPost1.timezoneStringOffset;
+                                this.defaultTimeZone = this.timezone.displayName;
                                 this.changedValue();
 
                                 this.adminActionStatusService.getActionItemsById(this.$state.params.postIdval)
