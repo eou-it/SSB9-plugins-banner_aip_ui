@@ -328,7 +328,7 @@ module AIP {
         }
 
         trustActionItemContent = function () {
-            this.actionItem.actionItemContent = this.$sce.trustAsHtml(this.$filter("html")(this.actionItem.actionItemContent));
+            this.actionItem.actionItemContent = this.$sce.trustAsHtml(this.actionItem.actionItemContent);
             return this.actionItem.actionItemContent;
         }
 

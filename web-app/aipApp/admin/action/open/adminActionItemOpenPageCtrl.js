@@ -14,7 +14,7 @@ var AIP;
                 return this.$sce.trustAsHtml(string);
             };
             this.trustActionItemContent = function () {
-                this.actionItem.actionItemContent = this.$sce.trustAsHtml(this.$filter("html")(this.actionItem.actionItemContent));
+                this.actionItem.actionItemContent = this.$sce.trustAsHtml(this.actionItem.actionItemContent);
                 return this.actionItem.actionItemContent;
             };
             this.trustActionItemRules = function (statusRuleLabelText) {
