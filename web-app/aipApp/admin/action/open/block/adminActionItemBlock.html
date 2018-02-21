@@ -109,8 +109,8 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
                                 <div>Select</div>
                             </xe-ui-select-match>
 
-                            <xe-ui-select-choices repeat="item in vm.personaData">
-                                <div ng-bind-html="vm.allActionItems.persona[item]" value="item"></div>
+                            <xe-ui-select-choices repeat="item in vm.personaData | filter:$select.search">
+                                <div ng-bind-html="vm.allActionItems.persona[item]| highlight: $select.search" value="item"></div>
 
                             </xe-ui-select-choices>
 

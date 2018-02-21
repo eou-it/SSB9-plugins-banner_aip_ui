@@ -223,28 +223,32 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
             </div>
 
         </div>
-        <div class="clear-both"><input type="checkbox" id="chkPopulation" ng-model="vm.regeneratePopulation" ng-change="vm.checkChanges()"><label
+   <!--     <div class="clear-both"><input type="checkbox" id="chkPopulation" ng-model="vm.regeneratePopulation" ng-change="vm.checkChanges()"><label
                 class="titleValue required"><span class="postChk">{{"aip.admin.action.postactionItem.regenerate.Population"|i18n_aip}}</span></label>
-        </div>
+        </div>-->
 
     </div>
 
+
+
+
+
     <div class="actionItemControl">
         <div class="row">
-            <div class="actionItemElement col-xs-12 col-sm-12">
-                <div class="col-sm-8 offset-sm-8 col-xs-12 actionItemButton">
+            <div class="actionItemElement col-xs-12 col-sm-8">
+                <div class="col-sm-4 offset-sm-8 col-xs-12 actionItemButton">
                     <span>
-                        <button name="Cancel" type="button" class="btn btn-default col-sm-2" ng-click="vm.cancel()">{{"aip.common.cancel"|i18n_aip}}</button>
+                        <button name="Cancel" type="button" class="btn btn-default" ng-click="vm.cancel()">{{"aip.common.cancel"|i18n_aip}}</button>
                     </span>
                     <span>
-                        <button name="Save" type="button" class="btn btn-primary col-sm-2" ng-if="vm.editMode==false" ng-disabled=" !vm.validateInput() "
+                        <button name="Save" type="button" class="btn btn-primary" ng-if="vm.editMode==false" ng-disabled=" !vm.validateInput() "
                                 ng-click="vm.save()">
-                        {{"aip.common.submitandreturn"|i18n_aip}}</button>
+                        {{"aip.common.saveandreturn"|i18n_aip}}</button>
                     </span>
                     <span>
-                        <button name="Save" type="button" class="btn btn-primary col-sm-2"  ng-if="vm.editMode==true" ng-disabled=" !vm.dirtyFlag || !vm.validateInput() "
+                        <button name="Save" type="button" class="btn btn-primary"  ng-if="vm.editMode==true" ng-disabled=" !vm.dirtyFlag || !vm.validateInput() "
                                 ng-click="vm.save()">
-                        {{"aip.common.submitandreturn"|i18n_aip}}</button>
+                        {{"aip.common.saveandreturn"|i18n_aip}}</button>
                     </span>
                 </div>
             </div>
