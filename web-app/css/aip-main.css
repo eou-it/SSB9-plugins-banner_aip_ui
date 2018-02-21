@@ -1,10 +1,9 @@
 /*******************************************************************************
 Copyright 2018 Ellucian Company L.P. and its affiliates.
 ********************************************************************************/
-#gridCaption {
-  color: gray;
-  font-size: 18px;
-}
+/*********************************************************************************
+ Copyright 2017 Ellucian Company L.P. and its affiliates.
+ **********************************************************************************/
 aip-list .aip-list-container {
   border: none;
   box-shadow: none; }
@@ -514,7 +513,8 @@ ol.selected-group > li > button {
     margin-left: 0; }
   .actionListContainer .control {
     float: right;
-    padding-top: 8px; }
+    padding-top: 8px;
+    margin-right: 0.2em; }
   .actionListContainer .actionListTable {
     overflow: auto; }
     .actionListContainer .actionListTable .table-container {
@@ -553,6 +553,24 @@ ol.selected-group > li > button {
         .actionItemAddContainer .actionItemInfo .actionItemInfoRow .actionItemElement .alert {
           padding-top: 8px;
           padding-bottom: 8px; }
+        .actionItemAddContainer .actionItemInfo .actionItemInfoRow .actionItemElement input {
+          font-size: 14px;
+          font-family: "OpenSans-semibold";
+          color: #869fb1;
+          border: 1px solid #869fb1;
+          padding: 2px 5px; }
+        .actionItemAddContainer .actionItemInfo .actionItemInfoRow .actionItemElement textarea::-webkit-input-placeholder, .actionItemAddContainer .actionItemInfo .actionItemInfoRow .actionItemElement input::-webkit-input-placeholder {
+          color: #869fb1; }
+        .actionItemAddContainer .actionItemInfo .actionItemInfoRow .actionItemElement textarea::-moz-placeholder, .actionItemAddContainer .actionItemInfo .actionItemInfoRow .actionItemElement input::-moz-placeholder {
+          color: #869fb1; }
+        .actionItemAddContainer .actionItemInfo .actionItemInfoRow .actionItemElement textarea:-ms-input-placeholder, .actionItemAddContainer .actionItemInfo .actionItemInfoRow .actionItemElement input:-ms-input-placeholder {
+          color: #869fb1; }
+        .actionItemAddContainer .actionItemInfo .actionItemInfoRow .actionItemElement textarea:focus::-webkit-input-placeholder, .actionItemAddContainer .actionItemInfo .actionItemInfoRow .actionItemElement input:focus::-webkit-input-placeholder {
+          color: #ccc; }
+        .actionItemAddContainer .actionItemInfo .actionItemInfoRow .actionItemElement textarea:focus::-moz-placeholder, .actionItemAddContainer .actionItemInfo .actionItemInfoRow .actionItemElement input:focus::-moz-placeholder {
+          color: #ccc; }
+        .actionItemAddContainer .actionItemInfo .actionItemInfoRow .actionItemElement textarea:focus:-ms-input-placeholder, .actionItemAddContainer .actionItemInfo .actionItemInfoRow .actionItemElement input:focus:-ms-input-placeholder {
+          color: #ccc; }
         .actionItemAddContainer .actionItemInfo .actionItemInfoRow .actionItemElement .open > .dropdown-menu {
           max-height: 200px;
           overflow-y: scroll; }
@@ -567,7 +585,8 @@ ol.selected-group > li > button {
           position: absolute;
           bottom: 0;
           left: auto;
-          right: 8px; }
+          right: 8px;
+          color: #4F585F; }
         .actionItemAddContainer .actionItemInfo .actionItemInfoRow .actionItemElement .titleValue.supplement.dimmed {
           font-style: italic;
           position: relative;
@@ -579,7 +598,11 @@ ol.selected-group > li > button {
           left: 8px;
           right: auto; }
         .actionItemAddContainer .actionItemInfo .actionItemInfoRow .actionItemElement textArea {
-          width: 100%; }
+          width: 100%;
+          border: 1px solid #869fb1;
+          font-size: 14px;
+          font-family: "OpenSans-semibold";
+          padding: 5px 5px; }
       .actionItemAddContainer .actionItemInfo .actionItemInfoRow .actionItemElement.input-actionItem {
         width: 100%; }
         .actionItemAddContainer .actionItemInfo .actionItemInfoRow .actionItemElement.input-actionItem .actionItemTitle {
@@ -1015,7 +1038,7 @@ ol.selected-group > li > button {
   .actionItemAddContainer .ui-select-dropdown {
     width: 21.35em; }
   .actionItemAddContainer .ui-select-dropdown .select2-search input {
-    width: 20em !important; }
+    width: inherit !important; }
   .actionItemAddContainer .actionItemEdit {
     font-size: 14px;
     margin-left: 15px;
@@ -1292,6 +1315,10 @@ ol.selected-group > li > button {
     font-size: 13px; }
   .aip-modal .actionFolderName {
     font-size: 12px; } }
+
+#gridCaption {
+  color: gray;
+  font-size: 18px; }
 
 #username {
   padding-right: 0.5em; }
@@ -1588,5 +1615,54 @@ ol.selected-group > li > button {
 .statusError {
   background-color: #FFFF00;
   border: 1px solid #CCCC00; }
+
+.ui-select-container .select2-choice, .ui-select-multiple .select2-choices {
+  min-height: 3em !important; }
+
+.ui-select-container .select2-choice > .select2-chosen {
+  font-size: 14px !important;
+  line-height: 1.75em !important; }
+
+.search-container .simple-input-field {
+  margin-left: 1em !important;
+  font-size: 0.875em !important;
+  color: #869fb1 !important; }
+
+.search-container .simple-input-field::-webkit-input-placeholder {
+  color: #869fb1 !important; }
+
+.search-container .simple-input-field::-moz-placeholder {
+  color: #869fb1 !important; }
+
+.search-container .simple-input-field:-ms-input-placeholder {
+  color: #869fb1 !important; }
+
+.search-container .simple-input-field:focus::-webkit-input-placeholder {
+  color: #ccc !important; }
+
+.search-container .simple-input-field:focus::-moz-placeholder {
+  color: #ccc !important; }
+
+.search-container .simple-input-field:focus:-ms-input-placeholder {
+  color: #ccc !important; }
+
+.pagination-container .pagination-controls label {
+  margin: 0px !important;
+  display: inline !important; }
+
+.column-filter-button {
+  padding: 0.6em !important;
+  padding-left: 2em !important;
+  color: #869fb1 !important;
+  width: 13.3em !important; }
+  .column-filter-button .placeholder {
+    color: #869fb1 !important;
+    font-size: 0.9em !important;
+    font-weight: bold !important; }
+
+.table-container {
+  font-family: OpenSans-regular !important; }
+  .table-container .caption caption .caption-container {
+    font-size: 16px !important; }
 
 /*# sourceMappingURL=aip-main.css.map */
