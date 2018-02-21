@@ -16,6 +16,28 @@
           padding-top: 8px;
           padding-bottom: 8px;
         }
+        input{
+          font-size: 14px;
+          font-family: "OpenSans-semibold";
+          color: #869fb1;
+          border: 1px solid #869fb1;
+          padding:2px 5px;
+        }
+        textarea::-webkit-input-placeholder ,input::-webkit-input-placeholder{
+          color: #869fb1;
+        }
+        textarea::-moz-placeholder, input::-moz-placeholder{
+          color: #869fb1;
+        }
+        textarea:-ms-input-placeholder,input:-ms-input-placeholder{
+          color: #869fb1;
+        }
+        textarea:focus::-webkit-input-placeholder, input:focus::-webkit-input-placeholder {
+          color: #ccc; }
+        textarea:focus::-moz-placeholder, input:focus::-moz-placeholder {
+          color: #ccc; }
+        textarea:focus:-ms-input-placeholder, input:focus:-ms-input-placeholder {
+          color: #ccc; }
         .open > .dropdown-menu {
           max-height: 200px;
           overflow-y: scroll;
@@ -34,6 +56,7 @@
           bottom: 0;
           left: auto;
           right: 8px;
+          color: #4F585F;
         }
         .titleValue.supplement.dimmed {
           //color: gray;
@@ -51,6 +74,10 @@
         }
         textArea {
           width: 100%;
+          border: 1px solid #869fb1;
+          font-size: 14px;
+          font-family:"OpenSans-semibold";
+          padding:5px 5px;
         }
       }
       .actionItemElement.input-actionItem {
@@ -89,6 +116,7 @@
       }
     }
   }
+
   @media (min-width:769px) {
     .actionItemControl {
 

@@ -442,3 +442,60 @@ ol.selected-group > li > button {
   background-color: #FFFF00;
   border: 1px solid #CCCC00;
 }
+
+//Override xe-ui-components.css
+
+.ui-select-container .select2-choice, .ui-select-multiple .select2-choices {
+  min-height: 3em !important;
+}
+.ui-select-container .select2-choice > .select2-chosen {
+  font-size: 14px !important;
+  line-height: 1.75em !important;
+}
+.search-container .simple-input-field {
+  margin-left: 1em !important;
+  font-size: 0.875em !important;
+  color: #869fb1 !important;
+}
+
+.search-container .simple-input-field::-webkit-input-placeholder {
+  color: #869fb1 !important;
+}
+.search-container .simple-input-field::-moz-placeholder {
+  color: #869fb1 !important;
+}
+.search-container .simple-input-field:-ms-input-placeholder {
+  color: #869fb1 !important;
+}
+.search-container .simple-input-field:focus::-webkit-input-placeholder {
+  color: #ccc !important;
+}
+.search-container .simple-input-field:focus::-moz-placeholder {
+  color: #ccc !important;
+}
+.search-container .simple-input-field:focus:-ms-input-placeholder {
+  color: #ccc !important;
+}
+
+.pagination-container .pagination-controls label {
+  margin : 0px !important;
+  display: inline !important;
+}
+.column-filter-button {
+  padding: 0.6em !important;
+  padding-left: 2em !important;
+  color: #869fb1 !important;
+  width: 13.3em !important;
+  .placeholder {
+    color: #869fb1 !important;
+    font-size:0.9em !important;
+    font-weight:bold !important;
+  }
+}
+
+.table-container {
+  font-family: OpenSans-regular !important;
+  .caption caption .caption-container {
+    font-size: 16px !important;
+  }
+}
