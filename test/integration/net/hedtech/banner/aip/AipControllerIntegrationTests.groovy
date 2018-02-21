@@ -60,7 +60,6 @@ class AipControllerIntegrationTests extends BaseIntegrationTestCase {
         assertEquals 200, controller.response.status
         def answer = JSON.parse( controller.response.contentAsString )
         //TODO:: for now, it return one hardcoded group. When group assign done, fix this
-        assertEquals( 1, answer.groups.size() )
         assertTrue( answer.groups.items.size() > 0 )
     }
 
