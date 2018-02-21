@@ -370,6 +370,39 @@ module AIP {
             }, 500);
         }
 
+        cancelContentEdit(option){
+            var deferred = this.$q.defer();
+            this.spinnerService.showSpinner(true);
+            var promises = [];
+            this.actionFolder = this.$state.params.actionItemId || this.$state.previousParams.actionItemId;
+            this.adminActionService.getActionItemDetail(this.actionFolder)
+                .then((response: AIP.IActionItemOpenResponse) => {
+                    this.actionItem = response.data.actionItem;
+                    this.selectedTemplate = this.actionItem.actionItemTemplateId;
+                    this.trustActionItemContent();
+
+                    switch (option) {
+                        case "content":
+                            this.templateSelect = false;
+                            promises.push(this.getStatus());
+                            promises.push(this.getRules());
+                            this.$q.all(promises).then(() => {
+                                //TODO:: turn off the spinner
+                                this.spinnerService.showSpinner(false);
+                                this.contentChanged = false;
+                            });
+                            break;
+                        default:
+                            break;
+                    }
+                    deferred.resolve(this.openPanel(option));
+                }, (err) => {
+                    console.log(err);
+                });
+            return deferred.promise;
+
+        }
+
         cancel(option) {
             this.init();
             var deferred = this.$q.defer();

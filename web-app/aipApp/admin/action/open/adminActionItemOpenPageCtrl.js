@@ -321,6 +321,37 @@ var AIP;
                 }
             }, 500);
         };
+        AdminActionItemOpenPageCtrl.prototype.cancelContentEdit = function (option) {
+            var _this = this;
+            var deferred = this.$q.defer();
+            this.spinnerService.showSpinner(true);
+            var promises = [];
+            this.actionFolder = this.$state.params.actionItemId || this.$state.previousParams.actionItemId;
+            this.adminActionService.getActionItemDetail(this.actionFolder)
+                .then(function (response) {
+                _this.actionItem = response.data.actionItem;
+                _this.selectedTemplate = _this.actionItem.actionItemTemplateId;
+                _this.trustActionItemContent();
+                switch (option) {
+                    case "content":
+                        _this.templateSelect = false;
+                        promises.push(_this.getStatus());
+                        promises.push(_this.getRules());
+                        _this.$q.all(promises).then(function () {
+                            //TODO:: turn off the spinner
+                            _this.spinnerService.showSpinner(false);
+                            _this.contentChanged = false;
+                        });
+                        break;
+                    default:
+                        break;
+                }
+                deferred.resolve(_this.openPanel(option));
+            }, function (err) {
+                console.log(err);
+            });
+            return deferred.promise;
+        };
         AdminActionItemOpenPageCtrl.prototype.cancel = function (option) {
             var _this = this;
             this.init();
