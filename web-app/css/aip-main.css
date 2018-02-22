@@ -334,8 +334,6 @@ aip-list .aip-list-container {
         display: flex;
         margin-right: 16px;
         margin-left: 16px; }
-        .groupListContainer .groupListTable .table-container .row.groupActions .icon {
-          font-size: 1.5em; }
         .groupListContainer .groupListTable .table-container .row.groupActions div {
           flex: 1;
           margin-right: 10px; }
@@ -521,8 +519,6 @@ ol.selected-group > li > button {
         display: flex;
         margin-right: 16px;
         margin-left: 16px; }
-        .actionListContainer .actionListTable .table-container .row.actionItemActions .icon {
-          font-size: 1.5em; }
         .actionListContainer .actionListTable .table-container .row.actionItemActions div {
           flex: 1;
           margin-right: 10px; }
@@ -1615,7 +1611,7 @@ ol.selected-group > li > button {
   border: 1px solid #CCCC00; }
 
 .ui-select-container .select2-choice, .ui-select-multiple .select2-choices {
-  min-height: 3em !important; }
+  min-height: 2.2em !important; }
 
 .ui-select-container .select2-choice > .select2-chosen {
   font-size: 14px !important;
@@ -1662,5 +1658,10 @@ ol.selected-group > li > button {
   font-family: OpenSans-regular !important; }
   .table-container .caption caption .caption-container {
     font-size: 16px !important; }
+  .table-container .tbody .icon {
+    font-size: 1.5em;
+    border: none;
+    background-color: transparent;
+    margin-right: 2em; }
 
 /*# sourceMappingURL=aip-main.css.map */

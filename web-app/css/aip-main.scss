@@ -445,7 +445,7 @@ ol.selected-group > li > button {
 
 //Override xe-ui-components.css
 .ui-select-container .select2-choice, .ui-select-multiple .select2-choices {
-  min-height: 3em !important;
+  min-height: 2.2em !important;
 }
 .ui-select-container .select2-choice > .select2-chosen {
   font-size: 14px !important;
@@ -496,5 +496,11 @@ ol.selected-group > li > button {
   font-family: OpenSans-regular !important;
   .caption caption .caption-container {
     font-size: 16px !important;
+  }
+  .tbody .icon {
+    font-size: 1.5em;
+    border: none;
+    background-color: transparent;
+    margin-right: 2em;
   }
 }
