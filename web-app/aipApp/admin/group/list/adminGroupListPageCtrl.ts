@@ -67,7 +67,7 @@ module AIP {
             };
             this.mobileSize = angular.element("body").width()>768?false:true;
             this.searchConfig = {
-                id: "groupDataTableSearch",
+                id: "dataTableSearch",
                 delay: 300,
                 ariaLabel: this.$filter("i18n_aip")("aip.list.grid.search.group"),
                 searchString: "",
