@@ -263,55 +263,53 @@ aip-list .aip-list-container {
   .groupAddContainer .row {
     margin-left: 0;
     margin-right: 0; }
-  .groupAddContainer .groupInfo {
-    margin-bottom: 20px; }
-    .groupAddContainer .groupInfo .groupInfoRow {
-      margin-bottom: 16px; }
-      .groupAddContainer .groupInfo .groupInfoRow .groupElement {
-        padding-right: 8px;
-        padding-left: 8px;
-        margin-bottom: 8px; }
-        .groupAddContainer .groupInfo .groupInfoRow .groupElement .ui-select-container .select2-choice {
-          background-color: #ffffff !important; }
-        .groupAddContainer .groupInfo .groupInfoRow .groupElement .alert {
-          padding-top: 8px;
-          padding-bottom: 8px; }
-        .groupAddContainer .groupInfo .groupInfoRow .groupElement .open > .dropdown-menu {
-          max-height: 200px;
-          overflow-y: scroll; }
-        .groupAddContainer .groupInfo .groupInfoRow .groupElement .titleValue {
-          font-size: 1.5em;
-          font-weight: bold; }
-        .groupAddContainer .groupInfo .groupInfoRow .groupElement .titleValue.supplement {
-          font-size: 1.0em;
-          position: absolute;
-          bottom: 0;
-          left: auto;
-          right: 8px; }
-        .groupAddContainer .groupInfo .groupInfoRow .groupElement [lang='ar'] .titleValue.supplement {
-          left: 8px;
-          right: auto; }
-        .groupAddContainer .groupInfo .groupInfoRow .groupElement [lang='ar-sa'] .titleValue.supplement {
-          left: 8px;
-          right: auto; }
-      .groupAddContainer .groupInfo .groupInfoRow .groupElement.input-group {
-        width: 100%; }
-        .groupAddContainer .groupInfo .groupInfoRow .groupElement.input-group .groupTitle {
-          padding-right: 0;
-          padding-left: 0; }
-      .groupAddContainer .groupInfo .groupInfoRow .dropdown {
-        border: none;
-        box-shadow: none;
+  .groupAddContainer .groupInfo .groupInfoRow {
+    margin-bottom: 16px; }
+    .groupAddContainer .groupInfo .groupInfoRow .groupElement {
+      padding-right: 8px;
+      padding-left: 8px;
+      margin-bottom: 8px; }
+      .groupAddContainer .groupInfo .groupInfoRow .groupElement .ui-select-container .select2-choice {
+        background-color: #ffffff !important; }
+      .groupAddContainer .groupInfo .groupInfoRow .groupElement .alert {
+        padding-top: 8px;
+        padding-bottom: 8px; }
+      .groupAddContainer .groupInfo .groupInfoRow .groupElement .open > .dropdown-menu {
+        max-height: 200px;
+        overflow-y: scroll; }
+      .groupAddContainer .groupInfo .groupInfoRow .groupElement .titleValue {
+        font-size: 1.5em;
+        font-weight: bold; }
+      .groupAddContainer .groupInfo .groupInfoRow .groupElement .titleValue.supplement {
+        font-size: 1.0em;
+        position: absolute;
+        bottom: 0;
+        left: auto;
+        right: 8px; }
+      .groupAddContainer .groupInfo .groupInfoRow .groupElement [lang='ar'] .titleValue.supplement {
+        left: 8px;
+        right: auto; }
+      .groupAddContainer .groupInfo .groupInfoRow .groupElement [lang='ar-sa'] .titleValue.supplement {
+        left: 8px;
+        right: auto; }
+    .groupAddContainer .groupInfo .groupInfoRow .groupElement.input-group {
+      width: 100%; }
+      .groupAddContainer .groupInfo .groupInfoRow .groupElement.input-group .groupTitle {
+        padding-right: 0;
+        padding-left: 0; }
+    .groupAddContainer .groupInfo .groupInfoRow .dropdown {
+      border: none;
+      box-shadow: none;
+      width: auto;
+      padding: 0; }
+      .groupAddContainer .groupInfo .groupInfoRow .dropdown .dropdown-menu {
         width: auto;
-        padding: 0; }
-        .groupAddContainer .groupInfo .groupInfoRow .dropdown .dropdown-menu {
-          width: auto;
-          border: 1px solid rgba(0, 0, 0, 0.15); }
+        border: 1px solid rgba(0, 0, 0, 0.15); }
   .groupAddContainer .groupControl {
     /*position: relative;*/
     width: 100%;
     bottom: 10px;
-    margin-bottom: 15px;
+    margin-bottom: 35px;
     height: 5em; }
     .groupAddContainer .groupControl .groupButton {
       text-align: center; }
