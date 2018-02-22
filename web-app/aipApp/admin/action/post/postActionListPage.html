@@ -44,10 +44,9 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
             </xe-cell-markup>
 
             <xe-cell-markup column-name="postingActionStatus" >
-                <div class="icon icon-edit-CO" ng-click="vm.editActionItem(row.id)"
-                     title="{{'aip.common.edit.action.item.jaws'|i18n_aip}}">
-                    <span class="offscreen">{{'aip.common.edit.action.item.jaws'|i18n_aip}}</span>
-                </div>
+                <button class="icon icon-edit-CO" ng-click="vm.editActionItem(row.id)"
+                     title="{{'aip.common.edit.action.item.jaws'|i18n_aip}}" aria-label="{{'aip.common.edit.action.item.jaws'|i18n_aip}}">
+                </button>
 
             </xe-cell-markup>
 

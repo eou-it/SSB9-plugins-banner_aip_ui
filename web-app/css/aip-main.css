@@ -334,8 +334,6 @@ aip-list .aip-list-container {
         display: flex;
         margin-right: 16px;
         margin-left: 16px; }
-        .groupListContainer .groupListTable .table-container .row.groupActions .icon {
-          font-size: 1.5em; }
         .groupListContainer .groupListTable .table-container .row.groupActions div {
           flex: 1;
           margin-right: 10px; }
@@ -521,8 +519,6 @@ ol.selected-group > li > button {
         display: flex;
         margin-right: 16px;
         margin-left: 16px; }
-        .actionListContainer .actionListTable .table-container .row.actionItemActions .icon {
-          font-size: 1.5em; }
         .actionListContainer .actionListTable .table-container .row.actionItemActions div {
           flex: 1;
           margin-right: 10px; }
@@ -1615,14 +1611,13 @@ ol.selected-group > li > button {
   border: 1px solid #CCCC00; }
 
 .ui-select-container .select2-choice, .ui-select-multiple .select2-choices {
-  min-height: 3em !important; }
+  min-height: 2.2em !important; }
 
 .ui-select-container .select2-choice > .select2-chosen {
   font-size: 14px !important;
   line-height: 1.75em !important; }
 
 .search-container .simple-input-field {
-  margin-left: 1em !important;
   font-size: 0.875em !important;
   color: #869fb1 !important; }
 
@@ -1652,7 +1647,8 @@ ol.selected-group > li > button {
   padding: 0.6em !important;
   padding-left: 2em !important;
   color: #869fb1 !important;
-  width: 13.3em !important; }
+  width: 13.3em !important;
+  margin-right: 1em !important; }
   .column-filter-button .placeholder {
     color: #869fb1 !important;
     font-size: 0.9em !important;
@@ -1662,5 +1658,10 @@ ol.selected-group > li > button {
   font-family: OpenSans-regular !important; }
   .table-container .caption caption .caption-container {
     font-size: 16px !important; }
+  .table-container .tbody .icon {
+    font-size: 1.5em;
+    border: none;
+    background-color: transparent;
+    margin-right: 2em; }
 
 /*# sourceMappingURL=aip-main.css.map */
