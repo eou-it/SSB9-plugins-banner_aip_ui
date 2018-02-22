@@ -12,7 +12,10 @@ declare var notifications: any;
 declare var CKEDITOR;
 
 module AIP {
+    interface IAdminActionItemOpenPageCtrl {
 
+        specialCharacterTranslation():void;
+    }
     export class AdminActionItemOpenPageCtrl {
         $inject = ["$scope", "$q", "$state", "$filter", "$sce", "$window", "$templateRequest", "$templateCache", "$compile", "$timeout", "$interpolate", "SpinnerService", "AdminActionService", "AdminActionStatusService", "APP_ROOT", "CKEDITORCONFIG"];
         adminActionService: AIP.AdminActionService;
@@ -44,6 +47,8 @@ module AIP {
         templateSource;
         allActionItems;
         originalAssign;
+        test;
+        personaData;
         actionFolder;
 
         constructor($scope, $q: ng.IQService, $state, $filter, $sce, $window, $templateRequest, $templateCache, $compile,
@@ -79,6 +84,8 @@ module AIP {
             this.templateSource;
             this.saving = false;
             this.contentChanged;
+            this.test;
+            this.personaData;
             this.init();
             angular.element($window).bind('resize', function () {
                 // $scope.onResize();
@@ -103,8 +110,9 @@ module AIP {
                 //TODO:: turn off the spinner
                 this.spinnerService.showSpinner(false);
                 this.contentChanged = false;
-
+                this.specialCharacterTranslation();
             });
+
         }
 
 
@@ -298,6 +306,39 @@ module AIP {
                 }
             }
         }
+
+        specialCharacterTranslation()
+        {
+            for (var j=0;j<this.rules.length;j++)
+            {
+                if (this.rules[j].statusName.indexOf('&amp;') > -1 )
+                {
+                    this.rules[j].statusName=this.rules[j].statusName.replace("&amp;", "&");
+                }
+                if (this.rules[j].statusName.indexOf('&quot;') > -1 )
+                {
+                    this.rules[j].statusName= this.rules[j].statusName.replace("&quot;", "\"");
+
+                }
+                if ((this.rules[j].statusName.indexOf('&#039;') > -1)  || (this.rules[j].statusName.indexOf('&#39;') > -1 ))
+                {
+                    this.rules[j].statusName= this.rules[j].statusName.replace("&#039;", "\'");
+                    this.rules[j].statusName= this.rules[j].statusName.replace("&#39;", "\'");
+                }
+                if (this.rules[j].statusName.indexOf('&lt;') > -1 )
+                {
+                    this.rules[j].statusName=  this.rules[j].statusName.replace("&lt;", "<");
+
+                }
+                if (this.rules[j].statusName.indexOf('&gt;') > -1 )
+                {
+                    this.rules[j].statusName=this.rules[j].statusName.replace("&gt;", ">");
+
+                }
+            }
+
+        }
+
 
         isNoTemplateSelected() {
             if (this.templateSelect) {
@@ -496,6 +537,7 @@ module AIP {
             this.adminActionStatusService.getRules(this.actionFolder)
                 .then((response) => {
                     this.rules = response.data;
+                    console.log(this.rules)
                     angular.forEach(this.rules, (item) => {
                         //item.statusRuleLabelText = this.trustActionItemRules(item.statusRuleLabelText);
                         item.statusRuleLabelText = this.$sce.trustAsHtml(this.$filter("html")(item.statusRuleLabelText)).toString();
@@ -519,13 +561,13 @@ module AIP {
             this.adminActionStatusService.getRuleStatus()
                 .then((response) => {
                     this.statuses = response.data;
-
                     angular.forEach(this.statuses, (item) => {
                         if (item.actionItemStatusActive == "N" || item.actionItemStatusDefault == 'Y') {
                             var index = this.statuses.indexOf(item);
                             this.statuses.splice(index, 1);
-                        }
+                                          }
                     });
+
                     deferred.resolve();
                     // deferred.resolve(this.openPanel("content"));
                 }, (error) => {

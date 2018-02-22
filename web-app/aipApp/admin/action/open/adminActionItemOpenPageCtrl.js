@@ -52,6 +52,8 @@ var AIP;
             this.templateSource;
             this.saving = false;
             this.contentChanged;
+            this.test;
+            this.personaData;
             this.init();
             angular.element($window).bind('resize', function () {
                 // $scope.onResize();
@@ -77,6 +79,7 @@ var AIP;
                 //TODO:: turn off the spinner
                 _this.spinnerService.showSpinner(false);
                 _this.contentChanged = false;
+                _this.specialCharacterTranslation();
             });
         };
         AdminActionItemOpenPageCtrl.prototype.detectContentChange = function (content) {
@@ -267,6 +270,26 @@ var AIP;
                 }
             }
         };
+        AdminActionItemOpenPageCtrl.prototype.specialCharacterTranslation = function () {
+            for (var j = 0; j < this.rules.length; j++) {
+                if (this.rules[j].statusName.indexOf('&amp;') > -1) {
+                    this.rules[j].statusName = this.rules[j].statusName.replace("&amp;", "&");
+                }
+                if (this.rules[j].statusName.indexOf('&quot;') > -1) {
+                    this.rules[j].statusName = this.rules[j].statusName.replace("&quot;", "\"");
+                }
+                if ((this.rules[j].statusName.indexOf('&#039;') > -1) || (this.rules[j].statusName.indexOf('&#39;') > -1)) {
+                    this.rules[j].statusName = this.rules[j].statusName.replace("&#039;", "\'");
+                    this.rules[j].statusName = this.rules[j].statusName.replace("&#39;", "\'");
+                }
+                if (this.rules[j].statusName.indexOf('&lt;') > -1) {
+                    this.rules[j].statusName = this.rules[j].statusName.replace("&lt;", "<");
+                }
+                if (this.rules[j].statusName.indexOf('&gt;') > -1) {
+                    this.rules[j].statusName = this.rules[j].statusName.replace("&gt;", ">");
+                }
+            }
+        };
         AdminActionItemOpenPageCtrl.prototype.isNoTemplateSelected = function () {
             if (this.templateSelect) {
                 if (!this.selectedTemplate) {
@@ -448,6 +471,7 @@ var AIP;
             this.adminActionStatusService.getRules(this.actionFolder)
                 .then(function (response) {
                 _this.rules = response.data;
+                console.log(_this.rules);
                 angular.forEach(_this.rules, function (item) {
                     //item.statusRuleLabelText = this.trustActionItemRules(item.statusRuleLabelText);
                     item.statusRuleLabelText = _this.$sce.trustAsHtml(_this.$filter("html")(item.statusRuleLabelText)).toString();
