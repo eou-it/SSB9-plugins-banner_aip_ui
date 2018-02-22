@@ -10,6 +10,7 @@ var AIP;
             this.$location = $location;
             this.$filter = $filter;
             this.breadcrumbs = {};
+            sessionStorage.setItem('genAppCallingPage', '');
             this.callingUrl = sessionStorage.getItem('genAppCallingPage');
             this.init();
         }
