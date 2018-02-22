@@ -12,35 +12,39 @@ module AIP {
     }
     interface IAIPBreadcrumbService {
         breadcrumbs: {};
-        updateBreadcrumb(item:IBreadcrumbItem): void;
+        updateBreadcrumb(item: IBreadcrumbItem): void;
         draw(title: string): void;
         drawAll(): void;
         init(): void;
     }
 
-    export class AIPBreadcrumbService implements IAIPBreadcrumbService{
+    export class AIPBreadcrumbService implements IAIPBreadcrumbService {
         $inject = ["$location", "$filter"];
         breadcrumbs: {};
         $location;
         $filter;
         callingUrl: any;
+
         constructor($location, $filter) {
             this.$location = $location;
             this.$filter = $filter;
             this.breadcrumbs = {};
+            sessionStorage.setItem('genAppCallingPage', '');
             this.callingUrl = sessionStorage.getItem('genAppCallingPage');
             this.init();
         }
+
         init() {
-            if(this.callingUrl) {
+            if (this.callingUrl) {
                 this.breadcrumbs = JSON.parse(this.callingUrl);
             }
         }
+
         updateBreadcrumb(item: IBreadcrumbItem) {
             var existItemTitle = Object.keys(this.breadcrumbs);
             var itemTitle = this.$filter('i18n_aip')(item.title);
-            if(existItemTitle.indexOf(item.title)===-1) {
-                if(this.checkSkip(existItemTitle[existItemTitle.length-1], item.title)) {
+            if (existItemTitle.indexOf(item.title) === -1) {
+                if (this.checkSkip(existItemTitle[existItemTitle.length - 1], item.title)) {
                     delete this.breadcrumbs[existItemTitle[existItemTitle.length - 1]];
                 }
                 this.breadcrumbs[item.title] = item.url
@@ -55,6 +59,7 @@ module AIP {
             this.draw(item.title);
             sessionStorage.setItem('genAppCallingPage', JSON.stringify(this.breadcrumbs));
         }
+
         checkSkip(newVal, oldVal) {
             if (oldVal === "aip.admin.group.add" && newVal === "aip.admin.group.open") {
                 return true;
@@ -70,10 +75,11 @@ module AIP {
             }
             return false;
         }
+
         draw(title: string) {
             var breadcrumbI18 = {};
             angular.forEach(this.breadcrumbs, (value, key) => {
-                if(Object.keys(this.breadcrumbs).indexOf(key)===Object.keys(this.breadcrumbs).length-1) {
+                if (Object.keys(this.breadcrumbs).indexOf(key) === Object.keys(this.breadcrumbs).length - 1) {
                     breadcrumbI18[this.$filter('i18n_aip')(key)] = "";
                 } else {
                     breadcrumbI18[this.$filter('i18n_aip')(key)] = value;
@@ -83,10 +89,11 @@ module AIP {
 
             var updatedHeaderAttributes = {
                 "pageTitle": this.$filter('i18n_aip')(title),
-                "breadcrumb":breadcrumbI18
+                "breadcrumb": breadcrumbI18
             };
             BreadCrumbAndPageTitle.draw(updatedHeaderAttributes);
         }
+
         drawAll() {
             angular.forEach(this.breadcrumbs, (value, key) => {
                 this.draw(key);
