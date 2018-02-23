@@ -191,6 +191,14 @@ class AipAdminController {
      */
     def actionItemStatusGridList() {
 
+        if(params.sortColumnName){
+            if(params.sortColumnName == "actionItemStatusUserId"){
+                params.sortColumnName = "lastModifiedBy"
+            }else if(params.sortColumnName == "actionItemStatusActivityDate"){
+                params.sortColumnName = "lastModified"
+            }
+        }
+
         def paramObj = [filterName   : params.searchString ?: "%",
                         sortColumn   : params.sortColumnName ?: "id",
                         sortAscending: params.ascending ? params.ascending.toBoolean() : false,
