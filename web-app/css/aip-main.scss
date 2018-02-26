@@ -36,7 +36,7 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
 }
 
 #content {
-  overflow: hidden;
+  overflow: auto;
   //top: 90px !important;
   #title-panel {
     h1 {
@@ -124,10 +124,10 @@ label {
 
 .viewContainer {
   padding: 8px 16px;
-  height: 100%;
-  overflow-x: auto;
+  /*height: 100%;
+  overflow-x: auto;*/
   background-color: #edf2f7;
-  //overflow-y: scroll;
+  /*overflow-y: scroll;*/
   //margin-top: 5px;
   //override common-component angular-grid
   xe-table-grid {
