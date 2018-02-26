@@ -36,7 +36,7 @@ var bannerAIPApp = angular.module("bannerAIP", [
     'cm.timepicker'
 
 
-    ])
+])
 
 //set application root url
     .constant('APP_ROOT', aipAppRoot)
@@ -47,7 +47,7 @@ var bannerAIPApp = angular.module("bannerAIP", [
 
     .constant("APP_ABS_PATH", aipAppAbsPath)
 
-//constants for page information
+    //constants for page information
     .constant("PAGES", {
         "admin-landing": {
             url: "/landing",
@@ -56,7 +56,7 @@ var bannerAIPApp = angular.module("bannerAIP", [
             breadcrumb: {
                 label: "aip.admin.landing",
                 url: "/aip/#/landing"
-}
+            }
         },
         "admin-action-list": {
             url: "/action",
@@ -83,21 +83,19 @@ var bannerAIPApp = angular.module("bannerAIP", [
                 label: "aip.admin.action.actionItem.Addjob",
                 url: "/aip/#/action/add"}
         },
-"admin-post-edit": {
-    url: "/action/editjob/:postIdval/:isEdit",
-        templateUrl:"admin/action/post/adminPostItemAddPage.html",
-        controller:"AdminPostItemAddPageCtrl",
-        params: {
-        postIdval:null,
-            isEdit: null
-    },
-    breadcrumb: {
-        label: "aip.admin.action.actionItem.Editjob",
-            url: "/aip/#/action/editjob"}
-},
-
-
-"admin-action-add": {
+        "admin-post-edit": {
+            url: "/action/editjob/:postIdval/:isEdit",
+            templateUrl:"admin/action/post/adminPostItemAddPage.html",
+            controller:"AdminPostItemAddPageCtrl",
+            params: {
+                postIdval:null,
+                isEdit: null
+            },
+            breadcrumb: {
+                label: "aip.admin.action.actionItem.Editjob",
+                url: "/aip/#/action/editjob"}
+        },
+        "admin-action-add": {
             url: "/action/add",
             templateUrl:"admin/action/add/adminActionItemAddPage.html",
             controller:"AdminActionItemAddPageCtrl",
@@ -217,7 +215,7 @@ var bannerAIPApp = angular.module("bannerAIP", [
         }
 
     })
-//constant for endpoint
+    //constant for endpoint
     .constant("ENDPOINT", {
         admin: {
             folders: aipAppAbsPath + "aipAdmin/folders",
@@ -258,7 +256,7 @@ var bannerAIPApp = angular.module("bannerAIP", [
             checkActionItemPosted: aipAppAbsPath + "aipAdmin/checkActionItemPosted",
             loadBlockingProcessLov:aipAppAbsPath + "aipAdmin/loadBlockingProcessLov",
             statusPosted:aipAppAbsPath + "aipActionItemPosting/getStatusValue",
-			jobDetailsById:aipAppAbsPath + "aipActionItemPosting/getJobDetailsByPostId",
+            jobDetailsById:aipAppAbsPath + "aipActionItemPosting/getJobDetailsByPostId",
             actionItemById:aipAppAbsPath + "aipActionItemPosting/getActionItemByPostId",
             updateActionItemPosting:aipAppAbsPath + "aipActionItemPosting/updateActionItemPosting"
 
@@ -266,32 +264,32 @@ var bannerAIPApp = angular.module("bannerAIP", [
         }
     })
     .constant("PAGINATIONCONFIG",
-            {
-                pageLengths: [5, 10, 25, 50, 100],
-                offset: 10,
-                recordsFoundLabel: "Results found",
-                pageTitle: "Go To Page (End)",
-                pageLabel: "Page",
-                pageAriaLabel: "Go To Page. Short cut is End",
-                ofLabel: "of"
-            })
+        {
+            pageLengths: [5, 10, 25, 50, 100],
+            offset: 10,
+            recordsFoundLabel: "Results found",
+            pageTitle: "Go To Page (End)",
+            pageLabel: "Page",
+            pageAriaLabel: "Go To Page. Short cut is End",
+            ofLabel: "of"
+        })
 
 
-     .constant("CKEDITORCONFIG",
-                {
-                    disableNativeSpellChecker: false,
-                    height: '400px',
-                    width: '100%',
-                    pasteFromWordRemoveFontStyles: true,
-                    pasteFromWordRemoveStyles: true,
-                    allowedContent: true,
-                    fullPage: true,
-                    toolbarCanCollapse: true,
-                    toolbarStartupExpanded: true
-                })
+    .constant("CKEDITORCONFIG",
+        {
+            disableNativeSpellChecker: false,
+            height: '400px',
+            width: '100%',
+            pasteFromWordRemoveFontStyles: true,
+            pasteFromWordRemoveStyles: true,
+            allowedContent: true,
+            fullPage: true,
+            toolbarCanCollapse: true,
+            toolbarStartupExpanded: true
+        })
 
 
-//provider-injector
+    //provider-injector
     .config(["$stateProvider", "$urlRouterProvider", "$locationProvider",  "$httpProvider", "$windowProvider", "PAGES", "APP_ROOT", "APP_ABS_PATH",
         function($stateProvider, $urlRouteProvider, $locationProvider, $httpProvider, $windowProvider,
                  PAGES, APP_ROOT, APP_ABS_PATH) {
@@ -339,18 +337,23 @@ var bannerAIPApp = angular.module("bannerAIP", [
         }
     ])
 
-//instance-injector
-    .run(["$rootScope", "$state", "$stateParams", "$filter","$sce", "$templateCache","BreadcrumbService",
-        function($rootScope, $state, $stateParams, $filter, $sce, $templateCache, BreadcrumbService) {
+    //instance-injector
+    .run(["$rootScope", "$window","$location", "$state", "$stateParams", "$filter","$sce", "$templateCache","BreadcrumbService",
+        function($rootScope,$window,$location, $state, $stateParams, $filter, $sce, $templateCache, BreadcrumbService) {
             $rootScope.$state = $state;
             $rootScope.$stateParams = $stateParams;
 
             $rootScope.$on('$stateChangeStart', function(e, to) {
-            if(isActionItemAdmin===false && to.name==='admin-landing'){
-                e.preventDefault()
-                $rootScope.$state.go('list')
-            }
+                if(isActionItemAdmin===false && to.name ==='admin-landing'){
+                    e.preventDefault()
+                    $rootScope.$state.go('list')
+                }
+                if ($rootScope.DataChanged)
+                {
+                    e.preventDefault();
+                }
             });
+
 
             //when state successfully changed, update breadcrumbs
             $rootScope.$on("$stateChangeSuccess", function(event, toState, toParams, fromState, fromParams) {
@@ -358,16 +361,16 @@ var bannerAIPApp = angular.module("bannerAIP", [
                 $state.previousParams = fromParams;
                 BreadcrumbService.updateBreadcrumb(toState.data.breadcrumbs);
             });
-            // $rootScope.$on("$stateChangeStart", function(event, toState, toParams, fromState, fromParams) {
-            //     //console.log("state change start");
-            // });
-            // $rootScope.$on("$stateNotFound", function(err) {
-            //
-            // });
 
+            //On everychange of location of Browser
+            $rootScope.$on('$locationChangeStart', function(event, next, current,state) {
+                if ($rootScope.DataChanged)
+                {
+                    $rootScope.$broadcast('DetectChanges', { state: next});
+                    event.preventDefault();
 
-            // $templateCache.put('adminActionItemOpenOverview.html', '<div class="actionItemElement actionItemDetail col-xs-12 col-sm-8"><h3>{{"aip.list.grid.itemTitle"|i18n_aip}}</h3><p class="openActionItemTitle">{{vm.actionItem.title}}</p><h3>{{"aip.common.folder"|i18n_aip}}</h3></div><div class="hidden-xs col-sm-1 dividerContainer" ng-style="vm.getSaparatorHeight()"><div class="divider"></div></div><div class="actionItemElement col-xs-12 col-sm-3"><h3>{{"aip.common.activity"|i18n_aip}}</h3><hr /><div class="actionItemElement"><h4>{{"aip.common.last.updated.by"|i18n_aip}}</h4><p class="openActionItemLastUpdatedBy">{{vm.actionItem.creatorId}}</p></div><hr /><div class="actionItemElement"> <h4>{{"aip.common.activity.date"|i18n_aip}}</h4><p class="openActionItemActivityDate">{{vm.actionItem.activityDate}}</p></div></div>');
-
+                }
+            });
 
             //expose message.properties values for taglib
             //TODO:: find better way to handle this.
@@ -378,106 +381,106 @@ var bannerAIPApp = angular.module("bannerAIP", [
 
             CKEDITOR.on( 'instanceCreated', function( event ) {
                 var editor = event.editor,
-                        element = editor.element;
-                    // Customize the editor configurations on "configLoaded" event,
-                    // which is fired after the configuration file loading and
-                    // execution. This makes it possible to change the
-                    // configurations before the editor initialization takes place.
-                    editor.on( 'configLoaded', function() {
-                        // Remove unnecessary plugins to make the editor simpler.
-                        editor.config.removePlugins = 'flash,forms,iframe,newpage,smiley';
-                        var helpLabel = $.i18n.prop("aip.ckeditor.keyhelp");
+                    element = editor.element;
+                // Customize the editor configurations on "configLoaded" event,
+                // which is fired after the configuration file loading and
+                // execution. This makes it possible to change the
+                // configurations before the editor initialization takes place.
+                editor.on( 'configLoaded', function() {
+                    // Remove unnecessary plugins to make the editor simpler.
+                    editor.config.removePlugins = 'flash,forms,iframe,newpage,smiley';
+                    var helpLabel = $.i18n.prop("aip.ckeditor.keyhelp");
 
-                        editor.ui.addButton( 'A11YBtn', {
-                            label: helpLabel,
-                            command: 'a11yHelp',
-                            toolbar: 'about'
-                        } );
+                    editor.ui.addButton( 'A11YBtn', {
+                        label: helpLabel,
+                        command: 'a11yHelp',
+                        toolbar: 'about'
+                    } );
 
-                        editor.config.height='30em',
+                    editor.config.height='30em',
                         editor.config.width='100%',
 
-                            // Rearrange the layout of the toolbar.
+                        // Rearrange the layout of the toolbar.
                         editor.config.toolbar = [
-                         { name: 'document', items: [ 'Source' ] },
-                         { name: 'clipboard', items: [ 'Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo' ] },
-                         //{ name: 'editing', items: [ 'Scayt' ] },
-                         { name: 'links', items: [ 'Link', 'Unlink', 'Anchor' ] },
-                         { name: 'insert', items: [ 'Image', 'Table', 'HorizontalRule', 'SpecialChar' ] },
-                         { name: 'tools', items: [ 'Maximize' ] },
-                         '/',
-                         { name: 'basicstyles', items: [ 'Bold', 'Italic', 'Strike', '-', 'RemoveFormat' ] },
-                         { name: 'colors', items: [ 'TextColor', 'BGColor' ] },
-                         { name: 'paragraph', items: [ 'NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote' ] },
-                         { name: 'styles', items: [ 'Format', 'Font', 'FontSize'] },
-                         { name: 'about', items: [ 'About','A11YBtn' ] }
-                         ];
+                            { name: 'document', items: [ 'Source' ] },
+                            { name: 'clipboard', items: [ 'Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo' ] },
+                            //{ name: 'editing', items: [ 'Scayt' ] },
+                            { name: 'links', items: [ 'Link', 'Unlink', 'Anchor' ] },
+                            { name: 'insert', items: [ 'Image', 'Table', 'HorizontalRule', 'SpecialChar' ] },
+                            { name: 'tools', items: [ 'Maximize' ] },
+                            '/',
+                            { name: 'basicstyles', items: [ 'Bold', 'Italic', 'Strike', '-', 'RemoveFormat' ] },
+                            { name: 'colors', items: [ 'TextColor', 'BGColor' ] },
+                            { name: 'paragraph', items: [ 'NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote' ] },
+                            { name: 'styles', items: [ 'Format', 'Font', 'FontSize'] },
+                            { name: 'about', items: [ 'About','A11YBtn' ] }
+                        ];
 
-                        editor.config.format_tags = 'p;h1;h2;h3;h5;h6;pre;address;div';
-                    });
+                    editor.config.format_tags = 'p;h1;h2;h3;h5;h6;pre;address;div';
+                });
             });
-    }]
-);
+        }]
+    );
 
 
 var bannerAIPUI = angular.module("bannerAIPUI", [])
-    //set application root url
+//set application root url
     .constant('APP_ROOT', aipAppRoot)
 
     //supply directives' template url so that we don't have any hardcoded url in other code
     .config(['$provide', 'APP_ROOT', function($provide, APP_ROOT) {
-        //override angular-ui's default accordion-group directive template; h4 -> h2 for title
-        $provide.decorator('uibAccordionGroupDirective', function($delegate) {
-            var directive = $delegate[0];
-            directive.templateUrl = APP_ROOT + "common/directives/list/template/listAccordionHeader.html";
-            directive.replace=false;
-            return $delegate;
-        });
-        $provide.decorator("aipListDirective", function($delegate) {
-            var directive = $delegate[0];
-            directive.templateUrl = APP_ROOT + "common/directives/list/template/list.html";
-            return $delegate;
-        });
-        $provide.decorator("aipReadmoreDirective", function($delegate) {
-            var directive = $delegate[0];
-            directive.templateUrl = APP_ROOT + "common/directives/readmore/template/readmore.html";
-            return $delegate;
-        });
-        $provide.decorator("aipLandingItemDirective", function($delegate) {
-            var directive = $delegate[0];
-            directive.templateUrl = APP_ROOT + "common/directives/admin/landing-item/template/landingItem.html";
-            return $delegate;
-        });
-        $provide.decorator("aipItemDetailDirective", function($delegate) {
-            var directive = $delegate[0];
-            directive.templateUrl = APP_ROOT + "common/directives/item-detail/template/itemDetail.html";
-            return $delegate;
-        });
+            //override angular-ui's default accordion-group directive template; h4 -> h2 for title
+            $provide.decorator('uibAccordionGroupDirective', function($delegate) {
+                var directive = $delegate[0];
+                directive.templateUrl = APP_ROOT + "common/directives/list/template/listAccordionHeader.html";
+                directive.replace=false;
+                return $delegate;
+            });
+            $provide.decorator("aipListDirective", function($delegate) {
+                var directive = $delegate[0];
+                directive.templateUrl = APP_ROOT + "common/directives/list/template/list.html";
+                return $delegate;
+            });
+            $provide.decorator("aipReadmoreDirective", function($delegate) {
+                var directive = $delegate[0];
+                directive.templateUrl = APP_ROOT + "common/directives/readmore/template/readmore.html";
+                return $delegate;
+            });
+            $provide.decorator("aipLandingItemDirective", function($delegate) {
+                var directive = $delegate[0];
+                directive.templateUrl = APP_ROOT + "common/directives/admin/landing-item/template/landingItem.html";
+                return $delegate;
+            });
+            $provide.decorator("aipItemDetailDirective", function($delegate) {
+                var directive = $delegate[0];
+                directive.templateUrl = APP_ROOT + "common/directives/item-detail/template/itemDetail.html";
+                return $delegate;
+            });
 
-        $provide.decorator("aipGroupDetailDirective", function($delegate) {
-            var directive = $delegate[0];
-            directive.templateUrl = APP_ROOT + "common/directives/admin/group-detail/template/groupDetail.html";
-            return $delegate;
-        });
-        $provide.decorator("aipStatusRuleDirective", function($delegate) {
-            var directive = $delegate[0];
-            directive.templateUrl = APP_ROOT + "common/directives/admin/status-rule/template/statusRule.html";
-            return $delegate;
-        });
-        $provide.decorator("aipBlockedProcessDirective", function($delegate) {
-            var directive = $delegate[0];
-            directive.templateUrl = APP_ROOT + "common/directives/admin/blockedProcess/template/blockedProcess.html";
-            return $delegate;
-        });
-    }]
-);
+            $provide.decorator("aipGroupDetailDirective", function($delegate) {
+                var directive = $delegate[0];
+                directive.templateUrl = APP_ROOT + "common/directives/admin/group-detail/template/groupDetail.html";
+                return $delegate;
+            });
+            $provide.decorator("aipStatusRuleDirective", function($delegate) {
+                var directive = $delegate[0];
+                directive.templateUrl = APP_ROOT + "common/directives/admin/status-rule/template/statusRule.html";
+                return $delegate;
+            });
+            $provide.decorator("aipBlockedProcessDirective", function($delegate) {
+                var directive = $delegate[0];
+                directive.templateUrl = APP_ROOT + "common/directives/admin/blockedProcess/template/blockedProcess.html";
+                return $delegate;
+            });
+        }]
+    );
 
 
 // Override common components
 /*tab navigation*/
 angular.module("templates/tabNav.html", []).run(["$templateCache", function($templateCache) {
     $templateCache.put("templates/tabNav.html",
-            "<div class=\"xe-tab-container\" role=\"presentation\"><ul class=\"xe-tab-nav\" role=\"tablist\"><li ng-repeat=\"tab in tabnav.tabs\" ng-click=\"tabnav.activate(tab)\" ng-class=\"{active: tab.active}\" ng-repeat-complete aria-controls=\"{{'xe-tab-panel'+ ($index+1)}}\" aria-selected=\"{{tab.active}}\" tabindex=\"-1\"><a ui-sref=\"{{ tab.state && tab.state || '#' }}\" href=\"#\" id=\"{{'xe-tab'+ ($index+1)}}\" title=\"{{tab.heading}}\" ng-if=\"tab.state\">{{tab.heading}} <span></span></a> <a href=\"javascript:void(0)\;\" role=\"tab\" id=\"{{'xe-tab'+ ($index+1)}}\" title=\"{{tab.heading}}\" ng-if=\"!tab.state\" aria-selected=\"{{tab.active}}\">{{tab.heading}} <span></span></a></li></ul><div class=\"xe-tab-content\" role=\"presentation\"><ng-transclude></ng-transclude></div></div>");
+        "<div class=\"xe-tab-container\" role=\"presentation\"><ul class=\"xe-tab-nav\" role=\"tablist\"><li ng-repeat=\"tab in tabnav.tabs\" ng-click=\"tabnav.activate(tab)\" ng-class=\"{active: tab.active}\" ng-repeat-complete aria-controls=\"{{'xe-tab-panel'+ ($index+1)}}\" aria-selected=\"{{tab.active}}\" tabindex=\"-1\"><a ui-sref=\"{{ tab.state && tab.state || '#' }}\" href=\"#\" id=\"{{'xe-tab'+ ($index+1)}}\" title=\"{{tab.heading}}\" ng-if=\"tab.state\">{{tab.heading}} <span></span></a> <a href=\"javascript:void(0)\;\" role=\"tab\" id=\"{{'xe-tab'+ ($index+1)}}\" title=\"{{tab.heading}}\" ng-if=\"!tab.state\" aria-selected=\"{{tab.active}}\">{{tab.heading}} <span></span></a></li></ul><div class=\"xe-tab-content\" role=\"presentation\"><ng-transclude></ng-transclude></div></div>");
 }]);
 /*grid*/
 

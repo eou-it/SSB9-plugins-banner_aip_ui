@@ -7,9 +7,9 @@
 ///<reference path="../../../common/services/spinnerService.ts"/>
 var AIP;
 (function (AIP) {
-    var AdminActionItemOpenPageCtrl = (function () {
-        function AdminActionItemOpenPageCtrl($scope, $q, $state, $filter, $sce, $window, $templateRequest, $templateCache, $compile, $timeout, $interpolate, SpinnerService, AdminActionService, AdminActionStatusService, APP_ROOT, CKEDITORCONFIG) {
-            this.$inject = ["$scope", "$q", "$state", "$filter", "$sce", "$window", "$templateRequest", "$templateCache", "$compile", "$timeout", "$interpolate", "SpinnerService", "AdminActionService", "AdminActionStatusService", "APP_ROOT", "CKEDITORCONFIG"];
+    var AdminActionItemOpenPageCtrl = /** @class */ (function () {
+        function AdminActionItemOpenPageCtrl($scope, $rootScope, $q, $state, $filter, $sce, $window, $templateRequest, $templateCache, $compile, $timeout, $interpolate, SpinnerService, AdminActionService, AdminActionStatusService, APP_ROOT, CKEDITORCONFIG) {
+            this.$inject = ["$scope", "$rootScope", "$q", "$state", "$filter", "$sce", "$window", "$templateRequest", "$templateCache", "$compile", "$timeout", "$interpolate", "SpinnerService", "AdminActionService", "AdminActionStatusService", "APP_ROOT", "CKEDITORCONFIG"];
             this.trustAsHtml = function (string) {
                 return this.$sce.trustAsHtml(string);
             };
@@ -23,6 +23,7 @@ var AIP;
             };
             $scope.vm = this;
             this.$scope = $scope;
+            this.$rootScope = $rootScope;
             this.$q = $q;
             this.$state = $state;
             this.$filter = $filter;
@@ -54,6 +55,8 @@ var AIP;
             this.contentChanged;
             this.test;
             this.personaData;
+            this.actionItemDataChanged = false;
+            this.redirectval = "NoData";
             this.init();
             angular.element($window).bind('resize', function () {
                 // $scope.onResize();
@@ -81,10 +84,18 @@ var AIP;
                 _this.contentChanged = false;
                 _this.specialCharacterTranslation();
             });
+            var that = this;
+            this.$scope.$on("DetectChanges", function (event, args) {
+                if (that.actionItemDataChanged) {
+                    that.redirectval = args.state;
+                    that.checkEditchangesDone('content');
+                }
+            });
         };
         AdminActionItemOpenPageCtrl.prototype.detectContentChange = function (content) {
             if (this.templateSelect) {
                 this.contentChanged = true;
+                this.dataChanged();
             }
         };
         AdminActionItemOpenPageCtrl.prototype.handleNotification = function (noti) {
@@ -375,11 +386,17 @@ var AIP;
             });
             return deferred.promise;
         };
-        AdminActionItemOpenPageCtrl.prototype.cancel = function (option) {
+        AdminActionItemOpenPageCtrl.prototype.dataChanged = function () {
+            this.actionItemDataChanged = true;
+            this.$rootScope.DataChanged = true;
+        };
+        AdminActionItemOpenPageCtrl.prototype.reset = function (option) {
             var _this = this;
-            this.init();
             var deferred = this.$q.defer();
-            this.adminActionService.getActionItemDetail(this.$state.params.data)
+            this.spinnerService.showSpinner(true);
+            var promises = [];
+            this.actionFolder = this.$state.params.actionItemId || this.$state.previousParams.actionItemId;
+            this.adminActionService.getActionItemDetail(this.actionFolder)
                 .then(function (response) {
                 _this.actionItem = response.data.actionItem;
                 _this.selectedTemplate = _this.actionItem.actionItemTemplateId;
@@ -387,15 +404,57 @@ var AIP;
                 switch (option) {
                     case "content":
                         _this.templateSelect = false;
+                        promises.push(_this.getStatus());
+                        promises.push(_this.getRules());
+                        _this.$q.all(promises).then(function () {
+                            //TODO:: turn off the spinner
+                            _this.spinnerService.showSpinner(false);
+                            _this.contentChanged = false;
+                        });
                         break;
                     default:
                         break;
                 }
-                deferred.resolve(_this.openPanel("overview"));
+                deferred.resolve(_this.openPanel(option));
             }, function (err) {
                 console.log(err);
             });
             return deferred.promise;
+        };
+        AdminActionItemOpenPageCtrl.prototype.cancel = function (option) {
+            this.redirectval = "NoData";
+            this.checkEditchangesDone(option);
+        };
+        AdminActionItemOpenPageCtrl.prototype.checkEditchangesDone = function (option) {
+            var that = this;
+            while (notifications.length != 0) {
+                notifications.remove(notifications.first());
+            }
+            if (that.actionItemDataChanged || that.contentChanged) {
+                var n = new Notification({
+                    message: this.$filter("i18n_aip")("aip.admin.actionItem.saveChanges"),
+                    type: "warning",
+                });
+                n.addPromptAction(this.$filter("i18n_aip")("aip.common.text.no"), function () {
+                    notifications.remove(n);
+                });
+                n.addPromptAction(this.$filter("i18n_aip")("aip.common.text.yes"), function () {
+                    that.actionItemDataChanged = false;
+                    that.$rootScope.DataChanged = false;
+                    if (that.redirectval === "NoData") {
+                        that.reset(option);
+                        //location.href = window.location.href;
+                    }
+                    else {
+                        location.href = that.redirectval;
+                    }
+                    notifications.remove(n);
+                });
+                notifications.addNotification(n);
+            }
+            else {
+                that.reset(option);
+            }
         };
         AdminActionItemOpenPageCtrl.prototype.saveTemplate = function () {
             var _this = this;
@@ -435,6 +494,8 @@ var AIP;
                 console.log(err);
                 return { success: false };
             }));
+            this.actionItemDataChanged = false;
+            this.$rootScope.DataChanged = false;
             this.$q.all(allDefer)
                 .then(function (response) {
                 _this.saving = false;
@@ -508,6 +569,9 @@ var AIP;
             return deferred.promise;
         };
         AdminActionItemOpenPageCtrl.prototype.validateActionItemRule = function () {
+            if (this.contentChanged) {
+                this.dataChanged();
+            }
             if (this.selectedTemplate && !this.saving) {
                 if (this.rules.length === 0) {
                     return true;

@@ -36,7 +36,7 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
             <div class="row">
                 <div class="col-sm-4">
                     <select id="actionItemTemplate" class="actionItemSelect form-control" xe-data="" required
-                            aria-required="true" ng-model="vm.selectedTemplate" ng-change="vm.getRules()">
+                            aria-required="true" ng-model="vm.selectedTemplate" ng-change="vm.getRules(); vm.dataChanged()">
                         <option selected="selected" disabled selected value="">
                             {{"aip.admin.action.open.tab.content.templatePlaceholder"|i18n_aip}}
                         </option>
@@ -55,7 +55,7 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
             </div>
             <div class="row">
                 <textarea id="templateContent" ng-required="true" aria-required="true" name="templateContent"
-                          ckeditor="ckEditorConfig" ng-model="vm.actionItem.actionItemContent" ng-change="vm.detectContentChange(vm.actionItem.actionItemContent)"></textarea>
+                          ckeditor="ckEditorConfig" ng-model="vm.actionItem.actionItemContent" ng-change="vm.detectContentChange(vm.actionItem.actionItemContent); vm.dataChanged()"></textarea>
 
 
             </div>
@@ -73,7 +73,7 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
                 </div>
                 <div class="col-xs-11 col-sm-4">
                     <div class="col-xs-6 col-sm-6 actionButton">
-                        <button name="Cancel" type="button" class="btn btn-default" ng-click="vm.cancelContentEdit('content')">
+                        <button name="Cancel" type="button" class="btn btn-default" ng-click="vm.cancel('content')">
                             {{"aip.common.cancel"|i18n_aip}}
                         </button>
                     </div>
@@ -107,7 +107,7 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
                     </div>
 
                     <div class="h2-container" ng-if="vm.actionItemPostedStatus == 'Y'">
-                            <span class="button-text no-edit hidden-sm-down">{{'aip.admin.action.open.tab.content.posted'|i18n_aip}}</span>
+                        <span class="button-text no-edit hidden-sm-down">{{'aip.admin.action.open.tab.content.posted'|i18n_aip}}</span>
                     </div>
                 </div>
             </div>
