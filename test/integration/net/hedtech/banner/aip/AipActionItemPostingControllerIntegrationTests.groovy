@@ -220,6 +220,34 @@ class AipActionItemPostingControllerIntegrationTests extends BaseIntegrationTest
 
     }
 
+    @Test
+     void getStatusValue() {
+         SimpleDateFormat testingDateFormat = new SimpleDateFormat( 'MM/dd/yyyy' )
+         CommunicationPopulationListView populationListView = actionItemProcessingCommonService.fetchPopulationListForSend( 'p', [max: 10, offset: 0] )[0]
+         List<ActionItemGroup> actionItemGroups = ActionItemGroup.fetchActionItemGroups()
+         def actionItemGroup = actionItemGroups[0]
+         List<Long> actionItemIds = ActionItemGroupAssign.fetchByGroupId( actionItemGroup.id ).collect {it.actionItemId}
+         def requestMap = [:]
+         requestMap.postingName = 'TEST_INTEGRATION_TEST1'
+         requestMap.populationId = populationListView.id
+         requestMap.referenceId = UUID.randomUUID().toString()
+         requestMap.postingActionItemGroupId = actionItemGroup.id
+         requestMap.postNow = true
+         requestMap.recalculateOnPost = false
+         requestMap.displayStartDate = testingDateFormat.format( new Date() )
+         requestMap.displayEndDate = testingDateFormat.format( new Date() + 50 )
+         requestMap.scheduledStartDate = new Date() + 1
+         requestMap.actionItemIds = actionItemIds
+         def postingId=actionItemPostCompositeService.sendAsynchronousPostItem( requestMap ).savedJob.id
+         controller.request.contentType = "text/json"
+         controller.params.postID = postingId
+         controller.getStatusValue()
+         assertEquals 200, controller.response.status
+         def ret = controller.response.contentAsString
+         def data = JSON.parse( ret )
+         assertTrue data.result =='N'
+
+     }
 
     private getDynamicData() {
         def dynamicData = [:]
