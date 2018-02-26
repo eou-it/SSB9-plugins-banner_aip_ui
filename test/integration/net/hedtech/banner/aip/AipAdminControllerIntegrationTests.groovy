@@ -184,7 +184,7 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
         def answer = JSON.parse( controller.response.contentAsString )
         assertFalse answer.success
         assertTrue( answer.group.equals( null ) )
-        assertEquals( 'Save failed. The Group Name and Folder must be unique.', answer.message )
+        assertEquals( 'Save failed. The group name must be unique within the selected folder.', answer.message )
     }
 
 
