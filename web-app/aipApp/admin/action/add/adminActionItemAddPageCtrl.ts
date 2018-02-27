@@ -48,7 +48,7 @@ module AIP {
         redirectval;
 
 
-        constructor($scope, $q:ng.IQService, $rootScope,$state, $filter,$sce, $timeout, $window,
+        constructor($scope,  $rootScope, $q:ng.IQService, $state, $filter,$sce, $timeout, $window,
                     SpinnerService:AIP.SpinnerService, AdminActionService:AIP.AdminActionService,$location) {
             $scope.vm = this;
             this.$scope = $scope;
