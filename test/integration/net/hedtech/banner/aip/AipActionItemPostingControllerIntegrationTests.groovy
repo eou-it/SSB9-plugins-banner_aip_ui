@@ -127,6 +127,19 @@ class AipActionItemPostingControllerIntegrationTests extends BaseIntegrationTest
 
 
     @Test
+    void updateActionItemPostingWithScheduleDate() {
+        controller.request.contentType = "text/json"
+        String inputString = getCreateActionItemForScheduleJSON()
+        controller.request.json = inputString
+        controller.updateActionItemPosting()
+        assertEquals 200, controller.response.status
+        def ret = controller.response.contentAsString
+        def data = JSON.parse( ret )
+        assertTrue data.fail
+    }
+
+
+    @Test
     void addActionItemPostingFailedCase() {
         controller.request.contentType = "text/json"
         String inputString = getCreateActionItemJSONWithoutName()

@@ -1318,7 +1318,8 @@ ol.selected-group > li > button {
   padding-right: 0.5em; }
 
 #content {
-  overflow: hidden; }
+  overflow: auto;
+  background: #edf2f7; }
   #content #title-panel h1 {
     line-height: normal; }
 
@@ -1374,9 +1375,10 @@ label {
 
 .viewContainer {
   padding: 8px 16px;
-  height: 100%;
-  overflow-x: auto;
-  background-color: #edf2f7; }
+  /*height: 100%;
+  overflow-x: auto;*/
+  background-color: #edf2f7;
+  /*overflow-y: scroll;*/ }
   .viewContainer xe-table-grid .table-container .pagination-container {
     box-sizing: border-box; }
   .viewContainer hr {
