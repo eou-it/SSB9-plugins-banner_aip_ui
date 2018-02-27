@@ -188,7 +188,7 @@ module AIP {
 
 
             this.$q.all(allPromises).then(() => {
-               
+
                 if (this.editMode) {
                     this.adminActionService.getJobDetails(this.$state.params.postIdval)
                         .then((response) => {
@@ -507,6 +507,7 @@ module AIP {
                         };
                         this.$state.go("admin-post-list", {noti: notiParams, data: response.data.savedJob.id});
                     } else {
+                        this.sendTime = ''; // reset it to blank
                         this.saveErrorCallback(response.data.message);
                     }
                 }, (err) => {

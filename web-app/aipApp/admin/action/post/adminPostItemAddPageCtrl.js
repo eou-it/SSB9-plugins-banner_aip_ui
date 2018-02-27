@@ -6,7 +6,7 @@
 ///<reference path="../../../common/services/admin/adminActionService.ts"/>
 var AIP;
 (function (AIP) {
-    var AdminPostItemAddPageCtrl = /** @class */ (function () {
+    var AdminPostItemAddPageCtrl = (function () {
         function AdminPostItemAddPageCtrl($scope, $q, $state, $uibModal, $filter, $timeout, SpinnerService, APP_ROOT, AdminActionStatusService, AdminActionService) {
             this.$inject = ["$scope", "$q", "$state", "$filter", "$timeout", "SpinnerService", "AdminActionStatusService", "AdminActionService", "$uibModal", "APP_ROOT", "datePicker"];
             $scope.vm = this;
@@ -375,6 +375,7 @@ var AIP;
                     _this.$state.go("admin-post-list", { noti: notiParams, data: response.data.savedJob.id });
                 }
                 else {
+                    _this.sendTime = ''; // reset it to blank
                     _this.saveErrorCallback(response.data.message);
                 }
             }, function (err) {
