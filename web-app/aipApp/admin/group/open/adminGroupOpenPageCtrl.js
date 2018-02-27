@@ -6,9 +6,9 @@
 ///<reference path="../../../common/services/spinnerService.ts"/>
 var AIP;
 (function (AIP) {
-    var AdminGroupOpenPageCtrl = (function () {
-        function AdminGroupOpenPageCtrl($scope, $window, AdminGroupService, $q, SpinnerService, $state, $filter, $sce, $templateRequest, $templateCache, $compile, $timeout, APP_ROOT) {
-            this.$inject = ["$scope", "$window", "AdminGroupService", "$q", "SpinnerService", "$state", "$filter", "$sce", "$templateRequest", "$templateCache",
+    var AdminGroupOpenPageCtrl = /** @class */ (function () {
+        function AdminGroupOpenPageCtrl($scope, $rootScope, $window, AdminGroupService, $q, SpinnerService, $state, $filter, $sce, $templateRequest, $templateCache, $compile, $timeout, APP_ROOT) {
+            this.$inject = ["$scope", "$rootScope", "$window", "AdminGroupService", "$q", "SpinnerService", "$state", "$filter", "$sce", "$templateRequest", "$templateCache",
                 "$compile", "$timeout", "APP_ROOT"];
             this.trustHTML = function (txtString) {
                 var sanitized = txtString ? this.$sce.trustAsHtml(this.$filter("html")(txtString)) : "";
@@ -16,6 +16,7 @@ var AIP;
             };
             $scope.vm = this;
             this.$scope = $scope;
+            this.$rootScope = $rootScope;
             this.$window = $window;
             this.$q = $q;
             this.$state = $state;
@@ -36,6 +37,8 @@ var AIP;
             this.originalAssign = [];
             this.saving = false;
             this.groupDetailDefer = null;
+            this.actionItemDataChanged = false;
+            this.redirectval = "NoData";
             this.init();
         }
         AdminGroupOpenPageCtrl.prototype.init = function () {
@@ -60,6 +63,17 @@ var AIP;
                 //TODO:: turn off the spinner
                 _this.spinnerService.showSpinner(false);
             });
+            var that = this;
+            this.$scope.$on("DetectChanges", function (event, args) {
+                if (that.actionItemDataChanged) {
+                    that.redirectval = args.state;
+                    that.checkchangesDone();
+                }
+            });
+        };
+        AdminGroupOpenPageCtrl.prototype.dataChanged = function () {
+            this.actionItemDataChanged = true;
+            this.$rootScope.DataChanged = this.actionItemDataChanged;
         };
         AdminGroupOpenPageCtrl.prototype.openPanel = function (panelName) {
             var _this = this;
@@ -377,9 +391,42 @@ var AIP;
             return false;
         };
         AdminGroupOpenPageCtrl.prototype.cancel = function () {
-            this.editMode = false;
-            this.saving = false;
-            this.openContentPanel();
+            this.redirectval = "NoData";
+            this.checkchangesDone();
+        };
+        AdminGroupOpenPageCtrl.prototype.checkchangesDone = function () {
+            var that = this;
+            while (notifications.length != 0) {
+                notifications.remove(notifications.first());
+            }
+            if (that.actionItemDataChanged) {
+                var n = new Notification({
+                    message: this.$filter("i18n_aip")("aip.admin.actionItem.saveChanges"),
+                    type: "warning",
+                });
+                n.addPromptAction(this.$filter("i18n_aip")("aip.common.text.no"), function () {
+                    notifications.remove(n);
+                });
+                n.addPromptAction(this.$filter("i18n_aip")("aip.common.text.yes"), function () {
+                    that.actionItemDataChanged = false;
+                    that.$rootScope.DataChanged = false;
+                    if (that.redirectval === "NoData") {
+                        that.editMode = false;
+                        that.saving = false;
+                        that.openContentPanel();
+                    }
+                    else {
+                        location.href = that.redirectval;
+                    }
+                    notifications.remove(n);
+                });
+                notifications.addNotification(n);
+            }
+            else {
+                that.editMode = false;
+                that.saving = false;
+                that.openContentPanel();
+            }
         };
         AdminGroupOpenPageCtrl.prototype.isEqual = function (item1, item2) {
             var item1Properties = item1.map(function (item) {
@@ -399,7 +446,6 @@ var AIP;
             this.adminGroupService.updateActionItemGroupAssignment(this.selected, this.groupFolder.groupId ? this.groupFolder.groupId : this.groupFolder)
                 .then(function (response) {
                 _this.saving = false;
-                console.log(response);
                 var n = new Notification({
                     message: _this.$filter("i18n_aip")("aip.admin.group.assign.success"),
                     type: "success",
