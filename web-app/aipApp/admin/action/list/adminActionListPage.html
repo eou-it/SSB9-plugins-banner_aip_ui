@@ -30,26 +30,19 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
                 mobile-layout="vm.mobileConfig"
                 refresh-grid="refreshGrid"
                 draggable-column-names="vm.draggableColumnNames"
-                continuous-scrolling="false"
-                height="20em"
-                >
+                continuous-scrolling="false">
             <xe-cell-markup column-name="actionStatus">
                 <div class="row actionItemActions">
-                    <div class="icon icon-view-CO" ng-click="vm.openActionItem(row.id)"
-                         title="{{'aip.common.open.action.item.jaws'|i18n_aip}}">
-                        <span class="offscreen">{{'aip.common.open.action.item.jaws'|i18n_aip}}</span>
-                    </div>
+                    <button class="icon icon-view-CO" ng-click="vm.openActionItem(row.id)"
+                         title="{{'aip.common.open.action.item.jaws'|i18n_aip}}" aria-label="{{'aip.common.open.action.item.jaws'|i18n_aip}}">
+                    </button>
                     <div>
-                        <div  ng-if="row.deletable == false" class="icon icon-delete-CO" ng-click="vm.deleteBlock(row.cantDeleteMessage)" title="{{'aip.common.delete.group.jaws'|i18n_aip}}">
-                    <span class="offscreen">{{'aip.common.delete.group.jaws'|i18n_aip}}</span>
+                    <button  ng-if="row.deletable == false" class="icon icon-delete-CO" ng-click="vm.deleteBlock(row.cantDeleteMessage)" title="{{'aip.common.delete.group.jaws'|i18n_aip}}" aria-label="{{'aip.common.delete.group.jaws'|i18n_aip}}">
+                    </button>
+                    <button  ng-if="row.deletable == true" class="icon icon-delete-CO" ng-click="vm.deleteUnblock(row.actionItemId)" title="{{'aip.common.delete.group.jaws'|i18n_aip}}" aria-label="{{'aip.common.delete.group.jaws'|i18n_aip}}">
+                    </button>
                     </div>
-
-                    <div  ng-if="row.deletable == true" class="icon icon-delete-CO" ng-click="vm.deleteUnblock(row.actionItemId)" title="{{'aip.common.delete.group.jaws'|i18n_aip}}">
-                        <span class="offscreen">{{'aip.common.delete.group.jaws'|i18n_aip}}</span>
-                    </div>
-
-                    </div>
-                    </div>
+                </div>
 
             </xe-cell-markup>
             <xe-cell-markup column-name="actionItemPostedStatus" >

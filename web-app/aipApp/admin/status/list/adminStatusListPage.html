@@ -37,8 +37,7 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
                 mobile-layout="vm.mobileConfig"
                 refresh-grid="refreshGrid"
                 draggable-column-names="vm.draggableColumnNames"
-                continuous-scrolling="false"
-                height="20em">
+                continuous-scrolling="false">
                 <xe-cell-markup column-name="actionItemStatusBlockedProcess" aria-label="{{'aip.common.text.yes'|i18n_aip}}">
                     <div ng-if="row.actionItemStatusBlockedProcess === 'Y'" class="icon icon-success-CF icon-green">
                         <span class="offscreen">{{'aip.common.block.process.indicator.is'|i18n_aip}} {{'aip.common.text.yes'|i18n_aip}}</span>
@@ -56,12 +55,10 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
                     </div>
                 </xe-cell-markup>
                 <xe-cell-markup column-name="actionTobeTaken" >
-                    <div ng-if="row.deletable === 'N'" class="icon icon-delete-CO" ng-click="vm.disableSystemRecord(row.deleteRestrictionReason)">
-                        <span class="offscreen">{{'aip.common.system.required.indicator.is'|i18n_aip}} {{'aip.common.text.yes'|i18n_aip}}</span>
-                    </div>
-                    <div  ng-if="row.deletable === 'Y'" class="icon icon-delete-CO" ng-click="vm.deleteSystemRecord(row.id)">
-                        <span class="offscreen">{{'aip.common.system.required.indicator.is'|i18n_aip}} {{'aip.common.text.no'|i18n_aip}}</span>
-                    </div>
+                    <button ng-if="row.deletable === 'N'" class="icon icon-delete-CO" ng-click="vm.disableSystemRecord(row.deleteRestrictionReason)" title="{{'aip.common.delete.status.jaws'|i18n_aip}}" aria-label="{{'aip.common.system.required.indicator.is'|i18n_aip}} {{'aip.common.text.yes'|i18n_aip}}">
+                    </button>
+                    <button  ng-if="row.deletable === 'Y'" class="icon icon-delete-CO" ng-click="vm.deleteSystemRecord(row.id)" title="{{'aip.common.delete.status.jaws'|i18n_aip}}" aria-label="{{'aip.common.system.required.indicator.is'|i18n_aip}} {{'aip.common.text.no'|i18n_aip}}">
+                    </button>
                 </xe-cell-markup>
 
         </xe-table-grid>

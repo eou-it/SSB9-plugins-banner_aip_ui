@@ -16,13 +16,14 @@ module AIP {
         cancel(): void;
         save(): void;
         saveErrorCallback(message: string): void;
+        dataChanged():void;
     }
     interface IActionItemAddPageScope {
         vm: AdminActionItemAddPageCtrl;
     }
 
     export class AdminActionItemAddPageCtrl implements IAdminActionItemAddPageCtrl{
-        $inject = ["$scope", "$q", "$state", "$filter","$sce", "$timeout", "$window", "SpinnerService", "AdminActionService" ];
+        $inject = ["$scope","$rootScope", "$q", "$state", "$filter","$location","$sce", "$timeout", "$window", "SpinnerService", "AdminActionService" ];
         status: [AIP.IStatus];
         folders: [AIP.IFolder];
         actionItemInfo: AIP.IActionItemParam|any;
@@ -31,8 +32,11 @@ module AIP {
         spinnerService:AIP.SpinnerService;
         saving: boolean;
         $q: ng.IQService;
+        $scope;
         $state;
+        $rootScope;
         $filter;
+        $location;
         $sce;
         actionItem1;
         editMode: boolean;
@@ -40,12 +44,19 @@ module AIP {
         duplicateGroup: boolean;
         $timeout;
         actionItemInitial;
-        constructor($scope:IActionItemAddPageScope, $q:ng.IQService, $state, $filter,$sce, $timeout, $window,
-                    SpinnerService:AIP.SpinnerService, AdminActionService:AIP.AdminActionService) {
+        actionItemDataChanged:boolean;
+        redirectval;
+
+
+        constructor($scope, $q:ng.IQService, $rootScope,$state, $filter,$sce, $timeout, $window,
+                    SpinnerService:AIP.SpinnerService, AdminActionService:AIP.AdminActionService,$location) {
             $scope.vm = this;
+            this.$scope = $scope;
             this.$q = $q;
             this.$sce = $sce;
             this.$state = $state;
+            this.$rootScope=$rootScope;
+            this.$location=$location;
             this.$filter = $filter;
             this.$timeout = $timeout;
             this.spinnerService = SpinnerService;
@@ -56,6 +67,9 @@ module AIP {
             this.editMode = false;
             this.existFolder = {};
             this.duplicateGroup = false;
+            this.actionItemDataChanged=false;
+            this.redirectval="NoData";
+
             this.actionItemInitial = {
                 id: undefined,
                 title: undefined,
@@ -66,7 +80,8 @@ module AIP {
                 description: undefined
             }
             $window.onbeforeunload = (event)=> {
-                if(this.isChanged()) {
+                //   if(this.isChanged()) {
+                if(this.actionItemDataChanged) {
                     return this.$filter("i18n_aip")("aip.common.admin.unsaved");
                 }
                 // reset to default event listener
@@ -74,7 +89,9 @@ module AIP {
             };
 
             this.init();
+
         }
+
 
         init() {
             this.spinnerService.showSpinner(true);
@@ -84,9 +101,9 @@ module AIP {
             allPromises.push(
                 this.adminActionService.getStatus()
                     .then((response: AIP.IActionItemStatusResponse) => {
-                     this.status = response.data;
-                     this.status.map(item=>item.value=this.$filter("i18n_aip")(item.value));
-                     this.actionItemInfo.status = this.status[0].value;
+                        this.status = response.data;
+                        this.status.map(item=>item.value=this.$filter("i18n_aip")(item.value));
+                        this.actionItemInfo.status = this.status[0].value;
                     })
             );
             allPromises.push(
@@ -126,6 +143,15 @@ module AIP {
 
                 }
                 this.spinnerService.showSpinner(false);
+            });
+            var that=this;
+            this.$scope.$on("DetectChanges",function(event, args)
+            {
+                if (that.actionItemDataChanged) {
+                    that.redirectval = args.state;
+                    that.checkchangesDone();
+                }
+
             });
         }
         selectGroupFolder(item, index) {
@@ -186,8 +212,49 @@ module AIP {
                 return true;
             }
         }
-        cancel() {
-            this.$state.go("admin-action-list");
+
+        cancel()
+        {
+            this.redirectval="NoData";
+            this.checkchangesDone();
+        }
+
+        checkchangesDone() {
+
+            var that=this;
+            while (notifications.length != 0) {
+                notifications.remove(notifications.first())
+            }
+            if (that.actionItemDataChanged) {
+
+                var n = new Notification({
+                    message: this.$filter("i18n_aip")( "aip.admin.actionItem.saveChanges"),
+                    type: "warning",
+                });
+                n.addPromptAction(this.$filter("i18n_aip")("aip.common.text.no"), function () {
+                    notifications.remove(n);
+
+                })
+                n.addPromptAction(this.$filter("i18n_aip")("aip.common.text.yes"), function () {
+                    that.actionItemDataChanged=false;
+                    that.$rootScope.DataChanged=false;
+                    if (that.redirectval==="NoData")
+                    {
+                        that.$state.go('admin-action-list');
+                    }
+                    else {
+                        location.href = that.redirectval;
+                    }
+                    notifications.remove(n);
+                })
+
+                notifications.addNotification(n);
+            }
+            else
+            {
+                that.$state.go('admin-action-list');
+            }
+
         }
 
         isChanged() {
@@ -209,7 +276,7 @@ module AIP {
                 }
             } else {
                 if (this.actionItemInfo.name || this.actionItemInfo.title || (this.actionItemInfo.folder && this.actionItemInfo.folder.id) ||
-                this.actionItemInfo.description) {
+                    this.actionItemInfo.description) {
                     changed = true;
                 } else if (this.actionItemInfo.status!=="Draft") {
                     changed = true;
@@ -256,6 +323,11 @@ module AIP {
             }
         }
 
+        dataChanged(this)
+        {
+            this.actionItemDataChanged=true;
+            this.$rootScope.DataChanged=this.actionItemDataChanged
+        }
 
         save() {
             this.saving = true;
@@ -271,13 +343,12 @@ module AIP {
                                 notiType: "editSuccess",
                                 data: response.data
                             };
+                            this.actionItemDataChanged=false;
+                            this.$rootScope.DataChanged=false;
                             this.$state.go("admin-action-open", {
                                 noti: notiParams,
                                 data: response.data.updatedActionItem.id,
                             });
-
-
-
 
                         } else {
                             this.saveErrorCallback(response.data.message);

@@ -11,7 +11,7 @@ var AIP;
             this.$inject = ["$scope", "$window", "AdminGroupService", "$q", "SpinnerService", "$state", "$filter", "$sce", "$templateRequest", "$templateCache",
                 "$compile", "$timeout", "APP_ROOT"];
             this.trustHTML = function (txtString) {
-                var sanitized = txtString ? this.$filter("html")(this.$sce.trustAsHtml(txtString)) : "";
+                var sanitized = txtString ? this.$sce.trustAsHtml(this.$filter("html")(txtString)) : "";
                 return sanitized;
             };
             $scope.vm = this;
@@ -45,7 +45,7 @@ var AIP;
             this.groupDetailDefer = this.getGroupDetailDefer(this.$state.params.groupId).then(function () {
                 // $("p.openGroupDesc" ).html(decodeURI(this.groupFolder.groupDesc));
                 if (_this.groupFolder.postedInd == "Y") {
-                    $("#title-panel h1").html(_this.groupFolder.groupName + _this.$filter("i18n_aip")("aip.admin.group.title.posted"));
+                    $("#title-panel h1").html(_this.groupFolder.groupName + ' ' + _this.$filter("i18n_aip")("aip.admin.group.title.posted"));
                 }
                 else {
                     $("#title-panel h1").html(_this.groupFolder.groupName);
@@ -87,7 +87,7 @@ var AIP;
                 deferred.resolve(compiled);
                 if (panelName === "overview") {
                     if (_this.groupFolder.postedInd == "Y") {
-                        $("#title-panel h1").html(_this.groupFolder.groupName + _this.$filter("i18n_aip")("aip.admin.group.title.posted"));
+                        $("#title-panel h1").html(_this.groupFolder.groupName + ' ' + _this.$filter("i18n_aip")("aip.admin.group.title.posted"));
                     }
                     else {
                         $("#title-panel").children()[0].innerHTML = _this.groupFolder.groupTitle;

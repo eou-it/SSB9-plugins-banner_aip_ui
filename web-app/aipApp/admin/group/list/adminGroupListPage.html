@@ -34,27 +34,24 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
                 refresh-grid="refreshGrid"
                 draggable-column-names="vm.draggableColumnNames"
                 continuous-scrolling="false"
-                height="20em">
+                continuous-scroll-parent="content"
+                >
 
             <xe-cell-markup column-name="groupActions" >
                 <div class="row groupActions">
-                    <div  class="icon icon-view-CO" ng-click="vm.open(row.id)" title="{{'aip.common.open.group.jaws'|i18n_aip}}">
-                        <span class="offscreen">{{'aip.common.open.group.jaws'|i18n_aip}}</span>
-                    </div>
+                    <button class="icon icon-view-CO"  ng-click="vm.open(row.id)" title="{{'aip.common.open.group.jaws'|i18n_aip}}" aria-label="{{'aip.common.open.group.jaws'|i18n_aip}}">
+                    </button>
 
                     <!--<div class="icon icon-document-CO" ng-click="vm.copy(row.id)">-->
                         <!--<span class="offscreen"></span>-->
                     <!--</div>-->
 
                     <div>
-                        <div  ng-if="row.deletable == false" class="icon icon-delete-CO" ng-click="vm.deleteBlock(row.cantDeleteMessage)" title="{{'aip.common.delete.group.jaws'|i18n_aip}}">
-                            <span class="offscreen">{{'aip.common.delete.group.jaws'|i18n_aip}}</span>
-                        </div>
+                        <button  ng-if="row.deletable == false" class="icon icon-delete-CO" ng-click="vm.deleteBlock(row.cantDeleteMessage)" title="{{'aip.common.delete.group.jaws'|i18n_aip}}" aria-label="{{'aip.common.delete.group.jaws'|i18n_aip}}">
+                        </button>
 
-                        <div  ng-if="row.deletable == true" class="icon icon-delete-CO" ng-click="vm.deleteUnblock(row.groupId)" title="{{'aip.common.delete.group.jaws'|i18n_aip}}">
-                            <span class="offscreen">{{'aip.common.delete.group.jaws'|i18n_aip}}</span>
-                        </div>
-
+                        <button  ng-if="row.deletable == true" class="icon icon-delete-CO" ng-click="vm.deleteUnblock(row.groupId)" title="{{'aip.common.delete.group.jaws'|i18n_aip}}" aria-label="{{'aip.common.delete.group.jaws'|i18n_aip}}">
+                        </button>
                     </div>
                 </div>
 

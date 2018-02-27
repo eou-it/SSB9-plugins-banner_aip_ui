@@ -1,3 +1,6 @@
+<!--*******************************************************************************
+Copyright 2018 Ellucian Company L.P. and its affiliates.
+*******************************************************************************-->
 <div class="aip-item-detail-container">
     <div class="detail-content">
         <div class="detail-title" ng-if="!data.info.templateId">
@@ -6,7 +9,7 @@
         <div class="detail" tabindex="-1">
             <!--TODO:: text goes here-->
             <!--<ng-transclude></ng-transclude>-->
-            <pre ng-if="data.type === 'group'">{{data.info.content}}</pre>
+            <pre ng-if="data.type === 'group'" ng-bind-html="data.info.content"></pre>
             <div ng-if="data.type === 'actionItem' && !data.info.templateId">
                 {{"aip.user.detail.noTemplate"|i18n_aip}}
             </div>

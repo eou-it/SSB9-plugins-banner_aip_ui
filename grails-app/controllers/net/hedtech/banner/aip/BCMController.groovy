@@ -19,11 +19,11 @@ class BCMController {
      */
     def getBCMLocation() {
         def bcmLocationURL
-        if (!session[BCM_LOCATION]) {
+        if (session[BCM_LOCATION]) {
+            bcmLocationURL = session[BCM_LOCATION]
+        } else {
             bcmLocationURL = bannerCommManagementResourceAccessService.getBCMLocation()
             session[BCM_LOCATION] = bcmLocationURL
-        } else {
-            bcmLocationURL = session[BCM_LOCATION]
         }
         def map = [bcmURL: bcmLocationURL]
         render map as JSON

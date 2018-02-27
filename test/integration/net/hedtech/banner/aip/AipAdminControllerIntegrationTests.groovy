@@ -184,7 +184,7 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
         def answer = JSON.parse( controller.response.contentAsString )
         assertFalse answer.success
         assertTrue( answer.group.equals( null ) )
-        assertEquals( 'Save failed. The Group Name and Folder must be unique.', answer.message )
+        assertEquals( 'Save failed. The group name must be unique within the selected folder.', answer.message )
     }
 
 
@@ -1335,7 +1335,7 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
         def ret = controller.response.contentAsString
         def data = JSON.parse( ret )
         assertFalse data.success
-        assert data.message == 'The group is associated with assigned action items or a submitted Post Action Items job and cannot be deleted.'
+        assert data.message == 'The group is associated with a submitted Post Action Items job and cannot be deleted.'
     }
 
 

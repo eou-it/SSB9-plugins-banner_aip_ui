@@ -232,16 +232,17 @@ module AIP {
                                   var hourEnd = timeString.indexOf(":");
                                   var H = +timeString.substr(0, hourEnd);
                                   var h = H % 12 || 12;
-                                  var ampm = H < 12 ? "AM" : "PM";
-                                  timeString = h + timeString.substr(hourEnd, 3) + ampm;
+                                  var ampm = H < 12 ? " AM" : " PM";
+                                  var hoursStr = h < 10? "0"+h : h;
+                                  timeString = hoursStr + timeString.substr(hourEnd, 3) + ampm;
                                   this.sendTime=timeString;
                                 }
                                 else
                                 {
                                     this.sendTime=this.actionPost1.scheduledStartTime;
                                 }
-                                this.actionPost1.timezoneStringOffset["timezoneId"] = this.actionPost1.timezoneStringOffset.ID;
                                 this.timezone=this.actionPost1.timezoneStringOffset;
+                                this.defaultTimeZone = this.timezone.displayName;
                                 this.changedValue();
 
                                 this.adminActionStatusService.getActionItemsById(this.$state.params.postIdval)
@@ -468,6 +469,8 @@ module AIP {
                     notifications.remove(n);
                 })
                 n.addPromptAction(this.$filter("i18n_aip")("aip.common.text.yes"), function () {
+                    that.save();
+                    notifications.remove(n);
                 })
                 notifications.addNotification(n);
             }
@@ -484,7 +487,15 @@ module AIP {
                 this.sendTime=null;
                 this.timezone.timezoneId=null;
             }
-            this.sendTime =this.$filter("date")(this.sendTime, "HHmm");
+            if(this.editMode && !(this.sendTime instanceof Date) ){
+                var hourEnd = this.sendTime.indexOf(":");
+                var H = +this.sendTime.substr(0, hourEnd);
+                var h = H % 12 || 12;
+                var hoursStr = h < 10? "0"+h : h;
+                this.sendTime = hoursStr + this.sendTime.substr(hourEnd+1, 2) ;
+            }else{
+                this.sendTime =this.$filter("date")(this.sendTime, "HHmm");
+            }
             this.adminActionService.savePostActionItem(this.postActionItemInfo, this.selected, this.modalResults, this.selectedPopulation, this.postNow,this.sendTime,this.timezone.timezoneId, this.regeneratePopulation)
                 .then((response: AIP.IPostActionItemSaveResponse) => {
                     this.saving = false;

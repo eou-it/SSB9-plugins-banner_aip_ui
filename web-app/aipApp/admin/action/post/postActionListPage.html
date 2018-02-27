@@ -4,7 +4,7 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
 <div class="actionListContainer" id="postActionListPage" ng-controller="PostActionListPageCtrl">
     <div class="row">
         <div class="control">
-            <button type="button" class="btn btn-default" ng-click="vm.goAddPage()" aria-label="Add new Action Item">
+            <button type="button" class="btn btn-default" ng-click="vm.goAddPage()" aria-label="{{'aip.common.add.new'|i18n_aip}}">
                 <span class="icon icon-add-CO"></span>
                 <span class="button-text hidden-sm-down">{{'aip.common.add.new'|i18n_aip}}</span>
             </button>
@@ -44,10 +44,9 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
             </xe-cell-markup>
 
             <xe-cell-markup column-name="postingActionStatus" >
-                <div class="icon icon-edit-CO" ng-click="vm.editActionItem(row.id)"
-                     title="{{'aip.common.edit.action.item.jaws'|i18n_aip}}">
-                    <span class="offscreen">{{'aip.common.edit.action.item.jaws'|i18n_aip}}</span>
-                </div>
+                <button class="icon icon-edit-CO" ng-click="vm.editActionItem(row.id)"
+                     title="{{'aip.common.edit.action.item.jaws'|i18n_aip}}" aria-label="{{'aip.common.edit.action.item.jaws'|i18n_aip}}">
+                </button>
 
             </xe-cell-markup>
 

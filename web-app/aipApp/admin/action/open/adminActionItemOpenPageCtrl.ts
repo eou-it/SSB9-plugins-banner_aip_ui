@@ -12,9 +12,12 @@ declare var notifications: any;
 declare var CKEDITOR;
 
 module AIP {
+    interface IAdminActionItemOpenPageCtrl {
 
+        specialCharacterTranslation():void;
+    }
     export class AdminActionItemOpenPageCtrl {
-        $inject = ["$scope", "$q", "$state", "$filter", "$sce", "$window", "$templateRequest", "$templateCache", "$compile", "$timeout", "$interpolate", "SpinnerService", "AdminActionService", "AdminActionStatusService", "APP_ROOT", "CKEDITORCONFIG"];
+        $inject = ["$scope","$rootScope", "$q", "$state", "$filter", "$sce", "$window", "$templateRequest", "$templateCache", "$compile", "$timeout", "$interpolate", "SpinnerService", "AdminActionService", "AdminActionStatusService", "APP_ROOT", "CKEDITORCONFIG"];
         adminActionService: AIP.AdminActionService;
         adminActionStatusService: AIP.AdminActionStatusService;
         spinnerService: AIP.SpinnerService;
@@ -31,6 +34,7 @@ module AIP {
         actionItem;
         actionItemPostedStatus;
         $scope;
+        $rootScope;
         APP_ROOT;
         ckEditorConfig;
         templates;
@@ -44,12 +48,17 @@ module AIP {
         templateSource;
         allActionItems;
         originalAssign;
+        test;
+        personaData;
         actionFolder;
+        actionItemDataChanged:boolean;
+        redirectval;
 
-        constructor($scope, $q: ng.IQService, $state, $filter, $sce, $window, $templateRequest, $templateCache, $compile,
+        constructor($scope,$rootScope, $q: ng.IQService, $state, $filter, $sce, $window, $templateRequest, $templateCache, $compile,
                     $timeout, $interpolate, SpinnerService, AdminActionService, AdminActionStatusService, APP_ROOT, CKEDITORCONFIG) {
             $scope.vm = this;
             this.$scope = $scope;
+            this.$rootScope=$rootScope;
             this.$q = $q;
             this.$state = $state;
             this.$filter = $filter;
@@ -79,6 +88,11 @@ module AIP {
             this.templateSource;
             this.saving = false;
             this.contentChanged;
+            this.test;
+            this.personaData;
+            this.actionItemDataChanged=false;
+            this.redirectval="NoData";
+
             this.init();
             angular.element($window).bind('resize', function () {
                 // $scope.onResize();
@@ -103,7 +117,15 @@ module AIP {
                 //TODO:: turn off the spinner
                 this.spinnerService.showSpinner(false);
                 this.contentChanged = false;
-
+                this.specialCharacterTranslation();
+            });
+            var that=this;
+            this.$scope.$on("DetectChanges",function(event, args)
+            {
+                if (that.actionItemDataChanged) {
+                    that.redirectval = args.state;
+                    that.checkEditchangesDone('content');
+                }
             });
         }
 
@@ -111,6 +133,7 @@ module AIP {
         detectContentChange(content) {
             if (this.templateSelect) {
                 this.contentChanged = true;
+                this.dataChanged();
             }
         }
 
@@ -241,7 +264,7 @@ module AIP {
                     deferred.resolve(compiled);
                     if (panelName === "overview") {
                         if(this.actionItem.actionItemPostedStatus=="Y"){
-                            $("#title-panel h1" ).html(this.actionItem.actionItemName+this.$filter("i18n_aip")("aip.admin.actionItem.title.posted"));
+                            $("#title-panel h1" ).html(this.actionItem.actionItemName+' ' + this.$filter("i18n_aip")("aip.admin.actionItem.title.posted"));
                         }
                         else {
                             $("#title-panel").children()[0].innerHTML = this.actionItem.actionItemName;
@@ -299,6 +322,39 @@ module AIP {
             }
         }
 
+        specialCharacterTranslation()
+        {
+            for (var j=0;j<this.rules.length;j++)
+            {
+                if (this.rules[j].statusName.indexOf('&amp;') > -1 )
+                {
+                    this.rules[j].statusName=this.rules[j].statusName.replace("&amp;", "&");
+                }
+                if (this.rules[j].statusName.indexOf('&quot;') > -1 )
+                {
+                    this.rules[j].statusName= this.rules[j].statusName.replace("&quot;", "\"");
+
+                }
+                if ((this.rules[j].statusName.indexOf('&#039;') > -1)  || (this.rules[j].statusName.indexOf('&#39;') > -1 ))
+                {
+                    this.rules[j].statusName= this.rules[j].statusName.replace("&#039;", "\'");
+                    this.rules[j].statusName= this.rules[j].statusName.replace("&#39;", "\'");
+                }
+                if (this.rules[j].statusName.indexOf('&lt;') > -1 )
+                {
+                    this.rules[j].statusName=  this.rules[j].statusName.replace("&lt;", "<");
+
+                }
+                if (this.rules[j].statusName.indexOf('&gt;') > -1 )
+                {
+                    this.rules[j].statusName=this.rules[j].statusName.replace("&gt;", ">");
+
+                }
+            }
+
+        }
+
+
         isNoTemplateSelected() {
             if (this.templateSelect) {
                 if (!this.selectedTemplate) {
@@ -328,7 +384,7 @@ module AIP {
         }
 
         trustActionItemContent = function () {
-            this.actionItem.actionItemContent = this.$sce.trustAsHtml(this.$filter("html")(this.actionItem.actionItemContent));
+            this.actionItem.actionItemContent = this.$sce.trustAsHtml(this.actionItem.actionItemContent);
             return this.actionItem.actionItemContent;
         }
 
@@ -370,10 +426,12 @@ module AIP {
             }, 500);
         }
 
-        cancel(option) {
-            this.init();
+        cancelContentEdit(option){
             var deferred = this.$q.defer();
-            this.adminActionService.getActionItemDetail(this.$state.params.data)
+            this.spinnerService.showSpinner(true);
+            var promises = [];
+            this.actionFolder = this.$state.params.actionItemId || this.$state.previousParams.actionItemId;
+            this.adminActionService.getActionItemDetail(this.actionFolder)
                 .then((response: AIP.IActionItemOpenResponse) => {
                     this.actionItem = response.data.actionItem;
                     this.selectedTemplate = this.actionItem.actionItemTemplateId;
@@ -382,21 +440,120 @@ module AIP {
                     switch (option) {
                         case "content":
                             this.templateSelect = false;
+                            promises.push(this.getStatus());
+                            promises.push(this.getRules());
+                            this.$q.all(promises).then(() => {
+                                //TODO:: turn off the spinner
+                                this.spinnerService.showSpinner(false);
+                                this.contentChanged = false;
+                            });
                             break;
                         default:
                             break;
                     }
-                    deferred.resolve(this.openPanel("overview"));
+                    deferred.resolve(this.openPanel(option));
                 }, (err) => {
                     console.log(err);
                 });
             return deferred.promise;
+
         }
+
+        dataChanged(this)
+        {
+            this.actionItemDataChanged=true;
+            this.$rootScope.DataChanged=true;
+
+        }
+        reset(option)
+        {
+            var deferred = this.$q.defer();
+            this.spinnerService.showSpinner(true);
+            var promises = [];
+            this.actionFolder = this.$state.params.actionItemId || this.$state.previousParams.actionItemId;
+            this.adminActionService.getActionItemDetail(this.actionFolder)
+                .then((response: AIP.IActionItemOpenResponse) => {
+                    this.actionItem = response.data.actionItem;
+                    this.selectedTemplate = this.actionItem.actionItemTemplateId;
+                    this.trustActionItemContent();
+
+                    switch (option) {
+                        case "content":
+                            this.templateSelect = false;
+                            promises.push(this.getStatus());
+                            promises.push(this.getRules());
+                            this.$q.all(promises).then(() => {
+                                //TODO:: turn off the spinner
+                                this.spinnerService.showSpinner(false);
+                                this.contentChanged = false;
+                            });
+                            break;
+                        default:
+                            break;
+                    }
+                    deferred.resolve(this.openPanel(option));
+                }, (err) => {
+                    console.log(err);
+                });
+            return deferred.promise;
+
+        }
+
+
+        cancel(option)
+        {
+            this.redirectval="NoData";
+            this.checkEditchangesDone(option);
+        }
+
+
+        checkEditchangesDone(option) {
+
+            var that=this;
+            while (notifications.length != 0) {
+                notifications.remove(notifications.first())
+            }
+            if (that.actionItemDataChanged || that.contentChanged) {
+
+                var n = new Notification({
+                    message: this.$filter("i18n_aip")( "aip.admin.actionItem.saveChanges"),
+                    type: "warning",
+                });
+                n.addPromptAction(this.$filter("i18n_aip")("aip.common.text.no"), function () {
+                    notifications.remove(n);
+
+                })
+                n.addPromptAction(this.$filter("i18n_aip")("aip.common.text.yes"), function () {
+                    that.actionItemDataChanged=false;
+                    that.$rootScope.DataChanged=false;
+                    if (that.redirectval==="NoData")
+                    {
+                        that.reset(option);
+                        //location.href = window.location.href;
+                    }
+                    else {
+                        location.href = that.redirectval;
+                    }
+                    notifications.remove(n);
+
+                })
+                notifications.addNotification(n);
+            }
+            else
+            {
+                that.reset(option);
+            }
+        }
+
+
 
         saveTemplate() {
             //TODO:: implement to save rules
             var allDefer = [];
             this.saving = true;
+            if(this.actionItem.actionItemContent && $.type(this.actionItem.actionItemContent) != 'string'){
+                this.actionItem.actionItemContent = this.$sce.getTrustedHtml(this.actionItem.actionItemContent)
+            }
             allDefer.push(this.adminActionService.saveActionItemTemplate(this.selectedTemplate, this.actionItem.actionItemId, this.actionItem.actionItemContent)
                 .then((response: any) => {
                     if (response.data.success) {
@@ -425,6 +582,8 @@ module AIP {
                     console.log(err);
                     return {success: false};
                 }));
+            this.actionItemDataChanged=false;
+            this.$rootScope.DataChanged=false;
             this.$q.all(allDefer)
                 .then((response: any) => {
                     this.saving = false;
@@ -460,6 +619,7 @@ module AIP {
             this.adminActionStatusService.getRules(this.actionFolder)
                 .then((response) => {
                     this.rules = response.data;
+                    console.log(this.rules)
                     angular.forEach(this.rules, (item) => {
                         //item.statusRuleLabelText = this.trustActionItemRules(item.statusRuleLabelText);
                         item.statusRuleLabelText = this.$sce.trustAsHtml(this.$filter("html")(item.statusRuleLabelText)).toString();
@@ -483,13 +643,13 @@ module AIP {
             this.adminActionStatusService.getRuleStatus()
                 .then((response) => {
                     this.statuses = response.data;
-
                     angular.forEach(this.statuses, (item) => {
                         if (item.actionItemStatusActive == "N" || item.actionItemStatusDefault == 'Y') {
                             var index = this.statuses.indexOf(item);
                             this.statuses.splice(index, 1);
-                        }
+                                          }
                     });
+
                     deferred.resolve();
                     // deferred.resolve(this.openPanel("content"));
                 }, (error) => {
@@ -499,6 +659,10 @@ module AIP {
         }
 
         validateActionItemRule() {
+            if (this.contentChanged)
+            {
+                this.dataChanged();
+            }
             if (this.selectedTemplate && !this.saving) {
                 if (this.rules.length === 0) {
                     return true;

@@ -8,7 +8,7 @@ var AIPUI;
         function AIPItemDetailDirective() {
             this.restrict = "AE";
             this.transclude = true;
-            this.replace = true;
+            this.replace = false;
             this.scope = {
                 data: "=",
                 next: "&",

@@ -46,13 +46,18 @@
                            <span ng-if="key==='status'">
                             <span ng-class="{'badge pending':key==='status'&&row[key]==='Pending',
                             'badge approve':key==='status'&&row[key]==='Completed'||(key==='status'&&row[key]!=='Completed'&&row[key]!=='Rejected'&&row[key]!=='Pending'), 'badge reject':key==='status'&&row[key]==='Rejected'}">
-                            {{row[key]|i18n_aip}}
+                                <span class="data-label" ng-if="row['status']==='Rejected'">{{'aip.user.action.item.status.rejected'|i18n_aip}}</span>
+                                <span class="data-label" ng-if="row['status']==='Completed'">{{'aip.user.action.item.status.completed'|i18n_aip}}</span>
+                                <span class="data-label" ng-if="row['status']==='Pending'">{{'aip.user.action.item.status.pending'|i18n_aip}}</span>
+                                <span class="data-label" ng-if="row['status'] !=='Pending' && row['status'] !== 'Completed' && row['status']!== 'Rejected'">{{row['status']}}</span>
                             </span>
                         </span>
                         <span class="completedDate" ng-if="key==='completedDate'&&row[key]!==null">
                             <span class="data-label" ng-if="row['status']==='Completed'">{{'aip.common.text.date.completed'|i18n_aip}}</span>
                             <span class="data-label" ng-if="row['status']==='Rejected'">{{'aip.common.text.date.rejected'|i18n_aip}}</span>
                             {{row[key]}}</span>
+                        <span class="completedDate" ng-if="key==='completedDate'&&row[key]!==null"><p><span class="data-label">{{'aip.user.action.item.last.response'|i18n_aip}}</span>
+                        {{row['currentResponse']}}</p></span>
                         <aip-readmore class="aipReadmore" ng-if="key==='description'" ng-bind-html="row[key]"></aip-readmore>
                     </div>
                 </div>

@@ -18,7 +18,7 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
                         <button name="Edit" type="button" class="btn btn-default edit" ng-click="vm.selectTemplate()"
                                 aria-label="">
                             <span class="icon icon-edit-CO"></span>
-                            <span class="button-text hidden-sm-down">{{'aip.admin.action.open.tab.content.edit'|i18n_aip}}</span>
+                            <span class="button-text hidden-sm-down">{{'aip.common.text.edit'|i18n_aip}}</span>
                         </button>
                     </div>
                 </div>
@@ -36,7 +36,7 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
             <div class="row">
                 <div class="col-sm-4">
                     <select id="actionItemTemplate" class="actionItemSelect form-control" xe-data="" required
-                            aria-required="true" ng-model="vm.selectedTemplate" ng-change="vm.getRules()">
+                            aria-required="true" ng-model="vm.selectedTemplate" ng-change="vm.getRules(); vm.dataChanged()">
                         <option selected="selected" disabled selected value="">
                             {{"aip.admin.action.open.tab.content.templatePlaceholder"|i18n_aip}}
                         </option>
@@ -55,7 +55,7 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
             </div>
             <div class="row">
                 <textarea id="templateContent" ng-required="true" aria-required="true" name="templateContent"
-                          ckeditor="ckEditorConfig" ng-model="vm.actionItem.actionItemContent" ng-change="vm.detectContentChange(vm.actionItem.actionItemContent)"></textarea>
+                          ckeditor="ckEditorConfig" ng-model="vm.actionItem.actionItemContent" ng-change="vm.detectContentChange(vm.actionItem.actionItemContent); vm.dataChanged()"></textarea>
 
 
             </div>
@@ -102,12 +102,12 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
                         <button name="Edit" type="button" class="btn btn-default edit" ng-click="vm.selectTemplate()"
                                 aria-label="">
                             <span class="icon icon-edit-CO"></span>
-                            <span class="button-text hidden-sm-down">{{'aip.admin.action.open.tab.content.edit'|i18n_aip}}</span>
+                            <span class="button-text hidden-sm-down">{{'aip.common.text.edit'|i18n_aip}}</span>
                         </button>
                     </div>
 
                     <div class="h2-container" ng-if="vm.actionItemPostedStatus == 'Y'">
-                            <span class="button-text no-edit hidden-sm-down">{{'aip.admin.action.open.tab.content.posted'|i18n_aip}}</span>
+                        <span class="button-text no-edit hidden-sm-down">{{'aip.admin.action.open.tab.content.posted'|i18n_aip}}</span>
                     </div>
                 </div>
             </div>
@@ -143,7 +143,7 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
 
                     <div class="contentContainer" ng-if="vm.rules.length>0">
                         <table class="ruleListReadOnly">
-                            <caption aria-label="Action Item Response Options">
+                            <caption aria-label="{{'aip.admin.status.rules.table.caption'|i18n_aip}}">
                                 {{'aip.admin.status.rules.table.caption'|i18n_aip}}
                             </caption>
                             <thead>
@@ -151,6 +151,7 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
                                 {{'aip.admin.status.rules.table.header.responseOptionText'|i18n_aip}}
                             </th>
                             <th class="ruleStatus">{{'aip.admin.status.rules.table.header.status'|i18n_aip}}</th>
+                            <th class="ruleStatus"></th>
                             </thead>
                             <tbody>
                             <tr ng-repeat="rule in vm.rules">

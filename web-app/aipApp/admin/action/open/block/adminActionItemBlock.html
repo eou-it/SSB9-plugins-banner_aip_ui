@@ -82,7 +82,7 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
                 <div class="row actionItemBlock"  ng-repeat="(index, item) in vm.selected">
                     <div class="col-xs-8 col-sm-12 col-md-12  col-lg-3 smalldeviceglobal">
                         <label for="" class="titleValue" >{{"aip.admin.addBlockProcessData.process"|i18n_aip}}:</label>
-                        <xe-ui-select id="select2actionItems" ng-model="vm.selected[index].process" theme="select2" ng-disabled="disabled">
+                        <xe-ui-select id="select2actionItems" ng-model="vm.selected[index].process" theme="select2" ng-disabled="disabled" ng-change="vm.dataChanged()">
                             <xe-ui-select-match placeholder="Select">
                                 <div class="row actionItemName">{{vm.selected[index].process.name}}</div>
                             </xe-ui-select-match>
@@ -102,7 +102,7 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
 
                     <div class="row col-sm-12 col-xs-8 col-md-12  col-lg-4 smalldeviceglobal"  ng-if="vm.selected[index].process.personAllowed !=='N' && vm.selected[index].process.processPersonaBlockAllowedInd !=='N'">
                         <label for="" class="titleValue" >{{"aip.admin.addBlockProcessData.process.persona"|i18n_aip}}:</label>
-                        <xe-ui-select id="postActionItemPopulation" ng-model="vm.selected[index].persona" theme="select2">
+                        <xe-ui-select id="postActionItemPopulation" ng-model="vm.selected[index].persona" theme="select2" ng-change="vm.dataChanged()">
 
                             <xe-ui-select-match placeholder="Select">
                                 <div class="row actionItemName">{{vm.allActionItems.persona[vm.selected[index].persona]}}</div>
@@ -118,18 +118,18 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
                     </div>
 
 
-                   <!-- <div class="col-xs-2 col-sm-push-1">
-                        <div type="button" class="btn btn-default vertical" ng-click="vm.goUp(item, $event)" aria-label="{{'aip.admin.group.actionItem.up'|i18n_aip}}"
-                             ng-disabled="$index===0" title="{{'aip.admin.group.actionItem.up'|i18n_aip}}"
-                             tabindex="{{$index===0?-1:0}}">
-                            <i class="icon icon-arrowTop-C" aria-hidden="true"></i>
-                        </div>
-                        <div type="button" class="btn btn-default vertical" ng-click="vm.goDown(item, $event)" aria-label="{{'aip.admin.group.actionItem.down'|i18n_aip}}"
-                             ng-disabled="$index===vm.selected.length-1" title="{{'aip.admin.group.actionItem.down'|i18n_aip}}"
-                             tabindex="{{$index===vm.selected.length-1?-1:0}}">
-                            <i class="icon icon-arrowBottom-C" aria-hidden="true"></i>
-                        </div>
-                    </div>-->
+                    <!-- <div class="col-xs-2 col-sm-push-1">
+                         <div type="button" class="btn btn-default vertical" ng-click="vm.goUp(item, $event)" aria-label="{{'aip.admin.group.actionItem.up'|i18n_aip}}"
+                              ng-disabled="$index===0" title="{{'aip.admin.group.actionItem.up'|i18n_aip}}"
+                              tabindex="{{$index===0?-1:0}}">
+                             <i class="icon icon-arrowTop-C" aria-hidden="true"></i>
+                         </div>
+                         <div type="button" class="btn btn-default vertical" ng-click="vm.goDown(item, $event)" aria-label="{{'aip.admin.group.actionItem.down'|i18n_aip}}"
+                              ng-disabled="$index===vm.selected.length-1" title="{{'aip.admin.group.actionItem.down'|i18n_aip}}"
+                              tabindex="{{$index===vm.selected.length-1?-1:0}}">
+                             <i class="icon icon-arrowBottom-C" aria-hidden="true"></i>
+                         </div>
+                     </div>-->
                     <div class="col-xs-4 col-sm-4 col-lg-1">
                         <div type="button" class="btn btn-default vertical col-xs-6" ng-click="vm.delete(item)" aria-label="{{'aip.admin.group.actionItem.delete'|i18n_aip}}"
                              title="{{'aip.admin.group.actionItem.delete'|i18n_aip}}">

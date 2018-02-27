@@ -13,6 +13,7 @@
   .control {
     float: right;
     padding-top: 8px;
+    margin-right: 0.2em;
   }
 
   .actionListTable {
@@ -25,10 +26,6 @@
         display: flex;
         margin-right: 16px;
         margin-left: 16px;
-
-        .icon {
-          font-size: 1.5em;
-        }
 
         div {
           flex: 1;

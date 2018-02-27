@@ -16,7 +16,7 @@ module AIPUI {
         constructor() {
             this.restrict = "AE";
             this.transclude = true;
-            this.replace = true;
+            this.replace = false;
             this.scope = {
                 rules: "=",
                 status: "=",

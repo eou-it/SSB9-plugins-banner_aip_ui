@@ -1,7 +1,6 @@
 /*******************************************************************************
-Copyright 2017 Ellucian Company L.P. and its affiliates.
+Copyright 2018 Ellucian Company L.P. and its affiliates.
 ********************************************************************************/
-
 @import '../aipApp/common/directives/list/css/list';
 @import '../aipApp/common/directives/admin/landing-item/css/landingItem';
 @import '../aipApp/common/directives/item-detail/css/itemDetail';
@@ -19,19 +18,25 @@ Copyright 2017 Ellucian Company L.P. and its affiliates.
 @import '../aipApp/admin/action/post/adminPostItemAddPage';
 @import '../aipApp/admin/action/post/addpost/postAddModal';
 
-
+#gridCaption {
+  color: gray;
+  font-size: 18px;
+}
 
 #breadcrumb-panel {
   //display: none;
 }
+
 #title-panel {
   //display: none;
 }
+
 #username {
   padding-right: 0.5em;
 }
+
 #content {
-  overflow:hidden;
+  overflow: auto;
   //top: 90px !important;
   #title-panel {
     h1 {
@@ -46,45 +51,53 @@ Copyright 2017 Ellucian Company L.P. and its affiliates.
   }
 }
 
-@media screen and (max-width:768px) {
+@media screen and (max-width: 768px) {
   #content {
     top: 105px !important;
     .viewContainer {
       padding: 0 8px;
       overflow: auto;
     }
-    .jobstateDefault{min-width:10%;}
+    .jobstateDefault {
+      min-width: 10%;
+    }
 
     .hidden-sm-down {
       display: none;
     }
   }
 }
-@media screen and (max-width:480px) {
+
+@media screen and (max-width: 480px) {
   #content {
     top: 105px !important;
     .viewContainer {
       padding: 0 8px;
       overflow: auto;
     }
-    .actionItemAddContainer .enddate{padding-left: 0px}
+    .actionItemAddContainer .enddate {
+      padding-left: 0px
+    }
   }
 }
+
 #breadcrumbHeader {
   .breadcrumbButton {
     //font-size: 0.8em;
   }
   a.breadcrumbButton.leaf-breadcrumb {
-    text-decoration:none;
+    text-decoration: none;
     cursor: default;
   }
 }
 
 //focus indicator override for windows
 a:focus, div:focus, input:focus, span:focus, i:focus, button:focus, .breadcrumbButton:focus {
-  outline:0;
-  box-shadow: 0 0 2px 3px #78aeda, 0 0 2px #78aeda inset; border-radius: 2px;
+  outline: 0;
+  box-shadow: 0 0 2px 3px #78aeda, 0 0 2px #78aeda inset;
+  border-radius: 2px;
 }
+
 label {
   margin-bottom: 10px;
 }
@@ -101,19 +114,20 @@ label {
   .progress {
     position: absolute;
     width: 200px;
-    margin:auto;
-    left:0;
+    margin: auto;
+    left: 0;
     right: 0;
     top: 0;
     bottom: 0;
   }
 }
+
 .viewContainer {
   padding: 8px 16px;
-  height: 100%;
-  overflow-x: auto;
+  /*height: 100%;
+  overflow-x: auto;*/
   background-color: #edf2f7;
-  //overflow-y: scroll;
+  /*overflow-y: scroll;*/
   //margin-top: 5px;
   //override common-component angular-grid
   xe-table-grid {
@@ -183,6 +197,7 @@ label {
     }
   }
 }
+
 // modal
 .aip-modal {
   .modal-sm {
@@ -238,7 +253,8 @@ label {
         }
       }
       .modal-control {
-        border-top: 1px solid #1F6E9F;margin-top:15px;
+        border-top: 1px solid #1F6E9F;
+        margin-top: 15px;
         button {
           font-size: 18px;
           color: #1F6E9F;
@@ -249,15 +265,19 @@ label {
     }
   }
 }
+
 .cke_button_label.cke_button__a11ybtn_label {
   display: inline !important;
 }
+
 .cke_button_icon.cke_button__a11ybtn_icon {
   display: none;
 }
+
 .icon-green {
   color: #008000;
 }
+
 .offscreen {
   visibility: hidden;
 }
@@ -266,27 +286,30 @@ label {
 h2 {
   color: #4F585F;
   font-size: 1.5em;
-  font-family:"OpenSans-semibold";
+  font-family: "OpenSans-semibold";
   margin: 5px 0;
 }
+
 h3 {
   color: #4F585F;
   font-size: 1.5em;
-  font-family:"OpenSans-semibold";
+  font-family: "OpenSans-semibold";
   margin: 5px 0;
 
 }
+
 h3 {
   color: #4F585F;
   font-size: 1.15em;
-  font-family:"OpenSans-semibold";
+  font-family: "OpenSans-semibold";
   margin: 5px 0;
 
 }
+
 h4 {
   color: #4F585F;
   font-size: 1.15em;
-  font-family:"OpenSans-semibold";
+  font-family: "OpenSans-semibold";
   margin: 5px 0;
 }
 
@@ -308,7 +331,6 @@ fieldset[disabled] .btn-primary.active, .btn-primary {
   background-color: #275c8a;
 }
 
-
 /* draggable targets */
 [data-draggable="target"] {
   float: left;
@@ -321,18 +343,21 @@ fieldset[disabled] .btn-primary.active, .btn-primary {
   border: 2px solid #888;
   border-radius: 0.2em;
   background: #fefefe;
-  color: #555; }
+  color: #555;
+}
 
 /* drop target state */
 [data-draggable="target"][aria-dropeffect="move"] {
   border-color: #68b;
-  background: #fff; }
+  background: #fff;
+}
 
 /* drop target focus and dragover state */
 [data-draggable="target"][aria-dropeffect="move"]:focus,
 [data-draggable="target"][aria-dropeffect="move"].dragover {
   outline: none;
-  box-shadow: 0 0 0 1px #fff, 0 0 0 3px #68b; }
+  box-shadow: 0 0 0 1px #fff, 0 0 0 3px #68b;
+}
 
 /* draggable items */
 [data-draggable="item"] {
@@ -343,36 +368,43 @@ fieldset[disabled] .btn-primary.active, .btn-primary {
   padding: 0.2em 0.4em;
   border-radius: 0.2em;
   cursor: pointer;
-  line-height: 2em; }
+  line-height: 2em;
+}
 
 /* items focus state */
 [data-draggable="item"]:focus {
   outline: none;
-  box-shadow: 0 0 0 2px #68b, inset 0 0 0 1px #ddd; }
+  box-shadow: 0 0 0 2px #68b, inset 0 0 0 1px #ddd;
+}
 
 /* items grabbed state */
 [data-draggable="item"][aria-grabbed="true"] {
   background: #8ad;
-  color: #fff; }
+  color: #fff;
+}
 
 ol.available > li > button, ol.available > li > span.glyphicon-minus-sign {
-  display: none; }
+  display: none;
+}
 
 ol.available > li > span.glyphicon-plus-sign, ol.available > li > span.glyphicon-chevron-right {
   float: right;
   padding-right: 15px;
-  padding-top: 5px; }
+  padding-top: 5px;
+}
 
 ol.selected-group > li > span.glyphicon-plus-sign {
-  display: none; }
+  display: none;
+}
 
 ol.selected-group > li {
-  padding-right: 10px; }
+  padding-right: 10px;
+}
 
 ol.selected-group > li > button {
   float: right;
-  margin-right: 5px; }
-
+  margin-right: 5px;
+}
 
 .jobstateDefault {
   border-radius: 4px;
@@ -384,21 +416,91 @@ ol.selected-group > li > button {
   display: inline-block;
   color: #000;
 }
-.jobStateQueued{
+
+.jobStateQueued {
   background-color: #DAD5FF;
   border: 1px solid #B0ABD0;
 
 }
 
 .statusStopped {
-  background-color: #EF6969;border: 1px solid red; }
+  background-color: #EF6969;
+  border: 1px solid red;
+}
 
-.statusCompleted  {
+.statusCompleted {
   background-color: #c9f0c7;
-  border: 1px solid #4ec76a; }
+  border: 1px solid #4ec76a;
+}
+
 .statusScheduled {
   background-color: #c7c69f;
-  border: 1px solid #c7c69f; }
-.statusError{
+  border: 1px solid #c7c69f;
+}
+
+.statusError {
   background-color: #FFFF00;
-  border: 1px solid #CCCC00; }
+  border: 1px solid #CCCC00;
+}
+
+//Override xe-ui-components.css
+.ui-select-container .select2-choice, .ui-select-multiple .select2-choices {
+  min-height: 2.2em !important;
+}
+.ui-select-container .select2-choice > .select2-chosen {
+  font-size: 14px !important;
+  line-height: 1.75em !important;
+}
+.search-container .simple-input-field {
+  font-size: 0.875em !important;
+  color: #869fb1 !important;
+}
+
+.search-container .simple-input-field::-webkit-input-placeholder {
+  color: #869fb1 !important;
+}
+.search-container .simple-input-field::-moz-placeholder {
+  color: #869fb1 !important;
+}
+.search-container .simple-input-field:-ms-input-placeholder {
+  color: #869fb1 !important;
+}
+.search-container .simple-input-field:focus::-webkit-input-placeholder {
+  color: #ccc !important;
+}
+.search-container .simple-input-field:focus::-moz-placeholder {
+  color: #ccc !important;
+}
+.search-container .simple-input-field:focus:-ms-input-placeholder {
+  color: #ccc !important;
+}
+
+.pagination-container .pagination-controls label {
+  margin : 0px !important;
+  display: inline !important;
+}
+.column-filter-button {
+  padding: 0.6em !important;
+  padding-left: 2em !important;
+  color: #869fb1 !important;
+  width: 13.3em !important;
+  margin-right: 1em !important;
+  .placeholder {
+    color: #869fb1 !important;
+    font-size:0.9em !important;
+    font-weight:bold !important;
+  }
+}
+
+.table-container {
+  font-family: OpenSans-regular !important;
+  .caption caption .caption-container {
+    font-size: 16px !important;
+  }
+  .tbody .icon {
+    font-size: 1.5em;
+    border: none;
+    background-color: transparent;
+    margin-right: 2em;
+  }
+}

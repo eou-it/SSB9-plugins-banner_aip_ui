@@ -202,10 +202,10 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
                                         <label for="postActionItemPopulation" class="titleValue ">{{"aip.admin.action.postactionItem.timezone"|i18n_aip}}
                                         </label>
                                     </div>
-                                    <div class="actionItemElement col-sm-6" id="">
+                                    <div class="actionItemElement col-sm-6" id="" title={{"aip.admin.communication.timezone.noificataion"|i18n_aip}}>
                                         <div class="row timeZone">
                                             <span class="col-xs-11 col-sm-10 defaultTimezone" ng-if="vm.showTimezoneIcon" ng-bind-html="vm.defaultTimeZone"></span>
-                                            <button type="button" class="col-xs-1 col-sm-2 timezone-btn" ng-hide="vm.!showTimezoneIcon" ng-show="vm.showTimezoneIcon" ng-click="vm.showTimeZoneList()"></button>
+                                            <button type="button" class="col-xs-1 col-sm-2 timezone-btn" ng-hide="!vm.showTimezoneIcon" ng-show="vm.showTimezoneIcon" ng-click="vm.showTimeZoneList()"></button>
                                             <xe-ui-select class="col-xs-12 col-sm-12 timeZoneChange" ng-model="vm.timezone" ng-change="vm.setTimezone(vm.timezone);vm.checkChanges()" theme="select2" ng-hide="vm.showTimezoneIcon" ng-show="vm.showTimezoneIcon">
                                                 <xe-ui-select-match placeholder="{{'aip.admin.communication.sendMessage.timezonePlaceHolder' | i18n_aip}}" ng-bind-html="vm.timezone.displayName"></xe-ui-select-match>
                                                 <xe-ui-select-choices repeat="timezone in vm.timezones | filter: $select.search">
@@ -223,28 +223,32 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
             </div>
 
         </div>
-        <div class="clear-both"><input type="checkbox" id="chkPopulation" ng-model="vm.regeneratePopulation" ng-change="vm.checkChanges()"><label
+   <!--     <div class="clear-both"><input type="checkbox" id="chkPopulation" ng-model="vm.regeneratePopulation" ng-change="vm.checkChanges()"><label
                 class="titleValue required"><span class="postChk">{{"aip.admin.action.postactionItem.regenerate.Population"|i18n_aip}}</span></label>
-        </div>
+        </div>-->
 
     </div>
 
+
+
+
+
     <div class="actionItemControl">
         <div class="row">
-            <div class="actionItemElement col-xs-12 col-sm-12">
-                <div class="col-sm-8 offset-sm-8 col-xs-12 actionItemButton">
+            <div class="actionItemElement col-xs-12 col-sm-8">
+                <div class="col-sm-4 offset-sm-8 col-xs-12 actionItemButton">
                     <span>
-                        <button name="Cancel" type="button" class="btn btn-default col-sm-2" ng-click="vm.cancel()">{{"aip.common.cancel"|i18n_aip}}</button>
+                        <button name="Cancel" type="button" class="btn btn-default" ng-click="vm.cancel()">{{"aip.common.cancel"|i18n_aip}}</button>
                     </span>
                     <span>
-                        <button name="Save" type="button" class="btn btn-primary col-sm-2" ng-if="vm.editMode==false" ng-disabled=" !vm.validateInput() "
+                        <button name="Save" type="button" class="btn btn-primary" ng-if="vm.editMode==false" ng-disabled=" !vm.validateInput() "
                                 ng-click="vm.save()">
-                        {{"aip.common.submitandreturn"|i18n_aip}}</button>
+                        {{"aip.common.saveandreturn"|i18n_aip}}</button>
                     </span>
                     <span>
-                        <button name="Save" type="button" class="btn btn-primary col-sm-2"  ng-if="vm.editMode==true" ng-disabled=" !vm.dirtyFlag || !vm.validateInput() "
+                        <button name="Save" type="button" class="btn btn-primary"  ng-if="vm.editMode==true" ng-disabled=" !vm.dirtyFlag || !vm.validateInput() "
                                 ng-click="vm.save()">
-                        {{"aip.common.submitandreturn"|i18n_aip}}</button>
+                        {{"aip.common.saveandreturn"|i18n_aip}}</button>
                     </span>
                 </div>
             </div>

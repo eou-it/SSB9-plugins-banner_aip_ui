@@ -8,7 +8,7 @@ var PB;
         function PageBuilderPage($compile, ItemListViewService) {
             this.restrict = "AE";
             this.transclude = true;
-            this.replace = true;
+            this.replace = false;
             this.scope = {
                 content: "@",
                 aid: "@",
