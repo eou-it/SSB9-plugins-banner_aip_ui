@@ -1318,9 +1318,9 @@ ol.selected-group > li > button {
   padding-right: 0.5em; }
 
 #content {
-  overflow: auto; }
-  #content bac
-  #title-panel h1 {
+  overflow: auto;
+  background: #edf2f7; }
+  #content #title-panel h1 {
     line-height: normal; }
 
 @media screen and (min-width: 1024px) {
