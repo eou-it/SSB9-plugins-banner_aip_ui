@@ -304,6 +304,8 @@ module AIP {
                 });
                 notifications.addNotification(n);
             } else {*/
+              console.log("Type val",type);
+              console.log(this.actionItem.actionItemId);
                 if(type === "overview") {
                     this.$state.go("admin-action-edit", {actionItemId: this.actionItem.actionItemId, isEdit: true});
                 }
@@ -526,6 +528,7 @@ module AIP {
                 n.addPromptAction(this.$filter("i18n_aip")("aip.common.text.yes"), function () {
                     that.actionItemDataChanged=false;
                     that.$rootScope.DataChanged=false;
+                    that.contentChanged=false;
                     if (that.redirectval==="NoData")
                     {
                         that.reset(option);
@@ -582,8 +585,7 @@ module AIP {
                     console.log(err);
                     return {success: false};
                 }));
-            this.actionItemDataChanged=false;
-            this.$rootScope.DataChanged=false;
+
             this.$q.all(allDefer)
                 .then((response: any) => {
                     this.saving = false;
@@ -613,6 +615,9 @@ module AIP {
                     console.log(err);
                     this.saving = false;
                 });
+
+            this.actionItemDataChanged=false;
+            this.$rootScope.DataChanged=false;
         }
 
         getRules() {
@@ -662,6 +667,7 @@ module AIP {
             if (this.contentChanged)
             {
                 this.dataChanged();
+
             }
             if (this.selectedTemplate && !this.saving) {
                 if (this.rules.length === 0) {
@@ -685,6 +691,8 @@ module AIP {
                     return false;
                 }
             }
+            this.actionItemDataChanged=false;
+            this.$rootScope.DataChanged=false;
             return false;
         }
 

@@ -163,6 +163,8 @@ var AIP;
             this.adminGroupService.saveGroup(this.groupInfo, this.editMode, this.duplicateGroup)
                 .then(function (response) {
                 _this.saving = false;
+                _this.actionItemDataChanged = false;
+                _this.$rootScope.DataChanged = false;
                 var notiParams = {};
                 if (response.success) {
                     notiParams = {
@@ -224,6 +226,13 @@ var AIP;
                 that.$state.go("admin-group-list");
             }
         };
+        /* detectGroupContentChange(content) {
+             if(!this.editMode) {
+                 if (this.groupInfo.description !== "<p></p>" && this.groupInfo.description !== undefined) {
+                     this.dataChanged();
+                 }
+             }
+         }*/
         AdminGroupAddPageCtrl.prototype.isChanged = function () {
             var changed = false;
             if (this.editMode) {

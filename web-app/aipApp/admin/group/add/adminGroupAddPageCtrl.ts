@@ -22,6 +22,7 @@ module AIP {
         cancel(): void;
         checkchangesDone():void;
         dataChanged():void;
+      //  detectGroupContentChange():void;
 
     }
     interface IGroupSelect {
@@ -137,6 +138,7 @@ module AIP {
                                 this.existFolder = this.folders.filter((item)=> {
                                     return item.id === parseInt(response.group.folderId);
                                 })[0];
+
                                 this.groupInfo.description = this.trustHTML(response.group.groupDesc);
                                 this.groupInfoInitial = angular.copy(this.groupInfo);
                             } else {
@@ -206,10 +208,14 @@ module AIP {
             }
         }
         save() {
+
             this.saving = true;
             this.adminGroupService.saveGroup(this.groupInfo, this.editMode, this.duplicateGroup)
                 .then((response:IAddGroupResponse) => {
                     this.saving = false;
+                    this.actionItemDataChanged=false;
+                    this.$rootScope.DataChanged=false;
+
                     var notiParams = {};
                     if(response.success) {
                         notiParams = {
@@ -236,7 +242,7 @@ module AIP {
         dataChanged(this)
         {
             this.actionItemDataChanged=true;
-            this.$rootScope.DataChanged=this.actionItemDataChanged
+            this.$rootScope.DataChanged=this.actionItemDataChanged;
         }
 
         cancel()
@@ -282,6 +288,14 @@ module AIP {
             }
 
         }
+
+       /* detectGroupContentChange(content) {
+            if(!this.editMode) {
+                if (this.groupInfo.description !== "<p></p>" && this.groupInfo.description !== undefined) {
+                    this.dataChanged();
+                }
+            }
+        }*/
 
         isChanged() {
             var changed = false;
@@ -337,6 +351,7 @@ module AIP {
             } else {
                 delete this.errorMessage.folder;
             }
+
             if(!this.groupInfo.description || this.groupInfo.description === null || this.groupInfo.description === "" ) {
                 this.errorMessage.description = "invalid description";
             } else {

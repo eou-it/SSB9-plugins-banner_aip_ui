@@ -264,6 +264,8 @@ var AIP;
                        });
                        notifications.addNotification(n);
                    } else {*/
+            console.log("Type val", type);
+            console.log(this.actionItem.actionItemId);
             if (type === "overview") {
                 this.$state.go("admin-action-edit", { actionItemId: this.actionItem.actionItemId, isEdit: true });
             }
@@ -441,6 +443,7 @@ var AIP;
                 n.addPromptAction(this.$filter("i18n_aip")("aip.common.text.yes"), function () {
                     that.actionItemDataChanged = false;
                     that.$rootScope.DataChanged = false;
+                    that.contentChanged = false;
                     if (that.redirectval === "NoData") {
                         that.reset(option);
                         //location.href = window.location.href;
@@ -494,8 +497,6 @@ var AIP;
                 console.log(err);
                 return { success: false };
             }));
-            this.actionItemDataChanged = false;
-            this.$rootScope.DataChanged = false;
             this.$q.all(allDefer)
                 .then(function (response) {
                 _this.saving = false;
@@ -526,6 +527,8 @@ var AIP;
                 console.log(err);
                 _this.saving = false;
             });
+            this.actionItemDataChanged = false;
+            this.$rootScope.DataChanged = false;
         };
         AdminActionItemOpenPageCtrl.prototype.getRules = function () {
             var _this = this;
@@ -593,6 +596,8 @@ var AIP;
                     return false;
                 }
             }
+            this.actionItemDataChanged = false;
+            this.$rootScope.DataChanged = false;
             return false;
         };
         AdminActionItemOpenPageCtrl.prototype.saveErrorCallback = function (message) {

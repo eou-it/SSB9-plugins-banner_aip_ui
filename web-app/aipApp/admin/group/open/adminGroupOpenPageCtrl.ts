@@ -504,11 +504,14 @@ module AIP {
             this.adminGroupService.updateActionItemGroupAssignment(this.selected, this.groupFolder.groupId?this.groupFolder.groupId:this.groupFolder)
                 .then((response) => {
                     this.saving = false;
+                    this.actionItemDataChanged=false;
+                    this.$rootScope.DataChanged=false;
                     var n = new Notification({
                         message: this.$filter("i18n_aip")("aip.admin.group.assign.success"),
                         type: "success",
                         flash: true
                     });
+
                     setTimeout(() => {
                         notifications.addNotification(n);
                         this.openContentPanel();

@@ -446,6 +446,8 @@ var AIP;
             this.adminGroupService.updateActionItemGroupAssignment(this.selected, this.groupFolder.groupId ? this.groupFolder.groupId : this.groupFolder)
                 .then(function (response) {
                 _this.saving = false;
+                _this.actionItemDataChanged = false;
+                _this.$rootScope.DataChanged = false;
                 var n = new Notification({
                     message: _this.$filter("i18n_aip")("aip.admin.group.assign.success"),
                     type: "success",

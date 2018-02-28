@@ -6,7 +6,7 @@
 ///<reference path="../../../common/services/admin/adminActionService.ts"/>
 var AIP;
 (function (AIP) {
-    var AdminActionItemAddPageCtrl = (function () {
+    var AdminActionItemAddPageCtrl = /** @class */ (function () {
         function AdminActionItemAddPageCtrl($scope, $rootScope, $q, $state, $filter, $sce, $timeout, $window, SpinnerService, AdminActionService, $location) {
             var _this = this;
             this.$inject = ["$scope", "$rootScope", "$q", "$state", "$filter", "$location", "$sce", "$timeout", "$window", "SpinnerService", "AdminActionService"];
@@ -303,6 +303,7 @@ var AIP;
             else {
                 this.adminActionService.saveActionItem(this.actionItemInfo)
                     .then(function (response) {
+                    console.log("Success");
                     _this.saving = false;
                     var notiParams = {};
                     if (response.data.success) {
@@ -310,6 +311,8 @@ var AIP;
                             notiType: "saveSuccess",
                             data: response.data
                         };
+                        _this.actionItemDataChanged = false;
+                        _this.$rootScope.DataChanged = false;
                         _this.$state.go("admin-action-open", {
                             noti: notiParams,
                             actionItemId: response.data.newActionItem.id

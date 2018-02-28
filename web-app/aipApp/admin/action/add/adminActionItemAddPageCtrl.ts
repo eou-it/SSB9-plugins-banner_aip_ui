@@ -326,7 +326,7 @@ module AIP {
         dataChanged(this)
         {
             this.actionItemDataChanged=true;
-            this.$rootScope.DataChanged=this.actionItemDataChanged
+            this.$rootScope.DataChanged=this.actionItemDataChanged;
         }
 
         save() {
@@ -362,6 +362,7 @@ module AIP {
             else {
                 this.adminActionService.saveActionItem(this.actionItemInfo)
                     .then((response: AIP.IActionItemSaveResponse) => {
+                        console.log("Success");
                         this.saving = false;
                         var notiParams = {};
                         if (response.data.success) {
@@ -369,6 +370,8 @@ module AIP {
                                 notiType: "saveSuccess",
                                 data: response.data
                             };
+                            this.actionItemDataChanged=false;
+                            this.$rootScope.DataChanged=false;
                             this.$state.go("admin-action-open", {
                                 noti: notiParams,
                                 actionItemId: response.data.newActionItem.id
