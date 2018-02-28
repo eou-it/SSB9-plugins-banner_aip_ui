@@ -4,10 +4,7 @@
 package net.hedtech.banner.aip
 
 import grails.converters.JSON
-import net.hedtech.banner.i18n.DateAndDecimalUtils
 import org.springframework.context.i18n.LocaleContextHolder
-import org.springframework.web.servlet.support.RequestContextUtils
-
 
 class AipTagLib {
 
@@ -31,56 +28,13 @@ class AipTagLib {
         }
     }
 
-
     def i18n_aip_setup = {attrs ->
-
-        Set keys = []
-        grailsApplication.mainContext.getBean( 'messageSource' ).getMergedPluginProperties( LocaleContextHolder.getLocale() ).properties.each {key ->
-            if (key.key.startsWith( "aip." )) {
-                keys.add( key.key )
-            }
+        def map = [:]
+        grailsApplication.mainContext.getBean( 'messageSource' ).getMergedProperties( LocaleContextHolder.getLocale() ).properties.each {key ->
+            map.put key.key, key.value
         }
-
-        out << 'window.i18n_aip = {'
-        if (keys) {
-            def javaScriptProperties = []
-            keys.sort().each {
-                String msg = "${g.message( code: it )}"
-                // Assume the key was not found.  Look to see if it exists in the bundle
-                if (msg == it) {
-                    def value = DateAndDecimalUtils.properties( RequestContextUtils.getLocale( request ) )[it]
-                    if (value) {
-                        msg = value
-                    }
-                    println "missing property: " + it + ': ' + msg
-                }
-                if (msg && it != msg) {
-                    msg = encodeHTML( msg )
-                    javaScriptProperties << "\"$it\": \"$msg\""
-                }
-            }
-            out << javaScriptProperties.join( "," )
-        }
-        out << '};\n'
-
-        ///////////////////
-        //TODO:: delete below test code
-        /*
-        def plugin = grailsApplication.mainContext.pluginManager.getGrailsPlugin( "banner-aip-ui" )
-        def source = grailsApplication.mainContext.getBean('messageSource')
-
-        out << 'window.i18n_aip_bundle = "'
-        out << source.getPluginBundles(plugin).toString()
-        out << '"\n'
-        out << 'window.i18n_aip_bundle_plugins = "'
-        out << source.getPluginBaseNames().toString()
-        out << '"\n'
-
-        out << "window.i18n_temp = ${map as JSON};\n"
-        //////////////
-        */
+        out << "window.i18n_aip = ${map as JSON};\n"
     }
-
 
     def aipVersion = {attrs ->
         def plugin = grailsApplication.mainContext.pluginManager.getGrailsPlugin( "banner-aip-ui" )
