@@ -128,7 +128,7 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
                         <div class="row input-daterange form-group right-inner-addon">
                             <input type="text" id="date" date-picker ng-model="vm.postActionItemInfo.startDate"
                                    today="{{today}}" ng-change="vm.checkChanges()"
-                                   class="form-control  Datelement" name="deliveryDate"
+                                   class="form-control  Datelement" name="startDate"
                                    aria-required="true" required autocomplete="off"
                                    placeholder='{{"default.date.format"|i18n_aip}}'/>
 
@@ -142,8 +142,8 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
                     </div>
                     <div class="actionItemElement col-sm-6" id="postActionItemPopulation">
                         <div class="row">
-                            <input type="text" date-picker id="deliveryDate1"
-                                   class="form-control  Datelement" name="deliveryDate"
+                            <input type="text" date-picker id="endDate"
+                                   class="form-control  Datelement" name="endDate"
                                    ng-model="vm.postActionItemInfo.endDate" ng-change="vm.checkChanges()"
                                    aria-required="true" required autocomplete="off"
                                    placeholder='{{"default.date.format"|i18n_aip}}'/>

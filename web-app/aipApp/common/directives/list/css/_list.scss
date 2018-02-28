@@ -148,13 +148,18 @@ aip-list {
       .list-body {
         border: 1px solid $cell-text;
         padding: 0 0 8px 0;
+
         .list-item {
           padding: 16px 8px 0 8px;
           //border-bottom: 1px solid $border-color;
-          &:hover {
+         /* &:hover {
             cursor: pointer;
             background-color: lighten($banner-color, 50%);
+          }*/
+          &:focus {
+            background-color: #F3FCFF;
           }
+
           .aipReadmore {
             word-break: normal;
             //hyphenate-character: auto;
