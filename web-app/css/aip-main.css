@@ -592,7 +592,7 @@ ol.selected-group > li > button {
 .actionItemAddContainer {
   padding: 8px 0; }
   .actionItemAddContainer .row {
-    margin-left: 0;
+    margin-left: 0 !important;
     margin-right: 0; }
   .actionItemAddContainer .actionItemInfo {
     margin-bottom: 20px; }
@@ -1093,9 +1093,11 @@ ol.selected-group > li > button {
     width: inherit !important; }
   .actionItemAddContainer .actionItemEdit {
     font-size: 14px;
-    margin-left: 15px;
+    margin-left: 0 !important;
+    margin-right: 15px;
     color: #524e4e;
-    text-decoration: underline; }
+    text-decoration: underline;
+    cursor: pointer; }
   .actionItemAddContainer .actionItemEdit {
     font-size: 14px;
     margin-left: 15px;
@@ -1215,7 +1217,9 @@ ol.selected-group > li > button {
   .actionItemAddContainer .placeholderDisplay > span {
     display: block; }
   .actionItemAddContainer .displayInstruction {
-    font-size: 13px; }
+    font-size: 13px;
+    width: 100%;
+    line-height: 1.5em; }
   .actionItemAddContainer .xe-timepicker-popup.dropdown-menu li a .active {
     background-color: #428bca;
     color: #262626; }
@@ -1270,19 +1274,22 @@ ol.selected-group > li > button {
     background: url(./images/showTimezoneIcon.png) center center no-repeat;
     border: 0;
     padding: 5px;
-    margin-top: 3px; }
+    margin-top: 6px; }
   .actionItemAddContainer .timeZone {
-    border: 1px solid #cccccc;
+    border: 1px solid #869fb1;
     border-radius: 4px;
-    height: 30px !important;
+    height: 34px !important;
     background: #ffffff;
     webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
     box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
-    -webkit-transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s; }
+    width: 23em;
+    line-height: 1.5em; }
   .actionItemAddContainer .defaultTimezone {
-    font-size: 11px;
+    font-size: 13px;
     padding-left: 5px;
-    padding-top: 8px; }
+    padding-top: 8px;
+    font-family: "OpenSans-semibold";
+    color: #869fb1; }
   .actionItemAddContainer .timeZoneChange {
     padding-left: 0px;
     padding-right: 0px; }
@@ -1674,8 +1681,13 @@ ol.selected-group > li > button {
   min-height: 2.2em !important; }
 
 .ui-select-container .select2-choice > .select2-chosen {
-  font-size: 14px !important;
+  font-size: 13px !important;
   line-height: 1.75em !important; }
+
+.ui-select-choices .select2-result-label {
+  font-family: OpenSans-semibold !important;
+  color: #869fb1 !important;
+  word-wrap: break-word !important; }
 
 .search-container .simple-input-field {
   font-size: 0.875em !important;

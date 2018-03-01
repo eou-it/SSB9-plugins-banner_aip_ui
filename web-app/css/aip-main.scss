@@ -449,9 +449,15 @@ ol.selected-group > li > button {
   min-height: 2.2em !important;
 }
 .ui-select-container .select2-choice > .select2-chosen {
-  font-size: 14px !important;
+  font-size: 13px !important;
   line-height: 1.75em !important;
 }
+.ui-select-choices .select2-result-label{
+  font-family: OpenSans-semibold !important;
+  color: #869fb1 !important;
+  word-wrap: break-word !important;
+}
+
 .search-container .simple-input-field {
   font-size: 0.875em !important;
   color: #869fb1 !important;
