@@ -215,12 +215,12 @@ aip-list {
               background-color: #DAD5FF;
             }
             &.reject {
-              border: 1px solid #4EC76A;
-              background-color: #C9F0C7;
-            }
-            &.approve {
               border: 1px solid #F57E7E;
               background-color: #FFDCDC;
+            }
+            &.approve {
+              border: 1px solid #4EC76A;
+              background-color: #C9F0C7;
             }
           }
           .cell.completedDate {

@@ -138,11 +138,11 @@ aip-list .aip-list-container {
           border: 1px solid #B0ABD0;
           background-color: #DAD5FF; }
         aip-list .aip-list-container .list-body-container .list-body .list-item .badge.reject {
-          border: 1px solid #4EC76A;
-          background-color: #C9F0C7; }
-        aip-list .aip-list-container .list-body-container .list-body .list-item .badge.approve {
           border: 1px solid #F57E7E;
           background-color: #FFDCDC; }
+        aip-list .aip-list-container .list-body-container .list-body .list-item .badge.approve {
+          border: 1px solid #4EC76A;
+          background-color: #C9F0C7; }
       aip-list .aip-list-container .list-body-container .list-body .list-item .cell.completedDate {
         font-size: 1.3em;
         border-bottom: none;
