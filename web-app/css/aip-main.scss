@@ -449,20 +449,30 @@ ol.selected-group > li > button {
   min-height: 2.2em !important;
 }
 .ui-select-container .select2-choice > .select2-chosen {
+  color: darkSlateGray !important;
   font-size: 13px !important;
   line-height: 1.75em !important;
 }
 .ui-select-choices .select2-result-label{
+  font-size: 1.25em;
   font-family: OpenSans-semibold !important;
-  color: #869fb1 !important;
+  color: darkSlateGray !important;
   word-wrap: break-word !important;
 }
-
-.search-container .simple-input-field {
-  font-size: 0.875em !important;
+.ui-select-container {
+  font-family: "Open Sans";
+  width: 21em;
+  background: #fff;
+}
+.ui-select-dropdown{width: 21.35em;}
+.ui-select-dropdown .select2-search input {
+  width: inherit !important;}
+.ui-select-container .select2-default > .select2-chosen{
   color: #869fb1 !important;
 }
-
+.search-container .simple-input-field {
+  font-size: 0.875em !important;
+}
 .search-container .simple-input-field::-webkit-input-placeholder {
   color: #869fb1 !important;
 }
@@ -489,7 +499,6 @@ ol.selected-group > li > button {
 .column-filter-button {
   padding: 0.6em !important;
   padding-left: 2em !important;
-  color: #869fb1 !important;
   width: 13.3em !important;
   margin-right: 1em !important;
   .placeholder {

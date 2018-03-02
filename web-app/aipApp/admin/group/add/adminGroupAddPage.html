@@ -32,7 +32,8 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
                 <div class="row">
                     <xe-ui-select id="groupFolder" ng-model="vm.groupInfo.folder" theme="select2" ng-disabled="vm.groupInfo.postedInd" ng-change="vm.dataChanged()"
                                   on-select="vm.selectGroupFolder($item, $index)" >
-                        <xe-ui-select-match placeholder="{{'aip.common.select.folder.default'|i18n_aip}}" ng-bind-html="vm.groupInfo.folder.name">
+                        <xe-ui-select-match placeholder="{{'aip.common.select.folder.default'|i18n_aip}}" >
+                            {{vm.groupInfo.folder.name}}
                         </xe-ui-select-match>
                         <xe-ui-select-choices repeat="item in vm.folders | propsFilter: {name: $select.search}">
                             <div ng-bind-html="item.name"></div>
@@ -51,7 +52,8 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
                     <xe-ui-select id="groupStatus" ng-model="vm.groupInfo.status" theme="select2" ng-disabled="disabled" ng-change="vm.dataChanged()" search-enabled="false"
                                   on-select="vm.selectStatus($item, $index)">
 
-                        <xe-ui-select-match ng-bind-html="vm.groupInfo.status">
+                        <xe-ui-select-match>
+                            {{vm.groupInfo.status}}
                         </xe-ui-select-match>
                         <xe-ui-select-choices repeat="item in vm.status">
                             <div ng-bind-html="item.value"></div>

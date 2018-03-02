@@ -41,7 +41,7 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
 
                         <xe-ui-select-match class="placeholderDisplay" placeholder="Select">
                             <div class="row actionItemName" ng-bind-html="vm.selected.groupName"></div>
-                            <div>{{"aip.admin.action.selected.groupName.name"|i18n_aip}}</div>
+                            <div class="select-placeholder">{{"aip.admin.action.selected.groupName.name"|i18n_aip}}</div>
                         </xe-ui-select-match>
 
                         <xe-ui-select-choices group-by="vm.groupFunc" repeat="item in vm.groupList |
@@ -88,7 +88,7 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
 
                         <xe-ui-select-match placeholder="Select">
                             <div class="row actionItemName" ng-bind-html="vm.selectedPopulation.name"></div>
-                            <div>{{"aip.admin.action.selected.groupName.name"|i18n_aip}}</div>
+                            <div class="select-placeholder">{{"aip.admin.action.selected.groupName.name"|i18n_aip}}</div>
                         </xe-ui-select-match>
 
                         <xe-ui-select-choices group-by="vm.populationFunc" repeat="item in vm.populationList |
