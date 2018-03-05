@@ -1,8 +1,8 @@
-///<reference path="../../../../typings/tsd.d.ts"/>
-///<reference path="../../../common/services/admin/adminActionService.ts"/>
 /*******************************************************************************
  Copyright 2018 Ellucian Company L.P. and its affiliates.
  ********************************************************************************/
+///<reference path="../../../../typings/tsd.d.ts"/>
+///<reference path="../../../common/services/admin/adminActionService.ts"/>
 declare var register: any;
 
 module AIP {
@@ -271,7 +271,7 @@ module AIP {
                             type: "error",
                             flash: true
                         });
-                      
+
                         setTimeout(() => {
                             notifications.addNotification(n);
                             this.$state.params.noti = undefined;

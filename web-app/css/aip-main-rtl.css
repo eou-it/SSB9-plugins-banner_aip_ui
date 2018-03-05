@@ -170,12 +170,12 @@ aip-list .aip-list-container  {
     background-color:#DAD5FF;
 }
         aip-list .aip-list-container .list-body-container .list-body .list-item .badge.reject  {
-    border:1px solid #4EC76A;
-    background-color:#C9F0C7;
-}
-        aip-list .aip-list-container .list-body-container .list-body .list-item .badge.approve  {
     border:1px solid #F57E7E;
     background-color:#FFDCDC;
+}
+        aip-list .aip-list-container .list-body-container .list-body .list-item .badge.approve  {
+    border:1px solid #4EC76A;
+    background-color:#C9F0C7;
 }
       aip-list .aip-list-container .list-body-container .list-body .list-item .cell.completedDate  {
     font-size:1.3em;
@@ -368,6 +368,34 @@ input[type="radio"]:checked:after  {
     padding-right:8px;
     margin-bottom:8px;
 }
+      .groupAddContainer .groupInfo .groupInfoRow .groupElement input  {
+    font-size:14px;
+    font-family:"OpenSans-semibold";
+    color:darkSlateGray;
+    border:1px solid #869fb1;
+    padding:2px 5px;
+}
+      .groupAddContainer .groupInfo .groupInfoRow .groupElement input::-webkit-input-placeholder  {
+    color:#869fb1;
+    font-size:13px;
+}
+      .groupAddContainer .groupInfo .groupInfoRow .groupElement input::-moz-placeholder  {
+    color:#869fb1;
+    font-size:13px;
+}
+      .groupAddContainer .groupInfo .groupInfoRow .groupElement input:-ms-input-placeholder  {
+    color:#869fb1;
+    font-size:13px;
+}
+      .groupAddContainer .groupInfo .groupInfoRow .groupElement input:focus::-webkit-input-placeholder  {
+    color:#ccc;
+}
+      .groupAddContainer .groupInfo .groupInfoRow .groupElement input:focus::-moz-placeholder  {
+    color:#ccc;
+}
+      .groupAddContainer .groupInfo .groupInfoRow .groupElement input:focus:-ms-input-placeholder  {
+    color:#ccc;
+}
       .groupAddContainer .groupInfo .groupInfoRow .groupElement .ui-select-container .select2-choice  {
     background-color:#ffffff !important;
 }
@@ -385,10 +413,12 @@ input[type="radio"]:checked:after  {
 }
       .groupAddContainer .groupInfo .groupInfoRow .groupElement .titleValue.supplement  {
     font-size:1.0em;
+    font-style:italic;
     position:absolute;
     bottom:0;
     right:auto;
     left:8px;
+    color:#4F585F;
 }
       .groupAddContainer .groupInfo .groupInfoRow .groupElement [lang='ar'] .titleValue.supplement  {
     right:8px;
@@ -711,7 +741,7 @@ ol.selected-group > li > button  {
     padding:8px 0;
 }
   .actionItemAddContainer .row  {
-    margin-right:0;
+    margin-right:0 !important;
     margin-left:0;
 }
   .actionItemAddContainer .actionItemInfo  {
@@ -725,6 +755,9 @@ ol.selected-group > li > button  {
     padding-right:8px;
     margin-bottom:8px;
 }
+        .actionItemAddContainer .actionItemInfo .actionItemInfoRow .actionItemElement .select-placeholder  {
+    color:#869fb1;
+}
         .actionItemAddContainer .actionItemInfo .actionItemInfoRow .actionItemElement .alert  {
     padding-top:8px;
     padding-bottom:8px;
@@ -732,18 +765,21 @@ ol.selected-group > li > button  {
         .actionItemAddContainer .actionItemInfo .actionItemInfoRow .actionItemElement input  {
     font-size:14px;
     font-family:"OpenSans-semibold";
-    color:#869fb1;
+    color:darkSlateGray;
     border:1px solid #869fb1;
     padding:2px 5px;
 }
         .actionItemAddContainer .actionItemInfo .actionItemInfoRow .actionItemElement textarea::-webkit-input-placeholder, .actionItemAddContainer .actionItemInfo .actionItemInfoRow .actionItemElement input::-webkit-input-placeholder  {
     color:#869fb1;
+    font-size:13px;
 }
         .actionItemAddContainer .actionItemInfo .actionItemInfoRow .actionItemElement textarea::-moz-placeholder, .actionItemAddContainer .actionItemInfo .actionItemInfoRow .actionItemElement input::-moz-placeholder  {
     color:#869fb1;
+    font-size:13px;
 }
         .actionItemAddContainer .actionItemInfo .actionItemInfoRow .actionItemElement textarea:-ms-input-placeholder, .actionItemAddContainer .actionItemInfo .actionItemInfoRow .actionItemElement input:-ms-input-placeholder  {
     color:#869fb1;
+    font-size:13px;
 }
         .actionItemAddContainer .actionItemInfo .actionItemInfoRow .actionItemElement textarea:focus::-webkit-input-placeholder, .actionItemAddContainer .actionItemInfo .actionItemInfoRow .actionItemElement input:focus::-webkit-input-placeholder  {
     color:#ccc;
@@ -1198,25 +1234,13 @@ ol.selected-group > li > button  {
     border-radius:5px;
     padding-right:15px;
 }
-  .actionItemAddContainer .ui-select-choices .select2-result-label  {
-    font-size:1.25em;
-}
-  .actionItemAddContainer .ui-select-container  {
-    font-family:"Open Sans";
-    width:21em;
-    background:#fff;
-}
-  .actionItemAddContainer .ui-select-dropdown  {
-    width:21.35em;
-}
-  .actionItemAddContainer .ui-select-dropdown .select2-search input  {
-    width:inherit !important;
-}
   .actionItemAddContainer .actionItemEdit  {
     font-size:14px;
-    margin-right:15px;
+    margin-right:0 !important;
+    margin-left:15px;
     color:#524e4e;
     text-decoration:underline;
+    cursor:pointer;
 }
   .actionItemAddContainer .actionItemEdit  {
     font-size:14px;
@@ -1355,6 +1379,8 @@ ol.selected-group > li > button  {
 }
   .actionItemAddContainer .displayInstruction  {
     font-size:13px;
+    width:100%;
+    line-height:1.5em;
 }
   .actionItemAddContainer .xe-timepicker-popup.dropdown-menu li a .active  {
     background-color:#428bca;
@@ -1422,21 +1448,24 @@ ol.selected-group > li > button  {
     background:url(./images/showtimezoneicon.png) center center no-repeat;
     border:0;
     padding:5px;
-    margin-top:3px;
+    margin-top:6px;
 }
   .actionItemAddContainer .timeZone  {
-    border:1px solid #cccccc;
+    border:1px solid #869fb1;
     border-radius:4px;
-    height:30px !important;
+    height:34px !important;
     background:#ffffff;
     webkit-box-shadow:inset 0 1px 1px rgba(0, 0, 0, 0.075);
     box-shadow:inset 0 1px 1px rgba(0, 0, 0, 0.075);
-    -webkit-transition:border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+    width:23em;
+    line-height:1.5em;
 }
   .actionItemAddContainer .defaultTimezone  {
-    font-size:11px;
+    font-size:13px;
     padding-right:5px;
     padding-top:8px;
+    font-family:"OpenSans-semibold";
+    color:darkSlateGray;
 }
   .actionItemAddContainer .timeZoneChange  {
     padding-right:0px;
@@ -1875,13 +1904,38 @@ ol.selected-group > li > button  {
 }
 
 .ui-select-container .select2-choice > .select2-chosen  {
-    font-size:14px !important;
+    color:darkSlateGray !important;
+    font-size:13px !important;
     line-height:1.75em !important;
+}
+
+.ui-select-choices .select2-result-label  {
+    font-size:1.25em;
+    font-family:OpenSans-semibold !important;
+    color:darkSlateGray !important;
+    word-wrap:break-word !important;
+}
+
+.ui-select-container  {
+    font-family:"Open Sans";
+    width:21em;
+    background:#fff;
+}
+
+.ui-select-dropdown  {
+    width:21.35em;
+}
+
+.ui-select-dropdown .select2-search input  {
+    width:inherit !important;
+}
+
+.ui-select-container .select2-default > .select2-chosen  {
+    color:#869fb1 !important;
 }
 
 .search-container .simple-input-field  {
     font-size:0.875em !important;
-    color:#869fb1 !important;
 }
 
 .search-container .simple-input-field::-webkit-input-placeholder  {
@@ -1916,7 +1970,6 @@ ol.selected-group > li > button  {
 .column-filter-button  {
     padding:0.6em !important;
     padding-right:2em !important;
-    color:#869fb1 !important;
     width:13.3em !important;
     margin-left:1em !important;
 }

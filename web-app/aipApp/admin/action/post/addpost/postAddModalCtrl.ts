@@ -1,3 +1,6 @@
+/*******************************************************************************
+ Copyright 2018 Ellucian Company L.P. and its affiliates.
+ ********************************************************************************/
 //<reference path="../../../../../typings/tsd.d.ts"/>
 ///<reference path="../../../../common/services/admin/adminActionStatusService.ts"/>
 
@@ -56,7 +59,7 @@ module AIP {
                                 for (var i = 0; i < this.actionItemModal.length; i++) {
                                     for (var j = 0; j < this.selectedActionItemList.length; j++) {
                                           if (this.actionItemModal[i].actionItemId === this.selectedActionItemList[j].actionItemId) {
-                                            
+
                                             actionItemModal[i].check = true;
                                         }
                                     }
@@ -64,7 +67,7 @@ module AIP {
                             }
 
 
-                  
+
                 }
             });
             this.actionFolderGroupModal=actionFolderGroupModal;
