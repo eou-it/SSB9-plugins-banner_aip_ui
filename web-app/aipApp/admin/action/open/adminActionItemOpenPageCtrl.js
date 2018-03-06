@@ -7,7 +7,7 @@
 ///<reference path="../../../common/services/spinnerService.ts"/>
 var AIP;
 (function (AIP) {
-    var AdminActionItemOpenPageCtrl = /** @class */ (function () {
+    var AdminActionItemOpenPageCtrl = (function () {
         function AdminActionItemOpenPageCtrl($scope, $rootScope, $q, $state, $filter, $sce, $window, $templateRequest, $templateCache, $compile, $timeout, $interpolate, SpinnerService, AdminActionService, AdminActionStatusService, APP_ROOT, CKEDITORCONFIG) {
             this.$inject = ["$scope", "$rootScope", "$q", "$state", "$filter", "$sce", "$window", "$templateRequest", "$templateCache", "$compile", "$timeout", "$interpolate", "SpinnerService", "AdminActionService", "AdminActionStatusService", "APP_ROOT", "CKEDITORCONFIG"];
             this.trustAsHtml = function (string) {
@@ -429,7 +429,7 @@ var AIP;
         };
         AdminActionItemOpenPageCtrl.prototype.checkEditchangesDone = function (option) {
             var that = this;
-            while (notifications.length != 0) {
+            while (notifications.length !== 0) {
                 notifications.remove(notifications.first());
             }
             if (that.actionItemDataChanged || that.contentChanged) {

@@ -6,7 +6,7 @@
 ///<reference path="../../../common/services/admin/adminActionService.ts"/>
 var AIP;
 (function (AIP) {
-    var AdminActionItemAddPageCtrl = /** @class */ (function () {
+    var AdminActionItemAddPageCtrl = (function () {
         function AdminActionItemAddPageCtrl($scope, $rootScope, $q, $state, $filter, $sce, $timeout, $window, SpinnerService, AdminActionService, $location) {
             var _this = this;
             this.$inject = ["$scope", "$rootScope", "$q", "$state", "$filter", "$location", "$sce", "$timeout", "$window", "SpinnerService", "AdminActionService"];
@@ -172,7 +172,7 @@ var AIP;
         };
         AdminActionItemAddPageCtrl.prototype.checkchangesDone = function () {
             var that = this;
-            while (notifications.length != 0) {
+            while (notifications.length !== 0) {
                 notifications.remove(notifications.first());
             }
             if (that.actionItemDataChanged) {

@@ -6,7 +6,7 @@
 ///<reference path="../../../common/services/spinnerService.ts"/>
 var AIP;
 (function (AIP) {
-    var AdminGroupOpenPageCtrl = /** @class */ (function () {
+    var AdminGroupOpenPageCtrl = (function () {
         function AdminGroupOpenPageCtrl($scope, $rootScope, $window, AdminGroupService, $q, SpinnerService, $state, $filter, $sce, $templateRequest, $templateCache, $compile, $timeout, APP_ROOT) {
             this.$inject = ["$scope", "$rootScope", "$window", "AdminGroupService", "$q", "SpinnerService", "$state", "$filter", "$sce", "$templateRequest", "$templateCache",
                 "$compile", "$timeout", "APP_ROOT"];
@@ -89,6 +89,7 @@ var AIP;
                     break;
                 case "edit":
                     url = this.APP_ROOT + "admin/group/open/edit/edit.html";
+                    break;
                 default:
                     break;
             }
@@ -396,7 +397,7 @@ var AIP;
         };
         AdminGroupOpenPageCtrl.prototype.checkchangesDone = function () {
             var that = this;
-            while (notifications.length != 0) {
+            while (notifications.length !== 0) {
                 notifications.remove(notifications.first());
             }
             if (that.actionItemDataChanged) {

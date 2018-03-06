@@ -54,7 +54,7 @@ var AIP;
             var _this = this;
             this.spinnerService.showSpinner(true);
             var allPromises = [];
-            var deferred = this.$q.defer();
+            //var deferred = this.$q.defer();
             this.postActionItemInfo = {};
             this.editMode = this.$state.params.isEdit === "true" ? true : false;
             this.postIDvalue = this.$state.params.postIdval;
@@ -191,7 +191,7 @@ var AIP;
             this.changeFlag = true;
             this.itemLength = 0;
             this.modalResult = [];
-            var groupId = this.$scope;
+            //var groupId = this.$scope;
             this.adminActionService.getGroupActionItem(this.selected.groupId)
                 .then(function (response) {
                 _this.actionItemList = response.data;

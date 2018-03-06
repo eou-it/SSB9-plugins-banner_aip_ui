@@ -7,7 +7,7 @@
 ///<reference path="../../../../common/services/spinnerService.ts"/>
 var AIP;
 (function (AIP) {
-    var AdminActionItemBlockCtrl = /** @class */ (function () {
+    var AdminActionItemBlockCtrl = (function () {
         function AdminActionItemBlockCtrl($scope, $rootScope, $q, $state, $filter, $sce, $window, $templateRequest, $templateCache, $compile, $timeout, $interpolate, SpinnerService, AdminActionService, AdminActionStatusService, APP_ROOT, CKEDITORCONFIG) {
             this.$inject = ["$scope", "$window", "$rootScope", "$q", "$state", "$filter", "$sce", "$templateRequest", "$templateCache", "$compile",
                 "$timeout", "$interpolate", "SpinnerService", "AdminActionService", "AdminActionStatusService", "APP_ROOT", "CKEDITORCONFIG"];
@@ -124,7 +124,6 @@ var AIP;
             var _this = this;
             this.adminActionService.loadBlockingProcessLov1().then(function (response) {
                 _this.allActionItems = response.data;
-                var that = _this;
                 _this.personaData = [];
                 angular.forEach(_this.allActionItems.persona, function (value, key) {
                     {
@@ -277,7 +276,7 @@ var AIP;
         };
         AdminActionItemBlockCtrl.prototype.handleNotification = function (noti) {
             var _this = this;
-            while (notifications.length != 0) {
+            while (notifications.length !== 0) {
                 notifications.remove(notifications.first());
             }
             if (noti.notiType === "saveSuccess") {
@@ -344,7 +343,7 @@ var AIP;
         };
         AdminActionItemBlockCtrl.prototype.checkEditchanges = function () {
             var that = this;
-            while (notifications.length != 0) {
+            while (notifications.length !== 0) {
                 notifications.remove(notifications.first());
             }
             if (that.actionItemDataChanged) {
@@ -407,7 +406,7 @@ var AIP;
                     _this.handleNotification(notiParams);
                 }
                 if (response.data.success) {
-                    var notiParams = {};
+                    notiParams = {};
                     notiParams = {
                         notiType: "saveSuccess",
                         noti: notiParams,
@@ -418,7 +417,7 @@ var AIP;
                     _this.handleNotification(notiParams);
                 }
                 else {
-                    var notiParams = {};
+                    notiParams = {};
                     notiParams = {
                         notiType: "saveFailed",
                         noti: notiParams,
@@ -435,7 +434,6 @@ var AIP;
         };
         AdminActionItemBlockCtrl.prototype.saveBlocks = function () {
             var _this = this;
-            var that = this;
             //save selected items then exit edit mode
             //this.editMode = false;
             this.isSaving = true;

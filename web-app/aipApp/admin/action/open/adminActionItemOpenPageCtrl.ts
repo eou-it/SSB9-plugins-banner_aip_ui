@@ -512,7 +512,7 @@ module AIP {
         checkEditchangesDone(option) {
 
             var that=this;
-            while (notifications.length != 0) {
+            while (notifications.length !== 0) {
                 notifications.remove(notifications.first())
             }
             if (that.actionItemDataChanged || that.contentChanged) {

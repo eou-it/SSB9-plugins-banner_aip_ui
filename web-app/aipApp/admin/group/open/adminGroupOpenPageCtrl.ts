@@ -130,6 +130,7 @@ module AIP {
                     break;
                 case "edit":
                     url = this.APP_ROOT + "admin/group/open/edit/edit.html";
+                    break;
                 default:
                     break;
             }
@@ -449,7 +450,7 @@ module AIP {
 
         checkchangesDone() {
             var that=this;
-            while (notifications.length != 0) {
+            while (notifications.length !== 0) {
                 notifications.remove(notifications.first())
             }
             if (that.actionItemDataChanged) {

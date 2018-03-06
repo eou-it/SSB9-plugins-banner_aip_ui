@@ -51,8 +51,7 @@ module AIP {
         validate() {
             if (this.statusModel.title.length===0 || this.statusModel.title.length > 30) {
                 delete this.errorMessage.title;
-            } else {
-                delete this.errorMessage.title;
+                console.log(delete this.errorMessage.title)
             }
 
             if(Object.keys(this.errorMessage).length>0) {

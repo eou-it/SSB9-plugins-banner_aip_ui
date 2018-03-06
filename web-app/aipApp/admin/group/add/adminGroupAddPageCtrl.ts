@@ -254,7 +254,7 @@ module AIP {
         checkchangesDone() {
 
             var that=this;
-            while (notifications.length != 0) {
+            while (notifications.length !== 0) {
                 notifications.remove(notifications.first())
             }
             if (that.actionItemDataChanged) {

@@ -169,8 +169,6 @@ module AIP {
         enterEditMode() {
             this.adminActionService.loadBlockingProcessLov1().then((response:any) => {
                 this.allActionItems = response.data;
-
-                var that = this;
                 this.personaData=[];
 
                 angular.forEach(this.allActionItems.persona, (value,key) => {
@@ -344,7 +342,7 @@ module AIP {
             }
         }
         handleNotification(noti) {
-            while (notifications.length != 0) {
+            while (notifications.length !== 0) {
                 notifications.remove(notifications.first())
             }
             if(noti.notiType === "saveSuccess") {
@@ -436,7 +434,7 @@ module AIP {
         checkEditchanges()
         {
             var that=this;
-            while (notifications.length != 0) {
+            while (notifications.length !== 0) {
                 notifications.remove(notifications.first())
             }
             if (that.actionItemDataChanged) {
@@ -511,7 +509,7 @@ module AIP {
 
                     }
                     if(response.data.success){
-                        var notiParams = {};
+                        notiParams = {};
 
                         notiParams = {
                             notiType: "saveSuccess",
@@ -525,7 +523,7 @@ module AIP {
 
                     }
                     else{
-                        var notiParams = {};
+                        notiParams = {};
 
                         notiParams = {
                             notiType: "saveFailed",
@@ -544,7 +542,6 @@ module AIP {
         }
 
         saveBlocks() {
-            var that=this;
             //save selected items then exit edit mode
             //this.editMode = false;
             this.isSaving = true;
