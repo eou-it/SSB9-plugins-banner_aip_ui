@@ -67,7 +67,6 @@ var AIP;
                 }).finally(function () {
                     _this.spinnerService.showSpinner(false);
                     _this.initialOpenGroup = _this.getInitialSelection();
-                    //this.selectedData = {type: SelectionType.Group};
                     if (_this.initialOpenGroup !== -1) {
                         _this.itemListViewService.getDetailInformation(_this.actionItems.groups[_this.initialOpenGroup].id, "group", null)
                             .then(function (response) {
@@ -90,11 +89,6 @@ var AIP;
                         angular.forEach(group.items, function (item) {
                             item.state = item.state;
                             /*todo: can probably drop the message properties for these status since it's coming from the db*/
-                            /*
-                             ==="Completed"?
-                             "aip.status.complete":
-                             "aip.status.pending";
-                             */
                         });
                     });
                     _this.actionItems = actionItems;

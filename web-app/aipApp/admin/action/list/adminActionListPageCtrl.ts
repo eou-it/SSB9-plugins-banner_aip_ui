@@ -48,7 +48,6 @@ module AIP {
             this.actionListService = AdminActionService;
             this.init();
             angular.element($window).bind('resize', function() {
-                //$scope.onResize();
                 $scope.$apply();
             });
         }
@@ -175,8 +174,6 @@ module AIP {
             var deferred = this.$q.defer();
             this.actionListService.fetchData(query)
                 .then((response:AIP.IActionItemFetchResponse) => {
-                    // this.gridData = response;
-                    // this.gridData.header = this.header;
                     deferred.resolve(response);
                 }, (error) => {
                     console.log(error);
@@ -186,8 +183,6 @@ module AIP {
         }
         selectRecord(data) {
             this.selectedRecord = data;
-            // this.actionListService.enableActionItemOpen(data.id);
-            // this.$state.params.actionid = data.id;
         }
 
         deleteBlock(cantDeleteMessage) {
@@ -202,7 +197,7 @@ module AIP {
         deleteUnblock(map, name, $scope) {
             var n = new Notification({
                 message: this.$filter("i18n_aip")("aip.common.action.item.action.delete.warning"),
-                type: "warning",
+                type: "warning"
             });
             var actionService = this.actionListService;
             var keyValue = {
@@ -244,10 +239,6 @@ module AIP {
         goAddPage() {
             this.$state.go("admin-action-add");
         }
-        // goOpenPage() {
-        //
-        // }
-
         openActionItem(id) {
             this.$state.go("admin-action-open", { actionItemId: id});
         }

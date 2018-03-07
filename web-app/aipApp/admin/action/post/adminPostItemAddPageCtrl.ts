@@ -124,7 +124,6 @@ module AIP {
         init() {
             this.spinnerService.showSpinner(true);
             var allPromises = [];
-            //var deferred = this.$q.defer();
             this.postActionItemInfo = {};
             this.editMode = this.$state.params.isEdit==="true" ? true : false;
             this.postIDvalue=this.$state.params.postIdval;
@@ -134,7 +133,6 @@ module AIP {
                     .then((response: AIP.IPostActionItemGroupResponse) => {
                         this.groupList = response.data;
                         var postActionItemGroup: any = $("#postActionItemGroup");
-                        //this.postActionItemInfo["group"] = [];
                         this.postActionItemInfo.group = this.groupList;
 
                     })
@@ -173,7 +171,6 @@ module AIP {
                         this.timezones = response.data.timezones;
                         var timeZoneOffset = new Date().getTimezoneOffset();
                         var offset = "(GMT"+((timeZoneOffset<0? '+':'-')+ this.pad(parseInt(Math.abs(timeZoneOffset/60)), 2)+ ":" + this.pad(Math.abs(timeZoneOffset%60), 2)) + ")";
-                        //this.defaultTimeZone = offset;
                         var finalValue=''
                         angular.forEach(this.timezones,function(key,value){
                           var GMTString = key.stringOffset;
@@ -309,7 +306,6 @@ module AIP {
             this.changeFlag=true;
             this.itemLength = 0;
             this.modalResult = [];
-            //var groupId = this.$scope;
             this.adminActionService.getGroupActionItem(this.selected.groupId)
 
                 .then((response: AIP.IPostActionItemResponse) => {
@@ -375,7 +371,7 @@ module AIP {
                         return this.changeFlag
                     }
 
-                },
+                }
 
             });
             this.modalInstance.result.then((result) => {
@@ -462,16 +458,16 @@ module AIP {
 
                 var n = new Notification({
                     message: this.$filter("i18n_aip")("aip.common.action.post.status.edit.warning"),
-                    type: "warning",
+                    type: "warning"
                 });
                 n.addPromptAction(this.$filter("i18n_aip")("aip.common.text.no"), function () {
                     that.$state.go("admin-post-list");
                     notifications.remove(n);
-                })
+                });
                 n.addPromptAction(this.$filter("i18n_aip")("aip.common.text.yes"), function () {
                     that.save();
                     notifications.remove(n);
-                })
+                });
                 notifications.addNotification(n);
             }
             else

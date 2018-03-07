@@ -82,7 +82,6 @@ module AIP {
             this.spinnerService.showSpinner( true );
             var promises = [];
             this.groupDetailDefer = this.getGroupDetailDefer(this.$state.params.groupId).then(()=> {
-                // $("p.openGroupDesc" ).html(decodeURI(this.groupFolder.groupDesc));
                 if(this.groupFolder.postedInd=="Y"){
                     $("#title-panel h1" ).html(this.groupFolder.groupName + ' ' + this.$filter("i18n_aip")("aip.admin.group.title.posted"));
                 }else{
@@ -91,7 +90,7 @@ module AIP {
 
             }, (err) => {
                 console.log(err);
-            })
+            });
             if (this.$state.params.noti) {
                 this.handleNotification( this.$state.params.noti );
             }
@@ -270,31 +269,11 @@ module AIP {
         validateEdit(type) {
             this.adminGroupService.groupPosted(this.groupFolder.groupId)
                 .then((response) => {
-                    // if(response.posted) {
-                    //     var n = new Notification({
-                    //         message: this.$filter("i18n_aip")("aip.admin.group.content.edit.posted.warning"),
-                    //         type: "warning"
-                    //     });
-                    //     n.addPromptAction(this.$filter("i18n_aip")("aip.common.text.no"), () => {
-                    //         notifications.remove(n);
-                    //     });
-                    //     n.addPromptAction(this.$filter("i18n_aip")("aip.common.text.yes"), ()=> {
-                    //         notifications.remove(n);
-                    //         if(type === "overview") {
-                    //             this.$state.go("admin-group-edit", {groupId:this.groupFolder.groupId, isEdit: true});
-                    //         } else {
-                    //             this.edit();
-                    //         }
-                    //     });
-                    //     notifications.addNotification(n);
-                    // } else {
-                    //     notifications.remove(n);
                         if(type === "overview") {
                             this.$state.go("admin-group-edit", {groupId:this.groupFolder.groupId, isEdit: true});
                         } else {
                             this.edit();
                         }
-                    // }
                 }, (err) => {
                     throw new Error(err);
                 });
@@ -476,7 +455,7 @@ module AIP {
                         location.href = that.redirectval;
                     }
                     notifications.remove(n);
-                })
+                });
 
                 notifications.addNotification(n);
             }
@@ -493,7 +472,7 @@ module AIP {
             });
             var item2Properties = item2.map((item) => {
                 return [item.actionItemId, item.folderId, item.seq];
-            })
+            });
 
             if ( angular.equals(item1Properties, item2Properties)) {
                 return true;

@@ -18,7 +18,6 @@ var AIP;
             this.actionListService = AdminActionService;
             this.init();
             angular.element($window).bind('resize', function () {
-                //$scope.onResize();
                 $scope.$apply();
             });
         }
@@ -159,7 +158,6 @@ var AIP;
         PostActionListPageCtrl.prototype.handleNotification = function (noti) {
             var _this = this;
             if (noti.notiType === "saveSuccess") {
-                // var data = noti.data.newActionItem||noti.data.actionItem;
                 var n = new Notification({
                     message: this.$filter("i18n_aip")("aip.common.save.successful"),
                     type: "success",
@@ -176,8 +174,6 @@ var AIP;
             var deferred = this.$q.defer();
             this.actionListService.fetchTableData(query)
                 .then(function (response) {
-                // this.gridData = response;
-                // this.gridData.header = this.header;
                 deferred.resolve(response);
             }, function (error) {
                 console.log(error);
@@ -187,17 +183,12 @@ var AIP;
         };
         PostActionListPageCtrl.prototype.selectRecord = function (data) {
             this.selectedRecord = data;
-            // this.actionListService.enableActionItemOpen(data.id);
-            // this.$state.params.actionid = data.id;
         };
         PostActionListPageCtrl.prototype.refreshGrid = function () {
         };
         PostActionListPageCtrl.prototype.goAddPage = function () {
             this.$state.go("admin-post-add");
         };
-        // goOpenPage() {
-        //
-        // }
         PostActionListPageCtrl.prototype.openActionItem = function () {
             this.$state.go("admin-action-open", { data: this.selectedRecord.id });
         };

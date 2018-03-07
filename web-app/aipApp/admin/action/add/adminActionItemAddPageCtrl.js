@@ -46,7 +46,6 @@ var AIP;
                 description: undefined
             };
             $window.onbeforeunload = function (event) {
-                //   if(this.isChanged()) {
                 if (_this.actionItemDataChanged) {
                     return _this.$filter("i18n_aip")("aip.common.admin.unsaved");
                 }
@@ -85,9 +84,6 @@ var AIP;
                             _this.actionItemInfo.folder = _this.folders.filter(function (item) {
                                 return item.id === parseInt(_this.actionItem1.folderId);
                             })[0];
-                            /*this.existFolder = this.folders.filter((item)=> {
-                                return item.id === parseInt(this.actionItem1.folderId);
-                            })[0];*/
                             _this.actionItemInfo.description = _this.actionItem1.actionItemDesc;
                             _this.actionItemInitial = angular.copy(_this.actionItemInfo);
                             _this.trustActionItemContent();
@@ -136,11 +132,6 @@ var AIP;
             if (this.saving) {
                 return false;
             }
-            /*if(!this.actionItemInfo.name || this.actionItemInfo.name === null || this.actionItemInfo.name === "" || this.actionItemInfo.title.name > 300) {
-                this.errorMessage.name = "invalid title";
-            } else {
-                delete this.errorMessage.name;
-            }*/
             if (!this.actionItemInfo.folder) {
                 this.errorMessage.folder = "invalid folder";
             }

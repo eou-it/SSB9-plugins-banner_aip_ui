@@ -59,7 +59,6 @@ var AIP;
             this.redirectval = "NoData";
             this.init();
             angular.element($window).bind('resize', function () {
-                // $scope.onResize();
                 if (!$scope.$root.$phase) {
                     $scope.$apply();
                 }
@@ -126,7 +125,6 @@ var AIP;
                 $("#title-panel").height() -
                 $("#header-main-section").height() +
                 $(".status-rules").height() + 250;
-            // $("#outerFooter").height() - 30;
             return { "min-height": containerHeight };
         };
         AdminActionItemOpenPageCtrl.prototype.getSeparatorHeight = function () {
@@ -155,10 +153,8 @@ var AIP;
                 console.log(_this.actionItemPostedStatus);
                 if (_this.templateSelect) {
                     _this.selectTemplate();
-                    //this.trustActionItemContent();
                 }
                 else {
-                    //this.trustActionItemContent();
                 }
                 deferred.resolve(_this.openPanel("overview"));
             }, function (err) {
@@ -248,22 +244,6 @@ var AIP;
             }
         };
         AdminActionItemOpenPageCtrl.prototype.validateEdit = function (type) {
-            /*       if (this.actionItem.actionItemPostedStatus === "Y") {
-                       var n = new Notification({
-                           message: this.$filter("i18n_aip")("aip.admin.group.content.edit.posted.warning"),
-                           type: "warning"
-                       });
-                       n.addPromptAction(this.$filter("i18n_aip")("aip.common.text.no"), () => {
-                           notifications.remove(n);
-                       });
-                       n.addPromptAction(this.$filter("i18n_aip")("aip.common.text.yes"), ()=> {
-                           notifications.remove(n);
-                           if(type === "overview") {
-                               this.$state.go("admin-action-edit", {data: {group:this.actionItem.actionItemId, isEdit: true}});
-                           }
-                       });
-                       notifications.addNotification(n);
-                   } else {*/
             console.log("Type val", type);
             console.log(this.actionItem.actionItemId);
             if (type === "overview") {
@@ -337,22 +317,11 @@ var AIP;
                         $("#actionItemTemplate > option:selected").remove();
                     }
                 }
-                /*
-                 if(actionItemTemplate) {
-                 actionItemTemplate.select2({
-                 width: "25em",
-                 minimumResultsForSearch: Infinity,
-                 placeholderOption:'first'
-                 });
-                 }*/
                 $(".actionItemContent").height($(".actionItemElement").height() - $(".xe-tab-nav").height());
                 //TODO: find better and proper way to set defalut value in SELECT2 - current one is just dom object hack.
                 //action item selected temlate
                 if (_this.selectedTemplate) {
                     if (_this.templates[0].sourceInd == "B") {
-                        /*
-                         $(".select2-container.actionItemSelect .select2-chosen")[0].innerHTML = this.actionItem.actionItemTemplateName + " (" + this.$filter("i18n_aip")("aip.common.baseline") + ")";
-                         */
                     }
                 }
             }, 500);
@@ -446,7 +415,6 @@ var AIP;
                     that.contentChanged = false;
                     if (that.redirectval === "NoData") {
                         that.reset(option);
-                        //location.href = window.location.href;
                     }
                     else {
                         location.href = that.redirectval;
@@ -565,7 +533,6 @@ var AIP;
                     }
                 });
                 deferred.resolve();
-                // deferred.resolve(this.openPanel("content"));
             }, function (error) {
                 console.log(error);
             });

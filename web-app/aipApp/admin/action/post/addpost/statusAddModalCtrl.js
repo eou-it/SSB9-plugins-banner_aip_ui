@@ -28,7 +28,6 @@ var AIP;
                     _this.$uibModalInstance.close(response.data);
                 }
                 else {
-                    //this.$uibModalInstance.dismiss();
                     _this.saveErrorCallback(response.data.message);
                 }
             }, function (error) {

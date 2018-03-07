@@ -5,12 +5,10 @@
 var AIPUI;
 (function (AIPUI) {
     var AIPBlockedProcessDirective = (function () {
-        // current: {};
         function AIPBlockedProcessDirective() {
             this.restrict = "AE";
             this.transclude = true;
             this.replace = true;
-            // this.current = {};
             this.scope = {
                 currentitem: "=",
                 selected: "=",
@@ -21,11 +19,6 @@ var AIPUI;
         AIPBlockedProcessDirective.prototype.compile = function () {
         };
         AIPBlockedProcessDirective.prototype.link = function (scope, elem, attr, ctrl, transclude) {
-            // transclude(scope, (clone) => {
-            //
-            //     scope.init();
-            //
-            // });
             scope.init();
         };
         AIPBlockedProcessDirective.prototype.controller = function ($scope) {
@@ -39,22 +32,6 @@ var AIPUI;
                     $scope.urls = $scope.getCurrentUrls();
                 }
             };
-            // $scope.availableItems = function() {
-            //     var available = [];
-            //     // available.push($scope.getCurrent());
-            //     var generated = $scope.generated.map((item) => {
-            //         return item.name;
-            //     });
-            //     angular.forEach($scope.all, item => {
-            //         if(generated.indexOf(item.name)===-1 && available.indexOf(item.name)===-1) {
-            //             available.push(item);
-            //         }
-            //     });
-            //     if(available.indexOf($scope.currentitem)===-1) {
-            //         available.unshift($scope.currentitem);
-            //     }
-            //     return available;
-            // }
             $scope.updateCurrent = function () {
                 // $scope.remove() //remove current item item from selected list
                 var selected = $scope.selected.filter(function (item) {

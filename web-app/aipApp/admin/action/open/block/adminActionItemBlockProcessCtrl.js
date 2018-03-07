@@ -55,17 +55,8 @@ var AIP;
             this.editMode = false;
             this.isSaving = false;
             this.actionItemDataChanged = false;
-            /*  $window.onbeforeunload = (event)=> {
-                  console.log(this.actionItemDataChanged);
-                  if(this.actionItemDataChanged) {
-                      return this.$filter("i18n_aip")("aip.common.admin.unsaved");
-                  }
-                  // reset to default event listener
-                  $window.onbeforeunload = null;
-              };*/
             this.init();
             angular.element($window).bind('resize', function () {
-                // $scope.onResize();
                 if (!$scope.$root.$phase) {
                     $scope.$apply();
                 }
@@ -80,7 +71,6 @@ var AIP;
                 this.handleNotification(this.$state.params.noti);
             }
             promises.push(this.getBlockedProcessList(this.$state.params.actionItemId));
-            /*  promises.push(this.getBlockedProcessList());*/
             //if needed, add more deferred job into promises list
             this.$q.all(promises).then(function () {
                 _this.spinnerService.showSpinner(false);
@@ -149,7 +139,6 @@ var AIP;
                     });
                     _this.selected = editBlockData;
                     console.log(_this.selected);
-                    //this.originalAssign = angular.copy(this.selected);
                 }
                 else {
                     _this.editMode = true;
@@ -190,8 +179,6 @@ var AIP;
         AdminActionItemBlockCtrl.prototype.delete = function (item) {
             var itemIdx = this.selected.indexOf(item);
             this.selected.splice(itemIdx, 1);
-            //this.selected.splice(itemIdx, 1);
-            /*this.reAssignSeqnumber();*/
         };
         AdminActionItemBlockCtrl.prototype.addNew = function () {
             this.selected.push({});
@@ -224,28 +211,6 @@ var AIP;
             }
             return validation;
         };
-        /*selectActionItem(item, index) {
-         var currentAssigned = this.assignedActionItems[index];
-         if (currentAssigned.actionItemId === item.actionItemId) {
-         return;
-         }
-         if (!currentAssigned.actionItemId) {
-         currentAssigned.sequenceNumber = index + 1;
-         }
-         currentAssigned.actionItemId = item.actionItemId;
-         currentAssigned.actionItemFolderName = item.folderName;
-         currentAssigned.actionItemName = item.actionItemName;
-         currentAssigned.actionItemStatus = item.actionItemStatus;
-         this.assignedActionItems[index] = currentAssigned;
-         if(!this.selected[index].actionItemId) {
-         item.seq = index + 1;
-         this.selected[index] = item;
-         }
-         this.selected = this.selected.filter((item, idx) => {
-         return true;
-         });
-         this.reAssignSeqnumber()
-         }*/
         AdminActionItemBlockCtrl.prototype.addNewItem = function () {
             var available = this.getAvailable();
             if (available.length > 0) {
@@ -280,7 +245,6 @@ var AIP;
                 notifications.remove(notifications.first());
             }
             if (noti.notiType === "saveSuccess") {
-                // var data = noti.data.newActionItem||noti.data.actionItem;
                 var n = new Notification({
                     message: this.$filter("i18n_aip")("aip.common.save.successful"),
                     type: "success",
@@ -311,7 +275,6 @@ var AIP;
                 $("#title-panel").height() -
                 $("#header-main-section").height() +
                 $(".status-rules").height() + 250;
-            // $("#outerFooter").height() - 30;
             return { "min-height": containerHeight };
         };
         AdminActionItemBlockCtrl.prototype.getTemplateContentHeight = function () {
@@ -359,7 +322,6 @@ var AIP;
                     that.$rootScope.DataChanged = false;
                     if (that.redirectval === "NoData") {
                         that.reset();
-                        // location.href = window.location.href;
                     }
                     else {
                         that.reset();

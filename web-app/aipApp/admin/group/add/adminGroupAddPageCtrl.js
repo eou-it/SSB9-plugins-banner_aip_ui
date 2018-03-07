@@ -226,13 +226,6 @@ var AIP;
                 that.$state.go("admin-group-list");
             }
         };
-        /* detectGroupContentChange(content) {
-             if(!this.editMode) {
-                 if (this.groupInfo.description !== "<p></p>" && this.groupInfo.description !== undefined) {
-                     this.dataChanged();
-                 }
-             }
-         }*/
         AdminGroupAddPageCtrl.prototype.isChanged = function () {
             var changed = false;
             if (this.editMode) {
@@ -330,11 +323,6 @@ var AIP;
         AdminGroupAddPageCtrl.prototype.saveErrorCallback = function (invalidFields, errors, message) {
             var _this = this;
             //todo: iterate through errors given back through contraints
-            /*
-            errors.forEach( function(e, i) {
-                message += (e[i]);
-            });
-            */
             var message = this.$filter("i18n_aip")(message || "aip.admin.group.add.error.blank");
             if (errors != null) {
                 message = errors[0];

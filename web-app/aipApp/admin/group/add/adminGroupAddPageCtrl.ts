@@ -22,7 +22,6 @@ module AIP {
         cancel(): void;
         checkchangesDone():void;
         dataChanged():void;
-      //  detectGroupContentChange():void;
 
     }
     interface IGroupSelect {
@@ -266,7 +265,7 @@ module AIP {
                 n.addPromptAction(this.$filter("i18n_aip")("aip.common.text.no"), function () {
                     notifications.remove(n);
 
-                })
+                });
                 n.addPromptAction(this.$filter("i18n_aip")("aip.common.text.yes"), function () {
                     that.actionItemDataChanged=false;
                     that.$rootScope.DataChanged=false;
@@ -278,7 +277,7 @@ module AIP {
                         location.href = that.redirectval;
                     }
                     notifications.remove(n);
-                })
+                });
 
                 notifications.addNotification(n);
             }
@@ -288,14 +287,6 @@ module AIP {
             }
 
         }
-
-       /* detectGroupContentChange(content) {
-            if(!this.editMode) {
-                if (this.groupInfo.description !== "<p></p>" && this.groupInfo.description !== undefined) {
-                    this.dataChanged();
-                }
-            }
-        }*/
 
         isChanged() {
             var changed = false;
@@ -385,15 +376,10 @@ module AIP {
         trustHTML = function(txtString) {
             var sanitized = txtString ? this.$filter("html")(this.$sce.trustAsHtml(txtString)):"";
             return sanitized;
-        }
+        };
 
         saveErrorCallback(invalidFields, errors, message) {
             //todo: iterate through errors given back through contraints
-            /*
-            errors.forEach( function(e, i) {
-                message += (e[i]);
-            });
-            */
             var message = this.$filter("i18n_aip")(message||"aip.admin.group.add.error.blank")
             if (errors != null) {
                 message = errors[0]

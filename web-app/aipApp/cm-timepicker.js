@@ -1,3 +1,6 @@
+/*******************************************************************************
+ Copyright 2018 Ellucian Company L.P. and its affiliates.
+ ********************************************************************************/
 angular.module("cm.timepicker", ['xeTimePickerBox'
     ,'cm.tpls'
 ]);
@@ -370,11 +373,6 @@ angular.module("timepicker.html", []).run(["$templateCache", function($templateC
                         .bind('click', function () {
                             scope.openPopup();
                         })
-                        //.bind("blur", function () {
-                        //    $timeout(function (e) {
-                        //        scope.setClosePopupClass();
-                        //    }, 250);
-                        //})
                         .on('keydown', function (e) {
                             if (e.which === 38 && scope.timepicker.activeIdx > 0) { // UP
                                 scope.timepicker.activeIdx = scope.timepicker.activeIdx - 1;

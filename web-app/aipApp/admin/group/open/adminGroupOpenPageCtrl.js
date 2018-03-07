@@ -46,7 +46,6 @@ var AIP;
             this.spinnerService.showSpinner(true);
             var promises = [];
             this.groupDetailDefer = this.getGroupDetailDefer(this.$state.params.groupId).then(function () {
-                // $("p.openGroupDesc" ).html(decodeURI(this.groupFolder.groupDesc));
                 if (_this.groupFolder.postedInd == "Y") {
                     $("#title-panel h1").html(_this.groupFolder.groupName + ' ' + _this.$filter("i18n_aip")("aip.admin.group.title.posted"));
                 }
@@ -220,32 +219,12 @@ var AIP;
             var _this = this;
             this.adminGroupService.groupPosted(this.groupFolder.groupId)
                 .then(function (response) {
-                // if(response.posted) {
-                //     var n = new Notification({
-                //         message: this.$filter("i18n_aip")("aip.admin.group.content.edit.posted.warning"),
-                //         type: "warning"
-                //     });
-                //     n.addPromptAction(this.$filter("i18n_aip")("aip.common.text.no"), () => {
-                //         notifications.remove(n);
-                //     });
-                //     n.addPromptAction(this.$filter("i18n_aip")("aip.common.text.yes"), ()=> {
-                //         notifications.remove(n);
-                //         if(type === "overview") {
-                //             this.$state.go("admin-group-edit", {groupId:this.groupFolder.groupId, isEdit: true});
-                //         } else {
-                //             this.edit();
-                //         }
-                //     });
-                //     notifications.addNotification(n);
-                // } else {
-                //     notifications.remove(n);
                 if (type === "overview") {
                     _this.$state.go("admin-group-edit", { groupId: _this.groupFolder.groupId, isEdit: true });
                 }
                 else {
                     _this.edit();
                 }
-                // }
             }, function (err) {
                 throw new Error(err);
             });

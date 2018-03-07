@@ -78,9 +78,7 @@ module PB {
 
 
                         angular.bootstrap(bodyContent, ["BannerOnAngular"]);
-                       // element.empty();
                         element.append(bodyContent);
-                       // me.$compile(element)(scope);
                     });
             })
 

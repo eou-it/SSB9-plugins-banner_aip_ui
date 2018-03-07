@@ -19,7 +19,6 @@ var AIP;
             this.actionListService = AdminActionService;
             this.init();
             angular.element($window).bind('resize', function () {
-                //$scope.onResize();
                 $scope.$apply();
             });
         }
@@ -140,8 +139,6 @@ var AIP;
             var deferred = this.$q.defer();
             this.actionListService.fetchData(query)
                 .then(function (response) {
-                // this.gridData = response;
-                // this.gridData.header = this.header;
                 deferred.resolve(response);
             }, function (error) {
                 console.log(error);
@@ -151,8 +148,6 @@ var AIP;
         };
         AdminActionListPageCtrl.prototype.selectRecord = function (data) {
             this.selectedRecord = data;
-            // this.actionListService.enableActionItemOpen(data.id);
-            // this.$state.params.actionid = data.id;
         };
         AdminActionListPageCtrl.prototype.deleteBlock = function (cantDeleteMessage) {
             var n = new Notification({
@@ -203,9 +198,6 @@ var AIP;
         AdminActionListPageCtrl.prototype.goAddPage = function () {
             this.$state.go("admin-action-add");
         };
-        // goOpenPage() {
-        //
-        // }
         AdminActionListPageCtrl.prototype.openActionItem = function (id) {
             this.$state.go("admin-action-open", { actionItemId: id });
         };

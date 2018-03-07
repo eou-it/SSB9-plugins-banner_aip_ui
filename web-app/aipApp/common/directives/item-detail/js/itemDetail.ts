@@ -34,17 +34,14 @@ module AIPUI {
         }
         controller($scope) {
             $scope.proceed = function() {
-               // console.log("data from item detail")
-               // console.log(this.data);
-                //this.data.info.id=111;
                 $scope.next({groupId:this.data.info.detailId, itemId:this.data.info.id});
-            }
+            };
             $scope.getState = function(id) {
                 $scope.itemstate(id)
-            }
+            };
             $scope.returnlist = function() {
                 $scope.tolist();
-            }
+            };
             $scope.nextitem = function() {
                 $scope.next({groupId:this.data.groupId, itemId:this.data.info.id});
             }

@@ -97,7 +97,6 @@ var AIP;
             return request;
         };
         AdminGroupService.prototype.enableGroupOpen = function (groupId) {
-            //var selectedGroup = groupId;
             $("#openGroupBtn").removeAttr("disabled");
             return groupId;
         };
