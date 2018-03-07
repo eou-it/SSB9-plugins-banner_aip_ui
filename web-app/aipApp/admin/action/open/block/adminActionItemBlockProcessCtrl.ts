@@ -176,7 +176,7 @@ module AIP {
                         this.personaData.push(key);
                     }
 
-                })
+                });
 
                 if(this.blockedProcess.length!==0){
                     this.editMode=true;
@@ -200,7 +200,7 @@ module AIP {
                             editBlockData.push ({process:{id:key.id.blockingProcessId,name: key.processName,urls: key.urls,personAllowed:key.processPersonaBlockAllowedInd}, persona: key.blockedProcessAppRole})
                         }
 
-                    })
+                    });
 
                     this.selected=editBlockData;
                     console.log(this.selected)
@@ -441,12 +441,12 @@ module AIP {
 
                 var n = new Notification({
                     message: this.$filter("i18n_aip")( "aip.admin.actionItem.saveChanges"),
-                    type: "warning",
+                    type: "warning"
                 });
                 n.addPromptAction(this.$filter("i18n_aip")("aip.common.text.no"), function () {
                     notifications.remove(n);
 
-                })
+                });
                 n.addPromptAction(this.$filter("i18n_aip")("aip.common.text.yes"), function () {
                     that.actionItemDataChanged=false;
                     that.$rootScope.DataChanged=false;
@@ -460,7 +460,7 @@ module AIP {
                         location.href = that.redirectval;
                     }
                     notifications.remove(n);
-                })
+                });
                 notifications.addNotification(n);
             }
             else
@@ -475,7 +475,7 @@ module AIP {
             });
             var item2Properties = item2.map((item) => {
                 return [item.process.name, item.persona];
-            })
+            });
 
             if ( angular.equals(item1Properties, item2Properties)) {
                 return true;

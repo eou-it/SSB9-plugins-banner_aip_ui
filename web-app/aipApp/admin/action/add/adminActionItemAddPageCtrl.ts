@@ -78,7 +78,7 @@ module AIP {
                 postedInd: undefined,
                 folder: undefined,
                 description: undefined
-            }
+            };
             $window.onbeforeunload = (event)=> {
                 //   if(this.isChanged()) {
                 if(this.actionItemDataChanged) {
@@ -175,12 +175,12 @@ module AIP {
         }
         trustAsHtml = function (string) {
             return this.$sce.trustAsHtml(string);
-        }
+        };
 
         trustActionItemContent = function () {
             this.actionItemInfo.description = this.$sce.trustAsHtml(this.$filter("html")(this.actionItemInfo.description)).toString();
             return this.actionItemInfo.description;
-        }
+        };
         validateInput() {
             if(this.saving) {
                 return false;
@@ -234,7 +234,7 @@ module AIP {
                 n.addPromptAction(this.$filter("i18n_aip")("aip.common.text.no"), function () {
                     notifications.remove(n);
 
-                })
+                });
                 n.addPromptAction(this.$filter("i18n_aip")("aip.common.text.yes"), function () {
                     that.actionItemDataChanged=false;
                     that.$rootScope.DataChanged=false;
@@ -246,7 +246,7 @@ module AIP {
                         location.href = that.redirectval;
                     }
                     notifications.remove(n);
-                })
+                });
 
                 notifications.addNotification(n);
             }

@@ -116,7 +116,7 @@ var bannerAIPApp = angular.module("bannerAIP", [
             },
             breadcrumb: {
                 label: "aip.admin.action.open",
-                url: "/aip/#/action/open",
+                url: "/aip/#/action/open"
             }
         },
         "admin-action-edit": {
@@ -176,7 +176,7 @@ var bannerAIPApp = angular.module("bannerAIP", [
             },
             breadcrumb: {
                 label: "aip.admin.group.open",
-                url: "/aip/#/group/open",
+                url: "/aip/#/group/open"
 
             }
         },
@@ -356,7 +356,7 @@ var bannerAIPApp = angular.module("bannerAIP", [
 
             $rootScope.$on('$stateChangeStart', function (e, to) {
                 if (isActionItemAdmin === false && to.name === 'admin-landing') {
-                    e.preventDefault()
+                    e.preventDefault();
                     $rootScope.$state.go('list')
                 }
                 if ($rootScope.DataChanged) {

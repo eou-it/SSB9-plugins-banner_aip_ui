@@ -76,7 +76,7 @@ var AIP;
                         sortable: false,
                         visible: true,
                         columnShowHide: true,
-                        ascending: true,
+                        ascending: true
                     }
                 },
                 {

@@ -435,7 +435,7 @@ var AIP;
             if (that.actionItemDataChanged || that.contentChanged) {
                 var n = new Notification({
                     message: this.$filter("i18n_aip")("aip.admin.actionItem.saveChanges"),
-                    type: "warning",
+                    type: "warning"
                 });
                 n.addPromptAction(this.$filter("i18n_aip")("aip.common.text.no"), function () {
                     notifications.remove(n);

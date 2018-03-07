@@ -250,7 +250,7 @@ var AIP;
                     ChangeFlag: function () {
                         return _this.changeFlag;
                     }
-                },
+                }
             });
             this.modalInstance.result.then(function (result) {
                 _this.modalResults = [];
@@ -330,7 +330,7 @@ var AIP;
             if (that.editMode === true && that.dirtyFlag === true) {
                 var n = new Notification({
                     message: this.$filter("i18n_aip")("aip.common.action.post.status.edit.warning"),
-                    type: "warning",
+                    type: "warning"
                 });
                 n.addPromptAction(this.$filter("i18n_aip")("aip.common.text.no"), function () {
                     that.$state.go("admin-post-list");

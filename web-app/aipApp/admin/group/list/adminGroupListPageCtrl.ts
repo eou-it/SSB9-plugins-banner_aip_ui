@@ -218,7 +218,7 @@ module AIP {
         deleteUnblock(map, name, $scope) {
             var n = new Notification({
                 message: this.$filter("i18n_aip")("aip.admin.group.delete.warning"),
-                type: "warning",
+                type: "warning"
             });
             var actionService = this.adminGroupService;
             var keyValue = {

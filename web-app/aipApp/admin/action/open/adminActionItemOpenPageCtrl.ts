@@ -212,7 +212,7 @@ module AIP {
             this.adminActionService.getActionItemTemplates()
                 .then((response: AIP.IActionItemOpenResponse) => {
                     this.templates = response.data;
-                    console.log(this.templates)
+                    console.log(this.templates);
                     deferred.resolve(this.openPanel("content"));
                     this.getTemplateSource();
                     this.contentChanged = false;
@@ -519,7 +519,7 @@ module AIP {
 
                 var n = new Notification({
                     message: this.$filter("i18n_aip")( "aip.admin.actionItem.saveChanges"),
-                    type: "warning",
+                    type: "warning"
                 });
                 n.addPromptAction(this.$filter("i18n_aip")("aip.common.text.no"), function () {
                     notifications.remove(n);
@@ -676,7 +676,7 @@ module AIP {
                     return false
                 } else {
                     var invalidRule = this.rules.filter((item) => {
-                        var statusIdExists = true
+                        var statusIdExists = true;
 
                         if (!item.status.id) {
                             statusIdExists = item.status.actionItemStatusId

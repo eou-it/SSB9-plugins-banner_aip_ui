@@ -165,7 +165,7 @@ var AIP;
         AdminActionListPageCtrl.prototype.deleteUnblock = function (map, name, $scope) {
             var n = new Notification({
                 message: this.$filter("i18n_aip")("aip.common.action.item.action.delete.warning"),
-                type: "warning",
+                type: "warning"
             });
             var actionService = this.actionListService;
             var keyValue = {

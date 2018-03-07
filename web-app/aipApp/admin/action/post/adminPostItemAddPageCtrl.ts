@@ -72,8 +72,8 @@ module AIP {
         editMode: boolean;
         postIDvalue;
         selectedActionListVal;
-        changeFlag:boolean
-        dirtyFlag:boolean
+        changeFlag:boolean;
+        dirtyFlag:boolean;
 
         constructor($scope: IActionItemAddPageScope, $q: ng.IQService, $state, $uibModal, $filter, $timeout,
                     SpinnerService: AIP.SpinnerService, APP_ROOT,AdminActionStatusService, AdminActionService: AIP.AdminActionService) {
@@ -217,14 +217,14 @@ module AIP {
                                     }
                                 }
 
-                                this.selected= this.$scope.group
-                                this.selectedPopulation =   this.$scope.population
-                                this.postActionItemInfo.groupName = this.actionPost1.groupName
-                                this.postActionItemInfo.startDate = this.actionPost1.postingDisplayStartDate
-                                this.postActionItemInfo.endDate =  this.actionPost1.postingDisplayEndDate
-                                this.postActionItemInfo.localeDate = this.actionPost1.postingScheduleDateTime
-                                this.postNow = false
-                                this.regeneratePopulation=this.actionPost1.populationRegenerateIndicator
+                                this.selected= this.$scope.group;
+                                this.selectedPopulation =   this.$scope.population;
+                                this.postActionItemInfo.groupName = this.actionPost1.groupName;
+                                this.postActionItemInfo.startDate = this.actionPost1.postingDisplayStartDate;
+                                this.postActionItemInfo.endDate =  this.actionPost1.postingDisplayEndDate;
+                                this.postActionItemInfo.localeDate = this.actionPost1.postingScheduleDateTime;
+                                this.postNow = false;
+                                this.regeneratePopulation=this.actionPost1.populationRegenerateIndicator;
 
                                 if(this.postActionItemInfo.localeTime)
                                 {
@@ -333,7 +333,7 @@ module AIP {
        };
 
         pad(number, length){
-        var str = "" + number
+        var str = "" + number;
         while (str.length < length) {
             str = '0'+str
         }

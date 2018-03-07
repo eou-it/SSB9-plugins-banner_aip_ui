@@ -825,7 +825,6 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
 
         controller.groupList()
         def answer = JSON.parse( controller.response.contentAsString )
-        // TODO: verify something
         assertEquals 200, controller.response.status
     }
 

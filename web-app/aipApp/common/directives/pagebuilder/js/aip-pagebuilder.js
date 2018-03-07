@@ -13,7 +13,7 @@ var PB;
                 content: "@",
                 aid: "@",
                 gid: "@",
-                page: "@",
+                page: "@"
             };
             this.$compile = $compile;
             this.ItemListViewService = ItemListViewService;

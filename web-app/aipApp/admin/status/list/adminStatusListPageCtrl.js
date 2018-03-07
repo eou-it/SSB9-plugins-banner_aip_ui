@@ -171,7 +171,7 @@ var AIP;
         AdminStatusListPageCtrl.prototype.deleteSystemRecord = function (map, name, $scope) {
             var n = new Notification({
                 message: this.$filter("i18n_aip")("aip.common.action.item.status.delete.warning"),
-                type: "warning",
+                type: "warning"
             });
             var actionService = this.adminActionStatusService;
             var keyValue = {
