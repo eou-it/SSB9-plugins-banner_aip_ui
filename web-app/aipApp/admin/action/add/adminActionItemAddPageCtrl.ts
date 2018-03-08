@@ -78,9 +78,8 @@ module AIP {
                 postedInd: undefined,
                 folder: undefined,
                 description: undefined
-            }
+            };
             $window.onbeforeunload = (event)=> {
-                //   if(this.isChanged()) {
                 if(this.actionItemDataChanged) {
                     return this.$filter("i18n_aip")("aip.common.admin.unsaved");
                 }
@@ -126,9 +125,6 @@ module AIP {
                                 this.actionItemInfo.folder = this.folders.filter((item)=> {
                                     return item.id === parseInt(this.actionItem1.folderId);
                                 })[0];
-                                /*this.existFolder = this.folders.filter((item)=> {
-                                    return item.id === parseInt(this.actionItem1.folderId);
-                                })[0];*/
                                 this.actionItemInfo.description = this.actionItem1.actionItemDesc;
                                 this.actionItemInitial = angular.copy(this.actionItemInfo);
                                 this.trustActionItemContent();
@@ -175,21 +171,16 @@ module AIP {
         }
         trustAsHtml = function (string) {
             return this.$sce.trustAsHtml(string);
-        }
+        };
 
         trustActionItemContent = function () {
             this.actionItemInfo.description = this.$sce.trustAsHtml(this.$filter("html")(this.actionItemInfo.description)).toString();
             return this.actionItemInfo.description;
-        }
+        };
         validateInput() {
             if(this.saving) {
                 return false;
             }
-            /*if(!this.actionItemInfo.name || this.actionItemInfo.name === null || this.actionItemInfo.name === "" || this.actionItemInfo.title.name > 300) {
-                this.errorMessage.name = "invalid title";
-            } else {
-                delete this.errorMessage.name;
-            }*/
 
             if(!this.actionItemInfo.folder) {
                 this.errorMessage.folder = "invalid folder";
@@ -222,19 +213,19 @@ module AIP {
         checkchangesDone() {
 
             var that=this;
-            while (notifications.length != 0) {
+            while (notifications.length !== 0) {
                 notifications.remove(notifications.first())
             }
             if (that.actionItemDataChanged) {
 
                 var n = new Notification({
                     message: this.$filter("i18n_aip")( "aip.admin.actionItem.saveChanges"),
-                    type: "warning",
+                    type: "warning"
                 });
                 n.addPromptAction(this.$filter("i18n_aip")("aip.common.text.no"), function () {
                     notifications.remove(n);
 
-                })
+                });
                 n.addPromptAction(this.$filter("i18n_aip")("aip.common.text.yes"), function () {
                     that.actionItemDataChanged=false;
                     that.$rootScope.DataChanged=false;
@@ -246,7 +237,7 @@ module AIP {
                         location.href = that.redirectval;
                     }
                     notifications.remove(n);
-                })
+                });
 
                 notifications.addNotification(n);
             }
@@ -347,7 +338,7 @@ module AIP {
                             this.$rootScope.DataChanged=false;
                             this.$state.go("admin-action-open", {
                                 noti: notiParams,
-                                data: response.data.updatedActionItem.id,
+                                data: response.data.updatedActionItem.id
                             });
 
                         } else {

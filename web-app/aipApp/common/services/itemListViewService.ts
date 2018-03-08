@@ -102,7 +102,7 @@ module AIP {
                             detailId: response.data[0].id,
                             title: response.data[0].title,
                             page: response.data[1].actionItemPageName
-                        }
+                        };
 
                         console.log(returnData);
                     }
@@ -113,7 +113,7 @@ module AIP {
                     };
                 }, (err) => {
                     throw new Error(err);
-                })
+                });
             return request;
         }
 
@@ -137,19 +137,11 @@ module AIP {
                     });
                 }, (err) => {
                     throw new Error(err);
-                })
+                });
             return defer.promise;
         }
 
         confirmItem(id) {
-            //TODO: update datbase
-            //angular.forEach(this.userItems, (item) => {
-            //    angular.forEach(item.items, (_item) => {
-            //        if(_item.id == id) {
-            //            _item.state = "aip.user.list.item.state.complete";
-            //        }
-            //    });
-            //});
         }
     }
 }

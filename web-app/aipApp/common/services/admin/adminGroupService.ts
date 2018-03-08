@@ -174,12 +174,11 @@ module AIP {
                     return <IGroupDetailResponse>response.data;
                 }, (err) => {
                     throw new Error(err);
-                })
+                });
             return request;
         }
 
         enableGroupOpen(groupId) {
-            //var selectedGroup = groupId;
             $("#openGroupBtn").removeAttr("disabled");
             return groupId;
         }

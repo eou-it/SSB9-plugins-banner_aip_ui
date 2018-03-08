@@ -50,17 +50,6 @@ var AIP;
             };
             this.errorMessage = {};
         }
-        /*checkAll() {
-             if (this.checkAll === true) {
-                 angular.forEach(this.actionItemModal, (item) => {
-            item.check = true;
-                });
-                } else {
-             angular.forEach(this.actionItemModal, (item) => {
-            item.check = false;
-                 });
-             }
-            }*/
         PostAddModalCtrl.prototype.isCheckAll = function () {
             var checked = this.actionItemModal.filter(function (item) {
                 return item.check && item.check === true;

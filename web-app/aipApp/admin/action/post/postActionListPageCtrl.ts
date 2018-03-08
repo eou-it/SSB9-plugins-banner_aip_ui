@@ -51,7 +51,6 @@ module AIP {
             this.actionListService = AdminActionService;
             this.init();
             angular.element($window).bind('resize', function () {
-                //$scope.onResize();
                 $scope.$apply();
             });
         }
@@ -111,7 +110,7 @@ module AIP {
                     sortable: false,
                     visible: true,
                     columnShowHide: true,
-                    ascending: true,
+                    ascending: true
                 }
             },
                 {
@@ -198,7 +197,6 @@ module AIP {
 
         handleNotification(noti) {
             if(noti.notiType === "saveSuccess") {
-                // var data = noti.data.newActionItem||noti.data.actionItem;
                 var n = new Notification({
                     message: this.$filter("i18n_aip")("aip.common.save.successful"), //+
                     type: "success",
@@ -217,8 +215,6 @@ module AIP {
             var deferred = this.$q.defer();
             this.actionListService.fetchTableData(query)
                 .then((response: AIP.IPostActionItemFetchResponse) => {
-                    // this.gridData = response;
-                    // this.gridData.header = this.header;
                     deferred.resolve(response);
                 }, (error) => {
                     console.log(error);
@@ -229,8 +225,6 @@ module AIP {
 
         selectRecord(data) {
             this.selectedRecord = data;
-            // this.actionListService.enableActionItemOpen(data.id);
-            // this.$state.params.actionid = data.id;
         }
 
         refreshGrid() {
@@ -241,10 +235,6 @@ module AIP {
             this.$state.go("admin-post-add");
         }
 
-        // goOpenPage() {
-        //
-        // }
-
         openActionItem() {
             this.$state.go("admin-action-open", {data: this.selectedRecord.id});
         }
@@ -253,7 +243,7 @@ module AIP {
                 this.actionListService.getPostStatus(postId)
                 .then((response) => {
 
-                    while (notifications.length != 0) {
+                    while (notifications.length !== 0) {
                         notifications.remove(notifications.first())
                     }
                     if (response === "Y")
@@ -262,7 +252,7 @@ module AIP {
                     }
                     else
                     {
-                        while (notifications.length != 0) {
+                        while (notifications.length !== 0) {
                             notifications.remove(notifications.first())
                         }
 

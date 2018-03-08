@@ -53,11 +53,9 @@ module AIP {
             this.modalInstance;
             this.init();
             angular.element($window).bind('resize', function () {
-                //$scope.onResize();
                 $scope.$apply();
             });
             angular.element($window).bind('resize', function () {
-                //$scope.onResize();
                 $scope.$apply();
             });
         }
@@ -183,7 +181,6 @@ module AIP {
                     });
                     notifications.addNotification(n);
                     this.$scope.refreshGrid(true);  //use scope to call grid directive's function
-                    // this.refreshGrid(true);
                 } else {
                     //TODO:: send error notification
                 }
@@ -204,7 +201,7 @@ module AIP {
         deleteSystemRecord(map, name, $scope) {
             var n = new Notification({
                 message: this.$filter("i18n_aip")("aip.common.action.item.status.delete.warning"),
-                type: "warning",
+                type: "warning"
             });
             var actionService = this.adminActionStatusService;
             var keyValue = {
@@ -243,26 +240,6 @@ module AIP {
 
         }
 
-        /*
-
-        add() {
-            this.$state.go("admin-group-add");
-        }
-
-        open() {
-            this.adminActionStatusService.getGroupDetail(this.$state.params.status).then((response) => {
-                if(response.group) {
-                    this.$state.go("admin-group-open", {data: response.group});
-                } else {
-                    //todo: output error in notification center?
-                    console.log("fail");
-                }
-            }, (err) => {
-                //TODO:: handle error call
-                console.log(err);
-            });
-        }
-        */
 
         getHeight() {
             var containerHeight = $(document).height() -
@@ -279,8 +256,6 @@ module AIP {
             var deferred = this.$q.defer();
             this.adminActionStatusService.fetchData(query)
                 .then((response) => {
-                    // this.gridData = response;
-                    // this.gridData.header = this.header;
                     deferred.resolve(response);
                 }, (error) => {
                     console.log(error);
@@ -291,13 +266,7 @@ module AIP {
 
         selectRecord(data) {
             this.selectedRecord = data;
-            //this.adminActionStatusService.enableGroupOpen(data.id);
-            //this.$state.params.grp = data.id;
         }
-
-        // refreshGrid() {
-        //     console.log("Refresh");
-        // }
     }
 }
 

@@ -6,7 +6,7 @@
 ///<reference path="../../../common/services/spinnerService.ts"/>
 var AIP;
 (function (AIP) {
-    var AdminGroupOpenPageCtrl = /** @class */ (function () {
+    var AdminGroupOpenPageCtrl = (function () {
         function AdminGroupOpenPageCtrl($scope, $rootScope, $window, AdminGroupService, $q, SpinnerService, $state, $filter, $sce, $templateRequest, $templateCache, $compile, $timeout, APP_ROOT) {
             this.$inject = ["$scope", "$rootScope", "$window", "AdminGroupService", "$q", "SpinnerService", "$state", "$filter", "$sce", "$templateRequest", "$templateCache",
                 "$compile", "$timeout", "APP_ROOT"];
@@ -46,7 +46,6 @@ var AIP;
             this.spinnerService.showSpinner(true);
             var promises = [];
             this.groupDetailDefer = this.getGroupDetailDefer(this.$state.params.groupId).then(function () {
-                // $("p.openGroupDesc" ).html(decodeURI(this.groupFolder.groupDesc));
                 if (_this.groupFolder.postedInd == "Y") {
                     $("#title-panel h1").html(_this.groupFolder.groupName + ' ' + _this.$filter("i18n_aip")("aip.admin.group.title.posted"));
                 }
@@ -89,6 +88,7 @@ var AIP;
                     break;
                 case "edit":
                     url = this.APP_ROOT + "admin/group/open/edit/edit.html";
+                    break;
                 default:
                     break;
             }
@@ -219,32 +219,12 @@ var AIP;
             var _this = this;
             this.adminGroupService.groupPosted(this.groupFolder.groupId)
                 .then(function (response) {
-                // if(response.posted) {
-                //     var n = new Notification({
-                //         message: this.$filter("i18n_aip")("aip.admin.group.content.edit.posted.warning"),
-                //         type: "warning"
-                //     });
-                //     n.addPromptAction(this.$filter("i18n_aip")("aip.common.text.no"), () => {
-                //         notifications.remove(n);
-                //     });
-                //     n.addPromptAction(this.$filter("i18n_aip")("aip.common.text.yes"), ()=> {
-                //         notifications.remove(n);
-                //         if(type === "overview") {
-                //             this.$state.go("admin-group-edit", {groupId:this.groupFolder.groupId, isEdit: true});
-                //         } else {
-                //             this.edit();
-                //         }
-                //     });
-                //     notifications.addNotification(n);
-                // } else {
-                //     notifications.remove(n);
                 if (type === "overview") {
                     _this.$state.go("admin-group-edit", { groupId: _this.groupFolder.groupId, isEdit: true });
                 }
                 else {
                     _this.edit();
                 }
-                // }
             }, function (err) {
                 throw new Error(err);
             });
@@ -396,13 +376,13 @@ var AIP;
         };
         AdminGroupOpenPageCtrl.prototype.checkchangesDone = function () {
             var that = this;
-            while (notifications.length != 0) {
+            while (notifications.length !== 0) {
                 notifications.remove(notifications.first());
             }
             if (that.actionItemDataChanged) {
                 var n = new Notification({
                     message: this.$filter("i18n_aip")("aip.admin.actionItem.saveChanges"),
-                    type: "warning",
+                    type: "warning"
                 });
                 n.addPromptAction(this.$filter("i18n_aip")("aip.common.text.no"), function () {
                     notifications.remove(n);

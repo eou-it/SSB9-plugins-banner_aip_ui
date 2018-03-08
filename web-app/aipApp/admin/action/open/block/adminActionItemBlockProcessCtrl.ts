@@ -91,17 +91,8 @@ module AIP {
             this.isSaving = false;
             this.actionItemDataChanged=false;
 
-            /*  $window.onbeforeunload = (event)=> {
-                  console.log(this.actionItemDataChanged);
-                  if(this.actionItemDataChanged) {
-                      return this.$filter("i18n_aip")("aip.common.admin.unsaved");
-                  }
-                  // reset to default event listener
-                  $window.onbeforeunload = null;
-              };*/
             this.init();
             angular.element($window).bind('resize', function () {
-                // $scope.onResize();
                 if (!$scope.$root.$phase) {
                     $scope.$apply();
                 }
@@ -117,13 +108,12 @@ module AIP {
                 this.handleNotification( this.$state.params.noti );
             }
             promises.push(this.getBlockedProcessList(this.$state.params.actionItemId));
-            /*  promises.push(this.getBlockedProcessList());*/
             //if needed, add more deferred job into promises list
             this.$q.all( promises ).then( () => {
                 this.spinnerService.showSpinner( false );
             } );
             promises.push(
-            )
+            );
             /*Code For Dirty Check*/
             var that=this;
             this.$scope.$on("DetectChanges",function(event, args)
@@ -169,8 +159,6 @@ module AIP {
         enterEditMode() {
             this.adminActionService.loadBlockingProcessLov1().then((response:any) => {
                 this.allActionItems = response.data;
-
-                var that = this;
                 this.personaData=[];
 
                 angular.forEach(this.allActionItems.persona, (value,key) => {
@@ -178,7 +166,7 @@ module AIP {
                         this.personaData.push(key);
                     }
 
-                })
+                });
 
                 if(this.blockedProcess.length!==0){
                     this.editMode=true;
@@ -202,11 +190,10 @@ module AIP {
                             editBlockData.push ({process:{id:key.id.blockingProcessId,name: key.processName,urls: key.urls,personAllowed:key.processPersonaBlockAllowedInd}, persona: key.blockedProcessAppRole})
                         }
 
-                    })
+                    });
 
                     this.selected=editBlockData;
                     console.log(this.selected)
-                    //this.originalAssign = angular.copy(this.selected);
 
                 }
                 else {
@@ -252,8 +239,6 @@ module AIP {
         delete(item) {
             var itemIdx = this.selected.indexOf(item);
             this.selected.splice(itemIdx, 1);
-            //this.selected.splice(itemIdx, 1);
-            /*this.reAssignSeqnumber();*/
         }
         addNew() {
 
@@ -291,31 +276,6 @@ module AIP {
 
         }
 
-        /*selectActionItem(item, index) {
-         var currentAssigned = this.assignedActionItems[index];
-         if (currentAssigned.actionItemId === item.actionItemId) {
-         return;
-         }
-         if (!currentAssigned.actionItemId) {
-         currentAssigned.sequenceNumber = index + 1;
-         }
-         currentAssigned.actionItemId = item.actionItemId;
-         currentAssigned.actionItemFolderName = item.folderName;
-         currentAssigned.actionItemName = item.actionItemName;
-         currentAssigned.actionItemStatus = item.actionItemStatus;
-         this.assignedActionItems[index] = currentAssigned;
-         if(!this.selected[index].actionItemId) {
-         item.seq = index + 1;
-         this.selected[index] = item;
-         }
-         this.selected = this.selected.filter((item, idx) => {
-         return true;
-         });
-         this.reAssignSeqnumber()
-         }*/
-
-
-
         addNewItem() {
             var available = this.getAvailable();
             if(available.length > 0) {
@@ -344,11 +304,10 @@ module AIP {
             }
         }
         handleNotification(noti) {
-            while (notifications.length != 0) {
+            while (notifications.length !== 0) {
                 notifications.remove(notifications.first())
             }
             if(noti.notiType === "saveSuccess") {
-                // var data = noti.data.newActionItem||noti.data.actionItem;
                 var n = new Notification({
                     message: this.$filter("i18n_aip")("aip.common.save.successful"), //+
                     type: "success",
@@ -362,7 +321,7 @@ module AIP {
             }
             else if(noti.notiType === "saveFailed"){
                 var n1 = new Notification({
-                    message: noti.data, //+
+                    message: noti.data,
                     type: "error",
                     flash: true
                 });
@@ -381,7 +340,6 @@ module AIP {
                 $("#title-panel").height() -
                 $("#header-main-section").height() +
                 $(".status-rules").height() + 250
-            // $("#outerFooter").height() - 30;
             return {"min-height": containerHeight};
         }
         getTemplateContentHeight() {
@@ -436,33 +394,32 @@ module AIP {
         checkEditchanges()
         {
             var that=this;
-            while (notifications.length != 0) {
+            while (notifications.length !== 0) {
                 notifications.remove(notifications.first())
             }
             if (that.actionItemDataChanged) {
 
                 var n = new Notification({
                     message: this.$filter("i18n_aip")( "aip.admin.actionItem.saveChanges"),
-                    type: "warning",
+                    type: "warning"
                 });
                 n.addPromptAction(this.$filter("i18n_aip")("aip.common.text.no"), function () {
                     notifications.remove(n);
 
-                })
+                });
                 n.addPromptAction(this.$filter("i18n_aip")("aip.common.text.yes"), function () {
                     that.actionItemDataChanged=false;
                     that.$rootScope.DataChanged=false;
                     if (that.redirectval==="NoData")
                     {
                         that.reset();
-                        // location.href = window.location.href;
                     }
                     else {
                         that.reset();
                         location.href = that.redirectval;
                     }
                     notifications.remove(n);
-                })
+                });
                 notifications.addNotification(n);
             }
             else
@@ -477,7 +434,7 @@ module AIP {
             });
             var item2Properties = item2.map((item) => {
                 return [item.process.name, item.persona];
-            })
+            });
 
             if ( angular.equals(item1Properties, item2Properties)) {
                 return true;
@@ -511,7 +468,7 @@ module AIP {
 
                     }
                     if(response.data.success){
-                        var notiParams = {};
+                        notiParams = {};
 
                         notiParams = {
                             notiType: "saveSuccess",
@@ -525,7 +482,7 @@ module AIP {
 
                     }
                     else{
-                        var notiParams = {};
+                        notiParams = {};
 
                         notiParams = {
                             notiType: "saveFailed",
@@ -544,7 +501,6 @@ module AIP {
         }
 
         saveBlocks() {
-            var that=this;
             //save selected items then exit edit mode
             //this.editMode = false;
             this.isSaving = true;

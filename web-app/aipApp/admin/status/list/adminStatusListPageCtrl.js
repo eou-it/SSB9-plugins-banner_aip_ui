@@ -24,11 +24,9 @@ var AIP;
             this.modalInstance;
             this.init();
             angular.element($window).bind('resize', function () {
-                //$scope.onResize();
                 $scope.$apply();
             });
             angular.element($window).bind('resize', function () {
-                //$scope.onResize();
                 $scope.$apply();
             });
         }
@@ -151,7 +149,6 @@ var AIP;
                     });
                     notifications.addNotification(n);
                     _this.$scope.refreshGrid(true); //use scope to call grid directive's function
-                    // this.refreshGrid(true);
                 }
                 else {
                     //TODO:: send error notification
@@ -171,7 +168,7 @@ var AIP;
         AdminStatusListPageCtrl.prototype.deleteSystemRecord = function (map, name, $scope) {
             var n = new Notification({
                 message: this.$filter("i18n_aip")("aip.common.action.item.status.delete.warning"),
-                type: "warning",
+                type: "warning"
             });
             var actionService = this.adminActionStatusService;
             var keyValue = {
@@ -206,26 +203,6 @@ var AIP;
             });
             notifications.addNotification(n);
         };
-        /*
-
-        add() {
-            this.$state.go("admin-group-add");
-        }
-
-        open() {
-            this.adminActionStatusService.getGroupDetail(this.$state.params.status).then((response) => {
-                if(response.group) {
-                    this.$state.go("admin-group-open", {data: response.group});
-                } else {
-                    //todo: output error in notification center?
-                    console.log("fail");
-                }
-            }, (err) => {
-                //TODO:: handle error call
-                console.log(err);
-            });
-        }
-        */
         AdminStatusListPageCtrl.prototype.getHeight = function () {
             var containerHeight = $(document).height() -
                 $("#breadcrumb-panel").height() -
@@ -240,8 +217,6 @@ var AIP;
             var deferred = this.$q.defer();
             this.adminActionStatusService.fetchData(query)
                 .then(function (response) {
-                // this.gridData = response;
-                // this.gridData.header = this.header;
                 deferred.resolve(response);
             }, function (error) {
                 console.log(error);
@@ -251,8 +226,6 @@ var AIP;
         };
         AdminStatusListPageCtrl.prototype.selectRecord = function (data) {
             this.selectedRecord = data;
-            //this.adminActionStatusService.enableGroupOpen(data.id);
-            //this.$state.params.grp = data.id;
         };
         return AdminStatusListPageCtrl;
     }());

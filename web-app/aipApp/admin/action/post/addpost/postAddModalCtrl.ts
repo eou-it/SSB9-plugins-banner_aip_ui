@@ -79,18 +79,6 @@ module AIP {
 
         }
 
-        /*checkAll() {
-             if (this.checkAll === true) {
-                 angular.forEach(this.actionItemModal, (item) => {
-            item.check = true;
-                });
-                } else {
-             angular.forEach(this.actionItemModal, (item) => {
-            item.check = false;
-                 });
-             }
-            }*/
-
         isCheckAll() {
             var checked = this.actionItemModal.filter((item) => {
                 return item.check && item.check === true;

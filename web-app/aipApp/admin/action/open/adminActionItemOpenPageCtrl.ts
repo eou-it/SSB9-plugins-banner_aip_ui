@@ -95,7 +95,6 @@ module AIP {
 
             this.init();
             angular.element($window).bind('resize', function () {
-                // $scope.onResize();
                 if (!$scope.$root.$phase) {
                     $scope.$apply();
                 }
@@ -147,7 +146,7 @@ module AIP {
                     message = this.$filter("i18n_aip")("aip.common.edit.successful");
                 }
                 var n = new Notification({
-                    message: message, //+
+                    message: message,
                     type: "success",
                     flash: true
                 });
@@ -165,7 +164,6 @@ module AIP {
                 $("#title-panel").height() -
                 $("#header-main-section").height() +
                 $(".status-rules").height() + 250
-            // $("#outerFooter").height() - 30;
             return {"min-height": containerHeight};
         }
 
@@ -196,9 +194,7 @@ module AIP {
                     console.log(this.actionItemPostedStatus);
                     if (this.templateSelect) {
                         this.selectTemplate();
-                        //this.trustActionItemContent();
                     } else {
-                        //this.trustActionItemContent();
                     }
                     deferred.resolve(this.openPanel("overview"));
                 }, (err) => {
@@ -212,7 +208,7 @@ module AIP {
             this.adminActionService.getActionItemTemplates()
                 .then((response: AIP.IActionItemOpenResponse) => {
                     this.templates = response.data;
-                    console.log(this.templates)
+                    console.log(this.templates);
                     deferred.resolve(this.openPanel("content"));
                     this.getTemplateSource();
                     this.contentChanged = false;
@@ -288,22 +284,6 @@ module AIP {
             }
         }
         validateEdit(type) {
-     /*       if (this.actionItem.actionItemPostedStatus === "Y") {
-                var n = new Notification({
-                    message: this.$filter("i18n_aip")("aip.admin.group.content.edit.posted.warning"),
-                    type: "warning"
-                });
-                n.addPromptAction(this.$filter("i18n_aip")("aip.common.text.no"), () => {
-                    notifications.remove(n);
-                });
-                n.addPromptAction(this.$filter("i18n_aip")("aip.common.text.yes"), ()=> {
-                    notifications.remove(n);
-                    if(type === "overview") {
-                        this.$state.go("admin-action-edit", {data: {group:this.actionItem.actionItemId, isEdit: true}});
-                    }
-                });
-                notifications.addNotification(n);
-            } else {*/
               console.log("Type val",type);
               console.log(this.actionItem.actionItemId);
                 if(type === "overview") {
@@ -407,22 +387,11 @@ module AIP {
                     }
 
                 }
-                /*
-                 if(actionItemTemplate) {
-                 actionItemTemplate.select2({
-                 width: "25em",
-                 minimumResultsForSearch: Infinity,
-                 placeholderOption:'first'
-                 });
-                 }*/
                 $(".actionItemContent").height($(".actionItemElement").height() - $(".xe-tab-nav").height());
                 //TODO: find better and proper way to set defalut value in SELECT2 - current one is just dom object hack.
                 //action item selected temlate
                 if (this.selectedTemplate) {
                     if (this.templates[0].sourceInd == "B") {
-                        /*
-                         $(".select2-container.actionItemSelect .select2-chosen")[0].innerHTML = this.actionItem.actionItemTemplateName + " (" + this.$filter("i18n_aip")("aip.common.baseline") + ")";
-                         */
                     }
                 }
             }, 500);
@@ -512,19 +481,19 @@ module AIP {
         checkEditchangesDone(option) {
 
             var that=this;
-            while (notifications.length != 0) {
+            while (notifications.length !== 0) {
                 notifications.remove(notifications.first())
             }
             if (that.actionItemDataChanged || that.contentChanged) {
 
                 var n = new Notification({
                     message: this.$filter("i18n_aip")( "aip.admin.actionItem.saveChanges"),
-                    type: "warning",
+                    type: "warning"
                 });
                 n.addPromptAction(this.$filter("i18n_aip")("aip.common.text.no"), function () {
                     notifications.remove(n);
 
-                })
+                });
                 n.addPromptAction(this.$filter("i18n_aip")("aip.common.text.yes"), function () {
                     that.actionItemDataChanged=false;
                     that.$rootScope.DataChanged=false;
@@ -532,14 +501,13 @@ module AIP {
                     if (that.redirectval==="NoData")
                     {
                         that.reset(option);
-                        //location.href = window.location.href;
                     }
                     else {
                         location.href = that.redirectval;
                     }
                     notifications.remove(n);
 
-                })
+                });
                 notifications.addNotification(n);
             }
             else
@@ -624,7 +592,7 @@ module AIP {
             this.adminActionStatusService.getRules(this.actionFolder)
                 .then((response) => {
                     this.rules = response.data;
-                    console.log(this.rules)
+                    console.log(this.rules);
                     angular.forEach(this.rules, (item) => {
                         //item.statusRuleLabelText = this.trustActionItemRules(item.statusRuleLabelText);
                         item.statusRuleLabelText = this.$sce.trustAsHtml(this.$filter("html")(item.statusRuleLabelText)).toString();
@@ -656,7 +624,6 @@ module AIP {
                     });
 
                     deferred.resolve();
-                    // deferred.resolve(this.openPanel("content"));
                 }, (error) => {
                     console.log(error);
                 });
@@ -676,7 +643,7 @@ module AIP {
                     return false
                 } else {
                     var invalidRule = this.rules.filter((item) => {
-                        var statusIdExists = true
+                        var statusIdExists = true;
 
                         if (!item.status.id) {
                             statusIdExists = item.status.actionItemStatusId

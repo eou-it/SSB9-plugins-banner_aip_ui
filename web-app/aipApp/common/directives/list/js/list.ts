@@ -38,7 +38,7 @@ module AIPUI {
         controller($scope) {
             $scope.getStyle = function(key) {
                 return $scope.stylefunction({key: key});
-            }
+            };
             $scope.selectItem = function(group, row, evt) {
                 this.resetSelection();
                 this.addSelection(evt.currentTarget);
@@ -48,36 +48,36 @@ module AIPUI {
                         , 100
                     })
                 });
-            }
+            };
 
             $scope.openGroup = function(groupId) {
                 //TODO::Expand/Collapse group event
                 this.resetSelection();
                 $scope.togglegroup({state: {groupId:groupId, open:!this.isOpen}});
-            }
+            };
             $scope.displayGroupInfo = function(groupId, evt) {
-                evt.preventDefault()
+                evt.preventDefault();
                 evt.stopPropagation();
                 this.resetSelection();
                 $scope.togglegroup({state: {groupId:groupId, open:true}});
                 $scope.isOpen = true;
                 $scope.showgroupinfo({groupId:groupId});
-            }
+            };
             $scope.completedItem = function() {
                 var items = $scope.itemgroup.items.filter((_item) => {
                     return _item.status !== "Pending";
                 });
                 return items;
-            }
+            };
             $scope.resetSelection = function() {
                 $(".list-item").removeClass("selected");
-            }
+            };
             $scope.addSelection = function(element) {
                 $(element).addClass("selected");
-            }
+            };
             $scope.changeFocus = function(element) {
                 $(element).focus();
-            }
+            };
             $scope.focusing = function(evt) {
                 var target = evt.target;
                 if(target.className === "accordion-toggle") {
@@ -86,16 +86,6 @@ module AIPUI {
                 if(target.className === "group-instructions") {
                     $scope.selectedFocus = "description";
                 }
-
-                /*
-                if ($scope.selectedFocus === "header") {
-                    $(".row.instruction" ).removeAttr("aria-hidden" );
-                } else if ($scope.selectedFocus === "description") {
-                    $(".row.instruction" ).attr("aria-hidden", "false");
-                }
-                */
-
-
             }
         }
     }

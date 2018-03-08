@@ -92,14 +92,6 @@ var AIP;
             return defer.promise;
         };
         ItemListViewService.prototype.confirmItem = function (id) {
-            //TODO: update datbase
-            //angular.forEach(this.userItems, (item) => {
-            //    angular.forEach(item.items, (_item) => {
-            //        if(_item.id == id) {
-            //            _item.state = "aip.user.list.item.state.complete";
-            //        }
-            //    });
-            //});
         };
         return ItemListViewService;
     }());

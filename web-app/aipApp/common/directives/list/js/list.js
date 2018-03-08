@@ -78,13 +78,6 @@ var AIPUI;
                 if (target.className === "group-instructions") {
                     $scope.selectedFocus = "description";
                 }
-                /*
-                if ($scope.selectedFocus === "header") {
-                    $(".row.instruction" ).removeAttr("aria-hidden" );
-                } else if ($scope.selectedFocus === "description") {
-                    $(".row.instruction" ).attr("aria-hidden", "false");
-                }
-                */
             };
         };
         return AIPListDirective;

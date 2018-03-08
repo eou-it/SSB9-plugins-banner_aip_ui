@@ -444,7 +444,7 @@ module AIP {
                 folderId: parseInt(actionItem.folder.id),
                 description: actionItem.description,
                 status: actionItem.status,
-                actionItemId:actionItem.id,
+                actionItemId:actionItem.id
 
 
             };

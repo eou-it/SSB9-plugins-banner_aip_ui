@@ -6,7 +6,7 @@
 ///<reference path="../../../common/services/spinnerService.ts"/>
 var AIP;
 (function (AIP) {
-    var AdminGroupAddPageCtrl = /** @class */ (function () {
+    var AdminGroupAddPageCtrl = (function () {
         function AdminGroupAddPageCtrl($scope, $rootScope, $window, AdminGroupService, $q, SpinnerService, $state, $filter, $sce, $timeout, CKEDITORCONFIG) {
             var _this = this;
             this.$inject = ["$scope", "$rootScope", "$window", "AdminGroupService", "$q", "SpinnerService", "$state", "$filter", "$sce", "$timeout", "CKEDITORCONFIG"];
@@ -198,13 +198,13 @@ var AIP;
         };
         AdminGroupAddPageCtrl.prototype.checkchangesDone = function () {
             var that = this;
-            while (notifications.length != 0) {
+            while (notifications.length !== 0) {
                 notifications.remove(notifications.first());
             }
             if (that.actionItemDataChanged) {
                 var n = new Notification({
                     message: this.$filter("i18n_aip")("aip.admin.actionItem.saveChanges"),
-                    type: "warning",
+                    type: "warning"
                 });
                 n.addPromptAction(this.$filter("i18n_aip")("aip.common.text.no"), function () {
                     notifications.remove(n);
@@ -226,13 +226,6 @@ var AIP;
                 that.$state.go("admin-group-list");
             }
         };
-        /* detectGroupContentChange(content) {
-             if(!this.editMode) {
-                 if (this.groupInfo.description !== "<p></p>" && this.groupInfo.description !== undefined) {
-                     this.dataChanged();
-                 }
-             }
-         }*/
         AdminGroupAddPageCtrl.prototype.isChanged = function () {
             var changed = false;
             if (this.editMode) {
@@ -330,11 +323,6 @@ var AIP;
         AdminGroupAddPageCtrl.prototype.saveErrorCallback = function (invalidFields, errors, message) {
             var _this = this;
             //todo: iterate through errors given back through contraints
-            /*
-            errors.forEach( function(e, i) {
-                message += (e[i]);
-            });
-            */
             var message = this.$filter("i18n_aip")(message || "aip.admin.group.add.error.blank");
             if (errors != null) {
                 message = errors[0];

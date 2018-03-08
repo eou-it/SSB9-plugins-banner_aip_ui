@@ -19,17 +19,9 @@ var AIP;
             this.adminGroupService = AdminGroupService;
             this.init();
             angular.element($window).bind('resize', function () {
-                //$scope.onResize();
                 $scope.$apply();
             });
-            /*
-        $scope.$watch("[vm.groupDetailResponse, vm.groupInfo]" , (newVal, oldVal) => {
-            if(!$scope.$$phase) {
-                $scope.apply();
-            }
-        });*/
             angular.element($window).bind('resize', function () {
-                //$scope.onResize();
                 $scope.$apply();
             });
         }
@@ -76,7 +68,6 @@ var AIP;
                     name: "folderName",
                     title: this.$filter("i18n_aip")("aip.list.grid.folder"),
                     ariaLabel: this.$filter("i18n_aip")("aip.list.grid.folder"),
-                    // width: "100px",
                     options: {
                         sortable: true,
                         visible: true,
@@ -86,7 +77,6 @@ var AIP;
                     name: "groupStatus",
                     title: this.$filter("i18n_aip")("aip.list.grid.status"),
                     ariaLabel: this.$filter("i18n_aip")("aip.list.grid.status"),
-                    // width: "100px",
                     options: {
                         sortable: true,
                         visible: true,
@@ -96,7 +86,6 @@ var AIP;
                     name: "postedInd",
                     title: this.$filter("i18n_aip")("aip.list.grid.postInd"),
                     ariaLabel: this.$filter("i18n_aip")("aip.list.grid.postInd"),
-                    // width: "100px",
                     options: {
                         sortable: true,
                         visible: true,
@@ -106,7 +95,6 @@ var AIP;
                     name: "groupUserId",
                     title: this.$filter("i18n_aip")("aip.list.grid.lastUpdated"),
                     ariaLabel: this.$filter("i18n_aip")("aip.list.grid.lastUpdated"),
-                    // width: "100px",
                     options: {
                         sortable: true,
                         visible: true,
@@ -117,7 +105,6 @@ var AIP;
                     name: "groupActivityDate",
                     title: this.$filter("i18n_aip")("aip.list.grid.activityDate"),
                     ariaLabel: this.$filter("i18n_aip")("aip.list.grid.activityDate"),
-                    // width: "100px",
                     options: {
                         sortable: true,
                         visible: true,
@@ -127,7 +114,6 @@ var AIP;
                     name: "groupActions",
                     title: this.$filter("i18n_aip")("aip.list.grid.actions"),
                     ariaLabel: this.$filter("i18n_aip")("aip.list.grid.actions"),
-                    // width: "100px",
                     options: {
                         sortable: false,
                         visible: true,
@@ -164,8 +150,6 @@ var AIP;
             var deferred = this.$q.defer();
             this.adminGroupService.fetchData(query)
                 .then(function (response) {
-                // this.gridData = response;
-                // this.gridData.header = this.header;
                 deferred.resolve(response);
             }, function (error) {
                 console.log(error);
@@ -174,9 +158,6 @@ var AIP;
             return deferred.promise;
         };
         AdminGroupListPageCtrl.prototype.selectRecord = function (data) {
-            // this.selectedRecord = data;
-            // this.adminGroupService.enableGroupOpen(data.id);
-            // this.$state.params.grp = data.id;
         };
         AdminGroupListPageCtrl.prototype.deleteBlock = function (cantDeleteMessage) {
             var n = new Notification({
@@ -189,7 +170,7 @@ var AIP;
         AdminGroupListPageCtrl.prototype.deleteUnblock = function (map, name, $scope) {
             var n = new Notification({
                 message: this.$filter("i18n_aip")("aip.admin.group.delete.warning"),
-                type: "warning",
+                type: "warning"
             });
             var actionService = this.adminGroupService;
             var keyValue = {
