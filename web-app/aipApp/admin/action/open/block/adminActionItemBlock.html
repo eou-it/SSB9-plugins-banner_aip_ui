@@ -83,7 +83,7 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
                     <div class="col-xs-8 col-sm-12 col-md-12  col-lg-3 smalldeviceglobal">
                         <label for="" class="titleValue" >{{"aip.admin.addBlockProcessData.process"|i18n_aip}}:</label>
                         <xe-ui-select id="select2actionItems" ng-model="vm.selected[index].process" theme="select2" ng-disabled="disabled" ng-change="vm.dataChanged()">
-                            <xe-ui-select-match placeholder="Select">
+                            <xe-ui-select-match placeholder={{"aip.admin.action.selected.groupName.name"|i18n_aip}}>
                                 <div class="row actionItemName">{{vm.selected[index].process.name}}</div>
                             </xe-ui-select-match>
                             <xe-ui-select-choices group-by="vm.groupFn" repeat="item in vm.allActionItems.process | orderBy:'item.processName' | propsFilter:{name: $select.search} ">
@@ -104,7 +104,7 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
                         <label for="" class="titleValue" >{{"aip.admin.addBlockProcessData.process.persona"|i18n_aip}}:</label>
                         <xe-ui-select id="postActionItemPopulation" ng-model="vm.selected[index].persona" theme="select2" ng-change="vm.dataChanged()">
 
-                            <xe-ui-select-match placeholder="Select">
+                            <xe-ui-select-match placeholder={{"aip.admin.action.selected.groupName.name"|i18n_aip}}>
                                 <div class="row actionItemName">{{vm.allActionItems.persona[vm.selected[index].persona]}}</div>
                                 <div>Select</div>
                             </xe-ui-select-match>
