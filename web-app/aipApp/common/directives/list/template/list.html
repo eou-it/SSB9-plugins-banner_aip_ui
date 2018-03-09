@@ -51,16 +51,16 @@
                                 <span class="data-label" ng-if="row['status']==='Completed'">{{'aip.user.action.item.status.completed'|i18n_aip}}</span>
                                 <span class="data-label" ng-if="row['status']==='Pending'">{{'aip.user.action.item.status.pending'|i18n_aip}}</span>
                                 <span class="data-label" ng-if="row['status'] !=='Pending' && row['status'] !== 'Completed' && row['status']!== 'Rejected'">{{row['status']}}</span>
-                                <span class="notification-icon" ng-if="row['isBlocking']"></span>
+                                <!--<span class="notification-icon" ng-if="row['isBlocking']"></span>-->
                             </span>
                         </span>
 
 
                         <span class="completedDate" ng-if="key==='completedDate'&&row[key]!==null">
-                            <span class="data-label" ng-if="row['status']==='Completed'">{{'aip.common.text.date.completed'|i18n_aip}}</span>
-                            <span class="data-label" ng-if="row['status']==='Rejected'">{{'aip.common.text.date.rejected'|i18n_aip}}</span>
+                            <span class="data-label" >{{'aip.common.text.date.response.saved'|i18n_aip}}</span>
+                           <!-- <span class="data-label" ng-if="row['status']==='Rejected'">{{'aip.common.text.date.rejected'|i18n_aip}}</span>-->
                             {{row[key]}}
-                            <span class="notification-icon" ng-if="row['isBlocking']"></span>
+                           <!-- <span class="notification-icon" ng-if="row['isBlocking']"></span>-->
                         </span>
                         <span class="completedDate" ng-if="key==='completedDate'&&row[key]!==null"><p><span class="data-label">{{'aip.user.action.item.last.response'|i18n_aip}}</span>
                         {{row['currentResponse']}}</p></span>
