@@ -14,7 +14,7 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
             <div class="groupElement col-xs-12 col-sm-5">
                 <div class="row" ng-class="{'has-error':vm.groupInfo.name.length>60}">
                     <input id="groupName" maxlength="60" aria-valuemax="60" type="text" class="form-control" ng-model="vm.groupInfo.name"
-                           ng-change="vm.dataChanged()" ng-disabled="vm.editMode" placeholder="Group Name" aria-describedby="groupAdd-Name" required="required" aria-required="true" >
+                           ng-change="vm.dataChanged()" ng-disabled="vm.editMode" placeholder={{"aip.common.group.place.holder.name"|i18n_aip}} aria-describedby="groupAdd-Name" required="required" aria-required="true" >
                 </div>
                 <div class="alert alert-danger" role="alert" ng-if="vm.groupInfo.title.length>60">
                     <i class="fa fa-exclamation-circle" aria-hidden="true"></i>
@@ -73,7 +73,7 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
             <div class="groupElement col-xs-12 col-sm-5">
                 <div class="row" ng-class="{'has-error':vm.groupInfo.title.length>60}">
                     <input id="groupTitle" maxlength="60" aria-valuemax="60" type="text" class="form-control" ng-model="vm.groupInfo.title"
-                           ng-change="vm.dataChanged()"  placeholder="Group title" aria-describedby="groupAdd-Title" required="required" aria-required="true" >
+                           ng-change="vm.dataChanged()"  placeholder={{"aip.common.group.title"|i18n_aip}} aria-describedby="groupAdd-Title" required="required" aria-required="true" >
                 </div>
                 <div class="alert alert-danger" role="alert" ng-if="vm.groupInfo.title.length>60">
                     <i class="fa fa-exclamation-circle" aria-hidden="true"></i>
