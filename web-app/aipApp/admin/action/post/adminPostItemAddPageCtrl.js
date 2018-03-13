@@ -6,7 +6,7 @@
 ///<reference path="../../../common/services/admin/adminActionService.ts"/>
 var AIP;
 (function (AIP) {
-    var AdminPostItemAddPageCtrl = (function () {
+    var AdminPostItemAddPageCtrl = /** @class */ (function () {
         function AdminPostItemAddPageCtrl($scope, $q, $state, $uibModal, $filter, $timeout, SpinnerService, APP_ROOT, AdminActionStatusService, AdminActionService) {
             this.$inject = ["$scope", "$q", "$state", "$filter", "$timeout", "SpinnerService", "AdminActionStatusService", "AdminActionService", "$uibModal", "APP_ROOT", "datePicker"];
             $scope.vm = this;
@@ -349,15 +349,17 @@ var AIP;
                 this.sendTime = null;
                 this.timezone.timezoneId = null;
             }
-            if (this.editMode && !(this.sendTime instanceof Date)) {
-                var hourEnd = this.sendTime.indexOf(":");
-                var H = +this.sendTime.substr(0, hourEnd);
-                var h = H % 12 || 12;
-                var hoursStr = h < 10 ? "0" + h : h;
-                this.sendTime = hoursStr + this.sendTime.substr(hourEnd + 1, 2);
-            }
             else {
-                this.sendTime = this.$filter("date")(this.sendTime, "HHmm");
+                if (this.editMode && !(this.sendTime instanceof Date)) {
+                    var hourEnd = this.sendTime.indexOf(":");
+                    var H = +this.sendTime.substr(0, hourEnd);
+                    var h = H % 12 || 12;
+                    var hoursStr = h < 10 ? "0" + h : h;
+                    this.sendTime = hoursStr + this.sendTime.substr(hourEnd + 1, 2);
+                }
+                else {
+                    this.sendTime = this.$filter("date")(this.sendTime, "HHmm");
+                }
             }
             this.adminActionService.savePostActionItem(this.postActionItemInfo, this.selected, this.modalResults, this.selectedPopulation, this.postNow, this.sendTime, this.timezone.timezoneId, this.regeneratePopulation)
                 .then(function (response) {

@@ -482,15 +482,16 @@ module AIP {
             if(this.postNow===true){
                 this.sendTime=null;
                 this.timezone.timezoneId=null;
-            }
-            if(this.editMode && !(this.sendTime instanceof Date) ){
-                var hourEnd = this.sendTime.indexOf(":");
-                var H = +this.sendTime.substr(0, hourEnd);
-                var h = H % 12 || 12;
-                var hoursStr = h < 10? "0"+h : h;
-                this.sendTime = hoursStr + this.sendTime.substr(hourEnd+1, 2) ;
-            }else{
-                this.sendTime =this.$filter("date")(this.sendTime, "HHmm");
+            } else {
+                if (this.editMode && !(this.sendTime instanceof Date)) {
+                    var hourEnd = this.sendTime.indexOf(":");
+                    var H = +this.sendTime.substr(0, hourEnd);
+                    var h = H % 12 || 12;
+                    var hoursStr = h < 10 ? "0" + h : h;
+                    this.sendTime = hoursStr + this.sendTime.substr(hourEnd + 1, 2);
+                } else {
+                    this.sendTime = this.$filter("date")(this.sendTime, "HHmm");
+                }
             }
             this.adminActionService.savePostActionItem(this.postActionItemInfo, this.selected, this.modalResults, this.selectedPopulation, this.postNow,this.sendTime,this.timezone.timezoneId, this.regeneratePopulation)
                 .then((response: AIP.IPostActionItemSaveResponse) => {
