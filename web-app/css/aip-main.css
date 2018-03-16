@@ -707,7 +707,7 @@ ol.selected-group > li > button {
       .actionItemAddContainer .actionItemControl .actionItemButton span {
         padding-left: 24px; }
         .actionItemAddContainer .actionItemControl .actionItemButton span button {
-          min-width: 100px; }
+          min-width: 9px; }
   @media (min-width: 769px) {
     .actionItemAddContainer .actionItemButton {
       margin-left: 10px; } }
@@ -1158,7 +1158,7 @@ ol.selected-group > li > button {
       .actionItemAddContainer .actionItemControl .actionItemButton span {
         padding-left: 24px; }
         .actionItemAddContainer .actionItemControl .actionItemButton span button {
-          min-width: 100px;
+          min-width: 95px;
           margin-left: 3px; }
   .actionItemAddContainer input[type="checkbox"] {
     -webkit-appearance: initial;
