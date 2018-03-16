@@ -54,7 +54,6 @@ var AIP;
             var _this = this;
             this.spinnerService.showSpinner(true);
             var allPromises = [];
-            var deferred = this.$q.defer();
             this.postActionItemInfo = {};
             this.editMode = this.$state.params.isEdit === "true" ? true : false;
             this.postIDvalue = this.$state.params.postIdval;
@@ -62,7 +61,6 @@ var AIP;
                 .then(function (response) {
                 _this.groupList = response.data;
                 var postActionItemGroup = $("#postActionItemGroup");
-                //this.postActionItemInfo["group"] = [];
                 _this.postActionItemInfo.group = _this.groupList;
             }));
             allPromises.push(this.adminActionService.getPopulationlist()
@@ -88,7 +86,6 @@ var AIP;
                 _this.timezones = response.data.timezones;
                 var timeZoneOffset = new Date().getTimezoneOffset();
                 var offset = "(GMT" + ((timeZoneOffset < 0 ? '+' : '-') + _this.pad(parseInt(Math.abs(timeZoneOffset / 60)), 2) + ":" + _this.pad(Math.abs(timeZoneOffset % 60), 2)) + ")";
-                //this.defaultTimeZone = offset;
                 var finalValue = '';
                 angular.forEach(_this.timezones, function (key, value) {
                     var GMTString = key.stringOffset;
@@ -191,7 +188,6 @@ var AIP;
             this.changeFlag = true;
             this.itemLength = 0;
             this.modalResult = [];
-            var groupId = this.$scope;
             this.adminActionService.getGroupActionItem(this.selected.groupId)
                 .then(function (response) {
                 _this.actionItemList = response.data;
@@ -250,7 +246,7 @@ var AIP;
                     ChangeFlag: function () {
                         return _this.changeFlag;
                     }
-                },
+                }
             });
             this.modalInstance.result.then(function (result) {
                 _this.modalResults = [];
@@ -330,7 +326,7 @@ var AIP;
             if (that.editMode === true && that.dirtyFlag === true) {
                 var n = new Notification({
                     message: this.$filter("i18n_aip")("aip.common.action.post.status.edit.warning"),
-                    type: "warning",
+                    type: "warning"
                 });
                 n.addPromptAction(this.$filter("i18n_aip")("aip.common.text.no"), function () {
                     that.$state.go("admin-post-list");
@@ -353,15 +349,17 @@ var AIP;
                 this.sendTime = null;
                 this.timezone.timezoneId = null;
             }
-            if (this.editMode && !(this.sendTime instanceof Date)) {
-                var hourEnd = this.sendTime.indexOf(":");
-                var H = +this.sendTime.substr(0, hourEnd);
-                var h = H % 12 || 12;
-                var hoursStr = h < 10 ? "0" + h : h;
-                this.sendTime = hoursStr + this.sendTime.substr(hourEnd + 1, 2);
-            }
             else {
-                this.sendTime = this.$filter("date")(this.sendTime, "HHmm");
+                if (this.editMode && !(this.sendTime instanceof Date)) {
+                    var hourEnd = this.sendTime.indexOf(":");
+                    var H = +this.sendTime.substr(0, hourEnd);
+                    var h = H % 12 || 12;
+                    var hoursStr = h < 10 ? "0" + h : h;
+                    this.sendTime = hoursStr + this.sendTime.substr(hourEnd + 1, 2);
+                }
+                else {
+                    this.sendTime = this.$filter("date")(this.sendTime, "HHmm");
+                }
             }
             this.adminActionService.savePostActionItem(this.postActionItemInfo, this.selected, this.modalResults, this.selectedPopulation, this.postNow, this.sendTime, this.timezone.timezoneId, this.regeneratePopulation)
                 .then(function (response) {
@@ -375,6 +373,7 @@ var AIP;
                     _this.$state.go("admin-post-list", { noti: notiParams, data: response.data.savedJob.id });
                 }
                 else {
+                    _this.sendTime = ''; // reset it to blank
                     _this.saveErrorCallback(response.data.message);
                 }
             }, function (err) {

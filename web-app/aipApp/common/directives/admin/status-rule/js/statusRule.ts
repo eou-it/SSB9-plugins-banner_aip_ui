@@ -40,8 +40,7 @@ module AIPUI {
         controller($scope) {
 
             $scope.init = function(){
-                // $scope.addRule();
-            }
+            };
 
 
             $scope.addRule=function($event){
@@ -51,17 +50,16 @@ module AIPUI {
                         statusName: "",
                         status: $scope.status[0]
                     }
-                )
+                );
 
                 setTimeout(() => {
                     var btnTarget = $("input#response-"+$scope.rules.length) /*+ $scope.rules.length*/;
                     $(btnTarget).focus();
                 }, 500);
 
-            }
+            };
             $scope.getState = function(id) {
-                //$scope.itemstate(id)
-            }
+            };
 
             $scope.detectRuleChange = function() {
                 $scope.contentChanged = true;
@@ -89,8 +87,7 @@ module AIPUI {
                     }, 500);
                 }
                 this.detectRuleChange();
-                //$scope.setFocus($event, first);
-            }
+            };
             $scope.moveDown = function(item, $event) {
                 var idx = $scope.rules.indexOf(item);
                 var pos = idx + 1;
@@ -110,19 +107,19 @@ module AIPUI {
                 }
                 this.detectRuleChange();
 
-            }
+            };
             $scope.isLast = function(item) {
                 if ($scope.rules.indexOf(item) === $scope.rules.length -1 ) {
                     return true;
                 }
                 return false;
-            }
+            };
             $scope.isFirst = function(item) {
                 if ($scope.rules.indexOf(item) === 0 ) {
                     return true;
                 }
                 return false;
-            }
+            };
             $scope.removeRule = function(item, $event) {
                 var idx = $scope.rules.indexOf(item);
 

@@ -110,6 +110,7 @@ aip-list {
             text-decoration: underline;
             color: $link-color;
           }
+
           .group-progress {
             padding: 0;
             .progress {
@@ -121,6 +122,7 @@ aip-list {
                 border-radius: 0;
                 background-color: $progressbar-color;
                 box-shadow: none;
+
                 span {
                   color: $progressbar-text;
                   text-align: right;
@@ -130,7 +132,10 @@ aip-list {
                   width: auto;
                   white-space: nowrap;
                 }
+
+
               }
+
               &.normal {
                 .progress-bar {
                   span {
@@ -140,7 +145,11 @@ aip-list {
               }
             }
 
+
           }
+          .progresssuccessfull .progress-bar{background-color:green !important;}
+          .progresssuccessfull .progress-bar span{color:#fff !important;}
+
         }
       }
     }
@@ -148,13 +157,18 @@ aip-list {
       .list-body {
         border: 1px solid $cell-text;
         padding: 0 0 8px 0;
+
         .list-item {
           padding: 16px 8px 0 8px;
           //border-bottom: 1px solid $border-color;
-          &:hover {
+         /* &:hover {
             cursor: pointer;
             background-color: lighten($banner-color, 50%);
+          }*/
+          &:focus {
+            background-color: #F3FCFF;
           }
+
           .aipReadmore {
             word-break: normal;
             //hyphenate-character: auto;
@@ -201,12 +215,12 @@ aip-list {
               background-color: #DAD5FF;
             }
             &.reject {
-              border: 1px solid #4EC76A;
-              background-color: #C9F0C7;
-            }
-            &.approve {
               border: 1px solid #F57E7E;
               background-color: #FFDCDC;
+            }
+            &.approve {
+              border: 1px solid #4EC76A;
+              background-color: #C9F0C7;
             }
           }
           .cell.completedDate {
@@ -258,4 +272,8 @@ aip-list {
       }
     }
   }
+  .enddate{text-align: right;
+    margin-bottom: 15px;
+    font-weight: bold;
+    font-size: 11px;}
 }

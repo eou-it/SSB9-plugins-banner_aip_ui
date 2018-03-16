@@ -35,8 +35,9 @@ class AipTagLib {
     def i18n_aip_setup = {attrs ->
 
         Set keys = []
+        List exemptedList = ['default.date.format']
         grailsApplication.mainContext.getBean( 'messageSource' ).getMergedPluginProperties( LocaleContextHolder.getLocale() ).properties.each {key ->
-            if (key.key.startsWith( "aip." )) {
+            if (key.key.startsWith( "aip." ) || exemptedList.contains( key.key )) {
                 keys.add( key.key )
             }
         }
@@ -62,23 +63,6 @@ class AipTagLib {
             out << javaScriptProperties.join( "," )
         }
         out << '};\n'
-
-        ///////////////////
-        //TODO:: delete below test code
-        /*
-        def plugin = grailsApplication.mainContext.pluginManager.getGrailsPlugin( "banner-aip-ui" )
-        def source = grailsApplication.mainContext.getBean('messageSource')
-
-        out << 'window.i18n_aip_bundle = "'
-        out << source.getPluginBundles(plugin).toString()
-        out << '"\n'
-        out << 'window.i18n_aip_bundle_plugins = "'
-        out << source.getPluginBaseNames().toString()
-        out << '"\n'
-
-        out << "window.i18n_temp = ${map as JSON};\n"
-        //////////////
-        */
     }
 
 

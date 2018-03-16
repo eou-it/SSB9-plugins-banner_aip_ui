@@ -1,3 +1,6 @@
+/*******************************************************************************
+ Copyright 2018 Ellucian Company L.P. and its affiliates.
+ ********************************************************************************/
 //<reference path="../../../../../typings/tsd.d.ts"/>
 ///<reference path="../../../../common/services/admin/adminActionStatusService.ts"/>
 
@@ -56,7 +59,7 @@ module AIP {
                                 for (var i = 0; i < this.actionItemModal.length; i++) {
                                     for (var j = 0; j < this.selectedActionItemList.length; j++) {
                                           if (this.actionItemModal[i].actionItemId === this.selectedActionItemList[j].actionItemId) {
-                                            
+
                                             actionItemModal[i].check = true;
                                         }
                                     }
@@ -64,7 +67,7 @@ module AIP {
                             }
 
 
-                  
+
                 }
             });
             this.actionFolderGroupModal=actionFolderGroupModal;
@@ -75,18 +78,6 @@ module AIP {
             this.errorMessage = {};
 
         }
-
-        /*checkAll() {
-             if (this.checkAll === true) {
-                 angular.forEach(this.actionItemModal, (item) => {
-            item.check = true;
-                });
-                } else {
-             angular.forEach(this.actionItemModal, (item) => {
-            item.check = false;
-                 });
-             }
-            }*/
 
         isCheckAll() {
             var checked = this.actionItemModal.filter((item) => {

@@ -17,7 +17,7 @@ module AIP {
         specialCharacterTranslation():void;
     }
     export class AdminActionItemOpenPageCtrl {
-        $inject = ["$scope", "$q", "$state", "$filter", "$sce", "$window", "$templateRequest", "$templateCache", "$compile", "$timeout", "$interpolate", "SpinnerService", "AdminActionService", "AdminActionStatusService", "APP_ROOT", "CKEDITORCONFIG"];
+        $inject = ["$scope","$rootScope", "$q", "$state", "$filter", "$sce", "$window", "$templateRequest", "$templateCache", "$compile", "$timeout", "$interpolate", "SpinnerService", "AdminActionService", "AdminActionStatusService", "APP_ROOT", "CKEDITORCONFIG"];
         adminActionService: AIP.AdminActionService;
         adminActionStatusService: AIP.AdminActionStatusService;
         spinnerService: AIP.SpinnerService;
@@ -34,6 +34,7 @@ module AIP {
         actionItem;
         actionItemPostedStatus;
         $scope;
+        $rootScope;
         APP_ROOT;
         ckEditorConfig;
         templates;
@@ -50,11 +51,14 @@ module AIP {
         test;
         personaData;
         actionFolder;
+        actionItemDataChanged:boolean;
+        redirectval;
 
-        constructor($scope, $q: ng.IQService, $state, $filter, $sce, $window, $templateRequest, $templateCache, $compile,
+        constructor($scope,$rootScope, $q: ng.IQService, $state, $filter, $sce, $window, $templateRequest, $templateCache, $compile,
                     $timeout, $interpolate, SpinnerService, AdminActionService, AdminActionStatusService, APP_ROOT, CKEDITORCONFIG) {
             $scope.vm = this;
             this.$scope = $scope;
+            this.$rootScope=$rootScope;
             this.$q = $q;
             this.$state = $state;
             this.$filter = $filter;
@@ -86,9 +90,11 @@ module AIP {
             this.contentChanged;
             this.test;
             this.personaData;
+            this.actionItemDataChanged=false;
+            this.redirectval="NoData";
+
             this.init();
             angular.element($window).bind('resize', function () {
-                // $scope.onResize();
                 if (!$scope.$root.$phase) {
                     $scope.$apply();
                 }
@@ -112,13 +118,21 @@ module AIP {
                 this.contentChanged = false;
                 this.specialCharacterTranslation();
             });
-
+            var that=this;
+            this.$scope.$on("DetectChanges",function(event, args)
+            {
+                if (that.actionItemDataChanged) {
+                    that.redirectval = args.state;
+                    that.checkEditchangesDone('content');
+                }
+            });
         }
 
 
         detectContentChange(content) {
             if (this.templateSelect) {
                 this.contentChanged = true;
+                this.dataChanged();
             }
         }
 
@@ -132,7 +146,7 @@ module AIP {
                     message = this.$filter("i18n_aip")("aip.common.edit.successful");
                 }
                 var n = new Notification({
-                    message: message, //+
+                    message: message,
                     type: "success",
                     flash: true
                 });
@@ -150,7 +164,6 @@ module AIP {
                 $("#title-panel").height() -
                 $("#header-main-section").height() +
                 $(".status-rules").height() + 250
-            // $("#outerFooter").height() - 30;
             return {"min-height": containerHeight};
         }
 
@@ -181,9 +194,7 @@ module AIP {
                     console.log(this.actionItemPostedStatus);
                     if (this.templateSelect) {
                         this.selectTemplate();
-                        //this.trustActionItemContent();
                     } else {
-                        //this.trustActionItemContent();
                     }
                     deferred.resolve(this.openPanel("overview"));
                 }, (err) => {
@@ -197,7 +208,7 @@ module AIP {
             this.adminActionService.getActionItemTemplates()
                 .then((response: AIP.IActionItemOpenResponse) => {
                     this.templates = response.data;
-                    console.log(this.templates)
+                    console.log(this.templates);
                     deferred.resolve(this.openPanel("content"));
                     this.getTemplateSource();
                     this.contentChanged = false;
@@ -273,22 +284,8 @@ module AIP {
             }
         }
         validateEdit(type) {
-     /*       if (this.actionItem.actionItemPostedStatus === "Y") {
-                var n = new Notification({
-                    message: this.$filter("i18n_aip")("aip.admin.group.content.edit.posted.warning"),
-                    type: "warning"
-                });
-                n.addPromptAction(this.$filter("i18n_aip")("aip.common.text.no"), () => {
-                    notifications.remove(n);
-                });
-                n.addPromptAction(this.$filter("i18n_aip")("aip.common.text.yes"), ()=> {
-                    notifications.remove(n);
-                    if(type === "overview") {
-                        this.$state.go("admin-action-edit", {data: {group:this.actionItem.actionItemId, isEdit: true}});
-                    }
-                });
-                notifications.addNotification(n);
-            } else {*/
+              console.log("Type val",type);
+              console.log(this.actionItem.actionItemId);
                 if(type === "overview") {
                     this.$state.go("admin-action-edit", {actionItemId: this.actionItem.actionItemId, isEdit: true});
                 }
@@ -390,22 +387,11 @@ module AIP {
                     }
 
                 }
-                /*
-                 if(actionItemTemplate) {
-                 actionItemTemplate.select2({
-                 width: "25em",
-                 minimumResultsForSearch: Infinity,
-                 placeholderOption:'first'
-                 });
-                 }*/
                 $(".actionItemContent").height($(".actionItemElement").height() - $(".xe-tab-nav").height());
                 //TODO: find better and proper way to set defalut value in SELECT2 - current one is just dom object hack.
                 //action item selected temlate
                 if (this.selectedTemplate) {
                     if (this.templates[0].sourceInd == "B") {
-                        /*
-                         $(".select2-container.actionItemSelect .select2-chosen")[0].innerHTML = this.actionItem.actionItemTemplateName + " (" + this.$filter("i18n_aip")("aip.common.baseline") + ")";
-                         */
                     }
                 }
             }, 500);
@@ -444,10 +430,19 @@ module AIP {
 
         }
 
-        cancel(option) {
-            this.init();
+        dataChanged(this)
+        {
+            this.actionItemDataChanged=true;
+            this.$rootScope.DataChanged=true;
+
+        }
+        reset(option)
+        {
             var deferred = this.$q.defer();
-            this.adminActionService.getActionItemDetail(this.$state.params.data)
+            this.spinnerService.showSpinner(true);
+            var promises = [];
+            this.actionFolder = this.$state.params.actionItemId || this.$state.previousParams.actionItemId;
+            this.adminActionService.getActionItemDetail(this.actionFolder)
                 .then((response: AIP.IActionItemOpenResponse) => {
                     this.actionItem = response.data.actionItem;
                     this.selectedTemplate = this.actionItem.actionItemTemplateId;
@@ -456,16 +451,72 @@ module AIP {
                     switch (option) {
                         case "content":
                             this.templateSelect = false;
+                            promises.push(this.getStatus());
+                            promises.push(this.getRules());
+                            this.$q.all(promises).then(() => {
+                                //TODO:: turn off the spinner
+                                this.spinnerService.showSpinner(false);
+                                this.contentChanged = false;
+                            });
                             break;
                         default:
                             break;
                     }
-                    deferred.resolve(this.openPanel("overview"));
+                    deferred.resolve(this.openPanel(option));
                 }, (err) => {
                     console.log(err);
                 });
             return deferred.promise;
+
         }
+
+
+        cancel(option)
+        {
+            this.redirectval="NoData";
+            this.checkEditchangesDone(option);
+        }
+
+
+        checkEditchangesDone(option) {
+
+            var that=this;
+            while (notifications.length !== 0) {
+                notifications.remove(notifications.first())
+            }
+            if (that.actionItemDataChanged || that.contentChanged) {
+
+                var n = new Notification({
+                    message: this.$filter("i18n_aip")( "aip.admin.actionItem.saveChanges"),
+                    type: "warning"
+                });
+                n.addPromptAction(this.$filter("i18n_aip")("aip.common.text.no"), function () {
+                    notifications.remove(n);
+
+                });
+                n.addPromptAction(this.$filter("i18n_aip")("aip.common.text.yes"), function () {
+                    that.actionItemDataChanged=false;
+                    that.$rootScope.DataChanged=false;
+                    that.contentChanged=false;
+                    if (that.redirectval==="NoData")
+                    {
+                        that.reset(option);
+                    }
+                    else {
+                        location.href = that.redirectval;
+                    }
+                    notifications.remove(n);
+
+                });
+                notifications.addNotification(n);
+            }
+            else
+            {
+                that.reset(option);
+            }
+        }
+
+
 
         saveTemplate() {
             //TODO:: implement to save rules
@@ -502,6 +553,7 @@ module AIP {
                     console.log(err);
                     return {success: false};
                 }));
+
             this.$q.all(allDefer)
                 .then((response: any) => {
                     this.saving = false;
@@ -531,13 +583,16 @@ module AIP {
                     console.log(err);
                     this.saving = false;
                 });
+
+            this.actionItemDataChanged=false;
+            this.$rootScope.DataChanged=false;
         }
 
         getRules() {
             this.adminActionStatusService.getRules(this.actionFolder)
                 .then((response) => {
                     this.rules = response.data;
-                    console.log(this.rules)
+                    console.log(this.rules);
                     angular.forEach(this.rules, (item) => {
                         //item.statusRuleLabelText = this.trustActionItemRules(item.statusRuleLabelText);
                         item.statusRuleLabelText = this.$sce.trustAsHtml(this.$filter("html")(item.statusRuleLabelText)).toString();
@@ -569,7 +624,6 @@ module AIP {
                     });
 
                     deferred.resolve();
-                    // deferred.resolve(this.openPanel("content"));
                 }, (error) => {
                     console.log(error);
                 });
@@ -577,6 +631,11 @@ module AIP {
         }
 
         validateActionItemRule() {
+            if (this.contentChanged)
+            {
+                this.dataChanged();
+
+            }
             if (this.selectedTemplate && !this.saving) {
                 if (this.rules.length === 0) {
                     return true;
@@ -584,7 +643,7 @@ module AIP {
                     return false
                 } else {
                     var invalidRule = this.rules.filter((item) => {
-                        var statusIdExists = true
+                        var statusIdExists = true;
 
                         if (!item.status.id) {
                             statusIdExists = item.status.actionItemStatusId
@@ -599,6 +658,8 @@ module AIP {
                     return false;
                 }
             }
+            this.actionItemDataChanged=false;
+            this.$rootScope.DataChanged=false;
             return false;
         }
 

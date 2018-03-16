@@ -37,7 +37,6 @@ module AIP {
                         console.log( response.data );
                         this.$uibModalInstance.close( response.data );
                     } else {
-                        //this.$uibModalInstance.dismiss();
                         this.saveErrorCallback(response.data.message)
                     }
                 }, (error) => {

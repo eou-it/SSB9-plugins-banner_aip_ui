@@ -39,9 +39,9 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
                     <xe-ui-select id="postActionItemGroup" ng-change="vm.changedValue();vm.checkChanges()" ng-model="vm.selected"
                                   theme="select2" ng-disabled="disabled">
 
-                        <xe-ui-select-match class="placeholderDisplay" placeholder="Select">
+                        <xe-ui-select-match class="placeholderDisplay" placeholder={{"aip.admin.action.selected.groupName.name"|i18n_aip}}>
                             <div class="row actionItemName" ng-bind-html="vm.selected.groupName"></div>
-                            <div>{{"aip.admin.action.selected.groupName.name"|i18n_aip}}</div>
+                            <div class="select-placeholder">{{"aip.admin.action.selected.groupName.name"|i18n_aip}}</div>
                         </xe-ui-select-match>
 
                         <xe-ui-select-choices group-by="vm.groupFunc" repeat="item in vm.groupList |
@@ -59,16 +59,20 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
             <div class="actionItemElement row input-actionItem">
                 <label class="titleValue required" id="postActionItem">{{"aip.admin.action.actionItems.name"|i18n_aip}}
                 </label>
-                <span class="actionItemEdit" ng-click="vm.editPage()">{{"aip.admin.action.actionItems.add.edit"|i18n_aip}}</span>
-                <div class="actionItemLength">
-
-                    <div id="ActionItemGroup">
-                        <span ng-model="vm.itemLength" ng-if="vm.itemLength > 0">{{vm.itemLength}} {{"aip.admin.action.actionItems.itemsSelected"|i18n_aip}}</span>
-                        <span ng-model="vm.itemLength" ng-if="vm.itemLength <= 0">{{vm.itemLength}} {{"aip.admin.action.actionItems.itemsSelected"|i18n_aip}}</span>
-                    </div>
-                </div>
+            </div>
+            <div class="actionItemElement displayInstruction">
+                <div class="row">{{"aip.admin.action.actionItems.instructions"|i18n_aip}}</div>
 
             </div>
+
+            <div class="actionItemElement actionItemInfoRow row">
+                <span class="actionItemEdit" ng-click="vm.editPage()">{{"aip.admin.action.actionItems.add.edit"|i18n_aip}}</span>
+                <span id="ActionItemGroup" class="actionItemLength">
+                    <span ng-model="vm.itemLength" ng-if="vm.itemLength > 0">{{vm.itemLength}} {{"aip.admin.action.actionItems.itemsSelected"|i18n_aip}}</span>
+                    <span ng-model="vm.itemLength" ng-if="vm.itemLength <= 0">{{vm.itemLength}} {{"aip.admin.action.actionItems.itemsSelected"|i18n_aip}}</span>
+                </span>
+            </div>
+
         </div>
         <div class="row actionItemInfoRow actionItemStatus">
             <div class="actionItemElement row input-actionItem">
@@ -82,9 +86,9 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
                     <xe-ui-select id="postActionItemPopulation" ng-model="vm.selectedPopulation"  ng-change="vm.checkChanges()" theme="select2"
                                   ng-disabled="disabled">
 
-                        <xe-ui-select-match placeholder="Select">
+                        <xe-ui-select-match placeholder={{"aip.admin.action.selected.groupName.name"|i18n_aip}}>
                             <div class="row actionItemName" ng-bind-html="vm.selectedPopulation.name"></div>
-                            <div>{{"aip.admin.action.selected.groupName.name"|i18n_aip}}</div>
+                            <div class="select-placeholder">{{"aip.admin.action.selected.groupName.name"|i18n_aip}}</div>
                         </xe-ui-select-match>
 
                         <xe-ui-select-choices group-by="vm.populationFunc" repeat="item in vm.populationList |
@@ -128,9 +132,9 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
                         <div class="row input-daterange form-group right-inner-addon">
                             <input type="text" id="date" date-picker ng-model="vm.postActionItemInfo.startDate"
                                    today="{{today}}" ng-change="vm.checkChanges()"
-                                   class="form-control  Datelement" name="deliveryDate"
+                                   class="form-control  Datelement" name="startDate"
                                    aria-required="true" required autocomplete="off"
-                                   placeholder='{{"aip.postaction.dateFormatWaterMark"|i18n_aip}}'/>
+                                   placeholder='{{"default.date.format"|i18n_aip}}'/>
 
                         </div>
                     </div>
@@ -142,11 +146,11 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
                     </div>
                     <div class="actionItemElement col-sm-6" id="postActionItemPopulation">
                         <div class="row">
-                            <input type="text" date-picker id="deliveryDate1"
-                                   class="form-control  Datelement" name="deliveryDate"
+                            <input type="text" date-picker id="endDate"
+                                   class="form-control  Datelement" name="endDate"
                                    ng-model="vm.postActionItemInfo.endDate" ng-change="vm.checkChanges()"
                                    aria-required="true" required autocomplete="off"
-                                   placeholder='{{"aip.postaction.dateFormatWaterMark"|i18n_aip}}'/>
+                                   placeholder='{{"default.date.format"|i18n_aip}}'/>
                         </div>
                     </div>
                 </div>
@@ -175,7 +179,7 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
                                 <input type="text" id="date1" date-picker ng-model="vm.postActionItemInfo.localeDate" ng-change="vm.checkChanges()"
                                        class="form-control  Datelement" name="deliveryDate"
                                        aria-required="true" required autocomplete="off"
-                                       placeholder='{{"aip.postaction.dateFormatWaterMark"|i18n_aip}}'/>
+                                       placeholder='{{"default.date.format"|i18n_aip}}'/>
 
                             </div>
                         </div>
@@ -202,12 +206,17 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
                                         <label for="postActionItemPopulation" class="titleValue ">{{"aip.admin.action.postactionItem.timezone"|i18n_aip}}
                                         </label>
                                     </div>
-                                    <div class="actionItemElement col-sm-6" id="">
-                                        <div class="row timeZone">
-                                            <span class="col-xs-11 col-sm-10 defaultTimezone" ng-if="vm.showTimezoneIcon" ng-bind-html="vm.defaultTimeZone"></span>
-                                            <button type="button" class="col-xs-1 col-sm-2 timezone-btn" ng-hide="!vm.showTimezoneIcon" ng-show="vm.showTimezoneIcon" ng-click="vm.showTimeZoneList()"></button>
-                                            <xe-ui-select class="col-xs-12 col-sm-12 timeZoneChange" ng-model="vm.timezone" ng-change="vm.setTimezone(vm.timezone);vm.checkChanges()" theme="select2" ng-hide="vm.showTimezoneIcon" ng-show="vm.showTimezoneIcon">
-                                                <xe-ui-select-match placeholder="{{'aip.admin.communication.sendMessage.timezonePlaceHolder' | i18n_aip}}" ng-bind-html="vm.timezone.displayName"></xe-ui-select-match>
+                                    <div class="actionItemElement col-sm-6" id="" title={{"aip.admin.communication.timezone.noificataion"|i18n_aip}}>
+                                        <div class="row">
+                                            <div class="timeZone" ng-show="vm.showTimezoneIcon">
+                                                <span class="col-xs-11 col-sm-10 defaultTimezone" ng-bind-html="vm.defaultTimeZone"></span>
+                                                <button type="button" class="col-xs-1 col-sm-2 timezone-btn" ng-click="vm.showTimeZoneList()"></button>
+                                            </div>
+
+                                            <xe-ui-select class="col-xs-12 col-sm-12 timeZoneChange" ng-model="vm.timezone" ng-change="vm.setTimezone(vm.timezone);vm.checkChanges()" theme="select2" ng-show="!vm.showTimezoneIcon">
+                                                <xe-ui-select-match placeholder="{{'aip.admin.communication.sendMessage.timezonePlaceHolder' | i18n_aip}}">
+                                                    <div ng-bind-html="vm.timezone.displayName"></div>
+                                                </xe-ui-select-match>
                                                 <xe-ui-select-choices repeat="timezone in vm.timezones | filter: $select.search">
                                                     <div ng-bind-html="timezone.displayName | highlight: $select.search"></div>
                                                 </xe-ui-select-choices>

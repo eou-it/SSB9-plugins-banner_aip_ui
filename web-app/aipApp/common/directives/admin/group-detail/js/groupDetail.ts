@@ -29,24 +29,8 @@ module AIPUI {
             });
         }
         controller($scope) {
-            /*
-            $scope.proceed = function() {
-                $scope.next({groupId:this.groupId});
-            }
-            */
             $scope.getState = function(id) {
-                //$scope.itemstate(id)
             }
-            /*
-            $scope.returnlist = function() {
-                $scope.tolist();
-            }
-            */
-            /*
-            $scope.nextitem = function() {
-                $scope.next({groupId:this.data.groupId, itemId:this.data.info.id});
-            }
-            */
         }
 
     }

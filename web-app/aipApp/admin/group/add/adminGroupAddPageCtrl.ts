@@ -20,6 +20,9 @@ module AIP {
         errorMessage;
         save(): void;
         cancel(): void;
+        checkchangesDone():void;
+        dataChanged():void;
+
     }
     interface IGroupSelect {
         id?: number;
@@ -31,7 +34,7 @@ module AIP {
         description: string;
     }
     export class AdminGroupAddPageCtrl implements IAdminGroupAddPageCtrl{
-        $inject = ["$scope", "$window", "AdminGroupService", "$q", "SpinnerService", "$state", "$filter", "$sce", "$timeout", "CKEDITORCONFIG"];
+        $inject = ["$scope","$rootScope", "$window", "AdminGroupService", "$q", "SpinnerService", "$state", "$filter", "$sce", "$timeout", "CKEDITORCONFIG"];
         status: AIP.IStatus[];
         folders: AIP.IFolder[];
         groupInfo: IGroupSelect;
@@ -41,18 +44,23 @@ module AIP {
         adminGroupService: AIP.AdminGroupService;
         spinnerService: AIP.SpinnerService;
         $q: ng.IQService;
+        $scope;
         $state;
         $filter;
         $sce;
         $timeout;
-        $rootScope:ng.IRootScopeService;
+        $rootScope;
         ckEditorConfig;
         editMode: boolean;
         existFolder: any;
         duplicateGroup: boolean;
-        constructor($scope, $window:ng.IWindowService, AdminGroupService:AIP.AdminGroupService,
-            $q:ng.IQService, SpinnerService, $state, $filter, $sce, $timeout, CKEDITORCONFIG) {
+        actionItemDataChanged:boolean;
+        redirectval;
+        constructor($scope,$rootScope, $window:ng.IWindowService, AdminGroupService:AIP.AdminGroupService,
+                    $q:ng.IQService, SpinnerService, $state, $filter, $sce, $timeout, CKEDITORCONFIG) {
             $scope.vm = this;
+            this.$scope = $scope;
+            this.$rootScope=$rootScope;
             this.$q = $q;
             this.$state = $state;
             this.$filter = $filter;
@@ -67,6 +75,8 @@ module AIP {
             this.editMode = false;
             this.existFolder = {};
             this.duplicateGroup = false;
+            this.actionItemDataChanged=false;
+            this.redirectval="NoData";
             this.groupInfoInitial = {
                 id: undefined,
                 title: undefined,
@@ -127,6 +137,7 @@ module AIP {
                                 this.existFolder = this.folders.filter((item)=> {
                                     return item.id === parseInt(response.group.folderId);
                                 })[0];
+
                                 this.groupInfo.description = this.trustHTML(response.group.groupDesc);
                                 this.groupInfoInitial = angular.copy(this.groupInfo);
                             } else {
@@ -140,6 +151,15 @@ module AIP {
 
                 }
                 this.spinnerService.showSpinner(false);
+            });
+            var that=this;
+            this.$scope.$on("DetectChanges",function(event, args)
+            {
+                if (that.actionItemDataChanged) {
+                    that.redirectval = args.state;
+                    that.checkchangesDone();
+                }
+
             });
         }
         checkGroupPost() {
@@ -187,10 +207,14 @@ module AIP {
             }
         }
         save() {
+
             this.saving = true;
             this.adminGroupService.saveGroup(this.groupInfo, this.editMode, this.duplicateGroup)
                 .then((response:IAddGroupResponse) => {
                     this.saving = false;
+                    this.actionItemDataChanged=false;
+                    this.$rootScope.DataChanged=false;
+
                     var notiParams = {};
                     if(response.success) {
                         notiParams = {
@@ -213,9 +237,57 @@ module AIP {
                     notifications.addNotification(n);
                 });
         }
-        cancel() {
-            this.$state.go("admin-group-list");
+
+        dataChanged(this)
+        {
+            this.actionItemDataChanged=true;
+            this.$rootScope.DataChanged=this.actionItemDataChanged;
         }
+
+        cancel()
+        {
+            this.redirectval="NoData";
+            this.checkchangesDone();
+        }
+
+        checkchangesDone() {
+
+            var that=this;
+            while (notifications.length !== 0) {
+                notifications.remove(notifications.first())
+            }
+            if (that.actionItemDataChanged) {
+
+                var n = new Notification({
+                    message: this.$filter("i18n_aip")( "aip.admin.actionItem.saveChanges"),
+                    type: "warning"
+                });
+                n.addPromptAction(this.$filter("i18n_aip")("aip.common.text.no"), function () {
+                    notifications.remove(n);
+
+                });
+                n.addPromptAction(this.$filter("i18n_aip")("aip.common.text.yes"), function () {
+                    that.actionItemDataChanged=false;
+                    that.$rootScope.DataChanged=false;
+                    if (that.redirectval==="NoData")
+                    {
+                        that.$state.go("admin-group-list");
+                    }
+                    else {
+                        location.href = that.redirectval;
+                    }
+                    notifications.remove(n);
+                });
+
+                notifications.addNotification(n);
+            }
+            else
+            {
+                that.$state.go("admin-group-list");
+            }
+
+        }
+
         isChanged() {
             var changed = false;
             if(this.editMode) {
@@ -270,6 +342,7 @@ module AIP {
             } else {
                 delete this.errorMessage.folder;
             }
+
             if(!this.groupInfo.description || this.groupInfo.description === null || this.groupInfo.description === "" ) {
                 this.errorMessage.description = "invalid description";
             } else {
@@ -303,15 +376,10 @@ module AIP {
         trustHTML = function(txtString) {
             var sanitized = txtString ? this.$filter("html")(this.$sce.trustAsHtml(txtString)):"";
             return sanitized;
-        }
+        };
 
         saveErrorCallback(invalidFields, errors, message) {
-           //todo: iterate through errors given back through contraints
-            /*
-            errors.forEach( function(e, i) {
-                message += (e[i]);
-            });
-            */
+            //todo: iterate through errors given back through contraints
             var message = this.$filter("i18n_aip")(message||"aip.admin.group.add.error.blank")
             if (errors != null) {
                 message = errors[0]

@@ -17,7 +17,7 @@ module AIP {
         groupFolder: IGroupFolder;
     }
     export class AdminGroupOpenPageCtrl implements IAdminGroupOpenPageCtrl{
-        $inject = ["$scope", "$window", "AdminGroupService", "$q", "SpinnerService", "$state", "$filter", "$sce", "$templateRequest", "$templateCache",
+        $inject = ["$scope","$rootScope", "$window", "AdminGroupService", "$q", "SpinnerService", "$state", "$filter", "$sce", "$templateRequest", "$templateCache",
             "$compile", "$timeout", "APP_ROOT"];
         groupInfo:IGroupInfo;
         groupFolder: IGroupFolder;
@@ -26,6 +26,7 @@ module AIP {
         spinnerService: AIP.SpinnerService;
         $q: ng.IQService;
         $state;
+        $rootScope;
         $filter;
         $sce;
         $templateRequest;
@@ -43,12 +44,15 @@ module AIP {
         saving:boolean;
         groupDetailDefer:ng.IPromise<any>;
         $window;
+        actionItemDataChanged:boolean;
+        redirectval;
 
 
-        constructor($scope, $window, AdminGroupService:AIP.AdminGroupService, $q:ng.IQService, SpinnerService, $state, $filter, $sce, $templateRequest, $templateCache,
+        constructor($scope,$rootScope, $window, AdminGroupService:AIP.AdminGroupService, $q:ng.IQService, SpinnerService, $state, $filter, $sce, $templateRequest, $templateCache,
                     $compile, $timeout, APP_ROOT) {
             $scope.vm = this;
             this.$scope = $scope;
+            this.$rootScope=$rootScope;
             this.$window = $window;
             this.$q = $q;
             this.$state = $state;
@@ -69,7 +73,8 @@ module AIP {
             this.originalAssign = [];
             this.saving = false;
             this.groupDetailDefer = null;
-
+            this.actionItemDataChanged=false;
+            this.redirectval="NoData";
             this.init();
         }
 
@@ -77,7 +82,6 @@ module AIP {
             this.spinnerService.showSpinner( true );
             var promises = [];
             this.groupDetailDefer = this.getGroupDetailDefer(this.$state.params.groupId).then(()=> {
-                // $("p.openGroupDesc" ).html(decodeURI(this.groupFolder.groupDesc));
                 if(this.groupFolder.postedInd=="Y"){
                     $("#title-panel h1" ).html(this.groupFolder.groupName + ' ' + this.$filter("i18n_aip")("aip.admin.group.title.posted"));
                 }else{
@@ -86,7 +90,7 @@ module AIP {
 
             }, (err) => {
                 console.log(err);
-            })
+            });
             if (this.$state.params.noti) {
                 this.handleNotification( this.$state.params.noti );
             }
@@ -94,9 +98,25 @@ module AIP {
                 //TODO:: turn off the spinner
                 this.spinnerService.showSpinner( false );
             } );
+            var that=this;
+            this.$scope.$on("DetectChanges",function(event, args)
+            {
+                if (that.actionItemDataChanged) {
+                    that.redirectval = args.state;
+                    that.checkchangesDone();
+                }
+
+            });
+        }
+
+        dataChanged(this)
+        {
+            this.actionItemDataChanged=true;
+            this.$rootScope.DataChanged=this.actionItemDataChanged;
         }
 
         openPanel(panelName) {
+
             this.$window.onbeforeunload = null;
             var deferred=this.$q.defer();
             var url = "";
@@ -109,6 +129,7 @@ module AIP {
                     break;
                 case "edit":
                     url = this.APP_ROOT + "admin/group/open/edit/edit.html";
+                    break;
                 default:
                     break;
             }
@@ -149,6 +170,7 @@ module AIP {
         }
 
         openOverviewPanel() {
+
             this.editMode = false;
             this.selected = [];
             this.assignedActionItems = [];
@@ -161,6 +183,7 @@ module AIP {
 
         }
         openContentPanel() {
+
             this.editMode = false;
             this.assignedActionItems = [];
             this.initialAssigned = [];
@@ -246,31 +269,11 @@ module AIP {
         validateEdit(type) {
             this.adminGroupService.groupPosted(this.groupFolder.groupId)
                 .then((response) => {
-                    // if(response.posted) {
-                    //     var n = new Notification({
-                    //         message: this.$filter("i18n_aip")("aip.admin.group.content.edit.posted.warning"),
-                    //         type: "warning"
-                    //     });
-                    //     n.addPromptAction(this.$filter("i18n_aip")("aip.common.text.no"), () => {
-                    //         notifications.remove(n);
-                    //     });
-                    //     n.addPromptAction(this.$filter("i18n_aip")("aip.common.text.yes"), ()=> {
-                    //         notifications.remove(n);
-                    //         if(type === "overview") {
-                    //             this.$state.go("admin-group-edit", {groupId:this.groupFolder.groupId, isEdit: true});
-                    //         } else {
-                    //             this.edit();
-                    //         }
-                    //     });
-                    //     notifications.addNotification(n);
-                    // } else {
-                    //     notifications.remove(n);
                         if(type === "overview") {
                             this.$state.go("admin-group-edit", {groupId:this.groupFolder.groupId, isEdit: true});
                         } else {
                             this.edit();
                         }
-                    // }
                 }, (err) => {
                     throw new Error(err);
                 });
@@ -417,10 +420,51 @@ module AIP {
             }
             return false;
         }
-        cancel() {
-            this.editMode = false;
-            this.saving = false;
-            this.openContentPanel()
+
+        cancel()
+        {
+            this.redirectval="NoData";
+            this.checkchangesDone();
+        }
+
+        checkchangesDone() {
+            var that=this;
+            while (notifications.length !== 0) {
+                notifications.remove(notifications.first())
+            }
+            if (that.actionItemDataChanged) {
+
+                var n = new Notification({
+                    message: this.$filter("i18n_aip")( "aip.admin.actionItem.saveChanges"),
+                    type: "warning"
+                });
+                n.addPromptAction(this.$filter("i18n_aip")("aip.common.text.no"), function () {
+                    notifications.remove(n);
+
+                })
+                n.addPromptAction(this.$filter("i18n_aip")("aip.common.text.yes"), function () {
+                    that.actionItemDataChanged=false;
+                    that.$rootScope.DataChanged=false;
+                    if (that.redirectval==="NoData")
+                    {
+                        that.editMode = false;
+                        that.saving = false;
+                        that.openContentPanel();
+                    }
+                    else {
+                        location.href = that.redirectval;
+                    }
+                    notifications.remove(n);
+                });
+
+                notifications.addNotification(n);
+            }
+            else
+            {
+                that.editMode = false;
+                that.saving = false;
+                that.openContentPanel();
+            }
         }
         isEqual(item1, item2) {
             var item1Properties = item1.map((item) => {
@@ -428,7 +472,7 @@ module AIP {
             });
             var item2Properties = item2.map((item) => {
                 return [item.actionItemId, item.folderId, item.seq];
-            })
+            });
 
             if ( angular.equals(item1Properties, item2Properties)) {
                 return true;
@@ -440,12 +484,14 @@ module AIP {
             this.adminGroupService.updateActionItemGroupAssignment(this.selected, this.groupFolder.groupId?this.groupFolder.groupId:this.groupFolder)
                 .then((response) => {
                     this.saving = false;
-                    console.log(response);
+                    this.actionItemDataChanged=false;
+                    this.$rootScope.DataChanged=false;
                     var n = new Notification({
                         message: this.$filter("i18n_aip")("aip.admin.group.assign.success"),
                         type: "success",
                         flash: true
                     });
+
                     setTimeout(() => {
                         notifications.addNotification(n);
                         this.openContentPanel();

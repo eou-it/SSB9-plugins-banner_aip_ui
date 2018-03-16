@@ -1,6 +1,6 @@
 /*******************************************************************************
  Copyright 2018 Ellucian Company L.P. and its affiliates.
- ****************************************************************************** */
+ *******************************************************************************/
 ///<reference path="../../../../typings/tsd.d.ts"/>
 declare var register;
 
@@ -174,12 +174,11 @@ module AIP {
                     return <IGroupDetailResponse>response.data;
                 }, (err) => {
                     throw new Error(err);
-                })
+                });
             return request;
         }
 
         enableGroupOpen(groupId) {
-            //var selectedGroup = groupId;
             $("#openGroupBtn").removeAttr("disabled");
             return groupId;
         }

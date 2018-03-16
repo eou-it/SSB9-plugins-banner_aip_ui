@@ -127,6 +127,19 @@ class AipActionItemPostingControllerIntegrationTests extends BaseIntegrationTest
 
 
     @Test
+    void updateActionItemPostingWithScheduleDate() {
+        controller.request.contentType = "text/json"
+        String inputString = getCreateActionItemForScheduleJSON()
+        controller.request.json = inputString
+        controller.updateActionItemPosting()
+        assertEquals 200, controller.response.status
+        def ret = controller.response.contentAsString
+        def data = JSON.parse( ret )
+        assertTrue data.fail
+    }
+
+
+    @Test
     void addActionItemPostingFailedCase() {
         controller.request.contentType = "text/json"
         String inputString = getCreateActionItemJSONWithoutName()
@@ -221,6 +234,96 @@ class AipActionItemPostingControllerIntegrationTests extends BaseIntegrationTest
     }
 
 
+    @Test
+    void getStatusValue() {
+        SimpleDateFormat testingDateFormat = new SimpleDateFormat( 'MM/dd/yyyy' )
+        CommunicationPopulationListView populationListView = actionItemProcessingCommonService.fetchPopulationListForSend( 'p', [max: 10, offset: 0] )[0]
+        List<ActionItemGroup> actionItemGroups = ActionItemGroup.fetchActionItemGroups()
+        def actionItemGroup = actionItemGroups[0]
+        List<Long> actionItemIds = ActionItemGroupAssign.fetchByGroupId( actionItemGroup.id ).collect {it.actionItemId}
+        def requestMap = [:]
+        requestMap.postingName = 'TEST_INTEGRATION_TEST1'
+        requestMap.populationId = populationListView.id
+        requestMap.referenceId = UUID.randomUUID().toString()
+        requestMap.postingActionItemGroupId = actionItemGroup.id
+        requestMap.postNow = true
+        requestMap.recalculateOnPost = false
+        requestMap.displayStartDate = testingDateFormat.format( new Date() )
+        requestMap.displayEndDate = testingDateFormat.format( new Date() + 50 )
+        requestMap.scheduledStartDate = new Date() + 1
+        requestMap.actionItemIds = actionItemIds
+        def postingId = actionItemPostCompositeService.sendAsynchronousPostItem( requestMap ).savedJob.id
+        controller.request.contentType = "text/json"
+        controller.params.postID = postingId
+        controller.getStatusValue()
+        assertEquals 200, controller.response.status
+        def ret = controller.response.contentAsString
+        def data = JSON.parse( ret )
+        assertTrue ret == 'N'
+
+    }
+
+
+    @Test
+    void getJobDetailsByPostId() {
+        SimpleDateFormat testingDateFormat = new SimpleDateFormat( 'MM/dd/yyyy' )
+        CommunicationPopulationListView populationListView = actionItemProcessingCommonService.fetchPopulationListForSend( 'p', [max: 10, offset: 0] )[0]
+        List<ActionItemGroup> actionItemGroups = ActionItemGroup.fetchActionItemGroups()
+        def actionItemGroup = actionItemGroups[0]
+        List<Long> actionItemIds = ActionItemGroupAssign.fetchByGroupId( actionItemGroup.id ).collect {it.actionItemId}
+        def requestMap = [:]
+        requestMap.postingName = 'TEST_INTEGRATION_TEST1'
+        requestMap.populationId = populationListView.id
+        requestMap.referenceId = UUID.randomUUID().toString()
+        requestMap.postingActionItemGroupId = actionItemGroup.id
+        requestMap.postNow = true
+        requestMap.recalculateOnPost = false
+        requestMap.displayStartDate = testingDateFormat.format( new Date() )
+        requestMap.displayEndDate = testingDateFormat.format( new Date() + 50 )
+        requestMap.scheduledStartDate = new Date() + 1
+        requestMap.actionItemIds = actionItemIds
+        def postingId = actionItemPostCompositeService.sendAsynchronousPostItem( requestMap ).savedJob.id
+        controller.request.contentType = "text/json"
+        controller.params.postID = postingId
+        controller.getJobDetailsByPostId()
+        assertEquals 200, controller.response.status
+        def ret = controller.response.contentAsString
+        def data = JSON.parse( ret )
+        assertTrue data.postingName == 'TEST_INTEGRATION_TEST1'
+
+    }
+
+
+    @Test
+    void getActionItemByPostId() {
+        SimpleDateFormat testingDateFormat = new SimpleDateFormat( 'MM/dd/yyyy' )
+        CommunicationPopulationListView populationListView = actionItemProcessingCommonService.fetchPopulationListForSend( 'p', [max: 10, offset: 0] )[0]
+        List<ActionItemGroup> actionItemGroups = ActionItemGroup.fetchActionItemGroups()
+        def actionItemGroup = actionItemGroups[0]
+        List<Long> actionItemIds = ActionItemGroupAssign.fetchByGroupId( actionItemGroup.id ).collect {it.actionItemId}
+        def requestMap = [:]
+        requestMap.postingName = 'TEST_INTEGRATION_TEST1'
+        requestMap.populationId = populationListView.id
+        requestMap.referenceId = UUID.randomUUID().toString()
+        requestMap.postingActionItemGroupId = actionItemGroup.id
+        requestMap.postNow = true
+        requestMap.recalculateOnPost = false
+        requestMap.displayStartDate = testingDateFormat.format( new Date() )
+        requestMap.displayEndDate = testingDateFormat.format( new Date() + 50 )
+        requestMap.scheduledStartDate = new Date() + 1
+        requestMap.actionItemIds = actionItemIds
+        def postingId = actionItemPostCompositeService.sendAsynchronousPostItem( requestMap ).savedJob.id
+        controller.request.contentType = "text/json"
+        controller.params.postID = postingId
+        controller.getActionItemByPostId()
+        assertEquals 200, controller.response.status
+        def ret = controller.response.contentAsString
+        def data = JSON.parse( ret )
+        assertTrue data != null
+
+    }
+
+
     private getDynamicData() {
         def dynamicData = [:]
         SimpleDateFormat testingDateFormat = new SimpleDateFormat( 'MM/dd/yyyy' )
@@ -249,7 +352,7 @@ class AipActionItemPostingControllerIntegrationTests extends BaseIntegrationTest
         dynamicData.postingActionItemGroupId = actionItemGroup.id
         dynamicData.displayStartDate = testingDateFormat.format( new Date() )
         dynamicData.displayEndDate = testingDateFormat.format( new Date() + 50 )
-        dynamicData.scheduledStartDate = testingDateFormat.format( new Date() +1 )
+        dynamicData.scheduledStartDate = testingDateFormat.format( new Date() + 1 )
         dynamicData.scheduledStartTime = "2230"
         dynamicData.timezoneStringOffset = "Asia/Kolkata"
         dynamicData

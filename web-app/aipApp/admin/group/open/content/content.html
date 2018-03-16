@@ -60,7 +60,7 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
                 <div class="row">
                     <div class="col-xs-8 col-sm-8">
                         <xe-ui-select id="select2actionItems" ng-model="vm.selected[item.sequenceNumber-1]" theme="select2" ng-disabled="disabled"
-                                      on-select="vm.selectActionItem($item, $index)">
+                                      on-select="vm.selectActionItem($item, $index)" ng-change="vm.dataChanged()">
                             <xe-ui-select-match placeholder="{{'aip.admin.group.assign.select.default'|i18n_aip}}">
                                 <div class="row actionItemName">{{vm.selected[item.sequenceNumber-1].actionItemName}}</div>
                                 <div class="row additionalInfo">

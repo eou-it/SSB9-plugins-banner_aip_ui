@@ -2,19 +2,13 @@
   input.hasMultiCalendarPicker{height:35px;border-radius: 5px;
     padding-left: 15px;}
 
-  .ui-select-choices .select2-result-label{font-size: 1.25em;}
-  .ui-select-container {
-    font-family: "Open Sans";
-    width: 21em;
-    background: #fff;
-  }
-  .ui-select-dropdown{width: 21.35em;}
-  .ui-select-dropdown .select2-search input {
-    width: inherit !important;}
   .actionItemEdit{font-size: 14px;
-    margin-left: 15px;
+    margin-left:0 !important;
+    margin-right: 15px;
     color: #524e4e;
-    text-decoration: underline;}
+    text-decoration: underline;
+    cursor: pointer;
+  }
   .actionItemEdit{font-size: 14px;
     margin-left: 15px;
     color: #565e96;
@@ -190,7 +184,11 @@
     color: #131212;
   }
   .placeholderDisplay > span{display:block;}
-  .displayInstruction{font-size: 13px;}
+  .displayInstruction{
+    font-size: 13px;
+    width: 100%;
+    line-height: 1.5em;
+  }
   .xe-timepicker-popup.dropdown-menu li a .active  {
     background-color:#428bca;
     color: #262626;
@@ -263,21 +261,24 @@
     background: url(./images/showTimezoneIcon.png) center center no-repeat;
     border: 0;
     padding: 5px;
-    margin-top: 3px;
+    margin-top: 6px;
   }
   .timeZone{
-    border: 1px solid #cccccc;
+    border: 1px solid #869fb1;
     border-radius: 4px;
-    height: 30px !important;
+    height: 34px !important;
     background: #ffffff;
     webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
     box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
-    -webkit-transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+    width: 23em;
+    line-height: 1.5em;
   }
   .defaultTimezone{
-    font-size: 11px;
+    font-size: 13px;
     padding-left: 5px;
     padding-top: 8px;
+    font-family: "OpenSans-semibold";
+    color: darkSlateGray;
   }
   .timeZoneChange{
     padding-left:0px;

@@ -1,7 +1,7 @@
 <!--*******************************************************************************
 Copyright 2018 Ellucian Company L.P. and its affiliates.
 *******************************************************************************-->
-<div class="groupAddContainer">
+<div class="groupAddContainer" >
     <div class="groupInfo">
         <div class="row groupInfoRow groupFolder">
             <div class="groupElement row input-group">
@@ -14,7 +14,7 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
             <div class="groupElement col-xs-12 col-sm-5">
                 <div class="row" ng-class="{'has-error':vm.groupInfo.name.length>60}">
                     <input id="groupName" maxlength="60" aria-valuemax="60" type="text" class="form-control" ng-model="vm.groupInfo.name"
-                           ng-disabled="vm.editMode" placeholder="Group Name" aria-describedby="groupAdd-Name" required="required" aria-required="true">
+                           ng-change="vm.dataChanged()" ng-disabled="vm.editMode" placeholder={{"aip.common.group.place.holder.name"|i18n_aip}} aria-describedby="groupAdd-Name" required="required" aria-required="true" >
                 </div>
                 <div class="alert alert-danger" role="alert" ng-if="vm.groupInfo.title.length>60">
                     <i class="fa fa-exclamation-circle" aria-hidden="true"></i>
@@ -30,9 +30,10 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
             </div>
             <div class="groupElement col-xs-12 col-sm-5">
                 <div class="row">
-                    <xe-ui-select id="groupFolder" ng-model="vm.groupInfo.folder" theme="select2" ng-disabled="vm.groupInfo.postedInd"
-                                  on-select="vm.selectGroupFolder($item, $index)">
-                        <xe-ui-select-match placeholder="{{'aip.common.select.folder.default'|i18n_aip}}" ng-bind-html="vm.groupInfo.folder.name">
+                    <xe-ui-select id="groupFolder" ng-model="vm.groupInfo.folder" theme="select2" ng-disabled="vm.groupInfo.postedInd" ng-change="vm.dataChanged()"
+                                  on-select="vm.selectGroupFolder($item, $index)" >
+                        <xe-ui-select-match placeholder="{{'aip.common.select.folder.default'|i18n_aip}}" >
+                            {{vm.groupInfo.folder.name}}
                         </xe-ui-select-match>
                         <xe-ui-select-choices repeat="item in vm.folders | propsFilter: {name: $select.search}">
                             <div ng-bind-html="item.name"></div>
@@ -48,9 +49,11 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
             </div>
             <div class="groupElement col-xs-12 col-sm-5">
                 <div class="row">
-                    <xe-ui-select id="groupStatus" ng-model="vm.groupInfo.status" theme="select2" ng-disabled="disabled" search-enabled="false"
+                    <xe-ui-select id="groupStatus" ng-model="vm.groupInfo.status" theme="select2" ng-disabled="disabled" ng-change="vm.dataChanged()" search-enabled="false"
                                   on-select="vm.selectStatus($item, $index)">
-                        <xe-ui-select-match ng-bind-html="vm.groupInfo.status">
+
+                        <xe-ui-select-match>
+                            {{vm.groupInfo.status}}
                         </xe-ui-select-match>
                         <xe-ui-select-choices repeat="item in vm.status">
                             <div ng-bind-html="item.value"></div>
@@ -70,7 +73,7 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
             <div class="groupElement col-xs-12 col-sm-5">
                 <div class="row" ng-class="{'has-error':vm.groupInfo.title.length>60}">
                     <input id="groupTitle" maxlength="60" aria-valuemax="60" type="text" class="form-control" ng-model="vm.groupInfo.title"
-                           placeholder="Group title" aria-describedby="groupAdd-Title" required="required" aria-required="true">
+                           ng-change="vm.dataChanged()"  placeholder={{"aip.common.group.title"|i18n_aip}} aria-describedby="groupAdd-Title" required="required" aria-required="true" >
                 </div>
                 <div class="alert alert-danger" role="alert" ng-if="vm.groupInfo.title.length>60">
                     <i class="fa fa-exclamation-circle" aria-hidden="true"></i>
@@ -79,6 +82,9 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
                 </div>
             </div>
         </div>
+
+
+
         <div class="row groupInfoRow">
             <div class="groupElement row input-group">
                 <label for="groupDesc" class="titleValue" id="groupAdd-description">{{"aip.common.group.description"|i18n_aip}}
@@ -86,8 +92,10 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
             </div>
             <div class="groupElement col-xs-12 col-sm-12">
                 <div class="row">
-                     <textarea id="groupDesc" ng-required="true" aria-required="true" name="groupDesc" ckeditor="ckEditorConfig"
-                               ng-model="vm.groupInfo.description"></textarea>
+
+                   <textarea id="groupDesc" ng-required="true" aria-required="true" name="groupDesc" ckeditor="ckEditorConfig"
+                             ng-model="vm.groupInfo.description"  ng-change="vm.dataChanged()" ></textarea>
+
                 </div>
             </div>
         </div>
@@ -102,10 +110,10 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
                 </div>
                 <div class="col-xs-6 col-sm-6 groupButton">
                     <button name="Save" type="button" class="btn btn-primary" ng-disabled="!vm.validateInput()" ng-click="vm.checkGroupPost()">
-                    {{"aip.common.saveandreturn"|i18n_aip}}
+                        {{"aip.common.saveandreturn"|i18n_aip}}
                     </button>
                 </div>
-             </div>
+            </div>
         </div>
     </div>
 </div>

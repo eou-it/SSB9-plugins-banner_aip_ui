@@ -13,12 +13,10 @@ module AIPUI {
         scope:any;
         transclude: boolean;
         replace: boolean;
-        // current: {};
         constructor() {
             this.restrict = "AE";
             this.transclude = true;
             this.replace = true;
-            // this.current = {};
             this.scope = {
                 currentitem: "=",
                 selected: "=",
@@ -30,11 +28,6 @@ module AIPUI {
 
         }
         link(scope, elem, attr, ctrl, transclude) {
-            // transclude(scope, (clone) => {
-            //
-            //     scope.init();
-            //
-            // });
             scope.init();
         }
         controller($scope) {
@@ -49,24 +42,8 @@ module AIPUI {
                     $scope.generated.push($scope.currentitem);
                     $scope.urls = $scope.getCurrentUrls();
                 }
-            }
+            };
 
-            // $scope.availableItems = function() {
-            //     var available = [];
-            //     // available.push($scope.getCurrent());
-            //     var generated = $scope.generated.map((item) => {
-            //         return item.name;
-            //     });
-            //     angular.forEach($scope.all, item => {
-            //         if(generated.indexOf(item.name)===-1 && available.indexOf(item.name)===-1) {
-            //             available.push(item);
-            //         }
-            //     });
-            //     if(available.indexOf($scope.currentitem)===-1) {
-            //         available.unshift($scope.currentitem);
-            //     }
-            //     return available;
-            // }
             $scope.updateCurrent = function() {
                 // $scope.remove() //remove current item item from selected list
                 var selected = $scope.selected.filter((item) => {
@@ -82,11 +59,11 @@ module AIPUI {
                 $scope.generated[$scope.generated.indexOf(generated[0])] = $scope.currentitem;
                 $scope.current = $scope.currentitem;
                 $scope.urls = $scope.getCurrentUrls();
-            }
+            };
             $scope.getCurrentUrls = function() {
                 var current = $scope.getCurrent();
                 return current.value.urls;
-            }
+            };
             $scope.remove = function() {
                 var selected = $scope.selected.filter((item) => {
                     return item.name === $scope.current.name;

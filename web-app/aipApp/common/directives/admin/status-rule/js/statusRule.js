@@ -27,7 +27,6 @@ var AIPUI;
         };
         AIPStatusRuleDirective.prototype.controller = function ($scope) {
             $scope.init = function () {
-                // $scope.addRule();
             };
             $scope.addRule = function ($event) {
                 $scope.rules.push({
@@ -40,7 +39,6 @@ var AIPUI;
                 }, 500);
             };
             $scope.getState = function (id) {
-                //$scope.itemstate(id)
             };
             $scope.detectRuleChange = function () {
                 $scope.contentChanged = true;
@@ -65,7 +63,6 @@ var AIPUI;
                     }, 500);
                 }
                 this.detectRuleChange();
-                //$scope.setFocus($event, first);
             };
             $scope.moveDown = function (item, $event) {
                 var idx = $scope.rules.indexOf(item);

@@ -1,5 +1,5 @@
 /*******************************************************************************
- Copyright 2017 Ellucian Company L.P. and its affiliates.
+ Copyright 2018 Ellucian Company L.P. and its affiliates.
  ********************************************************************************/
 ///<reference path="../../../../typings/tsd.d.ts"/>
 ///<reference path="../../../common/services/spinnerService.ts"/>
@@ -7,8 +7,9 @@
 var AIP;
 (function (AIP) {
     var AdminActionItemAddPageCtrl = (function () {
-        function AdminActionItemAddPageCtrl($scope, $q, $state, $filter, $sce, $timeout, SpinnerService, AdminActionService) {
-            this.$inject = ["$scope", "$q", "$state", "$filter", "$sce", "$timeout", "SpinnerService", "AdminActionService"];
+        function AdminActionItemAddPageCtrl($scope, $rootScope, $q, $state, $filter, $sce, $timeout, $window, SpinnerService, AdminActionService, $location) {
+            var _this = this;
+            this.$inject = ["$scope", "$rootScope", "$q", "$state", "$filter", "$location", "$sce", "$timeout", "$window", "SpinnerService", "AdminActionService"];
             this.trustAsHtml = function (string) {
                 return this.$sce.trustAsHtml(string);
             };
@@ -17,9 +18,12 @@ var AIP;
                 return this.actionItemInfo.description;
             };
             $scope.vm = this;
+            this.$scope = $scope;
             this.$q = $q;
             this.$sce = $sce;
             this.$state = $state;
+            this.$rootScope = $rootScope;
+            this.$location = $location;
             this.$filter = $filter;
             this.$timeout = $timeout;
             this.spinnerService = SpinnerService;
@@ -30,6 +34,24 @@ var AIP;
             this.editMode = false;
             this.existFolder = {};
             this.duplicateGroup = false;
+            this.actionItemDataChanged = false;
+            this.redirectval = "NoData";
+            this.actionItemInitial = {
+                id: undefined,
+                title: undefined,
+                name: undefined,
+                status: undefined,
+                postedInd: undefined,
+                folder: undefined,
+                description: undefined
+            };
+            $window.onbeforeunload = function (event) {
+                if (_this.actionItemDataChanged) {
+                    return _this.$filter("i18n_aip")("aip.common.admin.unsaved");
+                }
+                // reset to default event listener
+                $window.onbeforeunload = null;
+            };
             this.init();
         }
         AdminActionItemAddPageCtrl.prototype.init = function () {
@@ -62,10 +84,8 @@ var AIP;
                             _this.actionItemInfo.folder = _this.folders.filter(function (item) {
                                 return item.id === parseInt(_this.actionItem1.folderId);
                             })[0];
-                            /*this.existFolder = this.folders.filter((item)=> {
-                                return item.id === parseInt(this.actionItem1.folderId);
-                            })[0];*/
                             _this.actionItemInfo.description = _this.actionItem1.actionItemDesc;
+                            _this.actionItemInitial = angular.copy(_this.actionItemInfo);
                             _this.trustActionItemContent();
                         }
                         else {
@@ -78,6 +98,13 @@ var AIP;
                     });
                 }
                 _this.spinnerService.showSpinner(false);
+            });
+            var that = this;
+            this.$scope.$on("DetectChanges", function (event, args) {
+                if (that.actionItemDataChanged) {
+                    that.redirectval = args.state;
+                    that.checkchangesDone();
+                }
             });
         };
         AdminActionItemAddPageCtrl.prototype.selectGroupFolder = function (item, index) {
@@ -105,11 +132,6 @@ var AIP;
             if (this.saving) {
                 return false;
             }
-            /*if(!this.actionItemInfo.name || this.actionItemInfo.name === null || this.actionItemInfo.name === "" || this.actionItemInfo.title.name > 300) {
-                this.errorMessage.name = "invalid title";
-            } else {
-                delete this.errorMessage.name;
-            }*/
             if (!this.actionItemInfo.folder) {
                 this.errorMessage.folder = "invalid folder";
             }
@@ -136,7 +158,68 @@ var AIP;
             }
         };
         AdminActionItemAddPageCtrl.prototype.cancel = function () {
-            this.$state.go("admin-action-list");
+            this.redirectval = "NoData";
+            this.checkchangesDone();
+        };
+        AdminActionItemAddPageCtrl.prototype.checkchangesDone = function () {
+            var that = this;
+            while (notifications.length !== 0) {
+                notifications.remove(notifications.first());
+            }
+            if (that.actionItemDataChanged) {
+                var n = new Notification({
+                    message: this.$filter("i18n_aip")("aip.admin.actionItem.saveChanges"),
+                    type: "warning"
+                });
+                n.addPromptAction(this.$filter("i18n_aip")("aip.common.text.no"), function () {
+                    notifications.remove(n);
+                });
+                n.addPromptAction(this.$filter("i18n_aip")("aip.common.text.yes"), function () {
+                    that.actionItemDataChanged = false;
+                    that.$rootScope.DataChanged = false;
+                    if (that.redirectval === "NoData") {
+                        that.$state.go('admin-action-list');
+                    }
+                    else {
+                        location.href = that.redirectval;
+                    }
+                    notifications.remove(n);
+                });
+                notifications.addNotification(n);
+            }
+            else {
+                that.$state.go('admin-action-list');
+            }
+        };
+        AdminActionItemAddPageCtrl.prototype.isChanged = function () {
+            var changed = false;
+            if (this.editMode) {
+                var keys = Object.keys(this.actionItemInitial);
+                for (var i = 0; i < keys.length; i++) {
+                    if (this.actionItemInfo[keys[i]]) {
+                        if (keys[i] === "folder") {
+                            if (this.actionItemInfo.folder.id !== this.actionItemInitial.folder.id) {
+                                changed = true;
+                                break;
+                            }
+                        }
+                        else if (this.actionItemInfo[keys[i]] !== this.actionItemInitial[keys[i]]) {
+                            changed = true;
+                            break;
+                        }
+                    }
+                }
+            }
+            else {
+                if (this.actionItemInfo.name || this.actionItemInfo.title || (this.actionItemInfo.folder && this.actionItemInfo.folder.id) ||
+                    this.actionItemInfo.description) {
+                    changed = true;
+                }
+                else if (this.actionItemInfo.status !== "Draft") {
+                    changed = true;
+                }
+            }
+            return changed;
         };
         AdminActionItemAddPageCtrl.prototype.checkActionPost = function () {
             var _this = this;
@@ -175,6 +258,10 @@ var AIP;
                 this.save();
             }
         };
+        AdminActionItemAddPageCtrl.prototype.dataChanged = function () {
+            this.actionItemDataChanged = true;
+            this.$rootScope.DataChanged = this.actionItemDataChanged;
+        };
         AdminActionItemAddPageCtrl.prototype.save = function () {
             var _this = this;
             this.saving = true;
@@ -188,9 +275,11 @@ var AIP;
                             notiType: "editSuccess",
                             data: response.data
                         };
+                        _this.actionItemDataChanged = false;
+                        _this.$rootScope.DataChanged = false;
                         _this.$state.go("admin-action-open", {
                             noti: notiParams,
-                            data: response.data.updatedActionItem.id,
+                            data: response.data.updatedActionItem.id
                         });
                     }
                     else {
@@ -205,6 +294,7 @@ var AIP;
             else {
                 this.adminActionService.saveActionItem(this.actionItemInfo)
                     .then(function (response) {
+                    console.log("Success");
                     _this.saving = false;
                     var notiParams = {};
                     if (response.data.success) {
@@ -212,6 +302,8 @@ var AIP;
                             notiType: "saveSuccess",
                             data: response.data
                         };
+                        _this.actionItemDataChanged = false;
+                        _this.$rootScope.DataChanged = false;
                         _this.$state.go("admin-action-open", {
                             noti: notiParams,
                             actionItemId: response.data.newActionItem.id

@@ -191,6 +191,14 @@ class AipAdminController {
      */
     def actionItemStatusGridList() {
 
+        if (params.sortColumnName) {
+            if (params.sortColumnName == "actionItemStatusUserId") {
+                params.sortColumnName = "lastModifiedBy"
+            } else if (params.sortColumnName == "actionItemStatusActivityDate") {
+                params.sortColumnName = "lastModified"
+            }
+        }
+
         def paramObj = [filterName   : params.searchString ?: "%",
                         sortColumn   : params.sortColumnName ?: "id",
                         sortAscending: params.ascending ? params.ascending.toBoolean() : false,
@@ -315,12 +323,6 @@ class AipAdminController {
             model = [
                     success: false,
                     message: MessageHelper.message( ae.defaultMessage ),
-            ]
-        } catch (Exception e) {
-            model = [
-                    success                 : false,
-                    message                 : e.message,
-                    actionItemBlockedProcess: ""
             ]
         }
         render model as JSON

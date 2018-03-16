@@ -1,3 +1,6 @@
+/*******************************************************************************
+ Copyright 2018 Ellucian Company L.P. and its affiliates.
+ *******************************************************************************/
 ///<reference path="../../../../typings/tsd.d.ts"/>
 var AIP;
 (function (AIP) {
@@ -94,7 +97,6 @@ var AIP;
             return request;
         };
         AdminGroupService.prototype.enableGroupOpen = function (groupId) {
-            //var selectedGroup = groupId;
             $("#openGroupBtn").removeAttr("disabled");
             return groupId;
         };

@@ -7,14 +7,16 @@
 var AIP;
 (function (AIP) {
     var AdminGroupAddPageCtrl = (function () {
-        function AdminGroupAddPageCtrl($scope, $window, AdminGroupService, $q, SpinnerService, $state, $filter, $sce, $timeout, CKEDITORCONFIG) {
+        function AdminGroupAddPageCtrl($scope, $rootScope, $window, AdminGroupService, $q, SpinnerService, $state, $filter, $sce, $timeout, CKEDITORCONFIG) {
             var _this = this;
-            this.$inject = ["$scope", "$window", "AdminGroupService", "$q", "SpinnerService", "$state", "$filter", "$sce", "$timeout", "CKEDITORCONFIG"];
+            this.$inject = ["$scope", "$rootScope", "$window", "AdminGroupService", "$q", "SpinnerService", "$state", "$filter", "$sce", "$timeout", "CKEDITORCONFIG"];
             this.trustHTML = function (txtString) {
                 var sanitized = txtString ? this.$filter("html")(this.$sce.trustAsHtml(txtString)) : "";
                 return sanitized;
             };
             $scope.vm = this;
+            this.$scope = $scope;
+            this.$rootScope = $rootScope;
             this.$q = $q;
             this.$state = $state;
             this.$filter = $filter;
@@ -29,6 +31,8 @@ var AIP;
             this.editMode = false;
             this.existFolder = {};
             this.duplicateGroup = false;
+            this.actionItemDataChanged = false;
+            this.redirectval = "NoData";
             this.groupInfoInitial = {
                 id: undefined,
                 title: undefined,
@@ -98,6 +102,13 @@ var AIP;
                 }
                 _this.spinnerService.showSpinner(false);
             });
+            var that = this;
+            this.$scope.$on("DetectChanges", function (event, args) {
+                if (that.actionItemDataChanged) {
+                    that.redirectval = args.state;
+                    that.checkchangesDone();
+                }
+            });
         };
         AdminGroupAddPageCtrl.prototype.checkGroupPost = function () {
             var _this = this;
@@ -152,6 +163,8 @@ var AIP;
             this.adminGroupService.saveGroup(this.groupInfo, this.editMode, this.duplicateGroup)
                 .then(function (response) {
                 _this.saving = false;
+                _this.actionItemDataChanged = false;
+                _this.$rootScope.DataChanged = false;
                 var notiParams = {};
                 if (response.success) {
                     notiParams = {
@@ -175,8 +188,43 @@ var AIP;
                 notifications.addNotification(n);
             });
         };
+        AdminGroupAddPageCtrl.prototype.dataChanged = function () {
+            this.actionItemDataChanged = true;
+            this.$rootScope.DataChanged = this.actionItemDataChanged;
+        };
         AdminGroupAddPageCtrl.prototype.cancel = function () {
-            this.$state.go("admin-group-list");
+            this.redirectval = "NoData";
+            this.checkchangesDone();
+        };
+        AdminGroupAddPageCtrl.prototype.checkchangesDone = function () {
+            var that = this;
+            while (notifications.length !== 0) {
+                notifications.remove(notifications.first());
+            }
+            if (that.actionItemDataChanged) {
+                var n = new Notification({
+                    message: this.$filter("i18n_aip")("aip.admin.actionItem.saveChanges"),
+                    type: "warning"
+                });
+                n.addPromptAction(this.$filter("i18n_aip")("aip.common.text.no"), function () {
+                    notifications.remove(n);
+                });
+                n.addPromptAction(this.$filter("i18n_aip")("aip.common.text.yes"), function () {
+                    that.actionItemDataChanged = false;
+                    that.$rootScope.DataChanged = false;
+                    if (that.redirectval === "NoData") {
+                        that.$state.go("admin-group-list");
+                    }
+                    else {
+                        location.href = that.redirectval;
+                    }
+                    notifications.remove(n);
+                });
+                notifications.addNotification(n);
+            }
+            else {
+                that.$state.go("admin-group-list");
+            }
         };
         AdminGroupAddPageCtrl.prototype.isChanged = function () {
             var changed = false;
@@ -275,11 +323,6 @@ var AIP;
         AdminGroupAddPageCtrl.prototype.saveErrorCallback = function (invalidFields, errors, message) {
             var _this = this;
             //todo: iterate through errors given back through contraints
-            /*
-            errors.forEach( function(e, i) {
-                message += (e[i]);
-            });
-            */
             var message = this.$filter("i18n_aip")(message || "aip.admin.group.add.error.blank");
             if (errors != null) {
                 message = errors[0];

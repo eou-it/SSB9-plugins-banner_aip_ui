@@ -72,8 +72,8 @@ module AIP {
         editMode: boolean;
         postIDvalue;
         selectedActionListVal;
-        changeFlag:boolean
-        dirtyFlag:boolean
+        changeFlag:boolean;
+        dirtyFlag:boolean;
 
         constructor($scope: IActionItemAddPageScope, $q: ng.IQService, $state, $uibModal, $filter, $timeout,
                     SpinnerService: AIP.SpinnerService, APP_ROOT,AdminActionStatusService, AdminActionService: AIP.AdminActionService) {
@@ -124,7 +124,6 @@ module AIP {
         init() {
             this.spinnerService.showSpinner(true);
             var allPromises = [];
-            var deferred = this.$q.defer();
             this.postActionItemInfo = {};
             this.editMode = this.$state.params.isEdit==="true" ? true : false;
             this.postIDvalue=this.$state.params.postIdval;
@@ -134,7 +133,6 @@ module AIP {
                     .then((response: AIP.IPostActionItemGroupResponse) => {
                         this.groupList = response.data;
                         var postActionItemGroup: any = $("#postActionItemGroup");
-                        //this.postActionItemInfo["group"] = [];
                         this.postActionItemInfo.group = this.groupList;
 
                     })
@@ -173,7 +171,6 @@ module AIP {
                         this.timezones = response.data.timezones;
                         var timeZoneOffset = new Date().getTimezoneOffset();
                         var offset = "(GMT"+((timeZoneOffset<0? '+':'-')+ this.pad(parseInt(Math.abs(timeZoneOffset/60)), 2)+ ":" + this.pad(Math.abs(timeZoneOffset%60), 2)) + ")";
-                        //this.defaultTimeZone = offset;
                         var finalValue=''
                         angular.forEach(this.timezones,function(key,value){
                           var GMTString = key.stringOffset;
@@ -188,7 +185,7 @@ module AIP {
 
 
             this.$q.all(allPromises).then(() => {
-               
+
                 if (this.editMode) {
                     this.adminActionService.getJobDetails(this.$state.params.postIdval)
                         .then((response) => {
@@ -217,14 +214,14 @@ module AIP {
                                     }
                                 }
 
-                                this.selected= this.$scope.group
-                                this.selectedPopulation =   this.$scope.population
-                                this.postActionItemInfo.groupName = this.actionPost1.groupName
-                                this.postActionItemInfo.startDate = this.actionPost1.postingDisplayStartDate
-                                this.postActionItemInfo.endDate =  this.actionPost1.postingDisplayEndDate
-                                this.postActionItemInfo.localeDate = this.actionPost1.postingScheduleDateTime
-                                this.postNow = false
-                                this.regeneratePopulation=this.actionPost1.populationRegenerateIndicator
+                                this.selected= this.$scope.group;
+                                this.selectedPopulation =   this.$scope.population;
+                                this.postActionItemInfo.groupName = this.actionPost1.groupName;
+                                this.postActionItemInfo.startDate = this.actionPost1.postingDisplayStartDate;
+                                this.postActionItemInfo.endDate =  this.actionPost1.postingDisplayEndDate;
+                                this.postActionItemInfo.localeDate = this.actionPost1.postingScheduleDateTime;
+                                this.postNow = false;
+                                this.regeneratePopulation=this.actionPost1.populationRegenerateIndicator;
 
                                 if(this.postActionItemInfo.localeTime)
                                 {
@@ -309,7 +306,6 @@ module AIP {
             this.changeFlag=true;
             this.itemLength = 0;
             this.modalResult = [];
-            var groupId = this.$scope;
             this.adminActionService.getGroupActionItem(this.selected.groupId)
 
                 .then((response: AIP.IPostActionItemResponse) => {
@@ -333,7 +329,7 @@ module AIP {
        };
 
         pad(number, length){
-        var str = "" + number
+        var str = "" + number;
         while (str.length < length) {
             str = '0'+str
         }
@@ -375,7 +371,7 @@ module AIP {
                         return this.changeFlag
                     }
 
-                },
+                }
 
             });
             this.modalInstance.result.then((result) => {
@@ -462,16 +458,16 @@ module AIP {
 
                 var n = new Notification({
                     message: this.$filter("i18n_aip")("aip.common.action.post.status.edit.warning"),
-                    type: "warning",
+                    type: "warning"
                 });
                 n.addPromptAction(this.$filter("i18n_aip")("aip.common.text.no"), function () {
                     that.$state.go("admin-post-list");
                     notifications.remove(n);
-                })
+                });
                 n.addPromptAction(this.$filter("i18n_aip")("aip.common.text.yes"), function () {
                     that.save();
                     notifications.remove(n);
-                })
+                });
                 notifications.addNotification(n);
             }
             else
@@ -486,15 +482,16 @@ module AIP {
             if(this.postNow===true){
                 this.sendTime=null;
                 this.timezone.timezoneId=null;
-            }
-            if(this.editMode && !(this.sendTime instanceof Date) ){
-                var hourEnd = this.sendTime.indexOf(":");
-                var H = +this.sendTime.substr(0, hourEnd);
-                var h = H % 12 || 12;
-                var hoursStr = h < 10? "0"+h : h;
-                this.sendTime = hoursStr + this.sendTime.substr(hourEnd+1, 2) ;
-            }else{
-                this.sendTime =this.$filter("date")(this.sendTime, "HHmm");
+            } else {
+                if (this.editMode && !(this.sendTime instanceof Date)) {
+                    var hourEnd = this.sendTime.indexOf(":");
+                    var H = +this.sendTime.substr(0, hourEnd);
+                    var h = H % 12 || 12;
+                    var hoursStr = h < 10 ? "0" + h : h;
+                    this.sendTime = hoursStr + this.sendTime.substr(hourEnd + 1, 2);
+                } else {
+                    this.sendTime = this.$filter("date")(this.sendTime, "HHmm");
+                }
             }
             this.adminActionService.savePostActionItem(this.postActionItemInfo, this.selected, this.modalResults, this.selectedPopulation, this.postNow,this.sendTime,this.timezone.timezoneId, this.regeneratePopulation)
                 .then((response: AIP.IPostActionItemSaveResponse) => {
@@ -507,6 +504,7 @@ module AIP {
                         };
                         this.$state.go("admin-post-list", {noti: notiParams, data: response.data.savedJob.id});
                     } else {
+                        this.sendTime = ''; // reset it to blank
                         this.saveErrorCallback(response.data.message);
                     }
                 }, (err) => {

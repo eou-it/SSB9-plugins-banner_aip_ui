@@ -14,16 +14,17 @@ declare var CKEDITOR;
 module AIP {
 
     export class AdminActionItemBlockCtrl{
-        $inject = ["$scope", "$q", "$state", "$filter", "$sce", "$window", "$templateRequest", "$templateCache", "$compile",
+        $inject = ["$scope","$window","$rootScope", "$q", "$state", "$filter", "$sce", "$templateRequest", "$templateCache", "$compile",
             "$timeout", "$interpolate", "SpinnerService", "AdminActionService", "AdminActionStatusService", "APP_ROOT", "CKEDITORCONFIG"];
         adminActionService: AIP.AdminActionService;
         adminActionStatusService: AIP.AdminActionStatusService;
         spinnerService: AIP.SpinnerService;
         $q: ng.IQService;
         $state;
+        $window;
         $filter;
         $sce;
-        $window;
+        $rootScope;
         $templateRequest;
         $templateCache;
         $compile;
@@ -42,23 +43,24 @@ module AIP {
         allActionItems;
         selected;
         originalAssign;
-
         blockedProcess: any[];
         allBlockProcessList: any[];
         alreadyGenerated: any[];
         editMode: boolean;
         isSaving: boolean;
+        actionItemDataChanged:boolean;
+        redirectval;
 
 
-        constructor($scope, $q:ng.IQService, $state, $filter, $sce, $window, $templateRequest, $templateCache, $compile,
+        constructor($scope, $rootScope, $q:ng.IQService, $state, $filter, $sce, $window, $templateRequest, $templateCache, $compile,
                     $timeout, $interpolate, SpinnerService, AdminActionService, AdminActionStatusService, APP_ROOT, CKEDITORCONFIG) {
             $scope.vm = this;
             this.$scope = $scope;
+            this.$rootScope= $rootScope;
             this.$q = $q;
             this.$state = $state;
             this.$filter = $filter;
             this.$sce = $sce;
-            this.$window = $window;
             this.$templateRequest = $templateRequest;
             this.$templateCache = $templateCache;
             this.$compile = $compile;
@@ -76,6 +78,7 @@ module AIP {
             this.initialAssigned = [];
             this.allActionItems = [];
             this.globalBlockProcess=false;
+            this.redirectval="NoData";
 
             this.blockedProcess = [];
             this.allBlockProcessList = [];
@@ -86,12 +89,15 @@ module AIP {
 
             this.editMode = false;
             this.isSaving = false;
+            this.actionItemDataChanged=false;
+
             this.init();
-            angular.element( $window ).bind( 'resize', function () {
-                if (!$scope.$root.$$phase) {
+            angular.element($window).bind('resize', function () {
+                if (!$scope.$root.$phase) {
                     $scope.$apply();
                 }
-            } );
+            });
+
         };
 
 
@@ -102,16 +108,24 @@ module AIP {
                 this.handleNotification( this.$state.params.noti );
             }
             promises.push(this.getBlockedProcessList(this.$state.params.actionItemId));
-            /*  promises.push(this.getBlockedProcessList());*/
             //if needed, add more deferred job into promises list
             this.$q.all( promises ).then( () => {
                 this.spinnerService.showSpinner( false );
             } );
             promises.push(
+            );
+            /*Code For Dirty Check*/
+            var that=this;
+            this.$scope.$on("DetectChanges",function(event, args)
+            {
+                if (that.actionItemDataChanged) {
+                    that.redirectval = args.state;
+                    that.checkEditchanges();
+                }
 
-            )}
+            });
 
-
+        }
 
         getBlockedProcessList(actionItemId?) {
             var deferred = this.$q.defer();
@@ -145,8 +159,6 @@ module AIP {
         enterEditMode() {
             this.adminActionService.loadBlockingProcessLov1().then((response:any) => {
                 this.allActionItems = response.data;
-
-                var that = this;
                 this.personaData=[];
 
                 angular.forEach(this.allActionItems.persona, (value,key) => {
@@ -154,7 +166,7 @@ module AIP {
                         this.personaData.push(key);
                     }
 
-                })
+                });
 
                 if(this.blockedProcess.length!==0){
                     this.editMode=true;
@@ -178,11 +190,10 @@ module AIP {
                             editBlockData.push ({process:{id:key.id.blockingProcessId,name: key.processName,urls: key.urls,personAllowed:key.processPersonaBlockAllowedInd}, persona: key.blockedProcessAppRole})
                         }
 
-                    })
+                    });
 
                     this.selected=editBlockData;
                     console.log(this.selected)
-                    //this.originalAssign = angular.copy(this.selected);
 
                 }
                 else {
@@ -190,14 +201,7 @@ module AIP {
                     this.addNew();
 
                 }
-                this.$window.onbeforeunload = (event)=> {
-                    if (this.isChanged()) {
-                        // reset to default event listener
-                        return this.$filter("i18n_aip")("aip.common.admin.unsaved");
-                    }
-                    // reset to default event listener
-                    this.$window.onbeforeunload = null;
-                };
+
             }, (err) => {
                 console.log(err);
             });
@@ -235,8 +239,6 @@ module AIP {
         delete(item) {
             var itemIdx = this.selected.indexOf(item);
             this.selected.splice(itemIdx, 1);
-            //this.selected.splice(itemIdx, 1);
-            /*this.reAssignSeqnumber();*/
         }
         addNew() {
 
@@ -264,8 +266,6 @@ module AIP {
                 return !item.process;
             });
 
-
-
             if (this.originalAssign.length>0 && this.isEqual(this.selected, this.originalAssign)) {
                 validation = false;
             }
@@ -275,31 +275,6 @@ module AIP {
             return validation;
 
         }
-
-        /*selectActionItem(item, index) {
-         var currentAssigned = this.assignedActionItems[index];
-         if (currentAssigned.actionItemId === item.actionItemId) {
-         return;
-         }
-         if (!currentAssigned.actionItemId) {
-         currentAssigned.sequenceNumber = index + 1;
-         }
-         currentAssigned.actionItemId = item.actionItemId;
-         currentAssigned.actionItemFolderName = item.folderName;
-         currentAssigned.actionItemName = item.actionItemName;
-         currentAssigned.actionItemStatus = item.actionItemStatus;
-         this.assignedActionItems[index] = currentAssigned;
-         if(!this.selected[index].actionItemId) {
-         item.seq = index + 1;
-         this.selected[index] = item;
-         }
-         this.selected = this.selected.filter((item, idx) => {
-         return true;
-         });
-         this.reAssignSeqnumber()
-         }*/
-
-
 
         addNewItem() {
             var available = this.getAvailable();
@@ -329,11 +304,10 @@ module AIP {
             }
         }
         handleNotification(noti) {
-            while (notifications.length != 0) {
+            while (notifications.length !== 0) {
                 notifications.remove(notifications.first())
             }
             if(noti.notiType === "saveSuccess") {
-                // var data = noti.data.newActionItem||noti.data.actionItem;
                 var n = new Notification({
                     message: this.$filter("i18n_aip")("aip.common.save.successful"), //+
                     type: "success",
@@ -347,7 +321,7 @@ module AIP {
             }
             else if(noti.notiType === "saveFailed"){
                 var n1 = new Notification({
-                    message: noti.data, //+
+                    message: noti.data,
                     type: "error",
                     flash: true
                 });
@@ -366,7 +340,6 @@ module AIP {
                 $("#title-panel").height() -
                 $("#header-main-section").height() +
                 $(".status-rules").height() + 250
-            // $("#outerFooter").height() - 30;
             return {"min-height": containerHeight};
         }
         getTemplateContentHeight() {
@@ -389,8 +362,14 @@ module AIP {
             return this.rules.statusRuleLabelText;
         }
 
+        dataChanged(this)
+        {
+            this.actionItemDataChanged=true;
+            this.$rootScope.DataChanged=this.actionItemDataChanged;
+        }
 
-        cancel() {
+        reset()
+        {
             //reset selected items then exit edit mode
             this.getBlockedProcessList(this.$state.params.actionItemId)
                 .then((response) => {
@@ -405,13 +384,57 @@ module AIP {
                 });
         }
 
+        cancel()
+        {
+            this.redirectval="NoData";
+            this.checkEditchanges();
+        }
+
+
+        checkEditchanges()
+        {
+            var that=this;
+            while (notifications.length !== 0) {
+                notifications.remove(notifications.first())
+            }
+            if (that.actionItemDataChanged) {
+
+                var n = new Notification({
+                    message: this.$filter("i18n_aip")( "aip.admin.actionItem.saveChanges"),
+                    type: "warning"
+                });
+                n.addPromptAction(this.$filter("i18n_aip")("aip.common.text.no"), function () {
+                    notifications.remove(n);
+
+                });
+                n.addPromptAction(this.$filter("i18n_aip")("aip.common.text.yes"), function () {
+                    that.actionItemDataChanged=false;
+                    that.$rootScope.DataChanged=false;
+                    if (that.redirectval==="NoData")
+                    {
+                        that.reset();
+                    }
+                    else {
+                        that.reset();
+                        location.href = that.redirectval;
+                    }
+                    notifications.remove(n);
+                });
+                notifications.addNotification(n);
+            }
+            else
+            {
+                that.reset();
+            }
+        }
+
         isEqual(item1, item2) {
             var item1Properties = item1.map((item) => {
                 return [item.process.name, item.persona];
             });
             var item2Properties = item2.map((item) => {
                 return [item.process.name, item.persona];
-            })
+            });
 
             if ( angular.equals(item1Properties, item2Properties)) {
                 return true;
@@ -445,18 +468,21 @@ module AIP {
 
                     }
                     if(response.data.success){
-                        var notiParams = {};
+                        notiParams = {};
 
                         notiParams = {
                             notiType: "saveSuccess",
                             noti: notiParams,
                             data: response.data.success
                         };
+                        this.actionItemDataChanged=false;
+                        this.$rootScope.DataChanged=false;
+
                         this.handleNotification( notiParams);
 
                     }
                     else{
-                        var notiParams = {};
+                        notiParams = {};
 
                         notiParams = {
                             notiType: "saveFailed",
@@ -475,7 +501,6 @@ module AIP {
         }
 
         saveBlocks() {
-            var that=this;
             //save selected items then exit edit mode
             //this.editMode = false;
             this.isSaving = true;
@@ -494,7 +519,6 @@ module AIP {
 
                             notifications.remove(n);
                             this.saveSucess()
-
 
                         });
                         n.addPromptAction(this.$filter("i18n_aip")("aip.common.text.no"), () => {

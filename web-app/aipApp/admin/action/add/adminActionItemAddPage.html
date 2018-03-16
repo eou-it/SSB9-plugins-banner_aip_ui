@@ -16,8 +16,8 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
                 <div class="row" ng-class="{'has-error':vm.actionItemInfo.name.length>60}">
                     <input id="actionItemName" maxlength="60" aria-valuemax="60" type="text" class="form-control"
                            ng-model="vm.actionItemInfo.name" ng-disabled="vm.editMode"
-                           placeholder="{{'aip.admin.action.actionItem.name'|i18n_aip}}" aria-label="{{'aip.admin.action.actionItem.name'|i18n_aip}}"
-                           aria-required="true">
+                           placeholder="{{'aip.admin.action.actionItem.name'|i18n_aip}}" aria-label="Action Item Name"
+                           aria-required="true" ng-change="vm.dataChanged()">
                 </div>
                 <div class="alert alert-danger" role="alert" ng-if="vm.actionItemInfo.title.name>60">
                     <i class="fa fa-exclamation-circle" aria-hidden="true"></i>
@@ -33,8 +33,8 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
             </div>
             <div class="actionItemElement col-xs-12 col-sm-5">
                 <div class="row">
-                    <xe-ui-select id="actionItemFolder" ng-model="vm.actionItemInfo.folder" theme="select2"
-                                  >
+                    <xe-ui-select id="actionItemFolder" ng-model="vm.actionItemInfo.folder" theme="select2" ng-change="vm.dataChanged()"
+                    >
                         <xe-ui-select-match placeholder="{{'aip.common.select.folder.default'|i18n_aip}}">
                             {{vm.actionItemInfo.folder.name}}
                         </xe-ui-select-match>
@@ -54,7 +54,7 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
             <div class="actionItemElement col-xs-12 col-sm-5">
                 <div class="row">
                     <xe-ui-select id="actionItemStatus" ng-model="vm.actionItemInfo.status" theme="select2" ng-disabled="disabled" search-enabled="false"
-                                  on-select="vm.selectStatus($item, $index)">
+                                  on-select="vm.selectStatus($item, $index)" ng-change="vm.dataChanged()">
                         <xe-ui-select-match>
                             {{vm.actionItemInfo.status}}
                         </xe-ui-select-match>
@@ -80,8 +80,8 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
                 <div class="row" ng-class="{'has-error':vm.actionItemInfo.title.length>300}">
                     <input id="actionItemTitle" maxlength="300" aria-valuemax="300" type="text" class="form-control"
                            ng-model="vm.actionItemInfo.title"
-                           placeholder="{{'aip.admin.action.actionItem.title'|i18n_aip}}" aria-label="{{'aip.admin.action.actionItem.title'|i18n_aip}}"
-                           aria-required="true">
+                           placeholder="{{'aip.admin.action.actionItem.title'|i18n_aip}}" aria-label="Action Item Title"
+                           aria-required="true"  ng-change="vm.dataChanged()">
                 </div>
                 <div class="alert alert-danger" role="alert" ng-if="vm.actionItemInfo.title.length>300">
                     <i class="fa fa-exclamation-circle" aria-hidden="true"></i>
@@ -102,7 +102,7 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
 
                     <textarea id="actionItemDesc" aria-required="true" name="actionItemDesc"
                               placeholder="{{'aip.admin.action.add.description.placeholder'|i18n_aip}}" rows="20" cols="35"
-                              ng-model="vm.actionItemInfo.description" aria-label="Description"></textarea>
+                              ng-model="vm.actionItemInfo.description" aria-label="Description" ng-change="vm.dataChanged()"></textarea>
 
             </div>
         </div>

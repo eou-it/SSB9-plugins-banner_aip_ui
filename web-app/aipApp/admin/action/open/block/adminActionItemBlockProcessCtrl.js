@@ -8,8 +8,8 @@
 var AIP;
 (function (AIP) {
     var AdminActionItemBlockCtrl = (function () {
-        function AdminActionItemBlockCtrl($scope, $q, $state, $filter, $sce, $window, $templateRequest, $templateCache, $compile, $timeout, $interpolate, SpinnerService, AdminActionService, AdminActionStatusService, APP_ROOT, CKEDITORCONFIG) {
-            this.$inject = ["$scope", "$q", "$state", "$filter", "$sce", "$window", "$templateRequest", "$templateCache", "$compile",
+        function AdminActionItemBlockCtrl($scope, $rootScope, $q, $state, $filter, $sce, $window, $templateRequest, $templateCache, $compile, $timeout, $interpolate, SpinnerService, AdminActionService, AdminActionStatusService, APP_ROOT, CKEDITORCONFIG) {
+            this.$inject = ["$scope", "$window", "$rootScope", "$q", "$state", "$filter", "$sce", "$templateRequest", "$templateCache", "$compile",
                 "$timeout", "$interpolate", "SpinnerService", "AdminActionService", "AdminActionStatusService", "APP_ROOT", "CKEDITORCONFIG"];
             this.trustAsHtml = function (string) {
                 return this.$sce.trustAsHtml(string);
@@ -24,11 +24,11 @@ var AIP;
             };
             $scope.vm = this;
             this.$scope = $scope;
+            this.$rootScope = $rootScope;
             this.$q = $q;
             this.$state = $state;
             this.$filter = $filter;
             this.$sce = $sce;
-            this.$window = $window;
             this.$templateRequest = $templateRequest;
             this.$templateCache = $templateCache;
             this.$compile = $compile;
@@ -46,6 +46,7 @@ var AIP;
             this.initialAssigned = [];
             this.allActionItems = [];
             this.globalBlockProcess = false;
+            this.redirectval = "NoData";
             this.blockedProcess = [];
             this.allBlockProcessList = [];
             this.alreadyGenerated = [];
@@ -53,9 +54,10 @@ var AIP;
             this.originalAssign = [];
             this.editMode = false;
             this.isSaving = false;
+            this.actionItemDataChanged = false;
             this.init();
             angular.element($window).bind('resize', function () {
-                if (!$scope.$root.$$phase) {
+                if (!$scope.$root.$phase) {
                     $scope.$apply();
                 }
             });
@@ -69,12 +71,19 @@ var AIP;
                 this.handleNotification(this.$state.params.noti);
             }
             promises.push(this.getBlockedProcessList(this.$state.params.actionItemId));
-            /*  promises.push(this.getBlockedProcessList());*/
             //if needed, add more deferred job into promises list
             this.$q.all(promises).then(function () {
                 _this.spinnerService.showSpinner(false);
             });
             promises.push();
+            /*Code For Dirty Check*/
+            var that = this;
+            this.$scope.$on("DetectChanges", function (event, args) {
+                if (that.actionItemDataChanged) {
+                    that.redirectval = args.state;
+                    that.checkEditchanges();
+                }
+            });
         };
         AdminActionItemBlockCtrl.prototype.getBlockedProcessList = function (actionItemId) {
             var _this = this;
@@ -105,7 +114,6 @@ var AIP;
             var _this = this;
             this.adminActionService.loadBlockingProcessLov1().then(function (response) {
                 _this.allActionItems = response.data;
-                var that = _this;
                 _this.personaData = [];
                 angular.forEach(_this.allActionItems.persona, function (value, key) {
                     {
@@ -131,20 +139,11 @@ var AIP;
                     });
                     _this.selected = editBlockData;
                     console.log(_this.selected);
-                    //this.originalAssign = angular.copy(this.selected);
                 }
                 else {
                     _this.editMode = true;
                     _this.addNew();
                 }
-                _this.$window.onbeforeunload = function (event) {
-                    if (_this.isChanged()) {
-                        // reset to default event listener
-                        return _this.$filter("i18n_aip")("aip.common.admin.unsaved");
-                    }
-                    // reset to default event listener
-                    _this.$window.onbeforeunload = null;
-                };
             }, function (err) {
                 console.log(err);
             });
@@ -180,8 +179,6 @@ var AIP;
         AdminActionItemBlockCtrl.prototype.delete = function (item) {
             var itemIdx = this.selected.indexOf(item);
             this.selected.splice(itemIdx, 1);
-            //this.selected.splice(itemIdx, 1);
-            /*this.reAssignSeqnumber();*/
         };
         AdminActionItemBlockCtrl.prototype.addNew = function () {
             this.selected.push({});
@@ -214,28 +211,6 @@ var AIP;
             }
             return validation;
         };
-        /*selectActionItem(item, index) {
-         var currentAssigned = this.assignedActionItems[index];
-         if (currentAssigned.actionItemId === item.actionItemId) {
-         return;
-         }
-         if (!currentAssigned.actionItemId) {
-         currentAssigned.sequenceNumber = index + 1;
-         }
-         currentAssigned.actionItemId = item.actionItemId;
-         currentAssigned.actionItemFolderName = item.folderName;
-         currentAssigned.actionItemName = item.actionItemName;
-         currentAssigned.actionItemStatus = item.actionItemStatus;
-         this.assignedActionItems[index] = currentAssigned;
-         if(!this.selected[index].actionItemId) {
-         item.seq = index + 1;
-         this.selected[index] = item;
-         }
-         this.selected = this.selected.filter((item, idx) => {
-         return true;
-         });
-         this.reAssignSeqnumber()
-         }*/
         AdminActionItemBlockCtrl.prototype.addNewItem = function () {
             var available = this.getAvailable();
             if (available.length > 0) {
@@ -266,11 +241,10 @@ var AIP;
         };
         AdminActionItemBlockCtrl.prototype.handleNotification = function (noti) {
             var _this = this;
-            while (notifications.length != 0) {
+            while (notifications.length !== 0) {
                 notifications.remove(notifications.first());
             }
             if (noti.notiType === "saveSuccess") {
-                // var data = noti.data.newActionItem||noti.data.actionItem;
                 var n = new Notification({
                     message: this.$filter("i18n_aip")("aip.common.save.successful"),
                     type: "success",
@@ -301,7 +275,6 @@ var AIP;
                 $("#title-panel").height() -
                 $("#header-main-section").height() +
                 $(".status-rules").height() + 250;
-            // $("#outerFooter").height() - 30;
             return { "min-height": containerHeight };
         };
         AdminActionItemBlockCtrl.prototype.getTemplateContentHeight = function () {
@@ -309,7 +282,11 @@ var AIP;
                 $(".xe-tab-nav").height();
             return { height: containerHeight };
         };
-        AdminActionItemBlockCtrl.prototype.cancel = function () {
+        AdminActionItemBlockCtrl.prototype.dataChanged = function () {
+            this.actionItemDataChanged = true;
+            this.$rootScope.DataChanged = this.actionItemDataChanged;
+        };
+        AdminActionItemBlockCtrl.prototype.reset = function () {
             var _this = this;
             //reset selected items then exit edit mode
             this.getBlockedProcessList(this.$state.params.actionItemId)
@@ -322,6 +299,41 @@ var AIP;
                 _this.alreadyGenerated = [];
                 _this.editMode = false;
             });
+        };
+        AdminActionItemBlockCtrl.prototype.cancel = function () {
+            this.redirectval = "NoData";
+            this.checkEditchanges();
+        };
+        AdminActionItemBlockCtrl.prototype.checkEditchanges = function () {
+            var that = this;
+            while (notifications.length !== 0) {
+                notifications.remove(notifications.first());
+            }
+            if (that.actionItemDataChanged) {
+                var n = new Notification({
+                    message: this.$filter("i18n_aip")("aip.admin.actionItem.saveChanges"),
+                    type: "warning"
+                });
+                n.addPromptAction(this.$filter("i18n_aip")("aip.common.text.no"), function () {
+                    notifications.remove(n);
+                });
+                n.addPromptAction(this.$filter("i18n_aip")("aip.common.text.yes"), function () {
+                    that.actionItemDataChanged = false;
+                    that.$rootScope.DataChanged = false;
+                    if (that.redirectval === "NoData") {
+                        that.reset();
+                    }
+                    else {
+                        that.reset();
+                        location.href = that.redirectval;
+                    }
+                    notifications.remove(n);
+                });
+                notifications.addNotification(n);
+            }
+            else {
+                that.reset();
+            }
         };
         AdminActionItemBlockCtrl.prototype.isEqual = function (item1, item2) {
             var item1Properties = item1.map(function (item) {
@@ -356,16 +368,18 @@ var AIP;
                     _this.handleNotification(notiParams);
                 }
                 if (response.data.success) {
-                    var notiParams = {};
+                    notiParams = {};
                     notiParams = {
                         notiType: "saveSuccess",
                         noti: notiParams,
                         data: response.data.success
                     };
+                    _this.actionItemDataChanged = false;
+                    _this.$rootScope.DataChanged = false;
                     _this.handleNotification(notiParams);
                 }
                 else {
-                    var notiParams = {};
+                    notiParams = {};
                     notiParams = {
                         notiType: "saveFailed",
                         noti: notiParams,
@@ -382,7 +396,6 @@ var AIP;
         };
         AdminActionItemBlockCtrl.prototype.saveBlocks = function () {
             var _this = this;
-            var that = this;
             //save selected items then exit edit mode
             //this.editMode = false;
             this.isSaving = true;

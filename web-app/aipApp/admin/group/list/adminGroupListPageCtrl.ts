@@ -39,18 +39,10 @@ module AIP {
             this.adminGroupService = AdminGroupService;
             this.init();
             angular.element($window).bind('resize', function() {
-                //$scope.onResize();
                 $scope.$apply();
             });
 
-            /*
-        $scope.$watch("[vm.groupDetailResponse, vm.groupInfo]" , (newVal, oldVal) => {
-            if(!$scope.$$phase) {
-                $scope.apply();
-            }
-        });*/
         angular.element($window).bind('resize', function() {
-            //$scope.onResize();
             $scope.$apply();
         });
 
@@ -98,7 +90,6 @@ module AIP {
                 name: "folderName",
                 title: this.$filter("i18n_aip")("aip.list.grid.folder"),
                 ariaLabel: this.$filter("i18n_aip")("aip.list.grid.folder"),
-                // width: "100px",
                 options: {
                     sortable: true,
                     visible: true,
@@ -108,7 +99,6 @@ module AIP {
                 name: "groupStatus",
                 title: this.$filter("i18n_aip")("aip.list.grid.status"),
                 ariaLabel: this.$filter("i18n_aip")("aip.list.grid.status"),
-                // width: "100px",
                 options: {
                     sortable: true,
                     visible: true,
@@ -118,7 +108,6 @@ module AIP {
                 name: "postedInd",
                 title: this.$filter("i18n_aip")("aip.list.grid.postInd"),
                 ariaLabel: this.$filter("i18n_aip")("aip.list.grid.postInd"),
-                // width: "100px",
                 options: {
                     sortable: true,
                     visible: true,
@@ -128,7 +117,6 @@ module AIP {
                 name: "groupUserId",
                 title: this.$filter("i18n_aip")("aip.list.grid.lastUpdated"),
                 ariaLabel: this.$filter("i18n_aip")("aip.list.grid.lastUpdated"),
-                // width: "100px",
                 options: {
                     sortable: true,
                     visible: true,
@@ -139,7 +127,6 @@ module AIP {
                 name: "groupActivityDate",
                 title: this.$filter("i18n_aip")("aip.list.grid.activityDate"),
                 ariaLabel: this.$filter("i18n_aip")("aip.list.grid.activityDate"),
-                // width: "100px",
                 options: {
                     sortable: true,
                     visible: true,
@@ -149,7 +136,6 @@ module AIP {
                     name: "groupActions",
                     title: this.$filter("i18n_aip")("aip.list.grid.actions"),
                     ariaLabel: this.$filter("i18n_aip")("aip.list.grid.actions"),
-                    // width: "100px",
                     options: {
                         sortable: false,
                         visible: true,
@@ -190,8 +176,6 @@ module AIP {
             var deferred = this.$q.defer();
             this.adminGroupService.fetchData(query)
                 .then((response) => {
-                    // this.gridData = response;
-                    // this.gridData.header = this.header;
                     deferred.resolve(response);
                 }, (error) => {
                     console.log(error);
@@ -200,10 +184,6 @@ module AIP {
             return deferred.promise;
         }
         selectRecord(data) {
-            // this.selectedRecord = data;
-            // this.adminGroupService.enableGroupOpen(data.id);
-            // this.$state.params.grp = data.id;
-
         }
 
         deleteBlock(cantDeleteMessage) {
@@ -218,7 +198,7 @@ module AIP {
         deleteUnblock(map, name, $scope) {
             var n = new Notification({
                 message: this.$filter("i18n_aip")("aip.admin.group.delete.warning"),
-                type: "warning",
+                type: "warning"
             });
             var actionService = this.adminGroupService;
             var keyValue = {

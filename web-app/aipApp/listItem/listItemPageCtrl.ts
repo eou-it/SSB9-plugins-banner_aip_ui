@@ -111,7 +111,6 @@ module AIP {
 
                     this.initialOpenGroup = this.getInitialSelection();
 
-                    //this.selectedData = {type: SelectionType.Group};
                     if(this.initialOpenGroup !== -1) {
                         this.itemListViewService.getDetailInformation(this.actionItems.groups[this.initialOpenGroup].id, "group", null)
                             .then((response:ISelectedData) => {
@@ -134,11 +133,6 @@ module AIP {
                         angular.forEach( group.items, ( item ) => {
                             item.state = item.state
                             /*todo: can probably drop the message properties for these status since it's coming from the db*/
-                            /*
-                             ==="Completed"?
-                             "aip.status.complete":
-                             "aip.status.pending";
-                             */
                         } );
                     } );
                     this.actionItems = actionItems;
@@ -328,19 +322,6 @@ module AIP {
             notifications.addNotification( n );
 
         }
-
-        /*
-         getCustomPage(id,actionItemId) {
-            var defer = this.$q.defer();
-            var customPageId = id || "ActionItemPolicy"; //TODO: get id from selectedData (later)
-            var actionItemId = actionItemId || "3";
-            var request = this.itemListViewService.getPagebuilderPage(customPageId,actionItemId ).then( (response:any) => {
-                defer.resolve();
-            });
-            return defer.promise;
-        }
-        */
-
     }
 }
 
