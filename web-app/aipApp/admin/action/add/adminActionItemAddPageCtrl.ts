@@ -17,6 +17,7 @@ module AIP {
         save(): void;
         saveErrorCallback(message: string): void;
         dataChanged():void;
+        actionInfoValues():void;
     }
     interface IActionItemAddPageScope {
         vm: AdminActionItemAddPageCtrl;
@@ -46,6 +47,9 @@ module AIP {
         actionItemInitial;
         actionItemDataChanged:boolean;
         redirectval;
+        statusList;
+        selectedstatusval;
+        adminActionItemVal;
 
 
         constructor($scope,  $rootScope, $q:ng.IQService, $state, $filter,$sce, $timeout, $window,
@@ -69,6 +73,9 @@ module AIP {
             this.duplicateGroup = false;
             this.actionItemDataChanged=false;
             this.redirectval="NoData";
+            this.adminActionItemVal=[];
+            this.statusList=[];
+            this.selectedstatusval={};
 
             this.actionItemInitial = {
                 id: undefined,
@@ -101,8 +108,20 @@ module AIP {
                 this.adminActionService.getStatus()
                     .then((response: AIP.IActionItemStatusResponse) => {
                         this.status = response.data;
-                        this.status.map(item=>item.value=this.$filter("i18n_aip")(item.value));
+                        for (var k = 0; k < this.status.length; k++) {
+                            var values = {
+                                "id": this.status[k].id,
+                                "value": this.status[k].value
+                            };
+                            this.statusList.push(values);
+                        }
+                      //  this.status.map(item=>item.value=this.$filter("i18n_aip")(item.value));
+                        this.status.map((item) => {
+                            item.value = this.$filter("i18n_aip")( "aip.status." + item.value.charAt(0));
+                            return item;
+                        });
                         this.actionItemInfo.status = this.status[0].value;
+                        this.selectedstatusval= this.status[0];
                     })
             );
             allPromises.push(
@@ -110,6 +129,7 @@ module AIP {
                     .then((response:AIP.IActionItemFolderResponse) => {
                         this.folders = response.data;
                     })
+
             );
             this.$q.all(allPromises).then(() => {
                 if (this.editMode) {
@@ -125,6 +145,7 @@ module AIP {
                                 this.actionItemInfo.folder = this.folders.filter((item)=> {
                                     return item.id === parseInt(this.actionItem1.folderId);
                                 })[0];
+
                                 this.actionItemInfo.description = this.actionItem1.actionItemDesc;
                                 this.actionItemInitial = angular.copy(this.actionItemInfo);
                                 this.trustActionItemContent();
@@ -167,6 +188,7 @@ module AIP {
             }
         }
         selectStatus(item, index) {
+            this.selectedstatusval=item;
             this.actionItemInfo.status = item.value;
         }
         trustAsHtml = function (string) {
@@ -320,10 +342,44 @@ module AIP {
             this.$rootScope.DataChanged=this.actionItemDataChanged;
         }
 
+        actionInfoValues()
+        {
+            var modifiedStatus;
+            if (this.editMode)
+            {
+                for (var k = 0; k < this.status.length; k++) {
+                    if(this.status[k].value=== this.actionItemInfo.status)
+                    {
+                        this.selectedstatusval=this.status[k];
+                    }
+                }
+            }
+            for (var i = 0; i < this.statusList.length; i++) {
+                if (this.selectedstatusval.id === this.statusList[i].id) {
+                    modifiedStatus = this.statusList[i].value;
+                }
+            }
+
+            var values = {
+                "folder": this.actionItemInfo.folder,
+                "name":this.actionItemInfo.name,
+                "postedInd":this.actionItemInfo.postedInd,
+                "id":this.actionItemInfo.id,
+                "status":modifiedStatus,
+                "title":this.actionItemInfo.title,
+                "description":this.actionItemInfo.description
+            };
+
+            this.adminActionItemVal.push(values);
+
+        }
+
+
         save() {
             this.saving = true;
+            this.actionInfoValues();
             if (this.editMode) {
-                this.adminActionService.editActionItems(this.actionItemInfo)
+                this.adminActionService.editActionItems(this.adminActionItemVal[0])
                     .then((response: AIP.IActionItemSaveResponse) => {
                         this.saving = false;
 
@@ -351,7 +407,7 @@ module AIP {
                     });
             }
             else {
-                this.adminActionService.saveActionItem(this.actionItemInfo)
+                this.adminActionService.saveActionItem(this.adminActionItemVal[0])
                     .then((response: AIP.IActionItemSaveResponse) => {
                         console.log("Success");
                         this.saving = false;

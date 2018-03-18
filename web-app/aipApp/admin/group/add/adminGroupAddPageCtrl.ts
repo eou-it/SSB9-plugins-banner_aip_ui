@@ -22,6 +22,7 @@ module AIP {
         cancel(): void;
         checkchangesDone():void;
         dataChanged():void;
+        groupInfoValues():void;
 
     }
     interface IGroupSelect {
@@ -56,6 +57,9 @@ module AIP {
         duplicateGroup: boolean;
         actionItemDataChanged:boolean;
         redirectval;
+        statusList;
+        selectedstatusval;
+        groupval;
         constructor($scope,$rootScope, $window:ng.IWindowService, AdminGroupService:AIP.AdminGroupService,
                     $q:ng.IQService, SpinnerService, $state, $filter, $sce, $timeout, CKEDITORCONFIG) {
             $scope.vm = this;
@@ -77,6 +81,9 @@ module AIP {
             this.duplicateGroup = false;
             this.actionItemDataChanged=false;
             this.redirectval="NoData";
+            this.groupval=[];
+            this.statusList=[];
+            this.selectedstatusval={};
             this.groupInfoInitial = {
                 id: undefined,
                 title: undefined,
@@ -109,11 +116,19 @@ module AIP {
             this.editMode = this.$state.params.isEdit==="true"?true:false;
             promises.push(
                 this.adminGroupService.getStatus().then((status) => {
+                    for (var k = 0; k < status.length; k++) {
+                    var values = {
+                        "id": status[k].id,
+                        "value": status[k].value
+                    };
+                        this.statusList.push(values);
+                     }
                     this.status = status.map((item) => {
                         item.value = this.$filter("i18n_aip")( "aip.status." + item.value.charAt(0));
                         return item;
                     });
                     this.groupInfo.status = this.status[0].value;
+                    this.selectedstatusval= this.status[0];
                 })
             );
             promises.push(
@@ -206,10 +221,44 @@ module AIP {
                 this.save();
             }
         }
+
+        groupInfoValues()
+        {
+            var modifiedStatus;
+            if (this.editMode)
+            {
+                for (var k = 0; k < this.status.length; k++) {
+                    if(this.status[k].value=== this.groupInfo.status)
+                    {
+                        this.selectedstatusval=this.status[k];
+                    }
+                }
+            }
+                for (var i = 0; i < this.statusList.length; i++) {
+                    if (this.selectedstatusval.id === this.statusList[i].id) {
+                        modifiedStatus = this.statusList[i].value;
+                    }
+                }
+
+            var values = {
+                "folder": this.groupInfo.folder,
+                "id": this.groupInfo.id,
+                "name":this.groupInfo.name,
+                "postedInd":this.groupInfo.postedInd,
+                "status":modifiedStatus,
+                "title":this.groupInfo.title,
+                "description":this.groupInfo.description
+            };
+            this.groupval.push(values);
+
+         }
+
+
         save() {
 
             this.saving = true;
-            this.adminGroupService.saveGroup(this.groupInfo, this.editMode, this.duplicateGroup)
+            this.groupInfoValues();
+            this.adminGroupService.saveGroup(this.groupval[0], this.editMode, this.duplicateGroup)
                 .then((response:IAddGroupResponse) => {
                     this.saving = false;
                     this.actionItemDataChanged=false;
@@ -371,6 +420,7 @@ module AIP {
             }
         }
         selectStatus(item, index) {
+            this.selectedstatusval=item;
             this.groupInfo.status = item.value;
         }
         trustHTML = function(txtString) {
