@@ -50,6 +50,7 @@ module AIP {
         isSaving: boolean;
         actionItemDataChanged:boolean;
         redirectval;
+        actionBlockFolder;
 
 
         constructor($scope, $rootScope, $q:ng.IQService, $state, $filter, $sce, $window, $templateRequest, $templateCache, $compile,
@@ -79,6 +80,7 @@ module AIP {
             this.allActionItems = [];
             this.globalBlockProcess=false;
             this.redirectval="NoData";
+            this.actionBlockFolder;
 
             this.blockedProcess = [];
             this.allBlockProcessList = [];
@@ -107,7 +109,9 @@ module AIP {
             if (this.$state.params.noti) {
                 this.handleNotification( this.$state.params.noti );
             }
-            promises.push(this.getBlockedProcessList(this.$state.params.actionItemId));
+            this.actionBlockFolder = this.$state.params.actionItemId || this.$state.previousParams.actionItemId;
+
+            promises.push(this.getBlockedProcessList(this.actionBlockFolder));
             //if needed, add more deferred job into promises list
             this.$q.all( promises ).then( () => {
                 this.spinnerService.showSpinner( false );
@@ -371,7 +375,7 @@ module AIP {
         reset()
         {
             //reset selected items then exit edit mode
-            this.getBlockedProcessList(this.$state.params.actionItemId)
+            this.getBlockedProcessList(this.actionBlockFolder)
                 .then((response) => {
                     this.alreadyGenerated = [];
                     this.editMode = false;
@@ -451,9 +455,9 @@ module AIP {
                 }
                 return {processId:item.process.id, persona: item.persona};
             });
-            this.adminActionService.updateBlockedProcessItems(this.$state.params.actionItemId,this.globalBlockProcess,saveData)
+            this.adminActionService.updateBlockedProcessItems(this.actionBlockFolder,this.globalBlockProcess,saveData)
                 .then((response) => {
-                    this.getBlockedProcessList(this.$state.params.actionItemId);
+                    this.getBlockedProcessList(this.actionBlockFolder);
 
 
                     if(response.data.success){
@@ -508,7 +512,7 @@ module AIP {
             // actionItemId: this.$state.params.data
 
 
-            this.adminActionService.checkActionItemPosted(this.$state.params.actionItemId)
+            this.adminActionService.checkActionItemPosted(this.actionBlockFolder)
                 .then((response) => {
                     if (response.posted) {
                         var n = new Notification({
