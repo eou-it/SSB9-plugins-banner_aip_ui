@@ -199,6 +199,15 @@ aip-list .enddate  {
     font-weight:bold;
     font-size:11px;
 }
+aip-list .completedEndDate  {
+    font-size:1.3em;
+    border-bottom:none;
+    padding:25px 10px 0px 8px;
+}
+aip-list .completedEndDate .data-label  {
+    font-family:"OpenSans-bold";
+    display:inline-block;
+}
 
 .AIP-landing-container  {
     padding:16px;
@@ -861,7 +870,7 @@ ol.selected-group > li > button  {
     padding-right:24px;
 }
         .actionItemAddContainer .actionItemControl .actionItemButton span button  {
-    min-width:100px;
+    min-width:95px;
 }
   
 
@@ -1296,7 +1305,7 @@ ol.selected-group > li > button  {
     padding-right:24px;
 }
         .actionItemAddContainer .actionItemControl .actionItemButton span button  {
-    min-width:100px;
+    min-width:95px;
     margin-right:3px;
 }
   .actionItemAddContainer input[type="checkbox"]  {
