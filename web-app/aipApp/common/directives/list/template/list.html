@@ -65,7 +65,7 @@
                         <span class="completedDate" ng-if="key==='completedDate'&&row[key]!==null"><p><span class="data-label">{{'aip.user.action.item.last.response'|i18n_aip}}</span>
                         {{row['currentResponse']}}</p></span>
 
-                        <aip-readmore class="aipReadmore" ng-if="key==='description'" ng-bind-html="row[key]"></aip-readmore>
+                        <pre ng-show="key==='description' && row[key].length>0">  <aip-readmore class="aipReadmore" ng-if="key==='description'" ng-bind-html="row[key]"></aip-readmore> </pre>
                     </div>
 
                 </div>
