@@ -25,7 +25,7 @@ class BCMController {
             bcmLocationURL = bannerCommManagementResourceAccessService.getBCMLocation()
             session[BCM_LOCATION] = bcmLocationURL
         }
-        def map = [bcmURL: bcmLocationURL]
+        def map = [bcmURL: bcmLocationURL,mepCode:session.getAttribute('mep')]
         render map as JSON
     }
 }

@@ -20,6 +20,7 @@ angular.module('bannerAIPUI')
                         $scope.bcm = response.data.bcmURL;
 
                         if (state == "admin-manage-list") {
+                            $scope.bcm += response.data.mepCode? "?mepCode="+response.data.mepCode:"";
                             window.open($scope.bcm);
                         }
                         $state.go(state);
