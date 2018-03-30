@@ -43,7 +43,7 @@
     <script type="text/javascript">
         var pageControllers = {};
 
-        <g:i18n_aip_setup/>
+        <g:i18n_setup/>
         <g:aipVersion/>
         <g:if env="development">
             window.aip?window.aip.dev="development":window.aip={dev:"development"};

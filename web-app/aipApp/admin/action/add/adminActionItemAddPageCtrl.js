@@ -6,7 +6,7 @@
 ///<reference path="../../../common/services/admin/adminActionService.ts"/>
 var AIP;
 (function (AIP) {
-    var AdminActionItemAddPageCtrl = (function () {
+    var AdminActionItemAddPageCtrl = /** @class */ (function () {
         function AdminActionItemAddPageCtrl($scope, $rootScope, $q, $state, $filter, $sce, $timeout, $window, SpinnerService, AdminActionService, $location) {
             var _this = this;
             this.$inject = ["$scope", "$rootScope", "$q", "$state", "$filter", "$location", "$sce", "$timeout", "$window", "SpinnerService", "AdminActionService"];
@@ -36,6 +36,9 @@ var AIP;
             this.duplicateGroup = false;
             this.actionItemDataChanged = false;
             this.redirectval = "NoData";
+            this.adminActionItemVal = [];
+            this.statusList = [];
+            this.selectedstatusval = {};
             this.actionItemInitial = {
                 id: undefined,
                 title: undefined,
@@ -63,8 +66,20 @@ var AIP;
             allPromises.push(this.adminActionService.getStatus()
                 .then(function (response) {
                 _this.status = response.data;
-                _this.status.map(function (item) { return item.value = _this.$filter("i18n_aip")(item.value); });
+                for (var k = 0; k < _this.status.length; k++) {
+                    var values = {
+                        "id": _this.status[k].id,
+                        "value": _this.status[k].value
+                    };
+                    _this.statusList.push(values);
+                }
+                //  this.status.map(item=>item.value=this.$filter("i18n_aip")(item.value));
+                _this.status.map(function (item) {
+                    item.value = _this.$filter("i18n_aip")("aip.status." + item.value.charAt(0));
+                    return item;
+                });
                 _this.actionItemInfo.status = _this.status[0].value;
+                _this.selectedstatusval = _this.status[0];
             }));
             allPromises.push(this.adminActionService.getFolder()
                 .then(function (response) {
@@ -126,6 +141,7 @@ var AIP;
             }
         };
         AdminActionItemAddPageCtrl.prototype.selectStatus = function (item, index) {
+            this.selectedstatusval = item;
             this.actionItemInfo.status = item.value;
         };
         AdminActionItemAddPageCtrl.prototype.validateInput = function () {
@@ -262,11 +278,37 @@ var AIP;
             this.actionItemDataChanged = true;
             this.$rootScope.DataChanged = this.actionItemDataChanged;
         };
+        AdminActionItemAddPageCtrl.prototype.actionInfoValues = function () {
+            var modifiedStatus;
+            if (this.editMode) {
+                for (var k = 0; k < this.status.length; k++) {
+                    if (this.status[k].value === this.actionItemInfo.status) {
+                        this.selectedstatusval = this.status[k];
+                    }
+                }
+            }
+            for (var i = 0; i < this.statusList.length; i++) {
+                if (this.selectedstatusval.id === this.statusList[i].id) {
+                    modifiedStatus = this.statusList[i].value;
+                }
+            }
+            var values = {
+                "folder": this.actionItemInfo.folder,
+                "name": this.actionItemInfo.name,
+                "postedInd": this.actionItemInfo.postedInd,
+                "id": this.actionItemInfo.id,
+                "status": modifiedStatus,
+                "title": this.actionItemInfo.title,
+                "description": this.actionItemInfo.description
+            };
+            this.adminActionItemVal.push(values);
+        };
         AdminActionItemAddPageCtrl.prototype.save = function () {
             var _this = this;
             this.saving = true;
+            this.actionInfoValues();
             if (this.editMode) {
-                this.adminActionService.editActionItems(this.actionItemInfo)
+                this.adminActionService.editActionItems(this.adminActionItemVal[0])
                     .then(function (response) {
                     _this.saving = false;
                     if (response.data.success) {
@@ -292,7 +334,7 @@ var AIP;
                 });
             }
             else {
-                this.adminActionService.saveActionItem(this.actionItemInfo)
+                this.adminActionService.saveActionItem(this.adminActionItemVal[0])
                     .then(function (response) {
                     console.log("Success");
                     _this.saving = false;

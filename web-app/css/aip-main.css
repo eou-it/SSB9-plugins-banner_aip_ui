@@ -169,6 +169,13 @@ aip-list .enddate {
   margin-bottom: 15px;
   font-weight: bold;
   font-size: 11px; }
+aip-list .completedEndDate {
+  font-size: 1.3em;
+  border-bottom: none;
+  padding: 25px 8px 0px 10px; }
+aip-list .completedEndDate .data-label {
+  font-family: "OpenSans-bold";
+  display: inline-block; }
 
 .AIP-landing-container {
   padding: 16px; }
@@ -707,7 +714,7 @@ ol.selected-group > li > button {
       .actionItemAddContainer .actionItemControl .actionItemButton span {
         padding-left: 24px; }
         .actionItemAddContainer .actionItemControl .actionItemButton span button {
-          min-width: 100px; }
+          min-width: 95px; }
   @media (min-width: 769px) {
     .actionItemAddContainer .actionItemButton {
       margin-left: 10px; } }
@@ -1158,7 +1165,7 @@ ol.selected-group > li > button {
       .actionItemAddContainer .actionItemControl .actionItemButton span {
         padding-left: 24px; }
         .actionItemAddContainer .actionItemControl .actionItemButton span button {
-          min-width: 100px;
+          min-width: 95px;
           margin-left: 3px; }
   .actionItemAddContainer input[type="checkbox"] {
     -webkit-appearance: initial;

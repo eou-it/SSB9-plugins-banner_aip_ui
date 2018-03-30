@@ -47,6 +47,7 @@ var AIP;
             this.allActionItems = [];
             this.globalBlockProcess = false;
             this.redirectval = "NoData";
+            this.actionBlockFolder;
             this.blockedProcess = [];
             this.allBlockProcessList = [];
             this.alreadyGenerated = [];
@@ -70,7 +71,8 @@ var AIP;
             if (this.$state.params.noti) {
                 this.handleNotification(this.$state.params.noti);
             }
-            promises.push(this.getBlockedProcessList(this.$state.params.actionItemId));
+            this.actionBlockFolder = this.$state.params.actionItemId || this.$state.previousParams.actionItemId;
+            promises.push(this.getBlockedProcessList(this.actionBlockFolder));
             //if needed, add more deferred job into promises list
             this.$q.all(promises).then(function () {
                 _this.spinnerService.showSpinner(false);
@@ -289,7 +291,7 @@ var AIP;
         AdminActionItemBlockCtrl.prototype.reset = function () {
             var _this = this;
             //reset selected items then exit edit mode
-            this.getBlockedProcessList(this.$state.params.actionItemId)
+            this.getBlockedProcessList(this.actionBlockFolder)
                 .then(function (response) {
                 _this.alreadyGenerated = [];
                 _this.editMode = false;
@@ -355,9 +357,9 @@ var AIP;
                 }
                 return { processId: item.process.id, persona: item.persona };
             });
-            this.adminActionService.updateBlockedProcessItems(this.$state.params.actionItemId, this.globalBlockProcess, saveData)
+            this.adminActionService.updateBlockedProcessItems(this.actionBlockFolder, this.globalBlockProcess, saveData)
                 .then(function (response) {
-                _this.getBlockedProcessList(_this.$state.params.actionItemId);
+                _this.getBlockedProcessList(_this.actionBlockFolder);
                 if (response.data.success) {
                     var notiParams = {};
                     notiParams = {
@@ -401,7 +403,7 @@ var AIP;
             this.isSaving = true;
             // items: this.alreadyGenerated[{id:id, name: "name", value:{processNamei18n:"i18n", urls:["url"]}}]
             // actionItemId: this.$state.params.data
-            this.adminActionService.checkActionItemPosted(this.$state.params.actionItemId)
+            this.adminActionService.checkActionItemPosted(this.actionBlockFolder)
                 .then(function (response) {
                 if (response.posted) {
                     var n = new Notification({

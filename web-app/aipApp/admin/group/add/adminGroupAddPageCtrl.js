@@ -6,7 +6,7 @@
 ///<reference path="../../../common/services/spinnerService.ts"/>
 var AIP;
 (function (AIP) {
-    var AdminGroupAddPageCtrl = (function () {
+    var AdminGroupAddPageCtrl = /** @class */ (function () {
         function AdminGroupAddPageCtrl($scope, $rootScope, $window, AdminGroupService, $q, SpinnerService, $state, $filter, $sce, $timeout, CKEDITORCONFIG) {
             var _this = this;
             this.$inject = ["$scope", "$rootScope", "$window", "AdminGroupService", "$q", "SpinnerService", "$state", "$filter", "$sce", "$timeout", "CKEDITORCONFIG"];
@@ -33,6 +33,9 @@ var AIP;
             this.duplicateGroup = false;
             this.actionItemDataChanged = false;
             this.redirectval = "NoData";
+            this.groupval = [];
+            this.statusList = [];
+            this.selectedstatusval = {};
             this.groupInfoInitial = {
                 id: undefined,
                 title: undefined,
@@ -63,11 +66,19 @@ var AIP;
             this.groupInfo = {};
             this.editMode = this.$state.params.isEdit === "true" ? true : false;
             promises.push(this.adminGroupService.getStatus().then(function (status) {
+                for (var k = 0; k < status.length; k++) {
+                    var values = {
+                        "id": status[k].id,
+                        "value": status[k].value
+                    };
+                    _this.statusList.push(values);
+                }
                 _this.status = status.map(function (item) {
                     item.value = _this.$filter("i18n_aip")("aip.status." + item.value.charAt(0));
                     return item;
                 });
                 _this.groupInfo.status = _this.status[0].value;
+                _this.selectedstatusval = _this.status[0];
             }));
             promises.push(this.adminGroupService.getFolder().then(function (folders) {
                 _this.folders = folders;
@@ -157,10 +168,36 @@ var AIP;
                 this.save();
             }
         };
+        AdminGroupAddPageCtrl.prototype.groupInfoValues = function () {
+            var modifiedStatus;
+            if (this.editMode) {
+                for (var k = 0; k < this.status.length; k++) {
+                    if (this.status[k].value === this.groupInfo.status) {
+                        this.selectedstatusval = this.status[k];
+                    }
+                }
+            }
+            for (var i = 0; i < this.statusList.length; i++) {
+                if (this.selectedstatusval.id === this.statusList[i].id) {
+                    modifiedStatus = this.statusList[i].value;
+                }
+            }
+            var values = {
+                "folder": this.groupInfo.folder,
+                "id": this.groupInfo.id,
+                "name": this.groupInfo.name,
+                "postedInd": this.groupInfo.postedInd,
+                "status": modifiedStatus,
+                "title": this.groupInfo.title,
+                "description": this.groupInfo.description
+            };
+            this.groupval.push(values);
+        };
         AdminGroupAddPageCtrl.prototype.save = function () {
             var _this = this;
             this.saving = true;
-            this.adminGroupService.saveGroup(this.groupInfo, this.editMode, this.duplicateGroup)
+            this.groupInfoValues();
+            this.adminGroupService.saveGroup(this.groupval[0], this.editMode, this.duplicateGroup)
                 .then(function (response) {
                 _this.saving = false;
                 _this.actionItemDataChanged = false;
@@ -318,6 +355,7 @@ var AIP;
             }
         };
         AdminGroupAddPageCtrl.prototype.selectStatus = function (item, index) {
+            this.selectedstatusval = item;
             this.groupInfo.status = item.value;
         };
         AdminGroupAddPageCtrl.prototype.saveErrorCallback = function (invalidFields, errors, message) {
