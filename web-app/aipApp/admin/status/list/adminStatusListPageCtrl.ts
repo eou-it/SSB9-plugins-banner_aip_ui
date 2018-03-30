@@ -37,8 +37,6 @@ module AIP {
             $scope.vm = this;
             $scope.disableSystemRecord = function (data) {
 
-                alert(data);
-
             }
 
             this.$scope = $scope;

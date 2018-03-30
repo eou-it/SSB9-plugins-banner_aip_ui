@@ -10,7 +10,6 @@ var AIP;
                 "ENDPOINT", "PAGINATIONCONFIG", "AdminActionStatusService", "APP_ROOT"];
             $scope.vm = this;
             $scope.disableSystemRecord = function (data) {
-                alert(data);
             };
             this.$scope = $scope;
             this.$state = $state;
