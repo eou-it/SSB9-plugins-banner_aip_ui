@@ -32,13 +32,6 @@ class AipTagLibIntegrationTests extends BaseIntegrationTestCase {
 
     def lib = new AipTagLib()
 
-    // private or utility?
-    @Test
-    void testEncodeHtml() {
-        assertEquals( "&lt;br&gt;", lib.encodeHTML( "<br>" ) )
-        assertEquals( "&quot;", lib.encodeHTML( "\"" ) )
-    }
-
     // FIXME: needs setup since 12/02/16 change
     // FIXME: need to parse and validate
     @Ignore
