@@ -4,7 +4,7 @@
 package net.hedtech.banner.aip
 
 import grails.converters.JSON
-import net.hedtech.banner.general.communication.population.CommunicationPopulationListView
+import net.hedtech.banner.general.communication.population.CommunicationPopulation
 import net.hedtech.banner.testing.BaseIntegrationTestCase
 import org.junit.After
 import org.junit.Before
@@ -63,8 +63,8 @@ class AipActionItemPostingControllerIntegrationTests extends BaseIntegrationTest
             "displayEndDate":"${dynamicData.displayEndDate}",
             "postNow":"false",
             "scheduled":"true",
-            "scheduledStartDate":"${dynamicData.scheduledStartDate}", 
-            "scheduledStartTime":"${dynamicData.scheduledStartTime}", 
+            "scheduledStartDate":"${dynamicData.scheduledStartDate}",
+            "scheduledStartTime":"${dynamicData.scheduledStartTime}",
             "timezoneStringOffset":"${dynamicData.timezoneStringOffset}",
             "populationRegenerateIndicator":false
             }"""
@@ -205,7 +205,7 @@ class AipActionItemPostingControllerIntegrationTests extends BaseIntegrationTest
     @Test
     void actionItemPostJobList() {
         SimpleDateFormat testingDateFormat = new SimpleDateFormat( 'MM/dd/yyyy' )
-        CommunicationPopulationListView populationListView = actionItemProcessingCommonService.fetchPopulationListForSend( 'p', [max: 10, offset: 0] )[0]
+        CommunicationPopulation populationListView = CommunicationPopulation.findAllByPopulationName( 'AIP Student Population 1' )[0]
         List<ActionItemGroup> actionItemGroups = ActionItemGroup.fetchActionItemGroups()
         def actionItemGroup = actionItemGroups[0]
         List<Long> actionItemIds = ActionItemGroupAssign.fetchByGroupId( actionItemGroup.id ).collect {it.actionItemId}
@@ -237,7 +237,7 @@ class AipActionItemPostingControllerIntegrationTests extends BaseIntegrationTest
     @Test
     void getStatusValue() {
         SimpleDateFormat testingDateFormat = new SimpleDateFormat( 'MM/dd/yyyy' )
-        CommunicationPopulationListView populationListView = actionItemProcessingCommonService.fetchPopulationListForSend( 'p', [max: 10, offset: 0] )[0]
+        CommunicationPopulation populationListView = CommunicationPopulation.findAllByPopulationName( 'AIP Student Population 1' )[0]
         List<ActionItemGroup> actionItemGroups = ActionItemGroup.fetchActionItemGroups()
         def actionItemGroup = actionItemGroups[0]
         List<Long> actionItemIds = ActionItemGroupAssign.fetchByGroupId( actionItemGroup.id ).collect {it.actionItemId}
@@ -267,7 +267,7 @@ class AipActionItemPostingControllerIntegrationTests extends BaseIntegrationTest
     @Test
     void getJobDetailsByPostId() {
         SimpleDateFormat testingDateFormat = new SimpleDateFormat( 'MM/dd/yyyy' )
-        CommunicationPopulationListView populationListView = actionItemProcessingCommonService.fetchPopulationListForSend( 'p', [max: 10, offset: 0] )[0]
+        CommunicationPopulation populationListView = CommunicationPopulation.findAllByPopulationName( 'AIP Student Population 1' )[0]
         List<ActionItemGroup> actionItemGroups = ActionItemGroup.fetchActionItemGroups()
         def actionItemGroup = actionItemGroups[0]
         List<Long> actionItemIds = ActionItemGroupAssign.fetchByGroupId( actionItemGroup.id ).collect {it.actionItemId}
@@ -297,7 +297,7 @@ class AipActionItemPostingControllerIntegrationTests extends BaseIntegrationTest
     @Test
     void getActionItemByPostId() {
         SimpleDateFormat testingDateFormat = new SimpleDateFormat( 'MM/dd/yyyy' )
-        CommunicationPopulationListView populationListView = actionItemProcessingCommonService.fetchPopulationListForSend( 'p', [max: 10, offset: 0] )[0]
+        CommunicationPopulation populationListView = CommunicationPopulation.findAllByPopulationName( 'AIP Student Population 1' )[0]
         List<ActionItemGroup> actionItemGroups = ActionItemGroup.fetchActionItemGroups()
         def actionItemGroup = actionItemGroups[0]
         List<Long> actionItemIds = ActionItemGroupAssign.fetchByGroupId( actionItemGroup.id ).collect {it.actionItemId}
@@ -327,7 +327,7 @@ class AipActionItemPostingControllerIntegrationTests extends BaseIntegrationTest
     private getDynamicData() {
         def dynamicData = [:]
         SimpleDateFormat testingDateFormat = new SimpleDateFormat( 'MM/dd/yyyy' )
-        CommunicationPopulationListView populationListView = actionItemProcessingCommonService.fetchPopulationListForSend( 'p', [max: 10, offset: 0] )[0]
+        CommunicationPopulation populationListView = CommunicationPopulation.findAllByPopulationName( 'AIP Student Population 1' )[0]
         List<ActionItemGroup> actionItemGroups = ActionItemGroup.fetchActionItemGroups()
         def actionItemGroup = actionItemGroups[0]
         List<Long> actionItemIds = ActionItemGroupAssign.fetchByGroupId( actionItemGroup.id ).collect {it.actionItemId}
@@ -343,7 +343,7 @@ class AipActionItemPostingControllerIntegrationTests extends BaseIntegrationTest
     private getDynamicDataForScheduledPosting() {
         def dynamicData = [:]
         SimpleDateFormat testingDateFormat = new SimpleDateFormat( 'MM/dd/yyyy' )
-        CommunicationPopulationListView populationListView = actionItemProcessingCommonService.fetchPopulationListForSend( 'p', [max: 10, offset: 0] )[0]
+        CommunicationPopulation populationListView = CommunicationPopulation.findAllByPopulationName( 'AIP Student Population 1' )[0]
         List<ActionItemGroup> actionItemGroups = ActionItemGroup.fetchActionItemGroups()
         def actionItemGroup = actionItemGroups[0]
         List<Long> actionItemIds = ActionItemGroupAssign.fetchByGroupId( actionItemGroup.id ).collect {it.actionItemId}

@@ -25,6 +25,7 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
     def actionItemStatusCompositeService
 
     def actionItemGroupService
+    def communicationFolderService
 
     def actionItemReadOnlyService
 
@@ -66,12 +67,10 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
         def auth = selfServiceBannerAuthenticationProvider.authenticate(
                 new UsernamePasswordAuthenticationToken( person.bannerId, '111111' ) )
         SecurityContextHolder.getContext().setAuthentication( auth )
-
         controller.folders()
         def folder = JSON.parse( controller.response.contentAsString )
         assertNotNull( folder )
-        // TODO: get a better handle on testdata and exact test
-        assertTrue( folder.size() > 15 )
+        assertTrue( folder.size() > 0 )
     }
 
 
@@ -82,12 +81,15 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
         def auth = selfServiceBannerAuthenticationProvider.authenticate(
                 new UsernamePasswordAuthenticationToken( person.bannerId, '111111' ) )
         SecurityContextHolder.getContext().setAuthentication( auth )
-
+        communicationFolderService.create( new CommunicationFolder( name: 'Test',
+                                                                    description: 'Description',
+                                                                    systemIndicator: false,
+                                                                    internal: false ) )
         controller.folders()
         def folder = JSON.parse( controller.response.contentAsString )
         assertNotNull( folder )
-        // TODO: get a better handle on testdata and exact test
-        assertTrue( folder.size() > 15 )
+        folder.find {it.get( "name" ) == 'Test'}.name == 'Test'
+        folder.find {it.get( "name" ) == 'Test'}.description == 'Description'
     }
 
     // using student. Fail on security?
