@@ -36,7 +36,7 @@ class AipPageBuilderControllerIntegrationTests extends BaseIntegrationTestCase {
         println query
         sessionFactory.currentSession.createSQLQuery( query ).executeUpdate()
         controller.request.contentType = "text/json"
-        controller.params.id = "AIPMasterTemplateSystemRequired"
+        controller.params.id = "TestAIPMasterTemplateSystemRequired"
         controller.pageScript()
         assertEquals 200, controller.response.status
     }
@@ -48,7 +48,7 @@ class AipPageBuilderControllerIntegrationTests extends BaseIntegrationTestCase {
         println query
         sessionFactory.currentSession.createSQLQuery( query ).setString( 'clob', '{ "name":"TestAIPMasterTemplateSystemRequired","type":"page" }' ).executeUpdate()
         controller.request.contentType = "text/json"
-        controller.params.id = "AIPMasterTemplateSystemRequired"
+        controller.params.id = "TestAIPMasterTemplateSystemRequired"
         controller.page()
         assertEquals 200, controller.response.status
         String actualJSON = controller.response.contentAsString
