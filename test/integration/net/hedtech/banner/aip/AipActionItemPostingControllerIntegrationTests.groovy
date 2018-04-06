@@ -17,7 +17,6 @@ import java.text.SimpleDateFormat
  *
  */
 class AipActionItemPostingControllerIntegrationTests extends BaseIntegrationTestCase {
-    def actionItemProcessingCommonService
     def actionItemPostCompositeService
 
 
@@ -206,9 +205,12 @@ class AipActionItemPostingControllerIntegrationTests extends BaseIntegrationTest
     void actionItemPostJobList() {
         SimpleDateFormat testingDateFormat = new SimpleDateFormat( 'MM/dd/yyyy' )
         CommunicationPopulation populationListView = CommunicationPopulation.findAllByPopulationName( 'AIP Student Population 1' )[0]
+        assertNotNull populationListView
         List<ActionItemGroup> actionItemGroups = ActionItemGroup.fetchActionItemGroups()
+        assert actionItemGroups.size() > 0
         def actionItemGroup = actionItemGroups[0]
         List<Long> actionItemIds = ActionItemGroupAssign.fetchByGroupId( actionItemGroup.id ).collect {it.actionItemId}
+        assert actionItemIds.size() > 0
         def requestMap = [:]
         requestMap.postingName = 'TEST_INTEGRATION_TEST'
         requestMap.populationId = populationListView.id
@@ -238,9 +240,12 @@ class AipActionItemPostingControllerIntegrationTests extends BaseIntegrationTest
     void getStatusValue() {
         SimpleDateFormat testingDateFormat = new SimpleDateFormat( 'MM/dd/yyyy' )
         CommunicationPopulation populationListView = CommunicationPopulation.findAllByPopulationName( 'AIP Student Population 1' )[0]
+        assertNotNull populationListView
         List<ActionItemGroup> actionItemGroups = ActionItemGroup.fetchActionItemGroups()
+        assert actionItemGroups.size() > 0
         def actionItemGroup = actionItemGroups[0]
         List<Long> actionItemIds = ActionItemGroupAssign.fetchByGroupId( actionItemGroup.id ).collect {it.actionItemId}
+        assert actionItemIds.size() > 0
         def requestMap = [:]
         requestMap.postingName = 'TEST_INTEGRATION_TEST1'
         requestMap.populationId = populationListView.id
@@ -268,9 +273,13 @@ class AipActionItemPostingControllerIntegrationTests extends BaseIntegrationTest
     void getJobDetailsByPostId() {
         SimpleDateFormat testingDateFormat = new SimpleDateFormat( 'MM/dd/yyyy' )
         CommunicationPopulation populationListView = CommunicationPopulation.findAllByPopulationName( 'AIP Student Population 1' )[0]
+        assertNotNull populationListView
         List<ActionItemGroup> actionItemGroups = ActionItemGroup.fetchActionItemGroups()
+        assert actionItemGroups.size() > 0
         def actionItemGroup = actionItemGroups[0]
         List<Long> actionItemIds = ActionItemGroupAssign.fetchByGroupId( actionItemGroup.id ).collect {it.actionItemId}
+        assert actionItemIds.size() > 0
+
         def requestMap = [:]
         requestMap.postingName = 'TEST_INTEGRATION_TEST1'
         requestMap.populationId = populationListView.id
@@ -298,9 +307,13 @@ class AipActionItemPostingControllerIntegrationTests extends BaseIntegrationTest
     void getActionItemByPostId() {
         SimpleDateFormat testingDateFormat = new SimpleDateFormat( 'MM/dd/yyyy' )
         CommunicationPopulation populationListView = CommunicationPopulation.findAllByPopulationName( 'AIP Student Population 1' )[0]
+        assertNotNull populationListView
         List<ActionItemGroup> actionItemGroups = ActionItemGroup.fetchActionItemGroups()
+        assert actionItemGroups.size() > 0
         def actionItemGroup = actionItemGroups[0]
         List<Long> actionItemIds = ActionItemGroupAssign.fetchByGroupId( actionItemGroup.id ).collect {it.actionItemId}
+        assert actionItemIds.size() > 0
+
         def requestMap = [:]
         requestMap.postingName = 'TEST_INTEGRATION_TEST1'
         requestMap.populationId = populationListView.id
@@ -328,9 +341,14 @@ class AipActionItemPostingControllerIntegrationTests extends BaseIntegrationTest
         def dynamicData = [:]
         SimpleDateFormat testingDateFormat = new SimpleDateFormat( 'MM/dd/yyyy' )
         CommunicationPopulation populationListView = CommunicationPopulation.findAllByPopulationName( 'AIP Student Population 1' )[0]
+        assertNotNull populationListView
         List<ActionItemGroup> actionItemGroups = ActionItemGroup.fetchActionItemGroups()
+        assert actionItemGroups.size() > 0
         def actionItemGroup = actionItemGroups[0]
         List<Long> actionItemIds = ActionItemGroupAssign.fetchByGroupId( actionItemGroup.id ).collect {it.actionItemId}
+        assert actionItemIds.size() > 0
+
+
         dynamicData.actionItemIds = actionItemIds[0]
         dynamicData.populationId = populationListView.id
         dynamicData.postingActionItemGroupId = actionItemGroup.id
@@ -344,9 +362,12 @@ class AipActionItemPostingControllerIntegrationTests extends BaseIntegrationTest
         def dynamicData = [:]
         SimpleDateFormat testingDateFormat = new SimpleDateFormat( 'MM/dd/yyyy' )
         CommunicationPopulation populationListView = CommunicationPopulation.findAllByPopulationName( 'AIP Student Population 1' )[0]
+        assertNotNull populationListView
         List<ActionItemGroup> actionItemGroups = ActionItemGroup.fetchActionItemGroups()
+        assert actionItemGroups.size() > 0
         def actionItemGroup = actionItemGroups[0]
         List<Long> actionItemIds = ActionItemGroupAssign.fetchByGroupId( actionItemGroup.id ).collect {it.actionItemId}
+        assert actionItemIds.size() > 0
         dynamicData.actionItemIds = actionItemIds[0]
         dynamicData.populationId = populationListView.id
         dynamicData.postingActionItemGroupId = actionItemGroup.id
