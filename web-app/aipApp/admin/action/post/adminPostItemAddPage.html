@@ -129,7 +129,7 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
                     </div>
                     <div class="actionItemElement Datelement col-sm-6  dateRow form-container" role="textbox">
 
-                        <div class="row input-daterange form-group right-inner-addon">
+                        <div class="row input-daterange form-group right-inner-addon dateRange-minwidth">
                             <input type="text" id="date" date-picker ng-model="vm.postActionItemInfo.startDate"
                                    today="{{today}}" ng-change="vm.checkChanges()"
                                    class="form-control  Datelement" name="startDate"
@@ -144,8 +144,8 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
                         <label for="postActionItemPopulation" class="titleValue required">{{"aip.admin.action.postactionItem.end.date"|i18n_aip}}
                         </label>
                     </div>
-                    <div class="actionItemElement col-sm-6" id="postActionItemPopulation">
-                        <div class="row">
+                    <div class="actionItemElement Datelement col-sm-6  dateRow form-container"  role="textbox"id="postActionItemPopulation">
+                        <div class="row input-daterange form-group right-inner-addon dateRange-minwidth" >
                             <input type="text" date-picker id="endDate"
                                    class="form-control  Datelement" name="endDate"
                                    ng-model="vm.postActionItemInfo.endDate" ng-change="vm.checkChanges()"
@@ -206,19 +206,19 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
                                         <label for="postActionItemPopulation" class="titleValue ">{{"aip.admin.action.postactionItem.timezone"|i18n_aip}}
                                         </label>
                                     </div>
-                                    <div class="actionItemElement col-sm-6" id="" title={{"aip.admin.communication.timezone.noificataion"|i18n_aip}}>
+                                    <div class="actionItemElement col-sm-6" id="timezoneid" title={{"aip.admin.communication.timezone.noificataion"|i18n_aip}}>
                                         <div class="row">
-                                            <div class="timeZone" ng-show="vm.showTimezoneIcon">
+                                            <div class="timeZone timezone-minwidth" ng-show="vm.showTimezoneIcon">
                                                 <span class="col-xs-11 col-sm-10 defaultTimezone" ng-bind-html="vm.defaultTimeZone"></span>
                                                 <button type="button" class="col-xs-1 col-sm-2 timezone-btn" ng-click="vm.showTimeZoneList()"></button>
                                             </div>
 
-                                            <xe-ui-select class="col-xs-12 col-sm-12 timeZoneChange" ng-model="vm.timezone" ng-change="vm.setTimezone(vm.timezone);vm.checkChanges()" theme="select2" ng-show="!vm.showTimezoneIcon">
-                                                <xe-ui-select-match placeholder="{{'aip.admin.communication.sendMessage.timezonePlaceHolder' | i18n_aip}}">
-                                                    <div ng-bind-html="vm.timezone.displayName"></div>
+                                            <xe-ui-select class="col-xs-12 col-sm-12 timeZoneChange timezone-minwidth" ng-model="vm.timezone" ng-change="vm.setTimezone(vm.timezone);vm.checkChanges()" theme="select2" ng-show="!vm.showTimezoneIcon">
+                                                <xe-ui-select-match  class="timezone-minwidth" placeholder="{{'aip.admin.communication.sendMessage.timezonePlaceHolder' | i18n_aip}}">
+                                                    <div  class="timezone-minwidth" ng-bind-html="vm.timezone.displayName"></div>
                                                 </xe-ui-select-match>
-                                                <xe-ui-select-choices repeat="timezone in vm.timezones | filter: $select.search">
-                                                    <div ng-bind-html="timezone.displayName | highlight: $select.search"></div>
+                                                <xe-ui-select-choices class="timezone-minwidth" repeat="timezone in vm.timezones | filter: $select.search">
+                                                    <div  class="timezone-minwidth" ng-bind-html="timezone.displayName | highlight: $select.search"></div>
                                                 </xe-ui-select-choices>
                                             </xe-ui-select>
 
@@ -237,10 +237,6 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
         </div>-->
 
     </div>
-
-
-
-
 
     <div class="actionItemControl">
         <div class="row">

@@ -169,13 +169,6 @@ aip-list .enddate {
   margin-bottom: 15px;
   font-weight: bold;
   font-size: 11px; }
-aip-list .completedEndDate {
-  font-size: 1.3em;
-  border-bottom: none;
-  padding: 25px 8px 0px 10px; }
-aip-list .completedEndDate .data-label {
-  font-family: "OpenSans-bold";
-  display: inline-block; }
 
 .AIP-landing-container {
   padding: 16px; }
@@ -1128,6 +1121,14 @@ ol.selected-group > li > button {
     margin-left: 15px;
     color: #565e96;
     text-decoration: underline; }
+  .actionItemAddContainer .dateRange-minwidth {
+    min-width: 160px; }
+  .actionItemAddContainer .timezone-minwidth {
+    width: 280px; }
+  .actionItemAddContainer #timezoneid .ui-select-dropdown .select2-search input {
+    width: 270px !important; }
+  .actionItemAddContainer #timezoneid .ui-select-dropdown {
+    width: 280px !important; }
   .actionItemAddContainer .calendar-img {
     background: url(./images/datepicker_icon.png) no-repeat scroll !important; }
   .actionItemAddContainer input.hasMultiCalendarPicker + span {

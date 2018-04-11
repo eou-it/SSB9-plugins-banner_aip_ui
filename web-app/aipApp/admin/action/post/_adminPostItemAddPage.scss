@@ -12,8 +12,24 @@
   .actionItemEdit{font-size: 14px;
     margin-left: 15px;
     color: #565e96;
-    text-decoration: underline;}
+    text-decoration: underline;
 
+  }
+ .dateRange-minwidth{
+   min-width: 160px;
+ }
+.timezone-minwidth
+{
+  width: 280px;
+}
+
+  #timezoneid .ui-select-dropdown .select2-search input {
+    width:270px !important;
+  }
+
+  #timezoneid .ui-select-dropdown{
+    width:280px !important;
+  }
   .calendar-img {
     background: url(./images/datepicker_icon.png) no-repeat scroll !important;
   }
