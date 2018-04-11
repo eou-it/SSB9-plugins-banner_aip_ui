@@ -1,6 +1,3 @@
-/*******************************************************************************
- Copyright 2018 Ellucian Company L.P. and its affiliates.
- ********************************************************************************/
 ///<reference path="../../../../typings/tsd.d.ts"/>
 ///<reference path="../../../common/services/admin/adminActionService.ts"/>
 var AIP;
@@ -196,14 +193,14 @@ var AIP;
             var _this = this;
             this.actionListService.getPostStatus(postId)
                 .then(function (response) {
-                while (notifications.length !== 0) {
+                if (notifications.length !== 0) {
                     notifications.remove(notifications.first());
                 }
                 if (response === "Y") {
                     _this.$state.go("admin-post-edit", { postIdval: postId, isEdit: true });
                 }
                 else {
-                    while (notifications.length !== 0) {
+                    if (notifications.length !== 0) {
                         notifications.remove(notifications.first());
                     }
                     var n = new Notification({

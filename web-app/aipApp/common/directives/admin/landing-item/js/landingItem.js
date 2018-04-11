@@ -12,6 +12,7 @@ angular.module('bannerAIPUI')
             },
             controller: ['$scope', '$attrs', "$state","$http","$filter","BCM_ROOT", function($scope, $attrs, $state,$http,$filter,BCM_ROOT) {
                 if (!$scope.model) {
+                    var devErrorMessages;
                     devErrorMessages += "model attribute is required\n";
                 }
                 $scope.model.filteredDescription = $filter('i18n_aip')($scope.model.description).split("//br");

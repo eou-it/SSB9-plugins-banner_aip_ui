@@ -194,7 +194,6 @@ module AIP {
                     console.log(this.actionItemPostedStatus);
                     if (this.templateSelect) {
                         this.selectTemplate();
-                    } else {
                     }
                     deferred.resolve(this.openPanel("overview"));
                 }, (err) => {
@@ -481,9 +480,6 @@ module AIP {
         checkEditchangesDone(option) {
 
             var that=this;
-            while (notifications.length !== 0) {
-                notifications.remove(notifications.first())
-            }
             if (that.actionItemDataChanged || that.contentChanged) {
 
                 var n = new Notification({

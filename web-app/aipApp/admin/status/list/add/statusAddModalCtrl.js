@@ -44,12 +44,7 @@ var AIP;
                 delete this.errorMessage.title;
                 console.log(delete this.errorMessage.title);
             }
-            if (Object.keys(this.errorMessage).length > 0) {
-                return false;
-            }
-            else {
-                return true;
-            }
+            return Object.keys(this.errorMessage).length <= 0;
         };
         StatusAddModalCtrl.prototype.saveErrorCallback = function (message) {
             var n = new Notification({

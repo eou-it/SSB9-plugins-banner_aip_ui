@@ -243,7 +243,7 @@ module AIP {
                 this.actionListService.getPostStatus(postId)
                 .then((response) => {
 
-                    while (notifications.length !== 0) {
+                    if (notifications.length !== 0) {
                         notifications.remove(notifications.first())
                     }
                     if (response === "Y")
@@ -252,7 +252,7 @@ module AIP {
                     }
                     else
                     {
-                        while (notifications.length !== 0) {
+                        if (notifications.length !== 0) {
                             notifications.remove(notifications.first())
                         }
 

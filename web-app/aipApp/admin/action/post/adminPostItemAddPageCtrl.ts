@@ -430,7 +430,7 @@ module AIP {
             } else {
                 delete this.errorMessage.population;
             }
-            if (!this.modalResult == null) {
+           if (!this.modalResult) {
                 this.errorMessage.success = "invalid actionItem";
             } else {
                 delete this.errorMessage.success;

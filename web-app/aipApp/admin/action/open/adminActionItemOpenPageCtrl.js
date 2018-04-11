@@ -154,8 +154,6 @@ var AIP;
                 if (_this.templateSelect) {
                     _this.selectTemplate();
                 }
-                else {
-                }
                 deferred.resolve(_this.openPanel("overview"));
             }, function (err) {
                 console.log(err);
@@ -398,9 +396,6 @@ var AIP;
         };
         AdminActionItemOpenPageCtrl.prototype.checkEditchangesDone = function (option) {
             var that = this;
-            while (notifications.length !== 0) {
-                notifications.remove(notifications.first());
-            }
             if (that.actionItemDataChanged || that.contentChanged) {
                 var n = new Notification({
                     message: this.$filter("i18n_aip")("aip.admin.actionItem.saveChanges"),

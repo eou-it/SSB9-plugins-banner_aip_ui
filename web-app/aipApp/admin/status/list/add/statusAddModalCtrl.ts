@@ -53,12 +53,7 @@ module AIP {
                 delete this.errorMessage.title;
                 console.log(delete this.errorMessage.title)
             }
-
-            if(Object.keys(this.errorMessage).length>0) {
-                return false;
-            } else {
-                return true;
-            }
+            return Object.keys(this.errorMessage).length <=0
         }
         saveErrorCallback(message) {
             var n = new Notification({

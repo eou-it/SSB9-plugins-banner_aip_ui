@@ -6,7 +6,7 @@
 ///<reference path="../../../common/services/spinnerService.ts"/>
 var AIP;
 (function (AIP) {
-    var AdminGroupAddPageCtrl = /** @class */ (function () {
+    var AdminGroupAddPageCtrl = (function () {
         function AdminGroupAddPageCtrl($scope, $rootScope, $window, AdminGroupService, $q, SpinnerService, $state, $filter, $sce, $timeout, CKEDITORCONFIG) {
             var _this = this;
             this.$inject = ["$scope", "$rootScope", "$window", "AdminGroupService", "$q", "SpinnerService", "$state", "$filter", "$sce", "$timeout", "CKEDITORCONFIG"];
@@ -235,9 +235,6 @@ var AIP;
         };
         AdminGroupAddPageCtrl.prototype.checkchangesDone = function () {
             var that = this;
-            while (notifications.length !== 0) {
-                notifications.remove(notifications.first());
-            }
             if (that.actionItemDataChanged) {
                 var n = new Notification({
                     message: this.$filter("i18n_aip")("aip.admin.actionItem.saveChanges"),
