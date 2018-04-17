@@ -125,11 +125,6 @@ var AIP;
                 if (_this.blockedProcess.length !== 0) {
                     _this.editMode = true;
                     var editBlockData = [];
-                    var name;
-                    var persona;
-                    var personAllowed;
-                    var urls;
-                    var id;
                     _this.globalBlockProcess;
                     angular.forEach(_this.blockedProcess, function (key) {
                         if (key.processPersonaBlockAllowedInd === 'N') {
@@ -395,11 +390,7 @@ var AIP;
         };
         AdminActionItemBlockCtrl.prototype.saveBlocks = function () {
             var _this = this;
-            //save selected items then exit edit mode
-            //this.editMode = false;
             this.isSaving = true;
-            // items: this.alreadyGenerated[{id:id, name: "name", value:{processNamei18n:"i18n", urls:["url"]}}]
-            // actionItemId: this.$state.params.data
             this.adminActionService.checkActionItemPosted(this.actionBlockFolder)
                 .then(function (response) {
                 if (response.posted) {

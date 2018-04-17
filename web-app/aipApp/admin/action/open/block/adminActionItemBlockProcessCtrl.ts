@@ -176,11 +176,6 @@ module AIP {
                     this.editMode=true;
 
                     var editBlockData=[];
-                    var name;
-                    var persona;
-                    var personAllowed;
-                    var urls;
-                    var id;
                     this.globalBlockProcess;
 
 
@@ -502,11 +497,9 @@ module AIP {
         }
 
         saveBlocks() {
-            //save selected items then exit edit mode
-            //this.editMode = false;
+
             this.isSaving = true;
-            // items: this.alreadyGenerated[{id:id, name: "name", value:{processNamei18n:"i18n", urls:["url"]}}]
-            // actionItemId: this.$state.params.data
+
 
 
             this.adminActionService.checkActionItemPosted(this.actionBlockFolder)

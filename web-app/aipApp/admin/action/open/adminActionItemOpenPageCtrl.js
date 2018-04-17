@@ -318,10 +318,6 @@ var AIP;
                 $(".actionItemContent").height($(".actionItemElement").height() - $(".xe-tab-nav").height());
                 //TODO: find better and proper way to set defalut value in SELECT2 - current one is just dom object hack.
                 //action item selected temlate
-                if (_this.selectedTemplate) {
-                    if (_this.templates[0].sourceInd == "B") {
-                    }
-                }
             }, 500);
         };
         AdminActionItemOpenPageCtrl.prototype.cancelContentEdit = function (option) {

@@ -132,7 +132,6 @@ module AIP {
                 this.adminActionService.getGrouplist()
                     .then((response: AIP.IPostActionItemGroupResponse) => {
                         this.groupList = response.data;
-                        var postActionItemGroup: any = $("#postActionItemGroup");
                         this.postActionItemInfo.group = this.groupList;
 
                     })
@@ -142,7 +141,6 @@ module AIP {
                 this.adminActionService.getPopulationlist()
                     .then((response: AIP.IPostActionItemPopulationResponse) => {
                         this.populationList = response.data;
-                        var postActionItemPopulation: any = $("#postActionItemPopulation");
                         this.postActionItemInfo.population = this.populationList;
 
                     })
@@ -310,7 +308,6 @@ module AIP {
 
                 .then((response: AIP.IPostActionItemResponse) => {
                     this.actionItemList = response.data;
-                    var postActionItemGroup: any = $("#ActionItemGroup");
                     this.postActionItemInfo["groupAction"] = [];
                     this.postActionItemInfo.groupAction = this.actionItemList;
                 })

@@ -81,7 +81,7 @@ var AIP;
                     dataType: 'script',
                     success: function () {
                         angular.module("BannerOnAngular").controller(data.controllerId, data.controllerId);
-                        params = { action: "page", controller: "customPage", id: data.pageName, actionItemId: actionItemId, groupId: groupId, saved: false };
+                        var params = { action: "page", controller: "customPage", id: data.pageName, actionItemId: actionItemId, groupId: groupId, saved: false };
                         defer.resolve(data);
                     },
                     async: true

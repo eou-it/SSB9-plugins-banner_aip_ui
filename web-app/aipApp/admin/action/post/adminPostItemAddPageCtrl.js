@@ -60,13 +60,11 @@ var AIP;
             allPromises.push(this.adminActionService.getGrouplist()
                 .then(function (response) {
                 _this.groupList = response.data;
-                var postActionItemGroup = $("#postActionItemGroup");
                 _this.postActionItemInfo.group = _this.groupList;
             }));
             allPromises.push(this.adminActionService.getPopulationlist()
                 .then(function (response) {
                 _this.populationList = response.data;
-                var postActionItemPopulation = $("#postActionItemPopulation");
                 _this.postActionItemInfo.population = _this.populationList;
             }));
             allPromises.push(this.adminActionService.getCurrentDateLocale()
@@ -191,7 +189,6 @@ var AIP;
             this.adminActionService.getGroupActionItem(this.selected.groupId)
                 .then(function (response) {
                 _this.actionItemList = response.data;
-                var postActionItemGroup = $("#ActionItemGroup");
                 _this.postActionItemInfo["groupAction"] = [];
                 _this.postActionItemInfo.groupAction = _this.actionItemList;
             });
