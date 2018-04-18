@@ -47,7 +47,6 @@ module PB {
         link(scope, element, attrs) {
             var self = this;
             attrs.$observe('aid', (tpl)  => {
-                var me = self;
                 self.ItemListViewService.getPagebuilderPage(attrs.page, attrs.aid, attrs.gid)
                     .then((val) => {
                         element.children().empty();

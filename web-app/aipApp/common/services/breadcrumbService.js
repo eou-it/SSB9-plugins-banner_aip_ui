@@ -10,7 +10,7 @@ var AIP;
             this.$location = $location;
             this.$filter = $filter;
             this.breadcrumbs = {};
-            this.callingUrl = sessionStorage.getItem('genAIPAppCallingPage');
+            this.callingUrl = sessionStorage.getItem('genAppCallingPage');
             this.init();
         }
         AIPBreadcrumbService.prototype.init = function () {
@@ -21,7 +21,6 @@ var AIP;
         AIPBreadcrumbService.prototype.updateBreadcrumb = function (item) {
             var _this = this;
             var existItemTitle = Object.keys(this.breadcrumbs);
-            var itemTitle = this.$filter('i18n_aip')(item.title);
             if (existItemTitle.indexOf(item.title) === -1) {
                 if (this.checkSkip(existItemTitle[existItemTitle.length - 1], item.title)) {
                     delete this.breadcrumbs[existItemTitle[existItemTitle.length - 1]];
@@ -37,7 +36,7 @@ var AIP;
                 this.breadcrumbs = temp;
             }
             this.draw(item.title);
-            sessionStorage.setItem('genAIPAppCallingPage', JSON.stringify(this.breadcrumbs));
+            sessionStorage.setItem('genAppCallingPage', JSON.stringify(this.breadcrumbs));
         };
         AIPBreadcrumbService.prototype.checkSkip = function (newVal, oldVal) {
             if (oldVal === "aip.admin.group.add" && newVal === "aip.admin.group.open") {

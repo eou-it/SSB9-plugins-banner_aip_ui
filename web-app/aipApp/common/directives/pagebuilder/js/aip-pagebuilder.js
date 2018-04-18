@@ -23,7 +23,6 @@ var PB;
         PageBuilderPage.prototype.link = function (scope, element, attrs) {
             var self = this;
             attrs.$observe('aid', function (tpl) {
-                var me = self;
                 self.ItemListViewService.getPagebuilderPage(attrs.page, attrs.aid, attrs.gid)
                     .then(function (val) {
                     element.children().empty();

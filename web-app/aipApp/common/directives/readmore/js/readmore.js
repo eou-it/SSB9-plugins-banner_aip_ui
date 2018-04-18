@@ -28,13 +28,11 @@ var AIPUI;
         AIPReadmoreDirective.prototype.controller = function () {
         };
         AIPReadmoreDirective.prototype.readmore = function (str) {
-            var original = this.scope.text;
             var moreText = "";
             //TODO:: add "less" with clickable link
             return moreText;
         };
         AIPReadmoreDirective.prototype.readless = function (strr) {
-            var original = this.scope.text;
             var lessText = "";
             //TODO:: add "more" with clickable link
             return lessText;

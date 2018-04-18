@@ -41,7 +41,6 @@ module AIP {
 
         updateBreadcrumb(item: IBreadcrumbItem) {
             var existItemTitle = Object.keys(this.breadcrumbs);
-            var itemTitle = this.$filter('i18n_aip')(item.title);
             if (existItemTitle.indexOf(item.title) === -1) {
                 if (this.checkSkip(existItemTitle[existItemTitle.length - 1], item.title)) {
                     delete this.breadcrumbs[existItemTitle[existItemTitle.length - 1]];
