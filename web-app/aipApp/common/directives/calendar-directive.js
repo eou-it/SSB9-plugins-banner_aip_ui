@@ -25,8 +25,7 @@ function datePicker(dateFormatService, notificationCenterService, $filter) {
             if ($attr.today) {
                 dateFormatService.fetchDate().$promise.then(
                     function(response) {
-                        var dateFormat;
-                        dateFormat = response.dateFormat;
+                        var dateFormat = response.dateFormat;
                         $ele.val(response.date);
                         controller.$setViewValue($ele.val());
                     }
