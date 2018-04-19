@@ -238,7 +238,7 @@ var AIP;
         };
         AdminActionItemBlockCtrl.prototype.handleNotification = function (noti) {
             var _this = this;
-            while (notifications.length !== 0) {
+            if (notifications.length !== 0) {
                 notifications.remove(notifications.first());
             }
             if (noti.notiType === "saveSuccess") {

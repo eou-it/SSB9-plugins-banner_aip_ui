@@ -10,7 +10,7 @@ var AIP;
             this.$location = $location;
             this.$filter = $filter;
             this.breadcrumbs = {};
-            this.callingUrl = sessionStorage.getItem('genAppCallingPage');
+            this.callingUrl = sessionStorage.getItem('genAIPAppCallingPage');
             this.init();
         }
         AIPBreadcrumbService.prototype.init = function () {
@@ -36,7 +36,7 @@ var AIP;
                 this.breadcrumbs = temp;
             }
             this.draw(item.title);
-            sessionStorage.setItem('genAppCallingPage', JSON.stringify(this.breadcrumbs));
+            sessionStorage.setItem('genAIPAppCallingPage', JSON.stringify(this.breadcrumbs));
         };
         AIPBreadcrumbService.prototype.checkSkip = function (newVal, oldVal) {
             if (oldVal === "aip.admin.group.add" && newVal === "aip.admin.group.open") {

@@ -303,7 +303,7 @@ module AIP {
             }
         }
         handleNotification(noti) {
-            while (notifications.length !== 0) {
+            if(notifications.length !== 0) {
                 notifications.remove(notifications.first())
             }
             if(noti.notiType === "saveSuccess") {

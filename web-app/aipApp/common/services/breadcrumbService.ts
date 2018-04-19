@@ -29,7 +29,7 @@ module AIP {
             this.$location = $location;
             this.$filter = $filter;
             this.breadcrumbs = {};
-            this.callingUrl = sessionStorage.getItem('genAppCallingPage');
+            this.callingUrl = sessionStorage.getItem('genAIPAppCallingPage');
             this.init();
         }
 
@@ -55,7 +55,7 @@ module AIP {
                 this.breadcrumbs = temp;
             }
             this.draw(item.title);
-            sessionStorage.setItem('genAppCallingPage', JSON.stringify(this.breadcrumbs));
+            sessionStorage.setItem('genAIPAppCallingPage', JSON.stringify(this.breadcrumbs));
         }
 
         checkSkip(newVal, oldVal) {

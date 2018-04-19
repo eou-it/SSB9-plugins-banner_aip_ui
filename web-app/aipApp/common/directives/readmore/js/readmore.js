@@ -28,14 +28,12 @@ var AIPUI;
         AIPReadmoreDirective.prototype.controller = function () {
         };
         AIPReadmoreDirective.prototype.readmore = function (str) {
-            var moreText = "";
             //TODO:: add "less" with clickable link
-            return moreText;
+            return "";
         };
         AIPReadmoreDirective.prototype.readless = function (strr) {
-            var lessText = "";
             //TODO:: add "more" with clickable link
-            return lessText;
+            return "";
         };
         return AIPReadmoreDirective;
     }());

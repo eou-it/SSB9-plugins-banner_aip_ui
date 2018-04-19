@@ -40,16 +40,12 @@ module AIPUI {
         }
 
         readmore(str:string) {
-            var original = this.scope.text;
-            var moreText = "";
             //TODO:: add "less" with clickable link
-            return moreText;
+            return "";
         }
         readless(strr:string) {
-            var original = this.scope.text;
-            var lessText = "";
             //TODO:: add "more" with clickable link
-            return lessText;
+            return "";
         }
 
     }
