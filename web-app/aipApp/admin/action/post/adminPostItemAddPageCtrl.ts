@@ -215,9 +215,9 @@ module AIP {
                                 this.selected= this.$scope.group;
                                 this.selectedPopulation =   this.$scope.population;
                                 this.postActionItemInfo.groupName = this.actionPost1.groupName;
-                                this.postActionItemInfo.startDate = this.actionPost1.postingDisplayStartDate;
-                                this.postActionItemInfo.endDate =  this.actionPost1.postingDisplayEndDate;
-                                this.postActionItemInfo.localeDate = this.actionPost1.postingScheduleDateTime;
+                                this.postActionItemInfo.displayStartDate = this.actionPost1.postingDisplayStartDate;
+                                this.postActionItemInfo.displayEndDate =  this.actionPost1.postingDisplayEndDate;
+                                this.postActionItemInfo.scheduledStartDate = this.actionPost1.postingScheduleDateTime;
                                 this.postNow = false;
                                 this.regeneratePopulation=this.actionPost1.populationRegenerateIndicator;
 
@@ -405,12 +405,12 @@ module AIP {
                 delete this.errorMessage.name;
             }
 
-            if (!this.postActionItemInfo.startDate || this.postActionItemInfo.startDate === null || this.postActionItemInfo.startDate === "") {
+            if (!this.postActionItemInfo.displayStartDate || this.postActionItemInfo.displayStartDate === null || this.postActionItemInfo.displayStartDate === "") {
                 this.errorMessage.startDate = "invalid StartDate";
             } else {
                 delete this.errorMessage.startDate;
             }
-            if (!this.postActionItemInfo.endDate || this.postActionItemInfo.endDate === null || this.postActionItemInfo.endDate === "") {
+            if (!this.postActionItemInfo.displayEndDate || this.postActionItemInfo.displayEndDate === null || this.postActionItemInfo.displayEndDate === "") {
                 this.errorMessage.endDate = "invalid EndDate";
             } else {
                 delete this.errorMessage.endDate;

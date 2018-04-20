@@ -10,7 +10,7 @@ var AIP;
         Status[Status["Active"] = 2] = "Active";
         Status[Status["Inactive"] = 3] = "Inactive";
     })(Status || (Status = {}));
-    var AdminActionService = (function () {
+    var AdminActionService = /** @class */ (function () {
         function AdminActionService($http, $q, $filter, ENDPOINT) {
             this.$http = $http;
             this.$q = $q;
@@ -174,11 +174,11 @@ var AIP;
                 postingActionItemGroupId: selected.groupId,
                 actionItemIds: modalResult,
                 populationId: selectedPopulation.id,
-                displayStartDate: postActionItem.startDate,
-                displayEndDate: postActionItem.endDate,
+                displayStartDate: postActionItem.displayStartDate,
+                displayEndDate: postActionItem.displayEndDate,
                 postNow: '' + postNow + '',
                 scheduled: '' + !postNow + '',
-                scheduledStartDate: postActionItem.localeDate,
+                scheduledStartDate: postActionItem.scheduledStartDate,
                 scheduledStartTime: sendTime,
                 timezoneStringOffset: timeZone,
                 populationRegenerateIndicator: regeneratePopulation
@@ -294,9 +294,9 @@ var AIP;
             });
             return request;
         };
+        AdminActionService.$inject = ["$http", "$q", "$filter", "ENDPOINT"];
         return AdminActionService;
     }());
-    AdminActionService.$inject = ["$http", "$q", "$filter", "ENDPOINT"];
     AIP.AdminActionService = AdminActionService;
 })(AIP || (AIP = {}));
 register("bannerAIP").service("AdminActionService", AIP.AdminActionService);
