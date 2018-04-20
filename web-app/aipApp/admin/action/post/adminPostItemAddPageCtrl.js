@@ -120,9 +120,9 @@ var AIP;
                             _this.selected = _this.$scope.group;
                             _this.selectedPopulation = _this.$scope.population;
                             _this.postActionItemInfo.groupName = _this.actionPost1.groupName;
-                            _this.postActionItemInfo.startDate = _this.actionPost1.postingDisplayStartDate;
-                            _this.postActionItemInfo.endDate = _this.actionPost1.postingDisplayEndDate;
-                            _this.postActionItemInfo.localeDate = _this.actionPost1.postingScheduleDateTime;
+                            _this.postActionItemInfo.displayStartDate = _this.actionPost1.postingDisplayStartDate;
+                            _this.postActionItemInfo.displayEndDate = _this.actionPost1.postingDisplayEndDate;
+                            _this.postActionItemInfo.scheduledStartDate = _this.actionPost1.postingScheduleDateTime;
                             _this.postNow = false;
                             _this.regeneratePopulation = _this.actionPost1.populationRegenerateIndicator;
                             if (_this.postActionItemInfo.localeTime) {
@@ -278,13 +278,13 @@ var AIP;
             else {
                 delete this.errorMessage.name;
             }
-            if (!this.postActionItemInfo.startDate || this.postActionItemInfo.startDate === null || this.postActionItemInfo.startDate === "") {
+            if (!this.postActionItemInfo.displayStartDate || this.postActionItemInfo.displayStartDate === null || this.postActionItemInfo.displayStartDate === "") {
                 this.errorMessage.startDate = "invalid StartDate";
             }
             else {
                 delete this.errorMessage.startDate;
             }
-            if (!this.postActionItemInfo.endDate || this.postActionItemInfo.endDate === null || this.postActionItemInfo.endDate === "") {
+            if (!this.postActionItemInfo.displayEndDate || this.postActionItemInfo.displayEndDate === null || this.postActionItemInfo.displayEndDate === "") {
                 this.errorMessage.endDate = "invalid EndDate";
             }
             else {
