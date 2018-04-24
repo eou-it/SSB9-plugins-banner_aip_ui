@@ -355,10 +355,10 @@ var AIP;
             this.selectedstatusval = item;
             this.groupInfo.status = item.value;
         };
-        AdminGroupAddPageCtrl.prototype.saveErrorCallback = function (invalidFields, errors, message) {
+        AdminGroupAddPageCtrl.prototype.saveErrorCallback = function (invalidFields, errors, orgMessage) {
             var _this = this;
             //todo: iterate through errors given back through contraints
-            var message = this.$filter("i18n_aip")(message || "aip.admin.group.add.error.blank");
+            var message = this.$filter("i18n_aip")(orgMessage || "aip.admin.group.add.error.blank");
             if (errors != null) {
                 message = errors[0];
             }
