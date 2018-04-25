@@ -24,8 +24,8 @@ var AIP;
                 '?searchString=' + (query.searchString || '') +
                 '&sortColumnName=' + (query.sortColumnName || 'actionItemName') +
                 '&ascending=' + (query.ascending.toString() || "") +
-                '&offset=' + (query.offset.toString() || '') +
-                '&max=' + (realMax.toString() || '');
+                '&offset=' + (query.offset || 0) +
+                '&max=' + realMax;
             this.$http({
                 method: "GET",
                 url: url
