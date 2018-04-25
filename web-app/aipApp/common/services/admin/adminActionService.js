@@ -41,8 +41,8 @@ var AIP;
             var realMax = parseInt(query.max) - parseInt(query.offset);
             var url = this.ENDPOINT.admin.actionItemPostJobList +
                 '?searchParam=' + (query.searchString || '') +
-                '&offset=' + (query.offset.toString() || '') +
-                '&max=' + (realMax.toString() || '');
+                '&offset=' + (query.offset || 0) +
+                '&max=' + realMax;
             var params = {
                 filterName: query.searchParam || "%",
                 sortColumn: query.sortColumnName || "id",
