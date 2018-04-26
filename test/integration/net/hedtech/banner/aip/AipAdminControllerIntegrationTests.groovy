@@ -1011,7 +1011,8 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
         controller.actionItemStatusRulesByActionItemId()
         def answer = JSON.parse( controller.response.contentAsString )
         assertEquals( answer.size(), statusRules.size() )
-        assertEquals( actionItemStatusRules[0].statusRuleId, answer[0].statusRuleId )
+        def result = answer.find {it.statusRuleId == actionItemStatusRules[0].statusRuleId}
+        assertEquals( actionItemStatusRules[0].statusRuleId, result.statusRuleId )
     }
 
     // @Test Fix when/if updates get supported
