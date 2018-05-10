@@ -59,7 +59,6 @@ class AipControllerIntegrationTests extends BaseIntegrationTestCase {
         controller.actionItems()
         assertEquals 200, controller.response.status
         def answer = JSON.parse( controller.response.contentAsString )
-        //TODO:: for now, it return one hardcoded group. When group assign done, fix this
         assertTrue( answer.groups.items.size() > 0 )
     }
 
@@ -71,11 +70,6 @@ class AipControllerIntegrationTests extends BaseIntegrationTestCase {
         def auth = selfServiceBannerAuthenticationProvider.authenticate(
                 new UsernamePasswordAuthenticationToken( person.bannerId, '111111' ) )
         SecurityContextHolder.getContext().setAuthentication( auth )
-        // endpoint was removed. We will re-enable for blocking User Story
-        //controller.checkActionItems()
-        //assertEquals 200, controller.response.status
-        //def answer = JSON.parse( controller.response.contentAsString )
-        //assertEquals( 1, answer.items.size() )
     }
 
 
@@ -90,8 +84,7 @@ class AipControllerIntegrationTests extends BaseIntegrationTestCase {
         assertEquals 200, controller.response.status
 
         def answer = JSON.parse( controller.response.contentAsString )
-        // FIXME: test isn't really testing anything
-        //assertEquals( 1, answer.items.size() )
+        assert answer.bannerId == 'CSRSTU002'
     }
 
 

@@ -25,6 +25,7 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
     def actionItemStatusCompositeService
 
     def actionItemGroupService
+
     def communicationFolderService
 
     def actionItemReadOnlyService
@@ -59,7 +60,7 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
         logout()
     }
 
-    //TODO: using student. Fail on security?
+
     @Test
     void testFoldersEntryPointAsStudent() {
         def person = PersonUtility.getPerson( "CSRSTU002" )
@@ -82,47 +83,14 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
                 new UsernamePasswordAuthenticationToken( person.bannerId, '111111' ) )
         SecurityContextHolder.getContext().setAuthentication( auth )
         communicationFolderService.create( new CommunicationFolder( name: 'Test',
-                                                                    description: 'Description',
-                                                                    systemIndicator: false,
-                                                                    internal: false ) )
+                description: 'Description',
+                systemIndicator: false,
+                internal: false ) )
         controller.folders()
         def folder = JSON.parse( controller.response.contentAsString )
         assertNotNull( folder )
-        folder.find {it.get( "name" ) == 'Test'}.name == 'Test'
-        folder.find {it.get( "name" ) == 'Test'}.description == 'Description'
-    }
-
-    // using student. Fail on security?
-    // @Test Fix when/if updates get supported
-    void testAddFolderEntryPointAsStudent() {
-        def person = PersonUtility.getPerson( "CSRSTU002" )
-        assertNotNull person
-        def auth = selfServiceBannerAuthenticationProvider.authenticate(
-                new UsernamePasswordAuthenticationToken( person.bannerId, '111111' ) )
-        SecurityContextHolder.getContext().setAuthentication( auth )
-
-        controller.addFolder( VALID_FOLDER_NAME, VALID_FOLDER_DESCRIPTION )
-        def answer = JSON.parse( controller.response.contentAsString )
-
-        assertFalse( answer.success )
-        assertTrue( answer.newFolder.equals( null ) )
-        assertEquals( "Operation Not Permitted", answer.message )
-    }
-
-    // @Test endpoint removed. Is this something we support of have a future story for?
-    void testAddFolderEntryPointAsAdmin() {
-        def person = PersonUtility.getPerson( "AIPADM001" )
-        assertNotNull person
-        def auth = selfServiceBannerAuthenticationProvider.authenticate(
-                new UsernamePasswordAuthenticationToken( person.bannerId, '111111' ) )
-        SecurityContextHolder.getContext().setAuthentication( auth )
-        controller.addFolder( VALID_FOLDER_NAME, VALID_FOLDER_DESCRIPTION )
-        def answer = JSON.parse( controller.response.contentAsString )
-        // TODO: verify something
-        //TODO: fix AIPADM001 test in general app
-        //assertTrue( answer.success )
-        //assertNotNull( answer.newFolder )
-        //assertTrue( answer.message.equals(null) )
+        folder.find { it.get( "name" ) == 'Test' }.name == 'Test'
+        folder.find { it.get( "name" ) == 'Test' }.description == 'Description'
     }
 
 
@@ -269,7 +237,6 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
         requestObj.group.groupName = "1234567890" + "1234567890" + "1234567890" + "1234567890" + "1234567890" + "1234567890" + "a"
         //60 max
         requestObj.group.folderId = folderId
-        // FIXME: not max size. does not resolve
         requestObj.group.groupStatus = "Draft"
         requestObj.group.groupDesc = "<p><strong>This is a group description</p></strong>"
         requestObj.edit = false
@@ -618,7 +585,7 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
         assertEquals( actionItemGroupTitle, answer.group?.groupTitle )
     }
 
-    // FIXME: security. Is student Authorized?
+
     @Test
     void testAipGroupAsStudent() {
         def admin = PersonUtility.getPerson( "CSRSTU002" ) // role: student
@@ -641,7 +608,7 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
         assertEquals( true, answer.success )
     }
 
-    // FIXME: security. should fail
+
     @Test
     void testAipGroupAsNobody() {
         List<ActionItemGroup> actionItemGroups = actionItemGroupService.listActionItemGroups()
@@ -776,22 +743,7 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
 
         answer.result.each {
             def person = PersonUtility.getPerson( it.lastModifiedBy )
-
-            /*
-            if (person) {
-                println person
-                def params = [pidm:person.pidm, usage:'DEFAULT']
-                def preferredName = preferredNameService.getPreferredName(params);
-                println "full name: " + person.fullName
-                println "preferred name: " +preferredName
-
-            } else {
-                println "no person record for" +  it.lastModifiedBy
-            }*/
-
-
         }
-
         def testpn = PersonUtility.getPerson( '207001837' )
         if (testpn) {
             def params = [pidm: testpn.pidm, usage: 'DEFAULT']
@@ -799,10 +751,7 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
         } else {
             println "no person record"
         }
-
-
         assertEquals 200, controller.response.status
-        // TODO: verify something
     }
 
 
@@ -1011,192 +960,8 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
         controller.actionItemStatusRulesByActionItemId()
         def answer = JSON.parse( controller.response.contentAsString )
         assertEquals( answer.size(), statusRules.size() )
-        def result = answer.find {it.statusRuleId == actionItemStatusRules[0].statusRuleId}
+        def result = answer.find { it.statusRuleId == actionItemStatusRules[0].statusRuleId }
         assertEquals( actionItemStatusRules[0].statusRuleId, result.statusRuleId )
-    }
-
-    // @Test Fix when/if updates get supported
-    void testUpdateActionItemStatusRuleOrderChange() {
-        def admin = PersonUtility.getPerson( "AIPADM001" ) // role: admin
-        assertNotNull admin
-
-        def auth = selfServiceBannerAuthenticationProvider.authenticate(
-                new UsernamePasswordAuthenticationToken( admin.bannerId, '111111' ) )
-        SecurityContextHolder.getContext().setAuthentication( auth )
-
-        List<ActionItemStatusRuleReadOnly> probeList = actionItemStatusRuleReadOnlyService.listActionItemStatusRulesRO()
-
-        // make lists of ids and duplicate ids. Set last dup as an id we know has at least two entries
-        def actionItemIdToUse = 0
-        def foundIds = []
-        def foundDups = []
-        probeList.each {it ->
-            def thisId = it.statusRuleActionItemId
-            if (thisId in foundIds) {
-                actionItemIdToUse = thisId
-                foundDups.add( thisId )
-            }
-            foundIds.add( thisId )
-        }
-
-        //TODO:: set parameter for this test
-
-        assertTrue actionItemIdToUse != 0
-        List<ActionItemStatusRuleReadOnly> statusRules =
-                actionItemStatusRuleReadOnlyService.getActionItemStatusRulesROByActionItemId( actionItemIdToUse )
-
-        def rules = [
-                [
-                        statusRuleId       : statusRules[0].statusRuleId,
-                        statusRuleSeqOrder : statusRules[1].statusRuleSeqOrder,
-                        statusRuleLabelText: statusRules[0].statusRuleLabelText,
-                        statusId           : statusRules[0].statusId
-                ],
-                [
-                        statusRuleId       : statusRules[1].statusRuleId,
-                        statusRuleSeqOrder : statusRules[0].statusRuleSeqOrder,
-                        statusRuleLabelText: statusRules[1].statusRuleLabelText,
-                        statusId           : statusRules[0].statusId
-                ]
-        ]
-        def requestObj = [:]
-        requestObj.actionItemId = actionItemIdToUse
-        requestObj.rules = rules
-        controller.request.method = "POST"
-        controller.request.json = requestObj
-        controller.updateActionItemStatusRule()
-        def answer = JSON.parse( controller.response.contentAsString ).rules
-
-        def status0 = answer.find {it ->
-            it.id == statusRules[0].statusRuleId
-        }
-        def status1 = answer.find {it ->
-            it.id == statusRules[1].statusRuleId
-        }
-
-        assertEquals( status0.seqOrder, statusRules[1].statusRuleSeqOrder )
-        assertEquals( status1.seqOrder, statusRules[0].statusRuleSeqOrder )
-    }
-
-    // @Test Fix when/if updates get supported
-    void testUpdateActionItemStatusRuleRemoveRule() {
-        def admin = PersonUtility.getPerson( "AIPADM001" ) // role: admin
-        assertNotNull admin
-
-        def auth = selfServiceBannerAuthenticationProvider.authenticate(
-                new UsernamePasswordAuthenticationToken( admin.bannerId, '111111' ) )
-        SecurityContextHolder.getContext().setAuthentication( auth )
-
-        List<ActionItemStatusRuleReadOnly> probeList = actionItemStatusRuleReadOnlyService.listActionItemStatusRulesRO()
-
-        // make lists of ids and duplicate ids. Set last dup as an id we know has at least two entries
-        def actionItemIdToUse = 0
-        def foundIds = []
-        def foundDups = []
-        probeList.each {it ->
-            def thisId = it.statusRuleActionItemId
-            if (thisId in foundIds) {
-                actionItemIdToUse = thisId
-                foundDups.add( thisId )
-            }
-            foundIds.add( thisId )
-        }
-
-        List<ActionItemStatusRuleReadOnly> statusRules = actionItemStatusRuleReadOnlyService.getActionItemStatusRulesROByActionItemId( actionItemIdToUse )
-
-        def rules = [
-                [
-                        statusRuleId       : statusRules[0].statusRuleId,
-                        statusRuleSeqOrder : statusRules[0].statusRuleSeqOrder,
-                        statusRuleLabelText: statusRules[0].statusRuleLabelText,
-                        statusId           : statusRules[0].statusId
-                ]
-        ]
-        def requestObj = [:]
-        requestObj.actionItemId = actionItemIdToUse
-        requestObj.rules = rules
-        controller.request.method = "POST"
-        controller.request.json = requestObj
-        controller.updateActionItemStatusRule()
-        def answer = JSON.parse( controller.response.contentAsString )
-
-        assertEquals( statusRules[0].statusRuleId, answer.rules[0].id )
-        assertEquals( answer.rules.size(), 1 )
-    }
-
-    // @Test Fix when/if updates get supported
-    void testUpdateActionItemStatusRuleAddRule() {
-        def admin = PersonUtility.getPerson( "AIPADM001" ) // role: admin
-        assertNotNull admin
-
-        def auth = selfServiceBannerAuthenticationProvider.authenticate(
-                new UsernamePasswordAuthenticationToken( admin.bannerId, '111111' ) )
-        SecurityContextHolder.getContext().setAuthentication( auth )
-
-        List<ActionItemStatusRuleReadOnly> probeList = actionItemStatusRuleReadOnlyService.listActionItemStatusRulesRO()
-
-        // make lists of ids and duplicate ids. Set last dup as an id we know has at least two entries
-        def actionItemIdToUse = 0
-        def foundIds = []
-        def foundDups = []
-        probeList.each {it ->
-            def thisId = it.statusRuleActionItemId
-            if (thisId in foundIds) {
-                actionItemIdToUse = thisId
-                foundDups.add( thisId )
-            }
-            foundIds.add( thisId )
-        }
-
-        List<ActionItemStatusRuleReadOnly> statusRules = actionItemStatusRuleReadOnlyService.getActionItemStatusRulesROByActionItemId( actionItemIdToUse )
-
-        def rules = [
-                [
-                        statusRuleId       : statusRules[0].statusRuleId,
-                        statusRuleSeqOrder : statusRules[0].statusRuleSeqOrder,
-                        statusRuleLabelText: statusRules[0].statusRuleLabelText,
-                        statusId           : statusRules[0].statusId
-
-                ],
-                [
-                        statusRuleSeqOrder : statusRules[0].statusRuleSeqOrder + 1,
-                        statusRuleLabelText: "Test add rule",
-                        statusId           : statusRules[0].statusId
-                ],
-                [
-                        statusRuleId       : statusRules[1].statusRuleId,
-                        statusRuleSeqOrder : statusRules[0].statusRuleSeqOrder + 2,
-                        statusRuleLabelText: statusRules[1].statusRuleLabelText,
-                        statusId           : statusRules[0].statusId
-                ]
-        ]
-        def requestObj = [:]
-        requestObj.actionItemId = actionItemIdToUse
-        requestObj.rules = rules
-        controller.request.method = "POST"
-        controller.request.json = requestObj
-        controller.updateActionItemStatusRule()
-        def answer = JSON.parse( controller.response.contentAsString ).rules
-
-        def status0 = answer.find {it ->
-            it.id == statusRules[0].statusRuleId
-        }
-        def status1 = answer.find {it ->
-            it.id == statusRules[1].statusRuleId
-        }
-
-        def statusNew = answer.find {it ->
-            it.seqOrder == statusRules[0].statusRuleSeqOrder + 1
-        }
-        assertEquals( answer.size(), 3 )
-
-        assertEquals( status0.seqOrder, statusRules[0].statusRuleSeqOrder )
-        assertEquals( status0.id, statusRules[0].statusRuleId )
-
-        assertEquals( status1.seqOrder, statusRules[1].statusRuleSeqOrder + 1 )
-        assertEquals( status1.id, statusRules[1].statusRuleId )
-
-        assertEquals( statusNew.labelText, "Test add rule" )
     }
 
 
@@ -1227,7 +992,7 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
         assertEquals 200, controller.response.status
         def ret = controller.response.contentAsString
         def data = JSON.parse( ret )
-        assertTrue data.find {it.actionItemName == 'Meet with Advisor'}.actionItemName == 'Meet with Advisor'
+        assertTrue data.find { it.actionItemName == 'Meet with Advisor' }.actionItemName == 'Meet with Advisor'
     }
 
 
@@ -1238,7 +1003,7 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
         assertEquals 200, controller.response.status
         def ret = controller.response.contentAsString
         def data = JSON.parse( ret )
-        assertTrue data.find {it.value == 'Draft'}.value == 'Draft'
+        assertTrue data.find { it.value == 'Draft' }.value == 'Draft'
     }
 
 
