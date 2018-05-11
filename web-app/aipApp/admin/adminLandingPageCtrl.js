@@ -1,6 +1,9 @@
+/*******************************************************************************
+ Copyright 2018 Ellucian Company L.P. and its affiliates.
+ ********************************************************************************/
 var AIP;
 (function (AIP) {
-    var AdminLandingPageCtrl = (function () {
+    var AdminLandingPageCtrl = /** @class */ (function () {
         function AdminLandingPageCtrl($scope, $state) {
             this.$inject = ["$scope", "$state"];
             $scope.vm = this;
