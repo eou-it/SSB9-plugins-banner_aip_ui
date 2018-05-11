@@ -1,3 +1,6 @@
+/*******************************************************************************
+ Copyright 2018 Ellucian Company L.P. and its affiliates.
+ *******************************************************************************/
 ///<reference path="../../../../typings/tsd.d.ts"/>
 var AIP;
 (function (AIP) {
@@ -99,12 +102,6 @@ var AIP;
         };
         AdminGroupService.prototype.fetchData = function (query) {
             var deferred = this.$q.defer();
-            var url = this.ENDPOINT.admin.groupList + "?" +
-                '?searchString=' + (query.searchString || '') +
-                '&sortColumnName=' + (query.sortColumnName || 'groupTitle') +
-                '&ascending=' + query.ascending +
-                '&offset=' + (query.offset || '') +
-                '&max=' + (query.max || '');
             var realMax = parseInt(query.max) - parseInt(query.offset);
             var params = {
                 filterName: query.searchString || "%",

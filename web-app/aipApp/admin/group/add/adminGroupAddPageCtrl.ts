@@ -425,9 +425,9 @@ module AIP {
             return sanitized;
         };
 
-        saveErrorCallback(invalidFields, errors, message) {
+        saveErrorCallback(invalidFields, errors, orgMessage) {
             //todo: iterate through errors given back through contraints
-            var message = this.$filter("i18n_aip")(message||"aip.admin.group.add.error.blank")
+            var message = this.$filter("i18n_aip")(orgMessage||"aip.admin.group.add.error.blank")
             if (errors != null) {
                 message = errors[0]
             }

@@ -24,8 +24,8 @@ var AIP;
                 '?searchString=' + (query.searchString || '') +
                 '&sortColumnName=' + (query.sortColumnName || 'actionItemName') +
                 '&ascending=' + (query.ascending.toString() || "") +
-                '&offset=' + (query.offset.toString() || '') +
-                '&max=' + (realMax.toString() || '');
+                '&offset=' + (query.offset || 0) +
+                '&max=' + realMax;
             this.$http({
                 method: "GET",
                 url: url
@@ -41,8 +41,8 @@ var AIP;
             var realMax = parseInt(query.max) - parseInt(query.offset);
             var url = this.ENDPOINT.admin.actionItemPostJobList +
                 '?searchParam=' + (query.searchString || '') +
-                '&offset=' + (query.offset.toString() || '') +
-                '&max=' + (realMax.toString() || '');
+                '&offset=' + (query.offset || 0) +
+                '&max=' + realMax;
             var params = {
                 filterName: query.searchParam || "%",
                 sortColumn: query.sortColumnName || "id",
