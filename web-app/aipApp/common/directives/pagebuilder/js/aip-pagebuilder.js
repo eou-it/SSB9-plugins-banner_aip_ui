@@ -4,7 +4,7 @@
 ///<reference path="../../../../../typings/tsd.d.ts"/>
 var PB;
 (function (PB) {
-    var PageBuilderPage = (function () {
+    var PageBuilderPage = /** @class */ (function () {
         function PageBuilderPage($compile, ItemListViewService) {
             this.restrict = "AE";
             this.transclude = true;
@@ -51,9 +51,9 @@ var PB;
         };
         PageBuilderPage.prototype.controller = function ($scope) {
         };
+        PageBuilderPage.$inject = ["$compile", "ItemListViewService"];
         return PageBuilderPage;
     }());
-    PageBuilderPage.$inject = ["$compile", "ItemListViewService"];
     PB.PageBuilderPage = PageBuilderPage;
 })(PB || (PB = {}));
 register("BannerOnAngular").directive("pagebuilderPage", PB.PageBuilderPage);

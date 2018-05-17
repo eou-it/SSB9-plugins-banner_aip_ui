@@ -4,7 +4,7 @@
 ///<reference path="../../../typings/tsd.d.ts"/>
 var AIP;
 (function (AIP) {
-    var UserService = (function () {
+    var UserService = /** @class */ (function () {
         function UserService($http, $q, APP_PATH) {
             this.$http = $http;
             this.APP_PATH = APP_PATH;
@@ -20,9 +20,11 @@ var AIP;
             });
             return userRequest;
         };
+        UserService.$inject = ["$http", "$q", "APP_PATH"];
         return UserService;
     }());
-    UserService.$inject = ["$http", "$q", "APP_PATH"];
     AIP.UserService = UserService;
 })(AIP || (AIP = {}));
-register("bannerAIP").service("AIPUserService", AIP.UserService);
+//register("bannerAIP").service("AIPUserService", AIP.UserService);
+//register("bannerNonAdminAIP").service("AIPUserService", AIP.UserService);
+register("bannerCommonAIP").service("AIPUserService", AIP.UserService);

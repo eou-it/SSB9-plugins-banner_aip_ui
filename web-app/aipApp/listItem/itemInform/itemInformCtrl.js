@@ -1,9 +1,6 @@
-/*******************************************************************************
- Copyright 2018 Ellucian Company L.P. and its affiliates.
- ********************************************************************************/
 var AIP;
 (function (AIP) {
-    var ItemInformCtrl = (function () {
+    var ItemInformCtrl = /** @class */ (function () {
         function ItemInformCtrl($scope, $uibModalInstance, $window, ENDPOINT, APP_ROOT) {
             this.$inject = ["$scope", "$uibModalInstance", "$window", "AdminActionStatusService", "ENDPOINT", "APP_ROOT"];
             $scope.vm = this;
@@ -25,4 +22,4 @@ var AIP;
     }());
     AIP.ItemInformCtrl = ItemInformCtrl;
 })(AIP || (AIP = {}));
-register("bannerAIP").controller("ItemInformCtrl", AIP.ItemInformCtrl);
+register("bannerCommonAIP").controller("ItemInformCtrl", AIP.ItemInformCtrl);

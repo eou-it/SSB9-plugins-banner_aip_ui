@@ -4,7 +4,7 @@
 ///<reference path="../../../typings/tsd.d.ts"/>
 var AIP;
 (function (AIP) {
-    var SpinnerCtrl = (function () {
+    var SpinnerCtrl = /** @class */ (function () {
         function SpinnerCtrl($scope, SpinnerService, $rootScope) {
             var _this = this;
             $scope.vm = this;
@@ -16,9 +16,11 @@ var AIP;
                 _this.showing = newVal;
             }, true);
         }
+        SpinnerCtrl.$inject = ["$scope", "SpinnerService", "$rootScope"];
         return SpinnerCtrl;
     }());
-    SpinnerCtrl.$inject = ["$scope", "SpinnerService", "$rootScope"];
     AIP.SpinnerCtrl = SpinnerCtrl;
 })(AIP || (AIP = {}));
-register("bannerAIP").controller("SpinnerCtrl", AIP.SpinnerCtrl);
+//register("bannerAIP").controller("SpinnerCtrl", AIP.SpinnerCtrl);
+//register("bannerNonAdminAIP").controller("SpinnerCtrl", AIP.SpinnerCtrl);
+register("bannerCommonAIP").controller("SpinnerCtrl", AIP.SpinnerCtrl);

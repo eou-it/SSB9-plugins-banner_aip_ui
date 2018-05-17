@@ -325,4 +325,4 @@ module AIP {
     }
 }
 
-register("bannerAIP").controller("ListItemPageCtrl", AIP.ListItemPageCtrl);
+register("bannerNonAdminAIP").controller("ListItemPageCtrl", AIP.ListItemPageCtrl);

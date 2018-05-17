@@ -9,7 +9,7 @@ var aipAppRoot = "/" + extensibilityInfo.application + "/plugins/" +
 var aipAppAbsPath = window.location.protocol + "//" + window.location.host + Application.getApplicationPath() + "/";
 var bcmRoot = window.location.protocol + Application.getApplicationPath();
 
-
+sessionStorage.setItem('genAIPAppCallingPage', "");
 // required global variables for PageBuilder render
 var params = {};
 var rootWebApp = aipAppAbsPath.replace("/ssb/", "/");
@@ -26,6 +26,7 @@ var bannerAIPApp = angular.module("bannerAIP", [
     "ngAnimate",
     "xe-ui-components",
     "bannerAIPUI",
+    "bannerCommonAIP",
     "ngRoute",
     "SCEAIP",
     "ngCkeditor",
@@ -34,7 +35,6 @@ var bannerAIPApp = angular.module("bannerAIP", [
     "pbrun.directives",
     'dateParser',
     'cm.timepicker'
-
 
 ])
 
@@ -197,27 +197,6 @@ var bannerAIPApp = angular.module("bannerAIP", [
                 label: "aip.admin.status",
                 url: "/aip/#/status"
             }
-        },
-
-        "list": {
-            url: "/list",
-            templateUrl: "listItem/listItemPage.html",
-            controller: "ListItemPageCtrl",
-            breadcrumb: {
-                label: "aip.user.actionItem.list",
-                url: "/aip/list#/list"
-            }
-        },
-
-        "informedList": {
-            url: "/informedList",
-            templateUrl: "listItem/listItemPage.html",
-            controller: "ListItemPageCtrl",
-            breadcrumb: {
-                label: "aip.user.actionItem.list",
-                url: "/aip/list#/list"
-            },
-            inform: true
         }
 
     })
@@ -436,8 +415,7 @@ var bannerAIPApp = angular.module("bannerAIP", [
         }]
     );
 
-
-var bannerAIPUI = angular.module("bannerAIPUI", [])
+ bannerAIPUI
 //set application root url
     .constant('APP_ROOT', aipAppRoot)
 

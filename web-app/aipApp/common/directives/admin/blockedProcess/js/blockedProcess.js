@@ -4,7 +4,7 @@
 ///<reference path="../../../../../../typings/tsd.d.ts"/>
 var AIPUI;
 (function (AIPUI) {
-    var AIPBlockedProcessDirective = (function () {
+    var AIPBlockedProcessDirective = /** @class */ (function () {
         function AIPBlockedProcessDirective() {
             this.restrict = "AE";
             this.transclude = true;

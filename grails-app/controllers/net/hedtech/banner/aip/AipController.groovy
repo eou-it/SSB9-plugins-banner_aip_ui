@@ -12,14 +12,27 @@ import  net.hedtech.banner.aip.common.AIPConstants
  */
 class AipController {
 
-    static defaultAction = "list"
+    static defaultAction = "action"
     def userActionItemReadOnlyCompositeService
     def springSecurityService
+ //   def isActionItemAdmin=isLoggedInActionItemAdmin()
+
+    def action() {
+        if (isLoggedInActionItemAdmin()) {
+            def model = [isActionItemAdmin:isLoggedInActionItemAdmin()]
+            render( model: model, view: "aipAdmin" )
+        }
+        else {
+           def model = [isActionItemAdmin:isLoggedInActionItemAdmin()]
+            render( model: model, view: "aip" )
+
+        }
+    }
 
 
     def list() {
         def model = [isActionItemAdmin:isLoggedInActionItemAdmin()]
-        render( model: model, view: "index" )
+        render( model: model, view: "aip" )
     }
 
     /**
@@ -28,17 +41,17 @@ class AipController {
      */
     def informedList() {
         def model = [isActionItemAdmin:isLoggedInActionItemAdmin()]
-        render( model: model, view: "index" )
+        render( model: model, view: "aip" )
     }
 
     /**
      * Admin landing page
      * @return
      */
-//    def admin() {
-//        def model = [fragment: "/landing"]
-//        render( model: model, view: "index" )
-//    }
+  /*  def admin() {
+        def model = [isActionItemAdmin:isLoggedInActionItemAdmin()]
+        render( model: model, view: "aipAdmin" )
+    }*/
 
     /**
      * Logs out

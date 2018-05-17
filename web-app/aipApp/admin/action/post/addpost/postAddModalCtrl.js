@@ -5,7 +5,7 @@
 ///<reference path="../../../../common/services/admin/adminActionStatusService.ts"/>
 var AIP;
 (function (AIP) {
-    var PostAddModalCtrl = (function () {
+    var PostAddModalCtrl = /** @class */ (function () {
         function PostAddModalCtrl($scope, $uibModalInstance, ENDPOINT, AdminActionStatusService, EditMode, PostId, ChangeFlag, selectedActionItemList, actionItemModal, actionGroupModal, actionFolderGroupModal, APP_ROOT) {
             var _this = this;
             this.$inject = ["$scope", "$uibModalInstance", "ENDPOINT", "AdminActionStatusService", "EditMode", "PostId", "ChangeFlag", "selectedActionItemList", "actionItemModal", "actionGroupModal", "actionFolderGroupModal", "APP_ROOT"];

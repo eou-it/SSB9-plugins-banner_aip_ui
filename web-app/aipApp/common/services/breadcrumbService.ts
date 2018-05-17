@@ -30,7 +30,7 @@ module AIP {
             this.$filter = $filter;
             this.breadcrumbs = {};
             this.callingUrl = sessionStorage.getItem('genAIPAppCallingPage');
-            this.init();
+             this.init();
         }
 
         init() {
@@ -56,6 +56,7 @@ module AIP {
             }
             this.draw(item.title);
             sessionStorage.setItem('genAIPAppCallingPage', JSON.stringify(this.breadcrumbs));
+
         }
 
         checkSkip(newVal, oldVal) {
@@ -100,4 +101,8 @@ module AIP {
     }
 }
 
-angular.module("bannerAIP").service("BreadcrumbService", AIP.AIPBreadcrumbService);
+//angular.module("bannerAIP").service("BreadcrumbService", AIP.AIPBreadcrumbService);
+//angular.module("bannerNonAdminAIP").service("BreadcrumbService", AIP.AIPBreadcrumbService);
+
+angular.module("bannerCommonAIP").service("BreadcrumbService", AIP.AIPBreadcrumbService);
+

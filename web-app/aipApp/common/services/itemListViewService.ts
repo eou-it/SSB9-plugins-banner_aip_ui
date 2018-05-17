@@ -146,4 +146,6 @@ module AIP {
     }
 }
 
-register("bannerAIP").service("ItemListViewService", AIP.ItemListViewService);
+//register("bannerAIP").service("ItemListViewService", AIP.ItemListViewService);
+//register("bannerNonAdminAIP").service("ItemListViewService", AIP.ItemListViewService);
+register("bannerCommonAIP").service("ItemListViewService", AIP.ItemListViewService);

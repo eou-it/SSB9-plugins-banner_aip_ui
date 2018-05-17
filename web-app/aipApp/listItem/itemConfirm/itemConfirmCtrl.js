@@ -4,7 +4,7 @@
 ///<reference path="../../../typings/tsd.d.ts"/>
 var AIP;
 (function (AIP) {
-    var ItemConfirmCtrl = (function () {
+    var ItemConfirmCtrl = /** @class */ (function () {
         function ItemConfirmCtrl($scope, $stateParams, $state, ItemListViewService) {
             this.$inject = ["$scope", "$stateParams", "$state", "ItemListViewService"];
             $scope.vm = this;
@@ -43,4 +43,5 @@ var AIP;
     }());
     AIP.ItemConfirmCtrl = ItemConfirmCtrl;
 })(AIP || (AIP = {}));
-register("bannerAIP").controller("ItemConfirmCtrl", AIP.ItemConfirmCtrl);
+//register("bannerAIP").controller("ItemConfirmCtrl", AIP.ItemConfirmCtrl);
+register("bannerCommonAIP").controller("ItemConfirmCtrl", AIP.ItemConfirmCtrl);

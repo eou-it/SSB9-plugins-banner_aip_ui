@@ -34,4 +34,4 @@ module AIP {
     }
 }
 
-register("bannerAIP").controller("ItemInformCtrl", AIP.ItemInformCtrl);
+register("bannerCommonAIP").controller("ItemInformCtrl", AIP.ItemInformCtrl);
