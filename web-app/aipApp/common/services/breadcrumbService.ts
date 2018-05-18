@@ -100,9 +100,5 @@ module AIP {
         }
     }
 }
-
-//angular.module("bannerAIP").service("BreadcrumbService", AIP.AIPBreadcrumbService);
-//angular.module("bannerNonAdminAIP").service("BreadcrumbService", AIP.AIPBreadcrumbService);
-
 angular.module("bannerCommonAIP").service("BreadcrumbService", AIP.AIPBreadcrumbService);
 

@@ -23,7 +23,4 @@ module AIP {
         }
     }
 }
-
-//register("bannerAIP").controller("SpinnerCtrl", AIP.SpinnerCtrl);
-//register("bannerNonAdminAIP").controller("SpinnerCtrl", AIP.SpinnerCtrl);
 register("bannerCommonAIP").controller("SpinnerCtrl", AIP.SpinnerCtrl);

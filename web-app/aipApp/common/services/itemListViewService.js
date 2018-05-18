@@ -98,6 +98,4 @@ var AIP;
     }());
     AIP.ItemListViewService = ItemListViewService;
 })(AIP || (AIP = {}));
-//register("bannerAIP").service("ItemListViewService", AIP.ItemListViewService);
-//register("bannerNonAdminAIP").service("ItemListViewService", AIP.ItemListViewService);
 register("bannerCommonAIP").service("ItemListViewService", AIP.ItemListViewService);

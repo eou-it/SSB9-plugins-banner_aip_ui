@@ -25,6 +25,4 @@ var AIP;
     }());
     AIP.UserService = UserService;
 })(AIP || (AIP = {}));
-//register("bannerAIP").service("AIPUserService", AIP.UserService);
-//register("bannerNonAdminAIP").service("AIPUserService", AIP.UserService);
 register("bannerCommonAIP").service("AIPUserService", AIP.UserService);

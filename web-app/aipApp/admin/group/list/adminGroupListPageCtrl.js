@@ -5,7 +5,7 @@
 ///<reference path="../../../common/services/admin/adminGroupService.ts"/>
 var AIP;
 (function (AIP) {
-    var AdminGroupListPageCtrl = /** @class */ (function () {
+    var AdminGroupListPageCtrl = (function () {
         function AdminGroupListPageCtrl($scope, $state, $window, $filter, $q, ENDPOINT, PAGINATIONCONFIG, AdminGroupService) {
             this.$inject = ["$scope", "$state", "$window", "$filter", "$q", "ENDPOINT", "PAGINATIONCONFIG",
                 "AdminGroupService"];

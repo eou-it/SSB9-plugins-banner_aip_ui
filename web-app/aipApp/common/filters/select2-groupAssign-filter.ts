@@ -3,7 +3,6 @@
  ********************************************************************************/
 ///<reference path="../../../typings/tsd.d.ts"/>
 
-//angular.module('bannerAIP').
 angular.module('bannerCommonAIP').
 filter('groupAssignFilter', function () {
     return function (input, index, assigned, selected) {

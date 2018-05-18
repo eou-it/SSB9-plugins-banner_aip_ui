@@ -4,7 +4,7 @@
 ///<reference path="../../../common/services/admin/adminActionStatusService.ts"/>
 var AIP;
 (function (AIP) {
-    var AdminStatusListPageCtrl = /** @class */ (function () {
+    var AdminStatusListPageCtrl = (function () {
         function AdminStatusListPageCtrl($scope, $state, $window, $filter, $q, $http, $uibModal, ENDPOINT, PAGINATIONCONFIG, AdminActionStatusService, APP_ROOT) {
             this.$inject = ["$scope", "$state", "$window", "$filter", "$http", "$q", "$uibModal",
                 "ENDPOINT", "PAGINATIONCONFIG", "AdminActionStatusService", "APP_ROOT"];
