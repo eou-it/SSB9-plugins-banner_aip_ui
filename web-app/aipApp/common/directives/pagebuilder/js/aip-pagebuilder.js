@@ -4,7 +4,7 @@
 ///<reference path="../../../../../typings/tsd.d.ts"/>
 var PB;
 (function (PB) {
-    var PageBuilderPage = /** @class */ (function () {
+    var PageBuilderPage = (function () {
         function PageBuilderPage($compile, ItemListViewService) {
             this.restrict = "AE";
             this.transclude = true;

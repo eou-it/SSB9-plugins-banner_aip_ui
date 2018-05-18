@@ -4,7 +4,7 @@
 ///<reference path="../../../../../typings/tsd.d.ts"/>
 var AIPUI;
 (function (AIPUI) {
-    var AIPReadmoreDirective = /** @class */ (function () {
+    var AIPReadmoreDirective = (function () {
         function AIPReadmoreDirective() {
             this.restrict = "A";
             this.replace = true;

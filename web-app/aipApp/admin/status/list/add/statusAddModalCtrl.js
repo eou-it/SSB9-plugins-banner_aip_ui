@@ -5,7 +5,7 @@
 ///<reference path="../../../../common/services/admin/adminActionStatusService.ts"/>
 var AIP;
 (function (AIP) {
-    var StatusAddModalCtrl =  (function () {
+    var StatusAddModalCtrl = (function () {
         function StatusAddModalCtrl($scope, $uibModalInstance, ENDPOINT, AdminActionStatusService, APP_ROOT) {
             this.$inject = ["$scope", "$uibModalInstance", "AdminActionStatusService", "ENDPOINT", "APP_ROOT"];
             $scope.vm = this;

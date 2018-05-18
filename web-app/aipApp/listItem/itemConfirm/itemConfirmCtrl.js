@@ -4,7 +4,7 @@
 ///<reference path="../../../typings/tsd.d.ts"/>
 var AIP;
 (function (AIP) {
-    var ItemConfirmCtrl = /** @class */ (function () {
+    var ItemConfirmCtrl = (function () {
         function ItemConfirmCtrl($scope, $stateParams, $state, ItemListViewService) {
             this.$inject = ["$scope", "$stateParams", "$state", "ItemListViewService"];
             $scope.vm = this;

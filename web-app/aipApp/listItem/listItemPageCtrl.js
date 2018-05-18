@@ -6,7 +6,7 @@
 ///<reference path="../common/services/userService.ts"/>
 var AIP;
 (function (AIP) {
-    var ListItemPageCtrl = /** @class */ (function () {
+    var ListItemPageCtrl = (function () {
         function ListItemPageCtrl($scope, $state, ItemListViewService, AIPUserService, SpinnerService, $timeout, $q, $uibModal, APP_ROOT, $sce) {
             this.$inject = ["$scope", "$state", "ItemListViewService", "AIPUserService", "SpinnerService", "$timeout", "$q", "$uibModal", , "APP_ROOT", "$sce"];
             this.trustHTML = function (txtString) {

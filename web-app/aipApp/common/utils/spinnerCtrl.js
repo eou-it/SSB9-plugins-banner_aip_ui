@@ -4,7 +4,7 @@
 ///<reference path="../../../typings/tsd.d.ts"/>
 var AIP;
 (function (AIP) {
-    var SpinnerCtrl = /** @class */ (function () {
+    var SpinnerCtrl = (function () {
         function SpinnerCtrl($scope, SpinnerService, $rootScope) {
             var _this = this;
             $scope.vm = this;

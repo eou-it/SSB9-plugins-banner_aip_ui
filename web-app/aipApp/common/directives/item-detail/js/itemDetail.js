@@ -4,7 +4,7 @@
 ///<reference path="../../../../../typings/tsd.d.ts"/>
 var AIPUI;
 (function (AIPUI) {
-    var AIPItemDetailDirective = /** @class */ (function () {
+    var AIPItemDetailDirective = (function () {
         function AIPItemDetailDirective() {
             this.restrict = "AE";
             this.transclude = true;
