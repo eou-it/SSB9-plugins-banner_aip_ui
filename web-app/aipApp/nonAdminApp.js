@@ -15,7 +15,36 @@ var params = {};
 var rootWebApp = aipAppAbsPath.replace("/ssb/", "/");
 var resourceBase = rootWebApp + 'internalPb/';
 
+var xhrHttpInterceptor= function (){
+    return {
+        request: function(config) {
 
+            return config;
+        },
+
+        requestError: function(config) {
+
+            return config;
+        },
+
+        response: function(res) {
+
+            if ( res.config.url.indexOf(".html") === -1       &&
+                typeof res.data                 === "string" &&
+                res.data.indexOf("loginForm")  !== -1
+            )
+            {
+                window.location.assign(rootWebApp);
+            }
+            return res;
+        },
+
+
+        responseError: function(res) {
+            return res;
+        }
+    }
+}
 
 var bannerNonAdminAIPApp = angular.module("bannerNonAdminAIP", [
     "ngResource",
@@ -73,7 +102,7 @@ var bannerNonAdminAIPApp = angular.module("bannerNonAdminAIP", [
              inform: true
          }
 
-    })
+    }).factory('xhrHttpInterceptor',xhrHttpInterceptor)
 
 
     //provider-injector
@@ -124,6 +153,10 @@ var bannerNonAdminAIPApp = angular.module("bannerNonAdminAIP", [
             $httpProvider.defaults.headers.get['If-Modified-Since'] = 'Mon, 26 Jul 1997 05:00:00 GMT';
             $httpProvider.defaults.headers.get['Cache-Control'] = 'no-cache';
             $httpProvider.defaults.headers.get['Parama'] = 'no-cache';
+            $httpProvider.interceptors.push('xhrHttpInterceptor');
+
+
+
 
         }
     ])
