@@ -4,7 +4,7 @@
 ///<reference path="../../../../../typings/tsd.d.ts"/>
 var AIPUI;
 (function (AIPUI) {
-    var AIPListDirective = (function () {
+    var AIPListDirective = /** @class */ (function () {
         function AIPListDirective() {
             this.restrict = "AE";
             this.scope = {

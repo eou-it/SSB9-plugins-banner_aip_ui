@@ -5,17 +5,15 @@ declare var register: any;
 
 module AIP {
     export class ItemInformCtrl {
-        $inject = ["$scope", "$uibModalInstance", "$window", "AdminActionStatusService", "ENDPOINT", "APP_ROOT"];
+        $inject = ["$scope", "$uibModalInstance", "$window", "APP_ROOT"];
         $uibModalInstance;
         $window;
-        ENDPOINT;
         APP_ROOT;
 
-        constructor($scope, $uibModalInstance, $window, ENDPOINT, APP_ROOT) {
+        constructor($scope, $uibModalInstance, $window, APP_ROOT) {
             $scope.vm = this;
             this.$uibModalInstance = $uibModalInstance;
             this.$window = $window
-            this.ENDPOINT = ENDPOINT;
             this.APP_ROOT = APP_ROOT;
 
         }
@@ -34,4 +32,4 @@ module AIP {
     }
 }
 
-register("bannerAIP").controller("ItemInformCtrl", AIP.ItemInformCtrl);
+register("bannerCommonAIP").controller("ItemInformCtrl", AIP.ItemInformCtrl);

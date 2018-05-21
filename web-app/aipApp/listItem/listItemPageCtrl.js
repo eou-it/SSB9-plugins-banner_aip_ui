@@ -263,4 +263,4 @@ var AIP;
     }());
     AIP.ListItemPageCtrl = ListItemPageCtrl;
 })(AIP || (AIP = {}));
-register("bannerAIP").controller("ListItemPageCtrl", AIP.ListItemPageCtrl);
+register("bannerNonAdminAIP").controller("ListItemPageCtrl", AIP.ListItemPageCtrl);

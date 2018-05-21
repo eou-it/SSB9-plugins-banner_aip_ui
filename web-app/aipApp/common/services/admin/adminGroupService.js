@@ -1,6 +1,3 @@
-/*******************************************************************************
- Copyright 2018 Ellucian Company L.P. and its affiliates.
- *******************************************************************************/
 ///<reference path="../../../../typings/tsd.d.ts"/>
 var AIP;
 (function (AIP) {
@@ -10,7 +7,7 @@ var AIP;
         Status[Status["Active"] = 2] = "Active";
         Status[Status["Inactive"] = 3] = "Inactive";
     })(Status || (Status = {}));
-    var AdminGroupService = (function () {
+    var AdminGroupService = /** @class */ (function () {
         function AdminGroupService($http, $q, $filter, ENDPOINT, $sce) {
             this.$http = $http;
             this.$q = $q;
@@ -178,9 +175,9 @@ var AIP;
             });
             return request;
         };
+        AdminGroupService.$inject = ["$http", "$q", "$filter", "ENDPOINT", "$sce"];
         return AdminGroupService;
     }());
-    AdminGroupService.$inject = ["$http", "$q", "$filter", "ENDPOINT", "$sce"];
     AIP.AdminGroupService = AdminGroupService;
 })(AIP || (AIP = {}));
 register("bannerAIP").service("AdminGroupService", AIP.AdminGroupService);

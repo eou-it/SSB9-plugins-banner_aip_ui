@@ -4,7 +4,7 @@
 ///<reference path = "../../../typings/tsd.d.ts"/>
 var AIP;
 (function (AIP) {
-    var AIPBreadcrumbService = (function () {
+    var AIPBreadcrumbService = /** @class */ (function () {
         function AIPBreadcrumbService($location, $filter) {
             this.$inject = ["$location", "$filter"];
             this.$location = $location;
@@ -80,4 +80,4 @@ var AIP;
     }());
     AIP.AIPBreadcrumbService = AIPBreadcrumbService;
 })(AIP || (AIP = {}));
-angular.module("bannerAIP").service("BreadcrumbService", AIP.AIPBreadcrumbService);
+angular.module("bannerCommonAIP").service("BreadcrumbService", AIP.AIPBreadcrumbService);

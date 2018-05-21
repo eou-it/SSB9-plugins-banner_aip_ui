@@ -3,7 +3,7 @@
  ********************************************************************************/
 ///<reference path="../../../typings/tsd.d.ts"/>
 
-angular.module('bannerAIP').
+angular.module('bannerCommonAIP').
 filter('blockProcessItemFilter', function () {
     return function (input, current, generated) {
         var notGenerated = input.filter((item) => {

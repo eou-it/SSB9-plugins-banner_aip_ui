@@ -20,5 +20,4 @@ module AIP {
         }
     }
 }
-
-register("bannerAIP").service("SpinnerService", AIP.SpinnerService);
+register("bannerCommonAIP").service("SpinnerService", AIP.SpinnerService);

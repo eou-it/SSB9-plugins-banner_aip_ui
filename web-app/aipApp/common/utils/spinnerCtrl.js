@@ -16,9 +16,9 @@ var AIP;
                 _this.showing = newVal;
             }, true);
         }
+        SpinnerCtrl.$inject = ["$scope", "SpinnerService", "$rootScope"];
         return SpinnerCtrl;
     }());
-    SpinnerCtrl.$inject = ["$scope", "SpinnerService", "$rootScope"];
     AIP.SpinnerCtrl = SpinnerCtrl;
 })(AIP || (AIP = {}));
-register("bannerAIP").controller("SpinnerCtrl", AIP.SpinnerCtrl);
+register("bannerCommonAIP").controller("SpinnerCtrl", AIP.SpinnerCtrl);

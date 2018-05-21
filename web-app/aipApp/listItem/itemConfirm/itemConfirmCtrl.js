@@ -43,4 +43,4 @@ var AIP;
     }());
     AIP.ItemConfirmCtrl = ItemConfirmCtrl;
 })(AIP || (AIP = {}));
-register("bannerAIP").controller("ItemConfirmCtrl", AIP.ItemConfirmCtrl);
+register("bannerCommonAIP").controller("ItemConfirmCtrl", AIP.ItemConfirmCtrl);
