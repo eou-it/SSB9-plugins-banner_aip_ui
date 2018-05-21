@@ -14,7 +14,7 @@ modules = {
     }
     'bannerAdminAIPUI' {
         dependsOn 'bannerAIPUI'
-        dependsOn 'bannerAIPApp'
+        dependsOn 'bannerAdminAIPApp'
     }
     'bannerNonAdminAIPUI' {
         dependsOn 'bannerAIPUI'
@@ -75,7 +75,7 @@ modules = {
          resource url:[plugin: 'banner-aip-ui', file: 'aipApp/listItem/itemInform/itemInformCtrl.js']
      }
 
-    'bannerAIPApp' {
+    'bannerAdminAIPApp' {
 
         dependsOn "bannerCommonAIPApp"
         resource url:[plugin: 'banner-aip-ui', file: 'aipApp/common/directives/calendar-directive.js']

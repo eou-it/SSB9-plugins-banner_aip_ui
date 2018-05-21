@@ -154,10 +154,8 @@ var bannerNonAdminAIPApp = angular.module("bannerNonAdminAIP", [
 
 
  bannerAIPUI
-//set application root url
-    .constant('APP_ROOT', aipAppRoot)
-
-    //supply directives' template url so that we don't have any hardcoded url in other code
+     .constant('APP_ROOT', aipAppRoot)//set application root url
+     //supply directives' template url so that we don't have any hardcoded url in other code
     .config(['$provide', 'APP_ROOT', function ($provide, APP_ROOT) {
             //override angular-ui's default accordion-group directive template; h4 -> h2 for title
             $provide.decorator('uibAccordionGroupDirective', function ($delegate) {

@@ -412,8 +412,7 @@ var bannerAIPApp = angular.module("bannerAIP", [
     );
 
  bannerAIPUI
-//set application root url
-    .constant('APP_ROOT', aipAppRoot)
+    .constant('APP_ROOT', aipAppRoot)//set application root url
 
     //supply directives' template url so that we don't have any hardcoded url in other code
     .config(['$provide', 'APP_ROOT', function ($provide, APP_ROOT) {
