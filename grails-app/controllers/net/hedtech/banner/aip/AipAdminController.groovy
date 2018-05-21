@@ -15,6 +15,7 @@ import org.codehaus.groovy.grails.plugins.web.taglib.ValidationTagLib
  */
 class AipAdminController {
     private static final def LOGGER = Logger.getLogger( this.class )
+    static defaultAction = "landing"
 
     def groupFolderReadOnlyService
     def blockingProcessCompositeService
@@ -39,6 +40,10 @@ class AipAdminController {
     def actionItemService
     def actionItemBlockedProcessCompositeService
 
+
+    def landing() {
+        render(view: "aipAdmin" )
+    }
     /**
      * API for folders LOV
      * @return

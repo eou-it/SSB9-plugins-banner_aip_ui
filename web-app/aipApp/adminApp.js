@@ -333,10 +333,6 @@ var bannerAIPApp = angular.module("bannerAIP", [
             $rootScope.$stateParams = $stateParams;
 
             $rootScope.$on('$stateChangeStart', function (e, to) {
-                if (isActionItemAdmin === false && to.name === 'admin-landing') {
-                    e.preventDefault();
-                    $rootScope.$state.go('list')
-                }
                 if ($rootScope.DataChanged) {
                     e.preventDefault();
                 }

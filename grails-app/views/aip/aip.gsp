@@ -50,7 +50,7 @@
         window.aip?window.aip.dev="development":window.aip={dev:"development"};
         </g:if>
         <g:javascript>
-        var isActionItemAdmin = ${isActionItemAdmin};
+
         if ("${fragment}") {
             window.location.href = "${fragment}";
         }

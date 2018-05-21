@@ -41,6 +41,7 @@ modules = {
 
 
       'bannerCommonAIPApp' {
+
           dependsOn 'bannerAIPUtils'
           dependsOn "bannerSelfService, i18n-core"
           dependsOn "bannerAIPPB"
@@ -67,11 +68,7 @@ modules = {
 
      'bannerNonAdminAIPApp' {
 
-         dependsOn 'bannerAIPUtils'
-         dependsOn "bannerSelfService, i18n-core"
-         dependsOn "bannerAIPPB"
          dependsOn "bannerCommonAIPApp"
-
          resource url:[plugin: 'banner-aip-ui', file: 'aipApp/nonAdminApp.js']
          resource url:[plugin: 'banner-aip-ui', file: 'aipApp/listItem/listItemPageCtrl.js']
          resource url:[plugin: 'banner-aip-ui', file: 'aipApp/listItem/itemConfirm/itemConfirmCtrl.js']
@@ -80,9 +77,6 @@ modules = {
 
     'bannerAIPApp' {
 
-        dependsOn 'bannerAIPUtils'
-        dependsOn "bannerSelfService, i18n-core"
-        dependsOn "bannerAIPPB"
         dependsOn "bannerCommonAIPApp"
         resource url:[plugin: 'banner-aip-ui', file: 'aipApp/common/directives/calendar-directive.js']
         resource url:[plugin: 'banner-aip-ui', file: 'aipApp/adminApp.js']

@@ -83,7 +83,7 @@ var bannerNonAdminAIPApp = angular.module("bannerNonAdminAIP", [
 // TODO: should this be HTML5 in HashBang mode with a base defined in the HTML?
             $locationProvider.html5Mode(false);
             $locationProvider.hashPrefix('');
-            $urlRouteProvider.otherwise("/landing");
+            $urlRouteProvider.otherwise("/list");
             angular.forEach(PAGES, function (item, state) {
                 $stateProvider.state(state, {
                     url: item.url,
@@ -134,31 +134,12 @@ var bannerNonAdminAIPApp = angular.module("bannerNonAdminAIP", [
             $rootScope.$state = $state;
             $rootScope.$stateParams = $stateParams;
 
-            $rootScope.$on('$stateChangeStart', function (e, to) {
-                console.log("booleanflg",isActionItemAdmin);
-                if (isActionItemAdmin === false && to.name === 'admin-landing') {
-                    e.preventDefault();
-                    $rootScope.$state.go('list')
-                }
-                if ($rootScope.DataChanged) {
-                    e.preventDefault();
-                }
-            });
 
             //when state successfully changed, update breadcrumbs
             $rootScope.$on("$stateChangeSuccess", function (event, toState, toParams, fromState, fromParams) {
                 $state.previous = fromState;
                 $state.previousParams = fromParams;
                 BreadcrumbService.updateBreadcrumb(toState.data.breadcrumbs);
-            });
-
-            //On everychange of location of Browser
-            $rootScope.$on('$locationChangeStart', function (event, next, current, state) {
-                if ($rootScope.DataChanged) {
-                    $rootScope.$broadcast('DetectChanges', {state: next});
-                    event.preventDefault();
-
-                }
             });
 
             //expose message.properties values for taglib
