@@ -28,14 +28,50 @@ module AIPUI {
 
         }
         link(scope) {
-            if (scope.idx === scope.opengroup) {
-                scope.isOpen = true;
-            } else {
-                scope.isOpen = false;
-            }
+
 
         }
         controller($scope) {
+
+            if ($scope.idx === $scope.opengroup) {
+                $scope.isOpen = true;
+            } else {
+                $scope.isOpen = false;
+            }
+
+            setTimeout(function(){
+                /*
+                * To add aria-expanded attribute to all the groups.
+                * True for selected group & false for other groups
+                * */
+
+                var selectedGroup = document.querySelectorAll('div[aria-selected=true] a');
+                if($(selectedGroup[$scope.idx]).length >0){
+                    $(selectedGroup[$scope.idx]).attr("aria-expanded","true");
+                }
+                var otherGroups = document.querySelectorAll('div[aria-selected=false] a');
+
+                if($(otherGroups[$scope.idx]).length >0){
+                    $(otherGroups[$scope.idx]).attr("aria-expanded","false");
+                }
+                /*
+               * Event handler to toggle group & update aria-expanded attribute accordingly.
+               * */
+                var panelHeading = document.querySelectorAll('.panel-heading');
+                $(panelHeading[$scope.idx]).on('click keypress', function(event){
+                    event.stopImmediatePropagation();
+                    event.preventDefault();
+
+                    if(event.target.className == "group-instructions" || event.target.className == "accordion-toggle"){
+                        $scope.displayGroupInfo($scope.itemgroup.id, event);
+                    }else{
+                        $scope.openGroup($scope.itemgroup.id, event);
+                    }
+
+                });
+            },100);
+
+
             $scope.getStyle = function(key) {
                 return $scope.stylefunction({key: key});
             };
@@ -44,25 +80,30 @@ module AIPUI {
                 this.addSelection(evt.currentTarget);
                 $scope.click({groupId: group.id, itemId:row.id}).then(function() {
                     setTimeout(function() {
-                        $scope.changeFocus(".detail")
-                        , 100
-                    })
+                        $scope.changeFocus(".detail");
+
+                    }, 100);
                 });
             };
-
-            $scope.openGroup = function(groupId) {
-                //TODO::Expand/Collapse group event
+            $scope.openGroup = function(groupId,evt) {
                 this.resetSelection();
-                $scope.togglegroup({state: {groupId:groupId, open:!this.isOpen}});
+                var accordionToggle = $(evt.currentTarget).find('a');
+                var toggle = this.isOpen;
+                $(accordionToggle).attr('aria-expanded', toggle.toString());
+                $scope.togglegroup({state: {groupId:groupId, open:this.isOpen}});
             };
+
             $scope.displayGroupInfo = function(groupId, evt) {
-                evt.preventDefault();
-                evt.stopPropagation();
                 this.resetSelection();
                 $scope.togglegroup({state: {groupId:groupId, open:true}});
                 $scope.isOpen = true;
                 $scope.showgroupinfo({groupId:groupId});
+                setTimeout(function() {
+                    $scope.changeFocus(".detail");
+                }, 100);
+
             };
+
             $scope.completedItem = function() {
                 var items = $scope.itemgroup.items.filter((_item) => {
                     return _item.status !== "Pending";
