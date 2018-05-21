@@ -17,30 +17,13 @@ var resourceBase = rootWebApp + 'internalPb/';
 
 var xhrHttpInterceptor= function (){
     return {
-        request: function(config) {
-
-            return config;
-        },
-
-        requestError: function(config) {
-
-            return config;
-        },
-
         response: function(res) {
-
-            if ( res.config.url.indexOf(".html") === -1       &&
-                typeof res.data                 === "string" &&
-                res.data.indexOf("loginForm")  !== -1
-            )
+            // if response is a redirection to a full html page then reload the rootWebapp
+            // discards the response we received because there isn't a good way to process it
+            if ( typeof res.data === "string" && res.data.search(/<html/mi )!== -1 )
             {
-                window.location.assign(rootWebApp);
+                 window.location.assign(rootWebApp);
             }
-            return res;
-        },
-
-
-        responseError: function(res) {
             return res;
         }
     }
