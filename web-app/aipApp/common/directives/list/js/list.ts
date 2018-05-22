@@ -62,7 +62,7 @@ module AIPUI {
                     event.stopImmediatePropagation();
                     event.preventDefault();
 
-                    if(event.target.className == "group-instructions" || event.target.className == "accordion-toggle"){
+                    if(event.target.className === "group-instructions" || event.target.className === "accordion-toggle"){
                         $scope.displayGroupInfo($scope.itemgroup.id, event);
                     }else{
                         $scope.openGroup($scope.itemgroup.id, event);

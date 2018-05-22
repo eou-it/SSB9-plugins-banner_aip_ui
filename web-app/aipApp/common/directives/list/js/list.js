@@ -49,7 +49,7 @@ var AIPUI;
                 $(panelHeading[$scope.idx]).on('click keypress', function (event) {
                     event.stopImmediatePropagation();
                     event.preventDefault();
-                    if (event.target.className == "group-instructions" || event.target.className == "accordion-toggle") {
+                    if (event.target.className === "group-instructions" || event.target.className === "accordion-toggle") {
                         $scope.displayGroupInfo($scope.itemgroup.id, event);
                     }
                     else {
