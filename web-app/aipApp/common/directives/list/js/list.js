@@ -34,22 +34,22 @@ var AIPUI;
                 * To add aria-expanded attribute to all the groups.
                 * True for selected group & false for other groups
                 * */
-                var selectedGroup = document.querySelectorAll('div[aria-selected=true] a');
+                var selectedGroup = document.querySelectorAll('div[aria-selected=true] .accordion-toggle');
                 if ($(selectedGroup[$scope.idx]).length > 0) {
                     $(selectedGroup[$scope.idx]).attr("aria-expanded", "true");
                 }
-                var otherGroups = document.querySelectorAll('div[aria-selected=false] a');
+                var otherGroups = document.querySelectorAll('div[aria-selected=false] .accordion-toggle');
                 if ($(otherGroups[$scope.idx]).length > 0) {
                     $(otherGroups[$scope.idx]).attr("aria-expanded", "false");
                 }
                 /*
-               * Event handler to toggle group & update aria-expanded attribute accordingly.
-               * */
+            * Event handler to toggle group & update aria-expanded attribute accordingly.
+            * */
                 var panelHeading = document.querySelectorAll('.panel-heading');
-                $(panelHeading[$scope.idx]).on('click keypress', function (event) {
+                $(panelHeading[$scope.idx]).click(function (event) {
                     event.stopImmediatePropagation();
                     event.preventDefault();
-                    if (event.target.className === "group-instructions" || event.target.className === "accordion-toggle") {
+                    if (event.target.className === "group-instructions") {
                         $scope.displayGroupInfo($scope.itemgroup.id, event);
                     }
                     else {
@@ -71,12 +71,14 @@ var AIPUI;
             };
             $scope.openGroup = function (groupId, evt) {
                 this.resetSelection();
-                var accordionToggle = $(evt.currentTarget).find('a');
+                var accordionToggle = $(evt.currentTarget).find('.accordion-toggle');
                 var toggle = this.isOpen;
                 $(accordionToggle).attr('aria-expanded', toggle.toString());
                 $scope.togglegroup({ state: { groupId: groupId, open: this.isOpen } });
             };
             $scope.displayGroupInfo = function (groupId, evt) {
+                event.stopPropagation();
+                event.preventDefault();
                 this.resetSelection();
                 $scope.togglegroup({ state: { groupId: groupId, open: true } });
                 $scope.isOpen = true;
