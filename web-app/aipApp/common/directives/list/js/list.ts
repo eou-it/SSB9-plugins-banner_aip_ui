@@ -96,8 +96,8 @@ module AIPUI {
             };
 
             $scope.displayGroupInfo = function(groupId, evt) {
-                event.stopPropagation();
-                event.preventDefault();
+                evt.stopPropagation();
+                evt.preventDefault();
                 this.resetSelection();
                 $scope.togglegroup({state: {groupId:groupId, open:true}});
                 $scope.isOpen = true;

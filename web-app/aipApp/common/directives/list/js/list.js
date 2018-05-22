@@ -77,8 +77,8 @@ var AIPUI;
                 $scope.togglegroup({ state: { groupId: groupId, open: this.isOpen } });
             };
             $scope.displayGroupInfo = function (groupId, evt) {
-                event.stopPropagation();
-                event.preventDefault();
+                evt.stopPropagation();
+                evt.preventDefault();
                 this.resetSelection();
                 $scope.togglegroup({ state: { groupId: groupId, open: true } });
                 $scope.isOpen = true;
