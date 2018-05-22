@@ -77,8 +77,7 @@ modules = {
     'bannerAdminAIPApp' {
 
         dependsOn "bannerCommonAIPApp"
-        resource url:[plugin: 'banner-aip-ui', file: 'aipApp/common/directives/calendar-directive.js']
-        resource url:[plugin: 'banner-aip-ui', file: 'aipApp/adminApp.js']
+         resource url:[plugin: 'banner-aip-ui', file: 'aipApp/adminApp.js']
         resource url:[plugin: 'banner-aip-ui', file: 'aipApp/common/directives/admin/landing-item/js/landingItem.js']
         resource url:[plugin: 'banner-aip-ui', file: 'aipApp/common/directives/admin/group-detail/js/groupDetail.js']
         resource url:[plugin: 'banner-aip-ui', file: 'aipApp/common/directives/admin/status-rule/js/statusRule.js']
