@@ -1432,7 +1432,7 @@ ol.selected-group > li > button {
     top: 105px !important; }
     #content .viewContainer {
       padding: 0 8px;
-      overflow: auto; }
+      overflow: hidden; }
     #content .actionItemAddContainer .enddate {
       padding-left: 0px; } }
 #breadcrumbHeader a.breadcrumbButton.leaf-breadcrumb {
