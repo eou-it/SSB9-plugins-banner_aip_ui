@@ -57,7 +57,6 @@ modules = {
           resource url:[plugin: 'banner-aip-ui', file: 'aipApp/common/directives/calendar-directive.js']
           resource url:[plugin: 'banner-aip-ui', file: 'aipApp/common/directives/item-detail/js/itemDetail.js']
           resource url:[plugin: 'banner-aip-ui', file: 'aipApp/common/utils/spinnerCtrl.js']
-          resource url:[plugin: 'banner-aip-ui', file: 'aipApp/common/directives/admin/landing-item/js/landingItem.js']
           resource url:[plugin: 'banner-aip-ui', file: 'aipApp/common/directives/pagebuilder/js/aip-pagebuilder.js']
 
           resource url:[plugin: 'banner-aip-ui', file: 'aipApp/common/filters/blockProcessItem-filter.js']
