@@ -4,7 +4,7 @@
 ///<reference path="../../../../../typings/tsd.d.ts"/>
 var AIPUI;
 (function (AIPUI) {
-    var AIPListDirective = /** @class */ (function () {
+    var AIPListDirective = (function () {
         function AIPListDirective() {
             this.restrict = "AE";
             this.scope = {
@@ -29,34 +29,43 @@ var AIPUI;
             else {
                 $scope.isOpen = false;
             }
-            setTimeout(function () {
-                /*
-                * To add aria-expanded attribute to all the groups.
-                * True for selected group & false for other groups
-                * */
-                var selectedGroup = document.querySelectorAll('div[aria-selected=true] .accordion-toggle');
-                if ($(selectedGroup[$scope.idx]).length > 0) {
-                    $(selectedGroup[$scope.idx]).attr("aria-expanded", "true");
-                }
-                var otherGroups = document.querySelectorAll('div[aria-selected=false] .accordion-toggle');
-                if ($(otherGroups[$scope.idx]).length > 0) {
-                    $(otherGroups[$scope.idx]).attr("aria-expanded", "false");
-                }
-                /*
-            * Event handler to toggle group & update aria-expanded attribute accordingly.
-            * */
-                var panelHeading = document.querySelectorAll('.panel-heading');
-                $(panelHeading[$scope.idx]).click(function (event) {
-                    event.stopImmediatePropagation();
-                    event.preventDefault();
-                    if (event.target.className === "group-instructions") {
-                        $scope.displayGroupInfo($scope.itemgroup.id, event);
+            var waitForAccordionElements = function () {
+                setTimeout(function () {
+                    var accordionToggle = document.querySelector('.accordion-toggle');
+                    if ($(accordionToggle).length > 0) {
+                        /*
+                        * To add aria-expanded attribute to all the groups.
+                        * True for selected group & false for other groups
+                        * */
+                        var selectedGroup = document.querySelectorAll('div[aria-selected=true] .accordion-toggle');
+                        if ($(selectedGroup[$scope.idx]).length > 0) {
+                            $(selectedGroup[$scope.idx]).attr("aria-expanded", "true");
+                        }
+                        var otherGroups = document.querySelectorAll('div[aria-selected=false] .accordion-toggle');
+                        if ($(otherGroups[$scope.idx]).length > 0) {
+                            $(otherGroups[$scope.idx]).attr("aria-expanded", "false");
+                        }
+                        /*
+                        * Event handler to toggle group & update aria-expanded attribute accordingly.
+                        * */
+                        var panelHeading = document.querySelectorAll('.panel-heading');
+                        $(panelHeading[$scope.idx]).click(function (event) {
+                            event.stopImmediatePropagation();
+                            event.preventDefault();
+                            if (event.target.className === "group-instructions") {
+                                $scope.displayGroupInfo($scope.itemgroup.id, event);
+                            }
+                            else {
+                                $scope.openGroup($scope.itemgroup.id, event);
+                            }
+                        });
                     }
                     else {
-                        $scope.openGroup($scope.itemgroup.id, event);
+                        waitForAccordionElements();
                     }
-                });
-            }, 100);
+                }, 100);
+            };
+            waitForAccordionElements();
             $scope.getStyle = function (key) {
                 return $scope.stylefunction({ key: key });
             };
