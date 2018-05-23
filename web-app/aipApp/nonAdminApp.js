@@ -15,32 +15,43 @@ var params = {};
 var rootWebApp = aipAppAbsPath.replace("/ssb/", "/");
 var resourceBase = rootWebApp + 'internalPb/';
 
-
+var xhrHttpInterceptor = function () {
+    return {
+        response: function (res) {
+            // if response is a redirection to a full html page then reload the rootWebapp
+            // discards the response we received because there isn't a good way to process it
+            if (typeof res.data === "string" && res.data.search(/<html/mi) !== -1) {
+                window.location.assign(rootWebApp);
+            }
+            return res;
+        }
+    }
+}
 
 var bannerNonAdminAIPApp = angular.module("bannerNonAdminAIP", [
-    "ngResource",
-    "ngSanitize",
-    "ui.router",
-    "extensibility",
-    "ui.bootstrap",
-    "ngAria",
-    "ngAnimate",
-    "xe-ui-components",
-    "bannerAIPUI",
-    "bannerCommonAIP",
-    "ngRoute",
-    "SCEAIP",
-    "ngCkeditor",
-    "BannerOnAngular",
-    "I18nAIP",
-    "pbrun.directives",
-    'dateParser',
-    'cm.timepicker'
+        "ngResource",
+        "ngSanitize",
+        "ui.router",
+        "extensibility",
+        "ui.bootstrap",
+        "ngAria",
+        "ngAnimate",
+        "xe-ui-components",
+        "bannerAIPUI",
+        "bannerCommonAIP",
+        "ngRoute",
+        "SCEAIP",
+        "ngCkeditor",
+        "BannerOnAngular",
+        "I18nAIP",
+        "pbrun.directives",
+        'dateParser',
+        'cm.timepicker'
 
 
-])
+    ])
 
-//set application root url
+    //set application root url
     .constant('APP_ROOT', aipAppRoot)
 
     .constant('BCM_ROOT', bcmRoot)
@@ -53,27 +64,27 @@ var bannerNonAdminAIPApp = angular.module("bannerNonAdminAIP", [
     .constant("PAGES", {
 
         "list": {
-             url: "/list",
-             templateUrl: "listItem/listItemPage.html",
-             controller: "ListItemPageCtrl",
-             breadcrumb: {
-                 label: "aip.user.actionItem.list",
-                 url: "/aip/list#/list"
-             }
-         },
+            url: "/list",
+            templateUrl: "listItem/listItemPage.html",
+            controller: "ListItemPageCtrl",
+            breadcrumb: {
+                label: "aip.user.actionItem.list",
+                url: "/aip/list#/list"
+            }
+        },
 
-         "informedList": {
-             url: "/informedList",
-             templateUrl: "listItem/listItemPage.html",
-             controller: "ListItemPageCtrl",
-             breadcrumb: {
-                 label: "aip.user.actionItem.list",
-                 url: "/aip/list#/list"
-             },
-             inform: true
-         }
+        "informedList": {
+            url: "/informedList",
+            templateUrl: "listItem/listItemPage.html",
+            controller: "ListItemPageCtrl",
+            breadcrumb: {
+                label: "aip.user.actionItem.list",
+                url: "/aip/list#/list"
+            },
+            inform: true
+        }
 
-    })
+    }).factory('xhrHttpInterceptor', xhrHttpInterceptor)
 
 
     //provider-injector
@@ -124,13 +135,13 @@ var bannerNonAdminAIPApp = angular.module("bannerNonAdminAIP", [
             $httpProvider.defaults.headers.get['If-Modified-Since'] = 'Mon, 26 Jul 1997 05:00:00 GMT';
             $httpProvider.defaults.headers.get['Cache-Control'] = 'no-cache';
             $httpProvider.defaults.headers.get['Parama'] = 'no-cache';
-
+            $httpProvider.interceptors.push('xhrHttpInterceptor');
         }
     ])
 
     //instance-injector
-    .run(["$rootScope", "$window", "$location", "$state", "$stateParams", "$filter", "$sce", "$templateCache","BreadcrumbService",
-        function ($rootScope, $window, $location, $state, $stateParams, $filter, $sce, $templateCache,BreadcrumbService) {
+    .run(["$rootScope", "$window", "$location", "$state", "$stateParams", "$filter", "$sce", "$templateCache", "BreadcrumbService",
+        function ($rootScope, $window, $location, $state, $stateParams, $filter, $sce, $templateCache, BreadcrumbService) {
             $rootScope.$state = $state;
             $rootScope.$stateParams = $stateParams;
 
@@ -153,9 +164,9 @@ var bannerNonAdminAIPApp = angular.module("bannerNonAdminAIP", [
     );
 
 
- bannerAIPUI
-     .constant('APP_ROOT', aipAppRoot)//set application root url
-     //supply directives' template url so that we don't have any hardcoded url in other code
+bannerAIPUI
+    .constant('APP_ROOT', aipAppRoot)//set application root url
+    //supply directives' template url so that we don't have any hardcoded url in other code
     .config(['$provide', 'APP_ROOT', function ($provide, APP_ROOT) {
             //override angular-ui's default accordion-group directive template; h4 -> h2 for title
             $provide.decorator('uibAccordionGroupDirective', function ($delegate) {
@@ -199,7 +210,7 @@ angular.module("templates/dropdown.html", []).run(["$templateCache", function ($
 
 
 angular.module("BannerOnAngular")
-//set application root url
+    //set application root url
     .constant('APP_ROOT', aipAppRoot)
     .constant('BCM_ROOT', bcmRoot)
     .constant('APP_PATH', Application.getApplicationPath())

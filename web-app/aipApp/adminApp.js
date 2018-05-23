@@ -15,6 +15,22 @@ var params = {};
 var rootWebApp = aipAppAbsPath.replace("/ssb/", "/");
 var resourceBase = rootWebApp + 'internalPb/';
 
+var xhrHttpInterceptor= function (){
+    return {
+        response: function(res) {
+            // if response is a redirection to a full html page then reload the rootWebapp
+            // discards the response we received because there isn't a good way to process it
+            if ( typeof res.data === "string" && res.data.search(/<html/mi )!== -1 )
+            {
+                 window.location.assign(rootWebApp);
+            }
+            return res;
+        }
+    }
+}
+
+
+
 
 var bannerAIPApp = angular.module("bannerAIP", [
     "ngResource",
@@ -199,7 +215,7 @@ var bannerAIPApp = angular.module("bannerAIP", [
             }
         }
 
-    })
+    }).factory('xhrHttpInterceptor',xhrHttpInterceptor)
     //constant for endpoint
     .constant("ENDPOINT", {
         admin: {
@@ -322,6 +338,8 @@ var bannerAIPApp = angular.module("bannerAIP", [
             $httpProvider.defaults.headers.get['If-Modified-Since'] = 'Mon, 26 Jul 1997 05:00:00 GMT';
             $httpProvider.defaults.headers.get['Cache-Control'] = 'no-cache';
             $httpProvider.defaults.headers.get['Parama'] = 'no-cache';
+            $httpProvider.interceptors.push('xhrHttpInterceptor');
+
 
         }
     ])
