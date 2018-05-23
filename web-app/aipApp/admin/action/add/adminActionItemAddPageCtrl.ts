@@ -120,8 +120,8 @@ module AIP {
                             item.value = this.$filter("i18n_aip")( "aip.status." + item.value.charAt(0));
                             return item;
                         });
-                        this.actionItemInfo.status = this.status[0].value;
-                        this.selectedstatusval= this.status[0];
+                        this.actionItemInfo.status = this.status[1].value;
+                        this.selectedstatusval= this.status[1];
                     })
             );
             allPromises.push(

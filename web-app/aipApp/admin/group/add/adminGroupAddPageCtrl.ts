@@ -127,8 +127,8 @@ module AIP {
                         item.value = this.$filter("i18n_aip")( "aip.status." + item.value.charAt(0));
                         return item;
                     });
-                    this.groupInfo.status = this.status[0].value;
-                    this.selectedstatusval= this.status[0];
+                    this.groupInfo.status = this.status[1].value;
+                    this.selectedstatusval= this.status[1];
                 })
             );
             promises.push(

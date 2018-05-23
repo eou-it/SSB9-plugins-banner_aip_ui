@@ -6,7 +6,7 @@
 ///<reference path="../../../common/services/spinnerService.ts"/>
 var AIP;
 (function (AIP) {
-    var AdminGroupAddPageCtrl = (function () {
+    var AdminGroupAddPageCtrl = /** @class */ (function () {
         function AdminGroupAddPageCtrl($scope, $rootScope, $window, AdminGroupService, $q, SpinnerService, $state, $filter, $sce, $timeout, CKEDITORCONFIG) {
             var _this = this;
             this.$inject = ["$scope", "$rootScope", "$window", "AdminGroupService", "$q", "SpinnerService", "$state", "$filter", "$sce", "$timeout", "CKEDITORCONFIG"];
@@ -77,8 +77,8 @@ var AIP;
                     item.value = _this.$filter("i18n_aip")("aip.status." + item.value.charAt(0));
                     return item;
                 });
-                _this.groupInfo.status = _this.status[0].value;
-                _this.selectedstatusval = _this.status[0];
+                _this.groupInfo.status = _this.status[1].value;
+                _this.selectedstatusval = _this.status[1];
             }));
             promises.push(this.adminGroupService.getFolder().then(function (folders) {
                 _this.folders = folders;

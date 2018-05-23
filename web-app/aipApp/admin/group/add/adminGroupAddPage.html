@@ -54,7 +54,7 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
                         <xe-ui-select-match>
                             {{vm.groupInfo.status}}
                         </xe-ui-select-match>
-                        <xe-ui-select-choices repeat="item in vm.status">
+                        <xe-ui-select-choices repeat="item in vm.status |orderBy:'id'">
                             <div ng-bind-html="item.value"></div>
                         </xe-ui-select-choices>
                     </xe-ui-select>
