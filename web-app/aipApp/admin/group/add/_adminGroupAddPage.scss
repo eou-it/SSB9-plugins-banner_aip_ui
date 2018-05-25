@@ -60,6 +60,18 @@
           right: 8px;
           color: #4F585F;
         }
+        .folder-minwidth {
+          width: 250px;
+        }
+
+        #folderid .ui-select-dropdown .select2-search input {
+          width:240px !important;
+        }
+
+        #folderid .ui-select-dropdown{
+          width:250px !important;
+        }
+
         [lang='ar'] .titleValue.supplement {
           left: 8px;
           right: auto;

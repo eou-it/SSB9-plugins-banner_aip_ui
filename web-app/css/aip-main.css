@@ -365,6 +365,12 @@ input[type="radio"]:checked:after {
         left: auto;
         right: 8px;
         color: #4F585F; }
+      .groupAddContainer .groupInfo .groupInfoRow .groupElement .folder-minwidth {
+        width: 250px; }
+      .groupAddContainer .groupInfo .groupInfoRow .groupElement #folderid .ui-select-dropdown .select2-search input {
+        width: 240px !important; }
+      .groupAddContainer .groupInfo .groupInfoRow .groupElement #folderid .ui-select-dropdown {
+        width: 250px !important; }
       .groupAddContainer .groupInfo .groupInfoRow .groupElement [lang='ar'] .titleValue.supplement {
         left: 8px;
         right: auto; }
@@ -671,6 +677,12 @@ ol.selected-group > li > button {
           font-style: italic;
           position: relative;
           padding: 0 24px; }
+        .actionItemAddContainer .actionItemInfo .actionItemInfoRow .actionItemElement .folder-minwidth {
+          width: 250px; }
+        .actionItemAddContainer .actionItemInfo .actionItemInfoRow .actionItemElement #folderid .ui-select-dropdown .select2-search input {
+          width: 240px !important; }
+        .actionItemAddContainer .actionItemInfo .actionItemInfoRow .actionItemElement #folderid .ui-select-dropdown {
+          width: 250px !important; }
         .actionItemAddContainer .actionItemInfo .actionItemInfoRow .actionItemElement [lang='ar'] .titleValue.supplement {
           left: 8px;
           right: auto; }

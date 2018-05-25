@@ -26,20 +26,20 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
                 </div>
             </div>
         </div>
-        <div class="row actionItemInfoRow actionItemFolder">
+        <div class="row actionItemInfoRow actionItemFolder" >
             <div class="actionItemElement row input-actionItem">
                 <label for="actionItemFolder" class="titleValue required" id="actionItemAdd-folder">{{"aip.common.folder"|i18n_aip}}
                 </label>
             </div>
-            <div class="actionItemElement col-xs-12 col-sm-5">
-                <div class="row">
-                    <xe-ui-select id="actionItemFolder" ng-model="vm.actionItemInfo.folder" theme="select2" ng-change="vm.dataChanged()"
+            <div class="actionItemElement col-xs-12 col-sm-5" >
+                <div class="row ">
+                    <xe-ui-select class="folder-minwidth" id="folderid" ng-model="vm.actionItemInfo.folder" theme="select2" ng-change="vm.dataChanged()"
                     >
-                        <xe-ui-select-match placeholder="{{'aip.common.select.folder.default'|i18n_aip}}">
+                        <xe-ui-select-match  placeholder="{{'aip.common.select.folder.default'|i18n_aip}}">
                             {{vm.actionItemInfo.folder.name}}
                         </xe-ui-select-match>
-                        <xe-ui-select-choices repeat="item in vm.folders | propsFilter: {name: $select.search}">
-                            <div ng-bind-html="item.name"></div>
+                        <xe-ui-select-choices  repeat="item in vm.folders | propsFilter: {name: $select.search}">
+                            <div   ng-bind-html="item.name"></div>
                         </xe-ui-select-choices>
                     </xe-ui-select>
                 </div>
