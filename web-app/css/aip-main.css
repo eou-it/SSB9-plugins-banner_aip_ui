@@ -513,6 +513,8 @@ ol.selected-group > li > button {
   .groupOpenContainer .row {
     margin-left: 0;
     margin-right: 0; }
+    .groupOpenContainer .row .ui-select-container .select2-choice {
+      min-height: 2.9em !important; }
   .groupOpenContainer .groupInfo {
     margin-bottom: 20px; }
     .groupOpenContainer .groupInfo .groupInfoRow {
@@ -546,7 +548,8 @@ ol.selected-group > li > button {
               padding: 0;
               border-right: 1px solid #b3b3b3; }
             .groupOpenContainer .groupInfo .groupInfoRow .groupElement .xe-tab-container .contentInfo .contentText #select2actionItems .row.additionalInfo .actionItemFolder {
-              padding: 0 0 0 16px; }
+              padding: 0 0 0 16px;
+              min-height: 15px; }
           .groupOpenContainer .groupInfo .groupInfoRow .groupElement .xe-tab-container .contentInfo table {
             width: 100%;
             border: 1px solid #b3b3b3; }
@@ -585,6 +588,9 @@ ol.selected-group > li > button {
           padding: 8px; }
         .groupOpenContainer .groupInfo .groupInfoRow .groupElement #openGroupDetail .content-area {
           overflow: auto; }
+  .groupOpenContainer .row:after {
+    display: table !important;
+    content: " "; }
 
 .actionListContainer {
   overflow-y: auto;

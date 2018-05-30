@@ -7,7 +7,10 @@ $tableTextColor: #4F585F;
     .row {
       margin-left: 0;
       margin-right: 0;
+      .ui-select-container .select2-choice{    min-height: 2.9em !important;}
+
     }
+
     .groupInfo  {
       margin-bottom: 20px;
       .groupInfoRow {
@@ -55,9 +58,12 @@ $tableTextColor: #4F585F;
                       padding: 0;
                       border-right: 1px solid $borderColor
                     }
+
                     .actionItemFolder {
                       padding: 0 0 0 16px;
+                      min-height: 15px;
                     }
+
                   }
                 }
               }
@@ -117,4 +123,7 @@ $tableTextColor: #4F585F;
         }
       }
     }
+  .row:after{  display: table !important;
+    content: " ";
+  }
   }
