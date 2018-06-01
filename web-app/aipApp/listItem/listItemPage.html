@@ -11,6 +11,12 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
                 {{"aip.welcome.text"|i18n_aip}}
             </div>
         </div>
+        <div class="returnBtn" ng-if="vm.isFromGateKeeper">
+            <button class="btn btn-primary" ng-disabled="vm.haltingActionItemExists" ng-click="previousPath">{{"aip.user.actionItem.list.navbtn.continue"|i18n_aip}}</button>
+        </div>
+        <div class="returnBtn" ng-if="!vm.isFromGateKeeper">
+            <button class="btn btn-primary">{{"aip.user.actionItem.list.navbtn.return"|i18n_aip}}</button>
+        </div>
     </div>
     <div class="row">
         <div class="no-item-available" ng-if="vm.actionItems.groups.length === 0">

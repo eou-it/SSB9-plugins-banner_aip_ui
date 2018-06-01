@@ -24,6 +24,8 @@ var AIP;
             this.APP_ROOT = APP_ROOT;
             this.$sce = $sce;
             this.modalInstance;
+            this.isFromGateKeeper = false;
+            this.haltingActionItemExists = false;
             this.initialOpenGroup = -1;
             $scope.$watch("vm.detailView", function (newVal, oldVal) {
                 if (!$scope.$$phase) {
@@ -40,26 +42,26 @@ var AIP;
                 }, 500);
             });
             this.init();
+            $scope.previousLink = function () {
+                var previousPath = document.referrer;
+                if (previousPath != "") {
+                    window.location.replace(previousPath);
+                }
+            };
         }
         ListItemPageCtrl.prototype.init = function () {
             var _this = this;
-            this.informModal(this.$state.params['inform']);
+            this.isFromGateKeeper = this.$state.params['inform'];
+            this.informModal(this.isFromGateKeeper);
+            this.haltingActionItemExists = false;
+            if (this.isFromGateKeeper) {
+                this.haltingActionItemExists = true;
+            }
             this.spinnerService.showSpinner(true);
             this.userService.getUserInfo().then(function (userData) {
                 var userInfo = userData;
                 _this.userName = userData.fullName;
                 _this.itemListViewService.getActionItems(userInfo).then(function (actionItems) {
-                    angular.forEach(actionItems.groups, function (group) {
-                        angular.forEach(group.items, function (item) {
-                            item.state = item.state;
-                            /*todo: can probably drop the message properties for these status since it's coming from the db*/
-                            /*
-                            ==="Completed"?
-                                "aip.status.complete":
-                                "aip.status.pending";
-                           */
-                        });
-                    });
                     _this.actionItems = actionItems;
                     angular.forEach(_this.actionItems.groups, function (item) {
                         item.dscParams = _this.getParams(item.title, userInfo);
@@ -83,14 +85,22 @@ var AIP;
             this.spinnerService.showSpinner(true);
             this.userService.getUserInfo().then(function (userData) {
                 var userInfo = userData;
+                var isBlocking = false;
                 _this.userName = userData.fullName;
                 _this.itemListViewService.getActionItems(userInfo).then(function (actionItems) {
-                    angular.forEach(actionItems.groups, function (group) {
-                        angular.forEach(group.items, function (item) {
-                            item.state = item.state;
-                            /*todo: can probably drop the message properties for these status since it's coming from the db*/
-                        });
-                    });
+                    for (var _i = 0, _a = actionItems.groups; _i < _a.length; _i++) {
+                        var group = _a[_i];
+                        for (var _b = 0, _c = group.items; _b < _c.length; _b++) {
+                            var item = _c[_b];
+                            if (item.isBlocking) {
+                                isBlocking = true;
+                                break;
+                            }
+                        }
+                        ;
+                    }
+                    ;
+                    _this.haltingActionItemExists = isBlocking;
                     _this.actionItems = actionItems;
                     angular.forEach(_this.actionItems.groups, function (item) {
                         item.dscParams = _this.getParams(item.title, userInfo);
