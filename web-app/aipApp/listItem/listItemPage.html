@@ -3,7 +3,7 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
 *******************************************************************************-->
 <div class="listActionItem">
     <div class="row">
-        <div class="welcome col-xs-12 col-sm-5">
+        <div class="welcome col-xs-8">
             <div class="username">
                 {{"aip.welcome"|i18n_aip}}
             </div>
@@ -11,11 +11,11 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
                 {{"aip.welcome.text"|i18n_aip}}
             </div>
         </div>
-        <div class="returnBtn" ng-if="vm.isFromGateKeeper">
-            <button class="btn btn-primary" ng-disabled="vm.haltingActionItemExists" ng-click="previousPath">{{"aip.user.actionItem.list.navbtn.continue"|i18n_aip}}</button>
+        <div class="returnBtn col-xs-4" ng-if="vm.isFromGateKeeper">
+            <button class="btn btn-primary" ng-disabled="vm.haltingActionItemExists" ng-click="previousLink()">{{"aip.user.actionItem.list.navbtn.continue"|i18n_aip}}</button>
         </div>
-        <div class="returnBtn" ng-if="!vm.isFromGateKeeper">
-            <button class="btn btn-primary">{{"aip.user.actionItem.list.navbtn.return"|i18n_aip}}</button>
+        <div class="returnBtn col-xs-4" ng-if="!vm.isFromGateKeeper">
+            <button class="btn btn-primary" ng-click="previousLink()">{{"aip.user.actionItem.list.navbtn.return"|i18n_aip}}</button>
         </div>
     </div>
     <div class="row">
