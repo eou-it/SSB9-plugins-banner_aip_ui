@@ -11,11 +11,11 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
                 {{"aip.welcome.text"|i18n_aip}}
             </div>
         </div>
-        <div class="returnBtn col-xs-4" ng-if="vm.isFromGateKeeper">
-            <button class="btn btn-primary" ng-disabled="vm.haltingActionItemExists" ng-click="previousLink()">{{"aip.user.actionItem.list.navbtn.continue"|i18n_aip}}</button>
-        </div>
-        <div class="returnBtn col-xs-4" ng-if="!vm.isFromGateKeeper">
-            <button class="btn btn-primary" ng-click="previousLink()">{{"aip.user.actionItem.list.navbtn.return"|i18n_aip}}</button>
+        <div class="returnBtn col-xs-4" >
+            <button class="btn btn-primary" ng-click="previousLink()">
+                <span ng-if="vm.isFromGateKeeper">{{"aip.user.actionItem.list.navbtn.continue"|i18n_aip}}</span>
+                <span ng-if="!vm.isFromGateKeeper">{{"aip.user.actionItem.list.navbtn.return"|i18n_aip}}</span>
+            </button>
         </div>
     </div>
     <div class="row">

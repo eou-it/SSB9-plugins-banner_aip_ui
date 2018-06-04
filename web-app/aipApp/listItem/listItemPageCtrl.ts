@@ -50,7 +50,6 @@ module AIP {
         APP_ROOT;
         modalInstance;
         isFromGateKeeper;
-        haltingActionItemExists;
 
         constructor($scope, $state, ItemListViewService, AIPUserService, SpinnerService, $timeout, $q, $uibModal, APP_ROOT, $sce) {
             $scope.vm = this;
@@ -65,7 +64,6 @@ module AIP {
             this.$sce = $sce;
             this.modalInstance;
             this.isFromGateKeeper = false;
-            this.haltingActionItemExists = false;
 
             this.initialOpenGroup = -1;
             $scope.$watch(
@@ -98,10 +96,6 @@ module AIP {
         init() {
             this.isFromGateKeeper = this.$state.params['inform'];
             this.informModal(this.isFromGateKeeper);
-            this.haltingActionItemExists = false;
-            if(this.isFromGateKeeper){
-                this.haltingActionItemExists = true;
-            }
             this.spinnerService.showSpinner(true);
             this.userService.getUserInfo().then((userData) => {
                 var userInfo = userData;
@@ -132,19 +126,9 @@ module AIP {
             this.spinnerService.showSpinner(true);
             this.userService.getUserInfo().then( ( userData ) => {
                 var userInfo = userData;
-                var isBlocking = false;
                 this.userName = userData.fullName;
 
                 this.itemListViewService.getActionItems( userInfo ).then( ( actionItems:IUserItem ) => {
-                    for(var group of actionItems.groups){
-                        for(var item of group.items){
-                            if(item.isBlocking) {
-                                isBlocking = true;
-                                break;
-                            }
-                        };
-                    };
-                    this.haltingActionItemExists = isBlocking;
                     this.actionItems = actionItems;
                     angular.forEach( this.actionItems.groups, ( item ) => {
                         item.dscParams = this.getParams( item.title, userInfo );

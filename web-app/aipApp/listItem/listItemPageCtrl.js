@@ -25,7 +25,6 @@ var AIP;
             this.$sce = $sce;
             this.modalInstance;
             this.isFromGateKeeper = false;
-            this.haltingActionItemExists = false;
             this.initialOpenGroup = -1;
             $scope.$watch("vm.detailView", function (newVal, oldVal) {
                 if (!$scope.$$phase) {
@@ -53,10 +52,6 @@ var AIP;
             var _this = this;
             this.isFromGateKeeper = this.$state.params['inform'];
             this.informModal(this.isFromGateKeeper);
-            this.haltingActionItemExists = false;
-            if (this.isFromGateKeeper) {
-                this.haltingActionItemExists = true;
-            }
             this.spinnerService.showSpinner(true);
             this.userService.getUserInfo().then(function (userData) {
                 var userInfo = userData;
@@ -85,22 +80,8 @@ var AIP;
             this.spinnerService.showSpinner(true);
             this.userService.getUserInfo().then(function (userData) {
                 var userInfo = userData;
-                var isBlocking = false;
                 _this.userName = userData.fullName;
                 _this.itemListViewService.getActionItems(userInfo).then(function (actionItems) {
-                    for (var _i = 0, _a = actionItems.groups; _i < _a.length; _i++) {
-                        var group = _a[_i];
-                        for (var _b = 0, _c = group.items; _b < _c.length; _b++) {
-                            var item = _c[_b];
-                            if (item.isBlocking) {
-                                isBlocking = true;
-                                break;
-                            }
-                        }
-                        ;
-                    }
-                    ;
-                    _this.haltingActionItemExists = isBlocking;
                     _this.actionItems = actionItems;
                     angular.forEach(_this.actionItems.groups, function (item) {
                         item.dscParams = _this.getParams(item.title, userInfo);
