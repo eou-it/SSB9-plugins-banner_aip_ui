@@ -49,6 +49,7 @@ module AIP {
         $q;
         APP_ROOT;
         modalInstance;
+        isFromGateKeeper;
 
         constructor($scope, $state, ItemListViewService, AIPUserService, SpinnerService, $timeout, $q, $uibModal, APP_ROOT, $sce) {
             $scope.vm = this;
@@ -62,6 +63,7 @@ module AIP {
             this.APP_ROOT = APP_ROOT;
             this.$sce = $sce;
             this.modalInstance;
+            this.isFromGateKeeper = false;
 
             this.initialOpenGroup = -1;
             $scope.$watch(
@@ -83,25 +85,22 @@ module AIP {
             });
 
             this.init();
+
+            $scope.previousLink = function(){
+                var previousPath = document.referrer;
+                if(previousPath != ""){
+                    window.location.replace(previousPath);
+                }
+            };
         }
         init() {
-            this.informModal(this.$state.params['inform'])
+            this.isFromGateKeeper = this.$state.params['inform'];
+            this.informModal(this.isFromGateKeeper);
             this.spinnerService.showSpinner(true);
             this.userService.getUserInfo().then((userData) => {
                 var userInfo = userData;
                 this.userName = userData.fullName;
                 this.itemListViewService.getActionItems(userInfo).then((actionItems:IUserItem) => {
-                    angular.forEach(actionItems.groups, (group) => {
-                        angular.forEach(group.items, (item) => {
-                            item.state = item.state
-                            /*todo: can probably drop the message properties for these status since it's coming from the db*/
-                            /*
-                            ==="Completed"?
-                                "aip.status.complete":
-                                "aip.status.pending";
-                           */
-                        });
-                    });
                     this.actionItems = actionItems;
                     angular.forEach(this.actionItems.groups, (item) => {
                         item.dscParams = this.getParams(item.title, userInfo);
@@ -128,13 +127,8 @@ module AIP {
             this.userService.getUserInfo().then( ( userData ) => {
                 var userInfo = userData;
                 this.userName = userData.fullName;
+
                 this.itemListViewService.getActionItems( userInfo ).then( ( actionItems:IUserItem ) => {
-                    angular.forEach( actionItems.groups, ( group ) => {
-                        angular.forEach( group.items, ( item ) => {
-                            item.state = item.state
-                            /*todo: can probably drop the message properties for these status since it's coming from the db*/
-                        } );
-                    } );
                     this.actionItems = actionItems;
                     angular.forEach( this.actionItems.groups, ( item ) => {
                         item.dscParams = this.getParams( item.title, userInfo );

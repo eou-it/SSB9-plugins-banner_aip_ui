@@ -1503,6 +1503,11 @@ label {
       color: #557287; }
   .viewContainer .listActionItem .welcometext {
     font-size: 1.5em; }
+  .viewContainer .listActionItem .returnBtn {
+    float: right;
+    margin-bottom: 1em;
+    margin-top: 1em;
+    text-align: right; }
   .viewContainer .listActionItem .row {
     margin: 0; }
   .viewContainer .listActionItem .listActionItem-container .itemList .groupList {

@@ -3,13 +3,19 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
 *******************************************************************************-->
 <div class="listActionItem">
     <div class="row">
-        <div class="welcome col-xs-12 col-sm-5">
+        <div class="welcome col-xs-8">
             <div class="username">
                 {{"aip.welcome"|i18n_aip}}
             </div>
             <div class="welcometext">
                 {{"aip.welcome.text"|i18n_aip}}
             </div>
+        </div>
+        <div class="returnBtn col-xs-4" >
+            <button class="btn btn-primary" ng-click="previousLink()">
+                <span ng-if="vm.isFromGateKeeper">{{"aip.user.actionItem.list.navbtn.continue"|i18n_aip}}</span>
+                <span ng-if="!vm.isFromGateKeeper">{{"aip.user.actionItem.list.navbtn.return"|i18n_aip}}</span>
+            </button>
         </div>
     </div>
     <div class="row">
