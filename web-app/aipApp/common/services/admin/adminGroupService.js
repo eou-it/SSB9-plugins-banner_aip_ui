@@ -1,4 +1,7 @@
 ///<reference path="../../../../typings/tsd.d.ts"/>
+/*******************************************************************************
+ Copyright 2018 Ellucian Company L.P. and its affiliates.
+ ********************************************************************************/
 var AIP;
 (function (AIP) {
     var Status;
