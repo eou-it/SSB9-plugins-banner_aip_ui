@@ -8,7 +8,7 @@ var AIP;
 (function (AIP) {
     var ListItemPageCtrl = (function () {
         function ListItemPageCtrl($scope, $state, ItemListViewService, AIPUserService, SpinnerService, $timeout, $q, $uibModal, APP_ROOT, $sce) {
-            this.$inject = ["$scope", "$state", "ItemListViewService", "AIPUserService", "SpinnerService", "$timeout", "$q", "$uibModal", , "APP_ROOT", "$sce"];
+            this.$inject = ["$scope", "$state", "ItemListViewService", "AIPUserService", "SpinnerService", "$timeout", "$q", "$uibModal", "APP_ROOT", "$sce"];
             this.trustHTML = function (txtString) {
                 var sanitized = txtString ? this.$sce.trustAsHtml(txtString) : "";
                 return sanitized;
@@ -50,7 +50,10 @@ var AIP;
         }
         ListItemPageCtrl.prototype.init = function () {
             var _this = this;
-            this.isFromGateKeeper = this.$state.params['inform'];
+            var href = window.location.href;
+            if (href.indexOf("/informedList") > 0) {
+                this.isFromGateKeeper = true;
+            }
             this.informModal(this.isFromGateKeeper);
             this.spinnerService.showSpinner(true);
             this.userService.getUserInfo().then(function (userData) {

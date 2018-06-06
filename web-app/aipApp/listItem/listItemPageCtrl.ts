@@ -34,7 +34,7 @@ module AIP {
 
     export class ListItemPageCtrl implements IListItemPageCtrl{
 
-        $inject = ["$scope", "$state", "ItemListViewService", "AIPUserService", "SpinnerService", "$timeout", "$q", "$uibModal", , "APP_ROOT", "$sce"];
+        $inject = ["$scope", "$state", "ItemListViewService", "AIPUserService", "SpinnerService", "$timeout", "$q", "$uibModal","APP_ROOT", "$sce"];
         itemListViewService:AIP.ItemListViewService;
         userService:AIP.UserService;
         actionItems:IUserItem;
@@ -64,8 +64,8 @@ module AIP {
             this.$sce = $sce;
             this.modalInstance;
             this.isFromGateKeeper = false;
-
             this.initialOpenGroup = -1;
+            
             $scope.$watch(
                 "vm.detailView", function(newVal, oldVal) {
                     if(!$scope.$$phase) {
@@ -94,7 +94,11 @@ module AIP {
             };
         }
         init() {
-            this.isFromGateKeeper = this.$state.params['inform'];
+
+            var href = window.location.href;
+            if(href.indexOf("/informedList") > 0){
+                this.isFromGateKeeper = true;
+            }
             this.informModal(this.isFromGateKeeper);
             this.spinnerService.showSpinner(true);
             this.userService.getUserInfo().then((userData) => {
