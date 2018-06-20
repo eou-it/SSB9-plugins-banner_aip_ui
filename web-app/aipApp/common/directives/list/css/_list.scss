@@ -41,6 +41,13 @@ aip-list {
       height: 1px;
       border: 0;
     }
+    .halt-icon{
+      font-size: large !important;
+      color: #d12121;
+    }
+    .aip-icons{
+      float: right;
+    }
     .panel-heading {
       background-color: $heading-background;
       border: none;
@@ -68,7 +75,7 @@ aip-list {
           }
           .group-toggle-indicator {
             float: right;
-            padding-right: 8px;
+            padding-left: 20px;
           }
           .group-title {
             white-space: nowrap;
@@ -89,9 +96,10 @@ aip-list {
           }
           .badge {
             //float: right;
-            margin-left: 5px;
+            margin-left: 25px;
             border: 1px solid #222222;
             background-color: #555555;
+
             &.pending {
               border: 1px solid #B0ABD0;
               background-color: #DAD5FF;
@@ -178,7 +186,7 @@ aip-list {
             //-webkit-hyphens: auto;
             //mso-hyphenate: auto;
           }
-          .cell.title {
+          .title {
             padding-left: 10px;
             float: left;
             h3,h4 {
@@ -197,8 +205,9 @@ aip-list {
               padding-left: 0;
             }
           }
-          .cell.state {
-            padding: 0;
+
+          .status {
+            padding: 0 5px 0 0;
             span:first-letter {
               text-transform: uppercase;
             }
@@ -223,22 +232,57 @@ aip-list {
               background-color: #C9F0C7;
             }
           }
-          .cell.completedDate {
-            font-size: 1.3em;
+          .actionItemParams {
+            font-family: "OpenSans-regular";
+            font-size: 12px;
             border-bottom: none;
             padding: 25px 8px 0px 10px;
             span.data-label {
               font-family: "OpenSans-bold";
               display: inline-block;
+              padding-right: 3px;
             }
           }
-          .cell.description {
+          .haltProcessList{
+            h4{
+              //font-weight: bold;
+              font-size: 14px;
+              word-wrap: break-word;
+              margin-top: 3px;
+              /*line-height: 1.8em;*/
+              color: $link-color;
+              display: inline;
+              /*border-bottom: solid 1px #206E9f;*/
+              font-family:"OpenSans-semibold";
+              padding-bottom: 3px;
+              padding-right: 10px;
+              padding-left: 10px;
+            }
+            li{
+              list-style: none;
+              padding: 0;
+            }
+
+          }
+
+          .description {
             font-size: 1.3em;
             border-bottom: 1px solid $cell-text;
             padding: 10px 5px 15px 10px;
           }
         }
       }
+    }
+    @media (min-width: 768px) and (max-width: 1024px) {
+      .list-body {
+        .list-item {
+          .title {
+            width:200px;
+          }
+        }
+      }
+      //CSS
+
     }
     //small size (tablet)
     @media screen and (max-width: 768px) {
@@ -268,6 +312,14 @@ aip-list {
       .list-body {
         .description {
           padding-top: 8px;
+        }
+      }
+      .item-group{
+        .badge{
+          margin-left:10px;
+        }
+        .group-toggle-indicator{
+          padding-left:10px;
         }
       }
     }

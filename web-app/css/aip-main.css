@@ -22,6 +22,11 @@ aip-list .aip-list-container {
     background-color: #A4C6E4;
     height: 1px;
     border: 0; }
+  aip-list .aip-list-container .halt-icon {
+    font-size: large !important;
+    color: #d12121; }
+  aip-list .aip-list-container .aip-icons {
+    float: right; }
   aip-list .aip-list-container .panel-heading {
     background-color: #ECECEC;
     border: none;
@@ -43,7 +48,7 @@ aip-list .aip-list-container {
           color: #206E9f; }
       aip-list .aip-list-container .panel-heading .panel-title .item-group .group-toggle-indicator {
         float: right;
-        padding-right: 8px; }
+        padding-left: 20px; }
       aip-list .aip-list-container .panel-heading .panel-title .item-group .group-title {
         white-space: nowrap;
         padding: 0 0 16px 0; }
@@ -56,7 +61,7 @@ aip-list .aip-list-container {
         padding-right: 0;
         padding-left: 16px; }
       aip-list .aip-list-container .panel-heading .panel-title .item-group .badge {
-        margin-left: 5px;
+        margin-left: 25px;
         border: 1px solid #222222;
         background-color: #555555; }
         aip-list .aip-list-container .panel-heading .panel-title .item-group .badge.pending {
@@ -108,10 +113,10 @@ aip-list .aip-list-container {
         background-color: #F3FCFF; }
       aip-list .aip-list-container .list-body-container .list-body .list-item .aipReadmore {
         word-break: normal; }
-      aip-list .aip-list-container .list-body-container .list-body .list-item .cell.title {
+      aip-list .aip-list-container .list-body-container .list-body .list-item .title {
         padding-left: 10px;
         float: left; }
-        aip-list .aip-list-container .list-body-container .list-body .list-item .cell.title h3, aip-list .aip-list-container .list-body-container .list-body .list-item .cell.title h4 {
+        aip-list .aip-list-container .list-body-container .list-body .list-item .title h3, aip-list .aip-list-container .list-body-container .list-body .list-item .title h4 {
           font-weight: bold;
           font-size: 1.5em;
           word-wrap: break-word;
@@ -125,9 +130,9 @@ aip-list .aip-list-container {
           padding-bottom: 3px;
           padding-right: 10px;
           padding-left: 0; }
-      aip-list .aip-list-container .list-body-container .list-body .list-item .cell.state {
-        padding: 0; }
-        aip-list .aip-list-container .list-body-container .list-body .list-item .cell.state span:first-letter {
+      aip-list .aip-list-container .list-body-container .list-body .list-item .status {
+        padding: 0 5px 0 0; }
+        aip-list .aip-list-container .list-body-container .list-body .list-item .status span:first-letter {
           text-transform: uppercase; }
       aip-list .aip-list-container .list-body-container .list-body .list-item .badge {
         border-radius: 4px;
@@ -143,17 +148,37 @@ aip-list .aip-list-container {
         aip-list .aip-list-container .list-body-container .list-body .list-item .badge.approve {
           border: 1px solid #4EC76A;
           background-color: #C9F0C7; }
-      aip-list .aip-list-container .list-body-container .list-body .list-item .cell.completedDate {
-        font-size: 1.3em;
+      aip-list .aip-list-container .list-body-container .list-body .list-item .actionItemParams {
+        font-family: "OpenSans-regular";
+        font-size: 12px;
         border-bottom: none;
         padding: 25px 8px 0px 10px; }
-        aip-list .aip-list-container .list-body-container .list-body .list-item .cell.completedDate span.data-label {
+        aip-list .aip-list-container .list-body-container .list-body .list-item .actionItemParams span.data-label {
           font-family: "OpenSans-bold";
-          display: inline-block; }
-      aip-list .aip-list-container .list-body-container .list-body .list-item .cell.description {
+          display: inline-block;
+          padding-right: 3px; }
+      aip-list .aip-list-container .list-body-container .list-body .list-item .haltProcessList h4 {
+        font-size: 14px;
+        word-wrap: break-word;
+        margin-top: 3px;
+        /*line-height: 1.8em;*/
+        color: #206E9f;
+        display: inline;
+        /*border-bottom: solid 1px #206E9f;*/
+        font-family: "OpenSans-semibold";
+        padding-bottom: 3px;
+        padding-right: 10px;
+        padding-left: 10px; }
+      aip-list .aip-list-container .list-body-container .list-body .list-item .haltProcessList li {
+        list-style: none;
+        padding: 0; }
+      aip-list .aip-list-container .list-body-container .list-body .list-item .description {
         font-size: 1.3em;
         border-bottom: 1px solid #A4C6E4;
         padding: 10px 5px 15px 10px; }
+  @media (min-width: 768px) and (max-width: 1024px) {
+    aip-list .aip-list-container .list-body .list-item .title {
+      width: 200px; } }
   @media screen and (max-width: 768px) {
     aip-list .aip-list-container .header .list-item .title {
       padding-left: 0; }
@@ -163,7 +188,11 @@ aip-list .aip-list-container {
       float: right; } }
   @media screen and (max-width: 480px) {
     aip-list .aip-list-container .list-body .description {
-      padding-top: 8px; } }
+      padding-top: 8px; }
+    aip-list .aip-list-container .item-group .badge {
+      margin-left: 10px; }
+    aip-list .aip-list-container .item-group .group-toggle-indicator {
+      padding-left: 10px; } }
 aip-list .enddate {
   text-align: right;
   margin-bottom: 15px;
