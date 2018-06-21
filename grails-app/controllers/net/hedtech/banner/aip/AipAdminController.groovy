@@ -397,4 +397,12 @@ class AipAdminController {
         render result as JSON
     }
 
+    /**
+     * Fetch Current Date  Time TimeZone
+     * @return
+     */
+    def fetchCurrentDateTimeZone() {
+        def map = actionItemProcessingCommonService.fetchCurrentDateTimeZone()
+        render map as JSON
+    }
 }

@@ -252,6 +252,7 @@ var bannerAIPApp = angular.module("bannerAIP", [
             updateActionItemGroupAssignment: aipAppAbsPath + "aipAdmin/updateActionItemGroupAssignment",
             groupPosted: aipAppAbsPath + "aipAdmin/groupPosted",
             fetchCurrentDateInLocaleFormat: aipAppAbsPath + "aipAdmin/fetchCurrentDateInLocaleFormat",
+            fetchCurrentDateTimeZone: aipAppAbsPath + "aipAdmin/fetchCurrentDateTimeZone",
             is12HourClock: aipAppAbsPath + "aipAdmin/is12HourClock",
             listAvailableTimezones: aipAppAbsPath + "aipAdmin/listAvailableTimezones",
             checkActionItemPosted: aipAppAbsPath + "aipAdmin/checkActionItemPosted",

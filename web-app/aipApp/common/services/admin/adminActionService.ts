@@ -123,6 +123,12 @@ module AIP {
         groupTitle: string;
     }
 
+    export interface IServerDateTimeZone {
+        ServerDate: string;
+        ServerTime: string;
+        ServerTimeZone: string;
+    }
+
     export interface IStatus {
         id: string|number;
         value: string;
@@ -145,6 +151,9 @@ module AIP {
     }
     export interface IPostActionItemResponse {
         data: [IGroupActionItem];
+    }
+    export interface IPostActionItemServerResponse {
+        data: [IServerDateTimeZone];
     }
     export interface IPostActionItemPopulationResponse {
         data: [IPopulation];
@@ -330,6 +339,15 @@ module AIP {
             });
             return request;
         }
+        getServerDateTimeZone()
+        {
+            var request = this.$http({
+                method: "GET",
+                url: this.ENDPOINT.admin.fetchCurrentDateTimeZone
+            });
+            return request;
+
+        }
         getCurrentDateLocale(){
             var request = this.$http({
                 method: "GET",
@@ -385,7 +403,7 @@ module AIP {
             });
             return request;
         }
-        savePostActionItem(postActionItem,selected,modalResult,selectedPopulation,postNow,sendTime,timeZone,regeneratePopulation) {
+        savePostActionItem(postActionItem,selected,modalResult,selectedPopulation,postNow,sendTime,timeZone,regeneratePopulation,displayDatetimeZone) {
             var params = {
                 postId:postActionItem.postId,
                 postingName: postActionItem.name,
@@ -399,7 +417,8 @@ module AIP {
                 scheduledStartDate:postActionItem.scheduledStartDate,
                 scheduledStartTime:sendTime,
                 timezoneStringOffset:timeZone,
-                populationRegenerateIndicator:regeneratePopulation
+                populationRegenerateIndicator:regeneratePopulation,
+                displayDatetimeZone:displayDatetimeZone
             };
             var request = this.$http({
                 method: "POST",

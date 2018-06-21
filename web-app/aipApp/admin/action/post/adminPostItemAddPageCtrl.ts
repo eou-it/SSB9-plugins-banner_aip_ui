@@ -67,6 +67,7 @@ module AIP {
         timezone;
         timezones;
         defaultTimeZone;
+        defaultTimeZoneNameWithOffset;
         showTimezoneIcon;
         actionPost1;
         editMode: boolean;
@@ -74,6 +75,12 @@ module AIP {
         selectedActionListVal;
         changeFlag:boolean;
         dirtyFlag:boolean;
+        displayDatetimeZone;
+        serverinfo;
+        appServerDate;
+        appServerTime;
+        appServerTimeZone;
+
 
         constructor($scope: IActionItemAddPageScope, $q: ng.IQService, $state, $uibModal, $filter, $timeout,
                     SpinnerService: AIP.SpinnerService, APP_ROOT,AdminActionStatusService, AdminActionService: AIP.AdminActionService) {
@@ -111,13 +118,19 @@ module AIP {
             this.postIDvalue=0;
             this.dirtyFlag=false;
             this.selectedActionListVal=[];
-
+            this.displayDatetimeZone=null;
+            this.defaultTimeZoneNameWithOffset=null;
+            this.serverinfo={};
+            this.appServerDate=null;
+            this.appServerTime=null;
+            this.appServerTimeZone=null;
             this.init();
         }
 
         today(){
             this.sendTime = new Date();
             this.sendTime.setMinutes(Math.ceil(this.sendTime.getMinutes() / 30) * 30);
+            this.postActionItemInfo.scheduledStartDate=this.$filter('date')(this.sendTime, 'MM/dd/yyyy');
         };
 
 
@@ -147,6 +160,18 @@ module AIP {
             );
 
             allPromises.push(
+                this.adminActionService.getServerDateTimeZone()
+                    .then((response: AIP.IPostActionItemServerResponse) => {
+                       console.log("Server Data",response.data);
+                       this.serverinfo=response.data;
+                       this.appServerDate =  this.serverinfo.ServerDate;
+                       this.appServerTime =  this.serverinfo.ServerTime;
+                       this.appServerTimeZone =  this.serverinfo.ServerTimeZone.ID;
+
+                    })
+            );
+
+            allPromises.push(
                 this.adminActionService.getCurrentDateLocale()
                     .then((response) => {
                         this.localeDate = response.data;
@@ -170,14 +195,18 @@ module AIP {
                         var timeZoneOffset = new Date().getTimezoneOffset();
                         var offset = "(GMT"+((timeZoneOffset<0? '+':'-')+ this.pad(parseInt(Math.abs(timeZoneOffset/60)), 2)+ ":" + this.pad(Math.abs(timeZoneOffset%60), 2)) + ")";
                         var finalValue=''
+                        var timezonename=''
                         angular.forEach(this.timezones,function(key,value){
                           var GMTString = key.stringOffset;
                             if (offset===GMTString) {
                                 that.setTimezone(key);
                                 finalValue = '( '+ key.displayNameWithoutOffset + ' )';
+                                timezonename =key.displayName;
                             }
                         });
+                        this.defaultTimeZoneNameWithOffset = timezonename;
                         this.defaultTimeZone = finalValue;
+
                     })
             );
 
@@ -217,27 +246,14 @@ module AIP {
                                 this.postActionItemInfo.groupName = this.actionPost1.groupName;
                                 this.postActionItemInfo.displayStartDate = this.actionPost1.postingDisplayStartDate;
                                 this.postActionItemInfo.displayEndDate =  this.actionPost1.postingDisplayEndDate;
-                                this.postActionItemInfo.scheduledStartDate = this.actionPost1.postingScheduleDateTime;
+                                this.postActionItemInfo.scheduledStartDate = this.actionPost1.postingDisplayDateTime;
+                                this.appServerDate= this.postActionItemInfo.scheduledStartDate;
+
                                 this.postNow = false;
                                 this.regeneratePopulation=this.actionPost1.populationRegenerateIndicator;
+                                this.sendTime=this.actionPost1.postingDisplayTime;
 
-                                if(this.postActionItemInfo.localeTime)
-                                {
-                                  var timeString = this.actionPost1.scheduledStartTime;
-                                  var hourEnd = timeString.indexOf(":");
-                                  var H = +timeString.substr(0, hourEnd);
-                                  var h = H % 12 || 12;
-                                  var ampm = H < 12 ? " AM" : " PM";
-                                  var hoursStr = h < 10? "0"+h : h;
-                                  timeString = hoursStr + timeString.substr(hourEnd, 3) + ampm;
-                                  this.sendTime=timeString;
-                                }
-                                else
-                                {
-                                    this.sendTime=this.actionPost1.scheduledStartTime;
-                                }
-                                this.timezone=this.actionPost1.timezoneStringOffset;
-                                this.defaultTimeZone = this.timezone.displayName;
+                                this.defaultTimeZone =this.actionPost1.postingTimeZone;
                                 this.changedValue();
 
                                 this.adminActionStatusService.getActionItemsById(this.$state.params.postIdval)
@@ -336,6 +352,7 @@ module AIP {
             this.timezone = timezone;
 
         };
+
         editPage() {
 
             this.modalInstance = this.$uibModal.open({
@@ -477,8 +494,15 @@ module AIP {
         save() {
             this.saving = true;
             if(this.postNow===true){
+
                 this.sendTime=null;
                 this.timezone.timezoneId=null;
+                var CurrentDateTimeDetails = new Date();
+                var currentDate = this.$filter('date')(CurrentDateTimeDetails, 'MM/dd/yyyy');
+                var currentTime = this.$filter('date')(CurrentDateTimeDetails, 'HHmm');
+                var CurrentTimeZone= this.defaultTimeZoneNameWithOffset;
+                this.displayDatetimeZone=currentDate.toString()+' '+currentTime.toString()+' '+CurrentTimeZone;
+
             } else {
                 if (this.editMode && !(this.sendTime instanceof Date)) {
                     var hourEnd = this.sendTime.indexOf(":");
@@ -488,9 +512,12 @@ module AIP {
                     this.sendTime = hoursStr + this.sendTime.substr(hourEnd + 1, 2);
                 } else {
                     this.sendTime = this.$filter("date")(this.sendTime, "HHmm");
+                    console.log(typeof this.timezone.displayName);
+                    this.displayDatetimeZone=this.postActionItemInfo.scheduledStartDate+' '+this.sendTime+' '+this.timezone.displayName;
                 }
             }
-            this.adminActionService.savePostActionItem(this.postActionItemInfo, this.selected, this.modalResults, this.selectedPopulation, this.postNow,this.sendTime,this.timezone.timezoneId, this.regeneratePopulation)
+
+            this.adminActionService.savePostActionItem(this.postActionItemInfo, this.selected, this.modalResults, this.selectedPopulation, this.postNow,this.sendTime,this.timezone.timezoneId, this.regeneratePopulation,this.displayDatetimeZone)
                 .then((response: AIP.IPostActionItemSaveResponse) => {
                     this.saving = false;
                     var notiParams = {};
