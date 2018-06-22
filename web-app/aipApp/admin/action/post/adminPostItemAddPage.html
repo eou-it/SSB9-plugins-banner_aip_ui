@@ -186,7 +186,7 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
 
                                     <div class="row input-daterange form-group right-inner-addon dateRange-minwidth">
                                         <input type="text" id="scheduledStartDate" date-picker
-                                               ng-model="vm.postActionItemInfo.scheduledStartDate" ng-change="vm.checkChanges()"
+                                               ng-model="vm.postActionItemInfo.scheduledStartDate" ng-change="vm.checkChanges();vm.getProcessedServerDateTimeAndTimezone()"
                                                class="form-control  Datelement " name="scheduledStartDate"
                                                aria-required="true" required autocomplete="off"
                                                placeholder='{{"default.date.format.watermark"|i18n_aip}}'/>
@@ -198,15 +198,15 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
                                     <label for="postActionItemTime" id="postActionItemTime" class="titleValue col-sm-4 required" >{{"aip.admin.action.postactionItem.time"|i18n_aip}}
                                     </label>
                                 </div>
-                                <div class="actionItemElement Datelement col-sm-4 dateRow form-container" role="textbox"
-                                >
+                                <div class="actionItemElement Datelement col-sm-4 dateRow form-container" role="textbox">
+
                                     <div class="row input-daterange form-group right-inner-addon dateRange-minwidth">
                                         <input type="text" class="form-control   " name="" aria-required="true"
                                                xe-time-picker-box input_24_hr_string="{{vm.localeTime ? 'N' : 'Y'}}"
                                                hour-format-12="{{vm.localeTime ? 'Y' : 'N'}}"
                                                am-label='{{"aip.admin.communication.timepicker.time.am.label"|i18n_aip}}'
-                                               pm-label='{{"aip.admin.communication.timepicker.time.pm.label"|i18n_aip}}'
-                                               ng-model="vm.sendTime" ng-change="vm.checkChanges()"/>
+                                               pm-label='{{"aip.admin.communication.timepicker.time.pm.label"|i18n_aip}}' ng-change="vm.checkChanges();vm.getProcessedServerDateTimeAndTimezone()"
+                                               ng-model="vm.sendTime" />
                                     </div>
                                 </div>
                             </div>
@@ -227,7 +227,7 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
 
                                         <xe-ui-select class="col-xs-12 col-sm-12 timeZoneChange timezone-minwidth"
                                                       ng-model="vm.timezone"
-                                                      ng-change="vm.setTimezone(vm.timezone);vm.checkChanges()"
+                                                      ng-change="vm.setTimezone(vm.timezone);vm.checkChanges();vm.getProcessedServerDateTimeAndTimezone()"
                                                       theme="select2" ng-show="!vm.showTimezoneIcon">
                                             <xe-ui-select-match
                                                     placeholder="{{'aip.admin.communication.sendMessage.timezonePlaceHolder' | i18n_aip}}">

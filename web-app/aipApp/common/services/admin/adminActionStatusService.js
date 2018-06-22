@@ -67,6 +67,14 @@ var AIP;
             });
             return request;
         };
+        AdminActionStatusService.prototype.getProcessedServerDateTimeAndTimezone = function (selectedUserVal) {
+            var request = this.$http({
+                method: "POST",
+                data: selectedUserVal,
+                url: this.ENDPOINT.admin.processedDateTime
+            });
+            return request;
+        };
         AdminActionStatusService.$inject = ["$http", "$q", "$filter", "ENDPOINT"];
         return AdminActionStatusService;
     }());

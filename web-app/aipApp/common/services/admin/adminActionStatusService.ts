@@ -147,6 +147,17 @@ module AIP {
             return request;
         }
 
+        getProcessedServerDateTimeAndTimezone(selectedUserVal)
+        {
+            var request = this.$http({
+                method: "POST",
+                data:selectedUserVal,
+                url: this.ENDPOINT.admin.processedDateTime
+            });
+            return request;
+        }
+
+
         /*
          getFolder() {
          var request = this.$http({

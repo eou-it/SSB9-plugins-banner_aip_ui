@@ -23,6 +23,9 @@ module AIP {
         setTimezone(timezone:any): void;
 
         specialCharacterTranslation():void;
+
+        getProcessedServerDateTimeAndTimezone():void;
+
     }
 
     interface IActionItemAddPageScope {
@@ -80,6 +83,7 @@ module AIP {
         appServerDate;
         appServerTime;
         appServerTimeZone;
+        processedServerDetails;
 
 
         constructor($scope: IActionItemAddPageScope, $q: ng.IQService, $state, $uibModal, $filter, $timeout,
@@ -124,7 +128,9 @@ module AIP {
             this.appServerDate=null;
             this.appServerTime=null;
             this.appServerTimeZone=null;
+            this.processedServerDetails={};
             this.init();
+
         }
 
         today(){
@@ -252,8 +258,12 @@ module AIP {
                                 this.postNow = false;
                                 this.regeneratePopulation=this.actionPost1.populationRegenerateIndicator;
                                 this.sendTime=this.actionPost1.postingDisplayTime;
-
                                 this.defaultTimeZone =this.actionPost1.postingTimeZone;
+
+                                this.appServerDate=this.actionPost1.postingScheduleDateTime;
+                                this.appServerTime=this.actionPost1.scheduledStartTime;
+                                this.appServerTimeZone=this.actionPost1.timezoneStringOffset.timezoneId;
+
                                 this.changedValue();
 
                                 this.adminActionStatusService.getActionItemsById(this.$state.params.postIdval)
@@ -277,10 +287,12 @@ module AIP {
                         })
 
                 }
+                else{
+                    this.getProcessedServerDateTimeAndTimezone()
+                }
                 this.spinnerService.showSpinner(false);
             });
         }
-
 
         specialCharacterTranslation()
         {
@@ -330,6 +342,7 @@ module AIP {
 
         }
 
+
         setTime(time){
             this.sendTime = time;
             this.sendTime =this.$filter('date')(this.sendTime, 'HHmm');
@@ -352,6 +365,38 @@ module AIP {
             this.timezone = timezone;
 
         };
+
+
+        getProcessedServerDateTimeAndTimezone()
+        {
+            var Time=this.sendTime.toString()
+            var hourEnd = Time.indexOf(":");
+            if(hourEnd == -1)
+            {
+                Time=this.$filter("date")(Time, "HHmm")
+            }
+            else {
+                var H = +Time.substr(0, hourEnd);
+                var h = H % 12 || 12;
+                var hoursStr = h < 10 ? "0" + h : h;
+                Time = hoursStr + Time.substr(hourEnd + 1, 2)
+            }
+
+            var userSelectedVal=
+            {
+                "userEnterDate": this.postActionItemInfo.scheduledStartDate,
+                "userEnterTime": Time,
+                "userEnterTimeZone":this.timezone.timezoneId
+            };
+
+            this.adminActionStatusService.getProcessedServerDateTimeAndTimezone(userSelectedVal)
+                .then((response) => {
+                    this.processedServerDetails =response.data;
+                    this.appServerDate=this.processedServerDetails.serverDate;
+                    this.appServerTime=this.processedServerDetails.serverTime;
+                    this.appServerTimeZone=this.processedServerDetails.serverTimeZone;
+                });
+        }
 
         editPage() {
 
@@ -388,6 +433,7 @@ module AIP {
                 }
 
             });
+
             this.modalInstance.result.then((result) => {
                 this.modalResults = [];
                 this.itemLength = result.length;

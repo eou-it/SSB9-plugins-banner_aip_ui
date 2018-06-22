@@ -49,6 +49,7 @@ var AIP;
             this.appServerDate = null;
             this.appServerTime = null;
             this.appServerTimeZone = null;
+            this.processedServerDetails = {};
             this.init();
         }
         AdminPostItemAddPageCtrl.prototype.today = function () {
@@ -144,6 +145,9 @@ var AIP;
                             _this.regeneratePopulation = _this.actionPost1.populationRegenerateIndicator;
                             _this.sendTime = _this.actionPost1.postingDisplayTime;
                             _this.defaultTimeZone = _this.actionPost1.postingTimeZone;
+                            _this.appServerDate = _this.actionPost1.postingScheduleDateTime;
+                            _this.appServerTime = _this.actionPost1.scheduledStartTime;
+                            _this.appServerTimeZone = _this.actionPost1.timezoneStringOffset.timezoneId;
                             _this.changedValue();
                             _this.adminActionStatusService.getActionItemsById(_this.$state.params.postIdval)
                                 .then(function (response) {
@@ -163,6 +167,9 @@ var AIP;
                         //TODO:: handle error call
                         console.log(err);
                     });
+                }
+                else {
+                    _this.getProcessedServerDateTimeAndTimezone();
                 }
                 _this.spinnerService.showSpinner(false);
             });
@@ -219,6 +226,32 @@ var AIP;
             this.timezone = timezone;
         };
         ;
+        AdminPostItemAddPageCtrl.prototype.getProcessedServerDateTimeAndTimezone = function () {
+            var _this = this;
+            var Time = this.sendTime.toString();
+            var hourEnd = Time.indexOf(":");
+            if (hourEnd == -1) {
+                Time = this.$filter("date")(Time, "HHmm");
+            }
+            else {
+                var H = +Time.substr(0, hourEnd);
+                var h = H % 12 || 12;
+                var hoursStr = h < 10 ? "0" + h : h;
+                Time = hoursStr + Time.substr(hourEnd + 1, 2);
+            }
+            var userSelectedVal = {
+                "userEnterDate": this.postActionItemInfo.scheduledStartDate,
+                "userEnterTime": Time,
+                "userEnterTimeZone": this.timezone.timezoneId
+            };
+            this.adminActionStatusService.getProcessedServerDateTimeAndTimezone(userSelectedVal)
+                .then(function (response) {
+                _this.processedServerDetails = response.data;
+                _this.appServerDate = _this.processedServerDetails.serverDate;
+                _this.appServerTime = _this.processedServerDetails.serverTime;
+                _this.appServerTimeZone = _this.processedServerDetails.serverTimeZone;
+            });
+        };
         AdminPostItemAddPageCtrl.prototype.editPage = function () {
             var _this = this;
             this.modalInstance = this.$uibModal.open({

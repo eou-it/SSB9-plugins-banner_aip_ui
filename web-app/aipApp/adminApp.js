@@ -260,6 +260,7 @@ var bannerAIPApp = angular.module("bannerAIP", [
             statusPosted: aipAppAbsPath + "aipActionItemPosting/getStatusValue",
             jobDetailsById: aipAppAbsPath + "aipActionItemPosting/getJobDetailsByPostId",
             actionItemById: aipAppAbsPath + "aipActionItemPosting/getActionItemByPostId",
+            processedDateTime:aipAppAbsPath + "aipActionItemPosting/getProcessedServerDateTimeAndTimezone",
             updateActionItemPosting: aipAppAbsPath + "aipActionItemPosting/updateActionItemPosting"
 
 
