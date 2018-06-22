@@ -7,12 +7,12 @@
             <div class="row">
                 <div class="group-title col-sm-12 col-xs-12">
                     <div aria-label="{{itemgroup.title}} {{completedItem().length}} of {{itemgroup.items.length}} {{'aip.common.text.completed'|i18n_aip}}"
-                        id="h2-{{itemgroup.id}}" class="group-title-text col-sm-6 col-xs-7" tabindex="-1">
+                        id="h2-{{itemgroup.id}}" class="group-title-text col-sm-6 col-xs-6" tabindex="-1">
                         <h2 id="group-title-heading-{{itemgroup.id}}" class="group-title-text" ng-bind-html="itemgroup.title"></h2>
                     </div>
                     <div class="aip-icons">
                         <span class="halt-icon">
-                            <i class="fa fa-ban" ng-if="itemgroup.groupHalted" title="{{'aip.user.action.item.groupHalt.icon.title'|i18n_aip}}" aria-label="{{'aip.user.action.item.groupHalt.icon.title'|i18n_aip}}"></i>
+                            <i class="fa fa-ban" ng-if="itemgroup.groupHalted" title="{{'aip.user.action.item.group.haltIcon.title'|i18n_aip}}" aria-label="{{'aip.user.action.item.group.haltIcon.title'|i18n_aip}}"></i>
                         </span>
                         <span class="badge" ng-if="!isOpen">
                             <span >{{completedItem().length}}/</span> <span >{{itemgroup.items.length}}</span>
@@ -53,7 +53,7 @@
                             </div>
                             <div class="aip-icons">
                                 <span class="halt-icon">
-                                    <i class="fa fa-ban" ng-if="row['actionItemHalted']" title="{{'aip.user.action.item.actionItemHalt.icon.title'|i18n_aip}}" aria-label="{{'aip.user.action.item.actionItemHalt.icon.title'|i18n_aip}}"></i>
+                                    <i class="fa fa-ban" ng-if="row['actionItemHalted']" title="{{'aip.user.action.item.haltIcon.title'|i18n_aip}}" aria-label="{{'aip.user.action.item.haltIcon.title'|i18n_aip}}"></i>
                                 </span>
                                     <span class="status">
                                     <span ng-class="{'badge pending':row['status']==='Pending',
