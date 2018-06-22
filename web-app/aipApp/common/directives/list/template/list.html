@@ -12,7 +12,7 @@
                     </div>
                     <div class="aip-icons">
                         <span class="halt-icon">
-                            <i class="fa fa-ban" ng-if="itemgroup.groupHalted" title="{{'aip.user.action.item.groupHalt.icon.title'|i18n_aip}}"></i>
+                            <i class="fa fa-ban" ng-if="itemgroup.groupHalted" title="{{'aip.user.action.item.groupHalt.icon.title'|i18n_aip}}" aria-label="{{'aip.user.action.item.groupHalt.icon.title'|i18n_aip}}"></i>
                         </span>
                         <span class="badge" ng-if="!isOpen">
                             <span >{{completedItem().length}}/</span> <span >{{itemgroup.items.length}}</span>
@@ -53,7 +53,7 @@
                             </div>
                             <div class="aip-icons">
                                 <span class="halt-icon">
-                                    <i class="fa fa-ban" ng-if="row['actionItemHalted']" title="{{'aip.user.action.item.actionItemHalt.icon.title'|i18n_aip}}"></i>
+                                    <i class="fa fa-ban" ng-if="row['actionItemHalted']" title="{{'aip.user.action.item.actionItemHalt.icon.title'|i18n_aip}}" aria-label="{{'aip.user.action.item.actionItemHalt.icon.title'|i18n_aip}}"></i>
                                 </span>
                                     <span class="status">
                                     <span ng-class="{'badge pending':row['status']==='Pending',
