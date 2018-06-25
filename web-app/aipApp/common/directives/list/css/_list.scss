@@ -189,7 +189,7 @@ aip-list {
           .title {
             padding-left: 10px;
             float: left;
-            width:75%;
+            width:70%;
             h3,h4 {
               font-weight: bold;
               font-size: 1.5em;
@@ -217,9 +217,11 @@ aip-list {
             border-radius: 4px;
             color: $badge-text;
             margin-right: 10px;
-            //padding: 7px 10px;
             float: right;
-            //width: 100%;
+            white-space: normal;
+            word-wrap: break-word;
+            line-height: 1.2em;
+            max-width: 120px;           
             &.pending {
               border: 1px solid #B0ABD0;
               background-color: #DAD5FF;
@@ -282,7 +284,11 @@ aip-list {
           .title {
             width:60% !important;
           }
-          .badge, .enddate{
+          .badge{
+            max-width: 80px !important;
+            margin-right:5px !important;
+          }
+          .enddate{
             margin-right:5px !important;
           }
           .description {
@@ -300,7 +306,11 @@ aip-list {
           .title {
             width: 60% !important;
           }
-          .badge,.enddate{
+          .badge{
+            max-width: 80px !important;
+            margin-right:5px !important;
+          }
+          .enddate{
             margin-right:5px !important;
           }
           .description {
@@ -311,7 +321,11 @@ aip-list {
     @media (min-width:360px) and (max-width: 640px){
       .list-body{
         .list-item{
-          .badge,.enddate{
+          .badge{
+            max-width: 80px !important;
+            margin-right:5px !important;
+          }
+          .enddate{
             margin-right:5px !important;
           }
           .description {
@@ -323,7 +337,11 @@ aip-list {
     @media screen and (max-width: 480px) {
       .list-body {
         .list-item{
-          .badge,.enddate{
+          .badge{
+            max-width: 80px !important;
+            margin-right:5px !important;
+          }
+          .enddate{
             margin-right:5px !important;
           }
           .description {
@@ -331,17 +349,16 @@ aip-list {
             padding-right:5px !important;
           }
         }
-
-        }
       }
-      .item-group{
-        .badge{
-          margin-left:10px;
-        }
-        .group-toggle-indicator{
-          padding-left:10px;
-        }
+    }
+    .item-group{
+      .badge{
+        margin-left:10px;
       }
+      .group-toggle-indicator{
+        padding-left:10px;
+      }
+    }
     }
   }
   .enddate{text-align: right;

@@ -116,7 +116,7 @@ aip-list .aip-list-container {
       aip-list .aip-list-container .list-body-container .list-body .list-item .title {
         padding-left: 10px;
         float: left;
-        width: 75%; }
+        width: 70%; }
         aip-list .aip-list-container .list-body-container .list-body .list-item .title h3, aip-list .aip-list-container .list-body-container .list-body .list-item .title h4 {
           font-weight: bold;
           font-size: 1.5em;
@@ -139,7 +139,11 @@ aip-list .aip-list-container {
         border-radius: 4px;
         color: #3a3737;
         margin-right: 10px;
-        float: right; }
+        float: right;
+        white-space: normal;
+        word-wrap: break-word;
+        line-height: 1.2em;
+        max-width: 120px; }
         aip-list .aip-list-container .list-body-container .list-body .list-item .badge.pending {
           border: 1px solid #B0ABD0;
           background-color: #DAD5FF; }
@@ -182,24 +186,36 @@ aip-list .aip-list-container {
   @media (min-width: 768px) and (max-width: 1024px) {
     aip-list .aip-list-container .list-body .list-item .title {
       width: 60% !important; }
-    aip-list .aip-list-container .list-body .list-item .badge, aip-list .aip-list-container .list-body .list-item .enddate {
+    aip-list .aip-list-container .list-body .list-item .badge {
+      max-width: 80px !important;
+      margin-right: 5px !important; }
+    aip-list .aip-list-container .list-body .list-item .enddate {
       margin-right: 5px !important; }
     aip-list .aip-list-container .list-body .list-item .description {
       padding-right: 5px !important; } }
   @media screen and (max-width: 768px) {
     aip-list .aip-list-container .list-item .title {
       width: 60% !important; }
-    aip-list .aip-list-container .list-item .badge, aip-list .aip-list-container .list-item .enddate {
+    aip-list .aip-list-container .list-item .badge {
+      max-width: 80px !important;
+      margin-right: 5px !important; }
+    aip-list .aip-list-container .list-item .enddate {
       margin-right: 5px !important; }
     aip-list .aip-list-container .list-item .description {
       padding-right: 5px !important; } }
   @media (min-width: 360px) and (max-width: 640px) {
-    aip-list .aip-list-container .list-body .list-item .badge, aip-list .aip-list-container .list-body .list-item .enddate {
+    aip-list .aip-list-container .list-body .list-item .badge {
+      max-width: 80px !important;
+      margin-right: 5px !important; }
+    aip-list .aip-list-container .list-body .list-item .enddate {
       margin-right: 5px !important; }
     aip-list .aip-list-container .list-body .list-item .description {
       padding-right: 5px !important; } }
 @media screen and (min-width: 360px) and (max-width: 640px) and (max-width: 480px) {
-  aip-list .aip-list-container .list-body .list-item .badge, aip-list .aip-list-container .list-body .list-item .enddate {
+  aip-list .aip-list-container .list-body .list-item .badge {
+    max-width: 80px !important;
+    margin-right: 5px !important; }
+  aip-list .aip-list-container .list-body .list-item .enddate {
     margin-right: 5px !important; }
   aip-list .aip-list-container .list-body .list-item .description {
     padding-top: 8px !important;
