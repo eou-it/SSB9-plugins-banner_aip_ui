@@ -123,12 +123,6 @@ module AIP {
         groupTitle: string;
     }
 
-    export interface IServerDateTimeZone {
-        ServerDate: string;
-        ServerTime: string;
-        ServerTimeZone: string;
-    }
-
     export interface IStatus {
         id: string|number;
         value: string;
@@ -152,9 +146,7 @@ module AIP {
     export interface IPostActionItemResponse {
         data: [IGroupActionItem];
     }
-    export interface IPostActionItemServerResponse {
-        data: [IServerDateTimeZone];
-    }
+
     export interface IPostActionItemPopulationResponse {
         data: [IPopulation];
     }
@@ -339,15 +331,7 @@ module AIP {
             });
             return request;
         }
-        getServerDateTimeZone()
-        {
-            var request = this.$http({
-                method: "GET",
-                url: this.ENDPOINT.admin.fetchCurrentDateTimeZone
-            });
-            return request;
 
-        }
         getCurrentDateLocale(){
             var request = this.$http({
                 method: "GET",

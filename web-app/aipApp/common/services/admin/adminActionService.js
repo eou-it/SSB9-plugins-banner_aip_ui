@@ -113,13 +113,6 @@ var AIP;
             });
             return request;
         };
-        AdminActionService.prototype.getServerDateTimeZone = function () {
-            var request = this.$http({
-                method: "GET",
-                url: this.ENDPOINT.admin.fetchCurrentDateTimeZone
-            });
-            return request;
-        };
         AdminActionService.prototype.getCurrentDateLocale = function () {
             var request = this.$http({
                 method: "GET",

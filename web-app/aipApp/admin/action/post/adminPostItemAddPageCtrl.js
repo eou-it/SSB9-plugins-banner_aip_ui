@@ -50,12 +50,13 @@ var AIP;
             this.appServerTime = null;
             this.appServerTimeZone = null;
             this.processedServerDetails = {};
+            this.currentBrowserDate = null;
             this.init();
         }
         AdminPostItemAddPageCtrl.prototype.today = function () {
             this.sendTime = new Date();
             this.sendTime.setMinutes(Math.ceil(this.sendTime.getMinutes() / 30) * 30);
-            this.postActionItemInfo.scheduledStartDate = this.$filter('date')(this.sendTime, 'MM/dd/yyyy');
+            this.currentBrowserDate = this.$filter('date')(this.sendTime, this.$filter("i18n_aip")("default.date.format"));
         };
         ;
         AdminPostItemAddPageCtrl.prototype.init = function () {
@@ -75,14 +76,6 @@ var AIP;
                 _this.populationList = response.data;
                 _this.postActionItemInfo.population = _this.populationList;
             }));
-            allPromises.push(this.adminActionService.getServerDateTimeZone()
-                .then(function (response) {
-                console.log("Server Data", response.data);
-                _this.serverinfo = response.data;
-                _this.appServerDate = _this.serverinfo.ServerDate;
-                _this.appServerTime = _this.serverinfo.ServerTime;
-                _this.appServerTimeZone = _this.serverinfo.ServerTimeZone.ID;
-            }));
             allPromises.push(this.adminActionService.getCurrentDateLocale()
                 .then(function (response) {
                 _this.localeDate = response.data;
@@ -101,16 +94,16 @@ var AIP;
                 var timeZoneOffset = new Date().getTimezoneOffset();
                 var offset = "(GMT" + ((timeZoneOffset < 0 ? '+' : '-') + _this.pad(parseInt(Math.abs(timeZoneOffset / 60)), 2) + ":" + _this.pad(Math.abs(timeZoneOffset % 60), 2)) + ")";
                 var finalValue = '';
-                var timezonename = '';
+                var timeZone = '';
                 angular.forEach(_this.timezones, function (key, value) {
                     var GMTString = key.stringOffset;
                     if (offset === GMTString) {
                         that.setTimezone(key);
                         finalValue = '( ' + key.displayNameWithoutOffset + ' )';
-                        timezonename = key.displayName;
+                        timeZone = key.stringOffset + ' ' + key.timezoneId;
                     }
                 });
-                _this.defaultTimeZoneNameWithOffset = timezonename;
+                _this.defaultTimeZoneNameWithOffset = timeZone;
                 _this.defaultTimeZone = finalValue;
             }));
             this.$q.all(allPromises).then(function () {
@@ -140,7 +133,6 @@ var AIP;
                             _this.postActionItemInfo.displayStartDate = _this.actionPost1.postingDisplayStartDate;
                             _this.postActionItemInfo.displayEndDate = _this.actionPost1.postingDisplayEndDate;
                             _this.postActionItemInfo.scheduledStartDate = _this.actionPost1.postingDisplayDateTime;
-                            _this.appServerDate = _this.postActionItemInfo.scheduledStartDate;
                             _this.postNow = false;
                             _this.regeneratePopulation = _this.actionPost1.populationRegenerateIndicator;
                             _this.sendTime = _this.actionPost1.postingDisplayTime;
@@ -228,26 +220,32 @@ var AIP;
         ;
         AdminPostItemAddPageCtrl.prototype.getProcessedServerDateTimeAndTimezone = function () {
             var _this = this;
-            var Time = this.sendTime.toString();
-            var hourEnd = Time.indexOf(":");
-            if (hourEnd == -1) {
-                Time = this.$filter("date")(Time, "HHmm");
-            }
-            else {
-                var H = +Time.substr(0, hourEnd);
-                var h = H % 12 || 12;
-                var hoursStr = h < 10 ? "0" + h : h;
-                Time = hoursStr + Time.substr(hourEnd + 1, 2);
+            var EnteredDate = (this.postActionItemInfo.scheduledStartDate === undefined) ? this.currentBrowserDate : this.postActionItemInfo.scheduledStartDate;
+            var EnteredTime = this.$filter("date")(this.sendTime, "HHmm");
+            if (!(this.sendTime instanceof Date)) {
+                var timewithmodifier = this.sendTime.split(' ');
+                var time = timewithmodifier[0];
+                var modifier = timewithmodifier[1];
+                var hourmin = time.split(":");
+                var hour = hourmin[0];
+                var min = hourmin[1];
+                if (hour === '12') {
+                    hour = '00';
+                }
+                if (modifier === 'PM') {
+                    hour = parseInt(hour) + 12;
+                }
+                EnteredTime = hour + min;
             }
             var userSelectedVal = {
-                "userEnterDate": this.postActionItemInfo.scheduledStartDate,
-                "userEnterTime": Time,
+                "userEnterDate": EnteredDate,
+                "userEnterTime": EnteredTime,
                 "userEnterTimeZone": this.timezone.timezoneId
             };
             this.adminActionStatusService.getProcessedServerDateTimeAndTimezone(userSelectedVal)
                 .then(function (response) {
                 _this.processedServerDetails = response.data;
-                _this.appServerDate = _this.processedServerDetails.serverDate;
+                _this.appServerDate = (_this.postActionItemInfo.scheduledStartDate !== undefined) ? _this.processedServerDetails.serverDate : null;
                 _this.appServerTime = _this.processedServerDetails.serverTime;
                 _this.appServerTimeZone = _this.processedServerDetails.serverTimeZone;
             });
@@ -381,11 +379,12 @@ var AIP;
         AdminPostItemAddPageCtrl.prototype.save = function () {
             var _this = this;
             this.saving = true;
+            var userSelectedTime = null;
             if (this.postNow === true) {
                 this.sendTime = null;
                 this.timezone.timezoneId = null;
                 var CurrentDateTimeDetails = new Date();
-                var currentDate = this.$filter('date')(CurrentDateTimeDetails, 'MM/dd/yyyy');
+                var currentDate = this.$filter('date')(CurrentDateTimeDetails, this.$filter("i18n_aip")("default.date.format"));
                 var currentTime = this.$filter('date')(CurrentDateTimeDetails, 'HHmm');
                 var CurrentTimeZone = this.defaultTimeZoneNameWithOffset;
                 this.displayDatetimeZone = currentDate.toString() + ' ' + currentTime.toString() + ' ' + CurrentTimeZone;
@@ -396,15 +395,15 @@ var AIP;
                     var H = +this.sendTime.substr(0, hourEnd);
                     var h = H % 12 || 12;
                     var hoursStr = h < 10 ? "0" + h : h;
-                    this.sendTime = hoursStr + this.sendTime.substr(hourEnd + 1, 2);
+                    userSelectedTime = hoursStr + this.sendTime.substr(hourEnd + 1, 2);
+                    this.displayDatetimeZone = this.postActionItemInfo.scheduledStartDate + ' ' + userSelectedTime + ' ' + this.timezone.stringOffset + ' ' + this.timezone.timezoneId;
                 }
                 else {
-                    this.sendTime = this.$filter("date")(this.sendTime, "HHmm");
-                    console.log(typeof this.timezone.displayName);
-                    this.displayDatetimeZone = this.postActionItemInfo.scheduledStartDate + ' ' + this.sendTime + ' ' + this.timezone.displayName;
+                    userSelectedTime = this.$filter("date")(this.sendTime, "HHmm");
+                    this.displayDatetimeZone = this.postActionItemInfo.scheduledStartDate + ' ' + userSelectedTime + ' ' + this.timezone.stringOffset + ' ' + this.timezone.timezoneId;
                 }
             }
-            this.adminActionService.savePostActionItem(this.postActionItemInfo, this.selected, this.modalResults, this.selectedPopulation, this.postNow, this.sendTime, this.timezone.timezoneId, this.regeneratePopulation, this.displayDatetimeZone)
+            this.adminActionService.savePostActionItem(this.postActionItemInfo, this.selected, this.modalResults, this.selectedPopulation, this.postNow, userSelectedTime, this.timezone.timezoneId, this.regeneratePopulation, this.displayDatetimeZone)
                 .then(function (response) {
                 _this.saving = false;
                 var notiParams = {};
