@@ -1,8 +1,7 @@
-///<reference path="../../../../typings/tsd.d.ts"/>
-///<reference path="../../../common/services/admin/adminActionService.ts"/>
 /*******************************************************************************
  Copyright 2018 Ellucian Company L.P. and its affiliates.
- ********************************************************************************/
+ *******************************************************************************/
+///<reference path="../../../../typings/tsd.d.ts"/>
 var AIP;
 (function (AIP) {
     var PostActionListPageCtrl = /** @class */ (function () {
@@ -16,13 +15,17 @@ var AIP;
             this.endPoint = ENDPOINT; //ENDPOINT.admin.actionList
             this.paginationConfig = PAGINATIONCONFIG;
             this.actionListService = AdminActionService;
+            this.localeTime = {};
+            this.timezones = {};
             this.init();
             angular.element($window).bind('resize', function () {
                 $scope.$apply();
             });
         }
         PostActionListPageCtrl.prototype.init = function () {
+            var _this = this;
             this.gridData = {};
+            var allPromises = [];
             this.draggableColumnNames = [];
             this.mobileConfig = {
                 jobState: 3,
@@ -79,7 +82,7 @@ var AIP;
                     }
                 },
                 {
-                    name: "postingDisplayStartDate",
+                    name: "postingDisplayDateTime",
                     title: this.$filter("i18n_aip")("aip.admin.actionItem.post.grid.job.start-schedule.date"),
                     ariaLabel: this.$filter("i18n_aip")("aip.admin.actionItem.post.grid.job.start-schedule.date"),
                     width: "100px",
@@ -88,7 +91,30 @@ var AIP;
                         visible: true,
                         columnShowHide: true
                     }
-                }, {
+                },
+                {
+                    name: "postingDisplayTime",
+                    title: this.$filter("i18n_aip")("aip.admin.actionItem.post.grid.job.start-schedule.time"),
+                    ariaLabel: this.$filter("i18n_aip")("aip.admin.actionItem.post.grid.job.start-schedule.time"),
+                    width: "100px",
+                    options: {
+                        sortable: false,
+                        visible: true,
+                        columnShowHide: true
+                    }
+                },
+                {
+                    name: "postingTimeZone",
+                    title: this.$filter("i18n_aip")("aip.admin.actionItem.post.grid.job.timezone"),
+                    ariaLabel: this.$filter("i18n_aip")("aip.admin.actionItem.post.grid.job.timezone"),
+                    width: "100px",
+                    options: {
+                        sortable: false,
+                        visible: true,
+                        columnShowHide: true
+                    }
+                },
+                {
                     name: "groupFolderName",
                     title: this.$filter("i18n_aip")("aip.admin.actionItem.post.grid.job.group.folder"),
                     ariaLabel: this.$filter("i18n_aip")("aip.admin.actionItem.post.grid.job.group.folder"),
@@ -144,6 +170,15 @@ var AIP;
                     }
                 }
             ];
+            allPromises.push(this.actionListService.getCurrentTimeLocale()
+                .then(function (response) {
+                _this.localeTime = response.data.use12HourClock;
+            }));
+            allPromises.push(this.actionListService.getCurrentTimeZoneLocale()
+                .then(function (response) {
+                var that = _this;
+                _this.timezones = response.data.timezones;
+            }));
         };
         PostActionListPageCtrl.prototype.getHeight = function () {
             var containerHeight = $(document).height() -
