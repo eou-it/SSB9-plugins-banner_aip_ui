@@ -1,5 +1,7 @@
+/*******************************************************************************
+ Copyright 2018 Ellucian Company L.P. and its affiliates.
+ *******************************************************************************/
 ///<reference path="../../../../typings/tsd.d.ts"/>
-///<reference path="../../../common/services/admin/adminActionService.ts"/>
 var AIP;
 (function (AIP) {
     var PostActionListPageCtrl = /** @class */ (function () {

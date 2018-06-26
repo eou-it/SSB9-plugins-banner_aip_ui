@@ -46,7 +46,8 @@ class AipActionItemPostingControllerIntegrationTests extends BaseIntegrationTest
             "displayStartDate":"${dynamicData.displayStartDate}",
             "displayEndDate":"${dynamicData.displayEndDate}",
             "postNow":"true",
-            "populationRegenerateIndicator":false
+            "populationRegenerateIndicator":false,
+            "displayDatetimeZone": "06/21/2018 0330 (GMT+5:30) Asia/Kolkata"
             }"""
     }
 
@@ -65,7 +66,8 @@ class AipActionItemPostingControllerIntegrationTests extends BaseIntegrationTest
             "scheduledStartDate":"${dynamicData.scheduledStartDate}",
             "scheduledStartTime":"${dynamicData.scheduledStartTime}",
             "timezoneStringOffset":"${dynamicData.timezoneStringOffset}",
-            "populationRegenerateIndicator":false
+            "populationRegenerateIndicator":false,
+            "displayDatetimeZone":"06/21/2018 0330 (GMT+5:30) Asia/Kolkata"
             }"""
     }
 
@@ -238,6 +240,7 @@ class AipActionItemPostingControllerIntegrationTests extends BaseIntegrationTest
         requestMap.displayEndDate = testingDateFormat.format( new Date() + 50 )
         requestMap.scheduledStartDate = new Date() + 1
         requestMap.actionItemIds = actionItemIds
+        requestMap.displayDatetimeZone = "06/21/2018 0330 (GMT+5:30) Asia/Kolkata"
         actionItemPostCompositeService.sendAsynchronousPostItem( requestMap )
         controller.request.contentType = "text/json"
         controller.params.searchParam = null
@@ -273,6 +276,7 @@ class AipActionItemPostingControllerIntegrationTests extends BaseIntegrationTest
         requestMap.displayEndDate = testingDateFormat.format( new Date() + 50 )
         requestMap.scheduledStartDate = new Date() + 1
         requestMap.actionItemIds = actionItemIds
+        requestMap.displayDatetimeZone = "06/21/2018 0330 (GMT+5:30) Asia/Kolkata"
         def postingId = actionItemPostCompositeService.sendAsynchronousPostItem( requestMap ).savedJob.id
         controller.request.contentType = "text/json"
         controller.params.postID = postingId
@@ -307,6 +311,7 @@ class AipActionItemPostingControllerIntegrationTests extends BaseIntegrationTest
         requestMap.displayEndDate = testingDateFormat.format( new Date() + 50 )
         requestMap.scheduledStartDate = new Date() + 1
         requestMap.actionItemIds = actionItemIds
+        requestMap.displayDatetimeZone = "06/21/2018 0330 (GMT+5:30) Asia/Kolkata"
         def postingId = actionItemPostCompositeService.sendAsynchronousPostItem( requestMap ).savedJob.id
         controller.request.contentType = "text/json"
         controller.params.postID = postingId
@@ -341,6 +346,7 @@ class AipActionItemPostingControllerIntegrationTests extends BaseIntegrationTest
         requestMap.displayEndDate = testingDateFormat.format( new Date() + 50 )
         requestMap.scheduledStartDate = new Date() + 1
         requestMap.actionItemIds = actionItemIds
+        requestMap.displayDatetimeZone = "06/21/2018 0330 (GMT+5:30) Asia/Kolkata"
         def postingId = actionItemPostCompositeService.sendAsynchronousPostItem( requestMap ).savedJob.id
         controller.request.contentType = "text/json"
         controller.params.postID = postingId

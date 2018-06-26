@@ -119,7 +119,8 @@ class AipActionItemPostingController {
         render result as JSON
     }
 
-
+    /* Fetch the Processed server date,time and timezone for user selected
+    * */
     def getProcessedServerDateTimeAndTimezone() {
         def map = [:]
         map = request.JSON
