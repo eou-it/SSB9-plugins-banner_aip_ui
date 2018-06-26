@@ -51,12 +51,13 @@ var AIP;
             this.appServerTimeZone = null;
             this.processedServerDetails = {};
             this.currentBrowserDate = null;
+            this.selectedTime = null;
             this.init();
         }
         AdminPostItemAddPageCtrl.prototype.today = function () {
             this.sendTime = new Date();
             this.sendTime.setMinutes(Math.ceil(this.sendTime.getMinutes() / 30) * 30);
-            this.currentBrowserDate = this.$filter('date')(this.sendTime, this.$filter("i18n_aip")("default.date.format"));
+            this.currentBrowserDate = this.$filter('date')(new Date(), this.$filter("i18n_aip")("default.date.format"));
         };
         ;
         AdminPostItemAddPageCtrl.prototype.init = function () {
@@ -85,7 +86,6 @@ var AIP;
                 .then(function (response) {
                 _this.localeTime = response.data.use12HourClock;
                 _this.postActionItemInfo.localeTime = _this.localeTime;
-                _this.today();
             }));
             allPromises.push(this.adminActionService.getCurrentTimeZoneLocale()
                 .then(function (response) {
@@ -139,7 +139,7 @@ var AIP;
                             _this.defaultTimeZone = _this.actionPost1.postingTimeZone;
                             _this.appServerDate = _this.actionPost1.postingScheduleDateTime;
                             _this.appServerTime = _this.actionPost1.scheduledStartTime;
-                            _this.appServerTimeZone = _this.actionPost1.timezoneStringOffset.timezoneId;
+                            _this.appServerTimeZone = _this.actionPost1.timezoneStringOffset.displayName;
                             _this.changedValue();
                             _this.adminActionStatusService.getActionItemsById(_this.$state.params.postIdval)
                                 .then(function (response) {
@@ -161,6 +161,7 @@ var AIP;
                     });
                 }
                 else {
+                    _this.today();
                     _this.getProcessedServerDateTimeAndTimezone();
                 }
                 _this.spinnerService.showSpinner(false);
@@ -198,11 +199,6 @@ var AIP;
                 _this.postActionItemInfo.groupAction = _this.actionItemList;
             });
         };
-        AdminPostItemAddPageCtrl.prototype.setTime = function (time) {
-            this.sendTime = time;
-            this.sendTime = this.$filter('date')(this.sendTime, 'HHmm');
-        };
-        ;
         AdminPostItemAddPageCtrl.prototype.showTimeZoneList = function () {
             this.showTimezoneIcon = false;
         };
@@ -221,8 +217,10 @@ var AIP;
         AdminPostItemAddPageCtrl.prototype.getProcessedServerDateTimeAndTimezone = function () {
             var _this = this;
             var EnteredDate = (this.postActionItemInfo.scheduledStartDate === undefined) ? this.currentBrowserDate : this.postActionItemInfo.scheduledStartDate;
-            var EnteredTime = this.$filter("date")(this.sendTime, "HHmm");
-            if (!(this.sendTime instanceof Date)) {
+            if (this.sendTime instanceof Date) {
+                this.selectedTime = this.$filter("date")(this.sendTime, "HHmm");
+            }
+            else if (!(this.sendTime instanceof Date) && (this.sendTime.indexOf(':') > -1)) {
                 var timewithmodifier = this.sendTime.split(' ');
                 var time = timewithmodifier[0];
                 var modifier = timewithmodifier[1];
@@ -235,11 +233,14 @@ var AIP;
                 if (modifier === 'PM') {
                     hour = parseInt(hour) + 12;
                 }
-                EnteredTime = hour + min;
+                this.selectedTime = hour + min;
+            }
+            else {
+                this.selectedTime = this.sendTime;
             }
             var userSelectedVal = {
                 "userEnterDate": EnteredDate,
-                "userEnterTime": EnteredTime,
+                "userEnterTime": this.selectedTime,
                 "userEnterTimeZone": this.timezone.timezoneId
             };
             this.adminActionStatusService.getProcessedServerDateTimeAndTimezone(userSelectedVal)
@@ -295,9 +296,6 @@ var AIP;
             }, function (error) {
                 console.log(error);
             });
-        };
-        AdminPostItemAddPageCtrl.prototype.start = function () {
-            console.log(this.postActionItemInfo.startDate);
         };
         AdminPostItemAddPageCtrl.prototype.validateInput = function () {
             if (this.saving) {
@@ -396,11 +394,11 @@ var AIP;
                     var h = H % 12 || 12;
                     var hoursStr = h < 10 ? "0" + h : h;
                     userSelectedTime = hoursStr + this.sendTime.substr(hourEnd + 1, 2);
-                    this.displayDatetimeZone = this.postActionItemInfo.scheduledStartDate + ' ' + userSelectedTime + ' ' + this.timezone.stringOffset + ' ' + this.timezone.timezoneId;
+                    this.displayDatetimeZone = this.postActionItemInfo.scheduledStartDate + ' ' + this.selectedTime + ' ' + this.timezone.stringOffset + ' ' + this.timezone.timezoneId;
                 }
                 else {
                     userSelectedTime = this.$filter("date")(this.sendTime, "HHmm");
-                    this.displayDatetimeZone = this.postActionItemInfo.scheduledStartDate + ' ' + userSelectedTime + ' ' + this.timezone.stringOffset + ' ' + this.timezone.timezoneId;
+                    this.displayDatetimeZone = this.postActionItemInfo.scheduledStartDate + ' ' + this.selectedTime + ' ' + this.timezone.stringOffset + ' ' + this.timezone.timezoneId;
                 }
             }
             this.adminActionService.savePostActionItem(this.postActionItemInfo, this.selected, this.modalResults, this.selectedPopulation, this.postNow, userSelectedTime, this.timezone.timezoneId, this.regeneratePopulation, this.displayDatetimeZone)
