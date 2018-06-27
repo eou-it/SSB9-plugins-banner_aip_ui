@@ -216,6 +216,7 @@ var AIP;
         ;
         AdminPostItemAddPageCtrl.prototype.getProcessedServerDateTimeAndTimezone = function () {
             var _this = this;
+            console.log("ProcessedServerDate");
             var EnteredDate = (this.postActionItemInfo.scheduledStartDate === undefined) ? this.currentBrowserDate : this.postActionItemInfo.scheduledStartDate;
             if (this.sendTime instanceof Date) {
                 this.selectedTime = this.$filter("date")(this.sendTime, "HHmm");
