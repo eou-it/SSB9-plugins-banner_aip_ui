@@ -351,7 +351,7 @@ module AIP {
 
         getProcessedServerDateTimeAndTimezone()
         {
-            console.log("ProcessedServerDate");
+            console.log("ProcessedServerDate")
             var EnteredDate= (this.postActionItemInfo.scheduledStartDate === undefined) ? this.currentBrowserDate : this.postActionItemInfo.scheduledStartDate;
 
             if (this.sendTime instanceof Date){
