@@ -202,7 +202,7 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
 
                                     <div class="row input-daterange form-group right-inner-addon dateRange-minwidth">
                                         <input type="text" class="form-control   " name="" aria-required="true"
-                                               xe-time-picker-box input_24_hr_string="{{vm.localeTime ? 'N' : 'Y'}}" change='vm.getProcessedServerDateTimeAndTimezone()'
+                                               xe-time-picker-box input_24_hr_string="{{vm.localeTime ? 'N' : 'Y'}}" change='vm.checkChanges();vm.getProcessedServerDateTimeAndTimezone()'
                                                hour-format-12="{{vm.localeTime ? 'Y' : 'N'}}"
                                                am-label='{{"aip.admin.communication.timepicker.time.am.label"|i18n_aip}}'
                                                pm-label='{{"aip.admin.communication.timepicker.time.pm.label"|i18n_aip}}'
