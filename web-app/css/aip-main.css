@@ -50,7 +50,6 @@ aip-list .aip-list-container {
         float: right;
         padding-left: 20px; }
       aip-list .aip-list-container .panel-heading .panel-title .item-group .group-title {
-        white-space: nowrap;
         padding: 0 0 16px 0; }
         aip-list .aip-list-container .panel-heading .panel-title .item-group .group-title .group-title-text {
           font-size: 1em;
@@ -1313,6 +1312,10 @@ ol.selected-group > li > button {
     border-radius: 16px;
     background: #fff; }
   .actionItemAddContainer .postChk {
+    font-size: 1.5em;
+    font-weight: bold;
+    margin-left: 12px; }
+  .actionItemAddContainer .userenteredDet {
     font-size: 1.5em;
     font-weight: bold;
     margin-left: 12px; }
