@@ -91,20 +91,22 @@ var AIP;
                 .then(function (response) {
                 var that = _this;
                 _this.timezones = response.data.timezones;
-                var timeZoneOffset = new Date().getTimezoneOffset();
-                var offset = "(GMT" + ((timeZoneOffset < 0 ? '+' : '-') + _this.pad(parseInt(Math.abs(timeZoneOffset / 60)), 2) + ":" + _this.pad(Math.abs(timeZoneOffset % 60), 2)) + ")";
-                var finalValue = '';
-                var timeZone = '';
-                angular.forEach(_this.timezones, function (key, value) {
-                    var GMTString = key.stringOffset;
-                    if (offset === GMTString) {
-                        that.setTimezone(key);
-                        finalValue = '( ' + key.displayNameWithoutOffset + ' )';
-                        timeZone = key.stringOffset + ' ' + key.timezoneId;
-                    }
-                });
-                _this.defaultTimeZoneNameWithOffset = timeZone;
-                _this.defaultTimeZone = finalValue;
+                if (!_this.editMode) {
+                    var timeZoneOffset = new Date().getTimezoneOffset();
+                    var offset = "(GMT" + ((timeZoneOffset < 0 ? '+' : '-') + _this.pad(parseInt(Math.abs(timeZoneOffset / 60)), 2) + ":" + _this.pad(Math.abs(timeZoneOffset % 60), 2)) + ")";
+                    var finalValue = '';
+                    var timeZone = '';
+                    angular.forEach(_this.timezones, function (key, value) {
+                        var GMTString = key.stringOffset;
+                        if (offset === GMTString) {
+                            that.setTimezone(key);
+                            finalValue = '( ' + key.displayNameWithoutOffset + ' )';
+                            timeZone = key.stringOffset + ' ' + key.timezoneId;
+                        }
+                    });
+                    _this.defaultTimeZoneNameWithOffset = timeZone;
+                    _this.defaultTimeZone = finalValue;
+                }
             }));
             this.$q.all(allPromises).then(function () {
                 if (_this.editMode) {
@@ -137,6 +139,11 @@ var AIP;
                             _this.regeneratePopulation = _this.actionPost1.populationRegenerateIndicator;
                             _this.sendTime = _this.actionPost1.postingDisplayTime;
                             _this.defaultTimeZone = _this.actionPost1.postingTimeZone;
+                            for (var k = 0; k < _this.timezones.length; k++) {
+                                if (_this.actionPost1.postingTimeZone === _this.timezones[k].displayName) {
+                                    _this.setTimezone(_this.timezones[k]);
+                                }
+                            }
                             _this.appServerDate = _this.actionPost1.postingScheduleDateTime;
                             _this.appServerTime = _this.actionPost1.scheduledStartTime;
                             _this.appServerTimeZone = _this.actionPost1.timezoneStringOffset.displayName;
@@ -389,11 +396,7 @@ var AIP;
             }
             else {
                 if (this.editMode && !(this.sendTime instanceof Date)) {
-                    var hourEnd = this.sendTime.indexOf(":");
-                    var H = +this.sendTime.substr(0, hourEnd);
-                    var h = H % 12 || 12;
-                    var hoursStr = h < 10 ? "0" + h : h;
-                    userSelectedTime = hoursStr + this.sendTime.substr(hourEnd + 1, 2);
+                    userSelectedTime = this.selectedTime;
                     this.displayDatetimeZone = this.postActionItemInfo.scheduledStartDate + ' ' + this.selectedTime + ' ' + this.timezone.stringOffset + ' ' + this.timezone.timezoneId;
                 }
                 else {

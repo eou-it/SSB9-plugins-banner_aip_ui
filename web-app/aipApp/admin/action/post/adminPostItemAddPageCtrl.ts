@@ -190,20 +190,22 @@ module AIP {
                     .then((response:any) => {
                     var that=this;
                         this.timezones = response.data.timezones;
+                        if(!this.editMode) {
                         var timeZoneOffset = new Date().getTimezoneOffset();
                         var offset = "(GMT"+((timeZoneOffset<0? '+':'-')+ this.pad(parseInt(Math.abs(timeZoneOffset/60)), 2)+ ":" + this.pad(Math.abs(timeZoneOffset%60), 2)) + ")";
                         var finalValue=''
                         var timeZone=''
-                        angular.forEach(this.timezones,function(key,value){
-                          var GMTString = key.stringOffset;
-                            if (offset===GMTString) {
-                                that.setTimezone(key);
-                                finalValue = '( '+ key.displayNameWithoutOffset + ' )';
-                                timeZone =key.stringOffset+' '+key.timezoneId;
-                            }
-                        });
-                        this.defaultTimeZoneNameWithOffset = timeZone;
-                        this.defaultTimeZone = finalValue;
+                            angular.forEach(this.timezones, function (key, value) {
+                                var GMTString = key.stringOffset;
+                                if (offset === GMTString) {
+                                    that.setTimezone(key);
+                                    finalValue = '( ' + key.displayNameWithoutOffset + ' )';
+                                    timeZone = key.stringOffset + ' ' + key.timezoneId;
+                                }
+                            });
+                            this.defaultTimeZoneNameWithOffset = timeZone;
+                            this.defaultTimeZone = finalValue;
+                        }
 
                     })
             );
@@ -250,6 +252,13 @@ module AIP {
                                 this.regeneratePopulation=this.actionPost1.populationRegenerateIndicator;
                                 this.sendTime=this.actionPost1.postingDisplayTime;
                                 this.defaultTimeZone =this.actionPost1.postingTimeZone;
+
+                                for(var k=0;k<this.timezones.length;k++) {
+                                    if(this.actionPost1.postingTimeZone === this.timezones[k].displayName)
+                                    {
+                                        this.setTimezone(this.timezones[k])
+                                    }
+                                }
 
                                 this.appServerDate=this.actionPost1.postingScheduleDateTime;
                                 this.appServerTime=this.actionPost1.scheduledStartTime;
@@ -345,7 +354,6 @@ module AIP {
         setTimezone(timezone)
         {
             this.timezone = timezone;
-
         };
 
 
@@ -545,11 +553,7 @@ module AIP {
 
             } else {
                 if (this.editMode && !(this.sendTime instanceof Date)) {
-                    var hourEnd = this.sendTime.indexOf(":");
-                    var H = +this.sendTime.substr(0, hourEnd);
-                    var h = H % 12 || 12;
-                    var hoursStr = h < 10 ? "0" + h : h;
-                    userSelectedTime = hoursStr + this.sendTime.substr(hourEnd + 1, 2);
+                    userSelectedTime=this.selectedTime
                     this.displayDatetimeZone=this.postActionItemInfo.scheduledStartDate+' '+this.selectedTime+' '+this.timezone.stringOffset+' '+this.timezone.timezoneId;
 
                 } else {
