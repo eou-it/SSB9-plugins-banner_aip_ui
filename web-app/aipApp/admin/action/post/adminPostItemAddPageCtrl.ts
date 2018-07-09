@@ -4,7 +4,6 @@
 ///<reference path="../../../../typings/tsd.d.ts"/>
 ///<reference path="../../../common/services/spinnerService.ts"/>
 ///<reference path="../../../common/services/admin/adminActionService.ts"/>
-
 declare var register;
 declare var Notification: any;
 declare var notifications: any;
@@ -557,7 +556,12 @@ module AIP {
                     this.displayDatetimeZone=this.postActionItemInfo.scheduledStartDate+' '+this.selectedTime+' '+this.timezone.stringOffset+' '+this.timezone.timezoneId;
 
                 } else {
-                    userSelectedTime = this.$filter("date")(this.sendTime, "HHmm");
+                    if(this.sendTime instanceof Date) {
+                        userSelectedTime = this.$filter("date")(this.sendTime, "HHmm")
+                    }
+                    else{
+                        userSelectedTime= this.sendTime
+                    }
                     this.displayDatetimeZone=this.postActionItemInfo.scheduledStartDate+' '+this.selectedTime+' '+this.timezone.stringOffset+' '+this.timezone.timezoneId;
                 }
             }
