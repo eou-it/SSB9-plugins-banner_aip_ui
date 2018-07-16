@@ -87,7 +87,8 @@ module AIP {
             this.init();
 
             $scope.previousLink = function(){
-                var previousPath = document.referrer;
+               // var previousPath = document.referrer;
+                var previousPath =  this.isFromGateKeeper? decodeURI(window.reUrl) : document.referrer;
                 if(previousPath != ""){
                     window.location.replace(previousPath);
                 }

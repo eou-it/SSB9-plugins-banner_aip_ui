@@ -43,6 +43,7 @@
     </script>
     <script type="text/javascript">
         var pageControllers = {};
+        window.reUrl = "${reUrl}";
 
         <g:i18n_setup/>
         <g:aipVersion/>
