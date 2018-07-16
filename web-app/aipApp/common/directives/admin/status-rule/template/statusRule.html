@@ -11,7 +11,7 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
     </div>
 
     <div class="status-response row" ng-repeat="item in rules">
-        <div class="response-field col-sm-7">
+        <div class="response-field col-sm-5">
             <div class="row">
                 <div class="col-sm-12">
                     <label for="response-{{$index+1}}">{{'aip.admin.status.rules.table.header.responseOptionText'|i18n_aip}} {{'aip.character.astrick'|i18n_aip}}</label>
@@ -37,6 +37,20 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
                             ng-options="statusItem as statusItem.actionItemStatus for statusItem in status track by statusItem.actionItemStatus"
                             ng-change="detectRuleChange()">
                     </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="response-field col-sm-2">
+            <div class="row">
+                <div class="col-sm-12">
+                    <label for="reviewReqInd-{{$index+1}}">{{'aip.admin.status.rules.table.header.reviewReqInd'|i18n_aip}}</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-3">
+                    <input id="reviewReqInd-{{$index+1}}" class="reviewRequired" type="checkbox"
+                           ng-model="item.reviewReqInd" ng-change="detectRuleChange()"/>
                 </div>
             </div>
         </div>
@@ -76,13 +90,6 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
                 <span class="icon icon-add-CO" role="presentation"></span>
                 <span>{{'aip.admin.status.rules.table.form.add'|i18n_aip}}</span>
             </a>
-            <!--
-            <button name="AddReponse" type="button" class="btn btn-default add" ng-click="addRule($event)" aria-label="">
-                <span class="icon icon-add-CO"></span>
-                <span class="button-text hidden-sm-down">{{'aip.admin.status.rules.table.form.add'|i18n_aip}}</span>
-            </button>
-
-           -->
         </div>
     </div>
 </div>

@@ -593,7 +593,7 @@ module AIP {
                             actionItemStatus: item.statusName,
                             actionItemStatusId: item.statusId ? item.statusId : item.status.id
                         }
-
+                        item.reviewReqInd = item.statusReviewReqInd;
                     });
                     this.rules.sort((a, b) => {
                         return a.statusRuleSeqOrder - b.statusRuleSeqOrder;

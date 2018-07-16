@@ -7,7 +7,7 @@
 ///<reference path="../../../common/services/spinnerService.ts"/>
 var AIP;
 (function (AIP) {
-    var AdminActionItemOpenPageCtrl = (function () {
+    var AdminActionItemOpenPageCtrl = /** @class */ (function () {
         function AdminActionItemOpenPageCtrl($scope, $rootScope, $q, $state, $filter, $sce, $window, $templateRequest, $templateCache, $compile, $timeout, $interpolate, SpinnerService, AdminActionService, AdminActionStatusService, APP_ROOT, CKEDITORCONFIG) {
             this.$inject = ["$scope", "$rootScope", "$q", "$state", "$filter", "$sce", "$window", "$templateRequest", "$templateCache", "$compile", "$timeout", "$interpolate", "SpinnerService", "AdminActionService", "AdminActionStatusService", "APP_ROOT", "CKEDITORCONFIG"];
             this.trustAsHtml = function (string) {
@@ -502,6 +502,7 @@ var AIP;
                         actionItemStatus: item.statusName,
                         actionItemStatusId: item.statusId ? item.statusId : item.status.id
                     };
+                    item.reviewReqInd = item.statusReviewReqInd;
                 });
                 _this.rules.sort(function (a, b) {
                     return a.statusRuleSeqOrder - b.statusRuleSeqOrder;
