@@ -24,7 +24,7 @@ class AipController {
      * @return
      */
     def informedList() {
-        def reUrl = params.reUrl?params.reURl : ""
+        def reUrl = params.reUrl?params.reUrl : ""
         render(view: "aip",model: [reUrl:reUrl] )
     }
 
