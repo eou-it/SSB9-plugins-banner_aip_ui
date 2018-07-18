@@ -442,6 +442,7 @@ var AIP;
             angular.forEach(this.rules, function (item) {
                 item.statusRuleSeqOrder = _this.rules.indexOf(item);
                 item.statusId = item.statusId;
+                item.reviewReqInd = item.reviewReqInd ? true : false;
             });
             allDefer.push(this.adminActionService.updateActionItemStatusRule(this.rules, this.actionFolder)
                 .then(function (response) {
