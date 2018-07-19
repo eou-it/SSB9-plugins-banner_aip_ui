@@ -65,7 +65,7 @@ module AIP {
             this.modalInstance;
             this.isFromGateKeeper = false;
             this.initialOpenGroup = -1;
-            
+
             $scope.$watch(
                 "vm.detailView", function(newVal, oldVal) {
                     if(!$scope.$$phase) {
@@ -87,8 +87,9 @@ module AIP {
             this.init();
 
             $scope.previousLink = function(){
-                var previousPath = document.referrer;
-                if(previousPath != ""){
+                var previousPath =  window.reUrl? decodeURI(window.reUrl) : document.referrer;
+                if(previousPath !== ""){
+                    window.reUrl = '';
                     window.location.replace(previousPath);
                 }
             };

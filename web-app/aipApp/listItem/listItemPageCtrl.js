@@ -42,8 +42,9 @@ var AIP;
             });
             this.init();
             $scope.previousLink = function () {
-                var previousPath = document.referrer;
-                if (previousPath != "") {
+                var previousPath = window.reUrl ? decodeURI(window.reUrl) : document.referrer;
+                if (previousPath !== "") {
+                    window.reUrl = '';
                     window.location.replace(previousPath);
                 }
             };
@@ -254,7 +255,8 @@ var AIP;
             notifications.addNotification(n);
         };
         return ListItemPageCtrl;
-    }());
+    })();
     AIP.ListItemPageCtrl = ListItemPageCtrl;
 })(AIP || (AIP = {}));
 register("bannerNonAdminAIP").controller("ListItemPageCtrl", AIP.ListItemPageCtrl);
+//# sourceMappingURL=listItemPageCtrl.js.map

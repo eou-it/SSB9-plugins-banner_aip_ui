@@ -151,7 +151,8 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
                                 {{'aip.admin.status.rules.table.header.responseOptionText'|i18n_aip}}
                             </th>
                             <th class="ruleStatus">{{'aip.admin.status.rules.table.header.status'|i18n_aip}}</th>
-                            <th class="ruleStatus"></th>
+                            <th class="ruleStatus">{{'aip.admin.status.rules.table.header.haltStatus'|i18n_aip}}</th>
+                            <th class="ruleStatus">{{'aip.admin.status.rules.table.header.reviewReqInd'|i18n_aip}}</th>
                             </thead>
                             <tbody>
                             <tr ng-repeat="rule in vm.rules">
@@ -163,8 +164,11 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
                                             {{rule.statusName}}
                                         </span>
                                 </td>
-                                <td>
+                                <td data-label="{{'aip.admin.status.rules.table.header.haltStatus'|i18n_aip}}">
                                     {{(rule.statusBlockProcessInd=="Y"?"aip.admin.status.rules.table.blockText.block":"aip.admin.status.rules.table.blockText.unblock")|i18n_aip}}
+                                </td>
+                                <td data-label="{{'aip.admin.status.rules.table.header.reviewReqInd'|i18n_aip}}">
+                                    {{(rule.reviewReqInd?"aip.admin.status.rules.table.data.reviewRequired":"aip.admin.status.rules.table.data.reviewNotRequired")|i18n_aip}}
                                 </td>
                             </tr>
                             </tbody>

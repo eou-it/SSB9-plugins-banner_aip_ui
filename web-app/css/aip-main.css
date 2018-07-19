@@ -894,15 +894,34 @@ ol.selected-group > li > button {
             .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .status-rules .status-response {
               padding: 10px 0px;
               border-bottom: 1px solid #C0C0C0; }
+              .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .status-rules .status-response .reviewRequired {
+                width: 1.5em;
+                height: 25px;
+                margin-left: 3px; }
               @media screen and (max-width: 768px) {
                 .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .status-rules .status-response .response-field {
-                  margin-bottom: 10px; } }
+                  margin-bottom: 10px;
+                  padding: 0; }
+                .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .status-rules .status-response .reviewRequired {
+                  margin-left: 10px; } }
+              @media screen and (min-width: 768px) {
+                .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .status-rules .status-response .response-field {
+                  margin-bottom: 10px;
+                  padding: 0;
+                  white-space: nowrap; }
+                .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .status-rules .status-response .reviewRequired {
+                  margin-left: 10px; } }
             .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .status-rules button.delete, .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .status-rules button.sort {
               color: #206E9F;
               border: none; }
+            @media screen and (max-width: 768px) {
+              .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .status-rules .record-controls {
+                padding: 0; } }
             @media screen and (min-width: 768px) {
               .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .status-rules .record-controls {
-                margin-top: 30px; } }
+                margin-top: 20px; }
+              .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .status-rules .delete {
+                padding: 15px; } }
             .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .status-rules .add-link {
               font-family: "OpenSans-semibold";
               margin: 20px 0 20px 15px; }
@@ -939,7 +958,11 @@ ol.selected-group > li > button {
           padding: 8px;
           border-bottom: 1px solid #C0C0C0; }
         .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .contentContainer table.ruleListReadOnly {
-          border: 0; }
+          border: 0;
+          /*td:last-child {
+            border-bottom: 0;
+            display: none;
+          }*/ }
           .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .contentContainer table.ruleListReadOnly caption {
             border: 0;
             padding: 0;
@@ -961,9 +984,6 @@ ol.selected-group > li > button {
               text-indent: 0; }
           .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .contentContainer table.ruleListReadOnly td:first-child {
             border-top: 1px solid; }
-          .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .contentContainer table.ruleListReadOnly td:last-child {
-            border-bottom: 0;
-            display: none; }
           .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .contentContainer table.ruleListReadOnly td:before {
             display: table-row;
             width: 100%;
@@ -1312,10 +1332,6 @@ ol.selected-group > li > button {
     border-radius: 16px;
     background: #fff; }
   .actionItemAddContainer .postChk {
-    font-size: 1.5em;
-    font-weight: bold;
-    margin-left: 12px; }
-  .actionItemAddContainer .userenteredDet {
     font-size: 1.5em;
     font-weight: bold;
     margin-left: 12px; }
