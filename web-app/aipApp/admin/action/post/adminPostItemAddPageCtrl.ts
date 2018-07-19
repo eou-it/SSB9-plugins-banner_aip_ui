@@ -23,7 +23,11 @@ module AIP {
 
         specialCharacterTranslation():void;
 
+        getDefaultTimeZone():void;
+
         getProcessedServerDateTimeAndTimezone():void;
+
+        timeConversion():void;
 
     }
 
@@ -85,6 +89,7 @@ module AIP {
         processedServerDetails;
         currentBrowserDate;
         selectedTime;
+        enteredDate;
 
 
         constructor($scope: IActionItemAddPageScope, $q: ng.IQService, $state, $uibModal, $filter, $timeout,
@@ -132,6 +137,7 @@ module AIP {
             this.processedServerDetails={};
             this.currentBrowserDate=null;
             this.selectedTime=null;
+            this.enteredDate=null;
             this.init();
 
         }
@@ -190,20 +196,7 @@ module AIP {
                     var that=this;
                         this.timezones = response.data.timezones;
                         if(!this.editMode) {
-                        var timeZoneOffset = new Date().getTimezoneOffset();
-                        var offset = "(GMT"+((timeZoneOffset<0? '+':'-')+ this.pad(parseInt(Math.abs(timeZoneOffset/60)), 2)+ ":" + this.pad(Math.abs(timeZoneOffset%60), 2)) + ")";
-                        var finalValue=''
-                        var timeZone=''
-                            angular.forEach(this.timezones, function (key, value) {
-                                var GMTString = key.stringOffset;
-                                if (offset === GMTString) {
-                                    that.setTimezone(key);
-                                    finalValue = '( ' + key.displayNameWithoutOffset + ' )';
-                                    timeZone = key.stringOffset + ' ' + key.timezoneId;
-                                }
-                            });
-                            this.defaultTimeZoneNameWithOffset = timeZone;
-                            this.defaultTimeZone = finalValue;
+                           this.getDefaultTimeZone();
                         }
 
                     })
@@ -349,19 +342,38 @@ module AIP {
             str = '0'+str
         }
         return str
-    }
+       }
+
         setTimezone(timezone)
         {
             this.timezone = timezone;
         };
 
-
-        getProcessedServerDateTimeAndTimezone()
+        getDefaultTimeZone()
         {
-            var EnteredDate= (this.postActionItemInfo.scheduledStartDate === undefined) ? this.currentBrowserDate : this.postActionItemInfo.scheduledStartDate;
+            var that=this;
+            var timeZoneOffset = new Date().getTimezoneOffset();
+            var offset = "(GMT"+((timeZoneOffset<0? '+':'-')+ this.pad(parseInt(Math.abs(timeZoneOffset/60)), 2)+ ":" + this.pad(Math.abs(timeZoneOffset%60), 2)) + ")";
+            var finalValue=''
+            var timeZone=''
+            angular.forEach(this.timezones, function (key, value) {
+                var GMTString = key.stringOffset;
+                if (offset === GMTString) {
+                    that.setTimezone(key);
+                    finalValue = '( ' + key.displayNameWithoutOffset + ' )';
+                    timeZone = key.stringOffset + ' ' + key.timezoneId;
+                }
+            });
+            this.defaultTimeZoneNameWithOffset = timeZone;
+            this.defaultTimeZone = finalValue;
+        }
+
+        timeConversion()
+        {
+            this.enteredDate= (this.postActionItemInfo.scheduledStartDate === undefined) ? this.currentBrowserDate : this.postActionItemInfo.scheduledStartDate;
 
             if (this.sendTime instanceof Date){
-            this.selectedTime =  this.$filter("date")(this.sendTime, "HHmm")
+                this.selectedTime =  this.$filter("date")(this.sendTime, "HHmm")
             }
 
             else if( !(this.sendTime instanceof Date) && (this.sendTime.indexOf(':')>-1)) {
@@ -374,19 +386,23 @@ module AIP {
                 var min=hourmin[1];
                 if (hour === '12') {
                     hour = '00';
-               }
-                 if (modifier === 'PM') {
-                   hour = parseInt(hour) + 12;
-                 }
+                }
+                if (modifier === 'PM') {
+                    hour = parseInt(hour) + 12;
+                }
                 this.selectedTime = hour + min;
             }
             else{
                 this.selectedTime=this.sendTime
-           }
+            }
+        }
 
+        getProcessedServerDateTimeAndTimezone()
+        {
+            this.timeConversion()
             var userSelectedVal=
             {
-                "userEnterDate": EnteredDate,
+                "userEnterDate": this.enteredDate,
                 "userEnterTime": this.selectedTime,
                 "userEnterTimeZone":this.timezone.timezoneId
             };
@@ -543,16 +559,23 @@ module AIP {
             if(this.postNow===true){
 
                 this.sendTime=null;
-                this.timezone.timezoneId=null;
+                this.timezone=null;
                 var CurrentDateTimeDetails = new Date();
                 var currentDate = this.$filter('date')(CurrentDateTimeDetails, this.$filter("i18n_aip")("default.date.format"));
                 var currentTime = this.$filter('date')(CurrentDateTimeDetails, 'HHmm');
+                this.getDefaultTimeZone();
                 var CurrentTimeZone= this.defaultTimeZoneNameWithOffset;
                 this.displayDatetimeZone=currentDate.toString()+' '+currentTime.toString()+' '+CurrentTimeZone;
 
             } else {
                 if (this.editMode && !(this.sendTime instanceof Date)) {
-                    userSelectedTime=this.selectedTime
+                    if(this.selectedTime) {
+                        userSelectedTime = this.selectedTime
+                    }
+                    else{
+                        this.timeConversion()
+                        userSelectedTime = this.selectedTime
+                    }
                     this.displayDatetimeZone=this.postActionItemInfo.scheduledStartDate+' '+this.selectedTime+' '+this.timezone.stringOffset+' '+this.timezone.timezoneId;
 
                 } else {
@@ -577,7 +600,6 @@ module AIP {
                         };
                         this.$state.go("admin-post-list", {noti: notiParams, data: response.data.savedJob.id});
                     } else {
-                        this.sendTime = ''; // reset it to blank
                         this.saveErrorCallback(response.data.message);
                     }
                 }, (err) => {
