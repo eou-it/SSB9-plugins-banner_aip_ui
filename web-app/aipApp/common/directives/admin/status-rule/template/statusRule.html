@@ -75,7 +75,7 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
         <div class="record-controls col-sm-1">
             <div class="row">
                 <div class="col-sm-12">
-                    <button name="Delete" type="button" class="btn btn-default delete" ng-click="removeRule(item, $event)" aria-label="Remove Response Option" id="delete-{{$index+1}}">
+                    <button name="Delete" type="button" class="btn btn-default delete" ng-click="removeRule(item, $event); detectRuleChange();" aria-label="Remove Response Option" id="delete-{{$index+1}}">
                         <span class="icon icon-delete-CO" role="presentation"
                               aria-label="{{'aip.admin.status.rules.table.form.delete'|i18n_aip}}"></span>
                     </button>
