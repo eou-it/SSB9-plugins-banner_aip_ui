@@ -6,7 +6,7 @@
 ///<reference path="../common/services/userService.ts"/>
 var AIP;
 (function (AIP) {
-    var ListItemPageCtrl = (function () {
+    var ListItemPageCtrl = /** @class */ (function () {
         function ListItemPageCtrl($scope, $state, ItemListViewService, AIPUserService, SpinnerService, $timeout, $q, $uibModal, APP_ROOT, $sce) {
             this.$inject = ["$scope", "$state", "ItemListViewService", "AIPUserService", "SpinnerService", "$timeout", "$q", "$uibModal", "APP_ROOT", "$sce"];
             this.trustHTML = function (txtString) {
@@ -42,10 +42,11 @@ var AIP;
             });
             this.init();
             $scope.previousLink = function () {
-                var previousPath = window.reUrl ? decodeURI(window.reUrl) : document.referrer;
-                if (previousPath !== "") {
-                    window.reUrl = '';
-                    window.location.replace(previousPath);
+                if (window.reUrl && window.reUrl != '') {
+                    window.location.replace(decodeURI(window.reUrl));
+                }
+                else {
+                    window.history.back();
                 }
             };
         }
@@ -255,8 +256,7 @@ var AIP;
             notifications.addNotification(n);
         };
         return ListItemPageCtrl;
-    })();
+    }());
     AIP.ListItemPageCtrl = ListItemPageCtrl;
 })(AIP || (AIP = {}));
 register("bannerNonAdminAIP").controller("ListItemPageCtrl", AIP.ListItemPageCtrl);
-//# sourceMappingURL=listItemPageCtrl.js.map
