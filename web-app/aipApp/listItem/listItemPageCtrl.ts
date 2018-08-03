@@ -87,10 +87,10 @@ module AIP {
             this.init();
 
             $scope.previousLink = function(){
-                var previousPath =  window.reUrl? decodeURI(window.reUrl) : document.referrer;
-                if(previousPath !== ""){
-                    window.reUrl = '';
-                    window.location.replace(previousPath);
+                if(window.reUrl && window.reUrl != ''){
+                    window.location.replace(decodeURI(window.reUrl));
+                }else{
+                    window.history.back();
                 }
             };
         }
