@@ -20,6 +20,7 @@ module AIPUI {
             this.scope = {
                 rules: "=",
                 status: "=",
+                attachments:"=",
                 inputs:"&",
                 ngModel: '=',
                 ngChange: '&',
@@ -48,7 +49,8 @@ module AIPUI {
                 $scope.rules.push(
                     {
                         statusName: "",
-                        status: $scope.status[0]
+                        status: $scope.status[0],
+                        allowedAttachments:$scope.attachments[0]
                     }
                 );
 

@@ -56,6 +56,7 @@ var AIP;
             this.test;
             this.personaData;
             this.actionItemDataChanged = false;
+            this.maxAttachmentsList = [];
             this.redirectval = "NoData";
             this.init();
             angular.element($window).bind('resize', function () {
@@ -90,6 +91,7 @@ var AIP;
                     that.checkEditchangesDone('content');
                 }
             });
+            this.getMaxAttachments();
         };
         AdminActionItemOpenPageCtrl.prototype.detectContentChange = function (content) {
             if (this.templateSelect) {
@@ -443,6 +445,7 @@ var AIP;
                 item.statusRuleSeqOrder = _this.rules.indexOf(item);
                 item.statusId = item.statusId;
                 item.reviewReqInd = item.reviewReqInd ? true : false;
+                item.allowedAttachments = item.allowedAttachments;
             });
             allDefer.push(this.adminActionService.updateActionItemStatusRule(this.rules, this.actionFolder)
                 .then(function (response) {
@@ -495,15 +498,15 @@ var AIP;
             this.adminActionStatusService.getRules(this.actionFolder)
                 .then(function (response) {
                 _this.rules = response.data;
-                console.log(_this.rules);
                 angular.forEach(_this.rules, function (item) {
-                    //item.statusRuleLabelText = this.trustActionItemRules(item.statusRuleLabelText);
                     item.statusRuleLabelText = _this.$sce.trustAsHtml(_this.$filter("html")(item.statusRuleLabelText)).toString();
                     item["status"] = {
                         actionItemStatus: item.statusName,
                         actionItemStatusId: item.statusId ? item.statusId : item.status.id
                     };
                     item.reviewReqInd = item.statusReviewReqInd;
+                    item.statusAllowedAttachment = (item.statusAllowedAttachment < 10) ? ("0" + item.statusAllowedAttachment) : item.statusAllowedAttachment;
+                    item.allowedAttachments = item.statusAllowedAttachment;
                 });
                 _this.rules.sort(function (a, b) {
                     return a.statusRuleSeqOrder - b.statusRuleSeqOrder;
@@ -513,6 +516,23 @@ var AIP;
                 console.log("error:" + err);
             });
         };
+        AdminActionItemOpenPageCtrl.prototype.getMaxAttachments = function () {
+            var _this = this;
+            this.adminActionStatusService.getMaxAttachmentsVal()
+                .then(function (response) {
+                var max = response.data.maxAttachment;
+                for (var i = 0; i <= max; i++) {
+                    var result = "" + i;
+                    if (i.toString().length < 2) {
+                        var result = "0" + i;
+                    }
+                    _this.maxAttachmentsList.push(result);
+                }
+            }, function (err) {
+                console.log(err);
+            });
+        };
+        ;
         AdminActionItemOpenPageCtrl.prototype.getStatus = function () {
             var _this = this;
             var deferred = this.$q.defer();

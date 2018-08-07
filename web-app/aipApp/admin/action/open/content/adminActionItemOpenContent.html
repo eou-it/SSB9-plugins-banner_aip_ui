@@ -56,14 +56,10 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
             <div class="row">
                 <textarea id="templateContent" ng-required="true" aria-required="true" name="templateContent"
                           ckeditor="ckEditorConfig" ng-model="vm.actionItem.actionItemContent" ng-change="vm.detectContentChange(vm.actionItem.actionItemContent); vm.dataChanged()"></textarea>
-
-
             </div>
-
             <div class="contentContainer">
-
                 <div class="row">
-                    <aip-status-rule rules="vm.rules" status="vm.statuses" changes="vm.contentChanged"></aip-status-rule>
+                    <aip-status-rule rules="vm.rules" status="vm.statuses" attachments="vm.maxAttachmentsList" changes="vm.contentChanged"></aip-status-rule>
                 </div>
             </div>
         </div>
@@ -153,6 +149,7 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
                             <th class="ruleStatus">{{'aip.admin.status.rules.table.header.status'|i18n_aip}}</th>
                             <th class="ruleStatus">{{'aip.admin.status.rules.table.header.haltStatus'|i18n_aip}}</th>
                             <th class="ruleStatus">{{'aip.admin.status.rules.table.header.reviewReqInd'|i18n_aip}}</th>
+                            <th class="ruleStatus">{{'aip.admin.status.rules.table.header.allowedAttachment'|i18n_aip}}</th>
                             </thead>
                             <tbody>
                             <tr ng-repeat="rule in vm.rules">
@@ -169,6 +166,9 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
                                 </td>
                                 <td data-label="{{'aip.admin.status.rules.table.header.reviewReqInd'|i18n_aip}}">
                                     {{(rule.reviewReqInd?"aip.admin.status.rules.table.data.reviewRequired":"aip.admin.status.rules.table.data.reviewNotRequired")|i18n_aip}}
+                                </td>
+                                <td data-label="{{'aip.admin.status.rules.table.header.allowedAttachment'|i18n_aip}}"
+                                 data-ng-bind-html="rule.statusAllowedAttachment">
                                 </td>
                             </tr>
                             </tbody>

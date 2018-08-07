@@ -138,6 +138,15 @@ module AIP {
             return request;
         }
 
+        getMaxAttachmentsVal()
+        {
+            var request = this.$http({
+                method: "GET",
+                url: this.ENDPOINT.admin.getMaxAttachmentsVal
+            });
+            return request;
+        }
+
         getActionItemsById(PostId)
         {
             var request = this.$http({

@@ -11,7 +11,7 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
     </div>
 
     <div class="status-response row" ng-repeat="item in rules">
-        <div class="response-field col-sm-5">
+        <div class="response-field col-sm-4">
             <div class="row">
                 <div class="col-sm-12">
                     <label for="response-{{$index+1}}">{{'aip.admin.status.rules.table.header.responseOptionText'|i18n_aip}} {{'aip.character.astrick'|i18n_aip}}</label>
@@ -24,7 +24,7 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
             </div>
         </div>
 
-        <div class="response-field col-sm-3">
+        <div class="response-field col-sm-2">
             <div class="row">
                 <div class="col-sm-12">
                     <label for="status-{{$index+1}}">{{'aip.admin.status.rules.table.header.status'|i18n_aip}} {{'aip.character.astrick'|i18n_aip}}</label>
@@ -51,6 +51,22 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
                 <div class="col-sm-3">
                     <input id="reviewReqInd-{{$index+1}}" class="reviewRequired" type="checkbox"
                            ng-model="item.reviewReqInd" ng-change="detectRuleChange()"/>
+                </div>
+            </div>
+        </div>
+        <div class="response-field col-sm-2">
+            <div class="row">
+                <div class="col-sm-12">
+                    <label for="attachments-{{$index}}">{{'aip.admin.status.rules.table.header.allowedAttachment'|i18n_aip}}</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-7">
+                    <select name="attachments-{{$index}}" id="attachments-{{$index}}" class="actionItemSelect form-control"
+                            ng-model="item.allowedAttachments"
+                            ng-options="item for item in attachments"
+                            ng-change="detectRuleChange()">
+                    </select>
                 </div>
             </div>
         </div>

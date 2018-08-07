@@ -4,7 +4,7 @@
 ///<reference path="../../../../../../typings/tsd.d.ts"/>
 var AIPUI;
 (function (AIPUI) {
-    var AIPStatusRuleDirective = (function () {
+    var AIPStatusRuleDirective = /** @class */ (function () {
         function AIPStatusRuleDirective() {
             this.restrict = "AE";
             this.transclude = true;
@@ -12,6 +12,7 @@ var AIPUI;
             this.scope = {
                 rules: "=",
                 status: "=",
+                attachments: "=",
                 inputs: "&",
                 ngModel: '=',
                 ngChange: '&',
@@ -31,7 +32,8 @@ var AIPUI;
             $scope.addRule = function ($event) {
                 $scope.rules.push({
                     statusName: "",
-                    status: $scope.status[0]
+                    status: $scope.status[0],
+                    allowedAttachments: $scope.attachments[0]
                 });
                 setTimeout(function () {
                     var btnTarget = $("input#response-" + $scope.rules.length) /*+ $scope.rules.length*/;

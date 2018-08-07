@@ -60,6 +60,13 @@ var AIP;
             });
             return request;
         };
+        AdminActionStatusService.prototype.getMaxAttachmentsVal = function () {
+            var request = this.$http({
+                method: "GET",
+                url: this.ENDPOINT.admin.getMaxAttachmentsVal
+            });
+            return request;
+        };
         AdminActionStatusService.prototype.getActionItemsById = function (PostId) {
             var request = this.$http({
                 method: "GET",
