@@ -445,7 +445,7 @@ var AIP;
                 item.statusRuleSeqOrder = _this.rules.indexOf(item);
                 item.statusId = item.statusId;
                 item.reviewReqInd = item.reviewReqInd ? true : false;
-                item.attachments = item.attachments;
+                item.allowedAttachments = item.allowedAttachments;
             });
             allDefer.push(this.adminActionService.updateActionItemStatusRule(this.rules, this.actionFolder)
                 .then(function (response) {
@@ -509,7 +509,7 @@ var AIP;
                     if (item.statusAllowedAttachment.toString().length < 2) {
                         item.statusAllowedAttachment = "0" + item.statusAllowedAttachment;
                     }
-                    item.attachments = item.statusAllowedAttachment;
+                    item.allowedAttachments = item.statusAllowedAttachment;
                 });
                 _this.rules.sort(function (a, b) {
                     return a.statusRuleSeqOrder - b.statusRuleSeqOrder;
@@ -531,6 +531,7 @@ var AIP;
                     _this.maxAttachmentsList.push(result);
                 }
             }, function (err) {
+                //TODO:: handle error call
                 console.log(err);
             });
         };

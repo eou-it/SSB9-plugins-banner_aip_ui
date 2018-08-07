@@ -50,7 +50,7 @@ module AIPUI {
                     {
                         statusName: "",
                         status: $scope.status[0],
-                        attachments:$scope.attachments[0]
+                        allowedAttachments:$scope.attachments[0]
                     }
                 );
 

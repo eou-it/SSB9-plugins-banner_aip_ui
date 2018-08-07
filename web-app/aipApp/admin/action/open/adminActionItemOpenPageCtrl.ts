@@ -534,7 +534,7 @@ module AIP {
                 item.statusRuleSeqOrder = this.rules.indexOf(item);
                 item.statusId = item.statusId;
                 item.reviewReqInd = item.reviewReqInd?true:false;
-                item.attachments=item.attachments;
+                item.allowedAttachments=item.allowedAttachments;
             });
             allDefer.push(this.adminActionService.updateActionItemStatusRule(this.rules, this.actionFolder)
                 .then((response: any) => {
@@ -598,7 +598,7 @@ module AIP {
                         if(item.statusAllowedAttachment.toString().length < 2){
                             item.statusAllowedAttachment="0"+item.statusAllowedAttachment;
                         }
-                        item.attachments =item.statusAllowedAttachment;
+                        item.allowedAttachments =item.statusAllowedAttachment;
                     });
                     this.rules.sort((a, b) => {
                         return a.statusRuleSeqOrder - b.statusRuleSeqOrder;

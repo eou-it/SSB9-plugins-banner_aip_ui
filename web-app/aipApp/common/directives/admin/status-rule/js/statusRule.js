@@ -33,7 +33,7 @@ var AIPUI;
                 $scope.rules.push({
                     statusName: "",
                     status: $scope.status[0],
-                    attachments: $scope.attachments[0]
+                    allowedAttachments: $scope.attachments[0]
                 });
                 setTimeout(function () {
                     var btnTarget = $("input#response-" + $scope.rules.length) /*+ $scope.rules.length*/;
