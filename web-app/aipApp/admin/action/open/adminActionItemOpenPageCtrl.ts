@@ -53,6 +53,7 @@ module AIP {
         actionFolder;
         actionItemDataChanged:boolean;
         redirectval;
+        maxAttachmentsList;
 
         constructor($scope,$rootScope, $q: ng.IQService, $state, $filter, $sce, $window, $templateRequest, $templateCache, $compile,
                     $timeout, $interpolate, SpinnerService, AdminActionService, AdminActionStatusService, APP_ROOT, CKEDITORCONFIG) {
@@ -91,6 +92,7 @@ module AIP {
             this.test;
             this.personaData;
             this.actionItemDataChanged=false;
+            this.maxAttachmentsList=[];
             this.redirectval="NoData";
 
             this.init();
@@ -126,6 +128,7 @@ module AIP {
                     that.checkEditchangesDone('content');
                 }
             });
+            this.getMaxAttachments();
         }
 
 
@@ -289,7 +292,6 @@ module AIP {
                     this.$state.go("admin-action-edit", {actionItemId: this.actionItem.actionItemId, isEdit: true});
                 }
             }
-
 
         isNoContent() {
             if (this.templateSelect) {
@@ -509,8 +511,6 @@ module AIP {
             }
         }
 
-
-
         saveTemplate() {
             //TODO:: implement to save rules
             var allDefer = [];
@@ -534,6 +534,7 @@ module AIP {
                 item.statusRuleSeqOrder = this.rules.indexOf(item);
                 item.statusId = item.statusId;
                 item.reviewReqInd = item.reviewReqInd?true:false;
+                item.attachments=item.attachments;
             });
             allDefer.push(this.adminActionService.updateActionItemStatusRule(this.rules, this.actionFolder)
                 .then((response: any) => {
@@ -586,7 +587,6 @@ module AIP {
             this.adminActionStatusService.getRules(this.actionFolder)
                 .then((response) => {
                     this.rules = response.data;
-                    console.log(this.rules);
                     angular.forEach(this.rules, (item) => {
                         //item.statusRuleLabelText = this.trustActionItemRules(item.statusRuleLabelText);
                         item.statusRuleLabelText = this.$sce.trustAsHtml(this.$filter("html")(item.statusRuleLabelText)).toString();
@@ -595,6 +595,10 @@ module AIP {
                             actionItemStatusId: item.statusId ? item.statusId : item.status.id
                         }
                         item.reviewReqInd = item.statusReviewReqInd;
+                        if(item.statusAllowedAttachment.toString().length < 2){
+                            item.statusAllowedAttachment="0"+item.statusAllowedAttachment;
+                        }
+                        item.attachments =item.statusAllowedAttachment;
                     });
                     this.rules.sort((a, b) => {
                         return a.statusRuleSeqOrder - b.statusRuleSeqOrder;
@@ -604,6 +608,22 @@ module AIP {
                     console.log("error:" + err);
                 });
         }
+
+        getMaxAttachments(){
+            this.adminActionStatusService.getMaxAttachmentsVal()
+                .then((response) => {
+                    var max=response.data.maxAttachment;
+                    for (var i=0; i<=max; i++) {
+                        var result=""+i;
+                        if(i.toString().length < 2)
+                            var  result="0"+i;
+                        this.maxAttachmentsList.push(result);
+                    }
+                }, (err) => {
+                    //TODO:: handle error call
+                    console.log(err);
+                });
+        };
 
         getStatus() {
             var deferred = this.$q.defer();

@@ -9,6 +9,7 @@ import net.hedtech.banner.exceptions.ApplicationException
 import net.hedtech.banner.i18n.MessageHelper
 import org.apache.log4j.Logger
 import org.codehaus.groovy.grails.plugins.web.taglib.ValidationTagLib
+import net.hedtech.banner.general.overall.IntegrationConfiguration
 
 /**
  * Controller class for AIP Admin
@@ -397,4 +398,27 @@ class AipAdminController {
         render result as JSON
     }
 
+    /**
+     * Get Max Attachments Val
+     * @return
+     */
+    def getMaxAttachmentsVal() {
+        try {
+            String maxAttachment = session.getAttribute("maxAttachment")
+            if (!maxAttachment) {
+                maxAttachment = IntegrationConfiguration.fetchByProcessCodeAndSettingName('GENERAL_SSB', 'ACTION.ITEM.ATTACHMENT.MAXIMUM').value
+                session.setAttribute("maxAttachment", maxAttachment)
+            }
+            def model = [maxAttachment: Integer.parseInt(maxAttachment)]
+            render model as JSON
+        }
+       catch (Exception e)
+        {
+            String errorString ="Error. Please configure a valid number"
+            LOGGER.error errorString, e
+            def model = [errorMessage: errorString]
+            render model as JSON
+
+        }
+    }
 }
