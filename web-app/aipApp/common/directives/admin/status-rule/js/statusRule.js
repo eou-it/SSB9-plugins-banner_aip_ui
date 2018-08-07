@@ -27,7 +27,6 @@ var AIPUI;
             });
         };
         AIPStatusRuleDirective.prototype.controller = function ($scope) {
-            console.log("$scope", $scope);
             $scope.init = function () {
             };
             $scope.addRule = function ($event) {

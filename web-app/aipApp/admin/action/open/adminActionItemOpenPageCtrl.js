@@ -531,7 +531,6 @@ var AIP;
                     _this.maxAttachmentsList.push(result);
                 }
             }, function (err) {
-                //TODO:: handle error call
                 console.log(err);
             });
         };

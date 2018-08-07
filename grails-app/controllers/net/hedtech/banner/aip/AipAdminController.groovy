@@ -414,7 +414,7 @@ class AipAdminController {
         }
        catch (Exception e)
         {
-            String errorString ="Error. Please configure a valid number"
+            String errorString =MessageHelper.message("actionItemStatusRule.maxAttachment.error")
             LOGGER.error errorString, e
             def model = [errorMessage: errorString]
             render model as JSON

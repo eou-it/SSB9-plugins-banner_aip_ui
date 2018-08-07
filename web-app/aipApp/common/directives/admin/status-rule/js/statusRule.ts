@@ -40,8 +40,6 @@ module AIPUI {
         }
         controller($scope) {
 
-            console.log("$scope",$scope)
-
             $scope.init = function(){
             };
 
