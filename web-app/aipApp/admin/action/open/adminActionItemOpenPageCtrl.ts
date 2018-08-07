@@ -612,8 +612,9 @@ module AIP {
                     var max=response.data.maxAttachment;
                     for (var i=0; i<=max; i++) {
                         var result=""+i;
-                        if(i.toString().length < 2)
-                            var  result="0"+i;
+                        if(i.toString().length < 2) {
+                            var result = "0" + i;
+                        }
                         this.maxAttachmentsList.push(result);
                     }
                 }, (err) => {

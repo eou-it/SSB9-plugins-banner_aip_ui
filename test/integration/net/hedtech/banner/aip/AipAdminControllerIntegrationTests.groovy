@@ -1256,7 +1256,7 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
         controller.getMaxAttachmentsVal()
         assertEquals 200, controller.response.status
         def data1 = JSON.parse( controller.response.contentAsString )
-        assert data1.errorMessage == "Error. Please configure a valid number"
+        assert data1.errorMessage == "Error Occurred. Maximum Attachments value is not a valid number."
 
     }
 }

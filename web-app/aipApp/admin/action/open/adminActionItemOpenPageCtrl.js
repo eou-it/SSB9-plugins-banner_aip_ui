@@ -523,8 +523,9 @@ var AIP;
                 var max = response.data.maxAttachment;
                 for (var i = 0; i <= max; i++) {
                     var result = "" + i;
-                    if (i.toString().length < 2)
+                    if (i.toString().length < 2) {
                         var result = "0" + i;
+                    }
                     _this.maxAttachmentsList.push(result);
                 }
             }, function (err) {

@@ -15,7 +15,7 @@ import net.hedtech.banner.general.overall.IntegrationConfiguration
  * Controller class for AIP Admin
  */
 class AipAdminController {
-    private static final def LOGGER = Logger.getLogger( this.class )
+    private static final def LOGGER = Logger.getLogger(this.class)
     static defaultAction = "landing"
 
     def groupFolderReadOnlyService
@@ -43,7 +43,7 @@ class AipAdminController {
 
 
     def landing() {
-        render(view: "aipAdmin" )
+        render(view: "aipAdmin")
     }
     /**
      * API for folders LOV
@@ -61,7 +61,7 @@ class AipAdminController {
     def addActionItem() {
         def map = request.JSON
 
-        def result = actionItemCompositeService.addActionItem( map )
+        def result = actionItemCompositeService.addActionItem(map)
         render result as JSON
     }
 
@@ -71,7 +71,7 @@ class AipAdminController {
      */
     def editActionItem() {
         def map = request.JSON
-        def result = actionItemCompositeService.editActionItem( map )
+        def result = actionItemCompositeService.editActionItem(map)
         render result as JSON
     }
 
@@ -111,11 +111,11 @@ class AipAdminController {
         def success = false
 
         if (!params.groupId) {
-            response.sendError( 403 )
+            response.sendError(403)
             return
         }
 
-        GroupFolderReadOnly gfro = groupFolderReadOnlyService.getActionItemGroupById( Long.parseLong( params.groupId ) )
+        GroupFolderReadOnly gfro = groupFolderReadOnlyService.getActionItemGroupById(Long.parseLong(params.groupId))
         if (gfro) {
             success = true
         }
@@ -133,7 +133,7 @@ class AipAdminController {
      * @return
      */
     def createOrUpdateGroup() {
-        def result = actionItemGroupCompositeService.createOrUpdateGroup( request.JSON )
+        def result = actionItemGroupCompositeService.createOrUpdateGroup(request.JSON)
         render result as JSON
     }
 
@@ -148,7 +148,7 @@ class AipAdminController {
                         sortAscending: params.ascending ? params.ascending.toBoolean() : false,
                         max          : params.max.toInteger(),
                         offset       : params.offset ? params.offset.toInteger() : 0]
-        def results = actionItemReadOnlyCompositeService.listActionItemsPageSort( paramObj )
+        def results = actionItemReadOnlyCompositeService.listActionItemsPageSort(paramObj)
         render results as JSON
     }
 
@@ -157,7 +157,7 @@ class AipAdminController {
      * @return
      */
     def deleteGroup() {
-        def result = actionItemGroupCompositeService.deleteGroup( request.JSON )
+        def result = actionItemGroupCompositeService.deleteGroup(request.JSON)
         render result as JSON
     }
 
@@ -167,7 +167,7 @@ class AipAdminController {
      */
     def deleteActionItem() {
         def map = request.JSON
-        def result = actionItemCompositeService.deleteActionItem( map.actionItemId )
+        def result = actionItemCompositeService.deleteActionItem(map.actionItemId)
         render result as JSON
     }
 
@@ -176,7 +176,7 @@ class AipAdminController {
      * @return
      */
     def openActionItem() {
-        def model = actionItemReadOnlyCompositeService.openActionItem( params.actionItemId )
+        def model = actionItemReadOnlyCompositeService.openActionItem(params.actionItemId)
         render model as JSON
     }
 
@@ -187,7 +187,7 @@ class AipAdminController {
     def groupList() {
         def requestParams = request.JSON
         def paginationParams = [sortColumn: requestParams.sortColumn, sortAscending: requestParams.sortAscending, max: requestParams.max, offset: requestParams.offset]
-        def results = groupFolderReadOnlyService.listGroupFolderPageSort( [name: requestParams.filterName], paginationParams )
+        def results = groupFolderReadOnlyService.listGroupFolderPageSort([name: requestParams.filterName], paginationParams)
         render results as JSON
     }
 
@@ -211,7 +211,7 @@ class AipAdminController {
                         max          : params.max.toInteger(),
                         offset       : params.offset ? params.offset.toInteger() : 0]
 
-        def results = actionItemStatusCompositeService.listActionItemsPageSort( paramObj )
+        def results = actionItemStatusCompositeService.listActionItemsPageSort(paramObj)
         render results as JSON
     }
 
@@ -241,10 +241,10 @@ class AipAdminController {
         def jsonObj = request.JSON
         def actionItemId = jsonObj.actionItemId
         if (!actionItemId) {
-            response.sendError( 403 )
+            response.sendError(403)
             return
         }
-        def model = actionItemCompositeService.updateActionItemDetailWithTemplate( jsonObj )
+        def model = actionItemCompositeService.updateActionItemDetailWithTemplate(jsonObj)
         render model as JSON
     }
 
@@ -256,12 +256,12 @@ class AipAdminController {
         def model
         def map = request.JSON
         try {
-            model = actionItemStatusCompositeService.statusSave( map );
+            model = actionItemStatusCompositeService.statusSave(map);
         } catch (ApplicationException e) {
             model = [fail: true]
-            LOGGER.error( e.getMessage() )
+            LOGGER.error(e.getMessage())
             model.success = false
-            model.message = e.returnMap( {mapToLocalize -> new ValidationTagLib().message( mapToLocalize )} ).message
+            model.message = e.returnMap({ mapToLocalize -> new ValidationTagLib().message(mapToLocalize) }).message
         }
         render model as JSON
     }
@@ -273,11 +273,11 @@ class AipAdminController {
     def removeStatus() {
         def model
         try {
-            model = actionItemStatusCompositeService.removeStatus( request.JSON.id );
+            model = actionItemStatusCompositeService.removeStatus(request.JSON.id);
         } catch (ApplicationException e) {
             model = [fail: true]
-            LOGGER.error( e.getMessage() )
-            model.message = e.returnMap( {mapToLocalize -> new ValidationTagLib().message( mapToLocalize )} ).message
+            LOGGER.error(e.getMessage())
+            model.message = e.returnMap({ mapToLocalize -> new ValidationTagLib().message(mapToLocalize) }).message
         }
         render model as JSON
     }
@@ -291,28 +291,28 @@ class AipAdminController {
 
     def actionItemStatusRuleById() {
         def id = params.id
-        def actionItemStatusRuleRO = actionItemStatusRuleReadOnlyService.getActionItemStatusRuleROById( id )
+        def actionItemStatusRuleRO = actionItemStatusRuleReadOnlyService.getActionItemStatusRuleROById(id)
         render actionItemStatusRuleRO as JSON
     }
 
 
     def actionItemStatusRulesByActionItemId() {
-        def actionItemId = params.long( 'actionItemId' )
-        def actionItemStatusRulesReadOnly = actionItemStatusRuleReadOnlyService.getActionItemStatusRulesROByActionItemId( actionItemId )
+        def actionItemId = params.long('actionItemId')
+        def actionItemStatusRulesReadOnly = actionItemStatusRuleReadOnlyService.getActionItemStatusRulesROByActionItemId(actionItemId)
         render actionItemStatusRulesReadOnly as JSON
     }
 
 
     def updateActionItemStatusRule() {
         def jsonObj = request.JSON
-        def model = actionItemStatusCompositeService.updateActionItemStatusRule( jsonObj )
+        def model = actionItemStatusCompositeService.updateActionItemStatusRule(jsonObj)
         render model as JSON
     }
 
 
     def blockedProcessList() {
-        def actionItemId = params.long( 'actionItemId' )
-        def model = actionItemBlockedProcessCompositeService.getBlockedProcessForSpecifiedActionItem( actionItemId )
+        def actionItemId = params.long('actionItemId')
+        def model = actionItemBlockedProcessCompositeService.getBlockedProcessForSpecifiedActionItem(actionItemId)
         render model as JSON
     }
 
@@ -324,11 +324,11 @@ class AipAdminController {
         def model
         try {
             def paramMap = request.JSON
-            model = actionItemBlockedProcessCompositeService.updateBlockedProcessItems( paramMap )
+            model = actionItemBlockedProcessCompositeService.updateBlockedProcessItems(paramMap)
         } catch (ApplicationException ae) {
             model = [
                     success: false,
-                    message: MessageHelper.message( ae.defaultMessage ),
+                    message: MessageHelper.message(ae.defaultMessage),
             ]
         }
         render model as JSON
@@ -340,7 +340,7 @@ class AipAdminController {
      * @return
      */
     def getAssignedActionItemInGroup() {
-        def resultMap = actionItemGroupAssignReadOnlyService.getAssignedActionItemsInGroup( Long.parseLong( params.groupId ) )
+        def resultMap = actionItemGroupAssignReadOnlyService.getAssignedActionItemsInGroup(Long.parseLong(params.groupId))
         render resultMap as JSON
     }
 
@@ -358,7 +358,7 @@ class AipAdminController {
      * @return
      */
     def updateActionItemGroupAssignment() {
-        def model = actionItemGroupCompositeService.updateActionItemGroupAssignment( request.JSON )
+        def model = actionItemGroupCompositeService.updateActionItemGroupAssignment(request.JSON)
         render model as JSON
     }
 
@@ -367,7 +367,7 @@ class AipAdminController {
      * @return
      */
     def checkActionItemPosted() {
-        def model = [posted: actionItemService.checkActionItemPosted( Long.parseLong( params.actionItemId ) )]
+        def model = [posted: actionItemService.checkActionItemPosted(Long.parseLong(params.actionItemId))]
         render model as JSON
     }
 
@@ -385,7 +385,7 @@ class AipAdminController {
      * @return
      */
     def groupPosted() {
-        def model = [posted: actionItemGroupService.checkGroupPosted( Long.parseLong( params.groupId ) )]
+        def model = [posted: actionItemGroupService.checkGroupPosted(Long.parseLong(params.groupId))]
         render model as JSON
     }
 
@@ -403,22 +403,17 @@ class AipAdminController {
      * @return
      */
     def getMaxAttachmentsVal() {
-        try {
-            String maxAttachment = session.getAttribute("maxAttachment")
-            if (!maxAttachment) {
-                maxAttachment = IntegrationConfiguration.fetchByProcessCodeAndSettingName('GENERAL_SSB', 'ACTION.ITEM.ATTACHMENT.MAXIMUM').value
-                session.setAttribute("maxAttachment", maxAttachment)
+        String maxAttachment = session.getAttribute("maxAttachment")
+        def results
+        if (!maxAttachment) {
+             results = actionItemStatusCompositeService.getMaxAttachmentsValue(maxAttachment)
+            if (results.maxAttachment) {
+                session.setAttribute("maxAttachment", results.maxAttachment)
             }
-            def model = [maxAttachment: Integer.parseInt(maxAttachment)]
-            render model as JSON
         }
-       catch (Exception e)
-        {
-            String errorString =MessageHelper.message("actionItemStatusRule.maxAttachment.error")
-            LOGGER.error errorString, e
-            def model = [errorMessage: errorString]
-            render model as JSON
-
+        else{
+            results.maxAttachment = maxAttachment
         }
+        render results as JSON
     }
 }
