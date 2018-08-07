@@ -57,12 +57,12 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
         <div class="response-field col-sm-2">
             <div class="row">
                 <div class="col-sm-12">
-                    <label for="attachments-{{$index+1}}">{{'aip.admin.status.rules.table.header.allowedAttachment'|i18n_aip}}</label>
+                    <label for="attachments-{{$index}}">{{'aip.admin.status.rules.table.header.allowedAttachment'|i18n_aip}}</label>
                 </div>
             </div>
             <div class="row">
                 <div class="col-sm-7">
-                    <select name="attachments-{{$index+1}}" id="attachments-{{$index+1}}" class="actionItemSelect form-control"
+                    <select name="attachments-{{$index}}" id="attachments-{{$index}}" class="actionItemSelect form-control"
                             ng-model="item.allowedAttachments"
                             ng-options="item for item in attachments"
                             ng-change="detectRuleChange()">
