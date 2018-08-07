@@ -588,16 +588,13 @@ module AIP {
                 .then((response) => {
                     this.rules = response.data;
                     angular.forEach(this.rules, (item) => {
-                        //item.statusRuleLabelText = this.trustActionItemRules(item.statusRuleLabelText);
                         item.statusRuleLabelText = this.$sce.trustAsHtml(this.$filter("html")(item.statusRuleLabelText)).toString();
                         item["status"] = {
                             actionItemStatus: item.statusName,
                             actionItemStatusId: item.statusId ? item.statusId : item.status.id
                         }
                         item.reviewReqInd = item.statusReviewReqInd;
-                        if(item.statusAllowedAttachment.toString().length < 2){
-                            item.statusAllowedAttachment="0"+item.statusAllowedAttachment;
-                        }
+                        item.statusAllowedAttachment = (item.statusAllowedAttachment < 10) ? ("0" + item.statusAllowedAttachment) : item.statusAllowedAttachment;
                         item.allowedAttachments =item.statusAllowedAttachment;
                     });
                     this.rules.sort((a, b) => {
@@ -620,7 +617,6 @@ module AIP {
                         this.maxAttachmentsList.push(result);
                     }
                 }, (err) => {
-                    //TODO:: handle error call
                     console.log(err);
                 });
         };
