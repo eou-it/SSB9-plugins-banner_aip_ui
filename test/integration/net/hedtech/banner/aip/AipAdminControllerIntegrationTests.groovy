@@ -1237,18 +1237,17 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
     @Test
     void checkMaxAttachmentVal() {
         def nameSQL = """update goriccr set goriccr_value = ? where goriccr_icsn_code = 'ACTION.ITEM.ATTACHMENT.MAXIMUM' and goriccr_sqpr_code = 'GENERAL_SSB'"""
-        sessionFactory.getCurrentSession().createSQLQuery( nameSQL ).setString( 0, '10' ).executeUpdate()
-        assertEquals( '10', IntegrationConfiguration.fetchByProcessCodeAndSettingName( 'GENERAL_SSB', 'ACTION.ITEM.ATTACHMENT.MAXIMUM' ).value )
+        sessionFactory.getCurrentSession().createSQLQuery( nameSQL ).setString( 0, '5' ).executeUpdate()
+        assertEquals( '5', IntegrationConfiguration.fetchByProcessCodeAndSettingName( 'GENERAL_SSB', 'ACTION.ITEM.ATTACHMENT.MAXIMUM' ).value )
         controller.request.contentType = "text/json"
         controller.getMaxAttachmentsVal()
         assertEquals 200, controller.response.status
         def data = JSON.parse( controller.response.contentAsString )
-        assert data.maxAttachment == 10
-
+        assert data.maxAttachment == 5
     }
 
     @Test
-    void testErrorMaxAttachmentVal() {
+    void testCharMaxAttachmentVal() {
         def nameSQL1 = """update goriccr set goriccr_value = ? where goriccr_icsn_code = 'ACTION.ITEM.ATTACHMENT.MAXIMUM' and goriccr_sqpr_code = 'GENERAL_SSB'"""
         sessionFactory.getCurrentSession().createSQLQuery( nameSQL1 ).setString( 0, 'S' ).executeUpdate()
         assertEquals( 'S', IntegrationConfiguration.fetchByProcessCodeAndSettingName( 'GENERAL_SSB', 'ACTION.ITEM.ATTACHMENT.MAXIMUM' ).value )
@@ -1256,7 +1255,43 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
         controller.getMaxAttachmentsVal()
         assertEquals 200, controller.response.status
         def data1 = JSON.parse( controller.response.contentAsString )
-        assert data1.errorMessage == "Error Occurred. Maximum Attachments value is not a valid number."
-
+        assert data1.maxAttachment == 10
     }
+
+    @Test
+    void testZeroMaxAttachmentVal() {
+        def nameSQL1 = """update goriccr set goriccr_value = ? where goriccr_icsn_code = 'ACTION.ITEM.ATTACHMENT.MAXIMUM' and goriccr_sqpr_code = 'GENERAL_SSB'"""
+        sessionFactory.getCurrentSession().createSQLQuery( nameSQL1 ).setString( 0, '0' ).executeUpdate()
+        assertEquals( '0', IntegrationConfiguration.fetchByProcessCodeAndSettingName( 'GENERAL_SSB', 'ACTION.ITEM.ATTACHMENT.MAXIMUM' ).value )
+        controller.request.contentType = "text/json"
+        controller.getMaxAttachmentsVal()
+        assertEquals 200, controller.response.status
+        def data1 = JSON.parse( controller.response.contentAsString )
+        assert data1.maxAttachment == 10
+    }
+
+    @Test
+    void testnullMaxAttachmentVal() {
+        def nameSQL1 = """update goriccr set goriccr_value = ? where goriccr_icsn_code = 'ACTION.ITEM.ATTACHMENT.MAXIMUM' and goriccr_sqpr_code = 'GENERAL_SSB'"""
+        sessionFactory.getCurrentSession().createSQLQuery( nameSQL1 ).setString( 0, ' ' ).executeUpdate()
+        assertEquals( ' ', IntegrationConfiguration.fetchByProcessCodeAndSettingName( 'GENERAL_SSB', 'ACTION.ITEM.ATTACHMENT.MAXIMUM' ).value )
+        controller.request.contentType = "text/json"
+        controller.getMaxAttachmentsVal()
+        assertEquals 200, controller.response.status
+        def data1 = JSON.parse( controller.response.contentAsString )
+        assert data1.maxAttachment == 10
+    }
+
+    @Test
+    void testnegativeMaxAttachmentVal() {
+        def nameSQL1 = """update goriccr set goriccr_value = ? where goriccr_icsn_code = 'ACTION.ITEM.ATTACHMENT.MAXIMUM' and goriccr_sqpr_code = 'GENERAL_SSB'"""
+        sessionFactory.getCurrentSession().createSQLQuery( nameSQL1 ).setString( 0, '-2' ).executeUpdate()
+        assertEquals( '-2', IntegrationConfiguration.fetchByProcessCodeAndSettingName( 'GENERAL_SSB', 'ACTION.ITEM.ATTACHMENT.MAXIMUM' ).value )
+        controller.request.contentType = "text/json"
+        controller.getMaxAttachmentsVal()
+        assertEquals 200, controller.response.status
+        def data1 = JSON.parse( controller.response.contentAsString )
+        assert data1.maxAttachment == 10
+    }
+
 }
