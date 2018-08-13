@@ -70,12 +70,13 @@
 
                         <div class="actionItemParams">
                             <div ng-if="row['completedDate']!==null">
-                                <span class="data-label" >{{'aip.common.text.date.response.saved'|i18n_aip}}</span>{{row['completedDate']}}
-                                <p><span class="data-label">{{'aip.user.action.item.last.response'|i18n_aip}}</span>{{row['currentResponse']}}</p>
+                                <div><span class="data-label" >{{'aip.common.text.date.response.saved'|i18n_aip}}</span>{{row['completedDate']}}</div>
+                                <div><span class="data-label">{{'aip.user.action.item.last.response'|i18n_aip}}</span>{{row['currentResponse']}}</div>
+                                <div ng-if="row['currentReviewState']!==null"><span class="data-label">{{'aip.user.action.item.last.reviewState'|i18n_aip}}</span>{{row['currentReviewState']}}</div>
                             </div>
                             <div class="haltProcessList" ng-if="row['actionItemHalted']">
                                 <span class="data-label">{{'aip.user.action.item.haltProcess.list'|i18n_aip}}</span>
-                                <ul class="list-group">
+                                <ul>
                                     <li ng-repeat="haltProcessName in row['haltProcesses']">{{haltProcessName}}</li>
                                 </ul>
                             </div>
