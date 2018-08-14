@@ -156,12 +156,12 @@ aip-list .aip-list-container {
         font-family: "OpenSans-regular";
         font-size: 12px;
         border-bottom: none;
-        padding: 8px 8px 0px 10px;
+        padding: 2px 8px 0px 8px;
         clear: both; }
         aip-list .aip-list-container .list-body-container .list-body .list-item .actionItemParams span.data-label {
           font-family: "OpenSans-bold";
           display: inline-block;
-          padding-right: 3px; }
+          padding: 2px; }
       aip-list .aip-list-container .list-body-container .list-body .list-item .haltProcessList h4 {
         font-size: 14px;
         word-wrap: break-word;
@@ -176,7 +176,10 @@ aip-list .aip-list-container {
         padding-left: 10px; }
       aip-list .aip-list-container .list-body-container .list-body .list-item .haltProcessList li {
         list-style: none;
-        padding: 0; }
+        padding-left: 2px; }
+      aip-list .aip-list-container .list-body-container .list-body .list-item .haltProcessList ul {
+        padding: 0;
+        margin: 0; }
       aip-list .aip-list-container .list-body-container .list-body .list-item .description {
         font-size: 1.3em;
         border-bottom: 1px solid #A4C6E4;
