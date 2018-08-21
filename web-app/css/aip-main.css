@@ -337,10 +337,10 @@ aip-list .enddate {
   border-color: #357ebd; }
 
 .pb-detail.pb-radio.pb-item {
-  display: flex; }
+  display: block; }
 
 .pb-detail.pb-item.pb-radiolabel {
-  margin: 20px 30px 20px 0px; }
+  margin: 0px 20px 20px 0px; }
 
 input[type="radio"] {
   -webkit-appearance: initial;

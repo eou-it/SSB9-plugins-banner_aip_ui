@@ -299,7 +299,28 @@ module AIP {
         resetSelection() {
             this.selectedData = undefined;
         }
-
+        documentUploader (responseElementId,paperClipId,responseElement) {
+            var isElementPresent = document.getElementById(paperClipId);
+           	if(responseElement.length  > 0  &&  isElementPresent === null){
+           			var paperClipElement = document.createElement("input");
+           			paperClipElement.id=paperClipId
+           			paperClipElement.setAttribute("type","image");
+           			paperClipElement.setAttribute("src","../images/attach_icon_disabled.svg");
+                    paperClipElement.setAttribute("title","Click paperclip icon to check attached documents");
+                    paperClipElement.setAttribute("style","margin-bottom: -5px;");
+           			responseElement.after(paperClipElement);
+           			$('#'+paperClipId).on("click",function(){
+           			    var selectedPaperClip = this.id
+           	            var currentId = selectedPaperClip.substring(selectedPaperClip.length-1, selectedPaperClip.length);
+           	            currentId = "#pbid-ActionItemStatusAgree-radio-0-"+currentId;
+           	            if($(currentId)[0].checked === true ){
+           		            //make sure paper clip is enabled
+           		            $("#"+selectedPaperClip)[0].setAttribute("src", "../images/attach_icon_default.svg");
+           		            console.log('paper clip is clicked>>>>> Openup model window');
+           	            }
+           			});
+           	}
+        }
         informModal( show ) {
             if (show) {
                 this.modalInstance = this.$uibModal.open( {
