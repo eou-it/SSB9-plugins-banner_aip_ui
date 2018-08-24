@@ -195,8 +195,12 @@ var AIP;
                 _this.selectedData = response;
                 _this.selectedData.info.content = _this.trustHTML(response.info.content);
                 if (selectionType === "actionItem") {
-                    var group = _this.actionItems.groups.filter(function (item) { return item.id === groupId; });
-                    var acitonItem = group[0].items.filter(function (item) { return item.actionItemId === itemId; });
+                    var group = _this.actionItems.groups.filter(function (item) {
+                        return item.id === groupId;
+                    });
+                    var acitonItem = group[0].items.filter(function (item) {
+                        return item.actionItemId === itemId;
+                    });
                     _this.selectedData.info.title = actionItem[0].title;
                 }
                 defer.resolve();
@@ -235,6 +239,24 @@ var AIP;
         };
         ListItemPageCtrl.prototype.resetSelection = function () {
             this.selectedData = undefined;
+        };
+        ListItemPageCtrl.prototype.documentUploader = function (responseElementId, paperClipId, responseElement) {
+            var isElementPresent = document.getElementById(paperClipId);
+            if (isElementPresent === null && responseElement.length > 0) {
+                var paperClipElement = angular.element("<input id=" + paperClipId + " type='image' " +
+                    "src='../images/attach_icon_disabled.svg' title = 'Click paperclip icon to check attached documents' " +
+                    "class=' pb-detail pb-item pb-paperclip'/>");
+                responseElement.after(paperClipElement);
+                $('#' + paperClipId).on("click", function () {
+                    var selectedPaperClip = this.id;
+                    var currentId = selectedPaperClip.substring(selectedPaperClip.length - 1, selectedPaperClip.length);
+                    currentId = "#pbid-ActionItemStatusAgree-radio-0-" + currentId;
+                    if ($(currentId)[0].checked === true) {
+                        //make sure paper clip is enabled
+                        $("#" + selectedPaperClip)[0].setAttribute("src", "../images/attach_icon_default.svg");
+                    }
+                });
+            }
         };
         ListItemPageCtrl.prototype.informModal = function (show) {
             if (show) {
