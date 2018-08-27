@@ -20,8 +20,12 @@ modules = {
         dependsOn 'bannerAIPUI'
         dependsOn 'bannerNonAdminAIPApp'
     }
+    'bannerAIPReviewUI' {
+            dependsOn 'bannerAIPUI'
+            dependsOn 'bannerAIPReviewApp'
+        }
     'bannerAIPUIRTL' {
-        dependsOn 'bannerAIPUI','bannerAdminAIPUI','bannerNonAdminAIPUI'
+        dependsOn 'bannerAIPUI','bannerAdminAIPUI','bannerNonAdminAIPUI','bannerAIPReviewUI'
         dependsOn 'bannerSelfServiceCommonRTL, extensibilityAngularRTL, commonComponentsRTL'
         dependsOn "jquery"
         resource url:[plugin: 'banner-ui-ss', file: 'bootstrap/css/bootstrap-rtl.css'],            attrs: [media: 'screen, projection']
@@ -48,6 +52,7 @@ modules = {
 
           resource url:[plugin: 'banner-aip-ui', file: 'aipApp/aipcommon.js']
           resource url:[plugin: 'banner-aip-ui', file: 'aipApp/common/services/itemListViewService.js']
+          resource url:[plugin: 'banner-aip-ui', file: 'aipApp/common/services/aipReviewService.js']
           resource url:[plugin: 'banner-aip-ui', file: 'aipApp/common/services/breadcrumbService.js']
           resource url:[plugin: 'banner-aip-ui', file: 'aipApp/common/services/userService.js']
           resource url:[plugin: 'banner-aip-ui', file: 'aipApp/common/services/spinnerService.js']
@@ -73,6 +78,13 @@ modules = {
          resource url:[plugin: 'banner-aip-ui', file: 'aipApp/listItem/itemConfirm/itemConfirmCtrl.js']
          resource url:[plugin: 'banner-aip-ui', file: 'aipApp/listItem/itemInform/itemInformCtrl.js']
      }
+
+    'bannerAIPReviewApp' {
+
+             dependsOn "bannerCommonAIPApp"
+             resource url:[plugin: 'banner-aip-ui', file: 'aipApp/aipReviewApp.js']
+             resource url:[plugin: 'banner-aip-ui', file: 'aipApp/review/monitorActionItemCtrl.js']
+    }
 
     'bannerAdminAIPApp' {
 
