@@ -15,6 +15,15 @@ var AIPUI;
         AIPAttachment.prototype.link = function (scope, elem, attr) {
         };
         AIPAttachment.prototype.controller = function ($scope) {
+            $scope.openFileDialogOnEnter = function () {
+                $scope.openFileDialog();
+            };
+            $scope.openFileDialog = function () {
+                $("#file").click();
+            };
+            $scope.reset = function () {
+                angular.element('#file-input-textbox').val("");
+            };
         };
         return AIPAttachment;
     }());

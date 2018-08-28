@@ -15,10 +15,15 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
             <div class="modal-body" id="modal-status-add-body">
                 <div class="modal-body-content">
                     <div class="row">
-                        <input type="text" id="file-input-textbox" name="file-input-textbox" class="file-input"
-                               placeholder="Browse"/>
-                        <input type="file" name="file" id="file" class="sr-only"/>
-                        <input ng-model="button" class="primary button" type="button" value={{"js.aip.common.upload.button.label"|i18n_aip}} name="Button"/>
+                        <input type="text" id="file-input-textbox" name="file-input-textbox" tabindex="1"
+                               class="file-input" ng-keydown="openFileDialogOnEnter()" placeholder="Browse"
+                               ng-click="openFileDialog()"/>
+                        <input type="file" name="file" id="file" tabindex="1" class="sr-only"
+                               onchange="document.getElementById('file-input-textbox').value = this.value">
+                        <input ng-model="button" class="primary button" type="button" name="Button" tabindex="1"
+                               ng-click="submitUpload()" value={{"js.aip.common.upload.button.label"|i18n_aip}}>
+                        <input ng-model="button" type="button" class="btn btn-default" name="Button" tabindex="1"
+                               ng-click="reset()" value={{"js.aip.common.reset.button.label"|i18n_aip}}>
                     </div>
                 </div>
             </div>
