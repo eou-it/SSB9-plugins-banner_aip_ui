@@ -11,7 +11,7 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
                 {{"aip.welcome.text"|i18n_aip}}
             </div>
         </div>
-        <div class="returnBtn col-xs-4" >
+        <div class="returnBtn col-xs-4">
             <button class="btn btn-primary" ng-click="previousLink()">
                 <span ng-if="vm.isFromGateKeeper">{{"aip.user.actionItem.list.navbtn.continue"|i18n_aip}}</span>
                 <span ng-if="!vm.isFromGateKeeper">{{"aip.user.actionItem.list.navbtn.return"|i18n_aip}}</span>
@@ -24,10 +24,12 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
         </div>
         <div class="listActionItem-container" ng-if="vm.actionItems.groups.length > 0">
             <div class="itemList">
-                <div class="groupList col-sm-5 col-xs-12" ng-class="{'hidden-xs':vm.selectedData}" ng-style="vm.getHeight()">
+                <div class="groupList col-sm-5 col-xs-12" ng-class="{'hidden-xs':vm.selectedData}"
+                     ng-style="vm.getHeight()">
                     <uib-accordion close-others="oneAtATime">
-                        <aip-list ng-repeat="actionItemList in vm.actionItems.groups" itemgroup="actionItemList" click="vm.selectItem(groupId, itemId)"
-                                  stylefunction="vm.styleFunction(key)" idx="$index", opengroup="vm.initialOpenGroup"
+                        <aip-list ng-repeat="actionItemList in vm.actionItems.groups" itemgroup="actionItemList"
+                                  click="vm.selectItem(groupId, itemId)"
+                                  stylefunction="vm.styleFunction(key)" idx="$index" , opengroup="vm.initialOpenGroup"
                                   showgroupinfo="vm.showGroupInfo(groupId)" togglegroup="vm.toggleDetail(state)">
                         </aip-list>
                     </uib-accordion>
@@ -35,7 +37,8 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
                 <div class="groupDetail col-sm-7 col-xs-12" ng-style="vm.getHeight()">
                     <div class="detail-body-container" ng-if="vm.selectedData">
                         <div class="detail-body">
-                            <aip-item-detail data="vm.selectedData" next="vm.nextItem(groupId, itemId)" tolist="vm.resetSelection()">
+                            <aip-item-detail data="vm.selectedData" next="vm.nextItem(groupId, itemId)"
+                                             tolist="vm.resetSelection()">
                             </aip-item-detail>
 
                         </div>
@@ -43,5 +46,7 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
                 </div>
             </div>
         </div>
+        <aip-attachment></aip-attachment>
     </div>
 </div>
+

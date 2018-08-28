@@ -240,20 +240,35 @@ var AIP;
         ListItemPageCtrl.prototype.resetSelection = function () {
             this.selectedData = undefined;
         };
-        ListItemPageCtrl.prototype.documentUploader = function (responseElementId, paperClipId, responseElement) {
+        ListItemPageCtrl.prototype.documentUploader = function (responseElementId, paperClipId, responseElement, allowedAttachments, responseId) {
             var isElementPresent = document.getElementById(paperClipId);
             if (isElementPresent === null && responseElement.length > 0) {
                 var paperClipElement = angular.element("<input id=" + paperClipId + " type='image' " +
                     "src='../images/attach_icon_disabled.svg' title = 'Click paperclip icon to check attached documents' " +
                     "class=' pb-detail pb-item pb-paperclip'/>");
+                var selectedResponseElement = angular.element("<input id = " + paperClipId + "-response value =" + responseId + " type='hidden'/>");
+                var actionitemId = window.params.actionItemId;
+                var actionitemIdElement = angular.element("<input id = " + paperClipId + "-actionitemId value =" + actionitemId + " type='hidden'/>");
                 responseElement.after(paperClipElement);
+                responseElement.after(selectedResponseElement);
+                responseElement.after(actionitemIdElement);
                 $('#' + paperClipId).on("click", function () {
                     var selectedPaperClip = this.id;
                     var currentId = selectedPaperClip.substring(selectedPaperClip.length - 1, selectedPaperClip.length);
+                    var responseValue = $("#pbid-ActionItemStatusAgree-paper-clip-0-" + currentId + "-response").val();
+                    var actionItemIdValue = $("#pbid-ActionItemStatusAgree-paper-clip-0-" + currentId + "-actionitemId").val();
                     currentId = "#pbid-ActionItemStatusAgree-radio-0-" + currentId;
+                    //logging the responseid and actionitemId, this will be consumed by CSAT-4873
+                    //TODO: remove console logs
+                    console.log("responseId>>>>>>>>>>>>" + responseValue);
+                    console.log("window.params.actionItemId" + actionItemIdValue);
                     if ($(currentId)[0].checked === true) {
                         //make sure paper clip is enabled
                         $("#" + selectedPaperClip)[0].setAttribute("src", "../images/attach_icon_default.svg");
+                        // Open modal window
+                        $("#attachmentsDiv .xe-popup-mask").removeClass('ng-hide');
+                        $("#attachmentsDiv .xe-popup-mask").removeAttr("aria-hidden");
+                        $("#maxAttachments").text(allowedAttachments);
                     }
                 });
             }

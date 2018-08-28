@@ -190,7 +190,11 @@ bannerAIPUI
                 directive.templateUrl = APP_ROOT + "common/directives/item-detail/template/itemDetail.html";
                 return $delegate;
             });
-
+            $provide.decorator("aipAttachmentDirective", function ($delegate) {
+                var directive = $delegate[0];
+                directive.templateUrl = APP_ROOT + "common/directives/aip-attachment/template/aipAttachment.html";
+                return $delegate;
+            });
         }]
     );
 
