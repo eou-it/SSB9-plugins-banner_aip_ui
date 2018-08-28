@@ -353,6 +353,7 @@ module AIP {
                         $("#" + selectedPaperClip)[0].setAttribute("src", "../images/attach_icon_default.svg");
                         // Open modal window
                         $("#attachmentsDiv .xe-popup-mask").removeClass('ng-hide');
+                        $("#attachmentsDiv .xe-popup-mask").removeAttr("aria-hidden");
                         $("#maxAttachments").text(allowedAttachments);
                     }
                 });
