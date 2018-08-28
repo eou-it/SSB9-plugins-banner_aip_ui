@@ -7,7 +7,6 @@
 var aipAppRoot = "/" + extensibilityInfo.application + "/plugins/" +
     window.aipApp.fileSystemName + "/aipApp/";
 var aipAppAbsPath = window.location.protocol + "//" + window.location.host + Application.getApplicationPath() + "/";
-var bcmRoot = window.location.protocol + Application.getApplicationPath();
 
 sessionStorage.setItem('genAIPAppCallingPage', "");
 // required global variables for PageBuilder render
@@ -48,8 +47,6 @@ var bannerAIPReviewApp = angular.module("bannerAIPReview", [
 
 //set application root url
     .constant('APP_ROOT', aipAppRoot)
-
-    .constant('BCM_ROOT', bcmRoot)
 
     .constant('APP_PATH', Application.getApplicationPath())
 
