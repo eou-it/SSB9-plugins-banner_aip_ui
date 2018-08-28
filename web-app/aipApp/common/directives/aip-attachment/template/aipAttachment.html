@@ -4,11 +4,11 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
 
 <div id="attachmentsDiv">
     <xe-popup-modal show="modalShown" focusbackelement="tools"
-                    pageheader={{"aip.user.action.item.attachment.title"|i18n_aip}}>
+                    pageheader={{"js.aip.user.action.item.attachment.modal.title"|i18n_aip}}>
         <popup-content>
             <div id="modal-header">
                 <label>
-                    {{"aip.user.action.item.attachment.maximum.attachments"|i18n_aip}}: <span
+                    {{"js.aip.user.action.item.maximum.attachments.label"|i18n_aip}}: <span
                         id="maxAttachments"></span>
                 </label>
             </div>
@@ -18,7 +18,7 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
                         <input type="text" id="file-input-textbox" name="file-input-textbox" class="file-input"
                                placeholder="Browse"/>
                         <input type="file" name="file" id="file" class="sr-only"/>
-                        <input ng-model="button" class="primary button" type="button" value={{"aip.common.text.upload"|i18n_aip}} name="Button"/>
+                        <input ng-model="button" class="primary button" type="button" value={{"js.aip.common.upload.button.label"|i18n_aip}} name="Button"/>
                     </div>
                 </div>
             </div>
