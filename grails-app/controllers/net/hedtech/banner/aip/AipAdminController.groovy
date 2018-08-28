@@ -405,7 +405,7 @@ class AipAdminController {
     def getMaxAttachmentsVal() {
         String maxAttachment = session.getAttribute("maxAttachment")
         def results
-        if (!maxAttachment) {
+        if (maxAttachment.equals(null)) {
              results = actionItemStatusCompositeService.getMaxAttachmentsValue(maxAttachment)
             if (results.maxAttachment) {
                 session.setAttribute("maxAttachment", results.maxAttachment)
