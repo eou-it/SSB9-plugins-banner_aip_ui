@@ -35,7 +35,7 @@ module AIPUI {
             $scope.openFileDialog = function () {
                 $("#file").click();
             };
-
+            
             $scope.reset = function () {
                 angular.element('#file-input-textbox').val("");
             }
