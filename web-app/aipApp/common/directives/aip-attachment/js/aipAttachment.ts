@@ -28,9 +28,6 @@ module AIPUI {
         }
 
         controller($scope) {
-            $scope.openFileDialogOnEnter = function () {
-                $scope.openFileDialog();
-            };
 
             $scope.openFileDialog = function () {
                 $("#file").click();

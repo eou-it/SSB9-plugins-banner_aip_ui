@@ -16,17 +16,17 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
                 <div class="modal-body-content">
                     <div class="row">
                         <input type="text" id="file-input-textbox" name="file-input-textbox" tabindex="1"
-                               class="file-input" ng-keydown="openFileDialogOnEnter()" placeholder="Browse"
-                               ng-click="openFileDialog()"/>
+                               class="file-input"  placeholder="{{'js.aip.common.browse.button.label'|i18n_aip}}"
+                               ng-click="openFileDialog()"  aria-label="{{'js.aip.common.browse.button.label'|i18n_aip}}"/>
 
-                        <input type="file" name="file" id="file" tabindex="1" class="sr-only"
+                        <input type="file" name="file" id="file"  class="sr-only"
                                onchange="document.getElementById('file-input-textbox').value = this.value">
 
-                        <input ng-model="button" class="primary button btn-margin-left" type="button" name="Button" tabindex="2"
-                               ng-click="submitUpload()"  value={{"js.aip.common.upload.button.label"|i18n_aip}}>
+                        <input ng-model="upload" class="primary button btn-margin-left" type="button" name="Button" tabindex="2"
+                               ng-click="submitUpload()"  value={{"js.aip.common.upload.button.label"|i18n_aip}} aria-label="{{'js.aip.common.upload.button.label'|i18n_aip}}">
 
-                        <input ng-model="button" type="button" class="btn btn-default btn-margin-left btn-margin-top" name="Button" tabindex="3"
-                               ng-click="reset()" value={{"js.aip.common.reset.button.label"|i18n_aip}}>
+                        <input ng-model="reset" type="button" class="btn btn-default btn-margin-left btn-margin-top" name="Button" tabindex="3"
+                               ng-click="reset()" value={{"js.aip.common.reset.button.label"|i18n_aip}}  aria-label="{{'js.aip.common.reset.button.label'|i18n_aip}}">
                     </div>
                 </div>
             </div>
