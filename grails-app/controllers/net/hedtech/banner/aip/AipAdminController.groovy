@@ -399,7 +399,7 @@ class AipAdminController {
     }
 
     /**
-     * Get configured Max Attachments Val from GORICCR table
+     * Get configured Max Attachment Val from GORICCR table
      * @return
      */
     def getMaxAttachmentsVal() {
