@@ -21,9 +21,18 @@ class UploadController {
     def saveuploadInfo() {
         def map = request.JSON
         MultipartFile file = (MultipartFile) request.multipartFiles.file?.get( 0 );
-        map.file= file;
+        map.file = file;
         def uploadDocumentInfo = uploadDocumentCompositeService.saveUploadDocument( map )
         render uploadDocumentInfo as JSON
     }
 
+    /**
+     * This method is responsible for getting list is attached documents for a response.
+     * @return documents list as JSON
+     */
+    def fetchDocuments() {
+        def map = request.JSON
+        def results = uploadDocumentCompositeService.fetchDocuments( map )
+        render results as JSON
+    }
 }
