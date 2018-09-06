@@ -412,7 +412,7 @@ class AipAdminController {
             }
         }
         else{
-            results.maxAttachment = maxAttachment
+            results = [maxAttachment: maxAttachment]
         }
         render results as JSON
     }
