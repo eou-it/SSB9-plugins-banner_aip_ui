@@ -13,6 +13,7 @@ module AIPUI {
         scope: any;
         replace: boolean;
 
+
         constructor() {
             this.restrict = "AE";
             this.replace = false;
@@ -28,14 +29,6 @@ module AIPUI {
         }
 
         controller($scope) {
-
-            $scope.openFileDialog = function () {
-                $("#file").click();
-            };
-            
-            $scope.reset = function () {
-                angular.element('#file-input-textbox').val("");
-            }
         }
     }
 }
