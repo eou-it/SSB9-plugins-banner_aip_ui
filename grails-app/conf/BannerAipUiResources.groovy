@@ -69,6 +69,7 @@ modules = {
           resource url:[plugin: 'banner-aip-ui', file: 'aipApp/cm-timepicker.js']
           resource url:[plugin: 'banner-aip-ui', file: 'aipApp/angular-dateparser.min.js']
           resource url:[plugin: 'banner-aip-ui', file: 'aipApp/common/directives/aip-attachment/js/aipAttachment.js']
+          resource url:[plugin: 'banner-aip-ui', file: 'aipApp/common/directives/file-upload.js']
       }
 
      'bannerNonAdminAIPApp' {
