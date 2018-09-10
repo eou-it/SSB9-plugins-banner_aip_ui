@@ -1,6 +1,9 @@
 /*******************************************************************************
 Copyright 2018 Ellucian Company L.P. and its affiliates.
 ********************************************************************************/
+/*********************************************************************************
+ Copyright 2017-2018 Ellucian Company L.P. and its affiliates.
+ **********************************************************************************/
 aip-list .aip-list-container {
   border: none;
   box-shadow: none; }
@@ -288,6 +291,16 @@ aip-list .enddate {
     .landingItem-container .landing-context .landing-description {
       padding: 8px; } }
 
+#fileupload_label {
+  width: 100%; }
+
+.btn-right {
+  float: right;
+  margin-right: 5px; }
+
+/*******************************************************************************
+Copyright 2018 Ellucian Company L.P. and its affiliates.
+********************************************************************************/
 .aip-item-detail-container {
   height: inherit;
   background: #F3FCFF; }

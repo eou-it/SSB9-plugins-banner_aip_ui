@@ -1,26 +1,31 @@
 <!--*******************************************************************************
-Copyright 2018 Ellucian Company L.P. and its affiliates.
-*******************************************************************************-->
-
+   Copyright 2018 Ellucian Company L.P. and its affiliates.
+   *******************************************************************************-->
 <div id="attachmentsDiv">
     <xe-popup-modal show="modalShown" focusbackelement="tools"
                     pageheader={{"js.aip.user.action.item.attachment.modal.title"|i18n_aip}}>
         <popup-content>
-            <div id="modal-header">
+            <div id="modal-header ">
                 <label>
                     {{"js.aip.user.action.item.maximum.attachments.label"|i18n_aip}}: <span
                         id="maxAttachments"></span>
                 </label>
             </div>
-            <div class="modal-body" id="modal-status-add-body">
-                <div class="modal-body-content">
-                    <div class="row">
-                        <input type="text" id="file-input-textbox" name="file-input-textbox" class="file-input"
-                               placeholder="Browse"/>
-                        <input type="file" name="file" id="file" class="sr-only"/>
-                        <input ng-model="button" class="primary button" type="button" value={{"js.aip.common.upload.button.label"|i18n_aip}} name="Button"/>
+            <div class="modal-body">
+                <form name="UploadFile" role="form">
+                    <div class="row ">
+                        <label  for="fileupload_label" >
+                            {{"js.aip.user.document.attachment.filePath.label"|i18n_aip}}:
+                        </label>
+                        <input class="primary button btn-right" type="button" name="Button" tabindex="2"
+                               ng-click="submitUpload()"  value={{"js.aip.common.upload.button.label"|i18n_aip}} aria-label="{{'js.aip.common.upload.button.label'|i18n_aip}}">
+                        <input  class="btn btn-default secondary-btn btn-right" type="reset" name="Button" tabindex="3"
+                                value={{"js.aip.common.reset.button.label"|i18n_aip}}  aria-label="{{'js.aip.common.reset.button.label'|i18n_aip}}">
                     </div>
-                </div>
+                    <div class="row">
+                        <input id="fileupload_label" type="file" ngf-select ng-model="selectedFile" required="true" name="file" />
+                    </div>
+                </form>
             </div>
         </popup-content>
         <popup-buttons>
