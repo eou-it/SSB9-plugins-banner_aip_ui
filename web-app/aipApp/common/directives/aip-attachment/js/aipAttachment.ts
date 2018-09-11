@@ -8,7 +8,7 @@ declare var register;
 module AIPUI {
 
     export class AIPAttachment  {
-        $inject = ["$scope"];
+
         templateUrl: string;
         restrict: string;
         scope: any;
@@ -16,7 +16,9 @@ module AIPUI {
         constructor() {
             this.restrict = "AE";
             this.replace = false;
-            this.scope = { }
+            this.scope = {
+                showModal:"="
+            }
 
         }
 
@@ -25,14 +27,18 @@ module AIPUI {
         }
 
         link(scope, elem, attr) {
-            //console.log(scope.modalShown)
-            scope.modalShown = attr.showModal;
         }
 
         controller($scope) {
-            $scope.modalShown= false;
-
-
+            $scope.$watch(
+                            "showModal", function (newVal, oldVal) {
+                                console.log("Value changed "+ newVal);
+                                //TODO: Get the new Response ID & refresh the grid.
+                                if (!$scope.$$phase) {
+                                    $scope.$apply();
+                                }
+                            }
+                        );
             $scope.openFileDialogOnEnter = function () {
                 $scope.openFileDialog();
             };

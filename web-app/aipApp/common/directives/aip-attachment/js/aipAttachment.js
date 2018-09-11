@@ -6,19 +6,24 @@ var AIPUI;
 (function (AIPUI) {
     var AIPAttachment = /** @class */ (function () {
         function AIPAttachment() {
-            this.$inject = ["$scope"];
             this.restrict = "AE";
             this.replace = false;
-            this.scope = {};
+            this.scope = {
+                showModal: "="
+            };
         }
         AIPAttachment.prototype.compile = function () {
         };
         AIPAttachment.prototype.link = function (scope, elem, attr) {
-            //console.log(scope.modalShown)
-            scope.modalShown = attr.showModal;
         };
         AIPAttachment.prototype.controller = function ($scope) {
-            $scope.modalShown = false;
+            $scope.$watch("showModal", function (newVal, oldVal) {
+                console.log("Value changed " + newVal);
+                //TODO: Get the new Response ID & refresh the grid.
+                if (!$scope.$$phase) {
+                    $scope.$apply();
+                }
+            });
             $scope.openFileDialogOnEnter = function () {
                 $scope.openFileDialog();
             };

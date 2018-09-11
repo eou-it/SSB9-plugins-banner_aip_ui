@@ -26,16 +26,17 @@ var AIP;
             this.modalInstance;
             this.isFromGateKeeper = false;
             this.initialOpenGroup = -1;
+            $scope.showModal = false;
             $scope.$watch("vm.detailView", function (newVal, oldVal) {
                 if (!$scope.$$phase) {
-                    $scope.apply();
+                    $scope.$apply();
                 }
             });
-            $scope.modalShown = false;
             //Listen to your custom event
-            window.addEventListener('printerstatechanged', function (e) {
-                console.log('printer state changed testing>>>>>>');
-                $scope.modalShown = true;
+            window.addEventListener('responseChanged', function (e) {
+                console.log('Response changed testing>>>>>>');
+                $scope.showModal = true;
+                $scope.$apply();
             });
             notifications.on('add', function (e) {
                 setTimeout(function (e) {
@@ -272,7 +273,7 @@ var AIP;
                         //make sure paper clip is enabled
                         $("#" + selectedPaperClip)[0].setAttribute("src", "../images/attach_icon_default.svg");
                         $("aip-attachment").attr("reload-on", responseValue);
-                        var evt = new CustomEvent('printerstatechanged', { detail: "state" });
+                        var evt = new CustomEvent('responseChanged', { detail: "state" });
                         window.dispatchEvent(evt);
                         // Open modal window
                         // $("#attachmentsDiv .xe-popup-mask").removeClass('ng-hide');
