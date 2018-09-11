@@ -6,6 +6,7 @@ var AIPUI;
 (function (AIPUI) {
     var AIPAttachment = /** @class */ (function () {
         function AIPAttachment() {
+            this.$inject = ["$scope"];
             this.restrict = "AE";
             this.replace = false;
             this.scope = {};
@@ -13,8 +14,11 @@ var AIPUI;
         AIPAttachment.prototype.compile = function () {
         };
         AIPAttachment.prototype.link = function (scope, elem, attr) {
+            //console.log(scope.modalShown)
+            scope.modalShown = attr.showModal;
         };
         AIPAttachment.prototype.controller = function ($scope) {
+            $scope.modalShown = false;
             $scope.openFileDialogOnEnter = function () {
                 $scope.openFileDialog();
             };

@@ -8,7 +8,7 @@ var AIP;
 (function (AIP) {
     var ListItemPageCtrl = /** @class */ (function () {
         function ListItemPageCtrl($scope, $state, ItemListViewService, AIPUserService, SpinnerService, $timeout, $q, $uibModal, APP_ROOT, $sce) {
-            this.$inject = ["$scope", "$state", "ItemListViewService", "AIPUserService", "SpinnerService", "$timeout", "$q", "$uibModal", "APP_ROOT", "$sce"];
+            this.$inject = ["$scope", "$state", "ItemListViewService", "AIPUserService", "SpinnerService", "$timeout", "$q", "$uibModal", "APP_ROOT", "$sce", "$compile"];
             this.trustHTML = function (txtString) {
                 var sanitized = txtString ? this.$sce.trustAsHtml(txtString) : "";
                 return sanitized;
@@ -30,6 +30,12 @@ var AIP;
                 if (!$scope.$$phase) {
                     $scope.apply();
                 }
+            });
+            $scope.modalShown = false;
+            //Listen to your custom event
+            window.addEventListener('printerstatechanged', function (e) {
+                console.log('printer state changed testing>>>>>>');
+                $scope.modalShown = true;
             });
             notifications.on('add', function (e) {
                 setTimeout(function (e) {
@@ -265,9 +271,12 @@ var AIP;
                     if ($(currentId)[0].checked === true) {
                         //make sure paper clip is enabled
                         $("#" + selectedPaperClip)[0].setAttribute("src", "../images/attach_icon_default.svg");
+                        $("aip-attachment").attr("reload-on", responseValue);
+                        var evt = new CustomEvent('printerstatechanged', { detail: "state" });
+                        window.dispatchEvent(evt);
                         // Open modal window
-                        $("#attachmentsDiv .xe-popup-mask").removeClass('ng-hide');
-                        $("#attachmentsDiv .xe-popup-mask").removeAttr("aria-hidden");
+                        // $("#attachmentsDiv .xe-popup-mask").removeClass('ng-hide');
+                        // $("#attachmentsDiv .xe-popup-mask").removeAttr("aria-hidden");
                         $("#maxAttachments").text(allowedAttachments);
                     }
                 });

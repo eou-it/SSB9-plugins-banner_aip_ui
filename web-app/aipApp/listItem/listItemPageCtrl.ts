@@ -45,7 +45,7 @@ module AIP {
 
     export class ListItemPageCtrl implements IListItemPageCtrl {
 
-        $inject = ["$scope", "$state", "ItemListViewService", "AIPUserService", "SpinnerService", "$timeout", "$q", "$uibModal", "APP_ROOT", "$sce"];
+        $inject = ["$scope", "$state", "ItemListViewService", "AIPUserService", "SpinnerService", "$timeout", "$q", "$uibModal", "APP_ROOT", "$sce","$compile"];
         itemListViewService: AIP.ItemListViewService;
         userService: AIP.UserService;
         actionItems: IUserItem;
@@ -61,6 +61,7 @@ module AIP {
         APP_ROOT;
         modalInstance;
         isFromGateKeeper;
+        $compile;
 
         constructor($scope, $state, ItemListViewService, AIPUserService, SpinnerService, $timeout, $q, $uibModal, APP_ROOT, $sce) {
             $scope.vm = this;
@@ -76,7 +77,6 @@ module AIP {
             this.modalInstance;
             this.isFromGateKeeper = false;
             this.initialOpenGroup = -1;
-
             $scope.$watch(
                 "vm.detailView", function (newVal, oldVal) {
                     if (!$scope.$$phase) {
@@ -84,6 +84,13 @@ module AIP {
                     }
                 }
             );
+            $scope.modalShown = false;
+            //Listen to your custom event
+            window.addEventListener('printerstatechanged', function (e) {
+                   console.log('printer state changed testing>>>>>>');
+            $scope.modalShown = true; });
+
+
 
             notifications.on('add', function (e) {
                 setTimeout(function (e) {
@@ -105,6 +112,7 @@ module AIP {
                     window.history.back();
                 }
             };
+
         }
 
         init() {
@@ -338,6 +346,7 @@ module AIP {
                 responseElement.after(paperClipElement);
                 responseElement.after(selectedResponseElement);
                 responseElement.after(actionitemIdElement);
+
                 $('#' + paperClipId).on("click", function () {
                     var selectedPaperClip = this.id
                     var currentId = selectedPaperClip.substring(selectedPaperClip.length - 1, selectedPaperClip.length);
@@ -351,9 +360,13 @@ module AIP {
                     if ($(currentId)[0].checked === true) {
                         //make sure paper clip is enabled
                         $("#" + selectedPaperClip)[0].setAttribute("src", "../images/attach_icon_default.svg");
+                        $("aip-attachment").attr("reload-on",responseValue);
+                        var evt = new CustomEvent('printerstatechanged', { detail: "state" });
+                        window.dispatchEvent(evt);
                         // Open modal window
-                        $("#attachmentsDiv .xe-popup-mask").removeClass('ng-hide');
-                        $("#attachmentsDiv .xe-popup-mask").removeAttr("aria-hidden");
+                        // $("#attachmentsDiv .xe-popup-mask").removeClass('ng-hide');
+                        // $("#attachmentsDiv .xe-popup-mask").removeAttr("aria-hidden");
+
                         $("#maxAttachments").text(allowedAttachments);
                     }
                 });
@@ -381,6 +394,8 @@ module AIP {
             notifications.addNotification(n);
 
         }
+
+
     }
 }
 

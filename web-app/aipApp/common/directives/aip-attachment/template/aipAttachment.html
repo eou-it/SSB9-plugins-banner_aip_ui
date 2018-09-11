@@ -22,12 +22,52 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
                         <input type="file" name="file" id="file" tabindex="1" class="sr-only"
                                onchange="document.getElementById('file-input-textbox').value = this.value">
 
-                        <input ng-model="button" class="primary button btn-margin-left" type="button" name="Button" tabindex="2"
-                               ng-click="submitUpload()"  value={{"js.aip.common.upload.button.label"|i18n_aip}}>
+                        <input ng-model="button" class="primary button btn-margin-left" type="button" name="Button"
+                               tabindex="2"
+                               ng-click="submitUpload()" value={{"js.aip.common.upload.button.label"|i18n_aip}}>
 
-                        <input ng-model="button" type="button" class="btn btn-default btn-margin-left btn-margin-top" name="Button" tabindex="3"
+                        <input ng-model="button" type="button" class="btn btn-default btn-margin-left btn-margin-top"
+                               name="Button" tabindex="3"
                                ng-click="reset()" value={{"js.aip.common.reset.button.label"|i18n_aip}}>
                     </div>
+
+
+                    <div id="attachmentsTable">
+                        <xe-table-grid
+                                tableId="uplaodDocumentsTable"
+                                header="header"
+                                end-point="urlTest"
+                                fetch="fetchData(query)"
+                                post-fetch="postFetch(response, oldResult)"
+                                content="rows"
+                                results-found="records"
+                                continuous-scrolling="false"
+                                continuous-scroll-parent="body"
+                                on-row-click="onClick(data,index)"
+                                on-row-double-click="onDoubleClick(data,index)"
+                                no-data-msg="{{'aip.common.no.results.found'|i18n_aip}}"
+                                empty-table-msg="emptyTableMsg"
+                                draggable-column-names="draggableColumnNames"
+                                mobile-layout="mobileConfig"
+                                refresh-grid="refreshGrid"
+                                continuous-scrolling="false">
+                            <xe-cell-markup heading-name="tick">
+                                <input type="checkbox" ng-click="someMethod()" value="all"/>
+                            </xe-cell-markup>
+
+                            <xe-cell-markup column-name="tick">
+                                <input type="checkbox"/>
+                            </xe-cell-markup>
+                        </xe-table-grid>
+                    </div>
+
+
+
+
+
+
+
+
                 </div>
             </div>
         </popup-content>

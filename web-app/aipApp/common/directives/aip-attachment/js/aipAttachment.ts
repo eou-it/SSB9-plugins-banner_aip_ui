@@ -6,17 +6,18 @@
 declare var register;
 
 module AIPUI {
-    export class AIPAttachment {
 
+    export class AIPAttachment  {
+        $inject = ["$scope"];
         templateUrl: string;
         restrict: string;
         scope: any;
         replace: boolean;
-
         constructor() {
             this.restrict = "AE";
             this.replace = false;
-            this.scope = {}
+            this.scope = { }
+
         }
 
         compile() {
@@ -24,10 +25,14 @@ module AIPUI {
         }
 
         link(scope, elem, attr) {
-
+            //console.log(scope.modalShown)
+            scope.modalShown = attr.showModal;
         }
 
         controller($scope) {
+            $scope.modalShown= false;
+
+
             $scope.openFileDialogOnEnter = function () {
                 $scope.openFileDialog();
             };
@@ -35,12 +40,12 @@ module AIPUI {
             $scope.openFileDialog = function () {
                 $("#file").click();
             };
-            
+
             $scope.reset = function () {
                 angular.element('#file-input-textbox').val("");
+            };
             }
         }
     }
-}
 
 register("bannerAIPUI").directive("aipAttachment", AIPUI.AIPAttachment);
