@@ -22,7 +22,7 @@ class UploadController {
         def map = request.JSON
         MultipartFile file = (MultipartFile) request.multipartFiles.file?.get( 0 );
         map.file = file;
-        def uploadDocumentInfo = uploadDocumentCompositeService.saveUploadDocument( map )
+        def uploadDocumentInfo = uploadDocumentCompositeService.addUploadDocument( map )
         render uploadDocumentInfo as JSON
     }
 
@@ -34,5 +34,36 @@ class UploadController {
         def map = request.JSON
         def results = uploadDocumentCompositeService.fetchDocuments( map )
         render results as JSON
+    }
+    /**
+     * Get configured restricted attachment type val from GUROCFG table
+     * @return
+     */
+    def getrestrictedAttachmetTypeVal() {
+        String documentType = session.getAttribute("documentType");
+        def result
+        if (documentType.equals(null)) {
+            result = uploadDocumentCompositeService.uploadDocumentType()
+        }
+        else{
+            result = [documentType: documentType]
+        }
+        render result as JSON
+    }
+
+    /**
+     * Get configured allowed attachment max size val from GUROCFG table
+     * @return
+     */
+    def getAttachmentMaxSizeVal() {
+        String documentSize = session.getAttribute("documentSize");
+        def result
+        if (documentType.equals(null)) {
+            result = uploadDocumentCompositeService.uploadDocumentSize()
+        }
+        else{
+            result = [documentSize: documentSize]
+        }
+        render result as JSON
     }
 }
