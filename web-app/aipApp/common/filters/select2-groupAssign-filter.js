@@ -34,3 +34,4 @@ angular.module('bannerCommonAIP').
         return notGenerated;
     };
 });
+//# sourceMappingURL=select2-groupAssign-filter.js.map

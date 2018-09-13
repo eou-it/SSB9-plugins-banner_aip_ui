@@ -5,7 +5,7 @@
 ///<reference path="../../../common/services/admin/adminActionService.ts"/>
 var AIP;
 (function (AIP) {
-    var AdminActionListPageCtrl = /** @class */ (function () {
+    var AdminActionListPageCtrl = (function () {
         function AdminActionListPageCtrl($scope, $state, $window, $filter, $q, ENDPOINT, PAGINATIONCONFIG, AdminActionService) {
             this.$inject = ["$scope", "$state", "$window", "$filter", "$q", "ENDPOINT", "PAGINATIONCONFIG",
                 "AdminActionService"];
@@ -202,7 +202,8 @@ var AIP;
             this.$state.go("admin-action-open", { actionItemId: id });
         };
         return AdminActionListPageCtrl;
-    }());
+    })();
     AIP.AdminActionListPageCtrl = AdminActionListPageCtrl;
 })(AIP || (AIP = {}));
 register("bannerAIP").controller("AdminActionListPageCtrl", AIP.AdminActionListPageCtrl);
+//# sourceMappingURL=adminActionListPageCtrl.js.map

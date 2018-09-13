@@ -36,7 +36,8 @@ var AIPUI;
             return "";
         };
         return AIPReadmoreDirective;
-    }());
+    })();
     AIPUI.AIPReadmoreDirective = AIPReadmoreDirective;
 })(AIPUI || (AIPUI = {}));
 register("bannerAIPUI").directive("aipReadmore", AIPUI.AIPReadmoreDirective);
+//# sourceMappingURL=readmore.js.map

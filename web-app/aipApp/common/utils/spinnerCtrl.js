@@ -18,7 +18,8 @@ var AIP;
         }
         SpinnerCtrl.$inject = ["$scope", "SpinnerService", "$rootScope"];
         return SpinnerCtrl;
-    }());
+    })();
     AIP.SpinnerCtrl = SpinnerCtrl;
 })(AIP || (AIP = {}));
 register("bannerCommonAIP").controller("SpinnerCtrl", AIP.SpinnerCtrl);
+//# sourceMappingURL=spinnerCtrl.js.map

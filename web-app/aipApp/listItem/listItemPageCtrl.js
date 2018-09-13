@@ -6,7 +6,7 @@
 ///<reference path="../common/services/userService.ts"/>
 var AIP;
 (function (AIP) {
-    var ListItemPageCtrl = /** @class */ (function () {
+    var ListItemPageCtrl = (function () {
         function ListItemPageCtrl($scope, $state, ItemListViewService, AIPUserService, SpinnerService, $timeout, $q, $uibModal, APP_ROOT, $sce) {
             this.$inject = ["$scope", "$state", "ItemListViewService", "AIPUserService", "SpinnerService", "$timeout", "$q", "$uibModal", "APP_ROOT", "$sce", "$compile"];
             this.trustHTML = function (txtString) {
@@ -303,7 +303,8 @@ var AIP;
             notifications.addNotification(n);
         };
         return ListItemPageCtrl;
-    }());
+    })();
     AIP.ListItemPageCtrl = ListItemPageCtrl;
 })(AIP || (AIP = {}));
 register("bannerNonAdminAIP").controller("ListItemPageCtrl", AIP.ListItemPageCtrl);
+//# sourceMappingURL=listItemPageCtrl.js.map

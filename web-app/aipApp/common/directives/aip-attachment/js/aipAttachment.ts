@@ -13,6 +13,7 @@ module AIPUI {
         restrict: string;
         scope: any;
         replace: boolean;
+
         constructor() {
             this.restrict = "AE";
             this.replace = false;
@@ -30,28 +31,24 @@ module AIPUI {
         }
 
         controller($scope) {
-            $scope.$watch(
-                            "showModal", function (newVal, oldVal) {
-                                console.log("Value changed "+ newVal);
-                                //TODO: Get the new Response ID & refresh the grid.
-                                if (!$scope.$$phase) {
-                                    $scope.$apply();
-                                }
-                            }
-                        );
-            $scope.openFileDialogOnEnter = function () {
-                $scope.openFileDialog();
-            };
 
-            $scope.openFileDialog = function () {
-                $("#file").click();
-            };
+            $scope.$watch(
+                "showModal", function (newVal, oldVal) {
+                    console.log("Value changed "+ newVal);
+                    //TODO: Get the new Response ID & refresh the grid.
+                    if (!$scope.$$phase) {
+                        $scope.$apply();
+                    }
+                }
+            );
+
 
             $scope.reset = function () {
                 angular.element('#file-input-textbox').val("");
             };
-            }
         }
+
     }
+}
 
 register("bannerAIPUI").directive("aipAttachment", AIPUI.AIPAttachment);

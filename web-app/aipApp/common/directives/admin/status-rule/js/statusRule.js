@@ -4,7 +4,7 @@
 ///<reference path="../../../../../../typings/tsd.d.ts"/>
 var AIPUI;
 (function (AIPUI) {
-    var AIPStatusRuleDirective = /** @class */ (function () {
+    var AIPStatusRuleDirective = (function () {
         function AIPStatusRuleDirective() {
             this.restrict = "AE";
             this.transclude = true;
@@ -36,7 +36,7 @@ var AIPUI;
                     allowedAttachments: $scope.attachments[0]
                 });
                 setTimeout(function () {
-                    var btnTarget = $("input#response-" + $scope.rules.length) /*+ $scope.rules.length*/;
+                    var btnTarget = $("input#response-" + $scope.rules.length);
                     $(btnTarget).focus();
                 }, 500);
             };
@@ -113,7 +113,8 @@ var AIPUI;
             };
         };
         return AIPStatusRuleDirective;
-    }());
+    })();
     AIPUI.AIPStatusRuleDirective = AIPStatusRuleDirective;
 })(AIPUI || (AIPUI = {}));
 register("bannerAIPUI").directive("aipStatusRule", AIPUI.AIPStatusRuleDirective);
+//# sourceMappingURL=statusRule.js.map

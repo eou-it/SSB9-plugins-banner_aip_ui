@@ -46,9 +46,8 @@ var bannerNonAdminAIPApp = angular.module("bannerNonAdminAIP", [
         "I18nAIP",
         "pbrun.directives",
         'dateParser',
-        'cm.timepicker'
-
-
+        'cm.timepicker',
+        "ngFileUpload"
     ])
 
     //set application root url

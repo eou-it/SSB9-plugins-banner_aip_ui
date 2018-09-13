@@ -399,20 +399,20 @@ class AipAdminController {
     }
 
     /**
-     * Get configured Max Attachments Val from GORICCR table
+     * Get configured Max Attachment Val from GORICCR table
      * @return
      */
     def getMaxAttachmentsVal() {
         String maxAttachment = session.getAttribute("maxAttachment")
         def results
-        if (!maxAttachment) {
+        if (maxAttachment.equals(null)) {
              results = actionItemStatusCompositeService.getMaxAttachmentsValue(maxAttachment)
             if (results.maxAttachment) {
                 session.setAttribute("maxAttachment", results.maxAttachment)
             }
         }
         else{
-            results.maxAttachment = maxAttachment
+            results = [maxAttachment: maxAttachment]
         }
         render results as JSON
     }

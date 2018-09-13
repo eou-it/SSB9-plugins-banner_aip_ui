@@ -53,7 +53,8 @@ var PB;
         };
         PageBuilderPage.$inject = ["$compile", "ItemListViewService"];
         return PageBuilderPage;
-    }());
+    })();
     PB.PageBuilderPage = PageBuilderPage;
 })(PB || (PB = {}));
 register("BannerOnAngular").directive("pagebuilderPage", PB.PageBuilderPage);
+//# sourceMappingURL=aip-pagebuilder.js.map

@@ -91,7 +91,8 @@ var AIP;
             notifications.addNotification(n);
         };
         return PostAddModalCtrl;
-    }());
+    })();
     AIP.PostAddModalCtrl = PostAddModalCtrl;
 })(AIP || (AIP = {}));
 register("bannerAIP").controller("PostAddModalCtrl", AIP.PostAddModalCtrl);
+//# sourceMappingURL=postAddModalCtrl.js.map

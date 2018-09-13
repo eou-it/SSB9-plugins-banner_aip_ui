@@ -4,7 +4,7 @@
 ///<reference path="../../../typings/tsd.d.ts"/>
 var AIP;
 (function (AIP) {
-    var UserService = /** @class */ (function () {
+    var UserService = (function () {
         function UserService($http, $q, APP_PATH) {
             this.$http = $http;
             this.APP_PATH = APP_PATH;
@@ -22,7 +22,8 @@ var AIP;
         };
         UserService.$inject = ["$http", "$q", "APP_PATH"];
         return UserService;
-    }());
+    })();
     AIP.UserService = UserService;
 })(AIP || (AIP = {}));
 register("bannerCommonAIP").service("AIPUserService", AIP.UserService);
+//# sourceMappingURL=userService.js.map

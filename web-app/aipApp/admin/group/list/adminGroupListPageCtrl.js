@@ -208,7 +208,8 @@ var AIP;
         AdminGroupListPageCtrl.prototype.refreshGrid = function () {
         };
         return AdminGroupListPageCtrl;
-    }());
+    })();
     AIP.AdminGroupListPageCtrl = AdminGroupListPageCtrl;
 })(AIP || (AIP = {}));
 register("bannerAIP").controller("AdminGroupListPageCtrl", AIP.AdminGroupListPageCtrl);
+//# sourceMappingURL=adminGroupListPageCtrl.js.map
