@@ -8,11 +8,12 @@ declare var register;
 module AIPUI {
 
     export class AIPAttachment  {
-
+        static $inject=["AIPUploadService"];
         templateUrl: string;
         restrict: string;
         scope: any;
         replace: boolean;
+        attachmentParams;
 
         constructor() {
             this.restrict = "AE";
@@ -20,6 +21,7 @@ module AIPUI {
             this.scope = {
                 showModal:"="
             }
+            this.attachmentParams = {};
 
         }
 
@@ -30,7 +32,7 @@ module AIPUI {
         link(scope, elem, attr) {
         }
 
-        controller($scope) {
+        controller($scope,AIPUploadService) {
 
             $scope.$watch(
                 "showModal", function (newVal, oldVal) {
@@ -45,6 +47,15 @@ module AIPUI {
 
             $scope.reset = function () {
                 angular.element('#file-input-textbox').val("");
+            };
+
+            $scope.submitUpload = function (selectedFile) {
+                this.attachmentParams={actionItemId:218,responseId:391,documentName:'testfile',file:selectedFile};
+               //TODO need to work on getting params data
+                AIPUploadService.saveUploadInfo(this.attachmentParams).then((response) => {
+                    console.log("response"+ response);
+                });
+
             };
         }
 

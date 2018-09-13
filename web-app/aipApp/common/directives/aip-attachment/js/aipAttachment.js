@@ -11,12 +11,13 @@ var AIPUI;
             this.scope = {
                 showModal: "="
             };
+            this.attachmentParams = {};
         }
         AIPAttachment.prototype.compile = function () {
         };
         AIPAttachment.prototype.link = function (scope, elem, attr) {
         };
-        AIPAttachment.prototype.controller = function ($scope) {
+        AIPAttachment.prototype.controller = function ($scope, AIPUploadService) {
             $scope.$watch("showModal", function (newVal, oldVal) {
                 console.log("Value changed " + newVal);
                 //TODO: Get the new Response ID & refresh the grid.
@@ -27,7 +28,15 @@ var AIPUI;
             $scope.reset = function () {
                 angular.element('#file-input-textbox').val("");
             };
+            $scope.submitUpload = function (selectedFile) {
+                this.attachmentParams = { actionItemId: 218, responseId: 391, documentName: 'testfile', file: selectedFile };
+                //TODO need to work on getting params data
+                AIPUploadService.saveUploadInfo(this.attachmentParams).then(function (response) {
+                    console.log("response" + response);
+                });
+            };
         };
+        AIPAttachment.$inject = ["AIPUploadService"];
         return AIPAttachment;
     })();
     AIPUI.AIPAttachment = AIPAttachment;

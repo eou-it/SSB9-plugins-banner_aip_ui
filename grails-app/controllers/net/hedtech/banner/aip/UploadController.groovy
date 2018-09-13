@@ -18,7 +18,7 @@ class UploadController {
      * Upload Document
      * @return
      */
-    def saveuploadInfo() {
+    def saveUploadInfo() {
         def map = request.JSON
         MultipartFile file = (MultipartFile) request.multipartFiles.file?.get( 0 );
         map.file = file;
