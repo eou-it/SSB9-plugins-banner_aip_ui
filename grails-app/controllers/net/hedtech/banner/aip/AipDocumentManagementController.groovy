@@ -60,14 +60,15 @@ class AipDocumentManagementController {
      * Get configured restricted attachment type val from GUROCFG table
      * @return
      */
-    def getrestrictedAttachmetTypeVal() {
-        String documentType = session.getAttribute("documentType");
+    def getRestrictedAttachmentTypeVal() {
+        String restrictedFileTypes = session.getAttribute("restrictedFileTypes");
         def result
-        if (documentType.equals(null)) {
-            result = uploadDocumentCompositeService.uploadDocumentType()
+        if (!restrictedFileTypes) {
+            result = uploadDocumentCompositeService.getRestrictedFileTypes()
+            session.setAttribute('restrictedFileTypes',result.restrictedFileTypes)
         }
         else{
-            result = [documentType: documentType]
+            result = [restrictedFileTypes: restrictedFileTypes]
         }
         render result as JSON
     }
@@ -77,13 +78,14 @@ class AipDocumentManagementController {
      * @return
      */
     def getAttachmentMaxSizeVal() {
-        String documentSize = session.getAttribute("documentSize");
+        String maxFileSize = session.getAttribute("maxFileSize");
         def result
-        if (documentType.equals(null)) {
-            result = uploadDocumentCompositeService.uploadDocumentSize()
+        if (!maxFileSize) {
+            result = uploadDocumentCompositeService.getMaxFileSize()
+            session.setAttribute('maxFileSize',result.maxFileSize)
         }
         else{
-            result = [documentSize: documentSize]
+            result = [maxFileSize: maxFileSize]
         }
         render result as JSON
     }

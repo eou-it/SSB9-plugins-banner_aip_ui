@@ -16,10 +16,8 @@ import org.springframework.security.core.context.SecurityContextHolder
  * UploadControllerIntegrationTests.
  */
 class AipDocumentManagementControllerIntegrationTests extends BaseIntegrationTestCase {
+
     def selfServiceBannerAuthenticationProvider
-
-    def uploadDocumentService
-
 
     @Before
     public void setUp() {
@@ -47,15 +45,16 @@ class AipDocumentManagementControllerIntegrationTests extends BaseIntegrationTes
     }
 
     @Test
-    void testrestrictedAttachmentType() {
+    void testRestrictedAttachmentType() {
         def person = PersonUtility.getPerson( "CSRSTU002" )
         assertNotNull person
         def auth = selfServiceBannerAuthenticationProvider.authenticate(
                 new UsernamePasswordAuthenticationToken( person.bannerId, '111111' ) )
         SecurityContextHolder.getContext().setAuthentication( auth )
-        def result = controller.getrestrictedAttachmetTypeVal()
+        controller.getRestrictedAttachmentTypeVal()
         assertEquals 200, controller.response.status
-        assertNotNull result.documentType
+        def data = JSON.parse( controller.response.contentAsString )
+        assertNotNull data.restrictedFileTypes
     }
 
     @Test
@@ -65,7 +64,10 @@ class AipDocumentManagementControllerIntegrationTests extends BaseIntegrationTes
         def auth = selfServiceBannerAuthenticationProvider.authenticate(
                 new UsernamePasswordAuthenticationToken( person.bannerId, '111111' ) )
         SecurityContextHolder.getContext().setAuthentication( auth )
-        def result = controller.getAttachmentMaxSizeVal()
+        controller.getAttachmentMaxSizeVal()
         assertEquals 200, controller.response.status
+        def data = JSON.parse( controller.response.contentAsString )
+        assertNotNull data.maxFileSize
     }
+
 }
