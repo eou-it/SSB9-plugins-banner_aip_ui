@@ -31,8 +31,6 @@ class AipDocumentManagementController {
             map.put('responseId',multipartRequest.multipartParameters.responseId[0])
             map.put('documentName',multipartRequest.multipartParameters.documentName[0])
             map.put('fileLocation',multipartRequest.multipartParameters.fileLocation[0])
-            println "map $map"
-            println "map.file $map.file"
             uploadDocumentInfo = uploadDocumentCompositeService.addUploadDocument( map )
         } catch (Exception e) {
 

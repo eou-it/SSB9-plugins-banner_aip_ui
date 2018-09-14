@@ -41,8 +41,7 @@ module AIP {
                 file: params.file,
                 url: this.APP_PATH + "/aipDocumentManagement/uploadDocument"
             }).success(function (data, status, headers, config) {
-               console.log("data->"+data);
-               console.log("status->"+status);
+              
             }).error(function () {
 
             });
