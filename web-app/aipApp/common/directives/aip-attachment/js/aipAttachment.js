@@ -29,11 +29,11 @@ var AIPUI;
                 angular.element('#file-input-textbox').val("");
             };
             $scope.submitUpload = function (selectedFile) {
-                this.attachmentParams = { actionItemId: 218, responseId: 391, documentName: 'testfile', file: selectedFile };
-                //TODO need to work on getting params data
-                AIPUploadService.saveUploadInfo(this.attachmentParams).then(function (response) {
-                    console.log("response" + response);
-                });
+                if (selectedFile) {
+                    this.attachmentParams = { actionItemId: 218, responseId: 391, documentName: 'testfile', fileLocation: 'AIP', file: selectedFile[0] };
+                    //TODO need to work on getting params data
+                    AIPUploadService.saveUploadInfo(this.attachmentParams);
+                }
             };
         };
         AIPAttachment.$inject = ["AIPUploadService"];

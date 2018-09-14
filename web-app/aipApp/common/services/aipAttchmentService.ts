@@ -24,31 +24,34 @@ module AIP {
     }
 
     export class UploadService implements IUploadService{
-        static $inject=["$http", "$q", "APP_PATH"];
+        static $inject=["$http", "$q", "APP_PATH","Upload"];
         $http:ng.IHttpService;
         $q:ng.IQService;
         APP_PATH;
-        constructor($http:ng.IHttpService, $q, APP_PATH) {
+        Upload;
+        constructor($http:ng.IHttpService, $q, APP_PATH,Upload) {
             this.$http = $http;
             this.APP_PATH = APP_PATH;
+            this.Upload = Upload;
         }
         saveUploadInfo(params) {
-            var uploadRequest =  this.$http({
-                method: "POST",
-                data:params,
-                url: this.APP_PATH + "/upload/saveUploadInfo"
-            }).then((response:IGetUploaResponse) => {
-                return response;
-            }, (err) => {
-                throw new Error(err);
+            console.log("params"+params.actionItemId);
+            this.Upload.upload({
+                fields: {actionItemId: params.actionItemId, responseId: params.responseId,documentName:params.documentName,fileLocation:params.fileLocation},
+                file: params.file,
+                url: this.APP_PATH + "/aipDocumentManagement/uploadDocument"
+            }).success(function (data, status, headers, config) {
+               console.log("data->"+data);
+               console.log("status->"+status);
+            }).error(function () {
+
             });
-            return uploadRequest;
         }
 
         getRestrictedFileTypes() {
             var request = this.$http({
                 method: "GET",
-                url: this.APP_PATH + "/upload/restrictedFileType"
+                url: this.APP_PATH + "/aipDocumentManagement/restrictedFileType"
             });
             return request;
         }
@@ -56,7 +59,7 @@ module AIP {
         getFileMaxSize(){
             var request = this.$http({
                 method: "GET",
-                url: this.APP_PATH + "/upload/fileMaxSize"
+                url: this.APP_PATH + "/aipDocumentManagement/fileMaxSize"
             });
             return request;
         }

@@ -15,7 +15,7 @@ import org.springframework.security.core.context.SecurityContextHolder
 /**
  * UploadControllerIntegrationTests.
  */
-class UploadControllerIntegrationTests extends BaseIntegrationTestCase {
+class AipDocumentManagementControllerIntegrationTests extends BaseIntegrationTestCase {
     def selfServiceBannerAuthenticationProvider
 
     def uploadDocumentService
@@ -24,7 +24,7 @@ class UploadControllerIntegrationTests extends BaseIntegrationTestCase {
     @Before
     public void setUp() {
         formContext = ['GUAGMNU']
-        controller = new UploadController()
+        controller = new AipDocumentManagementController()
         super.setUp()
     }
 
@@ -36,13 +36,13 @@ class UploadControllerIntegrationTests extends BaseIntegrationTestCase {
     }
 
     @Test
-    void testSaveUploadInfo() {
+    void testUploadDocument() {
         def person = PersonUtility.getPerson( "CSRSTU002" )
         assertNotNull person
         def auth = selfServiceBannerAuthenticationProvider.authenticate(
                 new UsernamePasswordAuthenticationToken( person.bannerId, '111111' ) )
         SecurityContextHolder.getContext().setAuthentication( auth )
-        def result = controller.saveuploadInfo()
+        def result = controller.uploadDocument()
         assertEquals 200, controller.response.status
     }
 
