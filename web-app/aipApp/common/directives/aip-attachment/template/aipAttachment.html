@@ -27,31 +27,36 @@
                     </div>
                 </form>
 
-                    <div id="attachmentsTable">
+                <div class="attachmentsTable">
                         <xe-table-grid
-                                tableId="uplaodDocumentsTable"
+                                caption="Attachments"
+                                table-id="dataTableAttachmentsList"
                                 header="header"
-                                end-point="urlTest"
                                 fetch="fetchData(query)"
-                                post-fetch="postFetch(response, oldResult)"
-                                content="rows"
+                                end-point=""
+                                content="data"
                                 results-found="records"
-                                continuous-scrolling="false"
-                                continuous-scroll-parent="body"
-                                on-row-click="onClick(data,index)"
-                                on-row-double-click="onDoubleClick(data,index)"
+                                toolbar="true"
+                                paginate="true"
+                                on-row-click="selectRecord(data)"
                                 no-data-msg="{{'aip.common.no.results.found'|i18n_aip}}"
-                                empty-table-msg="emptyTableMsg"
-                                draggable-column-names="draggableColumnNames"
+                                search-config="searchConfig"
+                                pagination-config="paginationConfig"
                                 mobile-layout="mobileConfig"
                                 refresh-grid="refreshGrid"
-                                continuous-scrolling="false">
-                            <xe-cell-markup heading-name="tick">
-                                <input type="checkbox" ng-click="someMethod()" value="all"/>
-                            </xe-cell-markup>
+                                draggable-column-names="draggableColumnNames"
+                                continuous-scrolling="false"
+                                height="300px">
+                            <xe-cell-markup column-name="attachmentActions">
+                                <div class="row attachmentActions">
+                                    <button class="icon icon-view-CO" ng-click=""
+                                         title="{{'aip.common.open.action.item.jaws'|i18n_aip}}" aria-label="{{'aip.common.open.action.item.jaws'|i18n_aip}}">
+                                    </button>
 
-                            <xe-cell-markup column-name="tick">
-                                <input type="checkbox"/>
+                                    <button class="icon icon-delete-CO" ng-click=""
+                                            title="{{'aip.common.delete.group.jaws'|i18n_aip}}" aria-label="{{'aip.common.delete.group.jaws'|i18n_aip}}">
+                                    </button>
+                                </div>
                             </xe-cell-markup>
                         </xe-table-grid>
                     </div>

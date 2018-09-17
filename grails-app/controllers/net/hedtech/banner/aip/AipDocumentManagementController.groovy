@@ -50,9 +50,16 @@ class AipDocumentManagementController {
      * This method is responsible for getting list is attached documents for a response.
      * @return documents list as JSON
      */
-    def getDocumentList() {
-        def map = request.JSON
-        def results = uploadDocumentCompositeService.fetchDocuments( map )
+    def listDocuments() {
+        def paramsObj = [
+                actionItemId : params.actionItemId,
+                responseId   : params.responseId,
+                filterName   : params.searchString ?: "%",
+                sortColumn   : params.sortColumnName ?: "id",
+                sortAscending: params.ascending ? params.ascending.toBoolean() : false,
+                max          : params.max.toInteger(),
+                offset       : params.offset ? params.offset.toInteger() : 0]
+        def results = uploadDocumentCompositeService.fetchDocuments(paramsObj)
         render results as JSON
     }
 

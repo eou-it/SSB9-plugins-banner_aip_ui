@@ -19,8 +19,17 @@ module AIP {
         success:boolean;
         message:string;
     }
+    export interface IAttachmentListQuery {
+            responseId: number;
+            actionItemId: number;
+            searchString: string;
+            sortColumnName: string;
+            ascending: string;
+            offset: string;
+            max: string;
+    }
     interface IUploadService {
-
+        fetchAttachmentsList(query:IAttachmentListQuery):ng.IPromise<{}>;
     }
 
     export class UploadService implements IUploadService{
@@ -31,6 +40,7 @@ module AIP {
         Upload;
         constructor($http:ng.IHttpService, $q, APP_PATH,Upload) {
             this.$http = $http;
+            this.$q = $q;
             this.APP_PATH = APP_PATH;
             this.Upload = Upload;
         }
@@ -41,10 +51,31 @@ module AIP {
                 file: params.file,
                 url: this.APP_PATH + "/aipDocumentManagement/uploadDocument"
             }).success(function (data, status, headers, config) {
-              
+
             }).error(function () {
 
             });
+        }
+        fetchAttachmentsList (query:IAttachmentListQuery) {
+            var deferred = this.$q.defer();
+            var realMax = parseInt(query.max) - parseInt(query.offset);
+            var url = this.APP_PATH + "/aipDocumentManagement/listDocuments"+
+                '?actionItemId=' + (query.actionItemId || '')+
+                '&responseId=' + (query.responseId || '') +
+                '&searchString=' + (query.searchString || '') +
+                '&sortColumnName=' + (query.sortColumnName || 'actionItemName') +
+                '&ascending=' + (query.ascending.toString() || "")+
+                '&offset=' + (query.offset || 0 )+
+                '&max=' + realMax;
+            this.$http({
+                method: "GET",
+                url: url
+            }).then(function(response){
+                deferred.resolve(response.data);
+            }, function(response){
+                deferred.reject(response);
+            });
+            return deferred.promise;
         }
 
         getRestrictedFileTypes() {
