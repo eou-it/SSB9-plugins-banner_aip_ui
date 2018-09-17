@@ -18,7 +18,7 @@
                             {{"js.aip.user.document.attachment.filePath.label"|i18n_aip}}:
                         </label>
                         <input class="primary button btn-right" type="button" name="Button" tabindex="2"
-                               ng-click="submitUpload(selectedFile)"  value={{"js.aip.common.upload.button.label"|i18n_aip}} aria-label="{{'js.aip.common.upload.button.label'|i18n_aip}}">
+                               ng-click="uploadDocument(selectedFile)"  value={{"js.aip.common.upload.button.label"|i18n_aip}} aria-label="{{'js.aip.common.upload.button.label'|i18n_aip}}">
                         <input  class="btn btn-default secondary-btn btn-right" type="reset" name="Button" tabindex="3"
                                 value={{"js.aip.common.reset.button.label"|i18n_aip}}  aria-label="{{'js.aip.common.reset.button.label'|i18n_aip}}">
                     </div>
@@ -36,7 +36,7 @@
                                 end-point=""
                                 content="data"
                                 results-found="records"
-                                toolbar="true"
+                                toolbar="false"
                                 paginate="true"
                                 on-row-click="selectRecord(data)"
                                 no-data-msg="{{'aip.common.no.results.found'|i18n_aip}}"

@@ -4,22 +4,25 @@
 ///<reference path="../../../typings/tsd.d.ts"/>
 var AIP;
 (function (AIP) {
-    var UploadService = /** @class */ (function () {
+    var UploadService = (function () {
         function UploadService($http, $q, APP_PATH, Upload) {
             this.$http = $http;
             this.$q = $q;
             this.APP_PATH = APP_PATH;
             this.Upload = Upload;
         }
-        UploadService.prototype.saveUploadInfo = function (params) {
-            console.log("params" + params.actionItemId);
+        UploadService.prototype.uploadDocument = function (params) {
+            var defer = this.$q.defer();
             this.Upload.upload({
                 fields: { actionItemId: params.actionItemId, responseId: params.responseId, documentName: params.documentName, fileLocation: params.fileLocation },
                 file: params.file,
                 url: this.APP_PATH + "/aipDocumentManagement/uploadDocument"
-            }).success(function (data, status, headers, config) {
-            }).error(function () {
+            }).success(function (data) {
+                defer.resolve(data);
+            }).error(function (error) {
+                throw new Error(error);
             });
+            return defer.promise;
         };
         UploadService.prototype.fetchAttachmentsList = function (query) {
             var deferred = this.$q.defer();
@@ -36,29 +39,30 @@ var AIP;
                 method: "GET",
                 url: url
             }).then(function (response) {
-                deferred.resolve(response.data);
+                deferred.resolve(response);
             }, function (response) {
                 deferred.reject(response);
             });
             return deferred.promise;
         };
-        UploadService.prototype.getRestrictedFileTypes = function () {
+        UploadService.prototype.restrictedFileTypes = function () {
             var request = this.$http({
                 method: "GET",
-                url: this.APP_PATH + "/aipDocumentManagement/restrictedFileType"
+                url: this.APP_PATH + "/aipDocumentManagement/getRestrictedFileTypes"
             });
             return request;
         };
-        UploadService.prototype.getFileMaxSize = function () {
+        UploadService.prototype.maxFileSize = function () {
             var request = this.$http({
                 method: "GET",
-                url: this.APP_PATH + "/aipDocumentManagement/fileMaxSize"
+                url: this.APP_PATH + "/aipDocumentManagement/getMaxFileSize"
             });
             return request;
         };
         UploadService.$inject = ["$http", "$q", "APP_PATH", "Upload"];
         return UploadService;
-    }());
+    })();
     AIP.UploadService = UploadService;
 })(AIP || (AIP = {}));
 register("bannerCommonAIP").service("AIPUploadService", AIP.UploadService);
+//# sourceMappingURL=aipAttchmentService.js.map

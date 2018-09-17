@@ -5,7 +5,6 @@
 package net.hedtech.banner.aip
 
 import grails.converters.JSON
-import org.springframework.web.multipart.MultipartFile
 import org.springframework.web.multipart.MultipartHttpServletRequest
 import org.springframework.web.multipart.commons.CommonsMultipartFile
 
@@ -21,20 +20,7 @@ class AipDocumentManagementController {
      * @return
      */
     def uploadDocument() {
-        Map map = [:]
-        def uploadDocumentInfo
-        MultipartHttpServletRequest multipartRequest
-        try {
-            multipartRequest = (MultipartHttpServletRequest) request;
-            map.put('file',(CommonsMultipartFile) multipartRequest.getFile('file'))
-            map.put('actionItemId',multipartRequest.multipartParameters.actionItemId[0])
-            map.put('responseId',multipartRequest.multipartParameters.responseId[0])
-            map.put('documentName',multipartRequest.multipartParameters.documentName[0])
-            map.put('fileLocation',multipartRequest.multipartParameters.fileLocation[0])
-            uploadDocumentInfo = uploadDocumentCompositeService.addUploadDocument( map )
-        } catch (Exception e) {
-
-        }
+        def    uploadDocumentInfo = uploadDocumentCompositeService.addUploadDocument( requestParamsProcess(request))
         render uploadDocumentInfo as JSON
     }
 
@@ -67,16 +53,13 @@ class AipDocumentManagementController {
      * Get configured restricted attachment type val from GUROCFG table
      * @return
      */
-    def getRestrictedAttachmentTypeVal() {
+    def getRestrictedFileTypes() {
         String restrictedFileTypes = session.getAttribute("restrictedFileTypes");
         def result
         if (!restrictedFileTypes) {
-            result = uploadDocumentCompositeService.getRestrictedFileTypes()
-            session.setAttribute('restrictedFileTypes',result.restrictedFileTypes)
+            restrictedFileTypes = uploadDocumentCompositeService.getRestrictedFileTypes()
         }
-        else{
-            result = [restrictedFileTypes: restrictedFileTypes]
-        }
+        result = [restrictedFileTypes: restrictedFileTypes]
         render result as JSON
     }
 
@@ -84,16 +67,31 @@ class AipDocumentManagementController {
      * Get configured allowed attachment max size val from GUROCFG table
      * @return
      */
-    def getAttachmentMaxSizeVal() {
+    def getMaxFileSize() {
         String maxFileSize = session.getAttribute("maxFileSize");
         def result
         if (!maxFileSize) {
-            result = uploadDocumentCompositeService.getMaxFileSize()
-            session.setAttribute('maxFileSize',result.maxFileSize)
+            maxFileSize = uploadDocumentCompositeService.getMaxFileSize()
         }
-        else{
-            result = [maxFileSize: maxFileSize]
-        }
+        result = [maxFileSize: maxFileSize]
         render result as JSON
+    }
+
+    /**
+     * This method is responsible for process the request params.
+     * @return request params map
+     */
+    private Map requestParamsProcess(request){
+        Map requestParams =[:]
+        try {
+            MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
+            requestParams.put('file',(CommonsMultipartFile) multipartRequest.getFile('file'))
+            requestParams.put('actionItemId',multipartRequest.multipartParameters.actionItemId[0])
+            requestParams.put('responseId',multipartRequest.multipartParameters.responseId[0])
+            requestParams.put('documentName',multipartRequest.multipartParameters.documentName[0])
+        } catch (ClassCastException e) {
+
+        }
+        return  requestParams
     }
 }

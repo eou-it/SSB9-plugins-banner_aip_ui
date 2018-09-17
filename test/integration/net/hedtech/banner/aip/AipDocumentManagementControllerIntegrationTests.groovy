@@ -45,26 +45,26 @@ class AipDocumentManagementControllerIntegrationTests extends BaseIntegrationTes
     }
 
     @Test
-    void testRestrictedAttachmentType() {
+    void testGetRestrictedFileTypes() {
         def person = PersonUtility.getPerson( "CSRSTU002" )
         assertNotNull person
         def auth = selfServiceBannerAuthenticationProvider.authenticate(
                 new UsernamePasswordAuthenticationToken( person.bannerId, '111111' ) )
         SecurityContextHolder.getContext().setAuthentication( auth )
-        controller.getRestrictedAttachmentTypeVal()
+        controller.getRestrictedFileTypes()
         assertEquals 200, controller.response.status
         def data = JSON.parse( controller.response.contentAsString )
         assertNotNull data.restrictedFileTypes
     }
 
     @Test
-    void testAttachmentMaxSizeVal() {
+    void testGetMaxFileSize() {
         def person = PersonUtility.getPerson( "CSRSTU002" )
         assertNotNull person
         def auth = selfServiceBannerAuthenticationProvider.authenticate(
                 new UsernamePasswordAuthenticationToken( person.bannerId, '111111' ) )
         SecurityContextHolder.getContext().setAuthentication( auth )
-        controller.getAttachmentMaxSizeVal()
+        controller.getMaxFileSize()
         assertEquals 200, controller.response.status
         def data = JSON.parse( controller.response.contentAsString )
         assertNotNull data.maxFileSize

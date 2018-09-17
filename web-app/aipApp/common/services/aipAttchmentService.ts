@@ -44,17 +44,18 @@ module AIP {
             this.APP_PATH = APP_PATH;
             this.Upload = Upload;
         }
-        saveUploadInfo(params) {
-            console.log("params"+params.actionItemId);
+        uploadDocument(params) {
+            var defer = this.$q.defer();
             this.Upload.upload({
                 fields: {actionItemId: params.actionItemId, responseId: params.responseId,documentName:params.documentName,fileLocation:params.fileLocation},
                 file: params.file,
                 url: this.APP_PATH + "/aipDocumentManagement/uploadDocument"
-            }).success(function (data, status, headers, config) {
-
-            }).error(function () {
-
+            }).success(function (data) {
+                defer.resolve(data);
+            }).error(function (error) {
+                throw new Error(error);
             });
+            return defer.promise;
         }
         fetchAttachmentsList (query:IAttachmentListQuery) {
             var deferred = this.$q.defer();
@@ -71,25 +72,25 @@ module AIP {
                 method: "GET",
                 url: url
             }).then(function(response){
-                deferred.resolve(response.data);
+                deferred.resolve(response);
             }, function(response){
                 deferred.reject(response);
             });
             return deferred.promise;
         }
 
-        getRestrictedFileTypes() {
+        restrictedFileTypes() {
             var request = this.$http({
                 method: "GET",
-                url: this.APP_PATH + "/aipDocumentManagement/restrictedFileType"
+                url: this.APP_PATH + "/aipDocumentManagement/getRestrictedFileTypes"
             });
             return request;
         }
 
-        getFileMaxSize(){
+        maxFileSize(){
             var request = this.$http({
                 method: "GET",
-                url: this.APP_PATH + "/aipDocumentManagement/fileMaxSize"
+                url: this.APP_PATH + "/aipDocumentManagement/getMaxFileSize"
             });
             return request;
         }
