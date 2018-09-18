@@ -45,7 +45,7 @@ module AIP {
 
     export class ListItemPageCtrl implements IListItemPageCtrl {
 
-        $inject = ["$scope", "$state", "ItemListViewService", "AIPUserService", "SpinnerService", "$timeout", "$q", "$uibModal", "APP_ROOT", "$sce"];
+        $inject = ["$scope", "$state", "ItemListViewService", "AIPUserService", "SpinnerService", "$timeout", "$q", "$uibModal", "APP_ROOT", "$sce","$compile"];
         itemListViewService: AIP.ItemListViewService;
         userService: AIP.UserService;
         actionItems: IUserItem;
@@ -61,8 +61,10 @@ module AIP {
         APP_ROOT;
         modalInstance;
         isFromGateKeeper;
+        $compile;
+        showModal;
 
-        constructor($scope, $state, ItemListViewService, AIPUserService, SpinnerService, $timeout, $q, $uibModal, APP_ROOT, $sce) {
+        constructor($scope, $state, ItemListViewService, AIPUserService, SpinnerService, $timeout, $q, $uibModal, APP_ROOT, $sce,$compile) {
             $scope.vm = this;
             this.$state = $state;
             this.itemListViewService = ItemListViewService;
@@ -76,14 +78,31 @@ module AIP {
             this.modalInstance;
             this.isFromGateKeeper = false;
             this.initialOpenGroup = -1;
-
+            this.$compile = $compile;
+            $scope.showModal = false;
             $scope.$watch(
                 "vm.detailView", function (newVal, oldVal) {
                     if (!$scope.$$phase) {
-                        $scope.apply();
+                        $scope.$apply();
                     }
                 }
             );
+            //Listen to your custom event
+            window.addEventListener('responseChanged', function (e) {
+                   console.log('Response changed testing>>>>>>');
+                   $scope.responseId = window.params.responseId;
+                   $scope.actionItemId = window.params.actionItemId;
+                   $scope.maxAttachments = window.params.maxAttachments;
+                   var listItemPageDiv = $('.listActionItem');
+                   var attachmentModal = $('aip-attachment');
+                   if(attachmentModal.length >0){
+                       attachmentModal.remove();
+                   }
+                   var aipAttachmentDirective = $compile("<aip-attachment show-modal='showModal' response-id ='responseId' action-item-id='actionItemId' max-attachments ='maxAttachments'></aip-attachment>")($scope);
+                   listItemPageDiv.append(aipAttachmentDirective);
+                   $scope.showModal = true;
+                   $scope.$apply();
+            });
 
             notifications.on('add', function (e) {
                 setTimeout(function (e) {
@@ -91,8 +110,6 @@ module AIP {
                         //$scope.vm.init();
                         $scope.vm.refreshList();
                     }
-                    ;
-
                 }, 500);
             });
 
@@ -105,6 +122,7 @@ module AIP {
                     window.history.back();
                 }
             };
+
         }
 
         init() {
@@ -330,31 +348,22 @@ module AIP {
             var isElementPresent = document.getElementById(paperClipId);
             if (isElementPresent === null && responseElement.length > 0) {
                 var paperClipElement = angular.element("<input id=" + paperClipId + " type='image' " +
-                    "src='../images/attach_icon_disabled.svg' title = 'Click paperclip icon to check attached documents' " +
+                    "src='../images/attach_icon_disabled.svg' title = 'Click to add documents' " +
                     "class=' pb-detail pb-item pb-paperclip'/>");
-                var selectedResponseElement = angular.element("<input id = " + paperClipId + "-response value =" + responseId + " type='hidden'/>");
-                var actionitemId = window.params.actionItemId;
-                var actionitemIdElement = angular.element("<input id = " + paperClipId + "-actionitemId value =" + actionitemId + " type='hidden'/>");
+
+                window.params.responseId = responseId;
+                window.params.maxAttachments = allowedAttachments;
                 responseElement.after(paperClipElement);
-                responseElement.after(selectedResponseElement);
-                responseElement.after(actionitemIdElement);
+
                 $('#' + paperClipId).on("click", function () {
                     var selectedPaperClip = this.id
                     var currentId = selectedPaperClip.substring(selectedPaperClip.length - 1, selectedPaperClip.length);
-                    var responseValue = $("#pbid-ActionItemStatusAgree-paper-clip-0-" + currentId + "-response").val()
-                    var actionItemIdValue = $("#pbid-ActionItemStatusAgree-paper-clip-0-" + currentId + "-actionitemId").val()
                     currentId = "#pbid-ActionItemStatusAgree-radio-0-" + currentId;
-                    //logging the responseid and actionitemId, this will be consumed by CSAT-4873
-                    //TODO: remove console logs
-                    console.log("responseId>>>>>>>>>>>>" + responseValue);
-                    console.log("window.params.actionItemId" + actionItemIdValue);
                     if ($(currentId)[0].checked === true) {
                         //make sure paper clip is enabled
                         $("#" + selectedPaperClip)[0].setAttribute("src", "../images/attach_icon_default.svg");
-                        // Open modal window
-                        $("#attachmentsDiv .xe-popup-mask").removeClass('ng-hide');
-                        $("#attachmentsDiv .xe-popup-mask").removeAttr("aria-hidden");
-                        $("#maxAttachments").text(allowedAttachments);
+                        var evt = new CustomEvent('responseChanged');
+                        window.dispatchEvent(evt);
                     }
                 });
             }
@@ -381,6 +390,8 @@ module AIP {
             notifications.addNotification(n);
 
         }
+
+
     }
 }
 

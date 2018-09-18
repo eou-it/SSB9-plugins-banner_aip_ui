@@ -10,7 +10,7 @@ var AIP;
         Status[Status["Active"] = 2] = "Active";
         Status[Status["Inactive"] = 3] = "Inactive";
     })(Status || (Status = {}));
-    var AdminActionService = /** @class */ (function () {
+    var AdminActionService = (function () {
         function AdminActionService($http, $q, $filter, ENDPOINT) {
             this.$http = $http;
             this.$q = $q;
@@ -297,8 +297,9 @@ var AIP;
         };
         AdminActionService.$inject = ["$http", "$q", "$filter", "ENDPOINT"];
         return AdminActionService;
-    }());
+    })();
     AIP.AdminActionService = AdminActionService;
 })(AIP || (AIP = {}));
 register("bannerAIP").service("AdminActionService", AIP.AdminActionService);
 register("bannerAIP").service("dateFormatService", AIP.AdminActionService);
+//# sourceMappingURL=adminActionService.js.map

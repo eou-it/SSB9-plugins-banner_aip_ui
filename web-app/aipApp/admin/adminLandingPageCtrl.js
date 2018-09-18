@@ -1,10 +1,6 @@
-/*******************************************************************************
- Copyright 2018 Ellucian Company L.P. and its affiliates.
- *******************************************************************************/
-///<reference path="../../../../typings/tsd.d.ts"/>
 var AIP;
 (function (AIP) {
-    var AdminLandingPageCtrl = /** @class */ (function () {
+    var AdminLandingPageCtrl = (function () {
         function AdminLandingPageCtrl($scope, $state) {
             this.$inject = ["$scope", "$state"];
             $scope.vm = this;
@@ -46,7 +42,8 @@ var AIP;
             ];
         };
         return AdminLandingPageCtrl;
-    }());
+    })();
     AIP.AdminLandingPageCtrl = AdminLandingPageCtrl;
 })(AIP || (AIP = {}));
 register("bannerAIP").controller("AdminLandingPageCtrl", AIP.AdminLandingPageCtrl);
+//# sourceMappingURL=adminLandingPageCtrl.js.map
