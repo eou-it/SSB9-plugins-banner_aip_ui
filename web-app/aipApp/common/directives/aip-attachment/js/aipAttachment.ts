@@ -83,9 +83,9 @@ module AIPUI {
                 }
             }, {
                 name: "documentName",
-                title: "Document Name",
-                ariaLabel: "Document Name",
-                width: "30%",
+                title: $filter("i18n_aip")("js.aip.attachments.grid.header.documentName"),
+                ariaLabel: $filter("i18n_aip")("js.aip.attachments.grid.header.documentName"),
+                width: "40%",
                 options: {
                     sortable: true,
                     visible: true,
@@ -94,9 +94,9 @@ module AIPUI {
                 }
             }, {
                 name: "documentUploadedDate",
-                title: "Uploaded Date",
-                ariaLabel: "Document Uploaded Date",
-                width: "30%",
+                title: $filter("i18n_aip")("js.aip.attachments.grid.header.dateOfAttachment"),
+                ariaLabel: $filter("i18n_aip")("js.aip.attachments.grid.header.dateOfAttachment"),
+                width: "40%",
                 options: {
                     sortable: true,
                     visible: true,
@@ -105,9 +105,9 @@ module AIPUI {
             },
                 {
                     name: "attachmentActions",
-                    title: "Actions",
-                    ariaLabel: "Actions",
-                    width: "30%",
+                    title: $filter("i18n_aip")("js.aip.attachments.grid.header.actions"),
+                    ariaLabel: $filter("i18n_aip")("js.aip.attachments.grid.header.actions"),
+                    width: "20%",
                     options: {
                         sortable: false,
                         visible: true,
@@ -115,11 +115,12 @@ module AIPUI {
                     }
                 }
             ];
+
             $scope.selectRecord = function (data) {
                 $scope.selectedRecord = data;
-            }
-
+            };
             $scope.fetchData = function (query: AIP.IAttachmentListQuery) {
+
                 var deferred = $q.defer();
                 query.actionItemId = $scope.actionItemId;
                 query.responseId = $scope.responseId;
@@ -131,7 +132,7 @@ module AIPUI {
                         deferred.reject(error);
                     });
                 return deferred.promise;
-            }
+            };
 
             $scope.reset = function () {
                 angular.element('#file-input-textbox').val("");
@@ -149,21 +150,17 @@ module AIPUI {
                 }
 
                 if (selectedFileValidate(selectedFile)) {
-                    console.log("$scope.actionItemId" + $scope.actionItemId);
                     this.attachmentParams = {
                         actionItemId: $scope.actionItemId,
                         responseId: $scope.responseId,
                         documentName: selectedFile.name,
                         file: selectedFile
                     };
-                    console.log("this.attachmentParams" + this.attachmentParams);
-                    //TODO need to work on getting params data
+
                     AIPUploadService.uploadDocument(this.attachmentParams)
                         .then((response: any) => {
-                            console.log("response->" + response);
                             if (response.success === true) {
                                 successNotification(response.message);
-                                //$scope.refreshGrid(true);
                             } else {
                                 errorNotification(response.message);
                             }
@@ -187,24 +184,36 @@ module AIPUI {
                                 return false;
                             }
                         }
-                    })
+                    });
                 return true;
             };
-
-            $scope.deleteDocument = function () {
-                var data = this.row;
-                AIPUploadService.deleteDocument(data.id)
+            var deleteFile = function (documentId) {
+                AIPUploadService.deleteDocument(documentId)
                     .then((response: any) => {
-                        console.log("response->" + response);
                         if (response.data.success === true) {
                             successNotification(response.data.message);
-                            $scope.refreshGrid(true);
                         } else {
                             errorNotification(response.data.message);
                         }
 
                     });
-                return true;
+            };
+
+            $scope.deleteDocument = function () {
+                var data = this.row;
+                var n = new Notification({
+                    message: $filter("i18n_aip")("js.aip.attachments.delete.prompt.message"),
+                    type: "warning"
+                });
+                n.addPromptAction($filter("i18n_aip")("aip.common.text.no"), function () {
+                    notifications.remove(n);
+
+                });
+                n.addPromptAction($filter("i18n_aip")("aip.common.text.yes"), function () {
+                    deleteFile(data.id);
+                    notifications.remove(n);
+                });
+                notifications.addNotification(n);
             };
 
             var restrictedFileTypeValidate = function (selectedFileType) {
