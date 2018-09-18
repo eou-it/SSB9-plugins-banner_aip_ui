@@ -25,11 +25,13 @@ class AipDocumentManagementController {
     }
 
     /**
-     * This method is responsible for delete documents for a response.
+     * This method is responsible for deleting attached document for a response.
      * @return
      */
     def deleteDocument() {
-
+        def map = request.JSON
+        def result = uploadDocumentCompositeService.deleteDocument( map.documentId )
+        render result as JSON
     }
 
     /**

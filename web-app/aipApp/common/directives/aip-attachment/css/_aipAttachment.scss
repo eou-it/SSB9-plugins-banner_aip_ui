@@ -6,3 +6,25 @@
   float:right;
   margin-right:5px;
 }
+
+.aip-attachments-container{
+  .attachmentsTable{
+    margin-top: 1em;
+    .view-attachment-icon{
+      background: url(../images/aip_view_attachment.svg) no-repeat;
+      cursor: pointer;
+      height: 1.5em;
+      width: 1.8em;
+      border: none;
+      padding: 1.5em;
+    }
+    .delete-attachment-icon{
+      background: url(../images/aip_delete_attachment.svg) no-repeat;
+      cursor: pointer;
+      height: 1.5em;
+      width: 1.8em;
+      border: none;
+      padding: 1.5em;
+    }
+  }
+}

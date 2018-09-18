@@ -1,14 +1,14 @@
 <!--*******************************************************************************
    Copyright 2018 Ellucian Company L.P. and its affiliates.
    *******************************************************************************-->
-<div id="attachmentsDiv">
+<div id="attachmentsDiv" class="aip-attachments-container">
     <xe-popup-modal show="showModal" focusbackelement="tools"
                     pageheader={{"js.aip.user.action.item.attachment.modal.title"|i18n_aip}}>
         <popup-content>
             <div id="modal-header ">
                 <label>
                     {{"js.aip.user.action.item.maximum.attachments.label"|i18n_aip}}: <span
-                        id="maxAttachments"></span>
+                        id="maxAttachments">{{maxAttachments}}</span>
                 </label>
             </div>
             <div class="modal-body">
@@ -34,7 +34,7 @@
                                 header="header"
                                 fetch="fetchData(query)"
                                 end-point=""
-                                content="data"
+                                content="gridData.row"
                                 results-found="records"
                                 toolbar="false"
                                 paginate="true"
@@ -45,15 +45,14 @@
                                 mobile-layout="mobileConfig"
                                 refresh-grid="refreshGrid"
                                 draggable-column-names="draggableColumnNames"
-                                continuous-scrolling="false"
-                                height="300px">
+                                continuous-scrolling="false">
                             <xe-cell-markup column-name="attachmentActions">
                                 <div class="row attachmentActions">
-                                    <button class="icon icon-view-CO" ng-click=""
+                                    <button class="view-attachment-icon" ng-click=""
                                          title="{{'aip.common.open.action.item.jaws'|i18n_aip}}" aria-label="{{'aip.common.open.action.item.jaws'|i18n_aip}}">
                                     </button>
 
-                                    <button class="icon icon-delete-CO" ng-click=""
+                                    <button class="delete-attachment-icon" ng-click="deleteDocument()"
                                             title="{{'aip.common.delete.group.jaws'|i18n_aip}}" aria-label="{{'aip.common.delete.group.jaws'|i18n_aip}}">
                                     </button>
                                 </div>

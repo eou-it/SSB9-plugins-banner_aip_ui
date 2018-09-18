@@ -38,12 +38,13 @@ var AIP;
                 console.log('Response changed testing>>>>>>');
                 $scope.responseId = window.params.responseId;
                 $scope.actionItemId = window.params.actionItemId;
+                $scope.maxAttachments = window.params.maxAttachments;
                 var listItemPageDiv = $('.listActionItem');
                 var attachmentModal = $('aip-attachment');
                 if (attachmentModal.length > 0) {
                     attachmentModal.remove();
                 }
-                var aipAttachmentDirective = $compile("<aip-attachment show-modal='showModal' response-id ='responseId' action-item-id='actionItemId'></aip-attachment>")($scope);
+                var aipAttachmentDirective = $compile("<aip-attachment show-modal='showModal' response-id ='responseId' action-item-id='actionItemId' max-attachments ='maxAttachments'></aip-attachment>")($scope);
                 listItemPageDiv.append(aipAttachmentDirective);
                 $scope.showModal = true;
                 $scope.$apply();
@@ -260,9 +261,10 @@ var AIP;
             var isElementPresent = document.getElementById(paperClipId);
             if (isElementPresent === null && responseElement.length > 0) {
                 var paperClipElement = angular.element("<input id=" + paperClipId + " type='image' " +
-                    "src='../images/attach_icon_disabled.svg' title = 'Click paperclip icon to check attached documents' " +
+                    "src='../images/attach_icon_disabled.svg' title = 'Click to add documents' " +
                     "class=' pb-detail pb-item pb-paperclip'/>");
                 window.params.responseId = responseId;
+                window.params.maxAttachments = allowedAttachments;
                 responseElement.after(paperClipElement);
                 $('#' + paperClipId).on("click", function () {
                     var selectedPaperClip = this.id;
@@ -273,7 +275,6 @@ var AIP;
                         $("#" + selectedPaperClip)[0].setAttribute("src", "../images/attach_icon_default.svg");
                         var evt = new CustomEvent('responseChanged');
                         window.dispatchEvent(evt);
-                        $("#maxAttachments").text(allowedAttachments);
                     }
                 });
             }

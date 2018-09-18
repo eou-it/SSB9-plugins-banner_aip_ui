@@ -5,32 +5,34 @@
 ///<reference path="../../../services/aipAttchmentService.ts"/>
 var AIPUI;
 (function (AIPUI) {
-    var AIPAttachment = (function () {
+    var AIPAttachment = /** @class */ (function () {
         function AIPAttachment($filter, $q, AIPUploadService) {
             this.restrict = "AE";
             this.replace = false;
             this.scope = {
                 showModal: "=",
                 responseId: "=",
-                actionItemId: "="
+                actionItemId: "=",
+                maxAttachments: "="
             };
             this.attachmentParams = {};
             this.$q = $q;
+            this.$filter = $filter;
         }
         AIPAttachment.prototype.compile = function () {
         };
         AIPAttachment.prototype.link = function (scope, elem, attr) {
         };
-        AIPAttachment.prototype.controller = function ($scope, $filter, $q, AIPUploadService) {
-            $scope.data = [];
+        AIPAttachment.prototype.controller = function ($scope, $q, $filter, AIPUploadService) {
+            $scope.gridData = {};
             $scope.paginationConfig = {
                 pageLengths: [5, 10, 25, 50, 100],
                 offset: 10,
-                recordsFoundLabel: "Results found",
-                pageTitle: "Go To Page (End)",
-                pageLabel: "Page",
-                pageAriaLabel: "Go To Page. Short cut is End",
-                ofLabel: "of"
+                recordsFoundLabel: $filter("i18n_aip")("aip.common.results.found"),
+                pageTitle: $filter("i18n_aip")("pagination.page.shortcut.label"),
+                pageLabel: $filter("i18n_aip")("pagination.page.label"),
+                pageAriaLabel: $filter("i18n_aip")("pagination.page.aria.label"),
+                ofLabel: $filter("i18n_aip")("pagination.page.of.label")
             };
             $scope.draggableColumnNames = [];
             $scope.mobileConfig = {
@@ -41,9 +43,9 @@ var AIPUI;
             $scope.searchConfig = {
                 id: "dataTableSearch",
                 delay: 300,
-                ariaLabel: "Search",
+                ariaLabel: $filter("i18n_aip")("search.aria.label"),
                 searchString: "",
-                placeholder: "Search",
+                placeholder: $filter("i18n_aip")("search.label"),
                 maxlength: 200,
                 minimumCharacters: 1
             };
@@ -60,7 +62,7 @@ var AIPUI;
                     name: "documentName",
                     title: "Document Name",
                     ariaLabel: "Document Name",
-                    width: "50%",
+                    width: "30%",
                     options: {
                         sortable: true,
                         visible: true,
@@ -82,7 +84,7 @@ var AIPUI;
                     name: "attachmentActions",
                     title: "Actions",
                     ariaLabel: "Actions",
-                    width: "20%",
+                    width: "30%",
                     options: {
                         sortable: false,
                         visible: true,
@@ -99,7 +101,7 @@ var AIPUI;
                 query.responseId = $scope.responseId;
                 AIPUploadService.fetchAttachmentsList(query)
                     .then(function (response) {
-                    deferred.resolve(response.data);
+                    deferred.resolve(response);
                 }, function (error) {
                     console.log(error);
                     deferred.reject(error);
@@ -133,6 +135,7 @@ var AIPUI;
                         .then(function (response) {
                         console.log("response->" + response);
                         if (response.success === true) {
+                            $scope.refreshData(true);
                             successNotification(response.message);
                         }
                         else {
@@ -155,6 +158,21 @@ var AIPUI;
                             errorNotification($filter("i18n_aip")("js.aip.common.file.maxsize"));
                             return false;
                         }
+                    }
+                });
+                return true;
+            };
+            $scope.deleteDocument = function () {
+                var data = this.row;
+                AIPUploadService.deleteDocument(data.id)
+                    .then(function (response) {
+                    console.log("response->" + response);
+                    if (response.data.success === true) {
+                        successNotification(response.data.message);
+                        $scope.refreshGrid(true);
+                    }
+                    else {
+                        errorNotification(response.data.message);
                     }
                 });
                 return true;
@@ -190,8 +208,7 @@ var AIPUI;
         };
         AIPAttachment.$inject = ["$filter", "$q", "AIPUploadService"];
         return AIPAttachment;
-    })();
+    }());
     AIPUI.AIPAttachment = AIPAttachment;
 })(AIPUI || (AIPUI = {}));
 register("bannerAIPUI").directive("aipAttachment", AIPUI.AIPAttachment);
-//# sourceMappingURL=aipAttachment.js.map

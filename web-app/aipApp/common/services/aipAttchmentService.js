@@ -4,7 +4,7 @@
 ///<reference path="../../../typings/tsd.d.ts"/>
 var AIP;
 (function (AIP) {
-    var UploadService = (function () {
+    var UploadService = /** @class */ (function () {
         function UploadService($http, $q, APP_PATH, Upload) {
             this.$http = $http;
             this.$q = $q;
@@ -39,7 +39,7 @@ var AIP;
                 method: "GET",
                 url: url
             }).then(function (response) {
-                deferred.resolve(response);
+                deferred.resolve(response.data);
             }, function (response) {
                 deferred.reject(response);
             });
@@ -59,10 +59,20 @@ var AIP;
             });
             return request;
         };
+        UploadService.prototype.deleteDocument = function (documentId) {
+            var data = {
+                documentId: documentId
+            };
+            var request = this.$http({
+                method: "POST",
+                url: this.APP_PATH + "/aipDocumentManagement/deleteDocument",
+                data: data
+            });
+            return request;
+        };
         UploadService.$inject = ["$http", "$q", "APP_PATH", "Upload"];
         return UploadService;
-    })();
+    }());
     AIP.UploadService = UploadService;
 })(AIP || (AIP = {}));
 register("bannerCommonAIP").service("AIPUploadService", AIP.UploadService);
-//# sourceMappingURL=aipAttchmentService.js.map

@@ -14,6 +14,7 @@ module AIPUI {
     export class AIPAttachment  {
         static $inject = ["$filter", "$q","AIPUploadService"];
 
+        $scope;
         $filter;
         $q: ng.IQService;
         selectedRecord;
@@ -29,10 +30,12 @@ module AIPUI {
             this.scope = {
                 showModal:"=",
                 responseId:"=",
-                actionItemId:"="
+                actionItemId:"=",
+                maxAttachments:"="
             };
             this.attachmentParams = {};
             this.$q = $q;
+            this.$filter = $filter;
         }
 
         compile() {
@@ -42,16 +45,16 @@ module AIPUI {
         link(scope, elem, attr) {
         }
 
-        controller($scope,$filter, $q, AIPUploadService) {
-            $scope.data = [];
+        controller($scope, $q, $filter, AIPUploadService) {
+            $scope.gridData = {};
             $scope.paginationConfig = {
                 pageLengths: [5, 10, 25, 50, 100],
                 offset: 10,
-                recordsFoundLabel: "Results found",
-                pageTitle: "Go To Page (End)",
-                pageLabel: "Page",
-                pageAriaLabel: "Go To Page. Short cut is End",
-                ofLabel: "of"
+                recordsFoundLabel: $filter("i18n_aip")("aip.common.results.found"),
+                pageTitle: $filter("i18n_aip")("pagination.page.shortcut.label"),
+                pageLabel: $filter("i18n_aip")("pagination.page.label"),
+                pageAriaLabel: $filter("i18n_aip")("pagination.page.aria.label"),
+                ofLabel: $filter("i18n_aip")("pagination.page.of.label")
             };
             $scope.draggableColumnNames=[];
             $scope.mobileConfig = {
@@ -62,9 +65,9 @@ module AIPUI {
             $scope.searchConfig = {
                             id: "dataTableSearch",
                             delay: 300,
-                            ariaLabel: "Search",
+                            ariaLabel: $filter("i18n_aip")("search.aria.label"),
                             searchString: "",
-                            placeholder : "Search",
+                            placeholder : $filter("i18n_aip")("search.label"),
                             maxlength: 200,
                             minimumCharacters: 1
                         };
@@ -81,7 +84,7 @@ module AIPUI {
                             name: "documentName",
                             title: "Document Name",
                             ariaLabel: "Document Name",
-                            width: "50%",
+                            width: "30%",
                             options: {
                                 sortable: true,
                                 visible: true,
@@ -103,7 +106,7 @@ module AIPUI {
                             name: "attachmentActions",
                             title: "Actions",
                             ariaLabel: "Actions",
-                            width: "20%",
+                            width: "30%",
                             options: {
                                 sortable: false,
                                 visible: true,
@@ -112,15 +115,16 @@ module AIPUI {
                         }
                         ];
             $scope.selectRecord = function(data) {
-                        $scope.selectedRecord = data;
+                $scope.selectedRecord = data;
             }
+
             $scope.fetchData = function(query:AIP.IAttachmentListQuery){
                 var deferred = $q.defer();
                 query.actionItemId = $scope.actionItemId;
                 query.responseId = $scope.responseId;
                 AIPUploadService.fetchAttachmentsList(query)
                     .then((response) => {
-                        deferred.resolve(response.data);
+                        deferred.resolve(response);
                     }, (error) => {
                         console.log(error);
                         deferred.reject(error);
@@ -132,7 +136,7 @@ module AIPUI {
                 angular.element('#file-input-textbox').val("");
             };
 
-            $scope.uploadDocument = function (selectedFiles) {
+             $scope.uploadDocument = function (selectedFiles) {
                 if(!selectedFiles){
                     errorNotification($filter("i18n_aip")("js.aip.common.file.not.selected"));
                     return;
@@ -157,6 +161,7 @@ module AIPUI {
                         .then((response:any) => {
                            console.log("response->"+response);
                             if(response.success === true){
+                                $scope.refreshData(true);
                                 successNotification(response.message);
                             }else {
                                 errorNotification(response.message);
@@ -183,7 +188,23 @@ module AIPUI {
                             }
                         }
                 })
-                return true
+                return true;
+            };
+
+            $scope.deleteDocument = function(){
+                var data = this.row;
+                AIPUploadService.deleteDocument(data.id)
+                .then((response:any) => {
+                   console.log("response->"+response);
+                    if(response.data.success === true){
+                        successNotification(response.data.message);
+                        $scope.refreshGrid(true);
+                    }else {
+                        errorNotification(response.data.message);
+                    }
+
+                });
+                return true;
             };
 
             var restrictedFileTypeValidate = function(selectedFileType){

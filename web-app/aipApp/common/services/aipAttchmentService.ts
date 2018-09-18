@@ -72,7 +72,7 @@ module AIP {
                 method: "GET",
                 url: url
             }).then(function(response){
-                deferred.resolve(response);
+                deferred.resolve(response.data);
             }, function(response){
                 deferred.reject(response);
             });
@@ -91,6 +91,17 @@ module AIP {
             var request = this.$http({
                 method: "GET",
                 url: this.APP_PATH + "/aipDocumentManagement/getMaxFileSize"
+            });
+            return request;
+        }
+        deleteDocument(documentId){
+            var data = {
+                documentId:documentId
+            };
+            var request = this.$http({
+                method: "POST",
+                url: this.APP_PATH + "/aipDocumentManagement/deleteDocument",
+                data:data
             });
             return request;
         }
