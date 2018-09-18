@@ -135,8 +135,8 @@ var AIPUI;
                         .then(function (response) {
                         console.log("response->" + response);
                         if (response.success === true) {
-                            $scope.refreshData(true);
                             successNotification(response.message);
+                            //$scope.refreshGrid(true);
                         }
                         else {
                             errorNotification(response.message);
