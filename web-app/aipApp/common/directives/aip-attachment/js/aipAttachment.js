@@ -60,9 +60,9 @@ var AIPUI;
                     }
                 }, {
                     name: "documentName",
-                    title: "Document Name",
-                    ariaLabel: "Document Name",
-                    width: "30%",
+                    title: $filter("i18n_aip")("js.aip.attachments.grid.header.documentName"),
+                    ariaLabel: $filter("i18n_aip")("js.aip.attachments.grid.header.documentName"),
+                    width: "40%",
                     options: {
                         sortable: true,
                         visible: true,
@@ -71,9 +71,9 @@ var AIPUI;
                     }
                 }, {
                     name: "documentUploadedDate",
-                    title: "Uploaded Date",
-                    ariaLabel: "Document Uploaded Date",
-                    width: "30%",
+                    title: $filter("i18n_aip")("js.aip.attachments.grid.header.dateOfAttachment"),
+                    ariaLabel: $filter("i18n_aip")("js.aip.attachments.grid.header.dateOfAttachment"),
+                    width: "40%",
                     options: {
                         sortable: true,
                         visible: true,
@@ -82,9 +82,9 @@ var AIPUI;
                 },
                 {
                     name: "attachmentActions",
-                    title: "Actions",
-                    ariaLabel: "Actions",
-                    width: "30%",
+                    title: $filter("i18n_aip")("js.aip.attachments.grid.header.actions"),
+                    ariaLabel: $filter("i18n_aip")("js.aip.attachments.grid.header.actions"),
+                    width: "20%",
                     options: {
                         sortable: false,
                         visible: true,
@@ -157,19 +157,31 @@ var AIPUI;
                 });
                 return true;
             };
-            $scope.deleteDocument = function () {
-                var data = this.row;
-                AIPUploadService.deleteDocument(data.id)
+            var deleteFile = function (documentId) {
+                AIPUploadService.deleteDocument(documentId)
                     .then(function (response) {
                     if (response.data.success === true) {
                         successNotification(response.data.message);
-                        $scope.refreshGrid(true);
                     }
                     else {
                         errorNotification(response.data.message);
                     }
                 });
-                return true;
+            };
+            $scope.deleteDocument = function () {
+                var data = this.row;
+                var n = new Notification({
+                    message: $filter("i18n_aip")("js.aip.attachments.delete.prompt.message"),
+                    type: "warning"
+                });
+                n.addPromptAction($filter("i18n_aip")("aip.common.text.no"), function () {
+                    notifications.remove(n);
+                });
+                n.addPromptAction($filter("i18n_aip")("aip.common.text.yes"), function () {
+                    deleteFile(data.id);
+                    notifications.remove(n);
+                });
+                notifications.addNotification(n);
             };
             var restrictedFileTypeValidate = function (selectedFileType) {
                 AIPUploadService.restrictedFileTypes()

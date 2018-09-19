@@ -5,21 +5,19 @@
     <xe-popup-modal show="showModal" focusbackelement="tools"
                     pageheader={{"js.aip.user.action.item.attachment.modal.title"|i18n_aip}}>
         <popup-content>
-            <div id="modal-header ">
+            <div class="modal-body">
                 <label>
                     {{"js.aip.user.action.item.maximum.attachments.label"|i18n_aip}}: <span
                         id="maxAttachments">{{maxAttachments}}</span>
                 </label>
-            </div>
-            <div class="modal-body">
                 <form name="UploadFile" role="form">
                     <div class="row ">
                         <label  for="fileupload_label" >
                             {{"js.aip.user.document.attachment.filePath.label"|i18n_aip}}:
                         </label>
-                        <input class="primary button btn-right" type="button" name="Button" tabindex="2"
+                        <input class="btn btn-primary btn-right" type="button" name="uploadButton" tabindex="2"
                                ng-click="uploadDocument(selectedFile)"  value={{"js.aip.common.upload.button.label"|i18n_aip}} aria-label="{{'js.aip.common.upload.button.label'|i18n_aip}}">
-                        <input  class="btn btn-default secondary-btn btn-right" type="reset" name="Button" tabindex="3"
+                        <input  class="btn btn-default btn-right" type="reset" name="resetButton" tabindex="3"
                                 value={{"js.aip.common.reset.button.label"|i18n_aip}}  aria-label="{{'js.aip.common.reset.button.label'|i18n_aip}}">
                     </div>
                     <div class="row">
@@ -29,11 +27,10 @@
 
                 <div class="attachmentsTable">
                         <xe-table-grid
-                                caption="Attachments"
+                                caption="{{'js.aip.attachments.grid.caption'|i18n_aip}}"
                                 table-id="dataTableAttachmentsList"
                                 header="header"
                                 fetch="fetchData(query)"
-                                end-point=""
                                 content="gridData.row"
                                 results-found="records"
                                 toolbar="false"
@@ -43,15 +40,14 @@
                                 search-config="searchConfig"
                                 pagination-config="paginationConfig"
                                 mobile-layout="mobileConfig"
-                                refresh-grid="refreshGrid"
                                 draggable-column-names="draggableColumnNames"
-                                continuous-scrolling="false">
+                                continuous-scrolling="false"
+                                refresh-grid="refreshGrid">
                             <xe-cell-markup column-name="attachmentActions">
                                 <div class="row attachmentActions">
                                     <button class="view-attachment-icon" ng-click=""
                                          title="{{'aip.common.open.action.item.jaws'|i18n_aip}}" aria-label="{{'aip.common.open.action.item.jaws'|i18n_aip}}">
                                     </button>
-
                                     <button class="delete-attachment-icon" ng-click="deleteDocument()"
                                             title="{{'aip.common.delete.group.jaws'|i18n_aip}}" aria-label="{{'aip.common.delete.group.jaws'|i18n_aip}}">
                                     </button>
