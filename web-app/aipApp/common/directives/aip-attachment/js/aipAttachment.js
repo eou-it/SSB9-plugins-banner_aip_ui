@@ -3,10 +3,11 @@
  ********************************************************************************/
 ///<reference path="../../../../../typings/tsd.d.ts"/>
 ///<reference path="../../../services/aipAttchmentService.ts"/>
+///<reference path="../../../services/spinnerService.ts"/>
 var AIPUI;
 (function (AIPUI) {
-    var AIPAttachment = (function () {
-        function AIPAttachment($filter, $q, AIPUploadService) {
+    var AIPAttachment = /** @class */ (function () {
+        function AIPAttachment($filter, $q, AIPUploadService, SpinnerService) {
             this.restrict = "AE";
             this.replace = false;
             this.scope = {
@@ -23,7 +24,7 @@ var AIPUI;
         };
         AIPAttachment.prototype.link = function (scope, elem, attr) {
         };
-        AIPAttachment.prototype.controller = function ($scope, $q, $filter, AIPUploadService) {
+        AIPAttachment.prototype.controller = function ($scope, $q, $filter, AIPUploadService, SpinnerService) {
             $scope.gridData = {};
             $scope.paginationConfig = {
                 pageLengths: [5, 10, 25, 50, 100],
@@ -112,6 +113,7 @@ var AIPUI;
                 angular.element('#file-input-textbox').val("");
             };
             $scope.uploadDocument = function (selectedFiles) {
+                SpinnerService.showSpinner(true);
                 if (!selectedFiles) {
                     errorNotification($filter("i18n_aip")("js.aip.common.file.not.selected"));
                     return;
@@ -130,6 +132,7 @@ var AIPUI;
                     };
                     AIPUploadService.uploadDocument(this.attachmentParams)
                         .then(function (response) {
+                        SpinnerService.showSpinner(false);
                         if (response.success === true) {
                             successNotification(response.message);
                         }
@@ -160,6 +163,7 @@ var AIPUI;
             var deleteFile = function (documentId) {
                 AIPUploadService.deleteDocument(documentId)
                     .then(function (response) {
+                    SpinnerService.showSpinner(false);
                     if (response.data.success === true) {
                         successNotification(response.data.message);
                     }
@@ -178,6 +182,7 @@ var AIPUI;
                     notifications.remove(n);
                 });
                 n.addPromptAction($filter("i18n_aip")("aip.common.text.yes"), function () {
+                    SpinnerService.showSpinner(true);
                     deleteFile(data.id);
                     notifications.remove(n);
                 });
@@ -212,10 +217,9 @@ var AIPUI;
                 notifications.addNotification(n);
             };
         };
-        AIPAttachment.$inject = ["$filter", "$q", "AIPUploadService"];
+        AIPAttachment.$inject = ["$filter", "$q", "AIPUploadService", "SpinnerService"];
         return AIPAttachment;
-    })();
+    }());
     AIPUI.AIPAttachment = AIPAttachment;
 })(AIPUI || (AIPUI = {}));
 register("bannerAIPUI").directive("aipAttachment", AIPUI.AIPAttachment);
-//# sourceMappingURL=aipAttachment.js.map

@@ -3,6 +3,7 @@
  ********************************************************************************/
 ///<reference path="../../../../../typings/tsd.d.ts"/>
 ///<reference path="../../../services/aipAttchmentService.ts"/>
+    ///<reference path="../../../services/spinnerService.ts"/>
 
 declare var register;
 declare var Notification: any;
@@ -12,7 +13,7 @@ declare var notifications: any;
 module AIPUI {
 
     export class AIPAttachment {
-        static $inject = ["$filter", "$q", "AIPUploadService"];
+        static $inject = ["$filter", "$q", "AIPUploadService","SpinnerService"];
 
         $scope;
         $filter;
@@ -25,7 +26,7 @@ module AIPUI {
         attachmentParams;
         aipUploadService: AIP.UploadService;
 
-        constructor($filter, $q, AIPUploadService) {
+        constructor($filter, $q, AIPUploadService, SpinnerService) {
             this.restrict = "AE";
             this.replace = false;
             this.scope = {
@@ -46,7 +47,7 @@ module AIPUI {
         link(scope, elem, attr) {
         }
 
-        controller($scope, $q, $filter, AIPUploadService) {
+        controller($scope, $q, $filter, AIPUploadService, SpinnerService) {
             $scope.gridData = {};
             $scope.paginationConfig = {
                 pageLengths: [5, 10, 25, 50, 100],
@@ -120,7 +121,6 @@ module AIPUI {
                 $scope.selectedRecord = data;
             };
             $scope.fetchData = function (query: AIP.IAttachmentListQuery) {
-
                 var deferred = $q.defer();
                 query.actionItemId = $scope.actionItemId;
                 query.responseId = $scope.responseId;
@@ -139,6 +139,7 @@ module AIPUI {
             };
 
             $scope.uploadDocument = function (selectedFiles) {
+                SpinnerService.showSpinner(true);
                 if (!selectedFiles) {
                     errorNotification($filter("i18n_aip")("js.aip.common.file.not.selected"));
                     return;
@@ -160,6 +161,7 @@ module AIPUI {
 
                     AIPUploadService.uploadDocument(this.attachmentParams)
                         .then((response:any) => {
+                            SpinnerService.showSpinner(false);
                             if(response.success === true){
                                 successNotification(response.message);
                             } else {
@@ -192,6 +194,7 @@ module AIPUI {
             var deleteFile = function (documentId) {
                 AIPUploadService.deleteDocument(documentId)
                     .then((response: any) => {
+                        SpinnerService.showSpinner(false);
                         if (response.data.success === true) {
                             successNotification(response.data.message);
                         } else {
@@ -212,6 +215,7 @@ module AIPUI {
 
                 });
                 n.addPromptAction($filter("i18n_aip")("aip.common.text.yes"), function () {
+                    SpinnerService.showSpinner(true);
                     deleteFile(data.id);
                     notifications.remove(n);
                 });
