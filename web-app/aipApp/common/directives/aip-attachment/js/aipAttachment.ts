@@ -148,20 +148,15 @@ module AIPUI {
                 }
 
                 if(selectedFileValidate(selectedFile)){
-                    console.log("$scope.actionItemId"+$scope.actionItemId);
                     this.attachmentParams={
                         actionItemId: $scope.actionItemId,
                         responseId: $scope.responseId,
                         documentName:selectedFile.name,
                         file:selectedFile
                     };
-                    console.log("this.attachmentParams"+this.attachmentParams);
-                    //TODO need to work on getting params data
                     AIPUploadService.uploadDocument(this.attachmentParams)
                         .then((response:any) => {
-                           console.log("response->"+response);
                             if(response.success === true){
-                                $scope.refreshData(true);
                                 successNotification(response.message);
                             }else {
                                 errorNotification(response.message);
@@ -179,10 +174,10 @@ module AIPUI {
             };
 
             var maxFileSizeValidate = function(selectedFileSize){
-                AIPUploadService.maxFileSize(this.attachmentParams)
+                AIPUploadService.maxFileSize()
                     .then((response:any) => {
-                        if(response.maxFileSize){
-                            if( selectedFileSize > response.maxFileSize){
+                        if(response.data.maxFileSize){
+                            if( selectedFileSize > response.data.maxFileSize){
                                 errorNotification($filter("i18n_aip")("js.aip.common.file.maxsize"));
                                 return false;
                             }
@@ -195,7 +190,6 @@ module AIPUI {
                 var data = this.row;
                 AIPUploadService.deleteDocument(data.id)
                 .then((response:any) => {
-                   console.log("response->"+response);
                     if(response.data.success === true){
                         successNotification(response.data.message);
                         $scope.refreshGrid(true);
@@ -208,10 +202,10 @@ module AIPUI {
             };
 
             var restrictedFileTypeValidate = function(selectedFileType){
-                AIPUploadService.restrictedFileTypes(this.attachmentParams)
+                AIPUploadService.restrictedFileTypes()
                     .then((response:any) => {
-                        if(response.restrictedFileTypes){
-                            if(selectedFileType in response.restrictedFileTypes){
+                        if(response.data.restrictedFileTypes){
+                            if(selectedFileType in response.data.restrictedFileTypes){
                                 errorNotification($filter("i18n_aip")("js.aip.common.file.type.restricted"));
                                 return false;
                             }

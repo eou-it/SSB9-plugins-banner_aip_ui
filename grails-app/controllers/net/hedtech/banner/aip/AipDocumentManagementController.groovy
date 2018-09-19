@@ -56,13 +56,12 @@ class AipDocumentManagementController {
      * @return
      */
     def getRestrictedFileTypes() {
-        String restrictedFileTypes = session.getAttribute("restrictedFileTypes");
-        def result
+        def restrictedFileTypes = session.getAttribute("restrictedFileTypes");
         if (!restrictedFileTypes) {
             restrictedFileTypes = uploadDocumentCompositeService.getRestrictedFileTypes()
+            session.setAttribute("restrictedFileTypes", restrictedFileTypes)
         }
-        result = [restrictedFileTypes: restrictedFileTypes]
-        render result as JSON
+        render restrictedFileTypes as JSON
     }
 
     /**
@@ -70,13 +69,12 @@ class AipDocumentManagementController {
      * @return
      */
     def getMaxFileSize() {
-        String maxFileSize = session.getAttribute("maxFileSize");
-        def result
+        def maxFileSize = session.getAttribute("maxFileSize");
         if (!maxFileSize) {
             maxFileSize = uploadDocumentCompositeService.getMaxFileSize()
+            session.setAttribute("maxFileSize", maxFileSize)
         }
-        result = [maxFileSize: maxFileSize]
-        render result as JSON
+        render maxFileSize as JSON
     }
 
     /**
