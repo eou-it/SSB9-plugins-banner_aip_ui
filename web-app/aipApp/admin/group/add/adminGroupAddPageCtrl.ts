@@ -192,7 +192,6 @@ module AIP {
                                 n.addPromptAction(this.$filter("i18n_aip")("aip.common.text.yes"), () => {
                                     notifications.remove(n);
                                 });
-                                ;
                             } else {
                                 n.addPromptAction(this.$filter("i18n_aip")("aip.common.text.no"), () => {
                                     notifications.remove(n);

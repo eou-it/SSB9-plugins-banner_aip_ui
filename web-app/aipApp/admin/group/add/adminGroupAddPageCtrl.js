@@ -6,11 +6,14 @@
 ///<reference path="../../../common/services/spinnerService.ts"/>
 var AIP;
 (function (AIP) {
-    var _this = this;
-    var AdminGroupAddPageCtrl = (function () {
+    var AdminGroupAddPageCtrl = /** @class */ (function () {
         function AdminGroupAddPageCtrl($scope, $rootScope, $window, AdminGroupService, $q, SpinnerService, $state, $filter, $sce, $timeout, CKEDITORCONFIG) {
             var _this = this;
             this.$inject = ["$scope", "$rootScope", "$window", "AdminGroupService", "$q", "SpinnerService", "$state", "$filter", "$sce", "$timeout", "CKEDITORCONFIG"];
+            this.trustHTML = function (txtString) {
+                var sanitized = txtString ? this.$filter("html")(this.$sce.trustAsHtml(txtString)) : "";
+                return sanitized;
+            };
             $scope.vm = this;
             this.$scope = $scope;
             this.$rootScope = $rootScope;
@@ -134,7 +137,6 @@ var AIP;
                             n.addPromptAction(_this.$filter("i18n_aip")("aip.common.text.yes"), function () {
                                 notifications.remove(n);
                             });
-                            ;
                         }
                         else {
                             n.addPromptAction(_this.$filter("i18n_aip")("aip.common.text.no"), function () {
@@ -222,184 +224,172 @@ var AIP;
                 notifications.addNotification(n);
             });
         };
-        AdminGroupAddPageCtrl.prototype.dataChanged = ;
-        return AdminGroupAddPageCtrl;
-    })();
-    AIP.AdminGroupAddPageCtrl = AdminGroupAddPageCtrl;
-    this;
-    {
-        this.actionItemDataChanged = true;
-        this.$rootScope.DataChanged = this.actionItemDataChanged;
-    }
-    cancel();
-    {
-        this.redirectval = "NoData";
-        this.checkchangesDone();
-    }
-    checkchangesDone();
-    {
-        var that = this;
-        if (that.actionItemDataChanged) {
-            var n = new Notification({
-                message: this.$filter("i18n_aip")("aip.admin.actionItem.saveChanges"),
-                type: "warning"
-            });
-            n.addPromptAction(this.$filter("i18n_aip")("aip.common.text.no"), function () {
-                notifications.remove(n);
-            });
-            n.addPromptAction(this.$filter("i18n_aip")("aip.common.text.yes"), function () {
-                that.actionItemDataChanged = false;
-                that.$rootScope.DataChanged = false;
-                if (that.redirectval === "NoData") {
-                    that.$state.go("admin-group-list");
-                }
-                else {
-                    location.href = that.redirectval;
-                }
-                notifications.remove(n);
-            });
-            notifications.addNotification(n);
-        }
-        else {
-            that.$state.go("admin-group-list");
-        }
-    }
-    isChanged();
-    {
-        var changed = false;
-        if (this.editMode) {
-            var keys = Object.keys(this.groupInfoInitial);
-            for (var i = 0; i < keys.length; i++) {
-                if (this.groupInfo[keys[i]]) {
-                    if (keys[i] === "folder") {
-                        if (this.groupInfo.folder.id !== this.groupInfoInitial.folder.id) {
+        AdminGroupAddPageCtrl.prototype.dataChanged = function () {
+            this.actionItemDataChanged = true;
+            this.$rootScope.DataChanged = this.actionItemDataChanged;
+        };
+        AdminGroupAddPageCtrl.prototype.cancel = function () {
+            this.redirectval = "NoData";
+            this.checkchangesDone();
+        };
+        AdminGroupAddPageCtrl.prototype.checkchangesDone = function () {
+            var that = this;
+            if (that.actionItemDataChanged) {
+                var n = new Notification({
+                    message: this.$filter("i18n_aip")("aip.admin.actionItem.saveChanges"),
+                    type: "warning"
+                });
+                n.addPromptAction(this.$filter("i18n_aip")("aip.common.text.no"), function () {
+                    notifications.remove(n);
+                });
+                n.addPromptAction(this.$filter("i18n_aip")("aip.common.text.yes"), function () {
+                    that.actionItemDataChanged = false;
+                    that.$rootScope.DataChanged = false;
+                    if (that.redirectval === "NoData") {
+                        that.$state.go("admin-group-list");
+                    }
+                    else {
+                        location.href = that.redirectval;
+                    }
+                    notifications.remove(n);
+                });
+                notifications.addNotification(n);
+            }
+            else {
+                that.$state.go("admin-group-list");
+            }
+        };
+        AdminGroupAddPageCtrl.prototype.isChanged = function () {
+            var changed = false;
+            if (this.editMode) {
+                var keys = Object.keys(this.groupInfoInitial);
+                for (var i = 0; i < keys.length; i++) {
+                    if (this.groupInfo[keys[i]]) {
+                        if (keys[i] === "folder") {
+                            if (this.groupInfo.folder.id !== this.groupInfoInitial.folder.id) {
+                                changed = true;
+                                break;
+                            }
+                        }
+                        else if (keys[i] === "description") {
+                            var dom = document.createElement("DIV"), domInitial = document.createElement("DIV");
+                            dom.innerHTML = CKEDITOR.instances.groupDesc.getSnapshot(), domInitial.innerHTML = this.groupInfoInitial[keys[i]];
+                            var current = (dom.textContent || dom.innerHTML).replace(/\s\s/g, ""), initial = (domInitial.textContent || domInitial.innerHTML).replace(/\s\s/g, "");
+                            if (current.trim() !== initial.trim()) {
+                                changed = true;
+                                break;
+                            }
+                        }
+                        else if (this.groupInfo[keys[i]] !== this.groupInfoInitial[keys[i]]) {
                             changed = true;
                             break;
                         }
                     }
-                    else if (keys[i] === "description") {
-                        var dom = document.createElement("DIV"), domInitial = document.createElement("DIV");
-                        dom.innerHTML = CKEDITOR.instances.groupDesc.getSnapshot(), domInitial.innerHTML = this.groupInfoInitial[keys[i]];
-                        var current = (dom.textContent || dom.innerHTML).replace(/\s\s/g, ""), initial = (domInitial.textContent || domInitial.innerHTML).replace(/\s\s/g, "");
-                        if (current.trim() !== initial.trim()) {
-                            changed = true;
-                            break;
-                        }
-                    }
-                    else if (this.groupInfo[keys[i]] !== this.groupInfoInitial[keys[i]]) {
-                        changed = true;
-                        break;
-                    }
                 }
             }
-        }
-        else {
-            if (this.groupInfo.name || this.groupInfo.title || (this.groupInfo.folder && this.groupInfo.folder.id) || this.groupInfo.description) {
-                changed = true;
+            else {
+                if (this.groupInfo.name || this.groupInfo.title || (this.groupInfo.folder && this.groupInfo.folder.id) || this.groupInfo.description) {
+                    changed = true;
+                }
+                else if (this.groupInfo.status !== "Draft") {
+                    changed = true;
+                }
             }
-            else if (this.groupInfo.status !== "Draft") {
-                changed = true;
+            return changed;
+        };
+        AdminGroupAddPageCtrl.prototype.validateInput = function () {
+            if (this.saving) {
+                return false;
             }
-        }
-        return changed;
-    }
-    validateInput();
-    {
-        if (this.saving) {
-            return false;
-        }
-        if (!this.groupInfo.title || this.groupInfo.title === null || this.groupInfo.title === "" || this.groupInfo.title.length > 60) {
-            this.errorMessage.title = "invalid title";
-        }
-        else {
-            delete this.errorMessage.title;
-        }
-        if (!this.groupInfo.name || this.groupInfo.name === null || this.groupInfo.name === "" || this.groupInfo.name.length > 60) {
-            this.errorMessage.name = "invalid name";
-        }
-        else {
-            delete this.errorMessage.name;
-        }
-        if (!this.groupInfo.folder) {
-            this.errorMessage.folder = "invalid folder";
-        }
-        else {
-            delete this.errorMessage.folder;
-        }
-        if (!this.groupInfo.description || this.groupInfo.description === null || this.groupInfo.description === "") {
-            this.errorMessage.description = "invalid description";
-        }
-        else {
-            delete this.errorMessage.description;
-        }
-        if (Object.keys(this.errorMessage).length > 0) {
-            return false;
-        }
-        else {
-            return true;
-        }
-    }
-    selectGroupFolder(item, index);
-    {
-        if (this.editMode && (this.existFolder.id !== item.id)) {
-            this.duplicateGroup = true;
+            if (!this.groupInfo.title || this.groupInfo.title === null || this.groupInfo.title === "" || this.groupInfo.title.length > 60) {
+                this.errorMessage.title = "invalid title";
+            }
+            else {
+                delete this.errorMessage.title;
+            }
+            if (!this.groupInfo.name || this.groupInfo.name === null || this.groupInfo.name === "" || this.groupInfo.name.length > 60) {
+                this.errorMessage.name = "invalid name";
+            }
+            else {
+                delete this.errorMessage.name;
+            }
+            if (!this.groupInfo.folder) {
+                this.errorMessage.folder = "invalid folder";
+            }
+            else {
+                delete this.errorMessage.folder;
+            }
+            if (!this.groupInfo.description || this.groupInfo.description === null || this.groupInfo.description === "") {
+                this.errorMessage.description = "invalid description";
+            }
+            else {
+                delete this.errorMessage.description;
+            }
+            if (Object.keys(this.errorMessage).length > 0) {
+                return false;
+            }
+            else {
+                return true;
+            }
+        };
+        AdminGroupAddPageCtrl.prototype.selectGroupFolder = function (item, index) {
+            var _this = this;
+            if (this.editMode && (this.existFolder.id !== item.id)) {
+                this.duplicateGroup = true;
+                var n = new Notification({
+                    message: this.$filter("i18n_aip")("aip.admin.group.content.edit.posted.warning"),
+                    type: "warning"
+                });
+                n.addPromptAction(this.$filter("i18n_aip")("aip.common.text.ok"), function () {
+                    _this.duplicateGroup = true;
+                    notifications.remove(n);
+                });
+                notifications.addNotification(n);
+            }
+            else {
+                this.duplicateGroup = false;
+            }
+        };
+        AdminGroupAddPageCtrl.prototype.selectStatus = function (item, index) {
+            this.selectedstatusval = item;
+            this.groupInfo.status = item.value;
+        };
+        AdminGroupAddPageCtrl.prototype.saveErrorCallback = function (invalidFields, errors, orgMessage) {
+            var _this = this;
+            //todo: iterate through errors given back through contraints
+            var message = this.$filter("i18n_aip")(orgMessage || "aip.admin.group.add.error.blank");
+            if (errors != null) {
+                message = errors[0];
+            }
+            angular.forEach(invalidFields, function (field) {
+                if (field === "group status") {
+                    message += "</br>" + _this.$filter("i18n_aip")("admin.group.add.error.noStatus");
+                }
+                if (field === "folder") {
+                    message += "</br>" + _this.$filter("i18n_aip")("aip.admin.group.add.error.noFolder");
+                }
+                if (field === "group title") {
+                    message += "</br>" + _this.$filter("i18n_aip")("aip.admin.group.add.error.noTitle");
+                }
+                if (field === "group name") {
+                    message += "</br>" + _this.$filter("i18n_aip")("aip.admin.group.add.error.noName");
+                }
+                if (field === "group description") {
+                    message += "</br>" + _this.$filter("i18n_aip")("aip.admin.group.add.error.noDesc");
+                }
+            });
             var n = new Notification({
-                message: this.$filter("i18n_aip")("aip.admin.group.content.edit.posted.warning"),
-                type: "warning"
+                message: message,
+                type: "error",
+                flash: true
             });
             n.addPromptAction(this.$filter("i18n_aip")("aip.common.text.ok"), function () {
-                _this.duplicateGroup = true;
                 notifications.remove(n);
             });
             notifications.addNotification(n);
-        }
-        else {
-            this.duplicateGroup = false;
-        }
-    }
-    selectStatus(item, index);
-    {
-        this.selectedstatusval = item;
-        this.groupInfo.status = item.value;
-    }
-    trustHTML = function (txtString) {
-        var sanitized = txtString ? this.$filter("html")(this.$sce.trustAsHtml(txtString)) : "";
-        return sanitized;
-    };
-    saveErrorCallback(invalidFields, errors, orgMessage);
-    {
-        //todo: iterate through errors given back through contraints
-        var message = this.$filter("i18n_aip")(orgMessage || "aip.admin.group.add.error.blank");
-        if (errors != null) {
-            message = errors[0];
-        }
-        angular.forEach(invalidFields, function (field) {
-            if (field === "group status") {
-                message += "</br>" + _this.$filter("i18n_aip")("admin.group.add.error.noStatus");
-            }
-            if (field === "folder") {
-                message += "</br>" + _this.$filter("i18n_aip")("aip.admin.group.add.error.noFolder");
-            }
-            if (field === "group title") {
-                message += "</br>" + _this.$filter("i18n_aip")("aip.admin.group.add.error.noTitle");
-            }
-            if (field === "group name") {
-                message += "</br>" + _this.$filter("i18n_aip")("aip.admin.group.add.error.noName");
-            }
-            if (field === "group description") {
-                message += "</br>" + _this.$filter("i18n_aip")("aip.admin.group.add.error.noDesc");
-            }
-        });
-        var n = new Notification({
-            message: message,
-            type: "error",
-            flash: true
-        });
-        n.addPromptAction(this.$filter("i18n_aip")("aip.common.text.ok"), function () {
-            notifications.remove(n);
-        });
-        notifications.addNotification(n);
-    }
+        };
+        return AdminGroupAddPageCtrl;
+    }());
+    AIP.AdminGroupAddPageCtrl = AdminGroupAddPageCtrl;
 })(AIP || (AIP = {}));
 register("bannerAIP").controller("AdminGroupAddPageCtrl", AIP.AdminGroupAddPageCtrl);
-//# sourceMappingURL=adminGroupAddPageCtrl.js.map
