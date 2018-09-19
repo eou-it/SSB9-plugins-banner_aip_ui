@@ -7,8 +7,7 @@
 ///<reference path="../../../../common/services/spinnerService.ts"/>
 var AIP;
 (function (AIP) {
-    var _this = this;
-    var AdminActionItemBlockCtrl = (function () {
+    var AdminActionItemBlockCtrl = /** @class */ (function () {
         function AdminActionItemBlockCtrl($scope, $rootScope, $q, $state, $filter, $sce, $window, $templateRequest, $templateCache, $compile, $timeout, $interpolate, SpinnerService, AdminActionService, AdminActionStatusService, APP_ROOT, CKEDITORCONFIG) {
             this.$inject = ["$scope", "$window", "$rootScope", "$q", "$state", "$filter", "$sce", "$templateRequest", "$templateCache", "$compile",
                 "$timeout", "$interpolate", "SpinnerService", "AdminActionService", "AdminActionStatusService", "APP_ROOT", "CKEDITORCONFIG"];
@@ -280,148 +279,142 @@ var AIP;
                 $(".xe-tab-nav").height();
             return { height: containerHeight };
         };
-        AdminActionItemBlockCtrl.prototype.dataChanged = ;
-        return AdminActionItemBlockCtrl;
-    })();
-    AIP.AdminActionItemBlockCtrl = AdminActionItemBlockCtrl;
-    this;
-    {
-        this.actionItemDataChanged = true;
-        this.$rootScope.DataChanged = this.actionItemDataChanged;
-    }
-    reset();
-    {
-        //reset selected items then exit edit mode
-        this.getBlockedProcessList(this.actionBlockFolder)
-            .then(function (response) {
-            _this.alreadyGenerated = [];
-            _this.editMode = false;
-            _this.selected = [];
-        }, function (error) {
-            console.log("something wrong");
-            _this.alreadyGenerated = [];
-            _this.editMode = false;
-        });
-    }
-    cancel();
-    {
-        this.redirectval = "NoData";
-        this.checkEditchanges();
-    }
-    checkEditchanges();
-    {
-        var that = this;
-        if (that.actionItemDataChanged) {
-            var n = new Notification({
-                message: this.$filter("i18n_aip")("aip.admin.actionItem.saveChanges"),
-                type: "warning"
+        AdminActionItemBlockCtrl.prototype.dataChanged = function () {
+            this.actionItemDataChanged = true;
+            this.$rootScope.DataChanged = this.actionItemDataChanged;
+        };
+        AdminActionItemBlockCtrl.prototype.reset = function () {
+            var _this = this;
+            //reset selected items then exit edit mode
+            this.getBlockedProcessList(this.actionBlockFolder)
+                .then(function (response) {
+                _this.alreadyGenerated = [];
+                _this.editMode = false;
+                _this.selected = [];
+            }, function (error) {
+                console.log("something wrong");
+                _this.alreadyGenerated = [];
+                _this.editMode = false;
             });
-            n.addPromptAction(this.$filter("i18n_aip")("aip.common.text.no"), function () {
-                notifications.remove(n);
-            });
-            n.addPromptAction(this.$filter("i18n_aip")("aip.common.text.yes"), function () {
-                that.actionItemDataChanged = false;
-                that.$rootScope.DataChanged = false;
-                if (that.redirectval === "NoData") {
-                    that.reset();
-                }
-                else {
-                    that.reset();
-                    location.href = that.redirectval;
-                }
-                notifications.remove(n);
-            });
-            notifications.addNotification(n);
-        }
-        else {
-            that.reset();
-        }
-    }
-    isEqual(item1, item2);
-    {
-        var item1Properties = item1.map(function (item) {
-            return [item.process.name, item.persona];
-        });
-        var item2Properties = item2.map(function (item) {
-            return [item.process.name, item.persona];
-        });
-        if (angular.equals(item1Properties, item2Properties)) {
-            return true;
-        }
-        return false;
-    }
-    saveSucess();
-    {
-        var saveData = this.selected.map(function (item) {
-            if (item.process.personAllowed === "N") {
-                item.persona = "";
-            }
-            return { processId: item.process.id, persona: item.persona };
-        });
-        this.adminActionService.updateBlockedProcessItems(this.actionBlockFolder, this.globalBlockProcess, saveData)
-            .then(function (response) {
-            _this.getBlockedProcessList(_this.actionBlockFolder);
-            if (response.data.success) {
-                var notiParams = {};
-                notiParams = {
-                    notiType: "saveSuccess",
-                    noti: notiParams,
-                    data: response.data.success
-                };
-                _this.handleNotification(notiParams);
-            }
-            if (response.data.success) {
-                notiParams = {};
-                notiParams = {
-                    notiType: "saveSuccess",
-                    noti: notiParams,
-                    data: response.data.success
-                };
-                _this.actionItemDataChanged = false;
-                _this.$rootScope.DataChanged = false;
-                _this.handleNotification(notiParams);
-            }
-            else {
-                notiParams = {};
-                notiParams = {
-                    notiType: "saveFailed",
-                    noti: notiParams,
-                    data: response.data.message
-                };
-                _this.handleNotification(notiParams);
-                _this.editMode = true;
-            }
-            _this.isSaving = false;
-        }, function (error) {
-            _this.isSaving = false;
-        });
-        this.editMode = false;
-    }
-    saveBlocks();
-    {
-        this.isSaving = true;
-        this.adminActionService.checkActionItemPosted(this.actionBlockFolder)
-            .then(function (response) {
-            if (response.posted) {
+        };
+        AdminActionItemBlockCtrl.prototype.cancel = function () {
+            this.redirectval = "NoData";
+            this.checkEditchanges();
+        };
+        AdminActionItemBlockCtrl.prototype.checkEditchanges = function () {
+            var that = this;
+            if (that.actionItemDataChanged) {
                 var n = new Notification({
-                    message: _this.$filter("i18n_aip")("aip.admin.halt.content.save.warning"),
+                    message: this.$filter("i18n_aip")("aip.admin.actionItem.saveChanges"),
                     type: "warning"
                 });
-                n.addPromptAction(_this.$filter("i18n_aip")("aip.common.text.yes"), function () {
+                n.addPromptAction(this.$filter("i18n_aip")("aip.common.text.no"), function () {
                     notifications.remove(n);
-                    _this.saveSucess();
                 });
-                n.addPromptAction(_this.$filter("i18n_aip")("aip.common.text.no"), function () {
+                n.addPromptAction(this.$filter("i18n_aip")("aip.common.text.yes"), function () {
+                    that.actionItemDataChanged = false;
+                    that.$rootScope.DataChanged = false;
+                    if (that.redirectval === "NoData") {
+                        that.reset();
+                    }
+                    else {
+                        that.reset();
+                        location.href = that.redirectval;
+                    }
                     notifications.remove(n);
-                    _this.editMode = true;
                 });
                 notifications.addNotification(n);
             }
             else {
-                _this.saveSucess();
+                that.reset();
             }
-        });
-    }
+        };
+        AdminActionItemBlockCtrl.prototype.isEqual = function (item1, item2) {
+            var item1Properties = item1.map(function (item) {
+                return [item.process.name, item.persona];
+            });
+            var item2Properties = item2.map(function (item) {
+                return [item.process.name, item.persona];
+            });
+            if (angular.equals(item1Properties, item2Properties)) {
+                return true;
+            }
+            return false;
+        };
+        AdminActionItemBlockCtrl.prototype.saveSucess = function () {
+            var _this = this;
+            var saveData = this.selected.map(function (item) {
+                if (item.process.personAllowed === "N") {
+                    item.persona = "";
+                }
+                return { processId: item.process.id, persona: item.persona };
+            });
+            this.adminActionService.updateBlockedProcessItems(this.actionBlockFolder, this.globalBlockProcess, saveData)
+                .then(function (response) {
+                _this.getBlockedProcessList(_this.actionBlockFolder);
+                if (response.data.success) {
+                    var notiParams = {};
+                    notiParams = {
+                        notiType: "saveSuccess",
+                        noti: notiParams,
+                        data: response.data.success
+                    };
+                    _this.handleNotification(notiParams);
+                }
+                if (response.data.success) {
+                    notiParams = {};
+                    notiParams = {
+                        notiType: "saveSuccess",
+                        noti: notiParams,
+                        data: response.data.success
+                    };
+                    _this.actionItemDataChanged = false;
+                    _this.$rootScope.DataChanged = false;
+                    _this.handleNotification(notiParams);
+                }
+                else {
+                    notiParams = {};
+                    notiParams = {
+                        notiType: "saveFailed",
+                        noti: notiParams,
+                        data: response.data.message
+                    };
+                    _this.handleNotification(notiParams);
+                    _this.editMode = true;
+                }
+                _this.isSaving = false;
+            }, function (error) {
+                _this.isSaving = false;
+            });
+            this.editMode = false;
+        };
+        AdminActionItemBlockCtrl.prototype.saveBlocks = function () {
+            var _this = this;
+            this.isSaving = true;
+            this.adminActionService.checkActionItemPosted(this.actionBlockFolder)
+                .then(function (response) {
+                if (response.posted) {
+                    var n = new Notification({
+                        message: _this.$filter("i18n_aip")("aip.admin.halt.content.save.warning"),
+                        type: "warning"
+                    });
+                    n.addPromptAction(_this.$filter("i18n_aip")("aip.common.text.yes"), function () {
+                        notifications.remove(n);
+                        _this.saveSucess();
+                    });
+                    n.addPromptAction(_this.$filter("i18n_aip")("aip.common.text.no"), function () {
+                        notifications.remove(n);
+                        _this.editMode = true;
+                    });
+                    notifications.addNotification(n);
+                }
+                else {
+                    _this.saveSucess();
+                }
+            });
+        };
+        return AdminActionItemBlockCtrl;
+    }());
+    AIP.AdminActionItemBlockCtrl = AdminActionItemBlockCtrl;
 })(AIP || (AIP = {}));
 register("bannerAIP").controller("AdminActionItemBlockCtrl", AIP.AdminActionItemBlockCtrl);
-//# sourceMappingURL=adminActionItemBlockProcessCtrl.js.map

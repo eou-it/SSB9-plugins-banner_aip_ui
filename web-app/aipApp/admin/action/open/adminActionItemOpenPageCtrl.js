@@ -7,8 +7,7 @@
 ///<reference path="../../../common/services/spinnerService.ts"/>
 var AIP;
 (function (AIP) {
-    var _this = this;
-    var AdminActionItemOpenPageCtrl = (function () {
+    var AdminActionItemOpenPageCtrl = /** @class */ (function () {
         function AdminActionItemOpenPageCtrl($scope, $rootScope, $q, $state, $filter, $sce, $window, $templateRequest, $templateCache, $compile, $timeout, $interpolate, SpinnerService, AdminActionService, AdminActionStatusService, APP_ROOT, CKEDITORCONFIG) {
             this.$inject = ["$scope", "$rootScope", "$q", "$state", "$filter", "$sce", "$window", "$templateRequest", "$templateCache", "$compile", "$timeout", "$interpolate", "SpinnerService", "AdminActionService", "AdminActionStatusService", "APP_ROOT", "CKEDITORCONFIG"];
             this.trustAsHtml = function (string) {
@@ -354,250 +353,243 @@ var AIP;
             });
             return deferred.promise;
         };
-        AdminActionItemOpenPageCtrl.prototype.dataChanged = ;
-        return AdminActionItemOpenPageCtrl;
-    })();
-    AIP.AdminActionItemOpenPageCtrl = AdminActionItemOpenPageCtrl;
-    this;
-    {
-        this.actionItemDataChanged = true;
-        this.$rootScope.DataChanged = true;
-    }
-    reset(option);
-    {
-        var deferred = this.$q.defer();
-        this.spinnerService.showSpinner(true);
-        var promises = [];
-        this.actionFolder = this.$state.params.actionItemId || this.$state.previousParams.actionItemId;
-        this.adminActionService.getActionItemDetail(this.actionFolder)
-            .then(function (response) {
-            _this.actionItem = response.data.actionItem;
-            _this.selectedTemplate = _this.actionItem.actionItemTemplateId;
-            _this.trustActionItemContent();
-            switch (option) {
-                case "content":
-                    _this.templateSelect = false;
-                    promises.push(_this.getStatus());
-                    promises.push(_this.getRules());
-                    _this.$q.all(promises).then(function () {
-                        //TODO:: turn off the spinner
-                        _this.spinnerService.showSpinner(false);
-                        _this.contentChanged = false;
-                    });
-                    break;
-                default:
-                    break;
+        AdminActionItemOpenPageCtrl.prototype.dataChanged = function () {
+            this.actionItemDataChanged = true;
+            this.$rootScope.DataChanged = true;
+        };
+        AdminActionItemOpenPageCtrl.prototype.reset = function (option) {
+            var _this = this;
+            var deferred = this.$q.defer();
+            this.spinnerService.showSpinner(true);
+            var promises = [];
+            this.actionFolder = this.$state.params.actionItemId || this.$state.previousParams.actionItemId;
+            this.adminActionService.getActionItemDetail(this.actionFolder)
+                .then(function (response) {
+                _this.actionItem = response.data.actionItem;
+                _this.selectedTemplate = _this.actionItem.actionItemTemplateId;
+                _this.trustActionItemContent();
+                switch (option) {
+                    case "content":
+                        _this.templateSelect = false;
+                        promises.push(_this.getStatus());
+                        promises.push(_this.getRules());
+                        _this.$q.all(promises).then(function () {
+                            //TODO:: turn off the spinner
+                            _this.spinnerService.showSpinner(false);
+                            _this.contentChanged = false;
+                        });
+                        break;
+                    default:
+                        break;
+                }
+                deferred.resolve(_this.openPanel(option));
+            }, function (err) {
+                console.log(err);
+            });
+            return deferred.promise;
+        };
+        AdminActionItemOpenPageCtrl.prototype.cancel = function (option) {
+            this.redirectval = "NoData";
+            this.checkEditchangesDone(option);
+        };
+        AdminActionItemOpenPageCtrl.prototype.checkEditchangesDone = function (option) {
+            var that = this;
+            if (that.actionItemDataChanged || that.contentChanged) {
+                var n = new Notification({
+                    message: this.$filter("i18n_aip")("aip.admin.actionItem.saveChanges"),
+                    type: "warning"
+                });
+                n.addPromptAction(this.$filter("i18n_aip")("aip.common.text.no"), function () {
+                    notifications.remove(n);
+                });
+                n.addPromptAction(this.$filter("i18n_aip")("aip.common.text.yes"), function () {
+                    that.actionItemDataChanged = false;
+                    that.$rootScope.DataChanged = false;
+                    that.contentChanged = false;
+                    if (that.redirectval === "NoData") {
+                        that.reset(option);
+                    }
+                    else {
+                        location.href = that.redirectval;
+                    }
+                    notifications.remove(n);
+                });
+                notifications.addNotification(n);
             }
-            deferred.resolve(_this.openPanel(option));
-        }, function (err) {
-            console.log(err);
-        });
-        return deferred.promise;
-    }
-    cancel(option);
-    {
-        this.redirectval = "NoData";
-        this.checkEditchangesDone(option);
-    }
-    checkEditchangesDone(option);
-    {
-        var that = this;
-        if (that.actionItemDataChanged || that.contentChanged) {
-            var n = new Notification({
-                message: this.$filter("i18n_aip")("aip.admin.actionItem.saveChanges"),
-                type: "warning"
-            });
-            n.addPromptAction(this.$filter("i18n_aip")("aip.common.text.no"), function () {
-                notifications.remove(n);
-            });
-            n.addPromptAction(this.$filter("i18n_aip")("aip.common.text.yes"), function () {
-                that.actionItemDataChanged = false;
-                that.$rootScope.DataChanged = false;
-                that.contentChanged = false;
-                if (that.redirectval === "NoData") {
-                    that.reset(option);
+            else {
+                that.reset(option);
+            }
+        };
+        AdminActionItemOpenPageCtrl.prototype.saveTemplate = function () {
+            var _this = this;
+            //TODO:: implement to save rules
+            var allDefer = [];
+            this.saving = true;
+            if (this.actionItem.actionItemContent && $.type(this.actionItem.actionItemContent) != 'string') {
+                this.actionItem.actionItemContent = this.$sce.getTrustedHtml(this.actionItem.actionItemContent);
+            }
+            allDefer.push(this.adminActionService.saveActionItemTemplate(this.selectedTemplate, this.actionItem.actionItemId, this.actionItem.actionItemContent)
+                .then(function (response) {
+                if (response.data.success) {
+                    return { success: true, type: "template", data: response.data.actionItem };
                 }
                 else {
-                    location.href = that.redirectval;
+                    return { success: false, errors: response.data.errors };
                 }
-                notifications.remove(n);
+            }, function (err) {
+                console.log(err);
+                return { success: false };
+            }));
+            // set seq order in rule array with it's index
+            angular.forEach(this.rules, function (item) {
+                item.statusRuleSeqOrder = _this.rules.indexOf(item);
+                item.statusId = item.statusId;
+                item.reviewReqInd = item.reviewReqInd ? true : false;
+                item.allowedAttachments = item.allowedAttachments;
             });
-            notifications.addNotification(n);
-        }
-        else {
-            that.reset(option);
-        }
-    }
-    saveTemplate();
-    {
-        //TODO:: implement to save rules
-        var allDefer = [];
-        this.saving = true;
-        if (this.actionItem.actionItemContent && $.type(this.actionItem.actionItemContent) != 'string') {
-            this.actionItem.actionItemContent = this.$sce.getTrustedHtml(this.actionItem.actionItemContent);
-        }
-        allDefer.push(this.adminActionService.saveActionItemTemplate(this.selectedTemplate, this.actionItem.actionItemId, this.actionItem.actionItemContent)
-            .then(function (response) {
-            if (response.data.success) {
-                return { success: true, type: "template", data: response.data.actionItem };
-            }
-            else {
-                return { success: false, errors: response.data.errors };
-            }
-        }, function (err) {
-            console.log(err);
-            return { success: false };
-        }));
-        // set seq order in rule array with it's index
-        angular.forEach(this.rules, function (item) {
-            item.statusRuleSeqOrder = _this.rules.indexOf(item);
-            item.statusId = item.statusId;
-            item.reviewReqInd = item.reviewReqInd ? true : false;
-            item.allowedAttachments = item.allowedAttachments;
-        });
-        allDefer.push(this.adminActionService.updateActionItemStatusRule(this.rules, this.actionFolder)
-            .then(function (response) {
-            if (response.data.success) {
-                _this.getRules();
-                return { success: true };
-            }
-            else {
-                return { success: false, errors: response.data.errors };
-            }
-        }, function (err) {
-            console.log(err);
-            return { success: false };
-        }));
-        this.$q.all(allDefer)
-            .then(function (response) {
-            _this.saving = false;
-            var notiParams = {};
-            var errorItem = response.filter(function (item) {
-                return item.success === false;
-            });
-            var newData = response.filter(function (item) {
-                return item.type && item.type === "template";
-            });
-            if (errorItem.length === 0) {
-                notiParams = {
-                    notiType: "saveSuccess",
-                    data: newData[0].data
-                };
-                _this.handleNotification(notiParams);
-                _this.templateSelect = false;
-                _this.actionItem = newData[0].data;
-                _this.trustActionItemContent();
-                _this.openContentPanel();
-            }
-            else {
-                _this.saveErrorCallback(response[0].error);
-                console.log("error:");
-            }
-        }, function (err) {
-            _this.saveErrorCallback(err);
-            console.log(err);
-            _this.saving = false;
-        });
-        this.actionItemDataChanged = false;
-        this.$rootScope.DataChanged = false;
-    }
-    getRules();
-    {
-        this.adminActionStatusService.getRules(this.actionFolder)
-            .then(function (response) {
-            _this.rules = response.data;
-            angular.forEach(_this.rules, function (item) {
-                item.statusRuleLabelText = _this.$sce.trustAsHtml(_this.$filter("html")(item.statusRuleLabelText)).toString();
-                item["status"] = {
-                    actionItemStatus: item.statusName,
-                    actionItemStatusId: item.statusId ? item.statusId : item.status.id
-                };
-                item.reviewReqInd = item.statusReviewReqInd;
-                item.statusAllowedAttachment = (item.statusAllowedAttachment < 10) ? ("0" + item.statusAllowedAttachment) : item.statusAllowedAttachment;
-                item.allowedAttachments = item.statusAllowedAttachment;
-            });
-            _this.rules.sort(function (a, b) {
-                return a.statusRuleSeqOrder - b.statusRuleSeqOrder;
-            });
-        }, function (err) {
-            _this.saveErrorCallback(err);
-            console.log("error:" + err);
-        });
-    }
-    getMaxAttachments();
-    {
-        this.adminActionStatusService.getMaxAttachmentsVal()
-            .then(function (response) {
-            var max = response.data.maxAttachment;
-            for (var i = 0; i <= max; i++) {
-                var result = "" + i;
-                if (i.toString().length < 2) {
-                    var result = "0" + i;
+            allDefer.push(this.adminActionService.updateActionItemStatusRule(this.rules, this.actionFolder)
+                .then(function (response) {
+                if (response.data.success) {
+                    _this.getRules();
+                    return { success: true };
                 }
-                _this.maxAttachmentsList.push(result);
-            }
-        }, function (err) {
-            console.log(err);
-        });
-    }
-    ;
-    getStatus();
-    {
-        var deferred = this.$q.defer();
-        this.adminActionStatusService.getRuleStatus()
-            .then(function (response) {
-            _this.statuses = response.data;
-            angular.forEach(_this.statuses, function (item) {
-                if (item.actionItemStatusActive == "N" || item.actionItemStatusDefault == 'Y') {
-                    var index = _this.statuses.indexOf(item);
-                    _this.statuses.splice(index, 1);
+                else {
+                    return { success: false, errors: response.data.errors };
                 }
-            });
-            deferred.resolve();
-        }, function (error) {
-            console.log(error);
-        });
-        return deferred.promise;
-    }
-    validateActionItemRule();
-    {
-        if (this.contentChanged) {
-            this.dataChanged();
-        }
-        if (this.selectedTemplate && !this.saving) {
-            if (this.rules.length === 0) {
-                return true;
-            }
-            else if (!this.contentChanged) {
-                return false;
-            }
-            else {
-                var invalidRule = this.rules.filter(function (item) {
-                    var statusIdExists = true;
-                    if (!item.status.id) {
-                        statusIdExists = item.status.actionItemStatusId;
-                    }
-                    return !item.statusRuleLabelText || item.statusRuleLabelText === "" || !statusIdExists;
+            }, function (err) {
+                console.log(err);
+                return { success: false };
+            }));
+            this.$q.all(allDefer)
+                .then(function (response) {
+                _this.saving = false;
+                var notiParams = {};
+                var errorItem = response.filter(function (item) {
+                    return item.success === false;
                 });
-                if (invalidRule.length === 0) {
+                var newData = response.filter(function (item) {
+                    return item.type && item.type === "template";
+                });
+                if (errorItem.length === 0) {
+                    notiParams = {
+                        notiType: "saveSuccess",
+                        data: newData[0].data
+                    };
+                    _this.handleNotification(notiParams);
+                    _this.templateSelect = false;
+                    _this.actionItem = newData[0].data;
+                    _this.trustActionItemContent();
+                    _this.openContentPanel();
+                }
+                else {
+                    _this.saveErrorCallback(response[0].error);
+                    console.log("error:");
+                }
+            }, function (err) {
+                _this.saveErrorCallback(err);
+                console.log(err);
+                _this.saving = false;
+            });
+            this.actionItemDataChanged = false;
+            this.$rootScope.DataChanged = false;
+        };
+        AdminActionItemOpenPageCtrl.prototype.getRules = function () {
+            var _this = this;
+            this.adminActionStatusService.getRules(this.actionFolder)
+                .then(function (response) {
+                _this.rules = response.data;
+                angular.forEach(_this.rules, function (item) {
+                    item.statusRuleLabelText = _this.$sce.trustAsHtml(_this.$filter("html")(item.statusRuleLabelText)).toString();
+                    item["status"] = {
+                        actionItemStatus: item.statusName,
+                        actionItemStatusId: item.statusId ? item.statusId : item.status.id
+                    };
+                    item.reviewReqInd = item.statusReviewReqInd;
+                    item.statusAllowedAttachment = (item.statusAllowedAttachment < 10) ? ("0" + item.statusAllowedAttachment) : item.statusAllowedAttachment;
+                    item.allowedAttachments = item.statusAllowedAttachment;
+                });
+                _this.rules.sort(function (a, b) {
+                    return a.statusRuleSeqOrder - b.statusRuleSeqOrder;
+                });
+            }, function (err) {
+                _this.saveErrorCallback(err);
+                console.log("error:" + err);
+            });
+        };
+        AdminActionItemOpenPageCtrl.prototype.getMaxAttachments = function () {
+            var _this = this;
+            this.adminActionStatusService.getMaxAttachmentsVal()
+                .then(function (response) {
+                var max = response.data.maxAttachment;
+                for (var i = 0; i <= max; i++) {
+                    var result = "" + i;
+                    if (i.toString().length < 2) {
+                        var result = "0" + i;
+                    }
+                    _this.maxAttachmentsList.push(result);
+                }
+            }, function (err) {
+                console.log(err);
+            });
+        };
+        ;
+        AdminActionItemOpenPageCtrl.prototype.getStatus = function () {
+            var _this = this;
+            var deferred = this.$q.defer();
+            this.adminActionStatusService.getRuleStatus()
+                .then(function (response) {
+                _this.statuses = response.data;
+                angular.forEach(_this.statuses, function (item) {
+                    if (item.actionItemStatusActive == "N" || item.actionItemStatusDefault == 'Y') {
+                        var index = _this.statuses.indexOf(item);
+                        _this.statuses.splice(index, 1);
+                    }
+                });
+                deferred.resolve();
+            }, function (error) {
+                console.log(error);
+            });
+            return deferred.promise;
+        };
+        AdminActionItemOpenPageCtrl.prototype.validateActionItemRule = function () {
+            if (this.contentChanged) {
+                this.dataChanged();
+            }
+            if (this.selectedTemplate && !this.saving) {
+                if (this.rules.length === 0) {
                     return true;
                 }
-                return false;
+                else if (!this.contentChanged) {
+                    return false;
+                }
+                else {
+                    var invalidRule = this.rules.filter(function (item) {
+                        var statusIdExists = true;
+                        if (!item.status.id) {
+                            statusIdExists = item.status.actionItemStatusId;
+                        }
+                        return !item.statusRuleLabelText || item.statusRuleLabelText === "" || !statusIdExists;
+                    });
+                    if (invalidRule.length === 0) {
+                        return true;
+                    }
+                    return false;
+                }
             }
-        }
-        this.actionItemDataChanged = false;
-        this.$rootScope.DataChanged = false;
-        return false;
-    }
-    saveErrorCallback(message);
-    {
-        var n = new Notification({
-            message: message,
-            type: "error",
-            flash: true
-        });
-        notifications.addNotification(n);
-    }
+            this.actionItemDataChanged = false;
+            this.$rootScope.DataChanged = false;
+            return false;
+        };
+        AdminActionItemOpenPageCtrl.prototype.saveErrorCallback = function (message) {
+            var n = new Notification({
+                message: message,
+                type: "error",
+                flash: true
+            });
+            notifications.addNotification(n);
+        };
+        return AdminActionItemOpenPageCtrl;
+    }());
+    AIP.AdminActionItemOpenPageCtrl = AdminActionItemOpenPageCtrl;
 })(AIP || (AIP = {}));
 register("bannerAIP").controller("AdminActionItemOpenPageCtrl", AIP.AdminActionItemOpenPageCtrl);
-//# sourceMappingURL=adminActionItemOpenPageCtrl.js.map
