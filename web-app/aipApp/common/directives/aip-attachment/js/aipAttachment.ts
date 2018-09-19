@@ -48,7 +48,10 @@ module AIPUI {
         }
 
         controller($scope, $q, $filter, AIPUploadService, SpinnerService) {
+            $scope.query;
             $scope.gridData = {};
+            $scope.records;
+            $scope.selectedFiles = null;
             $scope.paginationConfig = {
                 pageLengths: [5, 10, 25, 50, 100],
                 offset: 10,
@@ -124,6 +127,7 @@ module AIPUI {
                 var deferred = $q.defer();
                 query.actionItemId = $scope.actionItemId;
                 query.responseId = $scope.responseId;
+                $scope.query = query;
                 AIPUploadService.fetchAttachmentsList(query)
                     .then((response) => {
                         deferred.resolve(response);
@@ -134,12 +138,22 @@ module AIPUI {
                 return deferred.promise;
             };
 
+            $scope.refreshData = function(){
+                AIPUploadService.fetchAttachmentsList($scope.query)
+                    .then((response) => {
+                        console.log($scope.gridData);
+                        console.log($scope.resultsFound);
+                        $scope.gridData.row = response.result;
+                        $scope.records = response.length;
+                    }, (error) => {
+                    });
+            }
+
             $scope.reset = function () {
-                angular.element('#file-input-textbox').val("");
+               angular.element('#file-input-textbox').val("");
             };
 
             $scope.uploadDocument = function (selectedFiles) {
-                SpinnerService.showSpinner(true);
                 if (!selectedFiles) {
                     errorNotification($filter("i18n_aip")("js.aip.common.file.not.selected"));
                     return;
@@ -150,7 +164,7 @@ module AIPUI {
                     return;
                 }
 
-
+                SpinnerService.showSpinner(true);
                 if(selectedFileValidate(selectedFile)){
                     this.attachmentParams={
                         actionItemId: $scope.actionItemId,
@@ -164,6 +178,7 @@ module AIPUI {
                             SpinnerService.showSpinner(false);
                             if(response.success === true){
                                 successNotification(response.message);
+                                $scope.refreshData();
                             } else {
                                 errorNotification(response.message);
                             }
@@ -182,6 +197,7 @@ module AIPUI {
             var maxFileSizeValidate = function(selectedFileSize){
                 AIPUploadService.maxFileSize()
                     .then((response:any) => {
+                        SpinnerService.showSpinner(false);
                         if(response.data.maxFileSize){
                             if( selectedFileSize > response.data.maxFileSize){
                                 errorNotification($filter("i18n_aip")("js.aip.common.file.maxsize"));
@@ -197,6 +213,7 @@ module AIPUI {
                         SpinnerService.showSpinner(false);
                         if (response.data.success === true) {
                             successNotification(response.data.message);
+                            $scope.refreshData();
                         } else {
                             errorNotification(response.data.message);
                         }
@@ -225,6 +242,7 @@ module AIPUI {
             var restrictedFileTypeValidate = function(selectedFileType){
                 AIPUploadService.restrictedFileTypes()
                     .then((response:any) => {
+                        SpinnerService.showSpinner(false);
                         if(response.data.restrictedFileTypes){
                             if(selectedFileType in response.data.restrictedFileTypes){
                                 errorNotification($filter("i18n_aip")("js.aip.common.file.type.restricted"));
