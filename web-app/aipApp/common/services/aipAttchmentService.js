@@ -4,7 +4,7 @@
 ///<reference path="../../../typings/tsd.d.ts"/>
 var AIP;
 (function (AIP) {
-    var UploadService = /** @class */ (function () {
+    var UploadService = (function () {
         function UploadService($http, $q, APP_PATH, Upload) {
             this.$http = $http;
             this.$q = $q;
@@ -72,7 +72,8 @@ var AIP;
         };
         UploadService.$inject = ["$http", "$q", "APP_PATH", "Upload"];
         return UploadService;
-    }());
+    })();
     AIP.UploadService = UploadService;
 })(AIP || (AIP = {}));
 register("bannerCommonAIP").service("AIPUploadService", AIP.UploadService);
+//# sourceMappingURL=aipAttchmentService.js.map

@@ -6,16 +6,7 @@
 declare var register;
 
 module AIP {
-    export interface IAttachmentInfo {
-        id: number;
-        actionItemId: number;
-        responseId: number;
-        documentName: string;
-        documentUploadedDate: Date;
-    }
-
     interface IGetUploaResponse {
-        uploadData: IAttachmentInfo;
         success:boolean;
         message:string;
     }

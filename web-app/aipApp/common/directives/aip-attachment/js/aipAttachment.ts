@@ -121,6 +121,7 @@ module AIPUI {
                 $scope.selectedRecord = data;
             };
             $scope.fetchData = function (query: AIP.IAttachmentListQuery) {
+
                 var deferred = $q.defer();
                 query.actionItemId = $scope.actionItemId;
                 query.responseId = $scope.responseId;
@@ -149,48 +150,52 @@ module AIPUI {
                     errorNotification($filter("i18n_aip")("js.aip.common.file.not.selected"));
                     return;
                 }
+                maxFileSizeValidate(selectedFile.size).then(function(resposne){
+                    if(resposne === 'true'){
+                        restrictedFileTypeValidate((selectedFile.name).split('.').pop()).then(function(resposne){
+                            if(resposne === 'true') {
+                                this.attachmentParams = {
+                                    actionItemId: $scope.actionItemId,
+                                    responseId: $scope.responseId,
+                                    documentName: selectedFile.name,
+                                    file: selectedFile
+                                };
+                                AIPUploadService.uploadDocument(this.attachmentParams)
+                                    .then((response:any) => {
+                                        SpinnerService.showSpinner(false);
+                                        if (response.success === true) {
+                                            successNotification(response.message);
+                                        } else {
+                                            errorNotification(response.message);
+                                        }
 
+                                    })
 
-                if(selectedFileValidate(selectedFile)){
-                    this.attachmentParams={
-                        actionItemId: $scope.actionItemId,
-                        responseId: $scope.responseId,
-                        documentName: selectedFile.name,
-                        file: selectedFile
-                    };
-
-                    AIPUploadService.uploadDocument(this.attachmentParams)
-                        .then((response:any) => {
-                            SpinnerService.showSpinner(false);
-                            if(response.success === true){
-                                successNotification(response.message);
-                            } else {
-                                errorNotification(response.message);
                             }
-
                         })
-                }
-            };
-            var selectedFileValidate = function (selectedFile) {
-                if (maxFileSizeValidate(selectedFile.size) && restrictedFileTypeValidate(selectedFile.type)) {
-                    return true;
-                }
-                return false;
-            };
+                    }
+                })
 
-
+            };
             var maxFileSizeValidate = function(selectedFileSize){
+                var deferred = $q.defer();
                 AIPUploadService.maxFileSize()
                     .then((response:any) => {
+
                         if(response.data.maxFileSize){
-                            if( selectedFileSize > response.data.maxFileSize){
-                                errorNotification($filter("i18n_aip")("js.aip.common.file.maxsize"));
-                                return false;
+                            if( selectedFileSize > parseInt(response.data.maxFileSize)){
+                                errorNotification($filter("i18n_aip")("js.aip.common.file.maxsize.error"));
+                                SpinnerService.showSpinner(false);
+                                deferred.resolve('false');
+                            }else{
+                                deferred.resolve('true');
                             }
                         }
                     });
-                return true;
+
+                return deferred.promise;
             };
+
             var deleteFile = function (documentId) {
                 AIPUploadService.deleteDocument(documentId)
                     .then((response: any) => {
@@ -223,16 +228,20 @@ module AIPUI {
             };
 
             var restrictedFileTypeValidate = function(selectedFileType){
+                var deferred = $q.defer();
                 AIPUploadService.restrictedFileTypes()
                     .then((response:any) => {
                         if(response.data.restrictedFileTypes){
-                            if(selectedFileType in response.data.restrictedFileTypes){
-                                errorNotification($filter("i18n_aip")("js.aip.common.file.type.restricted"));
-                                return false;
+                            if(response.data.restrictedFileTypes.indexOf(selectedFileType) !== -1){
+                                SpinnerService.showSpinner(false);
+                                errorNotification($filter("i18n_aip")("js.aip.common.file.type.restricted.error"));
+                               deferred.resolve('false');
+                            }else{
+                                deferred.resolve('true');
                             }
                         }
                     })
-                return true;
+                return deferred.promise
             };
 
             var errorNotification = function (message) {
