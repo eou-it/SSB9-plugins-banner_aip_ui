@@ -48,7 +48,10 @@ module AIPUI {
         }
 
         controller($scope, $q, $filter, AIPUploadService, SpinnerService) {
+            $scope.query;
             $scope.gridData = {};
+            $scope.records;
+            $scope.selectedFiles = null;
             $scope.paginationConfig = {
                 pageLengths: [5, 10, 25, 50, 100],
                 offset: 10,
@@ -125,6 +128,7 @@ module AIPUI {
                 var deferred = $q.defer();
                 query.actionItemId = $scope.actionItemId;
                 query.responseId = $scope.responseId;
+                $scope.query = query;
                 AIPUploadService.fetchAttachmentsList(query)
                     .then((response) => {
                         deferred.resolve(response);
@@ -135,12 +139,22 @@ module AIPUI {
                 return deferred.promise;
             };
 
+            $scope.refreshData = function(){
+                AIPUploadService.fetchAttachmentsList($scope.query)
+                    .then((response) => {
+                        console.log($scope.gridData);
+                        console.log($scope.resultsFound);
+                        $scope.gridData.row = response.result;
+                        $scope.records = response.length;
+                    }, (error) => {
+                    });
+            }
+
             $scope.reset = function () {
-                angular.element('#file-input-textbox').val("");
+               angular.element('#file-input-textbox').val("");
             };
 
             $scope.uploadDocument = function (selectedFiles) {
-                SpinnerService.showSpinner(true);
                 if (!selectedFiles) {
                     errorNotification($filter("i18n_aip")("js.aip.common.file.not.selected"));
                     return;
@@ -150,6 +164,7 @@ module AIPUI {
                     errorNotification($filter("i18n_aip")("js.aip.common.file.not.selected"));
                     return;
                 }
+                SpinnerService.showSpinner(true);
                 maxFileSizeValidate(selectedFile.size).then(function(resposne){
                     if(resposne === 'true'){
                         restrictedFileTypeValidate((selectedFile.name).split('.').pop()).then(function(resposne){
@@ -168,9 +183,7 @@ module AIPUI {
                                         } else {
                                             errorNotification(response.message);
                                         }
-
                                     })
-
                             }
                         })
                     }
@@ -181,7 +194,6 @@ module AIPUI {
                 var deferred = $q.defer();
                 AIPUploadService.maxFileSize()
                     .then((response:any) => {
-
                         if(response.data.maxFileSize){
                             if( selectedFileSize > parseInt(response.data.maxFileSize)){
                                 errorNotification($filter("i18n_aip")("js.aip.common.file.maxsize.error"));
@@ -190,6 +202,8 @@ module AIPUI {
                             }else{
                                 deferred.resolve('true');
                             }
+                        }else{
+                            deferred.resolve('true');
                         }
                     });
 
@@ -202,6 +216,7 @@ module AIPUI {
                         SpinnerService.showSpinner(false);
                         if (response.data.success === true) {
                             successNotification(response.data.message);
+                            $scope.refreshData();
                         } else {
                             errorNotification(response.data.message);
                         }
@@ -239,6 +254,8 @@ module AIPUI {
                             }else{
                                 deferred.resolve('true');
                             }
+                        }else{
+                            deferred.resolve('true');
                         }
                     })
                 return deferred.promise

@@ -25,7 +25,10 @@ var AIPUI;
         AIPAttachment.prototype.link = function (scope, elem, attr) {
         };
         AIPAttachment.prototype.controller = function ($scope, $q, $filter, AIPUploadService, SpinnerService) {
+            $scope.query;
             $scope.gridData = {};
+            $scope.records;
+            $scope.selectedFiles = null;
             $scope.paginationConfig = {
                 pageLengths: [5, 10, 25, 50, 100],
                 offset: 10,
@@ -100,6 +103,7 @@ var AIPUI;
                 var deferred = $q.defer();
                 query.actionItemId = $scope.actionItemId;
                 query.responseId = $scope.responseId;
+                $scope.query = query;
                 AIPUploadService.fetchAttachmentsList(query)
                     .then(function (response) {
                     deferred.resolve(response);
@@ -109,11 +113,20 @@ var AIPUI;
                 });
                 return deferred.promise;
             };
+            $scope.refreshData = function () {
+                AIPUploadService.fetchAttachmentsList($scope.query)
+                    .then(function (response) {
+                    console.log($scope.gridData);
+                    console.log($scope.resultsFound);
+                    $scope.gridData.row = response.result;
+                    $scope.records = response.length;
+                }, function (error) {
+                });
+            };
             $scope.reset = function () {
                 angular.element('#file-input-textbox').val("");
             };
             $scope.uploadDocument = function (selectedFiles) {
-                SpinnerService.showSpinner(true);
                 if (!selectedFiles) {
                     errorNotification($filter("i18n_aip")("js.aip.common.file.not.selected"));
                     return;
@@ -123,6 +136,7 @@ var AIPUI;
                     errorNotification($filter("i18n_aip")("js.aip.common.file.not.selected"));
                     return;
                 }
+                SpinnerService.showSpinner(true);
                 maxFileSizeValidate(selectedFile.size).then(function (resposne) {
                     if (resposne === 'true') {
                         restrictedFileTypeValidate((selectedFile.name).split('.').pop()).then(function (resposne) {
@@ -162,6 +176,9 @@ var AIPUI;
                             deferred.resolve('true');
                         }
                     }
+                    else {
+                        deferred.resolve('true');
+                    }
                 });
                 return deferred.promise;
             };
@@ -171,6 +188,7 @@ var AIPUI;
                     SpinnerService.showSpinner(false);
                     if (response.data.success === true) {
                         successNotification(response.data.message);
+                        $scope.refreshData();
                     }
                     else {
                         errorNotification(response.data.message);
@@ -206,6 +224,9 @@ var AIPUI;
                         else {
                             deferred.resolve('true');
                         }
+                    }
+                    else {
+                        deferred.resolve('true');
                     }
                 });
                 return deferred.promise;
