@@ -45,7 +45,7 @@ module AIP {
 
     export class ListItemPageCtrl implements IListItemPageCtrl {
 
-        $inject = ["$scope", "$state", "ItemListViewService", "AIPUserService", "SpinnerService", "$timeout", "$q", "$uibModal", "APP_ROOT", "$sce","$compile"];
+        $inject = ["$scope", "$state", "ItemListViewService", "AIPUserService", "SpinnerService", "$timeout", "$q", "$uibModal", "APP_ROOT", "$sce", "$compile"];
         itemListViewService: AIP.ItemListViewService;
         userService: AIP.UserService;
         actionItems: IUserItem;
@@ -64,7 +64,7 @@ module AIP {
         $compile;
         showModal;
 
-        constructor($scope, $state, ItemListViewService, AIPUserService, SpinnerService, $timeout, $q, $uibModal, APP_ROOT, $sce,$compile) {
+        constructor($scope, $state, ItemListViewService, AIPUserService, SpinnerService, $timeout, $q, $uibModal, APP_ROOT, $sce, $compile) {
             $scope.vm = this;
             this.$state = $state;
             this.itemListViewService = ItemListViewService;
@@ -89,19 +89,19 @@ module AIP {
             );
             //Listen to your custom event
             window.addEventListener('responseChanged', function (e) {
-                   console.log('Response changed testing>>>>>>');
-                   $scope.responseId = window.params.responseId;
-                   $scope.actionItemId = window.params.actionItemId;
-                   $scope.maxAttachments = window.params.maxAttachments;
-                   var listItemPageDiv = $('.listActionItem');
-                   var attachmentModal = $('aip-attachment');
-                   if(attachmentModal.length >0){
-                       attachmentModal.remove();
-                   }
-                   var aipAttachmentDirective = $compile("<aip-attachment show-modal='showModal' response-id ='responseId' action-item-id='actionItemId' max-attachments ='maxAttachments'></aip-attachment>")($scope);
-                   listItemPageDiv.append(aipAttachmentDirective);
-                   $scope.showModal = true;
-                   $scope.$apply();
+                console.log('Response changed testing>>>>>>');
+                $scope.responseId = window.params.responseId;
+                $scope.actionItemId = window.params.actionItemId;
+                $scope.maxAttachments = window.params.maxAttachments;
+                var listItemPageDiv = $('.listActionItem');
+                var attachmentModal = $('aip-attachment');
+                if (attachmentModal.length > 0) {
+                    attachmentModal.remove();
+                }
+                var aipAttachmentDirective = $compile("<aip-attachment show-modal='showModal' response-id ='responseId' action-item-id='actionItemId' max-attachments ='maxAttachments'></aip-attachment>")($scope);
+                listItemPageDiv.append(aipAttachmentDirective);
+                $scope.showModal = true;
+                $scope.$apply();
             });
 
             notifications.on('add', function (e) {
@@ -350,17 +350,15 @@ module AIP {
                 var paperClipElement = angular.element("<input id=" + paperClipId + " type='image' " +
                     "src='../images/attach_icon_disabled.svg' title = 'Click to add documents' " +
                     "class=' pb-detail pb-item pb-paperclip'/>");
-
-                window.params.responseId = responseId;
                 window.params.maxAttachments = allowedAttachments;
                 responseElement.after(paperClipElement);
-
                 $('#' + paperClipId).on("click", function () {
                     var selectedPaperClip = this.id
                     var currentId = selectedPaperClip.substring(selectedPaperClip.length - 1, selectedPaperClip.length);
                     currentId = "#pbid-ActionItemStatusAgree-radio-0-" + currentId;
                     if ($(currentId)[0].checked === true) {
                         //make sure paper clip is enabled
+                        window.params.responseId = $(currentId)[0].value;
                         $("#" + selectedPaperClip)[0].setAttribute("src", "../images/attach_icon_default.svg");
                         var evt = new CustomEvent('responseChanged');
                         window.dispatchEvent(evt);

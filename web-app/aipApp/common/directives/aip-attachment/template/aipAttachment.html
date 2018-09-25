@@ -11,50 +11,54 @@
                         id="maxAttachments">{{maxAttachments}}</span>
                 </label>
                 <form name="UploadFile" role="form">
-                    <div class="row ">
-                        <label  for="fileupload_label" >
-                            {{"js.aip.user.document.attachment.filePath.label"|i18n_aip}}:
-                        </label>
+                    <div class="row">
                         <input class="btn btn-primary btn-right" type="button" name="uploadButton" tabindex="2"
-                               ng-click="uploadDocument(selectedFile)"  value={{"js.aip.common.upload.button.label"|i18n_aip}} aria-label="{{'js.aip.common.upload.button.label'|i18n_aip}}">
-                        <input  class="btn btn-default btn-right" type="reset" name="resetButton" tabindex="3"
-                                value={{"js.aip.common.reset.button.label"|i18n_aip}}  aria-label="{{'js.aip.common.reset.button.label'|i18n_aip}}">
+                               ng-click="uploadDocument(selectedFile)"
+                               value={{"js.aip.common.upload.button.label"|i18n_aip}}
+                               aria-label="{{'js.aip.common.upload.button.label'|i18n_aip}}">
+                        <input class="btn btn-default btn-right" type="reset" name="resetButton" tabindex="3"
+                               value={{"js.aip.common.reset.button.label"|i18n_aip}}
+                               aria-label="{{'js.aip.common.reset.button.label'|i18n_aip}}">
                     </div>
                     <div class="row">
-                        <input id="fileupload_label" type="file" ngf-select ng-model="selectedFile" required="true" name="file" />
+                        <input id="fileupload_label" type="file" ngf-select ng-model="selectedFile" required="true"
+                               name="file"/>
                     </div>
                 </form>
 
                 <div class="attachmentsTable">
-                        <xe-table-grid
-                                caption="{{'js.aip.attachments.grid.caption'|i18n_aip}}"
-                                table-id="dataTableAttachmentsList"
-                                header="header"
-                                fetch="fetchData(query)"
-                                content="gridData.row"
-                                results-found="records"
-                                toolbar="false"
-                                paginate="true"
-                                on-row-click="selectRecord(data)"
-                                no-data-msg="{{'aip.common.no.results.found'|i18n_aip}}"
-                                search-config="searchConfig"
-                                pagination-config="paginationConfig"
-                                mobile-layout="mobileConfig"
-                                draggable-column-names="draggableColumnNames"
-                                continuous-scrolling="false"
-                                refresh-grid="refreshGrid">
-                            <xe-cell-markup column-name="attachmentActions">
-                                <div class="row attachmentActions">
-                                    <button class="view-attachment-icon" ng-click=""
-                                         title="{{'aip.common.open.action.item.jaws'|i18n_aip}}" aria-label="{{'aip.common.open.action.item.jaws'|i18n_aip}}">
-                                    </button>
-                                    <button class="delete-attachment-icon" ng-click="deleteDocument()"
-                                            title="{{'aip.common.delete.group.jaws'|i18n_aip}}" aria-label="{{'aip.common.delete.group.jaws'|i18n_aip}}">
-                                    </button>
-                                </div>
-                            </xe-cell-markup>
-                        </xe-table-grid>
-                    </div>
+                    <xe-table-grid
+                            table-id="dataTableAttachmentsList"
+                            header="header"
+                            fetch="fetchData(query)"
+                            content="gridData.row"
+                            results-found="records"
+                            toolbar="false"
+                            paginate="false"
+                            on-row-click="selectRecord(data)"
+                            no-data-msg="{{'aip.common.no.results.found'|i18n_aip}}"
+                            search-config="searchConfig"
+                            pagination-config="paginationConfig"
+                            mobile-layout="mobileConfig"
+                            draggable-column-names="draggableColumnNames"
+                            continuous-scrolling="true"
+                            continuous-scroll-parent="attachmentsTable"
+                            refresh-grid="refreshGrid"
+                            height="10em">
+                        <xe-cell-markup column-name="attachmentActions">
+                            <div class="row attachmentActions">
+                                <button class="view-attachment-icon" ng-click=""
+                                        title="{{'aip.common.open.action.item.jaws'|i18n_aip}}"
+                                        aria-label="{{'aip.common.open.action.item.jaws'|i18n_aip}}">
+                                </button>
+                                <button class="delete-attachment-icon" ng-click="deleteDocument()"
+                                        title="{{'aip.common.delete.group.jaws'|i18n_aip}}"
+                                        aria-label="{{'aip.common.delete.group.jaws'|i18n_aip}}">
+                                </button>
+                            </div>
+                        </xe-cell-markup>
+                    </xe-table-grid>
+                </div>
             </div>
         </popup-content>
         <popup-buttons>
