@@ -6,7 +6,7 @@
 ///<reference path="../../../services/spinnerService.ts"/>
 var AIPUI;
 (function (AIPUI) {
-    var AIPAttachment = (function () {
+    var AIPAttachment = /** @class */ (function () {
         function AIPAttachment($filter, $q, AIPUploadService, SpinnerService) {
             this.restrict = "AE";
             this.replace = false;
@@ -116,10 +116,15 @@ var AIPUI;
             $scope.refreshData = function () {
                 AIPUploadService.fetchAttachmentsList($scope.query)
                     .then(function (response) {
-                    console.log($scope.gridData);
-                    console.log($scope.resultsFound);
                     $scope.gridData.row = response.result;
-                    $scope.records = response.length;
+                    var msg = document.querySelector("#dataTableAttachmentsList #msg");
+                    if (response.length > 0) {
+                        msg.textContent = "";
+                    }
+                    else {
+                        msg.textContent = $filter("i18n_aip")("aip.common.no.results.found");
+                        msg.classList.add("noDataMsg");
+                    }
                 }, function (error) {
                 });
             };
@@ -151,6 +156,7 @@ var AIPUI;
                                     .then(function (response) {
                                     SpinnerService.showSpinner(false);
                                     if (response.success === true) {
+                                        $scope.refreshData();
                                         successNotification(response.message);
                                     }
                                     else {
@@ -250,8 +256,7 @@ var AIPUI;
         };
         AIPAttachment.$inject = ["$filter", "$q", "AIPUploadService", "SpinnerService"];
         return AIPAttachment;
-    })();
+    }());
     AIPUI.AIPAttachment = AIPAttachment;
 })(AIPUI || (AIPUI = {}));
 register("bannerAIPUI").directive("aipAttachment", AIPUI.AIPAttachment);
-//# sourceMappingURL=aipAttachment.js.map

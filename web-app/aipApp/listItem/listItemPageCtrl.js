@@ -35,7 +35,6 @@ var AIP;
             });
             //Listen to your custom event
             window.addEventListener('responseChanged', function (e) {
-                console.log('Response changed testing>>>>>>');
                 $scope.responseId = window.params.responseId;
                 $scope.actionItemId = window.params.actionItemId;
                 $scope.maxAttachments = window.params.maxAttachments;
@@ -111,7 +110,6 @@ var AIP;
                     // this.resetSelection();
                 }).finally(function () {
                     _this.spinnerService.showSpinner(false);
-                    console.log(_this.selectedData);
                     setTimeout(function () {
                         $("#item-" + params.groupId + "-" + params.actionItemId).focus()
                             , 100;
@@ -263,7 +261,6 @@ var AIP;
                 var paperClipElement = angular.element("<input id=" + paperClipId + " type='image' " +
                     "src='../images/attach_icon_disabled.svg' title = 'Click to add documents' " +
                     "class=' pb-detail pb-item pb-paperclip'/>");
-                window.params.responseId = responseId;
                 window.params.maxAttachments = allowedAttachments;
                 responseElement.after(paperClipElement);
                 $('#' + paperClipId).on("click", function () {
@@ -272,6 +269,7 @@ var AIP;
                     currentId = "#pbid-ActionItemStatusAgree-radio-0-" + currentId;
                     if ($(currentId)[0].checked === true) {
                         //make sure paper clip is enabled
+                        window.params.responseId = $(currentId)[0].value;
                         $("#" + selectedPaperClip)[0].setAttribute("src", "../images/attach_icon_default.svg");
                         var evt = new CustomEvent('responseChanged');
                         window.dispatchEvent(evt);

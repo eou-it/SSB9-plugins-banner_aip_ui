@@ -142,13 +142,17 @@ module AIPUI {
             $scope.refreshData = function(){
                 AIPUploadService.fetchAttachmentsList($scope.query)
                     .then((response) => {
-                        console.log($scope.gridData);
-                        console.log($scope.resultsFound);
                         $scope.gridData.row = response.result;
-                        $scope.records = response.length;
+                        var msg = document.querySelector("#dataTableAttachmentsList #msg");
+                        if(response.length > 0){
+                            msg.textContent = "";
+                        }else{
+                            msg.textContent = $filter("i18n_aip")("aip.common.no.results.found");
+                            msg.classList.add("noDataMsg");
+                        }
                     }, (error) => {
                     });
-            }
+            };
 
             $scope.reset = function () {
                angular.element('#file-input-textbox').val("");
@@ -179,6 +183,7 @@ module AIPUI {
                                     .then((response:any) => {
                                         SpinnerService.showSpinner(false);
                                         if (response.success === true) {
+                                            $scope.refreshData();
                                             successNotification(response.message);
                                         } else {
                                             errorNotification(response.message);

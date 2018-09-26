@@ -42,11 +42,9 @@ class AipDocumentManagementController {
         def paramsObj = [
                 actionItemId : params.actionItemId,
                 responseId   : params.responseId,
-                filterName   : params.searchString ?: "%",
                 sortColumn   : params.sortColumnName ?: "id",
-                sortAscending: params.ascending ? params.ascending.toBoolean() : false,
-                max          : params.max.toInteger(),
-                offset       : params.offset ? params.offset.toInteger() : 0]
+                sortAscending: params.ascending ? params.ascending.toBoolean() : false
+        ]
         def results = uploadDocumentCompositeService.fetchDocuments(paramsObj)
         render results as JSON
     }
