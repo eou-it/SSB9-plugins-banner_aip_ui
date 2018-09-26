@@ -89,7 +89,6 @@ module AIP {
             );
             //Listen to your custom event
             window.addEventListener('responseChanged', function (e) {
-                console.log('Response changed testing>>>>>>');
                 $scope.responseId = window.params.responseId;
                 $scope.actionItemId = window.params.actionItemId;
                 $scope.maxAttachments = window.params.maxAttachments;
@@ -174,8 +173,6 @@ module AIP {
                     // this.resetSelection();
                 }).finally(() => {
                     this.spinnerService.showSpinner(false);
-                    console.log(this.selectedData);
-
                     setTimeout(function () {
                         $("#item-" + params.groupId + "-" + params.actionItemId).focus()
                             , 100

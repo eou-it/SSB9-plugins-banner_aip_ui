@@ -320,9 +320,6 @@ aip-list .enddate {
     left: 50%;
     transform: translateX(-50%) translateY(-50%); }
 
-/*******************************************************************************
-Copyright 2018 Ellucian Company L.P. and its affiliates.
-********************************************************************************/
 .aip-item-detail-container {
   height: inherit;
   background: #F3FCFF; }

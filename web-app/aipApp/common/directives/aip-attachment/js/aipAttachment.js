@@ -117,7 +117,7 @@ var AIPUI;
                 AIPUploadService.fetchAttachmentsList($scope.query)
                     .then(function (response) {
                     $scope.gridData.row = response.result;
-                    var msg = document.getElementById("msg");
+                    var msg = document.querySelector("#dataTableAttachmentsList #msg");
                     if (response.length > 0) {
                         msg.textContent = "";
                     }

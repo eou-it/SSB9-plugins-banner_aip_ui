@@ -20,6 +20,7 @@ class AipDocumentManagementController {
      * @return
      */
     def uploadDocument() {
+        println("Request "+request)
         def    uploadDocumentInfo = uploadDocumentCompositeService.addUploadDocument( requestParamsProcess(request))
         render uploadDocumentInfo as JSON
     }
@@ -42,7 +43,6 @@ class AipDocumentManagementController {
         def paramsObj = [
                 actionItemId : params.actionItemId,
                 responseId   : params.responseId,
-                filterName   : params.searchString ?: "%",
                 sortColumn   : params.sortColumnName ?: "id",
                 sortAscending: params.ascending ? params.ascending.toBoolean() : false
         ]
