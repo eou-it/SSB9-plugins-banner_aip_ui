@@ -20,7 +20,6 @@ class AipDocumentManagementController {
      * @return
      */
     def uploadDocument() {
-        println("Request "+request)
         def    uploadDocumentInfo = uploadDocumentCompositeService.addUploadDocument( requestParamsProcess(request))
         render uploadDocumentInfo as JSON
     }
