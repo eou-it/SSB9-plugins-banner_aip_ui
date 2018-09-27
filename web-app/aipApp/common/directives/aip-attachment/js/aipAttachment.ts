@@ -153,7 +153,7 @@ module AIPUI {
             };
 
             $scope.reset = function () {
-                $("#fileupload_label").val(null);
+                resetSeletedFileValue();
             };
 
             $scope.uploadDocument = function (selectedFiles) {
@@ -170,6 +170,7 @@ module AIPUI {
                 if(!($scope.gridData.row.length < $scope.maxAttachments)){
                     errorNotification($filter("i18n_aip")("aip.uploadDocument.maximum.attachment.error"));
                     $scope.selectedFiles = "";
+                    resetSeletedFileValue();
                     return false;
                 }
 
@@ -186,11 +187,13 @@ module AIPUI {
                         if (response.success === true) {
                             successNotification(response.message);
                             $scope.refreshData();
+                            resetSeletedFileValue();
                             $scope.selectedFiles = "";
 
                         } else {
                             errorNotification(response.message);
                         }
+
                     })
 
             };
@@ -243,6 +246,10 @@ module AIPUI {
                     flash: true
                 });
                 notifications.addNotification(n);
+            }
+
+            var resetSeletedFileValue = function(){
+                $("#fileupload_label").val(null);
             }
 
         }
