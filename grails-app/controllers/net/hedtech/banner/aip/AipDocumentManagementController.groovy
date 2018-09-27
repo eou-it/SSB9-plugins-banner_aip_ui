@@ -154,6 +154,9 @@ class AipDocumentManagementController {
      */
     private boolean maximumAttachmentsValidation(actionItemId,responseId){
         def user = springSecurityService.getAuthentication()?.user
+        if(!user){
+            response.sendError 403
+        }
         Map paramsMapObj = [
                 actionItemId : actionItemId,
                 responseId   : responseId,
