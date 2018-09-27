@@ -45,20 +45,6 @@ var AIP;
             });
             return deferred.promise;
         };
-        UploadService.prototype.restrictedFileTypes = function () {
-            var request = this.$http({
-                method: "GET",
-                url: this.APP_PATH + "/aipDocumentManagement/getRestrictedFileTypes"
-            });
-            return request;
-        };
-        UploadService.prototype.maxFileSize = function () {
-            var request = this.$http({
-                method: "GET",
-                url: this.APP_PATH + "/aipDocumentManagement/getMaxFileSize"
-            });
-            return request;
-        };
         UploadService.prototype.deleteDocument = function (documentId) {
             var data = {
                 documentId: documentId

@@ -23,7 +23,6 @@ module AIPUI {
         restrict: string;
         scope: any;
         replace: boolean;
-        attachmentParams;
         aipUploadService: AIP.UploadService;
 
         constructor($filter, $q, AIPUploadService, SpinnerService) {
@@ -35,7 +34,6 @@ module AIPUI {
                 actionItemId: "=",
                 maxAttachments: "="
             };
-            this.attachmentParams = {};
             this.$q = $q;
             this.$filter = $filter;
         }
@@ -155,64 +153,46 @@ module AIPUI {
             };
 
             $scope.reset = function () {
-               angular.element('#file-input-textbox').val("");
+                $("#fileupload_label").val(null);
             };
 
             $scope.uploadDocument = function (selectedFiles) {
                 if (!selectedFiles) {
                     errorNotification($filter("i18n_aip")("js.aip.common.file.not.selected"));
-                    return;
+                    return false;
                 }
                 var selectedFile = selectedFiles[0];
                 if (!selectedFile) {
                     errorNotification($filter("i18n_aip")("js.aip.common.file.not.selected"));
-                    return;
+                    return false;
                 }
+
+                if(!($scope.gridData.row.length < $scope.maxAttachments)){
+                    errorNotification($filter("i18n_aip")("aip.uploadDocument.maximum.attachment.error"));
+                    $scope.selectedFiles = "";
+                    return false;
+                }
+
                 SpinnerService.showSpinner(true);
-                maxFileSizeValidate(selectedFile.size).then(function(resposne){
-                    if(resposne === 'true'){
-                        restrictedFileTypeValidate((selectedFile.name).split('.').pop()).then(function(resposne){
-                            if(resposne === 'true') {
-                                this.attachmentParams = {
-                                    actionItemId: $scope.actionItemId,
-                                    responseId: $scope.responseId,
-                                    documentName: selectedFile.name,
-                                    file: selectedFile
-                                };
-                                AIPUploadService.uploadDocument(this.attachmentParams)
-                                    .then((response:any) => {
-                                        SpinnerService.showSpinner(false);
-                                        if (response.success === true) {
-                                            $scope.refreshData();
-                                            successNotification(response.message);
-                                        } else {
-                                            errorNotification(response.message);
-                                        }
-                                    })
-                            }
-                        })
-                    }
-                })
-
-            };
-            var maxFileSizeValidate = function(selectedFileSize){
-                var deferred = $q.defer();
-                AIPUploadService.maxFileSize()
+                var attachmentParams = {
+                    actionItemId: $scope.actionItemId,
+                    responseId: $scope.responseId,
+                    documentName: selectedFile.name,
+                    file: selectedFile
+                };
+                AIPUploadService.uploadDocument(attachmentParams)
                     .then((response:any) => {
-                        if(response.data.maxFileSize){
-                            if( selectedFileSize > parseInt(response.data.maxFileSize)){
-                                errorNotification($filter("i18n_aip")("js.aip.common.file.maxsize.error"));
-                                SpinnerService.showSpinner(false);
-                                deferred.resolve('false');
-                            }else{
-                                deferred.resolve('true');
-                            }
-                        }else{
-                            deferred.resolve('true');
-                        }
-                    });
+                        SpinnerService.showSpinner(false);
+                        if (response.success === true) {
+                            successNotification(response.message);
+                            $scope.refreshData();
+                            $scope.selectedFiles = "";
 
-                return deferred.promise;
+                        } else {
+                            errorNotification(response.message);
+                        }
+                    })
+
             };
 
             var deleteFile = function (documentId) {
@@ -245,25 +225,6 @@ module AIPUI {
                     notifications.remove(n);
                 });
                 notifications.addNotification(n);
-            };
-
-            var restrictedFileTypeValidate = function(selectedFileType){
-                var deferred = $q.defer();
-                AIPUploadService.restrictedFileTypes()
-                    .then((response:any) => {
-                        if(response.data.restrictedFileTypes){
-                            if(response.data.restrictedFileTypes.indexOf(selectedFileType) !== -1){
-                                SpinnerService.showSpinner(false);
-                                errorNotification($filter("i18n_aip")("js.aip.common.file.type.restricted.error"));
-                               deferred.resolve('false');
-                            }else{
-                                deferred.resolve('true');
-                            }
-                        }else{
-                            deferred.resolve('true');
-                        }
-                    })
-                return deferred.promise
             };
 
             var errorNotification = function (message) {

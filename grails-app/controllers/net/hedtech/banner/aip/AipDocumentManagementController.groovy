@@ -5,23 +5,44 @@
 package net.hedtech.banner.aip
 
 import grails.converters.JSON
+import org.apache.log4j.Logger
 import org.springframework.web.multipart.MultipartHttpServletRequest
 import org.springframework.web.multipart.commons.CommonsMultipartFile
+import net.hedtech.banner.i18n.MessageHelper
 
 /**
  * Upload Controller
  */
 class AipDocumentManagementController {
-
+    private static final def LOGGER = Logger.getLogger(this.class)
     def uploadDocumentCompositeService
+    def springSecurityService
 
     /**
      * Upload Document
      * @return
      */
     def uploadDocument() {
-        def    uploadDocumentInfo = uploadDocumentCompositeService.addUploadDocument( requestParamsProcess(request))
-        render uploadDocumentInfo as JSON
+        Map model = [:]
+        Map requestParamsMap = requestParamsProcess(request)
+        CommonsMultipartFile selectedfile = requestParamsMap.file
+
+        if(!maxFileSizeValidation(selectedfile.getSize())){
+            model =[success:false,message:MessageHelper.message('aip.uploadDocument.file.maxsize.error')]
+        }
+
+        if(!model && !restrictedFileTypesValidation(requestParamsMap.documentName)){
+            model =[success:false,message:MessageHelper.message('aip.uploadDocument.file.type.restricted.error')]
+        }
+
+        if(!model && !maximumAttachmentsValidation(requestParamsMap.actionItemId,requestParamsMap.responseId)){
+            model =[success:false,message:MessageHelper.message('aip.uploadDocument.maximum.attachment.error')]
+        }
+
+        if(!model){
+            model = uploadDocumentCompositeService.addUploadDocument(requestParamsMap)
+        }
+        render model as JSON
     }
 
     /**
@@ -59,7 +80,7 @@ class AipDocumentManagementController {
             restrictedFileTypes = uploadDocumentCompositeService.getRestrictedFileTypes()
             session.setAttribute("restrictedFileTypes", restrictedFileTypes)
         }
-        render restrictedFileTypes as JSON
+        return restrictedFileTypes
     }
 
     /**
@@ -72,7 +93,7 @@ class AipDocumentManagementController {
             maxFileSize = uploadDocumentCompositeService.getMaxFileSize()
             session.setAttribute("maxFileSize", maxFileSize)
         }
-        render maxFileSize as JSON
+        return maxFileSize
     }
 
     /**
@@ -88,8 +109,60 @@ class AipDocumentManagementController {
             requestParams.put('responseId',multipartRequest.multipartParameters.responseId[0])
             requestParams.put('documentName',multipartRequest.multipartParameters.documentName[0])
         } catch (ClassCastException e) {
-
+            LOGGER.error(e.getMessage())
         }
         return  requestParams
     }
+
+    /**
+     * This method is responsible for file size validation.
+     * @return boolean flag
+     */
+    private boolean maxFileSizeValidation(selectedFileSize){
+        def configMaxFileSize  =  getMaxFileSize()
+        if(configMaxFileSize.maxFileSize){
+            if (selectedFileSize){
+                if( selectedFileSize > Long.valueOf(configMaxFileSize.maxFileSize) ){
+                    return false
+                }
+            }
+        }
+        return true
+    }
+
+    /**
+     * This method is responsible for restricted file types validation.
+     * @return boolean flag
+     */
+    private boolean restrictedFileTypesValidation(selectedFileName){
+        def restrictedFileTypesSession = getRestrictedFileTypes();
+        if(restrictedFileTypesSession.restrictedFileTypes) {
+            if(restrictedFileTypesSession.restrictedFileTypes.contains(getFileExtension(selectedFileName))) {
+                return false
+            }
+        }
+        return true
+    }
+
+    private String getFileExtension(fileName) {
+        return fileName.substring(fileName.lastIndexOf(".")+1);
+    }
+
+    /**
+     * This method is responsible for maximum attachments validation.
+     * @return boolean flag
+     */
+    private boolean maximumAttachmentsValidation(actionItemId,responseId){
+        def user = springSecurityService.getAuthentication()?.user
+        if(!user){
+            response.sendError 403
+        }
+        Map paramsMapObj = [
+                actionItemId : actionItemId,
+                responseId   : responseId,
+                pidm         : user.pidm
+        ]
+        return uploadDocumentCompositeService.maximumAttachmentsValidation(paramsMapObj)
+    }
+
 }

@@ -70,21 +70,6 @@ module AIP {
             return deferred.promise;
         }
 
-        restrictedFileTypes() {
-            var request = this.$http({
-                method: "GET",
-                url: this.APP_PATH + "/aipDocumentManagement/getRestrictedFileTypes"
-            });
-            return request;
-        }
-
-        maxFileSize(){
-            var request = this.$http({
-                method: "GET",
-                url: this.APP_PATH + "/aipDocumentManagement/getMaxFileSize"
-            });
-            return request;
-        }
         deleteDocument(documentId){
             var data = {
                 documentId:documentId
