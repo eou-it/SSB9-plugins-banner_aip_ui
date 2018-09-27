@@ -142,8 +142,11 @@ var AIPUI;
                 }
                 if (!($scope.gridData.row.length < $scope.maxAttachments)) {
                     errorNotification($filter("i18n_aip")("aip.uploadDocument.maximum.attachment.error"));
-                    $scope.selectedFiles = "";
                     resetSeletedFileValue();
+                    return false;
+                }
+                if (isDuplicateFileName($scope.gridData.row, selectedFile.name)) {
+                    errorNotification($filter("i18n_aip")("js.aip.uploadDocument.file.duplicate.error"));
                     return false;
                 }
                 SpinnerService.showSpinner(true);
@@ -160,7 +163,6 @@ var AIPUI;
                         successNotification(response.message);
                         $scope.refreshData();
                         resetSeletedFileValue();
-                        $scope.selectedFiles = "";
                     }
                     else {
                         errorNotification(response.message);
@@ -214,6 +216,15 @@ var AIPUI;
             };
             var resetSeletedFileValue = function () {
                 $("#fileupload_label").val(null);
+            };
+            var isDuplicateFileName = function (documentsJson, selectedDocumentName) {
+                if (documentsJson) {
+                    var result = documentsJson.filter(function (documentObj) {
+                        return (documentObj.documentName === selectedDocumentName);
+                    });
+                    return (result.length > 0);
+                }
+                return false;
             };
         };
         AIPAttachment.$inject = ["$filter", "$q", "AIPUploadService", "SpinnerService"];

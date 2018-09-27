@@ -157,10 +157,12 @@ module AIPUI {
             };
 
             $scope.uploadDocument = function (selectedFiles) {
+
                 if (!selectedFiles) {
                     errorNotification($filter("i18n_aip")("js.aip.common.file.not.selected"));
                     return false;
                 }
+
                 var selectedFile = selectedFiles[0];
                 if (!selectedFile) {
                     errorNotification($filter("i18n_aip")("js.aip.common.file.not.selected"));
@@ -169,8 +171,12 @@ module AIPUI {
 
                 if(!($scope.gridData.row.length < $scope.maxAttachments)){
                     errorNotification($filter("i18n_aip")("aip.uploadDocument.maximum.attachment.error"));
-                    $scope.selectedFiles = "";
                     resetSeletedFileValue();
+                    return false;
+                }
+
+                if(isDuplicateFileName($scope.gridData.row,selectedFile.name)){
+                    errorNotification($filter("i18n_aip")("js.aip.uploadDocument.file.duplicate.error"));
                     return false;
                 }
 
@@ -181,6 +187,7 @@ module AIPUI {
                     documentName: selectedFile.name,
                     file: selectedFile
                 };
+
                 AIPUploadService.uploadDocument(attachmentParams)
                     .then((response:any) => {
                         SpinnerService.showSpinner(false);
@@ -188,14 +195,10 @@ module AIPUI {
                             successNotification(response.message);
                             $scope.refreshData();
                             resetSeletedFileValue();
-                            $scope.selectedFiles = "";
-
                         } else {
                             errorNotification(response.message);
                         }
-
                     })
-
             };
 
             var deleteFile = function (documentId) {
@@ -250,6 +253,16 @@ module AIPUI {
 
             var resetSeletedFileValue = function(){
                 $("#fileupload_label").val(null);
+            }
+
+            var isDuplicateFileName = function(documentsJson,selectedDocumentName){
+                if(documentsJson) {
+                    var result = documentsJson.filter(function (documentObj) {
+                        return (documentObj.documentName === selectedDocumentName)
+                    });
+                    return (result.length > 0);
+                }
+                return false;
             }
 
         }
