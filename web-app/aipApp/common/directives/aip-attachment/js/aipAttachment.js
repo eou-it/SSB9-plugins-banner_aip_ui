@@ -128,7 +128,7 @@ var AIPUI;
                 });
             };
             $scope.reset = function () {
-                $("#fileupload_label").val(null);
+                resetSeletedFileValue();
             };
             $scope.uploadDocument = function (selectedFiles) {
                 if (!selectedFiles) {
@@ -142,7 +142,11 @@ var AIPUI;
                 }
                 if (!($scope.gridData.row.length < $scope.maxAttachments)) {
                     errorNotification($filter("i18n_aip")("aip.uploadDocument.maximum.attachment.error"));
-                    $scope.selectedFiles = "";
+                    resetSeletedFileValue();
+                    return false;
+                }
+                if (isDuplicateFileName($scope.gridData.row, selectedFile.name)) {
+                    errorNotification($filter("i18n_aip")("js.aip.uploadDocument.file.duplicate.error"));
                     return false;
                 }
                 SpinnerService.showSpinner(true);
@@ -158,7 +162,7 @@ var AIPUI;
                     if (response.success === true) {
                         successNotification(response.message);
                         $scope.refreshData();
-                        $scope.selectedFiles = "";
+                        resetSeletedFileValue();
                     }
                     else {
                         errorNotification(response.message);
@@ -209,6 +213,18 @@ var AIPUI;
                     flash: true
                 });
                 notifications.addNotification(n);
+            };
+            var resetSeletedFileValue = function () {
+                $("#fileupload_label").val(null);
+            };
+            var isDuplicateFileName = function (documentsJson, selectedDocumentName) {
+                if (documentsJson) {
+                    var result = documentsJson.filter(function (documentObj) {
+                        return (documentObj.documentName === selectedDocumentName);
+                    });
+                    return (result.length > 0);
+                }
+                return false;
             };
         };
         AIPAttachment.$inject = ["$filter", "$q", "AIPUploadService", "SpinnerService"];
