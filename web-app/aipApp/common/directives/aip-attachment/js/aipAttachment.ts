@@ -180,25 +180,33 @@ module AIPUI {
                     return false;
                 }
 
-                SpinnerService.showSpinner(true);
-                var attachmentParams = {
-                    actionItemId: $scope.actionItemId,
-                    responseId: $scope.responseId,
-                    documentName: selectedFile.name,
-                    file: selectedFile
-                };
+                maxFileSizeValidate(selectedFile.size).then(function(response){
+                    if(response === 'true'){
+                        restrictedFileTypeValidate((selectedFile.name).split('.').pop()).then(function(response){
+                            if(response === 'true') {
+                                SpinnerService.showSpinner(true);
+                                var attachmentParams = {
+                                    actionItemId: $scope.actionItemId,
+                                    responseId: $scope.responseId,
+                                    documentName: selectedFile.name,
+                                    file: selectedFile
+                                };
 
-                AIPUploadService.uploadDocument(attachmentParams)
-                    .then((response:any) => {
-                        SpinnerService.showSpinner(false);
-                        if (response.success === true) {
-                            successNotification(response.message);
-                            $scope.refreshData();
-                            resetSeletedFileValue();
-                        } else {
-                            errorNotification(response.message);
-                        }
-                    })
+                                AIPUploadService.uploadDocument(attachmentParams)
+                                    .then((response:any) => {
+                                        SpinnerService.showSpinner(false);
+                                        if (response.success === true) {
+                                            successNotification(response.message);
+                                            $scope.refreshData();
+                                            resetSeletedFileValue();
+                                        } else {
+                                            errorNotification(response.message);
+                                        }
+                                    })
+                            }
+                        })
+                    }
+                })
             };
 
             var deleteFile = function (documentId) {
@@ -264,6 +272,44 @@ module AIPUI {
                 }
                 return false;
             }
+
+            var restrictedFileTypeValidate = function(selectedFileType){
+                var deferred = $q.defer();
+                AIPUploadService.restrictedFileTypes()
+                    .then((response:any) => {
+                        if(response.data.restrictedFileTypes){
+                            if(response.data.restrictedFileTypes.indexOf(selectedFileType) !== -1){
+                                SpinnerService.showSpinner(false);
+                                errorNotification($filter("i18n_aip")("aip.uploadDocument.file.type.restricted.error"));
+                                deferred.resolve('false');
+                            }else{
+                                deferred.resolve('true');
+                            }
+                        }else{
+                            deferred.resolve('true');
+                        }
+                    })
+                return deferred.promise
+            }
+
+            var maxFileSizeValidate = function(selectedFileSize){
+                var deferred = $q.defer();
+                AIPUploadService.maxFileSize()
+                    .then((response:any) => {
+                        if(response.data.maxFileSize){
+                            if( selectedFileSize > parseInt(response.data.maxFileSize)){
+                                errorNotification($filter("i18n_aip")("aip.uploadDocument.file.maxsize.error"));
+                                SpinnerService.showSpinner(false);
+                                deferred.resolve('false');
+                            }else{
+                                deferred.resolve('true');
+                            }
+                        }else {
+                            deferred.resolve('true');
+                        }
+                    })
+                return deferred.promise;
+            };
 
         }
 

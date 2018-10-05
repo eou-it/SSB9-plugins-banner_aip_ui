@@ -56,6 +56,20 @@ var AIP;
             });
             return request;
         };
+        UploadService.prototype.restrictedFileTypes = function () {
+            var request = this.$http({
+                method: "GET",
+                url: this.APP_PATH + "/aipDocumentManagement/restrictedFileTypes"
+            });
+            return request;
+        };
+        UploadService.prototype.maxFileSize = function () {
+            var request = this.$http({
+                method: "GET",
+                url: this.APP_PATH + "/aipDocumentManagement/maxFileSize"
+            });
+            return request;
+        };
         UploadService.$inject = ["$http", "$q", "APP_PATH", "Upload"];
         return UploadService;
     })();

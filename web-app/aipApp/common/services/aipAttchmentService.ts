@@ -81,6 +81,22 @@ module AIP {
             });
             return request;
         }
+
+        restrictedFileTypes() {
+            var request = this.$http({
+                method: "GET",
+                url: this.APP_PATH + "/aipDocumentManagement/restrictedFileTypes"
+            });
+            return request;
+        }
+
+        maxFileSize(){
+            var request = this.$http({
+                method: "GET",
+                url: this.APP_PATH + "/aipDocumentManagement/maxFileSize"
+            });
+            return request;
+        }
     }
 }
 register("bannerCommonAIP").service("AIPUploadService", AIP.UploadService);

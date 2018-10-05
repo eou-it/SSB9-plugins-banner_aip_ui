@@ -71,11 +71,27 @@ class AipDocumentManagementController {
     }
 
     /**
+     * This method is responsible for getting restricted file types for a response.
+     * @return restricted file types as JSON
+     */
+    def restrictedFileTypes(){
+        render getRestrictedFileTypes() as JSON
+    }
+
+    /**
+     * This method is responsible for getting max file size for a response.
+     * @return max file size as JSON
+     */
+    def maxFileSize(){
+        render getMaxFileSize() as JSON
+    }
+
+    /**
      * Get configured restricted attachment type val from GUROCFG table
      * @return
      */
-    def getRestrictedFileTypes() {
-        def restrictedFileTypes = session.getAttribute("restrictedFileTypes");
+    private def getRestrictedFileTypes() {
+        def restrictedFileTypes = session.getAttribute("restrictedFileTypes")
         if (!restrictedFileTypes) {
             restrictedFileTypes = uploadDocumentCompositeService.getRestrictedFileTypes()
             session.setAttribute("restrictedFileTypes", restrictedFileTypes)
@@ -87,8 +103,8 @@ class AipDocumentManagementController {
      * Get configured allowed attachment max size val from GUROCFG table
      * @return
      */
-    def getMaxFileSize() {
-        def maxFileSize = session.getAttribute("maxFileSize");
+    private def getMaxFileSize() {
+        def maxFileSize = session.getAttribute("maxFileSize")
         if (!maxFileSize) {
             maxFileSize = uploadDocumentCompositeService.getMaxFileSize()
             session.setAttribute("maxFileSize", maxFileSize)
@@ -103,7 +119,7 @@ class AipDocumentManagementController {
     private Map requestParamsProcess(request){
         Map requestParams =[:]
         try {
-            MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
+            MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request
             requestParams.put('file',(CommonsMultipartFile) multipartRequest.getFile('file'))
             requestParams.put('actionItemId',multipartRequest.multipartParameters.actionItemId[0])
             requestParams.put('responseId',multipartRequest.multipartParameters.responseId[0])
@@ -135,7 +151,7 @@ class AipDocumentManagementController {
      * @return boolean flag
      */
     private boolean restrictedFileTypesValidation(selectedFileName){
-        def restrictedFileTypesSession = getRestrictedFileTypes();
+        def restrictedFileTypesSession = getRestrictedFileTypes()
         if(restrictedFileTypesSession.restrictedFileTypes) {
             if(restrictedFileTypesSession.restrictedFileTypes.contains(getFileExtension(selectedFileName))) {
                 return false
@@ -145,7 +161,7 @@ class AipDocumentManagementController {
     }
 
     private String getFileExtension(fileName) {
-        return fileName.substring(fileName.lastIndexOf(".")+1);
+        return fileName.substring(fileName.lastIndexOf(".")+1)
     }
 
     /**
