@@ -149,10 +149,10 @@ var AIPUI;
                     errorNotification($filter("i18n_aip")("js.aip.uploadDocument.file.duplicate.error"));
                     return false;
                 }
-                maxFileSizeValidate(selectedFile.size).then(function (resposne) {
-                    if (resposne === 'true') {
-                        restrictedFileTypeValidate((selectedFile.name).split('.').pop()).then(function (resposne) {
-                            if (resposne === 'true') {
+                maxFileSizeValidate(selectedFile.size).then(function (response) {
+                    if (response === 'true') {
+                        restrictedFileTypeValidate((selectedFile.name).split('.').pop()).then(function (response) {
+                            if (response === 'true') {
                                 SpinnerService.showSpinner(true);
                                 var attachmentParams = {
                                     actionItemId: $scope.actionItemId,
