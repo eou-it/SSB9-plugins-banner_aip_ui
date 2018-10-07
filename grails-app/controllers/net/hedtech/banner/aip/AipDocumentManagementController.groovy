@@ -180,5 +180,13 @@ class AipDocumentManagementController {
         ]
         return uploadDocumentCompositeService.maximumAttachmentsValidation(paramsMapObj)
     }
-
+    /**
+     * This method is responsible for Preview Document
+     * @return
+     */
+    def previewDocument() {
+        def map = request.JSON
+        def   previewDocumentInfo = uploadDocumentCompositeService.previewDocument(map.documentId)
+        render previewDocumentInfo as JSON
+    }
 }

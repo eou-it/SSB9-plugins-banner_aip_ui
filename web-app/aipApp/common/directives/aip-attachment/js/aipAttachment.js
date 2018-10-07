@@ -177,6 +177,40 @@ var AIPUI;
                     }
                 });
             };
+            $scope.previewDocument = function () {
+                var data = this.row;
+                AIPUploadService.previewDocument(data.id)
+                    .then(function (response) {
+                        SpinnerService.showSpinner(false);
+                        var base64Encoded = response.data.documentContent;
+                        var fileNameSplit = data.documentName.split('.');
+                        var fileExtension = fileNameSplit[fileNameSplit.length - 1];
+                        if (fileExtension.includes('pdf')) {
+                            var pdfWindow = "data:application/pdf;base64," + base64Encoded;
+                            window.open(pdfWindow);
+                        }
+                        else if ((fileExtension.includes('jpg')) || (fileExtension.includes('jpeg'))) {
+                            var jpgWindow = "data:image/jpeg;base64," + base64Encoded;
+                            window.open(jpgWindow);
+                        }
+                        else if (fileExtension.includes('png')) {
+                            var pngWindow = "data:image/png;base64," + base64Encoded;
+                            window.open(pngWindow);
+                        }
+                        else if (fileExtension.includes('txt')) {
+                            var txtWindow = "data:text/plain;base64," + base64Encoded;
+                            window.open(txtWindow);
+                        }
+                        else {
+                            $scope.dataURI = "data:application/octet-stream;base64," + base64Encoded;
+                            var link = document.createElement('a');
+                            document.body.appendChild(link);
+                            link.href = $scope.dataURI;
+                            link.download = data.documentName;
+                            link.click();
+                        }
+                    });
+            };
             var deleteFile = function (documentId) {
                 AIPUploadService.deleteDocument(documentId)
                     .then(function (response) {
