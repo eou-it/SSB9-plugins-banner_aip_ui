@@ -70,6 +70,17 @@ var AIP;
             });
             return request;
         };
+        UploadService.prototype.previewDocument = function (documentId) {
+            var data = {
+                documentId: documentId
+            };
+            var request = this.$http({
+                method: "POST",
+                url: this.APP_PATH + "/aipDocumentManagement/previewDocument",
+                data: data
+            });
+            return request;
+        };
         UploadService.$inject = ["$http", "$q", "APP_PATH", "Upload"];
         return UploadService;
     })();

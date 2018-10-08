@@ -97,6 +97,17 @@ module AIP {
             });
             return request;
         }
+        previewDocument(documentId){
+            var data = {
+                documentId:documentId
+            };
+            var request = this.$http({
+                method: "POST",
+                url: this.APP_PATH + "/aipDocumentManagement/previewDocument",
+                data:data
+            });
+            return request;
+        }
     }
 }
 register("bannerCommonAIP").service("AIPUploadService", AIP.UploadService);
