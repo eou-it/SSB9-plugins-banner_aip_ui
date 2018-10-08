@@ -6,7 +6,7 @@
 ///<reference path="../common/services/userService.ts"/>
 var AIP;
 (function (AIP) {
-    var ListItemPageCtrl = /** @class */ (function () {
+    var ListItemPageCtrl = (function () {
         function ListItemPageCtrl($scope, $state, ItemListViewService, AIPUserService, SpinnerService, $timeout, $q, $uibModal, APP_ROOT, $sce, $compile) {
             this.$inject = ["$scope", "$state", "ItemListViewService", "AIPUserService", "SpinnerService", "$timeout", "$q", "$uibModal", "APP_ROOT", "$sce", "$compile"];
             this.trustHTML = function (txtString) {
@@ -262,6 +262,7 @@ var AIP;
                     "src='../images/attach_icon_disabled.svg' title = 'Click to add documents' " +
                     "class=' pb-detail pb-item pb-paperclip'/>");
                 window.params.maxAttachments = allowedAttachments;
+                this.setMaxAttachmentParam(allowedAttachments, paperClipId, responseId);
                 responseElement.after(paperClipElement);
                 $('#' + paperClipId).on("click", function () {
                     var selectedPaperClip = this.id;
@@ -270,11 +271,26 @@ var AIP;
                     if ($(currentId)[0].checked === true) {
                         //make sure paper clip is enabled
                         window.params.responseId = $(currentId)[0].value;
+                        window.params.maxAttachments = $("#maxAttachment" + paperClipId + $(currentId)[0].value).val();
                         $("#" + selectedPaperClip)[0].setAttribute("src", "../images/attach_icon_default.svg");
                         var evt = new CustomEvent('responseChanged');
                         window.dispatchEvent(evt);
                     }
                 });
+            }
+        };
+        ListItemPageCtrl.prototype.setMaxAttachmentParam = function (allowedAttachments, paperClipId, responseId) {
+            var maxAttachmentHiddenElement = $("#maxAttachment" + paperClipId + responseId);
+            if (maxAttachmentHiddenElement.length === 0) {
+                $('<input>', {
+                    type: 'hidden',
+                    id: 'maxAttachment' + paperClipId + responseId,
+                    name: 'maxAttachment' + paperClipId + responseId,
+                    value: allowedAttachments
+                }).appendTo('body');
+            }
+            else {
+                maxAttachmentHiddenElement.val(allowedAttachments);
             }
         };
         ListItemPageCtrl.prototype.informModal = function (show) {
@@ -297,7 +313,8 @@ var AIP;
             notifications.addNotification(n);
         };
         return ListItemPageCtrl;
-    }());
+    })();
     AIP.ListItemPageCtrl = ListItemPageCtrl;
 })(AIP || (AIP = {}));
 register("bannerNonAdminAIP").controller("ListItemPageCtrl", AIP.ListItemPageCtrl);
+//# sourceMappingURL=listItemPageCtrl.js.map

@@ -348,6 +348,7 @@ module AIP {
                     "src='../images/attach_icon_disabled.svg' title = 'Click to add documents' " +
                     "class=' pb-detail pb-item pb-paperclip'/>");
                 window.params.maxAttachments = allowedAttachments;
+                this.setMaxAttachmentParam(allowedAttachments,paperClipId,responseId);
                 responseElement.after(paperClipElement);
                 $('#' + paperClipId).on("click", function () {
                     var selectedPaperClip = this.id
@@ -356,11 +357,28 @@ module AIP {
                     if ($(currentId)[0].checked === true) {
                         //make sure paper clip is enabled
                         window.params.responseId = $(currentId)[0].value;
+                        window.params.maxAttachments = $("#maxAttachment"+paperClipId+$(currentId)[0].value).val();
                         $("#" + selectedPaperClip)[0].setAttribute("src", "../images/attach_icon_default.svg");
                         var evt = new CustomEvent('responseChanged');
                         window.dispatchEvent(evt);
                     }
                 });
+            }
+        }
+
+       setMaxAttachmentParam(allowedAttachments,paperClipId,responseId){
+            var maxAttachmentHiddenElement = $("#maxAttachment"+paperClipId+responseId);
+            if (maxAttachmentHiddenElement.length === 0)
+            {
+                $('<input>', {
+                    type: 'hidden',
+                    id: 'maxAttachment'+paperClipId+responseId,
+                    name: 'maxAttachment'+paperClipId+responseId,
+                    value: allowedAttachments
+                }).appendTo('body');
+
+            }else{
+                maxAttachmentHiddenElement.val(allowedAttachments);
             }
         }
 
