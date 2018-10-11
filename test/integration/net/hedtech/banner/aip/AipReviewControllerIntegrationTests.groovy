@@ -31,4 +31,9 @@ class AipReviewControllerIntegrationTests extends BaseIntegrationTestCase {
         super.tearDown()
         logout()
     }
+
+    @Test
+    public void reviewTest(){
+        assertTrue true
+    }
 }
