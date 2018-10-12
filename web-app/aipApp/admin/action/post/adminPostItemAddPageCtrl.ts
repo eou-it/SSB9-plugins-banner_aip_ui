@@ -1,13 +1,13 @@
 /*******************************************************************************
  Copyright 2018 Ellucian Company L.P. and its affiliates.
  ********************************************************************************/
+
 ///<reference path="../../../../typings/tsd.d.ts"/>
 ///<reference path="../../../common/services/spinnerService.ts"/>
 ///<reference path="../../../common/services/admin/adminActionService.ts"/>
 declare var register;
 declare var Notification: any;
 declare var notifications: any;
-
 
 module AIP {
     interface IAdminPostItemAddPageCtrl {

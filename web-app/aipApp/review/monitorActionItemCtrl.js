@@ -1,9 +1,12 @@
-///<reference path="../../../typings/tsd.d.ts"/>
+/*********************************************************************************
+ Copyright 2018 Ellucian Company L.P. and its affiliates.
+ **********************************************************************************/
+///<reference path="../../typings/tsd.d.ts"/>
 ///<reference path="../common/services/aipReviewService.ts"/>
 ///<reference path="../common/services/userService.ts"/>
 var AIP;
 (function (AIP) {
-    var MonitorActionItemCtrl = (function () {
+    var MonitorActionItemCtrl = /** @class */ (function () {
         function MonitorActionItemCtrl($scope, $state, AIPReviewService, AIPUserService, SpinnerService, $timeout, $q, $uibModal, APP_ROOT, $sce) {
             this.$inject = ["$scope", "$state", "AIPReviewService", "AIPUserService", "SpinnerService", "$timeout", "$q", "$uibModal", "APP_ROOT", "$sce"];
             $scope.vm = this;
@@ -22,8 +25,7 @@ var AIP;
             //TODO: Get list of Action items for Search Parameter - Action Item - LOV
         };
         return MonitorActionItemCtrl;
-    })();
+    }());
     AIP.MonitorActionItemCtrl = MonitorActionItemCtrl;
 })(AIP || (AIP = {}));
 register("bannerAIPReview").controller("monitorActionItemCtrl", AIP.MonitorActionItemCtrl);
-//# sourceMappingURL=monitorActionItemCtrl.js.map
