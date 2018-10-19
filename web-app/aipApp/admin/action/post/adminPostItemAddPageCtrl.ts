@@ -1,13 +1,13 @@
 /*******************************************************************************
  Copyright 2018 Ellucian Company L.P. and its affiliates.
  ********************************************************************************/
-
 ///<reference path="../../../../typings/tsd.d.ts"/>
 ///<reference path="../../../common/services/spinnerService.ts"/>
 ///<reference path="../../../common/services/admin/adminActionService.ts"/>
 declare var register;
 declare var Notification: any;
 declare var notifications: any;
+
 
 module AIP {
     interface IAdminPostItemAddPageCtrl {
@@ -143,9 +143,9 @@ module AIP {
         }
 
         today(){
-           this.sendTime = new Date();
-           this.sendTime.setMinutes(Math.ceil(this.sendTime.getMinutes() / 30) * 30);
-           this.currentBrowserDate = this.$filter('date')(new Date(), this.$filter("i18n_aip")("default.date.format"));
+            this.sendTime = new Date();
+            this.sendTime.setMinutes(Math.ceil(this.sendTime.getMinutes() / 30) * 30);
+            this.currentBrowserDate = this.$filter('date')(new Date(), this.$filter("i18n_aip")("default.date.format"));
 
         };
 
@@ -193,10 +193,10 @@ module AIP {
 
                 this.adminActionService.getCurrentTimeZoneLocale()
                     .then((response:any) => {
-                    var that=this;
+                        var that=this;
                         this.timezones = response.data.timezones;
                         if(!this.editMode) {
-                           this.getDefaultTimeZone();
+                            this.getDefaultTimeZone();
                         }
 
                     })
@@ -243,7 +243,8 @@ module AIP {
                                 this.postNow = false;
                                 this.regeneratePopulation=this.actionPost1.populationRegenerateIndicator;
                                 this.sendTime=this.actionPost1.postingDisplayTime;
-                                this.defaultTimeZone =this.actionPost1.postingTimeZone;
+                                var postingTimeZone = this.actionPost1.postingTimeZone.split(" ");
+                                this.defaultTimeZone = postingTimeZone[postingTimeZone.length-1];
 
                                 for(var k=0;k<this.timezones.length;k++) {
                                     if(this.actionPost1.postingTimeZone === this.timezones[k].displayName)
@@ -254,7 +255,7 @@ module AIP {
 
                                 this.appServerDate=this.actionPost1.postingScheduleDateTime;
                                 this.appServerTime=this.actionPost1.scheduledStartTime;
-                                this.appServerTimeZone=this.actionPost1.timezoneStringOffset.displayName;
+                                this.appServerTimeZone=this.actionPost1.timezoneStringOffset.displayNameWithoutOffset;
 
                                 this.changedValue();
 
@@ -332,17 +333,17 @@ module AIP {
                 })
         }
 
-       showTimeZoneList() {
-        this.showTimezoneIcon = false;
-       };
+        showTimeZoneList() {
+            this.showTimezoneIcon = false;
+        };
 
         pad(number, length){
-        var str = "" + number;
-        while (str.length < length) {
-            str = '0'+str
+            var str = "" + number;
+            while (str.length < length) {
+                str = '0'+str
+            }
+            return str
         }
-        return str
-       }
 
         setTimezone(timezone)
         {
@@ -361,7 +362,7 @@ module AIP {
                 if (offset === GMTString) {
                     that.setTimezone(key);
                     finalValue = '( ' + key.displayNameWithoutOffset + ' )';
-                    timeZone = key.stringOffset + ' ' + key.timezoneId;
+                    timeZone=key.displayNameWithoutOffset;
                 }
             });
             this.defaultTimeZoneNameWithOffset = timeZone;
@@ -401,18 +402,19 @@ module AIP {
         {
             this.timeConversion()
             var userSelectedVal=
-            {
-                "userEnterDate": this.enteredDate,
-                "userEnterTime": this.selectedTime,
-                "userEnterTimeZone":this.timezone.timezoneId
-            };
+                {
+                    "userEnterDate": this.enteredDate,
+                    "userEnterTime": this.selectedTime,
+                    "userEnterTimeZone":this.timezone.timezoneId
+                };
 
             this.adminActionStatusService.getProcessedServerDateTimeAndTimezone(userSelectedVal)
                 .then((response) => {
                     this.processedServerDetails =response.data;
                     this.appServerDate= (this.postActionItemInfo.scheduledStartDate !== undefined) ?  this.processedServerDetails.serverDate:null;
                     this.appServerTime= this.processedServerDetails.serverTime;
-                    this.appServerTimeZone=this.processedServerDetails.serverTimeZone;
+                    var serverTimeZone= this.processedServerDetails.serverTimeZone.split(" ")
+                    this.appServerTimeZone=serverTimeZone[serverTimeZone.length-1];
 
                 });
         }
@@ -505,7 +507,7 @@ module AIP {
             } else {
                 delete this.errorMessage.population;
             }
-           if (!this.modalResult) {
+            if (!this.modalResult) {
                 this.errorMessage.success = "invalid actionItem";
             } else {
                 delete this.errorMessage.success;
@@ -517,13 +519,13 @@ module AIP {
             }
         }
 
-         checkChanges() {
+        checkChanges() {
 
-             var that = this;
-             if (that.editMode) {
-                 that.dirtyFlag = true
-             }
-         }
+            var that = this;
+            if (that.editMode) {
+                that.dirtyFlag = true
+            }
+        }
 
         cancel() {
 
