@@ -198,7 +198,7 @@ var AIP;
         AdminPostItemAddPageCtrl.prototype.showTimeZoneList = function () {
             this.showTimezoneIcon = false;
         };
-        ;
+
         AdminPostItemAddPageCtrl.prototype.pad = function (number, length) {
             var str = "" + number;
             while (str.length < length) {
@@ -207,10 +207,9 @@ var AIP;
             return str;
         };
         AdminPostItemAddPageCtrl.prototype.setTimezone = function (timezone) {
-            console.log(JSON.stringify(timezone));
             this.timezone = timezone;
         };
-        ;
+
         AdminPostItemAddPageCtrl.prototype.getDefaultTimeZone = function () {
             var that = this;
             var timeZoneOffset = new Date().getTimezoneOffset();
