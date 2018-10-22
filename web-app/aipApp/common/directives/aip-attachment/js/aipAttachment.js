@@ -6,7 +6,7 @@
 ///<reference path="../../../services/spinnerService.ts"/>
 var AIPUI;
 (function (AIPUI) {
-    var AIPAttachment = (function () {
+    var AIPAttachment = /** @class */ (function () {
         function AIPAttachment($filter, $q, AIPUploadService, SpinnerService) {
             this.restrict = "AE";
             this.replace = false;
@@ -178,14 +178,19 @@ var AIPUI;
                 });
             };
             $scope.previewDocument = function () {
+                SpinnerService.showSpinner(true);
                 var data = this.row;
                 AIPUploadService.previewDocument(data.id)
                     .then(function (response) {
-                        SpinnerService.showSpinner(false);
+                    SpinnerService.showSpinner(false);
+                    if (response.data.bdmDocuments) {
+                        var document = response.data.bdmDocuments[0];
+                        window.open(document.viewURL);
+                    }
+                    else {
                         var base64Encoded = response.data.documentContent;
                         var fileNameSplit = data.documentName.split('.');
                         var fileExtension = fileNameSplit[fileNameSplit.length - 1];
-
                         switch (fileExtension) {
                             case "pdf":
                                 var pdfWindow = "data:application/pdf;base64," + base64Encoded;
@@ -215,7 +220,8 @@ var AIPUI;
                                 link.download = data.documentName;
                                 link.click();
                         }
-                    });
+                    }
+                });
             };
             var deleteFile = function (documentId) {
                 AIPUploadService.deleteDocument(documentId)
@@ -317,8 +323,7 @@ var AIPUI;
         };
         AIPAttachment.$inject = ["$filter", "$q", "AIPUploadService", "SpinnerService"];
         return AIPAttachment;
-    })();
+    }());
     AIPUI.AIPAttachment = AIPAttachment;
 })(AIPUI || (AIPUI = {}));
 register("bannerAIPUI").directive("aipAttachment", AIPUI.AIPAttachment);
-//# sourceMappingURL=aipAttachment.js.map

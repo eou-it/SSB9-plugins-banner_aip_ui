@@ -210,13 +210,18 @@ module AIPUI {
             };
 
             $scope.previewDocument = function () {
+                SpinnerService.showSpinner(true);
                 var data = this.row;
                 AIPUploadService.previewDocument(data.id)
                     .then((response: any) => {
                         SpinnerService.showSpinner(false);
-                        var base64Encoded = response.data.documentContent
-                        var fileNameSplit = data.documentName.split('.')
-                        var fileExtension=fileNameSplit[fileNameSplit.length-1]
+                        if (response.data.bdmDocuments) {
+                            var document = response.data.bdmDocuments[0];
+                            window.open(document.viewURL);
+                        } else {
+                            var base64Encoded = response.data.documentContent
+                            var fileNameSplit = data.documentName.split('.')
+                            var fileExtension = fileNameSplit[fileNameSplit.length - 1]
 
                         switch (fileExtension) {
                             case "pdf":
@@ -247,8 +252,8 @@ module AIPUI {
                                 link.download = data.documentName;
                                 link.click();
                         }
-
-                    });
+                    }
+                });
             }
 
             var deleteFile = function (documentId) {
