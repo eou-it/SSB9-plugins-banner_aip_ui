@@ -221,7 +221,7 @@ var AIP;
                 if (offset === GMTString) {
                     that.setTimezone(key);
                     finalValue = '( ' + key.displayNameWithoutOffset + ' )';
-                    timeZone = key.displayNameWithoutOffset;
+                    timeZone = key.displayName;
                 }
             });
             this.defaultTimeZoneNameWithOffset = timeZone;
