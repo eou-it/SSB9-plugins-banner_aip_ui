@@ -183,43 +183,48 @@ var AIPUI;
                 AIPUploadService.previewDocument(data.id)
                     .then(function (response) {
                     SpinnerService.showSpinner(false);
-                    if (response.data.bdmDocuments) {
-                        var document = response.data.bdmDocuments[0];
-                        window.open(document.viewURL);
+                    if (response.data.success === true) {
+                        if (response.data.bdmDocument) {
+                            var document = response.data.bdmDocument;
+                            window.open(document.viewURL);
+                        }
+                        else {
+                            var base64Encoded = response.data.documentContent;
+                            var fileNameSplit = data.documentName.split('.');
+                            var fileExtension = fileNameSplit[fileNameSplit.length - 1];
+                            switch (fileExtension) {
+                                case "pdf":
+                                    var pdfWindow = "data:application/pdf;base64," + base64Encoded;
+                                    window.open(pdfWindow);
+                                    break;
+                                case "jpg":
+                                    var jpgWindow = "data:image/jpeg;base64," + base64Encoded;
+                                    window.open(jpgWindow);
+                                    break;
+                                case "jpeg":
+                                    var jpgWindow = "data:image/jpeg;base64," + base64Encoded;
+                                    window.open(jpgWindow);
+                                    break;
+                                case "png":
+                                    var pngWindow = "data:image/png;base64," + base64Encoded;
+                                    window.open(pngWindow);
+                                    break;
+                                case "txt":
+                                    var txtWindow = "data:text/plain;base64," + base64Encoded;
+                                    window.open(txtWindow);
+                                    break;
+                                default:
+                                    $scope.dataURI = "data:application/octet-stream;base64," + base64Encoded;
+                                    var link = document.createElement('a');
+                                    document.body.appendChild(link);
+                                    link.href = $scope.dataURI;
+                                    link.download = data.documentName;
+                                    link.click();
+                            }
+                        }
                     }
                     else {
-                        var base64Encoded = response.data.documentContent;
-                        var fileNameSplit = data.documentName.split('.');
-                        var fileExtension = fileNameSplit[fileNameSplit.length - 1];
-                        switch (fileExtension) {
-                            case "pdf":
-                                var pdfWindow = "data:application/pdf;base64," + base64Encoded;
-                                window.open(pdfWindow);
-                                break;
-                            case "jpg":
-                                var jpgWindow = "data:image/jpeg;base64," + base64Encoded;
-                                window.open(jpgWindow);
-                                break;
-                            case "jpeg":
-                                var jpgWindow = "data:image/jpeg;base64," + base64Encoded;
-                                window.open(jpgWindow);
-                                break;
-                            case "png":
-                                var pngWindow = "data:image/png;base64," + base64Encoded;
-                                window.open(pngWindow);
-                                break;
-                            case "txt":
-                                var txtWindow = "data:text/plain;base64," + base64Encoded;
-                                window.open(txtWindow);
-                                break;
-                            default:
-                                $scope.dataURI = "data:application/octet-stream;base64," + base64Encoded;
-                                var link = document.createElement('a');
-                                document.body.appendChild(link);
-                                link.href = $scope.dataURI;
-                                link.download = data.documentName;
-                                link.click();
-                        }
+                        errorNotification(response.data.message);
                     }
                 });
             };

@@ -13,7 +13,7 @@ declare var notifications: any;
 module AIPUI {
 
     export class AIPAttachment {
-        static $inject = ["$filter", "$q", "AIPUploadService","SpinnerService"];
+        static $inject = ["$filter", "$q", "AIPUploadService", "SpinnerService"];
 
         $scope;
         $filter;
@@ -137,14 +137,14 @@ module AIPUI {
                 return deferred.promise;
             };
 
-            $scope.refreshData = function(){
+            $scope.refreshData = function () {
                 AIPUploadService.fetchAttachmentsList($scope.query)
                     .then((response) => {
                         $scope.gridData.row = response.result;
                         var msg = document.querySelector("#dataTableAttachmentsList #msg");
-                        if(response.length > 0){
+                        if (response.length > 0) {
                             msg.textContent = "";
-                        }else{
+                        } else {
                             msg.textContent = $filter("i18n_aip")("aip.common.no.results.found");
                             msg.classList.add("noDataMsg");
                         }
@@ -169,21 +169,21 @@ module AIPUI {
                     return false;
                 }
 
-                if(!($scope.gridData.row.length < $scope.maxAttachments)){
+                if (!($scope.gridData.row.length < $scope.maxAttachments)) {
                     errorNotification($filter("i18n_aip")("aip.uploadDocument.maximum.attachment.error"));
                     resetSeletedFileValue();
                     return false;
                 }
 
-                if(isDuplicateFileName($scope.gridData.row,selectedFile.name)){
+                if (isDuplicateFileName($scope.gridData.row, selectedFile.name)) {
                     errorNotification($filter("i18n_aip")("js.aip.uploadDocument.file.duplicate.error"));
                     return false;
                 }
 
-                maxFileSizeValidate(selectedFile.size).then(function(response){
-                    if(response === 'true'){
-                        restrictedFileTypeValidate((selectedFile.name).split('.').pop()).then(function(response){
-                            if(response === 'true') {
+                maxFileSizeValidate(selectedFile.size).then(function (response) {
+                    if (response === 'true') {
+                        restrictedFileTypeValidate((selectedFile.name).split('.').pop()).then(function (response) {
+                            if (response === 'true') {
                                 SpinnerService.showSpinner(true);
                                 var attachmentParams = {
                                     actionItemId: $scope.actionItemId,
@@ -193,7 +193,7 @@ module AIPUI {
                                 };
 
                                 AIPUploadService.uploadDocument(attachmentParams)
-                                    .then((response:any) => {
+                                    .then((response: any) => {
                                         SpinnerService.showSpinner(false);
                                         if (response.success === true) {
                                             successNotification(response.message);
@@ -215,45 +215,50 @@ module AIPUI {
                 AIPUploadService.previewDocument(data.id)
                     .then((response: any) => {
                         SpinnerService.showSpinner(false);
-                        if (response.data.bdmDocuments) {
-                            var document = response.data.bdmDocuments[0];
-                            window.open(document.viewURL);
-                        } else {
-                            var base64Encoded = response.data.documentContent
-                            var fileNameSplit = data.documentName.split('.')
-                            var fileExtension = fileNameSplit[fileNameSplit.length - 1]
+                        if (response.data.success === true) {
+                            if (response.data.bdmDocument) {
+                                var document = response.data.bdmDocument;
+                                window.open(document.viewURL);
+                            } else {
+                                var base64Encoded = response.data.documentContent
+                                var fileNameSplit = data.documentName.split('.')
+                                var fileExtension = fileNameSplit[fileNameSplit.length - 1]
 
-                        switch (fileExtension) {
-                            case "pdf":
-                                var pdfWindow = "data:application/pdf;base64," + base64Encoded;
-                                window.open(pdfWindow);
-                                break;
-                            case "jpg":
-                                var jpgWindow = "data:image/jpeg;base64," + base64Encoded;
-                                window.open(jpgWindow);
-                                break;
-                            case "jpeg":
-                                var jpgWindow = "data:image/jpeg;base64," + base64Encoded;
-                                window.open(jpgWindow);
-                                break;
-                            case "png":
-                                var pngWindow = "data:image/png;base64," + base64Encoded;
-                                window.open(pngWindow);
-                                break;
-                            case "txt":
-                                var txtWindow = "data:text/plain;base64," + base64Encoded;
-                                window.open(txtWindow);
-                                break;
-                            default:
-                                $scope.dataURI = "data:application/octet-stream;base64," + base64Encoded;
-                                var link = document.createElement('a');
-                                document.body.appendChild(link);
-                                link.href = $scope.dataURI;
-                                link.download = data.documentName;
-                                link.click();
+                                switch (fileExtension) {
+                                    case "pdf":
+                                        var pdfWindow = "data:application/pdf;base64," + base64Encoded;
+                                        window.open(pdfWindow);
+                                        break;
+                                    case "jpg":
+                                        var jpgWindow = "data:image/jpeg;base64," + base64Encoded;
+                                        window.open(jpgWindow);
+                                        break;
+                                    case "jpeg":
+                                        var jpgWindow = "data:image/jpeg;base64," + base64Encoded;
+                                        window.open(jpgWindow);
+                                        break;
+                                    case "png":
+                                        var pngWindow = "data:image/png;base64," + base64Encoded;
+                                        window.open(pngWindow);
+                                        break;
+                                    case "txt":
+                                        var txtWindow = "data:text/plain;base64," + base64Encoded;
+                                        window.open(txtWindow);
+                                        break;
+                                    default:
+                                        $scope.dataURI = "data:application/octet-stream;base64," + base64Encoded;
+                                        var link = document.createElement('a');
+                                        document.body.appendChild(link);
+                                        link.href = $scope.dataURI;
+                                        link.download = data.documentName;
+                                        link.click();
+                                }
+                            }
+                        } else {
+                            errorNotification(response.data.message);
                         }
-                    }
-                });
+
+                    });
             }
 
             var deleteFile = function (documentId) {
@@ -306,12 +311,12 @@ module AIPUI {
                 notifications.addNotification(n);
             }
 
-            var resetSeletedFileValue = function(){
+            var resetSeletedFileValue = function () {
                 $("#fileupload_label").val(null);
             }
 
-            var isDuplicateFileName = function(documentsJson,selectedDocumentName){
-                if(documentsJson) {
+            var isDuplicateFileName = function (documentsJson, selectedDocumentName) {
+                if (documentsJson) {
                     var result = documentsJson.filter(function (documentObj) {
                         return (documentObj.documentName === selectedDocumentName)
                     });
@@ -320,38 +325,38 @@ module AIPUI {
                 return false;
             }
 
-            var restrictedFileTypeValidate = function(selectedFileType){
+            var restrictedFileTypeValidate = function (selectedFileType) {
                 var deferred = $q.defer();
                 AIPUploadService.restrictedFileTypes()
-                    .then((response:any) => {
-                        if(response.data.restrictedFileTypes){
-                            if(response.data.restrictedFileTypes.indexOf(selectedFileType) !== -1){
+                    .then((response: any) => {
+                        if (response.data.restrictedFileTypes) {
+                            if (response.data.restrictedFileTypes.indexOf(selectedFileType) !== -1) {
                                 SpinnerService.showSpinner(false);
                                 errorNotification($filter("i18n_aip")("aip.uploadDocument.file.type.restricted.error"));
                                 deferred.resolve('false');
-                            }else{
+                            } else {
                                 deferred.resolve('true');
                             }
-                        }else{
+                        } else {
                             deferred.resolve('true');
                         }
                     })
                 return deferred.promise
             }
 
-            var maxFileSizeValidate = function(selectedFileSize){
+            var maxFileSizeValidate = function (selectedFileSize) {
                 var deferred = $q.defer();
                 AIPUploadService.maxFileSize()
-                    .then((response:any) => {
-                        if(response.data.maxFileSize){
-                            if( selectedFileSize > parseInt(response.data.maxFileSize)){
+                    .then((response: any) => {
+                        if (response.data.maxFileSize) {
+                            if (selectedFileSize > parseInt(response.data.maxFileSize)) {
                                 errorNotification($filter("i18n_aip")("aip.uploadDocument.file.maxsize.error"));
                                 SpinnerService.showSpinner(false);
                                 deferred.resolve('false');
-                            }else{
+                            } else {
                                 deferred.resolve('true');
                             }
-                        }else {
+                        } else {
                             deferred.resolve('true');
                         }
                     })
