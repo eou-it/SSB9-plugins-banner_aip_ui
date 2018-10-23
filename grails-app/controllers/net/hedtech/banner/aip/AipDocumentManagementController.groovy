@@ -40,7 +40,7 @@ class AipDocumentManagementController {
         }
 
         if(!model){
-            model = uploadDocumentCompositeService.addUploadDocument(requestParamsMap)
+            model = uploadDocumentCompositeService.addDocument(requestParamsMap)
         }
         render model as JSON
     }
@@ -178,7 +178,7 @@ class AipDocumentManagementController {
                 responseId   : responseId,
                 pidm         : user.pidm
         ]
-        return uploadDocumentCompositeService.maximumAttachmentsValidation(paramsMapObj)
+        return uploadDocumentCompositeService.validateMaxAttachments(paramsMapObj)
     }
     /**
      * This method is responsible for Preview Document
