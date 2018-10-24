@@ -1,6 +1,101 @@
 <!--*******************************************************************************
 Copyright 2018 Ellucian Company L.P. and its affiliates.
 *******************************************************************************-->
-<div>
+<div class="monitor-action-item-root">
+    <div class="monitor-action-item-search-params">
+        <uib-accordion close-others="oneAtATime">
+            <uib-accordion-group class="monitor-action-item-container" role="tablist" is-open="true">
+                <uib-accordion-heading id="heading" role="tab" aria-label="{{js.aip.review.monitor.title.heading|i18n_aip}}">
+                    {{"js.aip.review.monitor.title.heading"|i18n_aip}}
+                </uib-accordion-heading>
 
+                <div class="row monitorActionItemInfoRow ">
+                    <div class="monitorActionItemElement col-xs-1 col-sm-1">
+                        <label for="actionItem" class="titleValue required" id="actionItem">{{"js.aip.review.monitor.action.itemTitle"|i18n_aip}}
+                        </label>
+                    </div>
+                    <div class="monitoractionItemElement col-xs-8 col-sm-8">
+                        <xe-ui-select id="actionItemName" ng-change="vm.changedValue();vm.checkChanges()"
+                                      ng-model="vm.selected"
+                                      theme="select2" ng-disabled="disabled">
+
+                            <xe-ui-select-match class="placeholderDisplay"
+                                                placeholder={{"js.aip.action.selected.name"|i18n_aip}}>
+                                <div class="actionItemName" ng-bind-html="vm.selected.name"></div>
+                                <div class="select-placeholder">{{"js.aip.action.selected.name"|i18n_aip}}
+                                </div>
+                            </xe-ui-select-match>
+
+                            <xe-ui-select-choices group-by="vm.groupFunc" repeat="item in vm.actionItemNamesList |
+                                    propsFilter: {name: $select.search}">
+                                <div ng-bind-html="item.name | highlight: $select.search"></div>
+
+                            </xe-ui-select-choices>
+                        </xe-ui-select>
+                    </div>
+                </div>
+                <div class="row monitorActionItemSearchByRow ">
+                    <div class="monitorActionItemSearchElement col-xs-1 col-sm-1">
+                        <label for="searchBy" class="titleValue required" id="searchBy">{{"js.aip.review.monitor.action.searchTitle"|i18n_aip}}
+                        </label>
+                    </div>
+                </div>
+                <div class="row monitorActionItemSearchByPersonIdRow ">
+                    <div class="monitorActionItemSearchElementByPersonId col-xs-1 col-sm-1">
+                        <input type="radio" id="personId" name="content" ng-model="option" ng-value="'personId'"
+                               ng-change="vm.checkChanges()">
+                        <label class="titleValue  required" for="personId"><span class="postChk">{{"js.aip.review.monitor.action.personIdTitle"|i18n_aip}}</span></label>
+                    </div>
+                </div>
+                <div class="row monitorActionItemSearchByPersonNameRow ">
+                    <div class="monitorActionItemSearchElementByPersonName col-xs-1 col-sm-1">
+                        <input type="radio" id="personName" name="content" ng-model="option" ng-value="'personName'"
+                               ng-change="vm.checkChanges()">
+                        <label class="titleValue  required" for="personName"><span class="postChk">{{"js.aip.review.monitor.action.personNameTitle"|i18n_aip}}</span></label>
+
+                    </div>
+                </div>
+                <div class="row monitorActionItemSearchByPersonNameRow ">
+                    <div class="monitorActionItemSearchElement col-xs-1 col-sm-1">
+                        <label for="searchByPersonId" class="titleValue required" id="searchByPersonId"
+                               ng-show="option == 'personId'"
+                               aria-label="{{js.aip.review.monitor.action.personIdTitle}}">{{"js.aip.review.monitor.action.personIdTitle"|i18n_aip}}
+                        </label>
+                        <label for="searchByPersonName" class="titleValue required" id="searchByPersonName"
+                               ng-show="option == 'personName'"
+                               aria-label="{{js.aip.review.monitor.action.personNameTitle}}">{{"js.aip.review.monitor.action.personNameTitle"|i18n_aip}}
+                        </label>
+                    </div>
+                </div>
+                <div class="row monitorActionItemSearchByPersonNameRow ">
+                    <div class="monitorActionItemSearchElement  col-sm-3 col-md-3">
+                        <input id="personIdVal" type="text" class="form-control" ng-show="option == 'personId'"
+                               ng-model="vm.personId" ng-change="vm.checkChanges()">
+                        <input id="personNameVal" type="text" class="form-control" ng-show="option == 'personName'"
+                               ng-model="vm.personName" ng-change="vm.checkChanges()">
+
+                    </div>
+                    <div class="actionItemElement col-xs-12 col-sm-8">
+                        <div class="col-sm-6 offset-sm-8 col-xs-12 actionItemButton">
+                        <span>
+                        <button name="search" type="button" class="btn btn-primary"
+                                ng-click="vm.search()">
+                        {{"js.aip.review.monitor.action.searchButtonTitle"|i18n_aip}}</button>
+                    </span>
+                            <span>
+                        <button name="startOver" type="button" class="btn btn-primary"
+                                ng-click="vm.startOver()">
+                        {{"js.aip.review.monitor.action.startButtonTitle"|i18n_aip}}</button>
+                    </span>
+                        </div>
+                    </div>
+                </div>
+
+            </uib-accordion-group>
+        </uib-accordion>
+    </div>
+    <div class="monitor-action-item-grid">
+        GRID
+    </div>
 </div>
+

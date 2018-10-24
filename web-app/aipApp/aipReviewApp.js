@@ -21,7 +21,7 @@ var xhrHttpInterceptor= function (){
             // discards the response we received because there isn't a good way to process it
             if ( typeof res.data === "string" && res.data.search(/<html/mi )!== -1 )
             {
-                 window.location.assign(rootWebApp);
+                window.location.assign(rootWebApp);
             }
             return res;
         }
@@ -68,6 +68,7 @@ var bannerAIPReviewApp = angular.module("bannerAIPReview", [
     //constant for endpoint
     .constant("ENDPOINT", {
         review: {
+            listActionItem: aipAppAbsPath + "aipReview/fetchActionItem"
 
         }
     })
@@ -181,8 +182,6 @@ bannerAIPUI
 
     //supply directives' template url so that we don't have any hardcoded url in other code
     .config(['$provide', 'APP_ROOT', function ($provide, APP_ROOT) {
-            //override angular-ui's default accordion-group directive template; h4 -> h2 for title
-
         }]
     );
 

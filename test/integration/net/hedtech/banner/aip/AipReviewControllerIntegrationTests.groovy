@@ -16,8 +16,8 @@ import org.springframework.security.core.context.SecurityContextHolder
  * AipReviewControllerIntegrationTests.
  */
 class AipReviewControllerIntegrationTests extends BaseIntegrationTestCase {
-    def selfServiceBannerAuthenticationProvider
-    def actionItemService
+
+    def monitorActionItemReadOnlyCompositeService
 
     @Before
     public void setUp() {
@@ -33,7 +33,9 @@ class AipReviewControllerIntegrationTests extends BaseIntegrationTestCase {
     }
 
     @Test
-    public void reviewTest(){
-        assertTrue true
+    void listActionItemNames() {
+        loginSSB( 'CSRSTU004', '111111' )
+        def result =monitorActionItemReadOnlyCompositeService.getactionItemNames()
+        assert result.size() > 0
     }
 }

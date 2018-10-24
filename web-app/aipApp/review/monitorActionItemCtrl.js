@@ -1,7 +1,4 @@
-/*********************************************************************************
- Copyright 2018 Ellucian Company L.P. and its affiliates.
- **********************************************************************************/
-///<reference path="../../typings/tsd.d.ts"/>
+///<reference path="../../../typings/tsd.d.ts"/>
 ///<reference path="../common/services/aipReviewService.ts"/>
 ///<reference path="../common/services/userService.ts"/>
 var AIP;
@@ -19,10 +16,22 @@ var AIP;
             this.$uibModal = $uibModal;
             this.APP_ROOT = APP_ROOT;
             this.$sce = $sce;
+            this.actionItemNamesList = [];
+            this.personId;
+            this.personName;
             this.init();
         }
         MonitorActionItemCtrl.prototype.init = function () {
-            //TODO: Get list of Action items for Search Parameter - Action Item - LOV
+            var _this = this;
+            var allPromises = [];
+            allPromises.push(this.aipReviewService.getActionItemList()
+                .then(function (response) {
+                    _this.actionItemNamesList = response.data;
+                }));
+        };
+        MonitorActionItemCtrl.prototype.search = function () {
+        };
+        MonitorActionItemCtrl.prototype.startOver = function () {
         };
         return MonitorActionItemCtrl;
     }());
