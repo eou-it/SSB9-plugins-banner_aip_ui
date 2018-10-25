@@ -19,6 +19,8 @@ var AIP;
             this.actionItemNamesList = [];
             this.personId;
             this.personName;
+            this.selected;
+            this.option;
             this.init();
         }
         MonitorActionItemCtrl.prototype.init = function () {
@@ -30,8 +32,16 @@ var AIP;
                 }));
         };
         MonitorActionItemCtrl.prototype.search = function () {
+            console.log(this.personId);
+            console.log(this.personName);
+            console.log(this.selected.id);
+            console.log(this.option);
         };
-        MonitorActionItemCtrl.prototype.startOver = function () {
+        MonitorActionItemCtrl.prototype.reset = function () {
+            this.selected = "";
+            this.option = "";
+            this.personId = "";
+            this.personName = "";
         };
         return MonitorActionItemCtrl;
     }());

@@ -30,6 +30,8 @@ module AIP {
         actionItemNamesList;
         personId;
         personName;
+        selected;
+        option;
 
         constructor($scope, $state, AIPReviewService, AIPUserService, SpinnerService, $timeout, $q, $uibModal, APP_ROOT, $sce) {
             $scope.vm = this;
@@ -45,6 +47,8 @@ module AIP {
             this.actionItemNamesList=[];
             this.personId;
             this.personName;
+            this.selected;
+            this.option;
             this.init();
 
         }
@@ -57,13 +61,18 @@ module AIP {
                         this.actionItemNamesList = response.data;
                     })
             );
-
         }
         search(){
-
+            console.log(this.personId)
+            console.log(this.personName)
+            console.log(this.selected.id)
+            console.log(this.option)
         }
-        startOver(){
-
+        reset(){
+            this.selected=""
+            this.option=""
+            this.personId=""
+            this.personName=""
         }
 
     }
