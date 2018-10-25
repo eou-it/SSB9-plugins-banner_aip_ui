@@ -68,7 +68,7 @@ var bannerAIPReviewApp = angular.module("bannerAIPReview", [
     //constant for endpoint
     .constant("ENDPOINT", {
         review: {
-            listActionItem: aipAppAbsPath + "aipReview/fetchActionItem"
+            listActionItemNames: aipAppAbsPath + "aipReview/fetchActionItemNames"
 
         }
     })

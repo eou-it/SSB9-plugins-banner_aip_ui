@@ -2,20 +2,22 @@ package net.hedtech.banner.aip
 
 import grails.converters.JSON
 
+/** Controller for Review Action Items **/
+
 class AipReviewController {
     static defaultAction = "monitor"
-    def monitorActionItemReadOnlyCompositeService
+    def monitorActionItemCompositeService
 
     def monitor() {
-        render( view: "aipReview" )
+        render(view: "aipReview")
     }
 
     /**
-     * Add Action Item
+     * Fetch Action Item Names
      * @return
      */
-    def fetchActionItem() {
-        def result = monitorActionItemReadOnlyCompositeService.getactionItemNames()
+    def fetchActionItemNames() {
+        def result = monitorActionItemCompositeService.getactionItemNames()
         render result as JSON
     }
 }

@@ -35,7 +35,7 @@ module AIP {
         getActionItemList() {
             var request = this.$http({
                 method: "GET",
-                url: this.ENDPOINT.review.listActionItem
+                url: this.ENDPOINT.review.listActionItemNames
             })
             return request;
         }
