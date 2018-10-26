@@ -17,7 +17,7 @@ import org.springframework.security.core.context.SecurityContextHolder
  */
 class AipReviewControllerIntegrationTests extends BaseIntegrationTestCase {
 
-    def monitorActionItemReadOnlyCompositeService
+    def monitorActionItemCompositeService
 
     @Before
     public void setUp() {
@@ -34,8 +34,7 @@ class AipReviewControllerIntegrationTests extends BaseIntegrationTestCase {
 
     @Test
     void listActionItemNames() {
-        loginSSB( 'CSRSTU004', '111111' )
-        def result =monitorActionItemReadOnlyCompositeService.getactionItemNames()
+        def result =monitorActionItemCompositeService.getActionItemNames()
         assert result.size() > 0
     }
 }

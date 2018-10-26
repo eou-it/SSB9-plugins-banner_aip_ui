@@ -1,3 +1,6 @@
+/*******************************************************************************
+ Copyright 2018 Ellucian Company L.P. and its affiliates.
+ ********************************************************************************/
 package net.hedtech.banner.aip
 
 import grails.converters.JSON
@@ -9,7 +12,7 @@ class AipReviewController {
     def monitorActionItemCompositeService
 
     def monitor() {
-        render(view: "aipReview")
+        render( view: "aipReview" )
     }
 
     /**
@@ -17,7 +20,7 @@ class AipReviewController {
      * @return
      */
     def fetchActionItemNames() {
-        def result = monitorActionItemCompositeService.getactionItemNames()
+        def result = monitorActionItemCompositeService.getActionItemNames()
         render result as JSON
     }
 }
