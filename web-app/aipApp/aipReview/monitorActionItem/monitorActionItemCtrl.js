@@ -2,8 +2,8 @@
  Copyright 2018 Ellucian Company L.P. and its affiliates.
  **********************************************************************************/
 ///<reference path="../../../typings/tsd.d.ts"/>
-///<reference path="../common/services/aipReviewService.ts"/>
-///<reference path="../common/services/userService.ts"/>
+///<reference path="../../common/services/aipReviewService.ts"/>
+///<reference path="../../common/services/userService.ts"/>
 var AIP;
 (function (AIP) {
     var MonitorActionItemCtrl = /** @class */ (function () {
@@ -31,8 +31,8 @@ var AIP;
             var allPromises = [];
             allPromises.push(this.aipReviewService.getActionItemList()
                 .then(function (response) {
-                    _this.actionItemNamesList = response.data;
-                }));
+                _this.actionItemNamesList = response.data;
+            }));
         };
         MonitorActionItemCtrl.prototype.search = function () {
             console.log(this.personId);
@@ -45,6 +45,9 @@ var AIP;
             this.option = "";
             this.personId = "";
             this.personName = "";
+        };
+        MonitorActionItemCtrl.prototype.review = function (userActionItemID) {
+            this.$state.go("review-action-item", { userActionItemID: userActionItemID });
         };
         return MonitorActionItemCtrl;
     }());

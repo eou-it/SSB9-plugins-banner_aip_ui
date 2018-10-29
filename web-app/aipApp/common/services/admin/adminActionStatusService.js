@@ -4,7 +4,7 @@
 ///<reference path="../../../../typings/tsd.d.ts"/>
 var AIP;
 (function (AIP) {
-    var AdminActionStatusService = (function () {
+    var AdminActionStatusService = /** @class */ (function () {
         function AdminActionStatusService($http, $q, $filter, ENDPOINT) {
             this.$http = $http;
             this.$q = $q;
@@ -84,8 +84,7 @@ var AIP;
         };
         AdminActionStatusService.$inject = ["$http", "$q", "$filter", "ENDPOINT"];
         return AdminActionStatusService;
-    })();
+    }());
     AIP.AdminActionStatusService = AdminActionStatusService;
 })(AIP || (AIP = {}));
 register("bannerAIP").service("AdminActionStatusService", AIP.AdminActionStatusService);
-//# sourceMappingURL=adminActionStatusService.js.map
