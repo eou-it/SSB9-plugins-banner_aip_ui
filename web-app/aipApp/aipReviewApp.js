@@ -54,7 +54,7 @@ var bannerAIPReviewApp = angular.module("bannerAIPReview", [
     //constants for page information
     .constant("PAGES", {
         "monitor-action-item": {
-            url: "/aipReview",
+            url: "/monitor",
             templateUrl: "aipReview/monitorActionItem/monitorActionItem.html",
             controller: "monitorActionItemCtrl",
             breadcrumb: {
@@ -63,15 +63,15 @@ var bannerAIPReviewApp = angular.module("bannerAIPReview", [
             }
         },
         "review-action-item": {
-            url: "/aipReview/review/:userActionItemID",
+            url: "/monitor/review/:userActionItemID",
             templateUrl: "aipReview/reviewActionItem/reviewActionItem.html",
-            controller: "reviewActionItemCtrl",
+            controller: "ReviewActionItemCtrl",
             params: {
                 userActionItemID: null
             },
             breadcrumb: {
-                label: "js.aip.review.monitor.action.item",
-                url: "/aipReview/review"
+                label: "js.aip.review.review.action.item",
+                url: "/aipReview/monitor/review"
             }
         }
 

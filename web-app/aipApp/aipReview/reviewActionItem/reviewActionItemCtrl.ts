@@ -4,7 +4,7 @@
 
 ///<reference path="../../../typings/tsd.d.ts"/>
 ///<reference path="../../common/services/aipReviewService.ts"/>
-    ///<reference path="../../common/services/userService.ts"/>
+///<reference path="../../common/services/userService.ts"/>
 declare var register;
 
 module AIP {
