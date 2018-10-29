@@ -34,7 +34,10 @@ class AipReviewControllerIntegrationTests extends BaseIntegrationTestCase {
 
     @Test
     void listActionItemNames() {
-        def result =monitorActionItemCompositeService.getActionItemNames()
-        assert result.size() > 0
+        def result =controller.fetchActionItemNames()
+        def ActionItemList = JSON.parse( controller.response.contentAsString )
+        assertNotNull( ActionItemList )
+        assertTrue( ActionItemList.size() > 0 )
+
     }
 }

@@ -31,7 +31,6 @@ $accordion-toggle: #000000;
   }
 
   .titleValue.supplement.dimmed {
-    //color: gray;
     font-style: italic;
     position: relative;
     padding: 0 24px;
@@ -54,18 +53,14 @@ $accordion-toggle: #000000;
     background: #1c8445;
   }
   input[type="radio"]:checked:after {
-    /* Heres your symbol replacement - this is a tick in Unicode. */
     content: '';
     color: #fff;
     position: absolute;
     border: 1px solid #fff;
-    /* border-top: none; */
-    /* border-right: none; */
     -webkit-transform: rotate(0deg);
     -moz-transform: rotate(0deg);
     -o-transform: rotate(0deg);
     -ms-transform: rotate(0deg);
-    /* transform: rotate(-16deg); */
     width: 7px;
     height: 7px;
     top: 5px;
