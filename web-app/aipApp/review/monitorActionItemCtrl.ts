@@ -2,7 +2,7 @@
  Copyright 2018 Ellucian Company L.P. and its affiliates.
  **********************************************************************************/
 
-///<reference path="../../typings/tsd.d.ts"/>
+///<reference path="../../../typings/tsd.d.ts"/>
 ///<reference path="../common/services/aipReviewService.ts"/>
 ///<reference path="../common/services/userService.ts"/>
 declare var register;
@@ -28,6 +28,11 @@ module AIP {
         $state;
         $q;
         APP_ROOT;
+        actionItemNamesList;
+        personId;
+        personName;
+        selected;
+        option;
 
         constructor($scope, $state, AIPReviewService, AIPUserService, SpinnerService, $timeout, $q, $uibModal, APP_ROOT, $sce) {
             $scope.vm = this;
@@ -40,13 +45,35 @@ module AIP {
             this.$uibModal = $uibModal;
             this.APP_ROOT = APP_ROOT;
             this.$sce = $sce;
-
+            this.actionItemNamesList=[];
+            this.personId;
+            this.personName;
+            this.selected;
+            this.option;
             this.init();
 
         }
 
         init() {
-            //TODO: Get list of Action items for Search Parameter - Action Item - LOV
+            var allPromises = [];
+            allPromises.push(
+                this.aipReviewService.getActionItemList()
+                    .then((response) => {
+                        this.actionItemNamesList = response.data;
+                    })
+            );
+        }
+        search(){
+            console.log(this.personId)
+            console.log(this.personName)
+            console.log(this.selected.id)
+            console.log(this.option)
+        }
+        reset(){
+            this.selected=""
+            this.option=""
+            this.personId=""
+            this.personName=""
         }
 
     }

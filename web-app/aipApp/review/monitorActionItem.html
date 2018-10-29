@@ -2,5 +2,99 @@
 Copyright 2018 Ellucian Company L.P. and its affiliates.
 *******************************************************************************-->
 <div>
+    <div>
+        <uib-accordion close-others="oneAtATime">
+            <uib-accordion-group class="monitor-action-item-container" role="tablist" is-open="true">
+                <uib-accordion-heading id="heading" role="tab"
+                                       aria-label="{{js.aip.review.monitor.title.heading|i18n_aip}}">
+                    {{"js.aip.review.monitor.title.heading"|i18n_aip}}
+                </uib-accordion-heading>
 
+                <div class="row ">
+                    <div class="col-xs-1 col-sm-1">
+                        <label for="actionItem" class="titleValue " id="actionItem">{{"js.aip.review.monitor.action.itemLabel"|i18n_aip}}
+                        </label>
+                    </div>
+                    <div class="col-xs-8 col-sm-8">
+                        <xe-ui-select id="actionItemName"
+                                      ng-model="vm.selected"
+                                      theme="select2" ng-disabled="disabled">
+
+                            <xe-ui-select-match class="placeholderDisplay"
+                                                placeholder={{"js.aip.action.selected.name"|i18n_aip}}>
+                                <div class="actionItemName" ng-bind-html="vm.selected.name"></div>
+                                <div class="select-placeholder">{{"js.aip.action.selected.name"|i18n_aip}}
+                                </div>
+                            </xe-ui-select-match>
+
+                            <xe-ui-select-choices repeat="item in vm.actionItemNamesList |
+                                    propsFilter: {name: $select.search}">
+                                <div ng-bind-html="item.name | highlight: $select.search"></div>
+
+                            </xe-ui-select-choices>
+                        </xe-ui-select>
+                    </div>
+                </div>
+                <div class="row ">
+                    <div class="col-xs-2 col-sm-2">
+                        <label for="searchBy" class="titleValue " id="searchBy">{{"js.aip.review.monitor.action.searchLabel"|i18n_aip}}
+                        </label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-2 col-sm-2">
+                        <input type="radio" id="personId" name="content" ng-model="vm.option" ng-value="'personId'">
+                        <label class="titleValue " for="personId">{{"js.aip.review.monitor.action.personIdLabel"|i18n_aip}}</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-2 col-sm-2">
+                        <input type="radio" id="personName" name="content" ng-model="vm.option" ng-value="'personName'">
+                        <label class="titleValue " for="personName">{{"js.aip.review.monitor.action.personNameLabel"|i18n_aip}}</label>
+
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-2 col-sm-2">
+                        <label for="searchByPersonId" class="titleValue " id="searchByPersonId"
+                               ng-if="vm.option == 'personId'"
+                               aria-label="{{js.aip.review.monitor.action.personIdLabel}}">{{"js.aip.review.monitor.action.personIdLabel"|i18n_aip}}
+                        </label>
+                        <label for="searchByPersonName" class="titleValue " id="searchByPersonName"
+                               ng-if="vm.option == 'personName'"
+                               aria-label="{{js.aip.review.monitor.action.personNameLabel}}">{{"js.aip.review.monitor.action.personNameLabel"|i18n_aip}}
+                        </label>
+                    </div>
+                </div>
+                <div class="row ">
+                    <div class="col-sm-3 col-md-3">
+                        <input id="personIdVal" type="text" class="form-control" ng-if="vm.option == 'personId'"
+                               ng-model="vm.personId">
+                        <input id="personNameVal" type="text" class="form-control" ng-if="vm.option == 'personName'"
+                               ng-model="vm.personName">
+
+                    </div>
+                    <div class="col-xs-12 col-sm-8">
+                        <div class="col-sm-6 offset-sm-8 col-xs-12 ">
+                        <span>
+                        <button name="search" type="button" class="btn btn-primary"
+                                ng-click="vm.search()">
+                        {{"js.aip.review.monitor.action.searchButtonLabel"|i18n_aip}}</button>
+                    </span>
+                            <span>
+                        <button name="startOver" type="button" class="btn btn-secondary"
+                                ng-click="vm.reset()">
+                        {{"js.aip.review.monitor.action.resetButtonLabel"|i18n_aip}}</button>
+                    </span>
+                        </div>
+                    </div>
+                </div>
+
+            </uib-accordion-group>
+        </uib-accordion>
+    </div>
+    <div >
+        GRID
+    </div>
 </div>
+
