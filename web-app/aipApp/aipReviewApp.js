@@ -70,7 +70,7 @@ var bannerAIPReviewApp = angular.module("bannerAIPReview", [
                 userActionItemID: null
             },
             breadcrumb: {
-                label: "js.aip.review.review.action.item",
+                label: "js.aip.review.action.item.heading",
                 url: "/aipReview/monitor/review"
             }
         }
