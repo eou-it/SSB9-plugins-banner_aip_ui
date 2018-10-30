@@ -6,7 +6,7 @@
 ///<reference path="../../common/services/userService.ts"/>
 var AIP;
 (function (AIP) {
-    var ReviewActionItemCtrl = /** @class */ (function () {
+    var ReviewActionItemCtrl = (function () {
         function ReviewActionItemCtrl($scope, $state, AIPReviewService, AIPUserService, SpinnerService, $timeout, $q, $uibModal, APP_ROOT, $sce) {
             this.$inject = ["$scope", "$state", "AIPReviewService", "AIPUserService", "SpinnerService", "$timeout", "$q", "$uibModal", "APP_ROOT", "$sce"];
             $scope.vm = this;
@@ -26,7 +26,8 @@ var AIP;
             this.option;
         }
         return ReviewActionItemCtrl;
-    }());
+    })();
     AIP.ReviewActionItemCtrl = ReviewActionItemCtrl;
 })(AIP || (AIP = {}));
 register("bannerAIPReview").controller("reviewActionItemCtrl", AIP.ReviewActionItemCtrl);
+//# sourceMappingURL=reviewActionItemCtrl.js.map
