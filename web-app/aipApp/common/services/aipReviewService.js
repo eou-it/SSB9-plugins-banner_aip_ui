@@ -23,10 +23,10 @@ var AIP;
             var realMax = parseInt(query.max) - parseInt(query.offset);
             var url = this.ENDPOINT.review.search +
                 '?actionItemId=' + (query.actionItemId || '') +
-                '?personName=' + (query.actionItemId || '') +
-                '?personId=' + (query.actionItemId || '') +
+                '&personName=' + (query.personName || '') +
+                '&personId=' + (query.personId || '') +
                 '&searchString=' + (query.searchString || '') +
-                '&sortColumnName=' + (query.sortColumnName || 'actionItemName') +
+                '&sortColumnName=' + (query.sortColumnName || '') +
                 '&ascending=' + (query.ascending.toString() || "") +
                 '&offset=' + (query.offset || 0) +
                 '&max=' + realMax;

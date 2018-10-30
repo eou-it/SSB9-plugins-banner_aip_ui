@@ -10,10 +10,10 @@ var AIP;
         function MonitorActionItemCtrl($scope, $state, AIPReviewService, AIPUserService, SpinnerService, $timeout, $q, $uibModal, APP_ROOT, $sce, $filter, PAGINATIONCONFIG) {
             this.$inject = ["$scope", "$state", "AIPReviewService", "AIPUserService", "SpinnerService", "$timeout", "$q", "$uibModal", "APP_ROOT", "$sce", "$filter", "PAGINATIONCONFIG"];
             this.fetchData = function (query) {
+                this.query = query;
+                this.query.actionItemId = 3;
+                this.query.personName = "Cliff";
                 var deferred = this.$q.defer();
-                query.actionItemId = 3;
-                query.personName = "Cliff Starr";
-                query.personId = this.personId;
                 this.aipReviewService.fetchSearchResult(query).then(function (response) {
                     deferred.resolve(response);
                 }, function (error) {
@@ -120,29 +120,6 @@ var AIP;
                     options: {
                         sortable: true,
                         ascending: true,
-                        visible: true,
-                        columnShowHide: true
-                    }
-                },
-                {
-                    name: "responseDate",
-                    title: this.$filter("i18n_aip")("js.aip.review.monitor.action.item.grid.header.responseDate"),
-                    ariaLable: this.$filter("i18n_aip")("js.aip.review.monitor.action.item.grid.header.responseDate"),
-                    width: "100px",
-                    options: {
-                        sortable: true,
-                        ascending: true,
-                        visible: true
-                    }
-                },
-                {
-                    name: "status",
-                    title: this.$filter("i18n_aip")("js.aip.review.monitor.action.item.grid.header.status"),
-                    ariaLable: this.$filter("i18n_aip")("js.aip.review.monitor.action.item.grid.header.status"),
-                    width: "100px",
-                    options: {
-                        sortable: true,
-                        ascending: true,
                         visible: true
                     }
                 },
@@ -191,7 +168,7 @@ var AIP;
                     }
                 },
                 {
-                    name: "review",
+                    name: "reviewIndicator",
                     title: this.$filter("i18n_aip")("js.aip.review.monitor.action.item.grid.header.reviewIndicator"),
                     ariaLable: this.$filter("i18n_aip")("js.aip.review.monitor.action.item.grid.header.reviewIndicator"),
                     width: "100px",
@@ -235,11 +212,17 @@ var AIP;
             };
             this.paginationConfig = this.commonPaginationConfig;
         };
+        ;
         MonitorActionItemCtrl.prototype.search = function () {
-            console.log(this.personId);
-            console.log(this.personName);
-            console.log(this.selected.id);
-            console.log(this.option);
+            this.query.actionItemId = this.selected.id;
+            if (this.option === "personName") {
+                this.query.personName = this.personName;
+            }
+            else {
+                this.query.personId = this.personId;
+            }
+            var refreshGrid = this.$scope;
+            refreshGrid.refreshGrid(true);
         };
         MonitorActionItemCtrl.prototype.reset = function () {
             this.selected = "";

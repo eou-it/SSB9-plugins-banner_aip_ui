@@ -29,7 +29,7 @@ class AipReviewController {
      * @return List of action items matching the search criteria
      */
     def searchActionItems() {
-        Long actionItemid = params?.actionId ? Long.valueOf(params?.actionId) : 0
+        Long actionItemid = params?.actionItemId ? Long.valueOf(params?.actionItemId) : 0
         //TODO: hard coded values To be removed after creating implemeting the grid on ui side
 		def pagingAndSortParams = [sortColumn: "actionItemName", sortDirection: "asc", max: 5, offset: 0]
 

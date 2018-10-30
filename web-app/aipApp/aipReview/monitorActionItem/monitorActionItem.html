@@ -79,12 +79,14 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
                         <span>
                         <button name="search" type="button" class="btn btn-primary"
                                 ng-click="vm.search()">
-                        {{"js.aip.review.monitor.action.searchButtonLabel"|i18n_aip}}</button>
+                            {{"js.aip.review.monitor.action.searchButtonLabel"|i18n_aip}}
+                        </button>
                     </span>
                             <span>
                         <button name="startOver" type="button" class="btn btn-secondary"
                                 ng-click="vm.reset()">
-                        {{"js.aip.review.monitor.action.resetButtonLabel"|i18n_aip}}</button>
+                            {{"js.aip.review.monitor.action.resetButtonLabel"|i18n_aip}}
+                        </button>
                     </span>
                         </div>
                     </div>
@@ -93,12 +95,12 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
             </uib-accordion-group>
         </uib-accordion>
     </div>
-    <div id="monitorActionItemGrid" >
+    <div id="monitorActionItemGrid">
         <xe-table-grid
                 caption="{{'js.aip.review.monitor.action.item.grid.caption'|i18n_aip}}"
                 table-id="dataTableAdminActionList"
                 header="vm.header"
-                fetch="vm.fetchTableData(query)"
+                fetch="vm.fetchData(query)"
                 content="vm.gridData.row"
                 results-found="vm.records"
                 toolbar="true"
@@ -114,8 +116,15 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
                 continuous-scrolling="vm.mobileSize"
                 continuous-scroll-parent="monitorActionItemGrid">
 
+            <xe-cell-markup column-name="actionStatus">
 
+                <div class="row actionItemActions">
+                    <button class="icon icon-view-CO" ng-click="vm.review(row.id)"
+                            title="{{'aip.common.open.action.item.jaws'|i18n_aip}}" aria-label="{{'aip.common.open.action.item.jaws'|i18n_aip}}">
+                    </button>
 
+                </div>
+            </xe-cell-markup>
         </xe-table-grid>
 
     </div>
