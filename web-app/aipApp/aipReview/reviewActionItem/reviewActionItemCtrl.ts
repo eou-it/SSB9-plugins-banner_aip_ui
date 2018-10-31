@@ -3,19 +3,19 @@
  **********************************************************************************/
 
 ///<reference path="../../../typings/tsd.d.ts"/>
-///<reference path="../common/services/aipReviewService.ts"/>
-///<reference path="../common/services/userService.ts"/>
+///<reference path="../../common/services/aipReviewService.ts"/>
+///<reference path="../../common/services/userService.ts"/>
 declare var register;
 
 module AIP {
 
 
-    interface IMonitorActionItemCtrl {
+    interface IReviewActionItemCtrl {
         aipReviewService: AIP.AIPReviewService;
         userService: AIP.UserService;
     }
 
-    export class MonitorActionItemCtrl implements IMonitorActionItemCtrl {
+    export class ReviewActionItemCtrl implements IReviewActionItemCtrl {
 
         $inject = ["$scope", "$state", "AIPReviewService", "AIPUserService", "SpinnerService", "$timeout", "$q", "$uibModal", "APP_ROOT", "$sce"];
         aipReviewService: AIP.AIPReviewService;
@@ -50,33 +50,10 @@ module AIP {
             this.personName;
             this.selected;
             this.option;
-            this.init();
-
         }
 
-        init() {
-            var allPromises = [];
-            allPromises.push(
-                this.aipReviewService.getActionItemList()
-                    .then((response) => {
-                        this.actionItemNamesList = response.data;
-                    })
-            );
-        }
-        search(){
-            console.log(this.personId)
-            console.log(this.personName)
-            console.log(this.selected.id)
-            console.log(this.option)
-        }
-        reset(){
-            this.selected=""
-            this.option=""
-            this.personId=""
-            this.personName=""
-        }
 
     }
 }
 
-register("bannerAIPReview").controller("monitorActionItemCtrl", AIP.MonitorActionItemCtrl);
+register("bannerAIPReview").controller("reviewActionItemCtrl", AIP.ReviewActionItemCtrl);

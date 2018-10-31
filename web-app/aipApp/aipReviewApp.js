@@ -14,13 +14,12 @@ var params = {};
 var rootWebApp = aipAppAbsPath.replace("/ssb/", "/");
 var resourceBase = rootWebApp + 'internalPb/';
 
-var xhrHttpInterceptor= function (){
+var xhrHttpInterceptor = function () {
     return {
-        response: function(res) {
+        response: function (res) {
             // if response is a redirection to a full html page then reload the rootWebapp
             // discards the response we received because there isn't a good way to process it
-            if ( typeof res.data === "string" && res.data.search(/<html/mi )!== -1 )
-            {
+            if (typeof res.data === "string" && res.data.search(/<html/mi) !== -1) {
                 window.location.assign(rootWebApp);
             }
             return res;
@@ -56,19 +55,33 @@ var bannerAIPReviewApp = angular.module("bannerAIPReview", [
     .constant("PAGES", {
         "monitor-action-item": {
             url: "/monitor",
-            templateUrl: "review/monitorActionItem.html",
+            templateUrl: "aipReview/monitorActionItem/monitorActionItem.html",
             controller: "monitorActionItemCtrl",
             breadcrumb: {
                 label: "js.aip.review.monitor.action.item",
                 url: "/aipReview"
             }
+        },
+        "review-action-item": {
+            url: "/monitor/review/:userActionItemID",
+            templateUrl: "aipReview/reviewActionItem/reviewActionItem.html",
+            controller: "ReviewActionItemCtrl",
+            params: {
+                userActionItemID: null
+            },
+            breadcrumb: {
+                label: "js.aip.review.action.item.heading",
+                url: "/aipReview/monitor/review"
+            }
         }
 
-    }).factory('xhrHttpInterceptor',xhrHttpInterceptor)
+    }).factory('xhrHttpInterceptor', xhrHttpInterceptor)
     //constant for endpoint
     .constant("ENDPOINT", {
         review: {
-            listActionItemNames: aipAppAbsPath + "aipReview/fetchActionItemNames"
+            listActionItemNames: aipAppAbsPath + "aipReview/fetchActionItemNames",
+            search: aipAppAbsPath + "aipReview/searchActionItems"
+
 
         }
     })

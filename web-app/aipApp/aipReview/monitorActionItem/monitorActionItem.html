@@ -79,12 +79,14 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
                         <span>
                         <button name="search" type="button" class="btn btn-primary"
                                 ng-click="vm.search()">
-                        {{"js.aip.review.monitor.action.searchButtonLabel"|i18n_aip}}</button>
+                            {{"js.aip.review.monitor.action.searchButtonLabel"|i18n_aip}}
+                        </button>
                     </span>
                             <span>
                         <button name="startOver" type="button" class="btn btn-secondary"
                                 ng-click="vm.reset()">
-                        {{"js.aip.review.monitor.action.resetButtonLabel"|i18n_aip}}</button>
+                            {{"js.aip.review.monitor.action.resetButtonLabel"|i18n_aip}}
+                        </button>
                     </span>
                         </div>
                     </div>
@@ -93,8 +95,48 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
             </uib-accordion-group>
         </uib-accordion>
     </div>
-    <div >
-        GRID
+    <div id="monitorActionItemGrid" ng-if="vm.gridEnabled">
+        <xe-table-grid
+                caption="{{'js.aip.review.monitor.action.item.grid.caption'|i18n_aip}}"
+                table-id="dataTableAdminActionList"
+                header="vm.header"
+                fetch="vm.fetchData(query)"
+                content="vm.gridData.row"
+                results-found="vm.records"
+                toolbar="true"
+                paginate="true"
+                on-row-click="vm.selectRecord(data)"
+                no-data-msg="{{'aip.common.no.results.found'|i18n_aip}}"
+                empty-table-msg="emptyTableMsg"
+                search-config="vm.searchConfig"
+                pagination-config="vm.paginationConfig"
+                mobile-layout="vm.mobileConfig"
+                refresh-grid="refreshGrid"
+                draggable-column-names="vm.draggableColumnNames"
+                continuous-scrolling="vm.mobileSize"
+                continuous-scroll-parent="monitorActionItemGrid">
+
+            <xe-cell-markup column-name="reviewIndicator">
+
+                <div ng-if="row.reviewIndicator==false">
+                    <button class="icon icon-view-CO" ng-click="vm.review(row.id)"
+                            title="{{'aip.common.open.action.item.jaws'|i18n_aip}}" aria-label="{{'aip.common.open.action.item.jaws'|i18n_aip}}">
+                    </button>
+
+                </div>
+            </xe-cell-markup>
+
+            <xe-cell-markup column-name="attachments">
+
+                <div ng-if="row.attachments>0">
+                    <button class="icon icon-view-CO" ng-click=""
+                            title="{{'aip.common.open.action.item.jaws'|i18n_aip}}" aria-label="{{'aip.common.open.action.item.jaws'|i18n_aip}}">
+                    </button>
+
+                </div>
+            </xe-cell-markup>
+        </xe-table-grid>
+
     </div>
 </div>
 

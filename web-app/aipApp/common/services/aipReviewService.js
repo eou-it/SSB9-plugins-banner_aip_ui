@@ -4,7 +4,7 @@
 ///<reference path="../../../typings/tsd.d.ts"/>
 var AIP;
 (function (AIP) {
-    var AIPReviewService = /** @class */ (function () {
+    var AIPReviewService = (function () {
         function AIPReviewService($http, $q, ENDPOINT, APP_PATH) {
             this.$http = $http;
             this.$q = $q;
@@ -18,9 +18,32 @@ var AIP;
             });
             return request;
         };
+        AIPReviewService.prototype.fetchSearchResult = function (query) {
+            var deferred = this.$q.defer();
+            var realMax = parseInt(query.max) - parseInt(query.offset);
+            var url = this.ENDPOINT.review.search +
+                '?actionItemId=' + (query.actionItemId || '') +
+                '&personName=' + (query.personName || '') +
+                '&personId=' + (query.personId || '') +
+                '&searchString=' + (query.searchString || '') +
+                '&sortColumnName=' + (query.sortColumnName || '') +
+                '&ascending=' + (query.ascending.toString() || "") +
+                '&offset=' + (query.offset || 0) +
+                '&max=' + realMax;
+            var request = this.$http({
+                method: "GET",
+                url: url
+            }).then(function (response) {
+                deferred.resolve(response.data);
+            }, function (response) {
+                deferred.reject(response);
+            });
+            return deferred.promise;
+        };
         AIPReviewService.$inject = ["$http", "$q", "ENDPOINT", "APP_PATH"];
         return AIPReviewService;
-    }());
+    })();
     AIP.AIPReviewService = AIPReviewService;
 })(AIP || (AIP = {}));
 register("bannerCommonAIP").service("AIPReviewService", AIP.AIPReviewService);
+//# sourceMappingURL=aipReviewService.js.map
