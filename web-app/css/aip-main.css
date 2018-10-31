@@ -1,3 +1,6 @@
+/*******************************************************************************
+Copyright 2018 Ellucian Company L.P. and its affiliates.
+********************************************************************************/
 /*********************************************************************************
  Copyright 2017-2018 Ellucian Company L.P. and its affiliates.
  **********************************************************************************/
@@ -1586,6 +1589,9 @@ ol.selected-group > li > button {
     left: 6px;
     border-radius: 16px;
     background: #fff; }
+  .monitor-action-item-container .attachmentimage {
+    height: 10px;
+    width: 10px; }
 
 #gridCaption {
   color: gray;
