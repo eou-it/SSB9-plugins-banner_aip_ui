@@ -118,7 +118,7 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
 
             <xe-cell-markup column-name="reviewIndicator">
 
-                <div ng-if="row.reviewIndicator==false">
+                <div ng-if="row.reviewIndicator==true">
                     <button class="icon icon-view-CO" ng-click="vm.review(row.id)"
                             title="{{'aip.common.open.action.item.jaws'|i18n_aip}}" aria-label="{{'aip.common.open.action.item.jaws'|i18n_aip}}">
                     </button>
@@ -128,10 +128,8 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
 
             <xe-cell-markup column-name="attachments">
 
-                <div ng-if="row.attachments>0">
-                    <button class="icon icon-view-CO" ng-click=""
-                            title="{{'aip.common.open.action.item.jaws'|i18n_aip}}" aria-label="{{'aip.common.open.action.item.jaws'|i18n_aip}}">
-                    </button>
+                <div ng-if="row.attachments>-1">
+                    <img src="../images/attach_icon_default.svg" class="attachmentimage" />
 
                 </div>
             </xe-cell-markup>
