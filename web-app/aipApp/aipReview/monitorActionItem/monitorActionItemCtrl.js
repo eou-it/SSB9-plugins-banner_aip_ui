@@ -6,13 +6,18 @@
 ///<reference path="../../common/services/userService.ts"/>
 var AIP;
 (function (AIP) {
-    var MonitorActionItemCtrl = /** @class */ (function () {
+    var MonitorActionItemCtrl = (function () {
         function MonitorActionItemCtrl($scope, $state, AIPReviewService, AIPUserService, SpinnerService, $timeout, $q, $uibModal, APP_ROOT, $sce, $filter, PAGINATIONCONFIG) {
             this.$inject = ["$scope", "$state", "AIPReviewService", "AIPUserService", "SpinnerService", "$timeout", "$q", "$uibModal", "APP_ROOT", "$sce", "$filter", "PAGINATIONCONFIG"];
             this.fetchData = function (query) {
                 this.query = query;
-                this.query.actionItemId = 3;
-                this.query.personName = "Cliff";
+                query.actionItemId = this.selected.id;
+                if (this.option === "personName") {
+                    query.personName = this.personName;
+                }
+                else {
+                    query.personId = this.personId;
+                }
                 var deferred = this.$q.defer();
                 this.aipReviewService.fetchSearchResult(query).then(function (response) {
                     deferred.resolve(response);
@@ -43,6 +48,7 @@ var AIP;
         }
         MonitorActionItemCtrl.prototype.init = function () {
             var _this = this;
+            this.gridEnabled = false;
             var allPromises = [];
             allPromises.push(this.aipReviewService.getActionItemList()
                 .then(function (response) {
@@ -171,7 +177,7 @@ var AIP;
                     name: "reviewIndicator",
                     title: this.$filter("i18n_aip")("js.aip.review.monitor.action.item.grid.header.reviewIndicator"),
                     ariaLable: this.$filter("i18n_aip")("js.aip.review.monitor.action.item.grid.header.reviewIndicator"),
-                    width: "100px",
+                    width: "25px",
                     options: {
                         sortable: false,
                         ascending: true,
@@ -183,10 +189,10 @@ var AIP;
                     name: "attachments",
                     title: this.$filter("i18n_aip")("js.aip.review.monitor.action.item.grid.header.attachments"),
                     ariaLable: this.$filter("i18n_aip")("js.aip.review.monitor.action.item.grid.header.attachments"),
-                    width: "100px",
+                    width: "25px",
                     options: {
-                        sortable: false,
-                        ascending: true,
+                        sortable: true,
+                        ascending: false,
                         visible: true
                     }
                 }, {
@@ -213,27 +219,26 @@ var AIP;
             this.paginationConfig = this.commonPaginationConfig;
         };
         MonitorActionItemCtrl.prototype.search = function () {
-            this.query.actionItemId = this.selected.id;
-            if (this.option === "personName") {
-                this.query.personName = this.personName;
+            this.gridEnabled = false;
+            if (this.gridEnabled == true) {
             }
-            else {
-                this.query.personId = this.personId;
-            }
-            var refreshGrid = this.$scope;
-            refreshGrid.refreshGrid(true);
+            this.gridEnabled = true;
         };
         MonitorActionItemCtrl.prototype.reset = function () {
             this.selected = {};
             this.option = "";
             this.personId = "";
             this.personName = "";
+            this.gridData = {};
+            this.gridEnabled = false;
         };
         MonitorActionItemCtrl.prototype.review = function (userActionItemID) {
+            console.log("parameter passed", userActionItemID);
             this.$state.go("review-action-item", { userActionItemID: userActionItemID });
         };
         return MonitorActionItemCtrl;
-    }());
+    })();
     AIP.MonitorActionItemCtrl = MonitorActionItemCtrl;
 })(AIP || (AIP = {}));
 register("bannerAIPReview").controller("monitorActionItemCtrl", AIP.MonitorActionItemCtrl);
+//# sourceMappingURL=monitorActionItemCtrl.js.map

@@ -47,6 +47,7 @@ module AIP {
         mobileSize;
         query:ISearchActionItemQuery;
         commonPaginationConfig;
+        gridEnabled:boolean;
 
         constructor($scope, $state, AIPReviewService, AIPUserService, SpinnerService, $timeout, $q, $uibModal, APP_ROOT, $sce, $filter, PAGINATIONCONFIG) {
             $scope.vm = this;
@@ -70,7 +71,7 @@ module AIP {
         }
 
         init() {
-
+            this.gridEnabled = false;
             var allPromises = [];
             allPromises.push(
                 this.aipReviewService.getActionItemList()
@@ -213,7 +214,7 @@ module AIP {
                     name: "reviewIndicator",
                     title: this.$filter("i18n_aip")("js.aip.review.monitor.action.item.grid.header.reviewIndicator"),
                     ariaLable: this.$filter("i18n_aip")("js.aip.review.monitor.action.item.grid.header.reviewIndicator"),
-                    width: "100px",
+                    width: "25px",
                     options: {
                         sortable: false,
                         ascending: true,
@@ -226,11 +227,11 @@ module AIP {
                     name: "attachments",
                     title: this.$filter("i18n_aip")("js.aip.review.monitor.action.item.grid.header.attachments"),
                     ariaLable: this.$filter("i18n_aip")("js.aip.review.monitor.action.item.grid.header.attachments"),
-                    width: "100px",
+                    width: "25px",
                     options: {
-                        sortable: false,
-                        ascending: true,
-                        visible: true
+                        sortable: true,
+                        ascending: false,
+                        visible: true,
                     }
 
                 }, {
@@ -264,8 +265,14 @@ module AIP {
 
         fetchData = function (query) {
             this.query = query;
-            this.query.actionItemId=3;
-            this.query.personName="Cliff";
+            query.actionItemId = this.selected.id;
+            if (this.option === "personName") {
+                query.personName = this.personName
+            }
+            else {
+                query.personId = this.personId
+            }
+
             var deferred = this.$q.defer();
             this.aipReviewService.fetchSearchResult(query).then(function (response) {
                 deferred.resolve(response);
@@ -278,15 +285,15 @@ module AIP {
 
 
         search() {
-            this.query.actionItemId = this.selected.id;
-            if (this.option==="personName") {
-                this.query.personName = this.personName;
+
+            this.gridEnabled = false;
+            if(this.gridEnabled==true){
+                //this.gridData={};
+               
             }
-            else {
-                this.query.personId = this.personId;
-            }
-            var refreshGrid=this.$scope;
-            refreshGrid.refreshGrid(true);
+
+            this.gridEnabled=true;
+
         }
 
         reset() {
@@ -294,10 +301,13 @@ module AIP {
             this.option = "";
             this.personId = "";
             this.personName = "";
+            this.gridData = {};
+            this.gridEnabled = false;
         }
 
 
-        review(userActionItemID) {
+        review(userActionItemID:string) {
+            console.log("parameter passed",userActionItemID)
             this.$state.go("review-action-item", {userActionItemID: userActionItemID});
         }
 

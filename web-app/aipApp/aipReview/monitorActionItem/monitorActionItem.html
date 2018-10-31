@@ -95,7 +95,7 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
             </uib-accordion-group>
         </uib-accordion>
     </div>
-    <div id="monitorActionItemGrid">
+    <div id="monitorActionItemGrid" ng-if="vm.gridEnabled">
         <xe-table-grid
                 caption="{{'js.aip.review.monitor.action.item.grid.caption'|i18n_aip}}"
                 table-id="dataTableAdminActionList"
@@ -116,10 +116,20 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
                 continuous-scrolling="vm.mobileSize"
                 continuous-scroll-parent="monitorActionItemGrid">
 
-            <xe-cell-markup column-name="actionStatus">
+            <xe-cell-markup column-name="reviewIndicator">
 
-                <div class="row actionItemActions">
+                <div ng-if="row.reviewIndicator==false">
                     <button class="icon icon-view-CO" ng-click="vm.review(row.id)"
+                            title="{{'aip.common.open.action.item.jaws'|i18n_aip}}" aria-label="{{'aip.common.open.action.item.jaws'|i18n_aip}}">
+                    </button>
+
+                </div>
+            </xe-cell-markup>
+
+            <xe-cell-markup column-name="attachments">
+
+                <div ng-if="row.attachments>0">
+                    <button class="icon icon-view-CO" ng-click=""
                             title="{{'aip.common.open.action.item.jaws'|i18n_aip}}" aria-label="{{'aip.common.open.action.item.jaws'|i18n_aip}}">
                     </button>
 
