@@ -6,7 +6,7 @@
 ///<reference path="../../common/services/userService.ts"/>
 var AIP;
 (function (AIP) {
-    var MonitorActionItemCtrl = (function () {
+    var MonitorActionItemCtrl = /** @class */ (function () {
         function MonitorActionItemCtrl($scope, $state, AIPReviewService, AIPUserService, SpinnerService, $timeout, $q, $uibModal, APP_ROOT, $sce, $filter, PAGINATIONCONFIG) {
             this.$inject = ["$scope", "$state", "AIPReviewService", "AIPUserService", "SpinnerService", "$timeout", "$q", "$uibModal", "APP_ROOT", "$sce", "$filter", "PAGINATIONCONFIG"];
             this.fetchData = function (query) {
@@ -212,7 +212,6 @@ var AIP;
             };
             this.paginationConfig = this.commonPaginationConfig;
         };
-        ;
         MonitorActionItemCtrl.prototype.search = function () {
             this.query.actionItemId = this.selected.id;
             if (this.option === "personName") {
@@ -225,7 +224,7 @@ var AIP;
             refreshGrid.refreshGrid(true);
         };
         MonitorActionItemCtrl.prototype.reset = function () {
-            this.selected = "";
+            this.selected = {};
             this.option = "";
             this.personId = "";
             this.personName = "";
@@ -234,8 +233,7 @@ var AIP;
             this.$state.go("review-action-item", { userActionItemID: userActionItemID });
         };
         return MonitorActionItemCtrl;
-    })();
+    }());
     AIP.MonitorActionItemCtrl = MonitorActionItemCtrl;
 })(AIP || (AIP = {}));
 register("bannerAIPReview").controller("monitorActionItemCtrl", AIP.MonitorActionItemCtrl);
-//# sourceMappingURL=monitorActionItemCtrl.js.map

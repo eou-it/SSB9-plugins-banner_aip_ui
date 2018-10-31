@@ -120,7 +120,7 @@ module AIP {
                 options: {
                     sortable: true,
                     ascending: true,
-                    visible: true,
+                    visible: true
                 }
             }, {
                 name: "actionItemGroupName",
@@ -130,7 +130,7 @@ module AIP {
                 options: {
                     sortable: true,
                     ascending: true,
-                    visible: true,
+                    visible: true
                 }
 
             },
@@ -154,7 +154,7 @@ module AIP {
                     options: {
                         sortable: true,
                         ascending: true,
-                        visible: true,
+                        visible: true
                     }
 
                 },
@@ -167,7 +167,7 @@ module AIP {
                     options: {
                         sortable: true,
                         ascending: true,
-                        visible: true,
+                        visible: true
                     }
 
                 },
@@ -181,7 +181,7 @@ module AIP {
                     options: {
                         sortable: false,
                         ascending: true,
-                        visible: true,
+                        visible: true
                     }
 
                 },
@@ -193,7 +193,7 @@ module AIP {
                     options: {
                         sortable: false,
                         ascending: true,
-                        visible: true,
+                        visible: true
                     }
 
                 },
@@ -205,7 +205,7 @@ module AIP {
                     options: {
                         sortable: false,
                         ascending: true,
-                        visible: true,
+                        visible: true
                     }
 
                 },
@@ -230,7 +230,7 @@ module AIP {
                     options: {
                         sortable: false,
                         ascending: true,
-                        visible: true,
+                        visible: true
                     }
 
                 }, {
@@ -241,7 +241,7 @@ module AIP {
                     options: {
                         sortable: false,
                         ascending: true,
-                        visible: true,
+                        visible: true
                     }
 
                 }
@@ -264,8 +264,8 @@ module AIP {
 
         fetchData = function (query) {
             this.query = query;
-            this.query.actionItemId=3
-            this.query.personName="Cliff"
+            this.query.actionItemId=3;
+            this.query.personName="Cliff";
             var deferred = this.$q.defer();
             this.aipReviewService.fetchSearchResult(query).then(function (response) {
                 deferred.resolve(response);
@@ -280,20 +280,20 @@ module AIP {
         search() {
             this.query.actionItemId = this.selected.id;
             if (this.option==="personName") {
-                this.query.personName = this.personName
+                this.query.personName = this.personName;
             }
             else {
-                this.query.personId = this.personId
+                this.query.personId = this.personId;
             }
             var refreshGrid=this.$scope;
             refreshGrid.refreshGrid(true);
         }
 
         reset() {
-            this.selected = ""
-            this.option = ""
-            this.personId = ""
-            this.personName = ""
+            this.selected = {};
+            this.option = "";
+            this.personId = "";
+            this.personName = "";
         }
 
 
