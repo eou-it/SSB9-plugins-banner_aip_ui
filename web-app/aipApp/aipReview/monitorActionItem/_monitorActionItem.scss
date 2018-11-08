@@ -74,5 +74,58 @@ $accordion-toggle: #000000;
     height:10px;
     width:10px;
   }
-}
+
+
+  .actionListContainer {
+    overflow-y: auto;
+    font-size: 14px;
+    }
+    .row {
+      margin-right: 0;
+      margin-left: 0;
+    }
+    .control {
+      float: right;
+      padding-top: 8px;
+      margin-right: 0.2em;
+    }
+
+    .actionListTable {
+      overflow: auto;
+      //padding-top: 16px;
+      .table-container {
+        margin-top: 8px;
+
+        .row.actionItemActions {
+          display: flex;
+          margin-right: 16px;
+          margin-left: 16px;
+
+          div {
+            flex: 1;
+            margin-right: 10px;
+          }
+          div:last-child {
+            margin-right: 0;
+
+          }
+        }
+      }
+    }
+  }
+
+
+
+  @media screen and (max-width: 768px) {
+
+    .actionListContainer {
+      .row {
+        .control {
+          padding: 0;
+        }
+      }
+    }
+  }
+
+
 

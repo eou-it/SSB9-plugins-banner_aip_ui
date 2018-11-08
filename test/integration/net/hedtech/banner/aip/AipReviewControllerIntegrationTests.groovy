@@ -19,6 +19,7 @@ import org.springframework.security.core.context.SecurityContextHolder
 class AipReviewControllerIntegrationTests extends BaseIntegrationTestCase {
 
     def monitorActionItemCompositeService
+   
 
     @Before
     public void setUp() {
@@ -26,6 +27,7 @@ class AipReviewControllerIntegrationTests extends BaseIntegrationTestCase {
         controller = new AipReviewController()
         super.setUp()
         loginSSB('AIPADM001', '111111')
+      
     }
 
     @After
@@ -47,7 +49,11 @@ class AipReviewControllerIntegrationTests extends BaseIntegrationTestCase {
     @Test
     void searchActionItemsByActionIdAndExsitingPersonID() {
 
-        controller.params.actionId = "3"
+        controller.params.actionItemId = "3"
+        controller.params.sortColumnName="spridenId"
+        controller.params.ascending=true
+        controller.params.max="50"
+        controller.params.offset="0"
         controller.params.personId = "CSRSTU001"
         controller.request.contentType = "text/json"
 
@@ -57,17 +63,22 @@ class AipReviewControllerIntegrationTests extends BaseIntegrationTestCase {
         assertEquals 200, controller.response.status
         def jsonResp = JSON.parse(response)
         assertNotNull jsonResp
-        assertEquals 1, jsonResp.size()
-        assertEquals "CSRSTU001", jsonResp.get(0).spridenId
+        assertEquals 1, jsonResp.result.size()
+        assertEquals 1, jsonResp.length
+        assertEquals "CSRSTU001", jsonResp.result.get(0).spridenId
     }
 
 
     @Test
     void searchActionItemsByActionIdAndNonExsitingPersonID() {
 
-        controller.params.actionId = "3"
+        controller.params.actionItemId= "3"
         controller.params.personId = "CSRSTABCD"
         controller.request.contentType = "text/json"
+        controller.params.ascending=true
+        controller.params.max="50"
+        controller.params.offset="0"
+        controller.params.sortColumnName="spridenId"
 
         controller.searchActionItems()
 
@@ -75,7 +86,7 @@ class AipReviewControllerIntegrationTests extends BaseIntegrationTestCase {
         assertEquals 200, controller.response.status
         def jsonResp = JSON.parse(response)
         assertNotNull jsonResp
-        assertEquals 0, jsonResp.size()
+        assertEquals 0, jsonResp.length
 
     }
 
@@ -83,9 +94,14 @@ class AipReviewControllerIntegrationTests extends BaseIntegrationTestCase {
     @Test
     void searchActionItemsByNonExistingActionIdAndExisitingPersonID() {
 
-        controller.params.actionId = "98989"
+        controller.params.actionItemId= "98989"
         controller.params.personId = "CSRSTU001"
         controller.request.contentType = "text/json"
+        controller.params.sortColumnName="spridenId"
+        controller.params.ascending=true
+        controller.params.max="50"
+        controller.params.offset="0"
+
 
         controller.searchActionItems()
 
@@ -93,7 +109,7 @@ class AipReviewControllerIntegrationTests extends BaseIntegrationTestCase {
         assertEquals 200, controller.response.status
         def jsonResp = JSON.parse(response)
         assertNotNull jsonResp
-        assertEquals 0, jsonResp.size()
+        assertEquals 0, jsonResp.length
 
     }
 
@@ -101,9 +117,14 @@ class AipReviewControllerIntegrationTests extends BaseIntegrationTestCase {
     @Test
     void searchActionItemsByActionIdAndExsitingPersonName() {
 
-        controller.params.actionId = "3"
+        controller.params.actionItemId= "3"
         controller.params.personName = "Cliff Starr"
         controller.request.contentType = "text/json"
+
+        controller.params.ascending=true
+        controller.params.max="50"
+        controller.params.offset="0"
+        controller.params.sortColumnName="spridenId"
 
         controller.searchActionItems()
 
@@ -111,16 +132,21 @@ class AipReviewControllerIntegrationTests extends BaseIntegrationTestCase {
         assertEquals 200, controller.response.status
         def jsonResp = JSON.parse(response)
         assertNotNull jsonResp
-        assertEquals 1, jsonResp.size()
-        assertEquals "CSRSTU001", jsonResp.get(0).spridenId
+        assertEquals 1, jsonResp.length
+        assertEquals "CSRSTU001", jsonResp.result.get(0).spridenId
     }
 
     @Test
     void searchActionItemsByActionIdAndNonExsitingPersonName() {
 
-        controller.params.actionId = "3"
+        controller.params.actionItemId= "3"
         controller.params.personName = "Osama Bin Ladden"
         controller.request.contentType = "text/json"
+        controller.params.ascending=true
+        controller.params.max="50"
+        controller.params.offset="0"
+        controller.params.sortColumnName="spridenId"
+
 
         controller.searchActionItems()
 
@@ -128,16 +154,21 @@ class AipReviewControllerIntegrationTests extends BaseIntegrationTestCase {
         assertEquals 200, controller.response.status
         def jsonResp = JSON.parse(response)
         assertNotNull jsonResp
-        assertEquals 0, jsonResp.size()
+        assertEquals 0, jsonResp.length
 
     }
 
     @Test
     void searchActionItemsByNonExistingActionIdAndPersonName() {
 
-        controller.params.actionId = "32323233"
+        controller.params.actionItemId= "32323233"
         controller.params.personName = "Cliff Starr"
         controller.request.contentType = "text/json"
+
+        controller.params.ascending=true
+        controller.params.max="50"
+        controller.params.offset="0"
+        controller.params.sortColumnName="spridenId"
 
         controller.searchActionItems()
 
@@ -145,16 +176,21 @@ class AipReviewControllerIntegrationTests extends BaseIntegrationTestCase {
         assertEquals 200, controller.response.status
         def jsonResp = JSON.parse(response)
         assertNotNull jsonResp
-        assertEquals 0, jsonResp.size()
+        assertEquals 0, jsonResp.length
 
     }
 
     @Test
     void searchActionItemsBygActionIdAndPartialPersonName() {
 
-        controller.params.actionId = "3"
+        controller.params.actionItemId= "3"
         controller.params.personName = "Cliff"
         controller.request.contentType = "text/json"
+
+        controller.params.ascending=true
+        controller.params.max="50"
+        controller.params.offset="0"
+        controller.params.sortColumnName="spridenId"
 
         controller.searchActionItems()
 
@@ -162,7 +198,7 @@ class AipReviewControllerIntegrationTests extends BaseIntegrationTestCase {
         assertEquals 200, controller.response.status
         def jsonResp = JSON.parse(response)
         assertNotNull jsonResp
-        assertEquals 1, jsonResp.size()
+        assertEquals 1, jsonResp.length
     }
 
     //action item only
@@ -170,8 +206,15 @@ class AipReviewControllerIntegrationTests extends BaseIntegrationTestCase {
     @Test
     void searchActionItemsByActionItemOnly() {
 
-        controller.params.actionId = "3"
+        controller.params.actionItemId= "3"
+
         controller.request.contentType = "text/json"
+
+        controller.params.ascending=true
+        controller.params.max="50"
+        controller.params.offset="0"
+        controller.params.sortColumnName="spridenId"
+
         controller.searchActionItems()
 
         def response = controller.response.getContentAsString()
@@ -179,18 +222,24 @@ class AipReviewControllerIntegrationTests extends BaseIntegrationTestCase {
         assertEquals 200, controller.response.status
         def jsonResp = JSON.parse(response)
         assertNotNull jsonResp
-        assertEquals 13, jsonResp.size()
+        assertEquals 13, jsonResp.length
 
-        def row1 = jsonResp[0]
-        def row2 = jsonResp[1]
+        def row1 = jsonResp.result[0]
+        def row2 = jsonResp.result[1]
         assertNotEquals row1, row2
     }
 
     @Test
     void searchActionItemsByActionItemOnlyNonExsistingActionItem() {
 
-        controller.params.actionId = "999998"
+        controller.params.actionItemId= "999998"
         controller.request.contentType = "text/json"
+
+        controller.params.ascending=true
+        controller.params.max="50"
+        controller.params.offset="0"
+        controller.params.sortColumnName="spridenId"
+
         controller.searchActionItems()
 
         def response = controller.response.getContentAsString()
@@ -198,7 +247,7 @@ class AipReviewControllerIntegrationTests extends BaseIntegrationTestCase {
         assertEquals 200, controller.response.status
         def jsonResp = JSON.parse(response)
         assertNotNull jsonResp
-        assertEquals 0, jsonResp.size()
+        assertEquals 0, jsonResp.length
     }
 
     //person Id only
@@ -208,16 +257,21 @@ class AipReviewControllerIntegrationTests extends BaseIntegrationTestCase {
         controller.params.personId = "CSRSTU001"
         controller.request.contentType = "text/json"
 
+        controller.params.ascending=true
+        controller.params.max="50"
+        controller.params.offset="0"
+        controller.params.sortColumnName="spridenId"
+
         controller.searchActionItems()
         def response = controller.response.getContentAsString()
 
         assertEquals 200, controller.response.status
         def jsonResp = JSON.parse(response)
         assertNotNull jsonResp
-        assertEquals 5, jsonResp.size()
+        assertEquals 5, jsonResp.length
 
-        def row1 = jsonResp[0]
-        def row2 = jsonResp[1]
+        def row1 = jsonResp.result[0]
+        def row2 = jsonResp.result[1]
         assertNotEquals row1, row2
 
     }
@@ -228,32 +282,48 @@ class AipReviewControllerIntegrationTests extends BaseIntegrationTestCase {
         controller.params.personId = "CSRQWERTY"
         controller.request.contentType = "text/json"
 
+        controller.params.ascending=true
+        controller.params.max="50"
+        controller.params.offset="0"
+        controller.params.sortColumnName="spridenId"
+
         controller.searchActionItems()
         def response = controller.response.getContentAsString()
 
         assertEquals 200, controller.response.status
         def jsonResp = JSON.parse(response)
         assertNotNull jsonResp
-        assertEquals 0, jsonResp.size()
+        assertEquals 0, jsonResp.length
     }
 
     @Test
     void searchActionItemByNameOnly() {
         controller.params.personName = "Cliff Starr"
         controller.request.contentType = "text/json"
+
+        controller.params.ascending=true
+        controller.params.max="50"
+        controller.params.offset="0"
+        controller.params.sortColumnName="spridenId"
+
         controller.searchActionItems()
 
         def response = controller.response.getContentAsString()
         assertEquals 200, controller.response.status
         def jsonResp = JSON.parse(response)
         assertNotNull jsonResp
-        assertEquals 5, jsonResp.size()
+        assertEquals 5, jsonResp.length
     }
 
     @Test
     void searchActionItemByNameOnlyPartial() {
         controller.params.personName = "Cliff"
         controller.request.contentType = "text/json"
+        controller.params.ascending=true
+        controller.params.max="50"
+        controller.params.offset="0"
+        controller.params.sortColumnName="spridenId"
+
         controller.searchActionItems()
 
         def response = controller.response.getContentAsString()
@@ -261,10 +331,10 @@ class AipReviewControllerIntegrationTests extends BaseIntegrationTestCase {
 
         def jsonResp = JSON.parse(response)
         assertNotNull jsonResp
-        assertEquals 6, jsonResp.size()
+        assertEquals 6, jsonResp.length
         //test unique values
-        def row1 = jsonResp[0]
-        def row2 = jsonResp[1]
+        def row1 = jsonResp.result[0]
+        def row2 = jsonResp.result[1]
         assertNotEquals row1, row2
     }
 
@@ -273,13 +343,18 @@ class AipReviewControllerIntegrationTests extends BaseIntegrationTestCase {
         controller.params.personName = "Osama Bin Ladden"
         controller.request.contentType = "text/json"
 
+        controller.params.ascending=true
+        controller.params.max="50"
+        controller.params.offset="0"
+        controller.params.sortColumnName="spridenId"
+
         controller.searchActionItems()
         def response = controller.response.getContentAsString()
 
         assertEquals 200, controller.response.status
         def jsonResp = JSON.parse(response)
         assertNotNull jsonResp
-        assertEquals 0, jsonResp.size()
+        assertEquals 0, jsonResp.length
     }
 
 }

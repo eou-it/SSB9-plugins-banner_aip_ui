@@ -11,13 +11,16 @@ var AIP;
             this.$inject = ["$scope", "$state", "AIPReviewService", "AIPUserService", "SpinnerService", "$timeout", "$q", "$uibModal", "APP_ROOT", "$sce", "$filter", "PAGINATIONCONFIG"];
             this.fetchData = function (query) {
                 this.query = query;
-                query.actionItemId = this.selected.id;
+                if (angular.isDefined(this.selected)) {
+                    query.actionItemId = this.selected.id;
+                }
                 if (this.option === "personName") {
                     query.personName = this.personName;
                 }
                 else {
                     query.personId = this.personId;
                 }
+                this.query = query;
                 var deferred = this.$q.defer();
                 this.aipReviewService.fetchSearchResult(query).then(function (response) {
                     deferred.resolve(response);
@@ -146,7 +149,7 @@ var AIP;
                     ariaLable: this.$filter("i18n_aip")("js.aip.review.monitor.action.item.grid.header.currentResponseText"),
                     width: "100px",
                     options: {
-                        sortable: false,
+                        sortable: true,
                         ascending: true,
                         visible: true
                     }
@@ -157,7 +160,7 @@ var AIP;
                     ariaLable: this.$filter("i18n_aip")("js.aip.review.monitor.action.item.grid.header.displayStartDate"),
                     width: "100px",
                     options: {
-                        sortable: false,
+                        sortable: true,
                         ascending: true,
                         visible: true
                     }
@@ -168,7 +171,7 @@ var AIP;
                     ariaLable: this.$filter("i18n_aip")("js.aip.review.monitor.action.item.grid.header.displayEndDate"),
                     width: "100px",
                     options: {
-                        sortable: false,
+                        sortable: true,
                         ascending: true,
                         visible: true
                     }
@@ -179,7 +182,7 @@ var AIP;
                     ariaLable: this.$filter("i18n_aip")("js.aip.review.monitor.action.item.grid.header.reviewIndicator"),
                     width: "25px",
                     options: {
-                        sortable: false,
+                        sortable: true,
                         ascending: true,
                         visible: true,
                         columnShowHide: true
@@ -192,7 +195,7 @@ var AIP;
                     width: "25px",
                     options: {
                         sortable: true,
-                        ascending: false,
+                        ascending: true,
                         visible: true
                     }
                 }, {
@@ -201,7 +204,7 @@ var AIP;
                     ariaLable: this.$filter("i18n_aip")("js.aip.review.monitor.action.item.grid.header.reviewState"),
                     width: "100px",
                     options: {
-                        sortable: false,
+                        sortable: true,
                         ascending: true,
                         visible: true
                     }
