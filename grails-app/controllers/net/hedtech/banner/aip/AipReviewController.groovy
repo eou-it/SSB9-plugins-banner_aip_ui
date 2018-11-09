@@ -29,15 +29,18 @@ class AipReviewController {
      * @return List of action items matching the search criteria
      */
     def searchActionItems() {
-        Long actionItemid = params?.actionItemId ? Long.valueOf(params?.actionItemId) : 0
-        //TODO: hard coded values To be removed after creating implemeting the grid on ui side
-		def pagingAndSortParams = [sortColumn: "actionItemName", sortDirection: "asc", max: 5, offset: 0]
+        Long actionItemid = params?.actionItemId ? Long.valueOf(params?.actionItemId) : null
+
+        def pagingAndSortParams = [sortColumn   : params.sortColumnName,
+                                   sortAscending: params.ascending ? params.ascending.toBoolean() : false,
+                                   max          : params.max,
+                                   offset       : params.offset]
 
         Map paramsMap = [:]
         def criteriaMap = [:]
         def filterData = [params: paramsMap, criteria: criteriaMap]
 
-        def result = monitorActionItemCompositeService.searchMonitorActionItems(actionItemid, params?.personName?.trim(), params?.personId?.trim(),filterData,pagingAndSortParams)
+        def result = monitorActionItemCompositeService.searchMonitorActionItems(actionItemid, params?.personName?.trim(),params?.personId?.trim(),filterData,pagingAndSortParams)
         render result as JSON
     }
 }

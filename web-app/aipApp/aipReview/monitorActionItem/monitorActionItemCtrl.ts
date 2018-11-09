@@ -180,7 +180,7 @@ module AIP {
                     ariaLable: this.$filter("i18n_aip")("js.aip.review.monitor.action.item.grid.header.currentResponseText"),
                     width: "100px",
                     options: {
-                        sortable: false,
+                        sortable: true,
                         ascending: true,
                         visible: true
                     }
@@ -192,7 +192,7 @@ module AIP {
                     ariaLable: this.$filter("i18n_aip")("js.aip.review.monitor.action.item.grid.header.displayStartDate"),
                     width: "100px",
                     options: {
-                        sortable: false,
+                        sortable: true,
                         ascending: true,
                         visible: true
                     }
@@ -204,7 +204,7 @@ module AIP {
                     ariaLable: this.$filter("i18n_aip")("js.aip.review.monitor.action.item.grid.header.displayEndDate"),
                     width: "100px",
                     options: {
-                        sortable: false,
+                        sortable: true,
                         ascending: true,
                         visible: true
                     }
@@ -216,7 +216,7 @@ module AIP {
                     ariaLable: this.$filter("i18n_aip")("js.aip.review.monitor.action.item.grid.header.reviewIndicator"),
                     width: "25px",
                     options: {
-                        sortable: false,
+                        sortable: true,
                         ascending: true,
                         visible: true,
                         columnShowHide: true
@@ -230,7 +230,7 @@ module AIP {
                     width: "25px",
                     options: {
                         sortable: true,
-                        ascending: false,
+                        ascending: true,
                         visible: true,
                     }
 
@@ -240,7 +240,7 @@ module AIP {
                     ariaLable: this.$filter("i18n_aip")("js.aip.review.monitor.action.item.grid.header.reviewState"),
                     width: "100px",
                     options: {
-                        sortable: false,
+                        sortable: true,
                         ascending: true,
                         visible: true
                     }
@@ -263,16 +263,20 @@ module AIP {
         }
 
 
+
+
         fetchData = function (query) {
             this.query = query;
-            query.actionItemId = this.selected.id;
+            if (angular.isDefined(this.selected)) {
+                query.actionItemId = this.selected.id;
+            }
             if (this.option === "personName") {
                 query.personName = this.personName
             }
             else {
                 query.personId = this.personId
             }
-
+            this.query=query;
             var deferred = this.$q.defer();
             this.aipReviewService.fetchSearchResult(query).then(function (response) {
                 deferred.resolve(response);
@@ -287,12 +291,12 @@ module AIP {
         search() {
 
             this.gridEnabled = false;
-            if(this.gridEnabled==true){
+            if (this.gridEnabled == true) {
                 //this.gridData={};
-               
+
             }
 
-            this.gridEnabled=true;
+            this.gridEnabled = true;
 
         }
 
@@ -307,7 +311,7 @@ module AIP {
 
 
         review(userActionItemID:string) {
-            console.log("parameter passed",userActionItemID)
+            console.log("parameter passed", userActionItemID)
             this.$state.go("review-action-item", {userActionItemID: userActionItemID});
         }
 
