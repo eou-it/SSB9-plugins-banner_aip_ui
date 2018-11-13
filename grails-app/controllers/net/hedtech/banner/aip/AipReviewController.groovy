@@ -43,4 +43,15 @@ class AipReviewController {
         def result = monitorActionItemCompositeService.searchMonitorActionItems(actionItemid, params?.personName?.trim(),params?.personId?.trim(),filterData,pagingAndSortParams)
         render result as JSON
     }
+
+    /**
+     * get action item based on the surrogate id
+     */
+    def getActionItem() {
+        Long userActionItemID = params?.userActionItemID ? Long.valueOf(params?.userActionItemID) : null
+
+        def result = monitorActionItemCompositeService.getActionItem(userActionItemID)
+
+        render result as JSON
+    }
 }

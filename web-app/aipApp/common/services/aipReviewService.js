@@ -40,6 +40,13 @@ var AIP;
             });
             return deferred.promise;
         };
+        AIPReviewService.prototype.getActionItem = function (userActionItemID) {
+            var request = this.$http({
+                method: "GET",
+                url: this.ENDPOINT.review.getActionItem + "?userActionItemID=" + userActionItemID
+            });
+            return request;
+        };
         AIPReviewService.$inject = ["$http", "$q", "ENDPOINT", "APP_PATH"];
         return AIPReviewService;
     })();

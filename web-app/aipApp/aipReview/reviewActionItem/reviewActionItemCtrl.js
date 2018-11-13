@@ -20,11 +20,21 @@ var AIP;
             this.APP_ROOT = APP_ROOT;
             this.$sce = $sce;
             this.actionItemNamesList = [];
+            this.actionItemDetails = null;
             this.personId;
             this.personName;
             this.selected;
             this.option;
+            this.init();
         }
+        ReviewActionItemCtrl.prototype.init = function () {
+            var _this = this;
+            var allPromises = [];
+            allPromises.push(this.aipReviewService.getActionItem(this.$state.params.userActionItemID)
+                .then(function (response) {
+                _this.actionItemDetails = response.data;
+            }));
+        };
         return ReviewActionItemCtrl;
     })();
     AIP.ReviewActionItemCtrl = ReviewActionItemCtrl;

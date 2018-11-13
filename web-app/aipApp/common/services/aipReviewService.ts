@@ -70,6 +70,14 @@ module AIP {
             return deferred.promise;
 
         }
+
+        getActionItem(userActionItemID) {
+            var request = this.$http({
+                method: "GET",
+                url: this.ENDPOINT.review.getActionItem + "?userActionItemID=" + userActionItemID
+            })
+            return request;
+        }
     }
 }
 register("bannerCommonAIP").service("AIPReviewService", AIP.AIPReviewService);

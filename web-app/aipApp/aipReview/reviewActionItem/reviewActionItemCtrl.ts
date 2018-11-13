@@ -29,6 +29,7 @@ module AIP {
         $q;
         APP_ROOT;
         actionItemNamesList;
+        actionItemDetails;
         personId;
         personName;
         selected;
@@ -46,13 +47,23 @@ module AIP {
             this.APP_ROOT = APP_ROOT;
             this.$sce = $sce;
             this.actionItemNamesList=[];
+            this.actionItemDetails = null;
             this.personId;
             this.personName;
             this.selected;
             this.option;
+            this.init();
         }
 
-
+        init() {
+            var allPromises = [];
+            allPromises.push(
+                this.aipReviewService.getActionItem(this.$state.params.userActionItemID)
+                    .then((response) => {
+                        this.actionItemDetails = response.data;
+                    })
+            );
+        }
     }
 }
 
