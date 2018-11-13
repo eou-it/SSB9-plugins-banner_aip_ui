@@ -185,8 +185,8 @@ var AIPUI;
                     SpinnerService.showSpinner(false);
                     if (response.data.success === true) {
                         if (response.data.bdmDocument) {
-                            var document = response.data.bdmDocument;
-                            window.open(document.viewURL);
+                            var bdmDocument = response.data.bdmDocument;
+                            window.open(bdmDocument.viewURL);
                         }
                         else {
                             var base64Encoded = response.data.documentContent;
