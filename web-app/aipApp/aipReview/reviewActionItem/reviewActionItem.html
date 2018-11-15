@@ -1,7 +1,7 @@
 <!--*******************************************************************************
 Copyright 2018 Ellucian Company L.P. and its affiliates.
 *******************************************************************************-->
-<div>
+<div id="reviewactionitem">
     <div class="row ">
         <div class="col-xs-1 col-sm-1">
             <label for="personId" class="titleValue " id="personId">{{"js.aip.review.monitor.action.personIdLabel"|i18n_aip}}
@@ -10,5 +10,48 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
         <div class="col-xs-8 col-sm-8">
             <div>{{vm.actionItemDetails.spridenId}}</div>
         </div>
+    </div>
+    <div  class="row">
+        <div class="col-xs-1 col-sm-1">
+             <label for="viewAttachments" style="white-space: nowrap;" id="viewAttachments">{{"js.aip.review.monitor.action.viewAttachmentsLabel"|i18n_aip}}
+             </label>
+        </div>
+        <div class="col-xs-8 col-sm-8">
+             <img src="../images/attach_icon_default.svg" class="attachmentimage" ng-click="vm.viewAttachemnts()"/>
+        </div>
+        <xe-popup-modal show=vm.showModal focusbackelement="tools"
+                                        pageheader={{"js.aip.review.monitor.action.viewAttachments.modal.title"|i18n_aip}}>
+            <popup-content>
+                <div class="attachmentsTable">
+                                    <xe-table-grid
+                                            table-id="dataTableAttachmentsList"
+                                            header="header"
+                                            fetch="fetchData(query)"
+                                            content="gridData.row"
+                                            results-found="records"
+                                            toolbar="false"
+                                            paginate="false"
+                                            on-row-click="selectRecord(data)"
+                                            no-data-msg="{{'aip.common.no.results.found'|i18n_aip}}"
+                                            search-config="searchConfig"
+                                            pagination-config="paginationConfig"
+                                            mobile-layout="mobileConfig"
+                                            draggable-column-names="draggableColumnNames"
+                                            continuous-scrolling="true"
+                                            continuous-scroll-parent="attachmentsTable"
+                                            refresh-grid="refreshGrid"
+                                            height="10em">
+                                        <xe-cell-markup column-name="attachmentActions">
+                                            <div class="row attachmentActions">
+                                                <button class="view-attachment-icon" ng-click="previewDocument()"
+                                                        title="{{'aip.common.open.action.item.jaws'|i18n_aip}}"
+                                                        aria-label="{{'aip.common.open.action.item.jaws'|i18n_aip}}">
+                                                </button>
+                                            </div>
+                                        </xe-cell-markup>
+                                    </xe-table-grid>
+                                </div>
+            </popup-content>
+        </xe-popup-modal>
     </div>
 </div>
