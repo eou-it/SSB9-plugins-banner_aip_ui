@@ -2,80 +2,76 @@
 Copyright 2018 Ellucian Company L.P. and its affiliates.
 *******************************************************************************-->
 <div>
-    <uib-accordion close-others="oneAtATime">
-        <uib-accordion-group class="monitor-action-item-container" role="tablist" is-open="true">
-            <div class="row ">
-                <div class="col-xs-1 col-sm-1">
-                    <label for="personId" class="titleValue " id="personId">{{"js.aip.review.monitor.action.personIdLabel"|i18n_aip}}
-                    </label>
-                </div>
-                <div class="col-xs-8 col-sm-8">
-                    {{vm.actionItemDetails.spridenId}}
-                </div>
-            </div>
-            <div class="row ">
-                <div class="col-xs-1 col-sm-1">
-                    <label for="personName" class="titleValue " id="personName">{{"js.aip.review.monitor.action.personNameLabel"|i18n_aip}}
-                    </label>
-                </div>
-                <div class="col-xs-8 col-sm-8">
-                    <div class="semi-bold">{{vm.actionItemDetails.actionItemPersonName}}</div>
-                </div>
-            </div>
-            <div class="row ">
-                <div class="col-xs-1 col-sm-1">
-                    <label for="actionItem" class="titleValue " id="actionItem">{{"js.aip.review.monitor.action.itemLabel"|i18n_aip}}
-                    </label>
-                </div>
-                <div class="col-xs-8 col-sm-8">
-                    <div>{{vm.actionItemDetails.actionItemName}}</div>
-                </div>
-            </div>
-            <div class="row ">
-                <div class="col-xs-1 col-sm-1">
-                    <label for="currentResponse" class="titleValue " id="currentResponse">{{"aip.user.action.item.last.response"|i18n_aip}}
-                    </label>
-                </div>
-                <div class="col-xs-8 col-sm-8">
-                    <div>{{vm.actionItemDetails.currentResponseText}}</div>
-                </div>
-            </div>
-            <div class="row ">
-                <div class="col-xs-1 col-sm-1">
-                    <label for="statusDate" class="titleValue " id="statusDate">{{"js.aip.review.monitor.action.statusLabel"|i18n_aip}}
-                    </label>
-                </div>
-                <div class="col-xs-8 col-sm-8">
-                    <div>{{vm.actionItemDetails.status}} {{vm.actionItemDetails.responseDate}}</div>
-                </div>
-            </div>
-            <div class="row ">
-                <div class="col-xs-1 col-sm-1">
-                    <label for="startEndDate" class="titleValue " id="startEndDate">{{"js.aip.review.monitor.action.dateLabel"|i18n_aip}}
-                    </label>
-                </div>
-                <div class="col-xs-8 col-sm-8">
-                    <div>{{vm.actionItemDetails.displayStartDate}}-{{vm.actionItemDetails.displayEndDate}}</div>
-                </div>
-            </div>
-            <div class="row ">
-                <div class="col-xs-1 col-sm-1">
-                    <label for="numberOfAttachments" class="titleValue " id="numberOfAttachments">{{"js.aip.review.monitor.action.numberOfAttachmentsLabel"|i18n_aip}}
-                    </label>
-                </div>
-                <div class="col-xs-8 col-sm-8">
-                    <div>{{vm.actionItemDetails.attachments}}</div>
-                </div>
-            </div>
-            <div class="row ">
-                <div class="col-xs-1 col-sm-1">
-                    <label for="viewAttachements" class="titleValue " id="viewAttachements">{{"js.aip.review.monitor.action.viewAttachmentsLabel"|i18n_aip}}
-                    </label>
-                </div>
-                <div class="col-xs-8 col-sm-8">
-                    <div></div>
-                </div>
-            </div>
-        </uib-accordion-group>
-    </uib-accordion>
+    <div class="row ">
+        <div class="col-xs-2 col-sm-2">
+            <label for="personId" class="titleValue " id="personId">{{"js.aip.review.monitor.action.personIdLabel"|i18n_aip}}
+            </label>
+        </div>
+        <div class="col-xs-7 col-sm-7">
+            {{vm.actionItemDetails.spridenId}}
+        </div>
+    </div>
+    <div class="row ">
+        <div class="col-xs-2 col-sm-2">
+            <label for="personName" class="titleValue " id="personName">{{"js.aip.review.monitor.action.personNameLabel"|i18n_aip}}
+            </label>
+        </div>
+        <div class="col-xs-7 col-sm-7">
+            <div class="semi-bold">{{vm.actionItemDetails.actionItemPersonName}}</div>
+        </div>
+    </div>
+    <div class="row ">
+        <div class="col-xs-2 col-sm-2">
+            <label for="actionItem" class="titleValue " id="actionItem">{{"js.aip.review.monitor.action.itemLabel"|i18n_aip}}
+            </label>
+        </div>
+        <div class="col-xs-7 col-sm-7">
+            <div>{{vm.actionItemDetails.actionItemName}}</div>
+        </div>
+    </div>
+    <div class="row ">
+        <div class="col-xs-2 col-sm-2">
+            <label for="currentResponse" class="titleValue " id="currentResponse">{{"aip.user.action.item.last.response"|i18n_aip}}
+            </label>
+        </div>
+        <div class="col-xs-7 col-sm-7">
+            <div>{{vm.actionItemDetails.currentResponseText}}</div>
+        </div>
+    </div>
+    <div class="row ">
+        <div class="col-xs-2 col-sm-2">
+            <label for="statusDate" class="titleValue " id="statusDate">{{"js.aip.review.monitor.action.statusLabel"|i18n_aip}}
+            </label>
+        </div>
+        <div class="col-xs-7 col-sm-7">
+            <div>{{vm.actionItemDetails.status}} {{vm.actionItemDetails.responseDate}}</div>
+        </div>
+    </div>
+    <div class="row ">
+        <div class="col-xs-2 col-sm-2">
+            <label for="startEndDate" class="titleValue " id="startEndDate">{{"js.aip.review.monitor.action.dateLabel"|i18n_aip}}
+            </label>
+        </div>
+        <div class="col-xs-7 col-sm-7">
+            <div>{{vm.actionItemDetails.displayStartDate}}-{{vm.actionItemDetails.displayEndDate}}</div>
+        </div>
+    </div>
+    <div class="row ">
+        <div class="col-xs-2 col-sm-2">
+            <label for="numberOfAttachments" class="titleValue " id="numberOfAttachments">{{"js.aip.review.monitor.action.numberOfAttachmentsLabel"|i18n_aip}}
+            </label>
+        </div>
+        <div class="col-xs-7 col-sm-7">
+            <div>{{vm.actionItemDetails.attachments}}</div>
+        </div>
+    </div>
+    <div class="row ">
+        <div class="col-xs-2 col-sm-2">
+            <label for="viewAttachements" class="titleValue " id="viewAttachements">{{"js.aip.review.monitor.action.viewAttachmentsLabel"|i18n_aip}}
+            </label>
+        </div>
+        <div class="col-xs-7 col-sm-7">
+            <div></div>
+        </div>
+    </div>
 </div>
