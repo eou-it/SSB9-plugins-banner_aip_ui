@@ -244,7 +244,7 @@ module AIP {
                                 this.regeneratePopulation=this.actionPost1.populationRegenerateIndicator;
                                 this.sendTime=this.actionPost1.postingDisplayTime;
                                 var postingTimeZone = this.actionPost1.postingTimeZone.split(" ");
-                                this.defaultTimeZone = postingTimeZone[postingTimeZone.length-1];
+                                this.defaultTimeZone = this.$filter("i18n_aip")("timezone." + postingTimeZone[postingTimeZone.length-1]);
 
                                 for(var k=0;k<this.timezones.length;k++) {
                                     if(this.actionPost1.postingTimeZone === this.timezones[k].displayName)
