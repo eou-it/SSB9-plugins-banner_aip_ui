@@ -65,13 +65,13 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
             <div>{{vm.actionItemDetails.attachments}}</div>
         </div>
     </div>
-    <div class="row ">
+    <div ng-if="vm.actionItemDetails.attachments>0" class="row">
         <div class="col-xs-2 col-sm-2">
-            <label for="viewAttachements" class="titleValue " id="viewAttachements">{{"js.aip.review.monitor.action.viewAttachmentsLabel"|i18n_aip}}
+            <label for="viewAttachments" style="white-space: nowrap;" id="viewAttachments">{{"js.aip.review.monitor.action.viewAttachmentsLabel"|i18n_aip}}
             </label>
         </div>
         <div class="col-xs-7 col-sm-7">
-            <div></div>
+            <img src="../images/attach_icon_default.svg" class="attachmentimage"/>
         </div>
     </div>
 </div>
