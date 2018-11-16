@@ -8,16 +8,16 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
             </label>
         </div>
         <div class="col-xs-7 col-sm-7">
-            {{vm.actionItemDetails.spridenId}}
+            <div class="fieldValue">{{vm.actionItemDetails.spridenId}}</div>
         </div>
     </div>
     <div class="row ">
         <div class="col-xs-2 col-sm-2">
-            <label for="personName" class="titleValue " id="personName">{{"js.aip.review.monitor.action.personNameLabel"|i18n_aip}}
+            <label for="personName" class="titleValue" id="personName">{{"js.aip.review.monitor.action.personNameLabel"|i18n_aip}}
             </label>
         </div>
         <div class="col-xs-7 col-sm-7">
-            <div class="semi-bold">{{vm.actionItemDetails.actionItemPersonName}}</div>
+            <div class="fieldValue">{{vm.actionItemDetails.actionItemPersonName}}</div>
         </div>
     </div>
     <div class="row ">
@@ -26,7 +26,7 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
             </label>
         </div>
         <div class="col-xs-7 col-sm-7">
-            <div>{{vm.actionItemDetails.actionItemName}}</div>
+            <div class="fieldValue">{{vm.actionItemDetails.actionItemName}}</div>
         </div>
     </div>
     <div class="row ">
@@ -35,7 +35,7 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
             </label>
         </div>
         <div class="col-xs-7 col-sm-7">
-            <div>{{vm.actionItemDetails.currentResponseText}}</div>
+            <div class="fieldValue">{{vm.actionItemDetails.currentResponseText}}</div>
         </div>
     </div>
     <div class="row ">
@@ -44,7 +44,7 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
             </label>
         </div>
         <div class="col-xs-7 col-sm-7">
-            <div>{{vm.actionItemDetails.status}} {{vm.actionItemDetails.responseDate}}</div>
+            <div class="fieldValue">{{vm.actionItemDetails.status}} {{vm.actionItemDetails.responseDate}}</div>
         </div>
     </div>
     <div class="row ">
@@ -53,7 +53,7 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
             </label>
         </div>
         <div class="col-xs-7 col-sm-7">
-            <div>{{vm.actionItemDetails.displayStartDate}}-{{vm.actionItemDetails.displayEndDate}}</div>
+            <div class="fieldValue">{{vm.actionItemDetails.displayStartDate}}-{{vm.actionItemDetails.displayEndDate}}</div>
         </div>
     </div>
     <div class="row ">
@@ -62,7 +62,7 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
             </label>
         </div>
         <div class="col-xs-7 col-sm-7">
-            <div>{{vm.actionItemDetails.attachments}}</div>
+            <div class="fieldValue">{{vm.actionItemDetails.attachments}}</div>
         </div>
     </div>
     <div ng-if="vm.actionItemDetails.attachments>0" class="row">
