@@ -1592,6 +1592,36 @@ ol.selected-group > li > button {
   .monitor-action-item-container .attachmentimage {
     height: 10px;
     width: 10px; }
+  .monitor-action-item-container .actionListContainer {
+    overflow-y: auto;
+    font-size: 14px; }
+  .monitor-action-item-container .row {
+    margin-right: 0;
+    margin-left: 0; }
+  .monitor-action-item-container .control {
+    float: right;
+    padding-top: 8px;
+    margin-right: 0.2em; }
+  .monitor-action-item-container .actionListTable {
+    overflow: auto; }
+    .monitor-action-item-container .actionListTable .table-container {
+      margin-top: 8px; }
+      .monitor-action-item-container .actionListTable .table-container .row.actionItemActions {
+        display: flex;
+        margin-right: 16px;
+        margin-left: 16px; }
+        .monitor-action-item-container .actionListTable .table-container .row.actionItemActions div {
+          flex: 1;
+          margin-right: 10px; }
+        .monitor-action-item-container .actionListTable .table-container .row.actionItemActions div:last-child {
+          margin-right: 0; }
+
+@media screen and (max-width: 768px) {
+  .actionListContainer .row .control {
+    padding: 0; } }
+.titleValue {
+  font-size: 1.5em;
+  font-weight: bold; }
 
 #gridCaption {
   color: gray;

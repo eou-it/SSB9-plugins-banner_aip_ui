@@ -4,7 +4,7 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
 <div id="reviewactionitem">
     <div class="row ">
         <div class="col-xs-2 col-sm-2">
-            <label for="personId" class="titleValue " id="personId">{{"js.aip.review.monitor.action.personIdLabel"|i18n_aip}}
+            <label for="personId" class="titleValue" id="personId">{{"js.aip.review.monitor.action.personIdLabel"|i18n_aip}}
             </label>
         </div>
         <div class="col-xs-7 col-sm-7">
@@ -40,7 +40,7 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
     </div>
     <div class="row ">
         <div class="col-xs-2 col-sm-2">
-            <label for="statusDate" class="titleValue " id="statusDate">{{"js.aip.review.monitor.action.statusLabel"|i18n_aip}}
+            <label for="statusDate" class="titleValue" id="statusDate">{{"js.aip.review.monitor.action.statusLabel"|i18n_aip}}
             </label>
         </div>
         <div class="col-xs-7 col-sm-7">
@@ -67,21 +67,13 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
     </div>
     <div ng-if="vm.actionItemDetails.attachments>0" class="row">
         <div class="col-xs-2 col-sm-2">
-            <label for="viewAttachments" style="white-space: nowrap;" id="viewAttachments">{{"js.aip.review.monitor.action.viewAttachmentsLabel"|i18n_aip}}
+            <label for="viewAttachments" class="titleValue " id="viewAttachments">{{"js.aip.review.monitor.action.viewAttachmentsLabel"|i18n_aip}}
             </label>
         </div>
         <div class="col-xs-7 col-sm-7">
-            <img src="../images/attach_icon_default.svg" class="attachmentimage"/>
+            <img src="../images/attach_icon_default.svg" class="attachmentimage" ng-click="vm.viewAttachemnts()"/>
         </div>
     </div>
-    <div  class="row">
-        <div class="col-xs-1 col-sm-1">
-             <label for="viewAttachments" style="white-space: nowrap;" id="viewAttachments">{{"js.aip.review.monitor.action.viewAttachmentsLabel"|i18n_aip}}
-             </label>
-        </div>
-        <div class="col-xs-8 col-sm-8">
-             <img src="../images/attach_icon_default.svg" class="attachmentimage" ng-click="vm.viewAttachemnts()"/>
-        </div>
         <xe-popup-modal show=vm.showModal focusbackelement="tools"
                                         pageheader={{"js.aip.review.monitor.action.viewAttachments.modal.title"|i18n_aip}}>
             <popup-content>
@@ -116,5 +108,4 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
                                 </div>
             </popup-content>
         </xe-popup-modal>
-    </div>
 </div>
