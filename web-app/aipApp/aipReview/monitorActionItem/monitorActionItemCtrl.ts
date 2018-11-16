@@ -299,11 +299,6 @@ module AIP {
                 notifications.addNotification(n);
                 return;
             }
-            this.gridEnabled = false;
-            if (this.gridEnabled == true) {
-                //this.gridData={};
-
-            }
 
             this.gridEnabled = true;
 

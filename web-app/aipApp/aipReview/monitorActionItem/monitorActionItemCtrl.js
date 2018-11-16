@@ -231,9 +231,6 @@ var AIP;
                 notifications.addNotification(n);
                 return;
             }
-            this.gridEnabled = false;
-            if (this.gridEnabled == true) {
-            }
             this.gridEnabled = true;
         };
         MonitorActionItemCtrl.prototype.reset = function () {
