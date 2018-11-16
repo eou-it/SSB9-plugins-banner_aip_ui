@@ -6,6 +6,8 @@
 ///<reference path="../../common/services/aipReviewService.ts"/>
 ///<reference path="../../common/services/userService.ts"/>
 declare var register;
+declare var Notification:any;
+declare var notifications:any;
 
 module AIP {
 
@@ -257,12 +259,10 @@ module AIP {
                 searchString: "",
                 placeholder: this.$filter("i18n_aip")("search.label"),
                 maxlength: 200,
-                minimumCharacters: 10
+                minimumCharacters: 3
             };
             this.paginationConfig = this.commonPaginationConfig;
         }
-
-
 
 
         fetchData = function (query) {
@@ -276,7 +276,7 @@ module AIP {
             else {
                 query.personId = this.personId
             }
-            this.query=query;
+            this.query = query;
             var deferred = this.$q.defer();
             this.aipReviewService.fetchSearchResult(query).then(function (response) {
                 deferred.resolve(response);
@@ -290,6 +290,15 @@ module AIP {
 
         search() {
 
+            if ((!this.personName || this.personName === "") && (!this.personId || this.personId === "") && (!this.selected || !this.selected.id )) {
+                var n = new Notification({
+                    message: this.$filter("i18n_aip")("js.aip.review.monitor.action.item.search.parameter.error.message"),
+                    type: "error",
+                    flash: true
+                });
+                notifications.addNotification(n);
+                return;
+            }
             this.gridEnabled = false;
             if (this.gridEnabled == true) {
                 //this.gridData={};
