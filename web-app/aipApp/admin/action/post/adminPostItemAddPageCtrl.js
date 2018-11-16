@@ -127,7 +127,7 @@ var AIP;
                                 _this.regeneratePopulation = _this.actionPost1.populationRegenerateIndicator;
                                 _this.sendTime = _this.actionPost1.postingDisplayTime;
                                 var postingTimeZone = _this.actionPost1.postingTimeZone.split(" ");
-                                _this.defaultTimeZone = postingTimeZone[postingTimeZone.length - 1];
+                                _this.defaultTimeZone = _this.$filter("i18n_aip")("timezone." + postingTimeZone[postingTimeZone.length - 1]);
                                 for (var k = 0; k < _this.timezones.length; k++) {
                                     if (_this.actionPost1.postingTimeZone === _this.timezones[k].displayName) {
                                         _this.setTimezone(_this.timezones[k]);
