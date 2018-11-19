@@ -8,9 +8,20 @@ declare var register;
 module AIP {
 
     export interface ISearchActionItemQuery {
-        actionItemId:number;
-        personName:string;
-        personId:string;
+        actionItemId: number;
+        personName: string;
+        personId: string;
+        searchString: string;
+        sortColumnName: string;
+        ascending: string;
+        offset: string;
+        max: string;
+    }
+
+    export interface IAttachmentListQuery {
+        responseId: number;
+        actionItemId: number;
+        personId : string;
         searchString: string;
         sortColumnName: string;
         ascending: string;
@@ -20,18 +31,17 @@ module AIP {
 
     interface IAIPReviewService {
         getActionItemList();
-        fetchSearchResult(query:ISearchActionItemQuery);
-
+        fetchSearchResult(query: ISearchActionItemQuery);
     }
 
     export class AIPReviewService implements IAIPReviewService {
         static $inject = ["$http", "$q", "ENDPOINT", "APP_PATH"];
-        $http:ng.IHttpService;
-        $q:ng.IQService;
+        $http: ng.IHttpService;
+        $q: ng.IQService;
         APP_PATH;
         ENDPOINT;
 
-        constructor($http:ng.IHttpService, $q:ng.IQService, ENDPOINT, APP_PATH) {
+        constructor($http: ng.IHttpService, $q: ng.IQService, ENDPOINT, APP_PATH) {
             this.$http = $http;
             this.$q = $q;
             this.APP_PATH = APP_PATH;
@@ -46,7 +56,7 @@ module AIP {
             return request;
         }
 
-        fetchSearchResult(query:ISearchActionItemQuery) {
+        fetchSearchResult(query: ISearchActionItemQuery) {
             var deferred = this.$q.defer();
             var realMax = parseInt(query.max) - parseInt(query.offset);
             var url = this.ENDPOINT.review.search +
@@ -56,7 +66,7 @@ module AIP {
                 '&searchString=' + (query.searchString || '') +
                 '&sortColumnName=' + (query.sortColumnName || '') +
                 '&ascending=' + (query.ascending.toString() || "") +
-                '&offset=' + (query.offset || 0 ) +
+                '&offset=' + (query.offset || 0) +
                 '&max=' + realMax;
 
             var request = this.$http({
@@ -69,6 +79,49 @@ module AIP {
             });
             return deferred.promise;
 
+        }
+
+        /**
+         * Gets list of attached document for a response.
+         * @param query
+         */
+        fetchAttachmentsList(query: IAttachmentListQuery) {
+            var deferred = this.$q.defer();
+            var realMax = parseInt(query.max) - parseInt(query.offset);
+            var url = this.APP_PATH + "/aipReview/listDocuments" +
+                '?actionItemId=' + (query.actionItemId || '') +
+                '&responseId=' + (query.responseId || '') +
+                '&personId=' + (query.personId || '') +
+                '&sortColumnName=' + (query.sortColumnName || 'actionItemName') +
+                '&ascending=' + (query.ascending.toString() || "") +
+                '&offset=' + (query.offset || 0) +
+                '&max=' + realMax;
+            this.$http({
+                method: "GET",
+                url: url
+            }).then(function (response) {
+                deferred.resolve(response.data);
+            }, function (response) {
+                deferred.reject(response);
+            });
+            return deferred.promise;
+        }
+
+        /**
+         * Preview of document.
+         * @param row
+         */
+        previewDocument(row) {
+            var data = {
+                documentId   : row.id,
+                fileLocation : row.fileLocation
+            };
+            var request = this.$http({
+                method: "POST",
+                url: this.APP_PATH + "/aipDocumentManagement/previewDocument",
+                data: data
+            });
+            return request;
         }
 
         getActionItem(userActionItemID) {
