@@ -165,23 +165,8 @@ var AIP;
                 pageAriaLabel: $filter("i18n_aip")("pagination.page.aria.label"),
                 ofLabel: $filter("i18n_aip")("pagination.page.of.label")
             };
-            $scope.draggableColumnNames = [];
-            $scope.mobileConfig = {
-                documentName: 3,
-                documentUploadedDate: 3,
-                attachmentActions: 3
-            };
             $scope.selectRecord = function (data) {
                 $scope.selectedRecord = data;
-            };
-            $scope.searchConfig = {
-                id: "dataTableSearch",
-                delay: 300,
-                ariaLabel: $filter("i18n_aip")("search.aria.label"),
-                searchString: "",
-                placeholder: $filter("i18n_aip")("search.label"),
-                maxlength: 200,
-                minimumCharacters: 1
             };
         }
         ReviewActionItemCtrl.prototype.init = function () {
@@ -198,7 +183,7 @@ var AIP;
         /**
          * Show of grid in the model window with list of attachments.
          */
-        ReviewActionItemCtrl.prototype.viewAttachemnts = function () {
+        ReviewActionItemCtrl.prototype.viewAttachments = function () {
             this.showModal = true;
             this.actionItemId = this.actionItemDetails.actionItemId;
             this.responseId = this.actionItemDetails.responseId;
