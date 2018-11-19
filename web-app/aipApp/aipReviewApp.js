@@ -65,7 +65,7 @@ var bannerAIPReviewApp = angular.module("bannerAIPReview", [
         "review-action-item": {
             url: "/monitor/review/:userActionItemID",
             templateUrl: "aipReview/reviewActionItem/reviewActionItem.html",
-            controller: "ReviewActionItemCtrl",
+            controller: "reviewActionItemCtrl",
             params: {
                 userActionItemID: null
             },
@@ -80,8 +80,8 @@ var bannerAIPReviewApp = angular.module("bannerAIPReview", [
     .constant("ENDPOINT", {
         review: {
             listActionItemNames: aipAppAbsPath + "aipReview/fetchActionItemNames",
-            search: aipAppAbsPath + "aipReview/searchActionItems"
-
+            search: aipAppAbsPath + "aipReview/searchActionItems",
+            getActionItem: aipAppAbsPath + "aipReview/getActionItem"
 
         }
     })
