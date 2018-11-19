@@ -259,7 +259,7 @@ module AIP {
                 searchString: "",
                 placeholder: this.$filter("i18n_aip")("search.label"),
                 maxlength: 200,
-                minimumCharacters: 3
+                minimumCharacters: 1
             };
             this.paginationConfig = this.commonPaginationConfig;
         }

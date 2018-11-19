@@ -36,11 +36,11 @@ class AipReviewController {
                                    max          : params.max,
                                    offset       : params.offset]
 
-        Map paramsMap = [:]
+        Map paramsMap = [searchString: params.searchString ? params.searchString : ""]
         def criteriaMap = [:]
         def filterData = [params: paramsMap, criteria: criteriaMap]
 
-        def result = monitorActionItemCompositeService.searchMonitorActionItems(actionItemid, params?.personName?.trim(),params?.personId?.trim(),filterData,pagingAndSortParams)
+        def result = monitorActionItemCompositeService.searchMonitorActionItems(actionItemid, params?.personName?.trim(), params?.personId?.trim(), filterData, pagingAndSortParams)
         render result as JSON
     }
 }
