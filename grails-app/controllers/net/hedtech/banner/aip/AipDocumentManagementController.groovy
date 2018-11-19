@@ -186,7 +186,7 @@ class AipDocumentManagementController {
      */
     def previewDocument() {
         def map = request.JSON
-        def   previewDocumentInfo = uploadDocumentCompositeService.previewDocument(map.documentId)
+        def   previewDocumentInfo = uploadDocumentCompositeService.previewDocument(map)
         render previewDocumentInfo as JSON
     }
 }
