@@ -234,6 +234,9 @@ aip-list .enddate {
   font-size: 11px;
   margin-right: 10px; }
 
+input.hasDatepicker {
+  width: 150px !important; }
+
 .AIP-landing-container {
   padding: 16px; }
 
