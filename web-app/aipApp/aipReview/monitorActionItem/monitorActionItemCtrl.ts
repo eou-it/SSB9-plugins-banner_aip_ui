@@ -50,6 +50,7 @@ module AIP {
         query:ISearchActionItemQuery;
         commonPaginationConfig;
         gridEnabled:boolean;
+        searchEnabled:boolean;
 
         constructor($scope, $state, AIPReviewService, AIPUserService, SpinnerService, $timeout, $q, $uibModal, APP_ROOT, $sce, $filter, PAGINATIONCONFIG) {
             $scope.vm = this;
@@ -73,6 +74,7 @@ module AIP {
         }
 
         init() {
+            this.searchEnabled=true;
             this.gridEnabled = false;
             var allPromises = [];
             allPromises.push(
@@ -301,6 +303,7 @@ module AIP {
             }
 
             this.gridEnabled = true;
+            this.searchEnabled= false;
 
         }
 
@@ -311,6 +314,7 @@ module AIP {
             this.personName = "";
             this.gridData = {};
             this.gridEnabled = false;
+            this.searchEnabled=true;
         }
 
 
