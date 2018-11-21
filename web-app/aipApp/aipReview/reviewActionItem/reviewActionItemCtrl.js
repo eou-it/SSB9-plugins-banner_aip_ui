@@ -7,7 +7,7 @@
 ///<reference path="../../common/services/spinnerService.ts"/>
 var AIP;
 (function (AIP) {
-    var ReviewActionItemCtrl = /** @class */ (function () {
+    var ReviewActionItemCtrl = (function () {
         function ReviewActionItemCtrl($scope, $state, AIPReviewService, AIPUserService, SpinnerService, $timeout, $q, $uibModal, APP_ROOT, $sce, $filter) {
             this.$inject = ["$scope", "$state", "AIPReviewService", "AIPUserService", "SpinnerService", "$timeout", "$q", "$uibModal", "APP_ROOT", "$sce", "$filter"];
             /**
@@ -102,6 +102,11 @@ var AIP;
             this.query;
             this.gridData = {};
             this.init();
+            this.actionItemReviewStatusList = null;
+            this.contactInfo;
+            this.externalCommetInd = true;
+            this.reviewComments;
+            this.selectedReviewState = {};
             $scope.header = [{
                     name: "id",
                     title: "ID",
@@ -178,7 +183,9 @@ var AIP;
                 _this.actionItemId = _this.actionItemDetails.actionItemId;
                 _this.responseId = _this.actionItemDetails.responseId;
                 _this.personId = _this.actionItemDetails.spridenId;
+                _this.selectedReviewState.name = _this.actionItemDetails.reviewState;
             }));
+            this.getReviewStatusList();
         };
         /**
          * Show of grid in the model window with list of attachments.
@@ -188,8 +195,47 @@ var AIP;
             this.actionItemId = this.actionItemDetails.actionItemId;
             this.responseId = this.actionItemDetails.responseId;
         };
+        ReviewActionItemCtrl.prototype.getReviewStatusList = function () {
+            var _this = this;
+            this.aipReviewService.getReviewStatusList()
+                .then(function (response) {
+                _this.actionItemReviewStatusList = response;
+            });
+        };
+        ReviewActionItemCtrl.prototype.updateActionItemReview = function () {
+            var _this = this;
+            var reqParams = {
+                userActionItemId: this.actionItemDetails.id,
+                responseId: this.actionItemDetails.responseId,
+                reviewStateId: this.selectedReviewState.code,
+                displayEndDate: this.actionItemDetails.displayEndDate,
+                externalCommetInd: this.externalCommetInd,
+                reviewComments: this.reviewComments,
+                contactInfo: this.contactInfo
+            };
+            this.spinnerService.showSpinner(true);
+            this.aipReviewService.updateActionItemReview(reqParams)
+                .then(function (response) {
+                _this.spinnerService.showSpinner(false);
+                if (response.data.success) {
+                    _this.displayNotification(response.data.message, "success");
+                }
+                else {
+                    _this.displayNotification(response.data.message, "error");
+                }
+            });
+        };
+        ReviewActionItemCtrl.prototype.displayNotification = function (message, errorType) {
+            var n = new Notification({
+                message: message,
+                type: errorType,
+                flash: true
+            });
+            notifications.addNotification(n);
+        };
         return ReviewActionItemCtrl;
-    }());
+    })();
     AIP.ReviewActionItemCtrl = ReviewActionItemCtrl;
 })(AIP || (AIP = {}));
 register("bannerAIPReview").controller("reviewActionItemCtrl", AIP.ReviewActionItemCtrl);
+//# sourceMappingURL=reviewActionItemCtrl.js.map

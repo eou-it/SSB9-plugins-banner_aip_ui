@@ -74,8 +74,71 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
             <img src="../images/attach_icon_default.svg" class="attachmentimage" ng-click="vm.viewAttachments()"/>
         </div>
     </div>
+    <div class="review-action-item-container">
+        <form name="actionItemReviewForm">
+            <div class="row">
+                <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2" >
+                    <label  class="titleValue">Review Status</label>
+                </div>
+                <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8" class="actionItemElement">
+                    <xe-ui-select class="folder-minwidth" id="folderid" ng-model="vm.selectedReviewState" theme="select2">
+                        <xe-ui-select-match  placeholder="{{''|i18n_aip}}">
+                            <div ng-bind-html="vm.selectedReviewState.name"></div>
+                        </xe-ui-select-match>
+                        <xe-ui-select-choices  repeat="item in vm.actionItemReviewStatusList | propsFilter: {name: $select.search}">
+                            <div ng-bind-html="item.name"></div>
+                        </xe-ui-select-choices>
+                    </xe-ui-select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2" >
+                    <label class="titleValue">Comments</label>
+                </div>
+                <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8" class="actionItemElement">
+                    <input type="checkbox" ng-model="vm.externalCommetInd" value="Y" checked="true">External
+                    <input type="text" class="form-control" ng-model="vm.reviewComments"/>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2" >
+                    <label class="titleValue">Display End Date</label>
+                </div>
+                <div class="actionItemElement col-xs-8 col-sm-8 col-md-8 col-lg-8">
+                    <input type="text" id="displayEndDate" date-picker ng-model="vm.actionItemDetails.displayEndDate"
+                           class="form-control  Datelement" name="displayEndDate"
+                           aria-required="true" required autocomplete="off"
+                           placeholder='{{"default.date.format.watermark"|i18n_aip}}'/>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2" >
+                    <label class="titleValue">Contact</label>
+                </div>
+                <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8" class="actionItemElement">
+                    <input type="text" data-ng-model="vm.contactInfo" class="form-control"/>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2" >
 
-        <xe-popup-modal show=vm.showModal focusbackelement="tools"
+                </div>
+                <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8" class="actionItemElement">
+                 <span>
+                    <button name="Cancel" type="button" class="btn btn-primary" ng-click="vm.reset()"  ng-disabled="!actionItemReviewForm.$dirty">
+                        {{"js.aip.review.monitor.action.resetButtonLabel"|i18n_aip}}
+                    </button>
+                 </span>
+                <span>
+                    <button name="Save" type="button" class="btn btn-primary"  ng-click="vm.updateActionItemReview();actionItemReviewForm.$setPristine();" ng-disabled="!actionItemReviewForm.$dirty">
+                        {{"default.button.save.label"|i18n_aip}}
+                    </button>
+                </span>
+                </div>
+            </div>
+        </form>
+    </div>
+    <xe-popup-modal show=vm.showModal focusbackelement="tools"
                                         pageheader={{"js.aip.review.monitor.action.viewAttachments.modal.title"|i18n_aip}}>
             <popup-content>
                 <div class="attachmentsTable" ng-if="vm.showModal">

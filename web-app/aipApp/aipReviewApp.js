@@ -81,7 +81,9 @@ var bannerAIPReviewApp = angular.module("bannerAIPReview", [
         review: {
             listActionItemNames: aipAppAbsPath + "aipReview/fetchActionItemNames",
             search: aipAppAbsPath + "aipReview/searchActionItems",
-            getActionItem: aipAppAbsPath + "aipReview/getActionItem"
+            getActionItem: aipAppAbsPath + "aipReview/getActionItem",
+            getReviewStatusList: aipAppAbsPath + "aipReview/getReviewStatusList",
+            updateActionItemReview: aipAppAbsPath + "aipReview/updateActionItemReview"
 
         }
     })

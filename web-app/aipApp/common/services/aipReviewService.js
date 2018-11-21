@@ -4,7 +4,7 @@
 ///<reference path="../../../typings/tsd.d.ts"/>
 var AIP;
 (function (AIP) {
-    var AIPReviewService = /** @class */ (function () {
+    var AIPReviewService = (function () {
         function AIPReviewService($http, $q, ENDPOINT, APP_PATH) {
             this.$http = $http;
             this.$q = $q;
@@ -88,9 +88,30 @@ var AIP;
             });
             return request;
         };
+        AIPReviewService.prototype.getReviewStatusList = function () {
+            var deferred = this.$q.defer();
+            var request = this.$http({
+                method: "GET",
+                url: this.ENDPOINT.review.getReviewStatusList
+            }).then(function (response) {
+                deferred.resolve(response.data);
+            }, function (response) {
+                deferred.reject(response);
+            });
+            return deferred.promise;
+        };
+        AIPReviewService.prototype.updateActionItemReview = function (params) {
+            var request = this.$http({
+                method: "POST",
+                data: params,
+                url: this.ENDPOINT.review.updateActionItemReview
+            });
+            return request;
+        };
         AIPReviewService.$inject = ["$http", "$q", "ENDPOINT", "APP_PATH"];
         return AIPReviewService;
-    }());
+    })();
     AIP.AIPReviewService = AIPReviewService;
 })(AIP || (AIP = {}));
 register("bannerCommonAIP").service("AIPReviewService", AIP.AIPReviewService);
+//# sourceMappingURL=aipReviewService.js.map
