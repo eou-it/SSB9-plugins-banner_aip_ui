@@ -237,6 +237,9 @@ aip-list .enddate {
 input.hasDatepicker {
   width: 150px !important; }
 
+.ui-datepicker {
+  height: 22em !important; }
+
 .AIP-landing-container {
   padding: 16px; }
 
