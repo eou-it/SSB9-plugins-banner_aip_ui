@@ -51,6 +51,7 @@ var AIP;
         }
         MonitorActionItemCtrl.prototype.init = function () {
             var _this = this;
+            this.searchEnabled = true;
             this.gridEnabled = false;
             var allPromises = [];
             allPromises.push(this.aipReviewService.getActionItemList()
@@ -232,6 +233,7 @@ var AIP;
                 return;
             }
             this.gridEnabled = true;
+            this.searchEnabled = false;
         };
         MonitorActionItemCtrl.prototype.reset = function () {
             this.selected = {};
@@ -240,6 +242,7 @@ var AIP;
             this.personName = "";
             this.gridData = {};
             this.gridEnabled = false;
+            this.searchEnabled = true;
         };
         MonitorActionItemCtrl.prototype.review = function (userActionItemID) {
             console.log("parameter passed", userActionItemID);

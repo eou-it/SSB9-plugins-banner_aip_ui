@@ -77,14 +77,14 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
                     <div class="col-xs-12 col-sm-8">
                         <div class="col-sm-6 offset-sm-8 col-xs-12 ">
                         <span>
-                        <button name="search" type="button" class="btn btn-primary"
-                                ng-click="vm.search()">
+                        <button name="search" type="button" class="btn"
+                                ng-click="vm.search()" ng-disabled="!vm.searchEnabled" ng-class="{'btn-primary': vm.searchEnabled}">
                             {{"js.aip.review.monitor.action.searchButtonLabel"|i18n_aip}}
                         </button>
                     </span>
                             <span>
-                        <button name="startOver" type="button" class="btn btn-secondary"
-                                ng-click="vm.reset()">
+                        <button name="startOver" type="button" class="btn"
+                                ng-click="vm.reset()" ng-class="{'btn-primary': !vm.searchEnabled,'btn-secondary':vm.searchEnabled}" >
                             {{"js.aip.review.monitor.action.resetButtonLabel"|i18n_aip}}
                         </button>
                     </span>
