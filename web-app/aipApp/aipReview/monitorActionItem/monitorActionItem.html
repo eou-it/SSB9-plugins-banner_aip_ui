@@ -6,7 +6,7 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
         <uib-accordion close-others="oneAtATime">
             <uib-accordion-group class="monitor-action-item-container" role="tablist" is-open="true">
                 <uib-accordion-heading id="heading" role="tab"
-                                       aria-label="{{js.aip.review.monitor.title.heading|i18n_aip}}">
+                                       aria-label="{{'js.aip.review.monitor.title.heading'|i18n_aip}}">
                     {{"js.aip.review.monitor.title.heading"|i18n_aip}}
                 </uib-accordion-heading>
 
@@ -58,11 +58,11 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
                     <div class="col-xs-2 col-sm-2">
                         <label for="searchByPersonId" class="titleValue " id="searchByPersonId"
                                ng-if="vm.option == 'personId'"
-                               aria-label="{{js.aip.review.monitor.action.personIdLabel}}">{{"js.aip.review.monitor.action.personIdLabel"|i18n_aip}}
+                               aria-label="{{'js.aip.review.monitor.action.personIdLabel'|i18n_aip}}">{{"js.aip.review.monitor.action.personIdLabel"|i18n_aip}}
                         </label>
                         <label for="searchByPersonName" class="titleValue " id="searchByPersonName"
                                ng-if="vm.option == 'personName'"
-                               aria-label="{{js.aip.review.monitor.action.personNameLabel}}">{{"js.aip.review.monitor.action.personNameLabel"|i18n_aip}}
+                               aria-label="{{'js.aip.review.monitor.action.personNameLabel'|i18n_aip}}">{{"js.aip.review.monitor.action.personNameLabel"|i18n_aip}}
                         </label>
                     </div>
                 </div>
@@ -122,8 +122,8 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
                     <div ng-show="row.reviewIndicator==true" class="row actionItemActions ng-scope">
                         <a class="icon icon-view-CO"
                                 title="{{'aip.common.open.action.item.jaws'|i18n_aip}}"
-                                aria-label="{{'aip.common.open.action.item.jaws'|i18n_aip}}
-                                " href="aipReview#/monitor/review/{{row.id}}">
+                                aria-label="{{'aip.common.open.action.item.jaws'|i18n_aip}}"
+                                href="aipReview#/monitor/review/{{row.id}}">
                         </a>
                         <!-- TODO: After refresh grid changes we need to modify the above link to button and call on clik to method in controller -->
                     </div>

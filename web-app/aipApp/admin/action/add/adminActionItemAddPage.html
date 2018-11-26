@@ -7,7 +7,7 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
             <div class="actionItemElement row input-actionItem">
                 <div class="actionItemTitle col-xs-12 col-md-8">
                     <label for="actionItemTitle" class="titleValue required" id="actionItemAdd-Name"
-                           aria-label="Action Item Name">{{"aip.admin.action.actionItem.name"|i18n_aip}}
+                           aria-label="{{'aip.admin.action.actionItem.name'|i18n_aip}}">{{"aip.admin.action.actionItem.name"|i18n_aip}}
                     </label>
                     <span class="titleValue supplement">{{"aip.admin.action.add.actionName.maxLength"|i18n_aip:60}}</span>
                 </div>
@@ -16,7 +16,7 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
                 <div class="row" ng-class="{'has-error':vm.actionItemInfo.name.length>60}">
                     <input id="actionItemName" maxlength="60" aria-valuemax="60" type="text" class="form-control"
                            ng-model="vm.actionItemInfo.name" ng-disabled="vm.editMode"
-                           placeholder="{{'aip.admin.action.actionItem.name'|i18n_aip}}" aria-label="Action Item Name"
+                           placeholder="{{'aip.admin.action.actionItem.name'|i18n_aip}}" aria-label="{{'aip.admin.action.actionItem.name'|i18n_aip}}"
                            aria-required="true" ng-change="vm.dataChanged()">
                 </div>
                 <div class="alert alert-danger" role="alert" ng-if="vm.actionItemInfo.title.name>60">
@@ -71,7 +71,7 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
             <div class="actionItemElement row input-actionItem">
                 <div class="actionItemTitle col-xs-12 col-md-8">
                     <label for="actionItemTitle" class="titleValue required" id="actionItemAdd-Title"
-                           aria-label="Action Item Title">{{"aip.admin.action.actionItem.title"|i18n_aip}}
+                           aria-label="{{'aip.admin.action.actionItem.title'|i18n_aip}}">{{"aip.admin.action.actionItem.title"|i18n_aip}}
                     </label>
                     <span class="titleValue supplement">{{"aip.admin.action.add.maxLength"|i18n_aip:300}}</span>
                 </div>
@@ -80,7 +80,7 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
                 <div class="row" ng-class="{'has-error':vm.actionItemInfo.title.length>300}">
                     <input id="actionItemTitle" maxlength="300" aria-valuemax="300" type="text" class="form-control"
                            ng-model="vm.actionItemInfo.title"
-                           placeholder="{{'aip.admin.action.actionItem.title'|i18n_aip}}" aria-label="Action Item Title"
+                           placeholder="{{'aip.admin.action.actionItem.title'|i18n_aip}}" aria-label="{{'aip.admin.action.actionItem.title'|i18n_aip}}"
                            aria-required="true"  ng-change="vm.dataChanged()">
                 </div>
                 <div class="alert alert-danger" role="alert" ng-if="vm.actionItemInfo.title.length>300">
@@ -102,7 +102,7 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
 
                     <textarea id="actionItemDesc" aria-required="true" name="actionItemDesc"
                               placeholder="{{'aip.admin.action.add.description.placeholder'|i18n_aip}}" rows="20" cols="35"
-                              ng-model="vm.actionItemInfo.description" aria-label="Description" ng-change="vm.dataChanged()"></textarea>
+                              ng-model="vm.actionItemInfo.description" aria-label="{{'aip.admin.action.add.description.placeholder'|i18n_aip}}" ng-change="vm.dataChanged()"></textarea>
 
             </div>
         </div>
