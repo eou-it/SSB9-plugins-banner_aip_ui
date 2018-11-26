@@ -40,20 +40,38 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
     </div>
     <div class="row ">
         <div class="col-xs-2 col-sm-2">
-            <label for="statusDate" class="titleValue" id="statusDate">{{"js.aip.review.monitor.action.statusLabel"|i18n_aip}}
+            <label for="responseStatus" class="titleValue" id="responseStatus">{{"js.aip.review.monitor.action.status.response.Label"|i18n_aip}}
             </label>
         </div>
         <div class="col-xs-7 col-sm-7">
-            <div class="fieldValue">{{vm.actionItemDetails.status}} {{vm.actionItemDetails.responseDate}}</div>
+            <div class="fieldValue">{{vm.actionItemDetails.status}}</div>
         </div>
     </div>
     <div class="row ">
         <div class="col-xs-2 col-sm-2">
-            <label for="startEndDate" class="titleValue " id="startEndDate">{{"js.aip.review.monitor.action.dateLabel"|i18n_aip}}
+            <label for="responseDate" class="titleValue" id="responseDate">{{"js.aip.review.monitor.action.response.date.Label"|i18n_aip}}
             </label>
         </div>
         <div class="col-xs-7 col-sm-7">
-            <div class="fieldValue">{{vm.actionItemDetails.displayStartDate}}-{{vm.actionItemDetails.displayEndDate}}</div>
+            <div class="fieldValue">{{vm.actionItemDetails.responseDate}}</div>
+        </div>
+    </div>
+    <div class="row ">
+        <div class="col-xs-2 col-sm-2">
+            <label for="startDate" class="titleValue " id="startDate">{{"js.aip.review.monitor.action.display.start.date.Label"|i18n_aip}}
+            </label>
+        </div>
+        <div class="col-xs-7 col-sm-7">
+            <div class="fieldValue">{{vm.actionItemDetails.displayStartDate}}</div>
+        </div>
+    </div>
+    <div class="row ">
+        <div class="col-xs-2 col-sm-2">
+            <label for="endDate" class="titleValue " id="endDate">{{"js.aip.review.monitor.action.diplay.end.date.Label"|i18n_aip}}
+            </label>
+        </div>
+        <div class="col-xs-7 col-sm-7">
+            <div class="fieldValue">{{vm.actionItemDetails.displayEndDate}}</div>
         </div>
     </div>
     <div class="row ">
@@ -77,32 +95,34 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
     <div class="review-action-item-container">
         <form name="actionItemReviewForm">
             <div class="row">
-                <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2" >
-                    <label  class="titleValue">Review Status</label>
+                <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                    <label class="titleValue">{{"js.aip.review.monitor.action.review.status.Label"|i18n_aip}}</label>
                 </div>
                 <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8" class="actionItemElement">
-                    <xe-ui-select class="folder-minwidth" id="folderid" ng-model="vm.selectedReviewState" theme="select2">
-                        <xe-ui-select-match  placeholder="{{''|i18n_aip}}">
+                    <xe-ui-select class="folder-minwidth" id="folderid" ng-model="vm.selectedReviewState"
+                                  theme="select2">
+                        <xe-ui-select-match placeholder="{{''|i18n_aip}}">
                             <div ng-bind-html="vm.selectedReviewState.name"></div>
                         </xe-ui-select-match>
-                        <xe-ui-select-choices  repeat="item in vm.actionItemReviewStatusList | propsFilter: {name: $select.search}">
+                        <xe-ui-select-choices
+                                repeat="item in vm.actionItemReviewStatusList | propsFilter: {name: $select.search}">
                             <div ng-bind-html="item.name"></div>
                         </xe-ui-select-choices>
                     </xe-ui-select>
                 </div>
             </div>
             <div class="row">
-                <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2" >
-                    <label class="titleValue">Comments</label>
+                <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                    <label class="titleValue">{{"js.aip.review.monitor.action.comments.Label"|i18n_aip}}</label>
                 </div>
                 <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8" class="actionItemElement">
-                    <input type="checkbox" ng-model="vm.externalCommetInd" value="Y" checked="true">External
+                    <input type="checkbox" ng-model="vm.externalCommetInd" value="Y" checked="true">{{"js.aip.review.monitor.action.external.Label"|i18n_aip}}
                     <input type="text" class="form-control" ng-model="vm.reviewComments"/>
                 </div>
             </div>
             <div class="row">
-                <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2" >
-                    <label class="titleValue">Display End Date</label>
+                <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                    <label class="titleValue">{{"js.aip.review.monitor.action.diplay.end.date.Label"|i18n_aip}}</label>
                 </div>
                 <div class="actionItemElement col-xs-8 col-sm-8 col-md-8 col-lg-8">
                     <input type="text" id="displayEndDate" date-picker ng-model="vm.actionItemDetails.displayEndDate"
@@ -112,25 +132,28 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
                 </div>
             </div>
             <div class="row">
-                <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2" >
-                    <label class="titleValue">Contact</label>
+                <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                    <label class="titleValue">{{"js.aip.review.monitor.action.contact.Label"|i18n_aip}}</label>
                 </div>
                 <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8" class="actionItemElement">
                     <input type="text" data-ng-model="vm.contactInfo" class="form-control"/>
                 </div>
             </div>
             <div class="row">
-                <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2" >
+                <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
 
                 </div>
                 <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8" class="actionItemElement">
                  <span>
-                    <button name="Cancel" type="button" class="btn btn-primary" ng-click="vm.reset()"  ng-disabled="!actionItemReviewForm.$dirty">
+                    <button name="Cancel" type="button" class="btn btn-primary" ng-click="vm.reset()"
+                            ng-disabled="!actionItemReviewForm.$dirty">
                         {{"js.aip.review.monitor.action.resetButtonLabel"|i18n_aip}}
                     </button>
                  </span>
                 <span>
-                    <button name="Save" type="button" class="btn btn-primary"  ng-click="vm.updateActionItemReview();actionItemReviewForm.$setPristine();" ng-disabled="!actionItemReviewForm.$dirty">
+                    <button name="Save" type="button" class="btn btn-primary"
+                            ng-click="vm.updateActionItemReview();actionItemReviewForm.$setPristine();"
+                            ng-disabled="!actionItemReviewForm.$dirty">
                         {{"default.button.save.label"|i18n_aip}}
                     </button>
                 </span>
@@ -139,33 +162,34 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
         </form>
     </div>
     <xe-popup-modal show=vm.showModal focusbackelement="tools"
-                                        pageheader={{"js.aip.review.monitor.action.viewAttachments.modal.title"|i18n_aip}}>
-            <popup-content>
-                <div class="attachmentsTable" ng-if="vm.showModal">
-                                    <xe-table-grid
-                                            table-id="dataTableAttachmentsList"
-                                            header="header"
-                                            fetch="vm.fetchData(query)"
-                                            content="vm.gridData.row"
-                                            results-found="records"
-                                            toolbar="false"
-                                            paginate="false"
-                                            on-row-click="vm.selectRecord(data)"
-                                            no-data-msg="{{'aip.common.no.results.found'|i18n_aip}}"
-                                            pagination-config="paginationConfig"
-                                            continuous-scrolling="true"
-                                            continuous-scroll-parent="attachmentsTable"
-                                            height="10em">
-                                        <xe-cell-markup column-name="attachmentActions">
-                                            <div class="row attachmentActions">
-                                                <button class="view-attachment-icon" ng-click="vm.previewDocument(row, vm.actionItemDetails.spridenId)"
-                                                        title="{{'aip.common.open.action.item.jaws'|i18n_aip}}"
-                                                        aria-label="{{'aip.common.open.action.item.jaws'|i18n_aip}}">
-                                                </button>
-                                            </div>
-                                        </xe-cell-markup>
-                                    </xe-table-grid>
-                                </div>
-            </popup-content>
-        </xe-popup-modal>
+                    pageheader={{"js.aip.review.monitor.action.viewAttachments.modal.title"|i18n_aip}}>
+        <popup-content>
+            <div class="attachmentsTable" ng-if="vm.showModal">
+                <xe-table-grid
+                        table-id="dataTableAttachmentsList"
+                        header="header"
+                        fetch="vm.fetchData(query)"
+                        content="vm.gridData.row"
+                        results-found="records"
+                        toolbar="false"
+                        paginate="false"
+                        on-row-click="vm.selectRecord(data)"
+                        no-data-msg="{{'aip.common.no.results.found'|i18n_aip}}"
+                        pagination-config="paginationConfig"
+                        continuous-scrolling="true"
+                        continuous-scroll-parent="attachmentsTable"
+                        height="10em">
+                    <xe-cell-markup column-name="attachmentActions">
+                        <div class="row attachmentActions">
+                            <button class="view-attachment-icon"
+                                    ng-click="vm.previewDocument(row, vm.actionItemDetails.spridenId)"
+                                    title="{{'aip.common.open.action.item.jaws'|i18n_aip}}"
+                                    aria-label="{{'aip.common.open.action.item.jaws'|i18n_aip}}">
+                            </button>
+                        </div>
+                    </xe-cell-markup>
+                </xe-table-grid>
+            </div>
+        </popup-content>
+    </xe-popup-modal>
 </div>
