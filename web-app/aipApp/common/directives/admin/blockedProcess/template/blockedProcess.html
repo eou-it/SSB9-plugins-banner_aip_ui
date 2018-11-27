@@ -3,7 +3,7 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
 *******************************************************************************-->
 <div class="blocked-process">
     <div class="col-xs-11 col-sm-11">
-        <select class="" xe-data="" aria-label="{{'aip.admin.status.block'|i18n_aip}}" required aria-required="true"
+        <select class="" xe-data="" aria-label="{{'aip.admin.status.halt'|i18n_aip}}" required aria-required="true"
                 ng-options="item as item.value.processNamei18n|i18n_aip for item in all | blockProcessItemFilter:currentitem:generated track by item.name"
                 ng-model="currentitem"
                 ng-change="updateCurrent()">

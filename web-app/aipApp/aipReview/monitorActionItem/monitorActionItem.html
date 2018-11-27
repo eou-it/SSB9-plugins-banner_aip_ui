@@ -44,25 +44,25 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
                 <div class="row">
                     <div class="col-xs-2 col-sm-2">
                         <input type="radio" id="personId" name="content" ng-model="vm.option" ng-value="'personId'">
-                        <label class="titleValue " for="personId">{{"js.aip.review.monitor.action.personIdLabel"|i18n_aip}}</label>
+                        <label class="titleValue " for="personId">{{"js.aip.review.monitor.action.personId.label"|i18n_aip}}</label>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-xs-2 col-sm-2">
                         <input type="radio" id="personName" name="content" ng-model="vm.option" ng-value="'personName'">
-                        <label class="titleValue " for="personName">{{"js.aip.review.monitor.action.personNameLabel"|i18n_aip}}</label>
+                        <label class="titleValue " for="personName">{{"js.aip.review.monitor.action.personName.label"|i18n_aip}}</label>
 
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-xs-2 col-sm-2">
                         <label for="searchByPersonId" class="titleValue " id="searchByPersonId"
-                               ng-if="vm.option == 'personId'"
-                               aria-label="{{'js.aip.review.monitor.action.personIdLabel'|i18n_aip}}">{{"js.aip.review.monitor.action.personIdLabel"|i18n_aip}}
+                               ng-if="vm.option == 'personId'">
+                            {{"js.aip.review.monitor.action.personId.label"|i18n_aip}}
                         </label>
                         <label for="searchByPersonName" class="titleValue " id="searchByPersonName"
-                               ng-if="vm.option == 'personName'"
-                               aria-label="{{'js.aip.review.monitor.action.personNameLabel'|i18n_aip}}">{{"js.aip.review.monitor.action.personNameLabel"|i18n_aip}}
+                               ng-if="vm.option == 'personName'">
+                            {{"js.aip.review.monitor.action.personName.label"|i18n_aip}}
                         </label>
                     </div>
                 </div>
