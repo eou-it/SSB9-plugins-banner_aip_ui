@@ -6,7 +6,7 @@
 ///<reference path="../../common/services/userService.ts"/>
 var AIP;
 (function (AIP) {
-    var MonitorActionItemCtrl = (function () {
+    var MonitorActionItemCtrl = /** @class */ (function () {
         function MonitorActionItemCtrl($scope, $state, AIPReviewService, AIPUserService, SpinnerService, $timeout, $q, $uibModal, APP_ROOT, $sce, $filter, PAGINATIONCONFIG) {
             this.$inject = ["$scope", "$state", "AIPReviewService", "AIPUserService", "SpinnerService", "$timeout", "$q", "$uibModal", "APP_ROOT", "$sce", "$filter", "PAGINATIONCONFIG"];
             this.fetchData = function (query) {
@@ -61,12 +61,18 @@ var AIP;
             this.gridData = {};
             this.draggableColumnNames = [];
             this.mobileConfig = {
+                actionItemPersonName: 3,
+                spridenId: 3,
+                actionItemGroupName: 3,
                 actionItemName: 3,
-                folderName: 3,
-                actionItemStatus: 3,
-                actionItemLastUserId: 3,
-                actionItemCompositeDate: 3,
-                actionStatus: 3
+                status: 3,
+                responseDate: 3,
+                currentResponseText: 3,
+                displayStartDate: 3,
+                displayEndDate: 3,
+                reviewIndicator: 3,
+                attachments: 3,
+                reviewState: 3
             };
             this.mobileSize = angular.element("body").width() > 768 ? false : true;
             this.header = [{
@@ -197,7 +203,7 @@ var AIP;
                     options: {
                         sortable: true,
                         ascending: true,
-                        visible: true
+                        visible: true,
                     }
                 }, {
                     name: "reviewState",
@@ -249,8 +255,7 @@ var AIP;
             this.$state.go("review-action-item", { userActionItemID: userActionItemID });
         };
         return MonitorActionItemCtrl;
-    })();
+    }());
     AIP.MonitorActionItemCtrl = MonitorActionItemCtrl;
 })(AIP || (AIP = {}));
 register("bannerAIPReview").controller("monitorActionItemCtrl", AIP.MonitorActionItemCtrl);
-//# sourceMappingURL=monitorActionItemCtrl.js.map

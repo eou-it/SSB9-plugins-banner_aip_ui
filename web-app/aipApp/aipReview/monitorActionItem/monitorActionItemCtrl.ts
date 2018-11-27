@@ -88,12 +88,18 @@ module AIP {
             this.draggableColumnNames = [];
 
             this.mobileConfig = {
+                actionItemPersonName: 3,
+                spridenId: 3,
+                actionItemGroupName: 3,
                 actionItemName: 3,
-                folderName: 3,
-                actionItemStatus: 3,
-                actionItemLastUserId: 3,
-                actionItemCompositeDate: 3,
-                actionStatus: 3
+                status: 3,
+                responseDate: 3,
+                currentResponseText:3,
+                displayStartDate:3,
+                displayEndDate:3,
+                reviewIndicator:3,
+                attachments:3,
+                reviewState:3
             };
             this.mobileSize = angular.element("body").width() > 768 ? false : true;
 

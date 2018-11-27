@@ -1,21 +1,21 @@
 <!--*******************************************************************************
 Copyright 2018 Ellucian Company L.P. and its affiliates.
 *******************************************************************************-->
-<div>
+<div class="monitor-action-item-container" id="monitorActionItemPage" ng-controller="monitorActionItemCtrl">
     <div>
         <uib-accordion close-others="oneAtATime">
-            <uib-accordion-group class="monitor-action-item-container" role="tablist" is-open="true">
+            <uib-accordion-group class="monitor-action-item-accordion-container" role="tablist" is-open="true">
                 <uib-accordion-heading id="heading" role="tab"
                                        aria-label="{{js.aip.review.monitor.title.heading|i18n_aip}}">
                     {{"js.aip.review.monitor.title.heading"|i18n_aip}}
                 </uib-accordion-heading>
 
                 <div class="row ">
-                    <div class="col-xs-1 col-sm-1">
+                    <div class="col-xs-2 col-sm-2 col-md-1 label-padding" >
                         <label for="actionItem" class="titleValue " id="actionItem">{{"js.aip.review.monitor.action.itemLabel"|i18n_aip}}
                         </label>
                     </div>
-                    <div class="col-xs-8 col-sm-8">
+                    <div class="col-xs-11 col-sm-11 col-md-7">
                         <xe-ui-select id="actionItemName"
                                       ng-model="vm.selected"
                                       theme="select2" ng-disabled="disabled">
@@ -36,26 +36,26 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
                     </div>
                 </div>
                 <div class="row ">
-                    <div class="col-xs-2 col-sm-2">
+                    <div class="col-xs-2 col-sm-3 col-md-3 label-padding">
                         <label for="searchBy" class="titleValue " id="searchBy">{{"js.aip.review.monitor.action.searchLabel"|i18n_aip}}
                         </label>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-xs-2 col-sm-2">
+                    <div class="col-xs-7 col-sm-3 col-md-3">
                         <input type="radio" id="personId" name="content" ng-model="vm.option" ng-value="'personId'">
                         <label class="titleValue " for="personId">{{"js.aip.review.monitor.action.personIdLabel"|i18n_aip}}</label>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-xs-2 col-sm-2">
+                    <div class="col-xs-7 col-sm-3 col-md-3">
                         <input type="radio" id="personName" name="content" ng-model="vm.option" ng-value="'personName'">
                         <label class="titleValue " for="personName">{{"js.aip.review.monitor.action.personNameLabel"|i18n_aip}}</label>
 
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-xs-2 col-sm-2">
+                    <div class="col-xs-7 col-sm-2 col-md-3">
                         <label for="searchByPersonId" class="titleValue " id="searchByPersonId"
                                ng-if="vm.option == 'personId'"
                                aria-label="{{js.aip.review.monitor.action.personIdLabel}}">{{"js.aip.review.monitor.action.personIdLabel"|i18n_aip}}
@@ -67,7 +67,7 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-sm-3 col-md-3">
+                    <div class="col-xs-4 col-sm-3 col-md-3">
                         <input id="personIdVal" type="text" class="form-control" ng-if="vm.option == 'personId'"
                                ng-model="vm.personId">
                         <input id="personNameVal" type="text" class="form-control" ng-if="vm.option == 'personName'"
@@ -130,10 +130,8 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
                 </xe-cell-markup>
 
                 <xe-cell-markup column-name="attachments">
-
                     <div ng-if="row.attachments>0" class="row actionItemActions">
                         <img src="../images/attach_icon_default.svg" class="attachmentimage"/>
-
                     </div>
                 </xe-cell-markup>
             </xe-table-grid>
