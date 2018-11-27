@@ -106,7 +106,7 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
                     end-point=""
                     content="vm.gridData.row"
                     results-found="vm.records"
-                    toolbar="false"
+                    toolbar="true"
                     paginate="true"
                     on-row-click="vm.selectRecord(data)"
                     no-data-msg="{{'aip.common.no.results.found'|i18n_aip}}"
@@ -116,8 +116,8 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
                     mobile-layout="vm.mobileConfig"
                     refresh-grid="refreshGrid"
                     draggable-column-names="vm.draggableColumnNames"
-                    continuous-scrolling="true">
-                    <!--continuous-scroll-parent="monitorActionItemGrid">-->
+                    continuous-scrolling="vm.mobileSize"
+                    continuous-scroll-parent="monitorActionItemGrid">
 
                 <xe-cell-markup column-name="reviewIndicator">
                     <div ng-show="row.reviewIndicator==true" class="row actionItemActions ng-scope">
