@@ -1548,7 +1548,7 @@ ol.selected-group > li > button {
   .monitor-action-item-accordion-container .accordion-toggle {
     color: #000000; }
   .monitor-action-item-accordion-container .label-padding {
-    padding-top: 2px; }
+    padding-top: 5px; }
   .monitor-action-item-accordion-container .select2-results {
     max-height: 100px; }
   .monitor-action-item-accordion-container .titleValue {
@@ -1625,7 +1625,7 @@ ol.selected-group > li > button {
           margin-right: 0; }
 
 @media screen and (max-width: 768px) {
-  .monitorActionItemContainer .row .control {
+  .monitor-action-item-container .row .control {
     padding: 0; } }
 .titleValue {
   font-size: 1.5em;

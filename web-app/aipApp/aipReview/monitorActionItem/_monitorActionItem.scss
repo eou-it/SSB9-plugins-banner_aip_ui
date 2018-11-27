@@ -9,7 +9,7 @@ $accordion-toggle: #000000;
     color: $accordion-toggle;
   }
   .label-padding {
-    padding-top: 2px;
+    padding-top: 5px;
   }
 
   .select2-results {
@@ -120,7 +120,7 @@ $accordion-toggle: #000000;
 
 @media screen and (max-width: 768px) {
 
-  .monitorActionItemContainer {
+  .monitor-action-item-container {
     .row {
       .control {
         padding: 0;
