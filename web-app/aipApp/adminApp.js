@@ -96,7 +96,7 @@ var bannerAIPApp = angular.module("bannerAIP", [
             templateUrl: "admin/action/post/adminPostItemAddPage.html",
             controller: "AdminPostItemAddPageCtrl",
             breadcrumb: {
-                label: "aip.admin.action.actionItem.Addjob",
+                label: "aip.admin.action.actionItem.addJob",
                 url: "/aipAdmin/#/action/add"
             }
         },
@@ -109,7 +109,7 @@ var bannerAIPApp = angular.module("bannerAIP", [
                 isEdit: null
             },
             breadcrumb: {
-                label: "aip.admin.action.actionItem.Editjob",
+                label: "aip.admin.action.actionItem.editJob",
                 url: "/aipAdmin/#/action/editjob"
             }
         },
