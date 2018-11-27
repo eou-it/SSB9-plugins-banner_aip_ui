@@ -1,12 +1,15 @@
 
 $accordion-toggle: #000000;
 
-.monitor-action-item-container {
+.monitor-action-item-accordion-container {
   border: none;
   box-shadow: none;
 
   .accordion-toggle {
     color: $accordion-toggle;
+  }
+  .label-padding {
+    padding-top: 2px;
   }
 
   .select2-results {
@@ -115,17 +118,13 @@ $accordion-toggle: #000000;
   }
 
 
+@media screen and (max-width: 768px) {
 
-  @media screen and (max-width: 768px) {
-
-    .actionListContainer {
-      .row {
-        .control {
-          padding: 0;
-        }
+  .monitorActionItemContainer {
+    .row {
+      .control {
+        padding: 0;
       }
     }
   }
-
-
-
+}
