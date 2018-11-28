@@ -95,10 +95,10 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
     <div class="review-action-item-container">
         <form name="actionItemReviewForm">
             <div class="row">
-                <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
                     <label class="titleValue">{{"js.aip.review.monitor.action.review.status.label"|i18n_aip}}</label>
                 </div>
-                <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8" class="actionItemElement">
+                <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8" class="actionItemElement">
                     <xe-ui-select class="folder-minwidth" ng-model="vm.selectedReviewState"
                                   theme="select2">
                         <xe-ui-select-match placeholder="{{''|i18n_aip}}">
@@ -112,19 +112,19 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
                 </div>
             </div>
             <div class="row">
-                <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
                     <label class="titleValue">{{"js.aip.review.monitor.action.comments.label"|i18n_aip}}</label>
                 </div>
-                <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8" class="actionItemElement">
+                <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8" class="actionItemElement">
                     <input type="checkbox" ng-model="vm.externalCommentInd" value="Y" checked="true">{{"js.aip.review.monitor.action.external.label"|i18n_aip}}
                     <input type="text" class="form-control" ng-model="vm.reviewComments"/>
                 </div>
             </div>
             <div class="row">
-                <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
                     <label class="titleValue">{{"js.aip.review.monitor.action.diplay.end.date.label"|i18n_aip}}</label>
                 </div>
-                <div class="actionItemElement col-xs-8 col-sm-8 col-md-8 col-lg-8">
+                <div class="actionItemElement col-xs-12 col-sm-8 col-md-8 col-lg-8">
                     <input type="text"  date-picker ng-model="vm.actionItemDetails.displayEndDate"
                            class="form-control  Datelement" name="displayEndDate"
                            aria-required="true" required autocomplete="off"
@@ -132,10 +132,10 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
                 </div>
             </div>
             <div class="row">
-                <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
                     <label class="titleValue">{{"js.aip.review.monitor.action.contact.label"|i18n_aip}}</label>
                 </div>
-                <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8" class="actionItemElement">
+                <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8" class="actionItemElement">
                     <input type="text" data-ng-model="vm.contactInfo" class="form-control"/>
                 </div>
             </div>
