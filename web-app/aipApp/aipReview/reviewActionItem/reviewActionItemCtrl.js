@@ -202,6 +202,20 @@ var AIP;
                 _this.actionItemReviewStatusList = response;
             });
         };
+        ReviewActionItemCtrl.prototype.reset = function (vm) {
+            var notification = new Notification({
+                message: this.$filter("i18n_aip")("js.aip.review.monitor.reset.prompt.message"),
+                type: "warning"
+            });
+            notification.addPromptAction(this.$filter("i18n_aip")("default.yes.label"), function () {
+                notifications.remove(notification);
+                vm.updateActionItemReview();
+            });
+            notification.addPromptAction(this.$filter("i18n_aip")("default.button.cancel.label"), function () {
+                notifications.remove(notification);
+            });
+            notifications.addNotification(notification);
+        };
         ReviewActionItemCtrl.prototype.updateActionItemReview = function () {
             var _this = this;
             var reqParams = {
