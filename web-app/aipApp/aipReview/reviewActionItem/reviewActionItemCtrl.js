@@ -104,7 +104,7 @@ var AIP;
             this.init();
             this.actionItemReviewStatusList = null;
             this.contactInfo;
-            this.externalCommetInd = true;
+            this.externalCommentInd = true;
             this.reviewComments;
             this.selectedReviewState = {};
             $scope.header = [{
@@ -223,7 +223,7 @@ var AIP;
                 responseId: this.actionItemDetails.responseId,
                 reviewStateId: this.selectedReviewState.code,
                 displayEndDate: this.actionItemDetails.displayEndDate,
-                externalCommetInd: this.externalCommetInd,
+                externalCommentInd: this.externalCommentInd,
                 reviewComments: this.reviewComments,
                 contactInfo: this.contactInfo
             };

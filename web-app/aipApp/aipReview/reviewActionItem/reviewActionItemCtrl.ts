@@ -44,7 +44,7 @@ module AIP {
         gridData;
         actionItemReviewStatusList;
         selectedReviewState;
-        externalCommetInd;
+        externalCommentInd;
         reviewComments;
         contactInfo;
 
@@ -74,7 +74,7 @@ module AIP {
             this.init();
             this.actionItemReviewStatusList = null;
             this.contactInfo;
-            this.externalCommetInd = true;
+            this.externalCommentInd = true;
             this.reviewComments;
             this.selectedReviewState = {};
 
@@ -271,7 +271,7 @@ module AIP {
                 responseId: this.actionItemDetails.responseId,
                 reviewStateId: this.selectedReviewState.code,
                 displayEndDate: this.actionItemDetails.displayEndDate,
-                externalCommetInd: this.externalCommetInd,
+                externalCommentInd: this.externalCommentInd,
                 reviewComments: this.reviewComments,
                 contactInfo: this.contactInfo
             };

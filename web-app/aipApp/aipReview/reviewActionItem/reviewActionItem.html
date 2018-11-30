@@ -40,7 +40,7 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
     </div>
     <div class="row ">
         <div class="col-xs-2 col-sm-2">
-            <label for="responseStatus" class="titleValue" id="responseStatus">{{"js.aip.review.monitor.action.status.response.Label"|i18n_aip}}
+            <label class="titleValue">{{"js.aip.review.monitor.action.status.response.label"|i18n_aip}}
             </label>
         </div>
         <div class="col-xs-7 col-sm-7">
@@ -49,7 +49,7 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
     </div>
     <div class="row ">
         <div class="col-xs-2 col-sm-2">
-            <label for="responseDate" class="titleValue" id="responseDate">{{"js.aip.review.monitor.action.response.date.Label"|i18n_aip}}
+            <label class="titleValue">{{"js.aip.review.monitor.action.response.date.label"|i18n_aip}}
             </label>
         </div>
         <div class="col-xs-7 col-sm-7">
@@ -58,7 +58,7 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
     </div>
     <div class="row ">
         <div class="col-xs-2 col-sm-2">
-            <label for="startDate" class="titleValue " id="startDate">{{"js.aip.review.monitor.action.display.start.date.Label"|i18n_aip}}
+            <label class="titleValue">{{"js.aip.review.monitor.action.display.start.date.label"|i18n_aip}}
             </label>
         </div>
         <div class="col-xs-7 col-sm-7">
@@ -67,7 +67,7 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
     </div>
     <div class="row ">
         <div class="col-xs-2 col-sm-2">
-            <label for="endDate" class="titleValue " id="endDate">{{"js.aip.review.monitor.action.diplay.end.date.Label"|i18n_aip}}
+            <label for="endDate" class="titleValue " id="endDate">{{"js.aip.review.monitor.action.diplay.end.date.label"|i18n_aip}}
             </label>
         </div>
         <div class="col-xs-7 col-sm-7">
@@ -95,11 +95,11 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
     <div class="review-action-item-container">
         <form name="actionItemReviewForm">
             <div class="row">
-                <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
-                    <label class="titleValue">{{"js.aip.review.monitor.action.review.status.Label"|i18n_aip}}</label>
+                <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
+                    <label class="titleValue">{{"js.aip.review.monitor.action.review.status.label"|i18n_aip}}</label>
                 </div>
-                <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8" class="actionItemElement">
-                    <xe-ui-select class="folder-minwidth" id="folderid" ng-model="vm.selectedReviewState"
+                <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8" class="actionItemElement">
+                    <xe-ui-select class="folder-minwidth" ng-model="vm.selectedReviewState"
                                   theme="select2">
                         <xe-ui-select-match placeholder="{{''|i18n_aip}}">
                             <div ng-bind-html="vm.selectedReviewState.name"></div>
@@ -112,30 +112,30 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
                 </div>
             </div>
             <div class="row">
-                <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
-                    <label class="titleValue">{{"js.aip.review.monitor.action.comments.Label"|i18n_aip}}</label>
+                <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
+                    <label class="titleValue">{{"js.aip.review.monitor.action.comments.label"|i18n_aip}}</label>
                 </div>
-                <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8" class="actionItemElement">
-                    <input type="checkbox" ng-model="vm.externalCommetInd" value="Y" checked="true">{{"js.aip.review.monitor.action.external.Label"|i18n_aip}}
+                <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8" class="actionItemElement">
+                    <input type="checkbox" ng-model="vm.externalCommentInd" value="Y" checked="true">{{"js.aip.review.monitor.action.external.label"|i18n_aip}}
                     <input type="text" class="form-control" ng-model="vm.reviewComments"/>
                 </div>
             </div>
             <div class="row">
-                <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
-                    <label class="titleValue">{{"js.aip.review.monitor.action.diplay.end.date.Label"|i18n_aip}}</label>
+                <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
+                    <label class="titleValue">{{"js.aip.review.monitor.action.diplay.end.date.label"|i18n_aip}}</label>
                 </div>
-                <div class="actionItemElement col-xs-8 col-sm-8 col-md-8 col-lg-8">
-                    <input type="text" id="displayEndDate" date-picker ng-model="vm.actionItemDetails.displayEndDate"
+                <div class="actionItemElement col-xs-12 col-sm-8 col-md-8 col-lg-8">
+                    <input type="text"  date-picker ng-model="vm.actionItemDetails.displayEndDate"
                            class="form-control  Datelement" name="displayEndDate"
                            aria-required="true" required autocomplete="off"
                            placeholder='{{"default.date.format.watermark"|i18n_aip}}'/>
                 </div>
             </div>
             <div class="row">
-                <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
-                    <label class="titleValue">{{"js.aip.review.monitor.action.contact.Label"|i18n_aip}}</label>
+                <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
+                    <label class="titleValue">{{"js.aip.review.monitor.action.contact.label"|i18n_aip}}</label>
                 </div>
-                <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8" class="actionItemElement">
+                <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8" class="actionItemElement">
                     <input type="text" data-ng-model="vm.contactInfo" class="form-control"/>
                 </div>
             </div>
