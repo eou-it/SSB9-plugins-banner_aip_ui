@@ -250,6 +250,21 @@ module AIP {
                 })
         }
 
+        reset(vm) {
+            var notification = new Notification({
+                message: this.$filter("i18n_aip")("js.aip.review.monitor.reset.prompt.message"),
+                type: "warning"
+            });
+            notification.addPromptAction(this.$filter("i18n_aip")("default.yes.label"), function () {
+                notifications.remove(notification);
+                vm.updateActionItemReview();
+            });
+            notification.addPromptAction(this.$filter("i18n_aip")("default.button.cancel.label"), function () {
+                notifications.remove(notification);
+            });
+            notifications.addNotification(notification);
+        }
+
         updateActionItemReview() {
             var reqParams = {
                 userActionItemId: this.actionItemDetails.id,
@@ -264,15 +279,15 @@ module AIP {
             this.aipReviewService.updateActionItemReview(reqParams)
                 .then((response) => {
                     this.spinnerService.showSpinner(false);
-                    if(response.data.success){
-                        this.displayNotification(response.data.message,"success")
-                    }else{
-                        this.displayNotification(response.data.message,"error")
+                    if (response.data.success) {
+                        this.displayNotification(response.data.message, "success")
+                    } else {
+                        this.displayNotification(response.data.message, "error")
                     }
                 })
         }
 
-        displayNotification(message,errorType) {
+        displayNotification(message, errorType) {
             var n = new Notification({
                 message: message,
                 type: errorType,
