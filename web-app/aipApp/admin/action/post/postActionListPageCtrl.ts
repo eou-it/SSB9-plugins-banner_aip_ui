@@ -255,8 +255,18 @@ module AIP {
         fetchTableData(query: AIP.IPostActionItemListQuery) {
 
             var deferred = this.$q.defer();
+            var am = this.$filter("i18n_aip")("aip.admin.communication.timepicker.time.am.label");
+            var pm = this.$filter("i18n_aip")("aip.admin.communication.timepicker.time.pm.label");
             this.actionListService.fetchTableData(query)
                 .then((response: AIP.IPostActionItemFetchResponse) => {
+                    for(var k = 0 ; k < response.result.length ; k++) {
+                        response.result[k].postingDisplayTime = response.result[k].postingDisplayTime.replace(new RegExp('AM', 'i'), am)
+                                                                                                     .replace(new RegExp('PM', 'i'), pm)
+                                                                                                     .replace(new RegExp('a. m.', 'i'), am)
+                                                                                                     .replace(new RegExp('p. m.', 'i'), pm)
+                                                                                                     .replace(new RegExp('a.m.', 'i'), am)
+                                                                                                     .replace(new RegExp('p.m.', 'i'), pm);
+                    }
                     deferred.resolve(response);
                 }, (error) => {
                     console.log(error);

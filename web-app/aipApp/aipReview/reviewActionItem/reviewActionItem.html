@@ -3,93 +3,93 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
 *******************************************************************************-->
 <div id="reviewactionitem">
     <div class="row ">
-        <div class="col-xs-2 col-sm-2">
-            <label for="personId" class="titleValue" id="personId">{{"js.aip.review.monitor.action.personIdLabel"|i18n_aip}}
+        <div class="col-xs-12 col-sm-2 col-md-2">
+            <label for="personId" class="titleValue" id="personId">{{"js.aip.review.monitor.action.personId.label"|i18n_aip}}
             </label>
         </div>
-        <div class="col-xs-7 col-sm-7">
+        <div class="col-xs-12 col-sm-7 col-md-7">
             <div class="fieldValue">{{vm.actionItemDetails.spridenId}}</div>
         </div>
     </div>
     <div class="row ">
-        <div class="col-xs-2 col-sm-2">
-            <label for="personName" class="titleValue" id="personName">{{"js.aip.review.monitor.action.personNameLabel"|i18n_aip}}
+        <div class="col-xs-12 col-sm-2 col-md-2">
+            <label for="personName" class="titleValue" id="personName">{{"js.aip.review.monitor.action.personName.label"|i18n_aip}}
             </label>
         </div>
-        <div class="col-xs-7 col-sm-7">
+        <div class="col-xs-12 col-sm-7 col-md-7">
             <div class="fieldValue">{{vm.actionItemDetails.actionItemPersonName}}</div>
         </div>
     </div>
     <div class="row ">
-        <div class="col-xs-2 col-sm-2">
+        <div class="col-xs-12 col-sm-2 col-md-2">
             <label for="actionItem" class="titleValue " id="actionItem">{{"js.aip.review.monitor.action.itemLabel"|i18n_aip}}
             </label>
         </div>
-        <div class="col-xs-7 col-sm-7">
+        <div class="col-xs-12 col-sm-7 col-md-7">
             <div class="fieldValue">{{vm.actionItemDetails.actionItemName}}</div>
         </div>
     </div>
     <div class="row ">
-        <div class="col-xs-2 col-sm-2">
+        <div class="col-xs-12 col-sm-2 col-md-2">
             <label for="currentResponse" class="titleValue " id="currentResponse">{{"aip.user.action.item.last.response"|i18n_aip}}
             </label>
         </div>
-        <div class="col-xs-7 col-sm-7">
+        <div class="col-xs-12 col-sm-7 col-md-7">
             <div class="fieldValue">{{vm.actionItemDetails.currentResponseText}}</div>
         </div>
     </div>
     <div class="row ">
-        <div class="col-xs-2 col-sm-2">
+        <div class="col-xs-12 col-sm-2 col-md-2">
             <label class="titleValue">{{"js.aip.review.monitor.action.status.response.label"|i18n_aip}}
             </label>
         </div>
-        <div class="col-xs-7 col-sm-7">
+        <div class="col-xs-12 col-sm-7 col-md-7">
             <div class="fieldValue">{{vm.actionItemDetails.status}}</div>
         </div>
     </div>
     <div class="row ">
-        <div class="col-xs-2 col-sm-2">
+        <div class="col-xs-12 col-sm-2 col-md-2">
             <label class="titleValue">{{"js.aip.review.monitor.action.response.date.label"|i18n_aip}}
             </label>
         </div>
-        <div class="col-xs-7 col-sm-7">
+        <div class="col-xs-12 col-sm-7 col-md-7">
             <div class="fieldValue">{{vm.actionItemDetails.responseDate}}</div>
         </div>
     </div>
     <div class="row ">
-        <div class="col-xs-2 col-sm-2">
+        <div class="col-xs-12 col-sm-2 col-md-2">
             <label class="titleValue">{{"js.aip.review.monitor.action.display.start.date.label"|i18n_aip}}
             </label>
         </div>
-        <div class="col-xs-7 col-sm-7">
+        <div class="col-xs-12 col-sm-7 col-md-7">
             <div class="fieldValue">{{vm.actionItemDetails.displayStartDate}}</div>
         </div>
     </div>
     <div class="row ">
-        <div class="col-xs-2 col-sm-2">
+        <div class="col-xs-12 col-sm-2 col-md-2">
             <label for="endDate" class="titleValue " id="endDate">{{"js.aip.review.monitor.action.diplay.end.date.label"|i18n_aip}}
             </label>
         </div>
-        <div class="col-xs-7 col-sm-7">
+        <div class="col-xs-12 col-sm-7 col-md-7">
             <div class="fieldValue">{{vm.actionItemDetails.displayEndDate}}</div>
         </div>
     </div>
     <div class="row ">
-        <div class="col-xs-2 col-sm-2">
+        <div class="col-xs-12 col-sm-2 col-md-2">
             <label for="numberOfAttachments" class="titleValue " id="numberOfAttachments">{{"js.aip.review.monitor.action.numberOfAttachmentsLabel"|i18n_aip}}
             </label>
         </div>
-        <div class="col-xs-7 col-sm-7">
+        <div class="col-xs-12 col-sm-7 col-md-7">
             <div class="fieldValue">{{vm.actionItemDetails.attachments}}</div>
         </div>
     </div>
     <div ng-if="vm.actionItemDetails.attachments>0" class="row">
-        <div class="col-xs-2 col-sm-2">
+        <div class="col-xs-12 col-sm-2 col-md-2">
             <label for="viewAttachments" class="titleValue " id="viewAttachments">{{"js.aip.review.monitor.action.viewAttachmentsLabel"|i18n_aip}}
             </label>
         </div>
-        <div class="col-xs-7 col-sm-7">
-            <img src="../images/attach_icon_default.svg" class="attachmentimage" ng-click="vm.viewAttachments()"/>
+        <div class="col-xs-12 col-sm-7 col-md-7">
+            <input type="image" src="../images/attach_icon_default.svg" class="attachmentimage" ng-click="vm.viewAttachments()">
         </div>
     </div>
     <div class="review-action-item-container">

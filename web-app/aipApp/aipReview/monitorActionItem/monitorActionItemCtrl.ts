@@ -6,6 +6,8 @@
 ///<reference path="../../common/services/aipReviewService.ts"/>
 ///<reference path="../../common/services/userService.ts"/>
 declare var register;
+declare var Notification:any;
+declare var notifications:any;
 
 module AIP {
 
@@ -48,6 +50,7 @@ module AIP {
         query:ISearchActionItemQuery;
         commonPaginationConfig;
         gridEnabled:boolean;
+        searchEnabled:boolean;
 
         constructor($scope, $state, AIPReviewService, AIPUserService, SpinnerService, $timeout, $q, $uibModal, APP_ROOT, $sce, $filter, PAGINATIONCONFIG) {
             $scope.vm = this;
@@ -71,6 +74,7 @@ module AIP {
         }
 
         init() {
+            this.searchEnabled=true;
             this.gridEnabled = false;
             var allPromises = [];
             allPromises.push(
@@ -84,12 +88,18 @@ module AIP {
             this.draggableColumnNames = [];
 
             this.mobileConfig = {
+                actionItemPersonName: 3,
+                spridenId: 3,
+                actionItemGroupName: 3,
                 actionItemName: 3,
-                folderName: 3,
-                actionItemStatus: 3,
-                actionItemLastUserId: 3,
-                actionItemCompositeDate: 3,
-                actionStatus: 3
+                status: 3,
+                responseDate: 3,
+                currentResponseText:3,
+                displayStartDate:3,
+                displayEndDate:3,
+                reviewIndicator:3,
+                attachments:3,
+                reviewState:3
             };
             this.mobileSize = angular.element("body").width() > 768 ? false : true;
 
@@ -257,12 +267,10 @@ module AIP {
                 searchString: "",
                 placeholder: this.$filter("i18n_aip")("search.label"),
                 maxlength: 200,
-                minimumCharacters: 10
+                minimumCharacters: 1
             };
             this.paginationConfig = this.commonPaginationConfig;
         }
-
-
 
 
         fetchData = function (query) {
@@ -276,7 +284,7 @@ module AIP {
             else {
                 query.personId = this.personId
             }
-            this.query=query;
+            this.query = query;
             var deferred = this.$q.defer();
             this.aipReviewService.fetchSearchResult(query).then(function (response) {
                 deferred.resolve(response);
@@ -290,13 +298,18 @@ module AIP {
 
         search() {
 
-            this.gridEnabled = false;
-            if (this.gridEnabled == true) {
-                //this.gridData={};
-
+            if ((!this.personName || this.personName === "") && (!this.personId || this.personId === "") && (!this.selected || !this.selected.id )) {
+                var n = new Notification({
+                    message: this.$filter("i18n_aip")("js.aip.review.monitor.action.item.search.parameter.error.message"),
+                    type: "error",
+                    flash: true
+                });
+                notifications.addNotification(n);
+                return;
             }
 
             this.gridEnabled = true;
+            this.searchEnabled= false;
 
         }
 
@@ -307,6 +320,7 @@ module AIP {
             this.personName = "";
             this.gridData = {};
             this.gridEnabled = false;
+            this.searchEnabled=true;
         }
 
 

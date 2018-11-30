@@ -234,6 +234,12 @@ aip-list .enddate {
   font-size: 11px;
   margin-right: 10px; }
 
+input.hasDatepicker {
+  width: 150px !important; }
+
+.ui-datepicker {
+  height: 22em !important; }
+
 .AIP-landing-container {
   padding: 16px; }
 
@@ -1536,19 +1542,21 @@ ol.selected-group > li > button {
   .aip-modal .actionFolderName {
     font-size: 12px; } }
 
-.monitor-action-item-container {
+.monitor-action-item-accordion-container {
   border: none;
   box-shadow: none; }
-  .monitor-action-item-container .accordion-toggle {
+  .monitor-action-item-accordion-container .accordion-toggle {
     color: #000000; }
-  .monitor-action-item-container .select2-results {
+  .monitor-action-item-accordion-container .label-padding {
+    padding-top: 5px; }
+  .monitor-action-item-accordion-container .select2-results {
     max-height: 100px; }
-  .monitor-action-item-container .titleValue {
+  .monitor-action-item-accordion-container .titleValue {
     font-size: 1.5em;
     font-weight: bold; }
-  .monitor-action-item-container .titleValue.required:after {
+  .monitor-action-item-accordion-container .titleValue.required:after {
     content: " *"; }
-  .monitor-action-item-container .titleValue.supplement {
+  .monitor-action-item-accordion-container .titleValue.supplement {
     font-size: 1.0em;
     font-style: italic;
     position: absolute;
@@ -1556,11 +1564,11 @@ ol.selected-group > li > button {
     left: auto;
     right: 8px;
     color: #4F585F; }
-  .monitor-action-item-container .titleValue.supplement.dimmed {
+  .monitor-action-item-accordion-container .titleValue.supplement.dimmed {
     font-style: italic;
     position: relative;
     padding: 0 24px; }
-  .monitor-action-item-container input[type="radio"] {
+  .monitor-action-item-accordion-container input[type="radio"] {
     -webkit-appearance: initial;
     appearance: initial;
     background: white;
@@ -1572,9 +1580,9 @@ ol.selected-group > li > button {
     border-radius: 15px;
     vertical-align: -40%;
     box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.25); }
-  .monitor-action-item-container input[type="radio"]:checked {
+  .monitor-action-item-accordion-container input[type="radio"]:checked {
     background: #1c8445; }
-  .monitor-action-item-container input[type="radio"]:checked:after {
+  .monitor-action-item-accordion-container input[type="radio"]:checked:after {
     content: '';
     color: #fff;
     position: absolute;
@@ -1589,42 +1597,44 @@ ol.selected-group > li > button {
     left: 6px;
     border-radius: 16px;
     background: #fff; }
-  .monitor-action-item-container .attachmentimage {
+  .monitor-action-item-accordion-container .attachmentimage {
     height: 10px;
     width: 10px; }
-  .monitor-action-item-container .actionListContainer {
+  .monitor-action-item-accordion-container .actionListContainer {
     overflow-y: auto;
     font-size: 14px; }
-  .monitor-action-item-container .row {
+  .monitor-action-item-accordion-container .row {
     margin-right: 0;
     margin-left: 0; }
-  .monitor-action-item-container .control {
+  .monitor-action-item-accordion-container .control {
     float: right;
     padding-top: 8px;
     margin-right: 0.2em; }
-  .monitor-action-item-container .actionListTable {
+  .monitor-action-item-accordion-container .actionListTable {
     overflow: auto; }
-    .monitor-action-item-container .actionListTable .table-container {
+    .monitor-action-item-accordion-container .actionListTable .table-container {
       margin-top: 8px; }
-      .monitor-action-item-container .actionListTable .table-container .row.actionItemActions {
+      .monitor-action-item-accordion-container .actionListTable .table-container .row.actionItemActions {
         display: flex;
         margin-right: 16px;
         margin-left: 16px; }
-        .monitor-action-item-container .actionListTable .table-container .row.actionItemActions div {
+        .monitor-action-item-accordion-container .actionListTable .table-container .row.actionItemActions div {
           flex: 1;
           margin-right: 10px; }
-        .monitor-action-item-container .actionListTable .table-container .row.actionItemActions div:last-child {
+        .monitor-action-item-accordion-container .actionListTable .table-container .row.actionItemActions div:last-child {
           margin-right: 0; }
 
 @media screen and (max-width: 768px) {
-  .actionListContainer .row .control {
+  .monitor-action-item-container .row .control {
     padding: 0; } }
 .titleValue {
   font-size: 1.5em;
-  font-weight: bold; }
+  font-weight: bold;
+  white-space: nowrap; }
 
 .fieldValue {
-  font-size: 1.5em; }
+  font-size: 1.5em;
+  white-space: nowrap; }
 
 .view-attachment-icon {
   background: url(../images/aip_view_attachment.svg) no-repeat;

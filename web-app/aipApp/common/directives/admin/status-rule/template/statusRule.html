@@ -32,7 +32,7 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
             </div>
             <div class="row">
                 <div class="col-sm-12">
-                    <select name="status-{{$index+1}}" id="status-{{$index+1}}" class="actionItemSelect form-control" xe-data="" aria-label="Status" required aria-required="true"
+                    <select name="status-{{$index+1}}" id="status-{{$index+1}}" class="actionItemSelect form-control" xe-data="" aria-label="{{'aip.admin.status.rules.table.header.status'|i18n_aip}}" required aria-required="true"
                             ng-model="item.status"
                             ng-options="statusItem as statusItem.actionItemStatus for statusItem in status track by statusItem.actionItemStatus"
                             ng-change="detectRuleChange()">
@@ -74,14 +74,14 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
         <div class="record-controls col-sm-1">
             <div class="row">
                 <div class="col-sm-12">
-                    <button name="OrderUp" type="button" class="btn btn-default sort" ng-click="moveUp(item, $event)" aria-label="Move up" ng-disabled="isFirst(item)" id="order-up-{{$index+1}}">
+                    <button name="OrderUp" type="button" class="btn btn-default sort" ng-click="moveUp(item, $event)" aria-label="{{'aip.admin.status.rules.table.move.up'|i18n_aip}}" ng-disabled="isFirst(item)" id="order-up-{{$index+1}}">
                         <span class="icon icon-arrowTop-C"></span>
                     </button>
                 </div>
             </div>
             <div class="row clear">
                 <div class="col-sm-12">
-                    <button name="OrderDown" type="button" class="btn btn-default sort" ng-click="moveDown(item, $event)" aria-label="Move down" ng-disabled="isLast(item)" id="order-down-{{$index+1}}">
+                    <button name="OrderDown" type="button" class="btn btn-default sort" ng-click="moveDown(item, $event)" aria-label="{{'aip.admin.status.rules.table.move.down'|i18n_aip}}" ng-disabled="isLast(item)" id="order-down-{{$index+1}}">
                         <span class="icon icon-arrowBottom-C"></span>
                     </button>
                 </div>
@@ -91,7 +91,7 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
         <div class="record-controls col-sm-1">
             <div class="row">
                 <div class="col-sm-12">
-                    <button name="Delete" type="button" class="btn btn-default delete" ng-click="removeRule(item, $event); detectRuleChange();" aria-label="Remove Response Option" id="delete-{{$index+1}}">
+                    <button name="Delete" type="button" class="btn btn-default delete" ng-click="removeRule(item, $event); detectRuleChange();" aria-label="{{'aip.admin.status.rules.table.delete.response.option'|i18n_aip}}" id="delete-{{$index+1}}">
                         <span class="icon icon-delete-CO" role="presentation"
                               aria-label="{{'aip.admin.status.rules.table.form.delete'|i18n_aip}}"></span>
                     </button>

@@ -16,7 +16,7 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
                 <div class="control col-xs-2 col-sm-4">
                     <div class="h2-container">
                         <button name="Edit" type="button" class="btn btn-default edit" ng-click="vm.selectTemplate()"
-                                aria-label="">
+                                aria-label="{{'aip.common.edit.action.item.jaws'|i18n_aip}}">
                             <span class="icon icon-edit-CO"></span>
                             <span class="button-text hidden-sm-down">{{'aip.common.text.edit'|i18n_aip}}</span>
                         </button>
@@ -76,7 +76,7 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
                     <div class="col-xs-6 col-sm-6 actionButton">
                         <button type="button" name="Save" class="btn btn-primary"
                                 ng-disabled="!vm.validateActionItemRule()" ng-click="vm.saveTemplate()">
-                            {{"aip.common.saveandreturn"|i18n_aip}}
+                            {{"aip.common.save.and.return"|i18n_aip}}
                         </button>
                     </div>
                 </div>
@@ -96,7 +96,7 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
                 <div class="control col-xs-2 col-sm-4">
                     <div class="h2-container"  ng-if="vm.actionItemPostedStatus == 'N'">
                         <button name="Edit" type="button" class="btn btn-default edit" ng-click="vm.selectTemplate()"
-                                aria-label="">
+                                aria-label="{{'aip.common.edit.action.item.jaws'|i18n_aip}}">
                             <span class="icon icon-edit-CO"></span>
                             <span class="button-text hidden-sm-down">{{'aip.common.text.edit'|i18n_aip}}</span>
                         </button>
@@ -176,7 +176,7 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
                     </div>
                     <div class="contentContainer" ng-if="vm.rules.length===0">
                         <div class="noResponses">
-                            {{"aip.admin.status.rules.noREsponses"|i18n_aip}}
+                            {{"aip.admin.status.rules.noResponses"|i18n_aip}}
                         </div>
                     </div>
                 </div>

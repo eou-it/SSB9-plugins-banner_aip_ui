@@ -13,8 +13,8 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
         <div class="row actionItemInfoRow actionItemName">
             <div class="actionItemElement row input-actionItem">
 
-                <label for="" class="titleValue required" id="actionItemAdd-Name"
-                       aria-label="Action Item Name">{{"aip.admin.action.actionItem.Postingjob"|i18n_aip}}
+                <label for="" class="titleValue required" id="actionItemAdd-Name">
+                    {{"aip.admin.action.actionItem.post.jobName.label"|i18n_aip}}
                 </label>
 
             </div>
@@ -22,8 +22,8 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
                 <div class="row">
                     <input id="actionItemName" type="text" class="form-control"
                            ng-model="vm.postActionItemInfo.name" ng-change="vm.checkChanges()"
-                           placeholder='{{"aip.admin.action.actionItem.Postingjob"|i18n_aip}}'
-                           aria-label='{{"aip.admin.action.actionItem.Postingjob"|i18n_aip}}'
+                           placeholder='{{"aip.admin.action.actionItem.post.jobName.label"|i18n_aip}}'
+                           aria-label='{{"aip.admin.action.actionItem.post.jobName.label"|i18n_aip}}'
                            aria-required="true">
                 </div>
 
@@ -112,8 +112,8 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
         <div class="row actionItemInfoRow actionItemName">
             <div class="actionItemElement row input-actionItem">
 
-                <label for="displayDates" class="titleValue" id="displayDates"
-                       aria-label="Action Item Name">{{"aip.admin.action.actionItem.displayDates"|i18n_aip}}
+                <label for="displayDates" class="titleValue" id="displayDates">
+                    {{"aip.admin.action.actionItem.displayDates"|i18n_aip}}
                 </label>
 
             </div>
@@ -138,6 +138,7 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
                                    today="{{today}}" ng-change="vm.checkChanges()"
                                    class="form-control  Datelement" name="displaystartDate"
                                    aria-required="true" required autocomplete="off"
+                                   aria-label="{{'aip.admin.action.postactionItem.start.date'|i18n_aip}}"
                                    placeholder='{{"default.date.format.watermark"|i18n_aip}}'/>
 
                         </div>
@@ -155,6 +156,7 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
                                    class="form-control  Datelement" name="displayEndDate"
                                    ng-model="vm.postActionItemInfo.displayEndDate" ng-change="vm.checkChanges()"
                                    aria-required="true" required autocomplete="off"
+                                   aria-label="{{'aip.admin.action.postactionItem.end.date'|i18n_aip}}"
                                    placeholder='{{"default.date.format.watermark"|i18n_aip}}'/>
                         </div>
                     </div>
@@ -272,6 +274,10 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
                                 <div class="actionItemElement Datelement col-sm-4 dateRow form-container" role="textbox">
                                     <div class="row input-daterange form-group right-inner-addon dateRange-minwidth">
                                         <input id="appServerTime" type="text" class="form-control"
+                                               xe-time-picker-box input_24_hr_string="{{vm.localeTime ? 'N' : 'Y'}}" change='vm.checkChanges();vm.getProcessedServerDateTimeAndTimezone()'
+                                               hour-format-12="{{vm.localeTime ? 'Y' : 'N'}}"
+                                               am-label='{{"aip.admin.communication.timepicker.time.am.label"|i18n_aip}}'
+                                               pm-label='{{"aip.admin.communication.timepicker.time.pm.label"|i18n_aip}}'
                                                ng-model="vm.appServerTime"
                                                aria-required="true" ng-disabled="true">
                                     </div>
@@ -308,13 +314,13 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
                         <button name="Save" type="button" class="btn btn-primary" ng-if="vm.editMode==false"
                                 ng-disabled=" !vm.validateInput() "
                                 ng-click="vm.save()">
-                        {{"aip.common.saveandreturn"|i18n_aip}}</button>
+                        {{"aip.common.save.and.return"|i18n_aip}}</button>
                     </span>
                             <span>
                         <button name="Save" type="button" class="btn btn-primary" ng-if="vm.editMode==true"
                                 ng-disabled=" !vm.dirtyFlag || !vm.validateInput() "
                                 ng-click="vm.save()">
-                        {{"aip.common.saveandreturn"|i18n_aip}}</button>
+                        {{"aip.common.save.and.return"|i18n_aip}}</button>
                     </span>
                         </div>
                     </div>
