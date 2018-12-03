@@ -269,7 +269,7 @@ module AIP {
             var reqParams = {
                 userActionItemId: this.actionItemDetails.id,
                 responseId: this.actionItemDetails.responseId,
-                reviewStateId: this.selectedReviewState.code,
+                reviewStateCode: this.selectedReviewState.code,
                 displayEndDate: this.actionItemDetails.displayEndDate,
                 externalCommentInd: this.externalCommentInd,
                 reviewComments: this.reviewComments,

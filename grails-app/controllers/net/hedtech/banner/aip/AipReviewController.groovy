@@ -78,7 +78,8 @@ class AipReviewController {
      * get list of review status
      */
     def getReviewStatusList() {
-        def result = [[code:1,name:"Review needed"],[code:2,name:"Review in progress"],[code:3,name:"Review approved"],[code:4,name:"Review in progress"]]
+       // def result = [[code:1,name:"Review needed"],[code:2,name:"Review in progress"],[code:3,name:"Review approved"],[code:4,name:"Review in progress"]]
+        def result = monitorActionItemCompositeService.getReviewStatusList()
         render result as JSON
     }
 
@@ -89,7 +90,7 @@ class AipReviewController {
     def updateActionItemReview(){
         def result
         def map = request.JSON
-        if(!(map?.reviewStateId))   {
+        if(!(map?.reviewStateCode))   {
             result =[success:false,message:MessageHelper.message('aip.review.action.update.review.state.error')]
         }
         if(!result){
