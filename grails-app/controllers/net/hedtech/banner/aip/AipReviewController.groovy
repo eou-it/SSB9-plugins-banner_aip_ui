@@ -4,6 +4,7 @@
 package net.hedtech.banner.aip
 
 import grails.converters.JSON
+import net.hedtech.banner.i18n.MessageHelper
 
 /** Controller for Review Action Items **/
 
@@ -72,4 +73,30 @@ class AipReviewController {
         def results = uploadDocumentCompositeService.fetchDocuments( paramsObj )
         render results as JSON
     }
+
+    /**
+     * get list of review status
+     */
+    def getReviewStatusList() {
+       // def result = [[code:1,name:"Review needed"],[code:2,name:"Review in progress"],[code:3,name:"Review approved"],[code:4,name:"Review in progress"]]
+        def result = monitorActionItemCompositeService.getReviewStatusList()
+        render result as JSON
+    }
+
+
+    /**
+     * update action item review
+     */
+    def updateActionItemReview(){
+        def result
+        def map = request.JSON
+        if(!(map?.reviewStateCode))   {
+            result =[success:false,message:MessageHelper.message('aip.review.action.update.review.state.error')]
+        }
+        if(!result){
+            result = monitorActionItemCompositeService.updateActionItemReview(map)
+        }
+        render result as JSON
+    }
+
 }

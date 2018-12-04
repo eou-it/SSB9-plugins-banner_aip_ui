@@ -5,7 +5,7 @@
 ///<reference path="../../../common/services/admin/adminActionService.ts"/>
 var AIP;
 (function (AIP) {
-    var PostActionListPageCtrl = /** @class */ (function () {
+    var PostActionListPageCtrl = (function () {
         function PostActionListPageCtrl($scope, $state, $window, $filter, $q, ENDPOINT, PAGINATIONCONFIG, AdminActionService) {
             this.$inject = ["$scope", "$state", "$window", "$filter", "$q", "ENDPOINT", "PAGINATIONCONFIG",
                 "AdminActionService"];
@@ -212,14 +212,14 @@ var AIP;
             var pm = this.$filter("i18n_aip")("aip.admin.communication.timepicker.time.pm.label");
             this.actionListService.fetchTableData(query)
                 .then(function (response) {
-                    for(var k = 0 ; k < response.result.length ; k++) {
-                        response.result[k].postingDisplayTime = response.result[k].postingDisplayTime.replace(new RegExp('AM', 'i'), am)
-                                                                                                     .replace(new RegExp('PM', 'i'), pm)
-                                                                                                     .replace(new RegExp('a. m.', 'i'), am)
-                                                                                                     .replace(new RegExp('p. m.', 'i'), pm)
-                                                                                                     .replace(new RegExp('a.m.', 'i'), am)
-                                                                                                     .replace(new RegExp('p.m.', 'i'), pm);
-                    }
+                for (var k = 0; k < response.result.length; k++) {
+                    response.result[k].postingDisplayTime = response.result[k].postingDisplayTime.replace(new RegExp('AM', 'i'), am)
+                        .replace(new RegExp('PM', 'i'), pm)
+                        .replace(new RegExp('a. m.', 'i'), am)
+                        .replace(new RegExp('p. m.', 'i'), pm)
+                        .replace(new RegExp('a.m.', 'i'), am)
+                        .replace(new RegExp('p.m.', 'i'), pm);
+                }
                 deferred.resolve(response);
             }, function (error) {
                 console.log(error);
@@ -268,7 +268,8 @@ var AIP;
             });
         };
         return PostActionListPageCtrl;
-    }());
+    })();
     AIP.PostActionListPageCtrl = PostActionListPageCtrl;
 })(AIP || (AIP = {}));
 register("bannerAIP").controller("PostActionListPageCtrl", AIP.PostActionListPageCtrl);
+//# sourceMappingURL=postActionListPageCtrl.js.map
