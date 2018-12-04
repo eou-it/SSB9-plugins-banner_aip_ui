@@ -72,7 +72,7 @@ var AIP;
                 displayEndDate: 3,
                 reviewIndicator: 3,
                 attachments: 3,
-                reviewState: 3
+                reviewStateCode: 3
             };
             this.mobileSize = angular.element("body").width() > 768 ? false : true;
             this.header = [{
@@ -206,7 +206,7 @@ var AIP;
                         visible: true
                     }
                 }, {
-                    name: "reviewState",
+                    name: "reviewStateCode",
                     title: this.$filter("i18n_aip")("js.aip.review.monitor.action.item.grid.header.reviewState"),
                     ariaLable: this.$filter("i18n_aip")("js.aip.review.monitor.action.item.grid.header.reviewState"),
                     width: "100px",
