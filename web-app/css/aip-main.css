@@ -2025,4 +2025,25 @@ ol.selected-group > li > button {
     background-color: transparent;
     margin-right: 2em; }
 
+.review-action-item-container {
+  border:solid 3px powderblue;
+  padding:2px;
+}
+
+.comments-labal-top-padding {
+  padding-top: 1em;
+}
+.review-block-labal-top-padding {
+  padding-top: 2px;
+}
+
+.row-top-padding {
+  padding-top: 1em;
+}
+
+.external-check-box-height {
+  width: 16px;
+  height: 16px;
+}
+
 /*# sourceMappingURL=aip-main.css.map */

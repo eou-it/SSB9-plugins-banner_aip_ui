@@ -157,7 +157,8 @@ module AIP {
                         this.actionItemId = this.actionItemDetails.actionItemId;
                         this.responseId = this.actionItemDetails.responseId;
                         this.personId = this.actionItemDetails.spridenId;
-                        this.selectedReviewState.name = this.actionItemDetails.reviewState
+                        this.selectedReviewState = this.actionItemDetails.reviewStateObject;
+                        this.contactInfo = this.actionItemDetails.contactInfo;
                     })
             );
             this.getReviewStatusList();
