@@ -260,12 +260,14 @@ module AIP {
             this.actionListService.fetchTableData(query)
                 .then((response: AIP.IPostActionItemFetchResponse) => {
                     for(var k = 0 ; k < response.result.length ; k++) {
-                        response.result[k].postingDisplayTime = response.result[k].postingDisplayTime.replace(new RegExp('AM', 'i'), am)
-                                                                                                     .replace(new RegExp('PM', 'i'), pm)
-                                                                                                     .replace(new RegExp('a. m.', 'i'), am)
-                                                                                                     .replace(new RegExp('p. m.', 'i'), pm)
-                                                                                                     .replace(new RegExp('a.m.', 'i'), am)
-                                                                                                     .replace(new RegExp('p.m.', 'i'), pm);
+                        if(response.result[k].postingDisplayTime) {
+                            response.result[k].postingDisplayTime = response.result[k].postingDisplayTime.replace(new RegExp('AM', 'i'), am)
+                                                                                                         .replace(new RegExp('PM', 'i'), pm)
+                                                                                                         .replace(new RegExp('a. m.', 'i'), am)
+                                                                                                         .replace(new RegExp('p. m.', 'i'), pm)
+                                                                                                         .replace(new RegExp('a.m.', 'i'), am)
+                                                                                                         .replace(new RegExp('p.m.', 'i'), pm);
+                        }
                     }
                     deferred.resolve(response);
                 }, (error) => {
