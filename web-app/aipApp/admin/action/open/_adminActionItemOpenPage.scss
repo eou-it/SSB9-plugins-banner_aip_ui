@@ -251,6 +251,7 @@ $link-color: #275c8a;
               #openActionItemContent {
                 .actionItemContent {
                   padding: 0;
+                  height: auto !important;
                   .contentContainer {
                     margin-top: 0;
                     margin-bottom: 0px;

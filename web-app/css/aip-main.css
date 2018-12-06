@@ -992,7 +992,8 @@ ol.selected-group > li > button {
       padding: 4px 0;
       margin-bottom: 30px; }
     .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent {
-      padding: 0; }
+      padding: 0;
+      height: auto !important;}
       .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .contentContainer {
         margin-top: 0;
         margin-bottom: 0px; }
