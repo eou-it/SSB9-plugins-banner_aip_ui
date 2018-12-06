@@ -40,6 +40,7 @@ module AIP {
         responseId;
         selectedRecord;
         gridData;
+        userActionItemId;
 
         constructor($scope, $state, AIPReviewService, AIPUserService, SpinnerService, $timeout, $q, $uibModal, APP_ROOT, $sce, $filter) {
             $scope.vm = this;
@@ -63,6 +64,7 @@ module AIP {
             this.actionItemId;
             this.responseId;
             this.query;
+            this.userActionItemId;
             this.gridData = {};
             this.init();
 
@@ -142,9 +144,10 @@ module AIP {
                 this.aipReviewService.getActionItem(this.$state.params.userActionItemID)
                     .then((response) => {
                         this.actionItemDetails = response.data;
-                        this.actionItemId = this.actionItemDetails.actionItemId;
-                        this.responseId = this.actionItemDetails.responseId;
-                        this.personId = this.actionItemDetails.spridenId;
+                        this.userActionItemId = this.actionItemDetails.id;
+                        //this.actionItemId = this.actionItemDetails.actionItemId;
+                        //this.responseId = this.actionItemDetails.responseId;
+                        //this.personId = this.actionItemDetails.spridenId;
                     })
             );
 
@@ -155,9 +158,8 @@ module AIP {
          * @param query
          */
         fetchData = function (query) {
-            query.actionItemId = this.actionItemId;
+            query.userActionItemId = this.userActionItemId;
             query.responseId = this.responseId;
-            query.personId = this.personId;
             var deferred = this.$q.defer();
             this.aipReviewService.fetchAttachmentsList(query).then(function (response) {
                 deferred.resolve(response);
@@ -225,8 +227,8 @@ module AIP {
          */
         viewAttachments() {
             this.showModal = true;
-            this.actionItemId = this.actionItemDetails.actionItemId;
-            this.responseId = this.actionItemDetails.responseId;
+            //this.actionItemId = this.actionItemDetails.actionItemId;
+            //this.responseId = this.actionItemDetails.responseId;
         }
 
     }

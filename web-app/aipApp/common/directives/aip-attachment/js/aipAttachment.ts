@@ -2,7 +2,7 @@
  Copyright 2018 Ellucian Company L.P. and its affiliates.
  ********************************************************************************/
 ///<reference path="../../../../../typings/tsd.d.ts"/>
-///<reference path="../../../services/aipAttchmentService.ts"/>
+///<reference path="../../../services/aipAttachmentService.ts"/>
     ///<reference path="../../../services/spinnerService.ts"/>
 
 declare var register;
@@ -31,7 +31,7 @@ module AIPUI {
             this.scope = {
                 showModal: "=",
                 responseId: "=",
-                actionItemId: "=",
+                userActionItemId: "=",
                 maxAttachments: "="
             };
             this.$q = $q;
@@ -124,7 +124,7 @@ module AIPUI {
             $scope.fetchData = function (query: AIP.IAttachmentListQuery) {
 
                 var deferred = $q.defer();
-                query.actionItemId = $scope.actionItemId;
+                query.userActionItemId = $scope.userActionItemId;
                 query.responseId = $scope.responseId;
                 $scope.query = query;
                 AIPUploadService.fetchAttachmentsList(query)
@@ -186,7 +186,7 @@ module AIPUI {
                             if (response === 'true') {
                                 SpinnerService.showSpinner(true);
                                 var attachmentParams = {
-                                    actionItemId: $scope.actionItemId,
+                                    userActionItemId: $scope.userActionItemId,
                                     responseId: $scope.responseId,
                                     documentName: selectedFile.name,
                                     file: selectedFile

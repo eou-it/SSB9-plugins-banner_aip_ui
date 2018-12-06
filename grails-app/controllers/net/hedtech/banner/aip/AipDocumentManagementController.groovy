@@ -35,7 +35,7 @@ class AipDocumentManagementController {
             model =[success:false,message:MessageHelper.message('aip.uploadDocument.file.type.restricted.error')]
         }
 
-        if(!model && !maximumAttachmentsValidation(requestParamsMap.actionItemId,requestParamsMap.responseId)){
+        if(!model && !maximumAttachmentsValidation(requestParamsMap.userActionItemId,requestParamsMap.responseId)){
             model =[success:false,message:MessageHelper.message('aip.uploadDocument.maximum.attachment.error')]
         }
 
@@ -61,7 +61,7 @@ class AipDocumentManagementController {
      */
     def listDocuments() {
         def paramsObj = [
-                actionItemId : params.actionItemId,
+                userActionItemId : params.userActionItemId,
                 responseId   : params.responseId,
                 sortColumn   : params.sortColumnName ?: "id",
                 sortAscending: params.ascending ? params.ascending.toBoolean() : false
@@ -121,7 +121,7 @@ class AipDocumentManagementController {
         try {
             MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request
             requestParams.put('file',(CommonsMultipartFile) multipartRequest.getFile('file'))
-            requestParams.put('actionItemId',multipartRequest.multipartParameters.actionItemId[0])
+            requestParams.put('userActionItemId',multipartRequest.multipartParameters.userActionItemId[0])
             requestParams.put('responseId',multipartRequest.multipartParameters.responseId[0])
             requestParams.put('documentName',multipartRequest.multipartParameters.documentName[0])
         } catch (ClassCastException e) {
@@ -168,15 +168,11 @@ class AipDocumentManagementController {
      * This method is responsible for maximum attachments validation.
      * @return boolean flag
      */
-    private boolean maximumAttachmentsValidation(actionItemId,responseId){
-        def user = springSecurityService.getAuthentication()?.user
-        if(!user){
-            response.sendError 403
-        }
+    private boolean maximumAttachmentsValidation(userActionItemId,responseId){
+
         Map paramsMapObj = [
-                actionItemId : actionItemId,
-                responseId   : responseId,
-                pidm         : user.pidm
+                userActionItemId : userActionItemId,
+                responseId   : responseId
         ]
         return uploadDocumentCompositeService.validateMaxAttachments(paramsMapObj)
     }

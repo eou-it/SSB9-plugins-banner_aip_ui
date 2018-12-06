@@ -15,9 +15,8 @@ var AIP;
              * @param query
              */
             this.fetchData = function (query) {
-                query.actionItemId = this.actionItemId;
+                query.userActionItemId = this.userActionItemId;
                 query.responseId = this.responseId;
-                query.personId = this.personId;
                 var deferred = this.$q.defer();
                 this.aipReviewService.fetchAttachmentsList(query).then(function (response) {
                     deferred.resolve(response);
@@ -100,6 +99,7 @@ var AIP;
             this.actionItemId;
             this.responseId;
             this.query;
+            this.userActionItemId;
             this.gridData = {};
             this.init();
             $scope.header = [{
@@ -175,9 +175,10 @@ var AIP;
             allPromises.push(this.aipReviewService.getActionItem(this.$state.params.userActionItemID)
                 .then(function (response) {
                 _this.actionItemDetails = response.data;
-                _this.actionItemId = _this.actionItemDetails.actionItemId;
-                _this.responseId = _this.actionItemDetails.responseId;
-                _this.personId = _this.actionItemDetails.spridenId;
+                _this.userActionItemId = _this.actionItemDetails.id;
+                //this.actionItemId = this.actionItemDetails.actionItemId;
+                //this.responseId = this.actionItemDetails.responseId;
+                //this.personId = this.actionItemDetails.spridenId;
             }));
         };
         /**
@@ -185,8 +186,8 @@ var AIP;
          */
         ReviewActionItemCtrl.prototype.viewAttachments = function () {
             this.showModal = true;
-            this.actionItemId = this.actionItemDetails.actionItemId;
-            this.responseId = this.actionItemDetails.responseId;
+            //this.actionItemId = this.actionItemDetails.actionItemId;
+            //this.responseId = this.actionItemDetails.responseId;
         };
         return ReviewActionItemCtrl;
     }());

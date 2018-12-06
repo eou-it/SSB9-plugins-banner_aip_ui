@@ -56,7 +56,7 @@ modules = {
         resource url: [plugin: 'banner-aip-ui', file: 'aipApp/common/services/breadcrumbService.js']
         resource url: [plugin: 'banner-aip-ui', file: 'aipApp/common/services/userService.js']
         resource url: [plugin: 'banner-aip-ui', file: 'aipApp/common/services/spinnerService.js']
-        resource url: [plugin: 'banner-aip-ui', file: 'aipApp/common/services/aipAttchmentService.js']
+        resource url: [plugin: 'banner-aip-ui', file: 'aipApp/common/services/aipAttachmentService.js']
 
         resource url: [plugin: 'banner-aip-ui', file: 'aipApp/common/directives/list/js/list.js']
         resource url: [plugin: 'banner-aip-ui', file: 'aipApp/common/directives/readmore/js/readmore.js']

@@ -48,9 +48,8 @@ var AIP;
             var deferred = this.$q.defer();
             var realMax = parseInt(query.max) - parseInt(query.offset);
             var url = this.APP_PATH + "/aipReview/listDocuments" +
-                '?actionItemId=' + (query.actionItemId || '') +
+                '?userActionItemId=' + (query.userActionItemId || '') +
                 '&responseId=' + (query.responseId || '') +
-                '&personId=' + (query.personId || '') +
                 '&sortColumnName=' + (query.sortColumnName || 'actionItemName') +
                 '&ascending=' + (query.ascending.toString() || "") +
                 '&offset=' + (query.offset || 0) +
