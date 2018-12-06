@@ -7,6 +7,8 @@
 ///<reference path="../../common/services/userService.ts"/>
 ///<reference path="../../common/services/spinnerService.ts"/>
 declare var register;
+declare var Notification: any;
+declare var notifications: any;
 
 module AIP {
 
@@ -41,6 +43,11 @@ module AIP {
         selectedRecord;
         gridData;
         userActionItemId;
+        actionItemReviewStatusList;
+        selectedReviewState;
+        externalCommentInd;
+        reviewComments;
+        contactInfo;
 
         constructor($scope, $state, AIPReviewService, AIPUserService, SpinnerService, $timeout, $q, $uibModal, APP_ROOT, $sce, $filter) {
             $scope.vm = this;
@@ -67,6 +74,11 @@ module AIP {
             this.userActionItemId;
             this.gridData = {};
             this.init();
+            this.actionItemReviewStatusList = null;
+            this.contactInfo;
+            this.externalCommentInd = true;
+            this.reviewComments;
+            this.selectedReviewState = {};
 
             $scope.header = [{
                 name: "id",
@@ -137,7 +149,7 @@ module AIP {
                 $scope.selectedRecord = data;
             };
         }
-
+        
         init() {
             var allPromises = [];
             allPromises.push(
@@ -148,9 +160,11 @@ module AIP {
                         //this.actionItemId = this.actionItemDetails.actionItemId;
                         //this.responseId = this.actionItemDetails.responseId;
                         //this.personId = this.actionItemDetails.spridenId;
+                        this.selectedReviewState = this.actionItemDetails.reviewStateObject;
+                        this.contactInfo = this.actionItemDetails.contactInfo;
                     })
             );
-
+            this.getReviewStatusList();
         }
 
         /**
@@ -229,6 +243,60 @@ module AIP {
             this.showModal = true;
             //this.actionItemId = this.actionItemDetails.actionItemId;
             //this.responseId = this.actionItemDetails.responseId;
+        }
+
+
+        getReviewStatusList() {
+            this.aipReviewService.getReviewStatusList()
+                .then((response) => {
+                    this.actionItemReviewStatusList = response;
+                })
+        }
+
+        reset(vm) {
+            var notification = new Notification({
+                message: this.$filter("i18n_aip")("js.aip.review.monitor.reset.prompt.message"),
+                type: "warning"
+            });
+            notification.addPromptAction(this.$filter("i18n_aip")("default.yes.label"), function () {
+                notifications.remove(notification);
+                vm.updateActionItemReview();
+            });
+            notification.addPromptAction(this.$filter("i18n_aip")("default.button.cancel.label"), function () {
+                notifications.remove(notification);
+            });
+            notifications.addNotification(notification);
+        }
+
+        updateActionItemReview() {
+            var reqParams = {
+                userActionItemId: this.actionItemDetails.id,
+                responseId: this.actionItemDetails.responseId,
+                reviewStateCode: this.selectedReviewState.code,
+                displayEndDate: this.actionItemDetails.displayEndDate,
+                externalCommentInd: this.externalCommentInd,
+                reviewComments: this.reviewComments,
+                contactInfo: this.contactInfo
+            };
+            this.spinnerService.showSpinner(true);
+            this.aipReviewService.updateActionItemReview(reqParams)
+                .then((response) => {
+                    this.spinnerService.showSpinner(false);
+                    if (response.data.success) {
+                        this.displayNotification(response.data.message, "success")
+                    } else {
+                        this.displayNotification(response.data.message, "error")
+                    }
+                })
+        }
+
+        displayNotification(message, errorType) {
+            var n = new Notification({
+                message: message,
+                type: errorType,
+                flash: true
+            });
+            notifications.addNotification(n);
         }
 
     }

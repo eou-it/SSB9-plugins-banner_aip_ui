@@ -992,7 +992,8 @@ ol.selected-group > li > button {
       padding: 4px 0;
       margin-bottom: 30px; }
     .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent {
-      padding: 0; }
+      padding: 0;
+      height: auto !important;}
       .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .contentContainer {
         margin-top: 0;
         margin-bottom: 0px; }
@@ -2024,5 +2025,26 @@ ol.selected-group > li > button {
     border: none;
     background-color: transparent;
     margin-right: 2em; }
+
+.review-action-item-container {
+  border:solid 3px powderblue;
+  padding:2px;
+}
+
+.comments-labal-top-padding {
+  padding-top: 1em;
+}
+.review-block-labal-top-padding {
+  padding-top: 2px;
+}
+
+.row-top-padding {
+  padding-top: 1em;
+}
+
+.external-check-box-height {
+  width: 16px;
+  height: 16px;
+}
 
 /*# sourceMappingURL=aip-main.css.map */

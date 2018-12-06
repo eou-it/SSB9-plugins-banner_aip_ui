@@ -18,6 +18,7 @@ module AIP {
         max: string;
     }
 
+
     export interface IAttachmentListQuery {
         responseId: number;
         userActionItemId: number;
@@ -31,6 +32,8 @@ module AIP {
     interface IAIPReviewService {
         getActionItemList();
         fetchSearchResult(query: ISearchActionItemQuery);
+        getReviewStatusList();
+        updateActionItemReview(params);
     }
 
     export class AIPReviewService implements IAIPReviewService {
@@ -127,6 +130,28 @@ module AIP {
                 method: "GET",
                 url: this.ENDPOINT.review.getActionItem + "?userActionItemID=" + userActionItemID
             })
+            return request;
+        }
+
+        getReviewStatusList() {
+            var deferred = this.$q.defer();
+            var request = this.$http({
+                method: "GET",
+                url: this.ENDPOINT.review.getReviewStatusList
+            }).then(function (response) {
+                deferred.resolve(response.data);
+            }, function (response) {
+                deferred.reject(response);
+            });
+            return deferred.promise;
+        }
+
+        updateActionItemReview(params) {
+            var request = this.$http({
+                method: "POST",
+                data: params,
+                url: this.ENDPOINT.review.updateActionItemReview
+            });
             return request;
         }
     }
