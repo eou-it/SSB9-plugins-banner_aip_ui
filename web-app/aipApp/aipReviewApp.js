@@ -83,7 +83,8 @@ var bannerAIPReviewApp = angular.module("bannerAIPReview", [
             search: aipAppAbsPath + "aipReview/searchActionItems",
             getActionItem: aipAppAbsPath + "aipReview/getActionItem",
             getReviewStatusList: aipAppAbsPath + "aipReview/getReviewStatusList",
-            updateActionItemReview: aipAppAbsPath + "aipReview/updateActionItemReview"
+            updateActionItemReview: aipAppAbsPath + "aipReview/updateActionItemReview",
+            listContactInformation: aipAppAbsPath + "aipReview/getContactInformation"
 
         }
     })

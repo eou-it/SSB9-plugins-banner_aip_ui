@@ -5,6 +5,7 @@ package net.hedtech.banner.aip
 
 import grails.converters.JSON
 import net.hedtech.banner.i18n.MessageHelper
+import net.hedtech.banner.general.ConfigurationData
 
 /** Controller for Review Action Items **/
 
@@ -97,6 +98,37 @@ class AipReviewController {
             result = monitorActionItemCompositeService.updateActionItemReview(map)
         }
         render result as JSON
+    }
+
+    /**
+     * Gets the list of contact information values.
+     * @return contact information list as JSON
+     */
+    def getContactInformation() {
+        def configName = "BANNER_AIP_REVIEWER_CONTACT_INFORMATION"
+        def configType = "arraylist"
+        def configApplicationId = "GENERAL_SS"
+
+        def configData = ConfigurationData.fetchByNameAndType(configName, configType, configApplicationId)
+
+        def results = configData.value
+        results = results.substring(1, results.length()-1)
+        List<String> contactInformationList = new ArrayList<String>(Arrays.asList(results.split(",")));
+        List<ConfigurationData> configDataList = new ArrayList<ConfigurationData>();
+        contactInformationList.each {
+            configDataList.add(new ConfigurationData(
+                    name: it,
+                    type: "string",
+                    value: it,
+                    version:  0.0,
+                    lastModified: new Date(),
+                    lastModifiedBy: "test",
+                    dataOrigin: "Banner"
+            ))
+        }
+
+        render configDataList as JSON
+
     }
 
 }

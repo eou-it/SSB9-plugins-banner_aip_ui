@@ -31,6 +31,7 @@ module AIP {
         $q;
         APP_ROOT;
         actionItemNamesList;
+        contactInformationList;
         actionItemDetails;
         personId;
         personName;
@@ -61,6 +62,7 @@ module AIP {
             this.$sce = $sce;
             this.$filter = $filter;
             this.actionItemNamesList = [];
+            this.contactInformationList = [];
             this.actionItemDetails = null;
             this.personId;
             this.personName;
@@ -159,6 +161,10 @@ module AIP {
                         this.personId = this.actionItemDetails.spridenId;
                         this.selectedReviewState = this.actionItemDetails.reviewStateObject;
                         this.contactInfo = this.actionItemDetails.contactInfo;
+                    }),
+                this.aipReviewService.getContactInformation()
+                    .then((response) => {
+                        this.contactInformationList = response.data;
                     })
             );
             this.getReviewStatusList();

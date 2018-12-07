@@ -136,7 +136,23 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
                     <label class="titleValue review-block-labal-top-padding">{{"js.aip.review.monitor.action.contact.label"|i18n_aip}}</label>
                 </div>
                 <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8" class="actionItemElement">
-                    <input type="text" data-ng-model="vm.contactInfo" class="form-control"/>
+                    <xe-ui-select id="contactInformation"
+                                  ng-model="vm.selected"
+                                  theme="select2" ng-disabled="disabled">
+
+                        <xe-ui-select-match class="placeholderDisplay"
+                                            placeholder={{"js.aip.action.selected.name"|i18n_aip}}>
+                            <div class="actionItemName" ng-bind-html="vm.selected.name"></div>
+                            <div class="select-placeholder">{{"js.aip.action.selected.name"|i18n_aip}}
+                            </div>
+                        </xe-ui-select-match>
+
+                        <xe-ui-select-choices repeat="item in vm.contactInformationList |
+                                    propsFilter: {name: $select.search}">
+                            <div ng-bind-html="item.value | highlight: $select.search"></div>
+
+                        </xe-ui-select-choices>
+                    </xe-ui-select>
                 </div>
             </div>
             <div class="row row-top-padding">

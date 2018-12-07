@@ -156,6 +156,14 @@ module AIP {
             });
             return request;
         }
+
+        getContactInformation() {
+            var request = this.$http({
+                method: "GET",
+                url: this.ENDPOINT.review.listContactInformation
+            })
+            return request;
+        }
     }
 }
 register("bannerCommonAIP").service("AIPReviewService", AIP.AIPReviewService);
