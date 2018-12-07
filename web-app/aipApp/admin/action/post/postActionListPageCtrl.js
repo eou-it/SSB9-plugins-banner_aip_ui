@@ -5,7 +5,7 @@
 ///<reference path="../../../common/services/admin/adminActionService.ts"/>
 var AIP;
 (function (AIP) {
-    var PostActionListPageCtrl = (function () {
+    var PostActionListPageCtrl = /** @class */ (function () {
         function PostActionListPageCtrl($scope, $state, $window, $filter, $q, ENDPOINT, PAGINATIONCONFIG, AdminActionService) {
             this.$inject = ["$scope", "$state", "$window", "$filter", "$q", "ENDPOINT", "PAGINATIONCONFIG",
                 "AdminActionService"];
@@ -270,8 +270,7 @@ var AIP;
             });
         };
         return PostActionListPageCtrl;
-    })();
+    }());
     AIP.PostActionListPageCtrl = PostActionListPageCtrl;
 })(AIP || (AIP = {}));
 register("bannerAIP").controller("PostActionListPageCtrl", AIP.PostActionListPageCtrl);
-//# sourceMappingURL=postActionListPageCtrl.js.map

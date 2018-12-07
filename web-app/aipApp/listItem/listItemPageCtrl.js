@@ -6,7 +6,7 @@
 ///<reference path="../common/services/userService.ts"/>
 var AIP;
 (function (AIP) {
-    var ListItemPageCtrl = (function () {
+    var ListItemPageCtrl = /** @class */ (function () {
         function ListItemPageCtrl($scope, $state, ItemListViewService, AIPUserService, SpinnerService, $timeout, $q, $uibModal, APP_ROOT, $sce, $compile) {
             this.$inject = ["$scope", "$state", "ItemListViewService", "AIPUserService", "SpinnerService", "$timeout", "$q", "$uibModal", "APP_ROOT", "$sce", "$compile"];
             this.trustHTML = function (txtString) {
@@ -36,14 +36,14 @@ var AIP;
             //Listen to your custom event
             window.addEventListener('responseChanged', function (e) {
                 $scope.responseId = window.params.responseId;
-                $scope.actionItemId = window.params.actionItemId;
+                $scope.userActionItemId = window.params.userActionItemId;
                 $scope.maxAttachments = window.params.maxAttachments;
                 var listItemPageDiv = $('.listActionItem');
                 var attachmentModal = $('aip-attachment');
                 if (attachmentModal.length > 0) {
                     attachmentModal.remove();
                 }
-                var aipAttachmentDirective = $compile("<aip-attachment show-modal='showModal' response-id ='responseId' action-item-id='actionItemId' max-attachments ='maxAttachments'></aip-attachment>")($scope);
+                var aipAttachmentDirective = $compile("<aip-attachment show-modal='showModal' response-id ='responseId' user-action-item-id='userActionItemId' max-attachments ='maxAttachments'></aip-attachment>")($scope);
                 listItemPageDiv.append(aipAttachmentDirective);
                 $scope.showModal = true;
                 $scope.$apply();
@@ -214,7 +214,7 @@ var AIP;
                         return item.id === groupId;
                     });
                     var acitonItem = group[0].items.filter(function (item) {
-                        return item.actionItemId === itemId;
+                        return item.id === itemId;
                     });
                     _this.selectedData.info.title = actionItem[0].title;
                 }
@@ -255,15 +255,15 @@ var AIP;
         ListItemPageCtrl.prototype.resetSelection = function () {
             this.selectedData = undefined;
         };
-        ListItemPageCtrl.prototype.documentUploader = function (responseElementId, paperClipId, responseElement, allowedAttachments, responseId) {
+        ListItemPageCtrl.prototype.documentUploader = function (userActionItemId, paperClipId, responseElement, allowedAttachments, responseId) {
             var isElementPresent = document.getElementById(paperClipId);
             if (isElementPresent === null && responseElement.length > 0) {
                 var paperClipElement = angular.element("<input id=" + paperClipId + " type='image' " +
                     "src='../images/attach_icon_disabled.svg' title = 'Click to add documents' " +
                     "class=' pb-detail pb-item pb-paperclip'/>");
-                window.params.maxAttachments = allowedAttachments;
                 this.setMaxAttachmentParam(allowedAttachments, paperClipId, responseId);
                 responseElement.after(paperClipElement);
+                window.params.userActionItemId = userActionItemId;
                 $('#' + paperClipId).on("click", function () {
                     var selectedPaperClip = this.id;
                     var currentId = selectedPaperClip.substring(selectedPaperClip.length - 1, selectedPaperClip.length);
@@ -313,8 +313,7 @@ var AIP;
             notifications.addNotification(n);
         };
         return ListItemPageCtrl;
-    })();
+    }());
     AIP.ListItemPageCtrl = ListItemPageCtrl;
 })(AIP || (AIP = {}));
 register("bannerNonAdminAIP").controller("ListItemPageCtrl", AIP.ListItemPageCtrl);
-//# sourceMappingURL=listItemPageCtrl.js.map
