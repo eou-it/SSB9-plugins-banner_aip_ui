@@ -371,9 +371,105 @@ aip-list {
     margin-right: 10px;
   }
 }
-input.hasDatepicker {
-  width:150px !important;
+/*CSS for Page builder templates*/
+input.pb-item.pb-text,
+input.pb-item.pb-number,
+input.pb-item.pb-datetime,
+input.pb-item.pb-email,
+input.pb-item.pb-tel
+{
+  font-size: 1.25em;
+  font-family: "OpenSans-semibold";
+  color: darkSlateGray;
+  border: 1px solid #869fb1;
+  padding: 8px 5px;
+  width: 18.75em;
+  -moz-border-radius  : 4px;
+  -webkit-border-radius : 4px;
+  margin-left: 15px;
+  border-radius:4px;
+}
+input.pb-item:focus {
+  border: 1px solid #206E9F;
+  box-shadow: inset 0px 2px 2px #CBE2E8;
+  color: #4F585F;
+}
+input.pb-item.hasDatepicker{
+  height:inherit;
+}
+h2.pb-block-label{
+  color: #4F585F;
+  font-size: 1.875em;
+  font-family: "OpenSans-semibold";
+  margin: 5px 0;
+  padding:0.75em 0.75em;
+}
+h3.pb-form-label{
+  color: #4F585F;
+  font-size: 1.5em;
+  font-family: "OpenSans-semibold";
+  margin: 5px 0;
+  padding:0.75em 0.75em;
+}
+div.pb-literal{
+  color: #4F585F;
+  font-size: 1.15em;
+  margin-top: 5px;
+  padding-left:0.75em;
+  margin-top: 25px;
+}
+label,span.pb-detail{
+  font-size: 1.25em;
+  line-height: 30px;
+  padding-left:0.75em;
+}
+label.pb-label{
+  font-size: 1.5em;
+  font-weight: bold;
+  margin-bottom: 1px;
+  padding: 0.75em 0.75em;
+  margin-left: 6px;
+  display: block;
+}
+label.pb-label.pb-boolean{
+  font-size: 1.25em;
+  display:inline-block;
+}
+select.pb-item.pb-select {
+  font-size: 1.25em;
+  font-family: "OpenSans-semibold";
+  color: darkSlateGray;
+  border: 1px solid #869fb1;
+  padding: 8px 5px;
+  width: 18.75em;
+  -moz-border-radius  : 4px;
+  -webkit-border-radius : 4px;
+  margin-left: 15px;
+  border-radius:4px;
+}
+select.pb-select:focus {
+  background-color: #FFFFFF;
+  border: 2px solid #206E9F;
+  background-color: #FFFFFF;
+  color: #000000;
+}
+option:empty
+{
+  display:none;
+}
+.pb-radio{
+  margin-top:-20px;
+}
+.pb-button{
+  padding: 0.75em 0.75em;
 }
 .ui-datepicker {
   height: 22em !important;
+}
+input[type="checkbox"] {
+  width: 20px;
+  height: 18px;
+  line-height: normal;
+  padding:0.75em 0.75em;
+  margin-left:9px;
 }
