@@ -49,6 +49,7 @@ module AIP {
         externalCommentInd;
         reviewComments;
         selectedContact;
+        dirtyFlag:boolean;
 
         constructor($scope, $state, AIPReviewService, AIPUserService, SpinnerService, $timeout, $q, $uibModal, APP_ROOT, $sce, $filter) {
             $scope.vm = this;
@@ -81,6 +82,7 @@ module AIP {
             this.externalCommentInd = true;
             this.reviewComments;
             this.selectedReviewState = {};
+            this.dirtyFlag = false;
 
             $scope.header = [{
                 name: "id",
@@ -260,6 +262,7 @@ module AIP {
         }
 
         reset(vm) {
+
             var notification = new Notification({
                 message: this.$filter("i18n_aip")("js.aip.review.monitor.reset.prompt.message"),
                 type: "warning"
@@ -303,6 +306,10 @@ module AIP {
                 flash: true
             });
             notifications.addNotification(n);
+        }
+
+        onValueChange(){
+            this.dirtyFlag = true;
         }
 
     }

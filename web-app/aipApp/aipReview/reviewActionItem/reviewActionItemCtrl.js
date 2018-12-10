@@ -108,6 +108,7 @@ var AIP;
             this.externalCommentInd = true;
             this.reviewComments;
             this.selectedReviewState = {};
+            this.dirtyFlag = false;
             $scope.header = [{
                     name: "id",
                     title: "ID",
@@ -252,6 +253,9 @@ var AIP;
                 flash: true
             });
             notifications.addNotification(n);
+        };
+        ReviewActionItemCtrl.prototype.onValueChange = function () {
+            this.dirtyFlag = true;
         };
         return ReviewActionItemCtrl;
     })();
