@@ -244,6 +244,7 @@ var AIP;
                 else {
                     _this.displayNotification(response.data.message, "error");
                 }
+                _this.dirtyFlag = false;
             });
         };
         ReviewActionItemCtrl.prototype.displayNotification = function (message, errorType) {

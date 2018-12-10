@@ -296,6 +296,7 @@ module AIP {
                     } else {
                         this.displayNotification(response.data.message, "error")
                     }
+                    this.dirtyFlag = false;
                 })
         }
 
