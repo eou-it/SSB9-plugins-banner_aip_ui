@@ -7,7 +7,7 @@
 ///<reference path="../../common/services/spinnerService.ts"/>
 var AIP;
 (function (AIP) {
-    var ReviewActionItemCtrl = (function () {
+    var ReviewActionItemCtrl = /** @class */ (function () {
         function ReviewActionItemCtrl($scope, $state, AIPReviewService, AIPUserService, SpinnerService, $timeout, $q, $uibModal, APP_ROOT, $sce, $filter) {
             this.$inject = ["$scope", "$state", "AIPReviewService", "AIPUserService", "SpinnerService", "$timeout", "$q", "$uibModal", "APP_ROOT", "$sce", "$filter", "datePicker"];
             /**
@@ -183,9 +183,7 @@ var AIP;
                 .then(function (response) {
                 _this.actionItemDetails = response.data;
                 _this.userActionItemId = _this.actionItemDetails.id;
-                //this.actionItemId = this.actionItemDetails.actionItemId;
-                //this.responseId = this.actionItemDetails.responseId;
-                //this.personId = this.actionItemDetails.spridenId;
+                _this.responseId = _this.actionItemDetails.responseId;
                 _this.selectedReviewState = _this.actionItemDetails.reviewStateObject;
                 _this.selectedContact.name = _this.actionItemDetails.contactInfo;
             }), this.aipReviewService.getContactInformation()
@@ -199,8 +197,8 @@ var AIP;
          */
         ReviewActionItemCtrl.prototype.viewAttachments = function () {
             this.showModal = true;
-            //this.actionItemId = this.actionItemDetails.actionItemId;
-            //this.responseId = this.actionItemDetails.responseId;
+            this.userActionItemId = this.actionItemDetails.id;
+            this.responseId = this.actionItemDetails.responseId;
         };
         ReviewActionItemCtrl.prototype.getReviewStatusList = function () {
             var _this = this;
@@ -259,8 +257,7 @@ var AIP;
             this.dirtyFlag = true;
         };
         return ReviewActionItemCtrl;
-    })();
+    }());
     AIP.ReviewActionItemCtrl = ReviewActionItemCtrl;
 })(AIP || (AIP = {}));
 register("bannerAIPReview").controller("reviewActionItemCtrl", AIP.ReviewActionItemCtrl);
-//# sourceMappingURL=reviewActionItemCtrl.js.map

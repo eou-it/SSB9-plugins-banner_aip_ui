@@ -290,7 +290,7 @@ module AIP {
                     var group = this.actionItems.groups.filter((item) => {
                         return item.id === groupId;
                     });
-                    var acitonItem = group[0].items.filter((item) => {
+                    var actionItem = group[0].items.filter((item) => {
                         return item.id === itemId;
                     });
                     this.selectedData.info.title = actionItem[0].title;

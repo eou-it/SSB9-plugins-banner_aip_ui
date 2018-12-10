@@ -153,7 +153,7 @@ module AIP {
                 $scope.selectedRecord = data;
             };
         }
-        
+
         init() {
             var allPromises = [];
             allPromises.push(
@@ -161,9 +161,7 @@ module AIP {
                     .then((response) => {
                         this.actionItemDetails = response.data;
                         this.userActionItemId = this.actionItemDetails.id;
-                        //this.actionItemId = this.actionItemDetails.actionItemId;
-                        //this.responseId = this.actionItemDetails.responseId;
-                        //this.personId = this.actionItemDetails.spridenId;
+                        this.responseId = this.actionItemDetails.responseId;
                         this.selectedReviewState = this.actionItemDetails.reviewStateObject;
                         this.selectedContact.name = this.actionItemDetails.contactInfo;
                     }),
@@ -249,8 +247,8 @@ module AIP {
          */
         viewAttachments() {
             this.showModal = true;
-            //this.actionItemId = this.actionItemDetails.actionItemId;
-            //this.responseId = this.actionItemDetails.responseId;
+            this.userActionItemId = this.actionItemDetails.id;
+            this.responseId = this.actionItemDetails.responseId;
         }
 
 
