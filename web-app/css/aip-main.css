@@ -2136,5 +2136,15 @@ ol.selected-group > li > button {
     border: none;
     background-color: transparent;
     margin-right: 2em; }
+.calendar-img{float: right;
+  margin-right: 10px;
+  top: -28px;
+  position: relative;}
+.date-input-height{
+  height: 33px !important;
+}
+.date-div-width {
+  max-width: 240px;
+}
 
 /*# sourceMappingURL=aip-main.css.map */

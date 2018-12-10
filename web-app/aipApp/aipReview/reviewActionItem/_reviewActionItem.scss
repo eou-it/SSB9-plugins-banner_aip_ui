@@ -31,6 +31,20 @@
     height: 16px;
 }
 
+.calendar-img{float: right;
+    margin-right: 10px;
+    top: -28px;
+    position: relative;
+}
+
+.date-input-height{
+    height: 33px !important;
+}
+
+.date-div-width {
+    max-width: 240px;
+}
+
 .view-attachment-icon {
     background: url(../images/aip_view_attachment.svg) no-repeat;
     cursor: pointer;

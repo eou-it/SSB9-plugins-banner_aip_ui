@@ -19,7 +19,7 @@ module AIP {
 
     export class ReviewActionItemCtrl implements IReviewActionItemCtrl {
 
-        $inject = ["$scope", "$state", "AIPReviewService", "AIPUserService", "SpinnerService", "$timeout", "$q", "$uibModal", "APP_ROOT", "$sce", "$filter"];
+        $inject = ["$scope", "$state", "AIPReviewService", "AIPUserService", "SpinnerService", "$timeout", "$q", "$uibModal", "APP_ROOT", "$sce", "$filter", "datePicker"];
         aipReviewService: AIP.AIPReviewService;
         userService: AIP.UserService;
         $uibModal;
@@ -48,7 +48,7 @@ module AIP {
         selectedReviewState;
         externalCommentInd;
         reviewComments;
-        contactInfo;
+        selectedContact;
 
         constructor($scope, $state, AIPReviewService, AIPUserService, SpinnerService, $timeout, $q, $uibModal, APP_ROOT, $sce, $filter) {
             $scope.vm = this;
@@ -77,7 +77,7 @@ module AIP {
             this.gridData = {};
             this.init();
             this.actionItemReviewStatusList = null;
-            this.contactInfo;
+            this.selectedContact={};
             this.externalCommentInd = true;
             this.reviewComments;
             this.selectedReviewState = {};
@@ -163,7 +163,7 @@ module AIP {
                         //this.responseId = this.actionItemDetails.responseId;
                         //this.personId = this.actionItemDetails.spridenId;
                         this.selectedReviewState = this.actionItemDetails.reviewStateObject;
-                        this.contactInfo = this.actionItemDetails.contactInfo;
+                        this.selectedContact.name = this.actionItemDetails.contactInfo;
                     }),
                 this.aipReviewService.getContactInformation()
                     .then((response) => {
@@ -282,7 +282,7 @@ module AIP {
                 displayEndDate: this.actionItemDetails.displayEndDate,
                 externalCommentInd: this.externalCommentInd,
                 reviewComments: this.reviewComments,
-                contactInfo: this.contactInfo
+                contactInfo: encodeURIComponent(this.selectedContact.name)
             };
             this.spinnerService.showSpinner(true);
             this.aipReviewService.updateActionItemReview(reqParams)

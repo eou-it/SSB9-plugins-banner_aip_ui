@@ -78,7 +78,6 @@ class AipReviewController {
      * get list of review status
      */
     def getReviewStatusList() {
-       // def result = [[code:1,name:"Review needed"],[code:2,name:"Review in progress"],[code:3,name:"Review approved"],[code:4,name:"Review in progress"]]
         def result = monitorActionItemCompositeService.getReviewStatusList()
         render result as JSON
     }

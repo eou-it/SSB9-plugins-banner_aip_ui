@@ -165,3 +165,5 @@ module AIP {
     }
 }
 register("bannerCommonAIP").service("AIPReviewService", AIP.AIPReviewService);
+register("bannerCommonAIP").service("dateFormatService", AIP.AIPReviewService);
+

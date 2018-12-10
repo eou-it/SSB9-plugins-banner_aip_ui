@@ -7,9 +7,9 @@
 ///<reference path="../../common/services/spinnerService.ts"/>
 var AIP;
 (function (AIP) {
-    var ReviewActionItemCtrl = /** @class */ (function () {
+    var ReviewActionItemCtrl = (function () {
         function ReviewActionItemCtrl($scope, $state, AIPReviewService, AIPUserService, SpinnerService, $timeout, $q, $uibModal, APP_ROOT, $sce, $filter) {
-            this.$inject = ["$scope", "$state", "AIPReviewService", "AIPUserService", "SpinnerService", "$timeout", "$q", "$uibModal", "APP_ROOT", "$sce", "$filter"];
+            this.$inject = ["$scope", "$state", "AIPReviewService", "AIPUserService", "SpinnerService", "$timeout", "$q", "$uibModal", "APP_ROOT", "$sce", "$filter", "datePicker"];
             /**
              * Gets list of attached document for a response.
              * @param query
@@ -104,7 +104,7 @@ var AIP;
             this.gridData = {};
             this.init();
             this.actionItemReviewStatusList = null;
-            this.contactInfo;
+            this.selectedContact = {};
             this.externalCommentInd = true;
             this.reviewComments;
             this.selectedReviewState = {};
@@ -186,7 +186,7 @@ var AIP;
                 //this.responseId = this.actionItemDetails.responseId;
                 //this.personId = this.actionItemDetails.spridenId;
                 _this.selectedReviewState = _this.actionItemDetails.reviewStateObject;
-                _this.contactInfo = _this.actionItemDetails.contactInfo;
+                _this.selectedContact.name = _this.actionItemDetails.contactInfo;
             }), this.aipReviewService.getContactInformation()
                 .then(function (response) {
                 _this.contactInformationList = response.data;
@@ -231,7 +231,7 @@ var AIP;
                 displayEndDate: this.actionItemDetails.displayEndDate,
                 externalCommentInd: this.externalCommentInd,
                 reviewComments: this.reviewComments,
-                contactInfo: this.contactInfo
+                contactInfo: encodeURIComponent(this.selectedContact.name)
             };
             this.spinnerService.showSpinner(true);
             this.aipReviewService.updateActionItemReview(reqParams)
@@ -254,7 +254,8 @@ var AIP;
             notifications.addNotification(n);
         };
         return ReviewActionItemCtrl;
-    }());
+    })();
     AIP.ReviewActionItemCtrl = ReviewActionItemCtrl;
 })(AIP || (AIP = {}));
 register("bannerAIPReview").controller("reviewActionItemCtrl", AIP.ReviewActionItemCtrl);
+//# sourceMappingURL=reviewActionItemCtrl.js.map
