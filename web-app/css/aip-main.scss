@@ -482,8 +482,10 @@ ol.selected-group > li > button {
 .search-container .simple-input-field {
   font-size: 0.875em !important;
 }
-.search-container .simple-input-field::-webkit-input-placeholder {
-  color: #869fb1 !important;
+@media screen and (min-width: 769px) {
+  .search-container .simple-input-field::-webkit-input-placeholder {
+    color: #869fb1 !important;
+  }
 }
 .search-container .simple-input-field::-moz-placeholder {
   color: #869fb1 !important;
@@ -508,7 +510,6 @@ ol.selected-group > li > button {
 .column-filter-button {
   padding: 0.6em !important;
   padding-left: 2em !important;
-  width: 13.3em !important;
   margin-right: 1em !important;
   .placeholder {
     color: #869fb1 !important;

@@ -1748,6 +1748,18 @@ ol.selected-group > li > button {
   width: 16px;
   height: 16px; }
 
+.calendar-img {
+  float: right;
+  margin-right: 10px;
+  top: -28px;
+  position: relative; }
+
+.date-input-height {
+  height: 33px !important; }
+
+.date-div-width {
+  max-width: 240px; }
+
 .view-attachment-icon {
   background: url(../images/aip_view_attachment.svg) no-repeat;
   cursor: pointer;
@@ -2095,9 +2107,9 @@ ol.selected-group > li > button {
 .search-container .simple-input-field {
   font-size: 0.875em !important; }
 
-.search-container .simple-input-field::-webkit-input-placeholder {
-  color: #869fb1 !important; }
-
+@media screen and (min-width: 769px) {
+  .search-container .simple-input-field::-webkit-input-placeholder {
+    color: #869fb1 !important; } }
 .search-container .simple-input-field::-moz-placeholder {
   color: #869fb1 !important; }
 
@@ -2120,7 +2132,6 @@ ol.selected-group > li > button {
 .column-filter-button {
   padding: 0.6em !important;
   padding-left: 2em !important;
-  width: 13.3em !important;
   margin-right: 1em !important; }
   .column-filter-button .placeholder {
     color: #869fb1 !important;
@@ -2136,15 +2147,5 @@ ol.selected-group > li > button {
     border: none;
     background-color: transparent;
     margin-right: 2em; }
-.calendar-img{float: right;
-  margin-right: 10px;
-  top: -28px;
-  position: relative;}
-.date-input-height{
-  height: 33px !important;
-}
-.date-div-width {
-  max-width: 240px;
-}
 
 /*# sourceMappingURL=aip-main.css.map */
