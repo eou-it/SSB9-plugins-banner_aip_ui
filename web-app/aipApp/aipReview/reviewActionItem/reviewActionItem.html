@@ -100,7 +100,7 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
                 </div>
                 <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8" class="actionItemElement">
                     <xe-ui-select class="folder-minwidth" ng-model="vm.selectedReviewState"
-                                  theme="select2">
+                                  theme="select2" ng-change = "vm.onValueChange()">
                         <xe-ui-select-match placeholder="{{''|i18n_aip}}">
                             <div ng-bind-html="vm.selectedReviewState.name"></div>
                         </xe-ui-select-match>
@@ -117,18 +117,18 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
                 </div>
                 <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8" class="actionItemElement">
                     <input type="checkbox" ng-model="vm.externalCommentInd" value="Y" checked="true" class="external-check-box-height">{{"js.aip.review.monitor.action.external.label"|i18n_aip}}
-                    <input type="text" class="form-control" ng-model="vm.reviewComments"/>
+                    <input type="text" class="form-control" ng-model="vm.reviewComments" ng-change = "vm.onValueChange()"/>
                 </div>
             </div>
             <div class="row row-top-padding">
                 <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
                     <label class="titleValue review-block-labal-top-padding">{{"js.aip.review.monitor.action.diplay.end.date.label"|i18n_aip}}</label>
                 </div>
-                <div class="actionItemElement col-xs-12 col-sm-8 col-md-8 col-lg-8">
+                <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8 date-div-width">
                     <input type="text"  date-picker ng-model="vm.actionItemDetails.displayEndDate"
-                           class="form-control  Datelement" name="displayEndDate"
+                           class="form-control  Datelement date-input-height" name="displayEndDate"
                            aria-required="true" required autocomplete="off"
-                           placeholder='{{"default.date.format.watermark"|i18n_aip}}'/>
+                           placeholder='{{"default.date.format.watermark"|i18n_aip}}' ng-change = "vm.onValueChange()"/>
                 </div>
             </div>
             <div class="row row-top-padding">
@@ -137,12 +137,12 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
                 </div>
                 <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8" class="actionItemElement">
                     <xe-ui-select id="contactInformation"
-                                  ng-model="vm.selected"
-                                  theme="select2" ng-disabled="disabled">
+                                  ng-model="vm.selectedContact"
+                                  theme="select2" ng-disabled="disabled" ng-change = "vm.onValueChange()">
 
                         <xe-ui-select-match class="placeholderDisplay"
                                             placeholder={{"js.aip.action.selected.name"|i18n_aip}}>
-                            <div class="actionItemName" ng-bind-html="vm.selected.name"></div>
+                            <div class="actionItemName" ng-bind-html="vm.selectedContact.name"></div>
                             <div class="select-placeholder">{{"js.aip.action.selected.name"|i18n_aip}}
                             </div>
                         </xe-ui-select-match>
@@ -161,14 +161,14 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
                 <div class="col-xs-8 col-sm-8 col-md-6 col-lg-6" class="actionItemElement">
                  <span>
                     <button name="Cancel" type="button" class="btn btn-primary" ng-click="vm.reset(vm)"
-                            ng-disabled="!actionItemReviewForm.$dirty">
+                            ng-disabled="!vm.dirtyFlag">
                         {{"js.aip.review.monitor.action.resetButtonLabel"|i18n_aip}}
                     </button>
                  </span>
                 <span>
                     <button name="Save" type="button" class="btn btn-primary"
                             ng-click="vm.updateActionItemReview();actionItemReviewForm.$setPristine();"
-                            ng-disabled="!actionItemReviewForm.$dirty">
+                            ng-disabled="!vm.dirtyFlag">
                         {{"default.button.save.label"|i18n_aip}}
                     </button>
                 </span>

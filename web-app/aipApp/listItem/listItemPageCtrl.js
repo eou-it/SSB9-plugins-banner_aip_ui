@@ -213,7 +213,7 @@ var AIP;
                     var group = _this.actionItems.groups.filter(function (item) {
                         return item.id === groupId;
                     });
-                    var acitonItem = group[0].items.filter(function (item) {
+                    var actionItem = group[0].items.filter(function (item) {
                         return item.id === itemId;
                     });
                     _this.selectedData.info.title = actionItem[0].title;

@@ -19,7 +19,7 @@ module AIP {
 
     export class ReviewActionItemCtrl implements IReviewActionItemCtrl {
 
-        $inject = ["$scope", "$state", "AIPReviewService", "AIPUserService", "SpinnerService", "$timeout", "$q", "$uibModal", "APP_ROOT", "$sce", "$filter"];
+        $inject = ["$scope", "$state", "AIPReviewService", "AIPUserService", "SpinnerService", "$timeout", "$q", "$uibModal", "APP_ROOT", "$sce", "$filter", "datePicker"];
         aipReviewService: AIP.AIPReviewService;
         userService: AIP.UserService;
         $uibModal;
@@ -48,7 +48,8 @@ module AIP {
         selectedReviewState;
         externalCommentInd;
         reviewComments;
-        contactInfo;
+        selectedContact;
+        dirtyFlag:boolean;
 
         constructor($scope, $state, AIPReviewService, AIPUserService, SpinnerService, $timeout, $q, $uibModal, APP_ROOT, $sce, $filter) {
             $scope.vm = this;
@@ -77,10 +78,11 @@ module AIP {
             this.gridData = {};
             this.init();
             this.actionItemReviewStatusList = null;
-            this.contactInfo;
+            this.selectedContact={};
             this.externalCommentInd = true;
             this.reviewComments;
             this.selectedReviewState = {};
+            this.dirtyFlag = false;
 
             $scope.header = [{
                 name: "id",
@@ -151,7 +153,7 @@ module AIP {
                 $scope.selectedRecord = data;
             };
         }
-        
+
         init() {
             var allPromises = [];
             allPromises.push(
@@ -159,11 +161,9 @@ module AIP {
                     .then((response) => {
                         this.actionItemDetails = response.data;
                         this.userActionItemId = this.actionItemDetails.id;
-                        //this.actionItemId = this.actionItemDetails.actionItemId;
-                        //this.responseId = this.actionItemDetails.responseId;
-                        //this.personId = this.actionItemDetails.spridenId;
+                        this.responseId = this.actionItemDetails.responseId;
                         this.selectedReviewState = this.actionItemDetails.reviewStateObject;
-                        this.contactInfo = this.actionItemDetails.contactInfo;
+                        this.selectedContact.name = this.actionItemDetails.contactInfo;
                     }),
                 this.aipReviewService.getContactInformation()
                     .then((response) => {
@@ -247,8 +247,8 @@ module AIP {
          */
         viewAttachments() {
             this.showModal = true;
-            //this.actionItemId = this.actionItemDetails.actionItemId;
-            //this.responseId = this.actionItemDetails.responseId;
+            this.userActionItemId = this.actionItemDetails.id;
+            this.responseId = this.actionItemDetails.responseId;
         }
 
 
@@ -260,6 +260,7 @@ module AIP {
         }
 
         reset(vm) {
+
             var notification = new Notification({
                 message: this.$filter("i18n_aip")("js.aip.review.monitor.reset.prompt.message"),
                 type: "warning"
@@ -282,7 +283,7 @@ module AIP {
                 displayEndDate: this.actionItemDetails.displayEndDate,
                 externalCommentInd: this.externalCommentInd,
                 reviewComments: this.reviewComments,
-                contactInfo: this.contactInfo
+                contactInfo: encodeURIComponent(this.selectedContact.name)
             };
             this.spinnerService.showSpinner(true);
             this.aipReviewService.updateActionItemReview(reqParams)
@@ -293,6 +294,7 @@ module AIP {
                     } else {
                         this.displayNotification(response.data.message, "error")
                     }
+                    this.dirtyFlag = false;
                 })
         }
 
@@ -303,6 +305,10 @@ module AIP {
                 flash: true
             });
             notifications.addNotification(n);
+        }
+
+        onValueChange(){
+            this.dirtyFlag = true;
         }
 
     }

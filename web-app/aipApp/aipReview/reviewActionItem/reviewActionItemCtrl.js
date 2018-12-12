@@ -9,7 +9,7 @@ var AIP;
 (function (AIP) {
     var ReviewActionItemCtrl = /** @class */ (function () {
         function ReviewActionItemCtrl($scope, $state, AIPReviewService, AIPUserService, SpinnerService, $timeout, $q, $uibModal, APP_ROOT, $sce, $filter) {
-            this.$inject = ["$scope", "$state", "AIPReviewService", "AIPUserService", "SpinnerService", "$timeout", "$q", "$uibModal", "APP_ROOT", "$sce", "$filter"];
+            this.$inject = ["$scope", "$state", "AIPReviewService", "AIPUserService", "SpinnerService", "$timeout", "$q", "$uibModal", "APP_ROOT", "$sce", "$filter", "datePicker"];
             /**
              * Gets list of attached document for a response.
              * @param query
@@ -104,10 +104,11 @@ var AIP;
             this.gridData = {};
             this.init();
             this.actionItemReviewStatusList = null;
-            this.contactInfo;
+            this.selectedContact = {};
             this.externalCommentInd = true;
             this.reviewComments;
             this.selectedReviewState = {};
+            this.dirtyFlag = false;
             $scope.header = [{
                     name: "id",
                     title: "ID",
@@ -182,11 +183,9 @@ var AIP;
                 .then(function (response) {
                 _this.actionItemDetails = response.data;
                 _this.userActionItemId = _this.actionItemDetails.id;
-                //this.actionItemId = this.actionItemDetails.actionItemId;
-                //this.responseId = this.actionItemDetails.responseId;
-                //this.personId = this.actionItemDetails.spridenId;
+                _this.responseId = _this.actionItemDetails.responseId;
                 _this.selectedReviewState = _this.actionItemDetails.reviewStateObject;
-                _this.contactInfo = _this.actionItemDetails.contactInfo;
+                _this.selectedContact.name = _this.actionItemDetails.contactInfo;
             }), this.aipReviewService.getContactInformation()
                 .then(function (response) {
                 _this.contactInformationList = response.data;
@@ -198,8 +197,8 @@ var AIP;
          */
         ReviewActionItemCtrl.prototype.viewAttachments = function () {
             this.showModal = true;
-            //this.actionItemId = this.actionItemDetails.actionItemId;
-            //this.responseId = this.actionItemDetails.responseId;
+            this.userActionItemId = this.actionItemDetails.id;
+            this.responseId = this.actionItemDetails.responseId;
         };
         ReviewActionItemCtrl.prototype.getReviewStatusList = function () {
             var _this = this;
@@ -231,7 +230,7 @@ var AIP;
                 displayEndDate: this.actionItemDetails.displayEndDate,
                 externalCommentInd: this.externalCommentInd,
                 reviewComments: this.reviewComments,
-                contactInfo: this.contactInfo
+                contactInfo: encodeURIComponent(this.selectedContact.name)
             };
             this.spinnerService.showSpinner(true);
             this.aipReviewService.updateActionItemReview(reqParams)
@@ -243,6 +242,7 @@ var AIP;
                 else {
                     _this.displayNotification(response.data.message, "error");
                 }
+                _this.dirtyFlag = false;
             });
         };
         ReviewActionItemCtrl.prototype.displayNotification = function (message, errorType) {
@@ -252,6 +252,9 @@ var AIP;
                 flash: true
             });
             notifications.addNotification(n);
+        };
+        ReviewActionItemCtrl.prototype.onValueChange = function () {
+            this.dirtyFlag = true;
         };
         return ReviewActionItemCtrl;
     }());

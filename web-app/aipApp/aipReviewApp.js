@@ -36,6 +36,7 @@ var bannerAIPReviewApp = angular.module("bannerAIPReview", [
     "ngAria",
     "ngAnimate",
     "xe-ui-components",
+    "bannerAIPUI",
     "bannerCommonAIP",
     "ngRoute",
     "SCEAIP",
