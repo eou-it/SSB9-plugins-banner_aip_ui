@@ -50,6 +50,7 @@ module AIP {
         reviewComments;
         selectedContact;
         dirtyFlag:boolean;
+        actionItemDetailsClone;
 
         constructor($scope, $state, AIPReviewService, AIPUserService, SpinnerService, $timeout, $q, $uibModal, APP_ROOT, $sce, $filter) {
             $scope.vm = this;
@@ -83,6 +84,7 @@ module AIP {
             this.reviewComments;
             this.selectedReviewState = {};
             this.dirtyFlag = false;
+            this.actionItemDetailsClone=null;
 
             $scope.header = [{
                 name: "id",
@@ -160,10 +162,12 @@ module AIP {
                 this.aipReviewService.getActionItem(this.$state.params.userActionItemID)
                     .then((response) => {
                         this.actionItemDetails = response.data;
+                        this.actionItemDetailsClone = jQuery.extend({}, response.data);
                         this.userActionItemId = this.actionItemDetails.id;
                         this.responseId = this.actionItemDetails.responseId;
                         this.selectedReviewState = this.actionItemDetails.reviewStateObject;
                         this.selectedContact.name = this.actionItemDetails.contactInfo;
+
                     }),
                 this.aipReviewService.getContactInformation()
                     .then((response) => {
@@ -260,14 +264,13 @@ module AIP {
         }
 
         reset(vm) {
-
             var notification = new Notification({
                 message: this.$filter("i18n_aip")("js.aip.review.monitor.reset.prompt.message"),
                 type: "warning"
             });
             notification.addPromptAction(this.$filter("i18n_aip")("default.yes.label"), function () {
                 notifications.remove(notification);
-                vm.updateActionItemReview();
+                vm.resetValues();
             });
             notification.addPromptAction(this.$filter("i18n_aip")("default.button.cancel.label"), function () {
                 notifications.remove(notification);
@@ -276,6 +279,14 @@ module AIP {
         }
 
         updateActionItemReview() {
+            if(!this.reviewStateValidation(this.selectedReviewState.code)){
+                this.displayNotification(this.$filter("i18n_aip")("aip.review.action.update.review.state.error"), "error");
+                return;
+            }
+            if(!this.isFiledsModified()){
+                this.displayNotification(this.$filter("i18n_aip")("aip.review.action.update.review.fields.validation.error"), "error");
+                return;
+            }
             var reqParams = {
                 userActionItemId: this.actionItemDetails.id,
                 responseId: this.actionItemDetails.responseId,
@@ -285,16 +296,20 @@ module AIP {
                 reviewComments: this.reviewComments,
                 contactInfo: encodeURIComponent(this.selectedContact.name)
             };
+
             this.spinnerService.showSpinner(true);
             this.aipReviewService.updateActionItemReview(reqParams)
                 .then((response) => {
                     this.spinnerService.showSpinner(false);
                     if (response.data.success) {
-                        this.displayNotification(response.data.message, "success")
+                        this.displayNotification(response.data.message, "success");
+                        this.dirtyFlag = false;
+                        this.actionItemDetailsClone.reviewStateObject.code = this.selectedReviewState.code;
+                        this.actionItemDetailsClone.displayEndDate = this.actionItemDetails.displayEndDate;
+                        this.actionItemDetailsClone.contactInfo = this.selectedContact.name;
                     } else {
-                        this.displayNotification(response.data.message, "error")
+                        this.displayNotification(response.data.message, "error");
                     }
-                    this.dirtyFlag = false;
                 })
         }
 
@@ -309,6 +324,38 @@ module AIP {
 
         onValueChange(){
             this.dirtyFlag = true;
+        }
+
+        resetValues(){
+            location.reload();
+        }
+
+        reviewStateValidation(selectedCode){
+            var isValidReveiwCode = false;
+            this.actionItemReviewStatusList.forEach(function(element) {
+                if(element.code === selectedCode ){
+                    isValidReveiwCode = true;
+                }
+            });
+            return isValidReveiwCode;
+        }
+
+        isFiledsModified(){
+            var isFiledsModified = false;
+            if(this.selectedReviewState.code !== this.actionItemDetailsClone.reviewStateObject.code){
+                isFiledsModified = true;
+            }
+            if(!isFiledsModified && this.actionItemDetailsClone.displayEndDate !== this.actionItemDetails.displayEndDate){
+                isFiledsModified = true;
+            }
+
+            if(!isFiledsModified && this.actionItemDetailsClone.contactInfo !== this.selectedContact.name){
+                isFiledsModified = true;
+            }
+            if(!isFiledsModified  && this.reviewComments !== ''){
+                isFiledsModified = true;
+            }
+            return  isFiledsModified ;
         }
 
     }
