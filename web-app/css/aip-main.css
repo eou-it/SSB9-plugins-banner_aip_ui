@@ -1738,11 +1738,20 @@ ol.selected-group > li > button {
   white-space: nowrap; }
 
 .review-action-item-container {
-  border: solid 3px powderblue;
   padding: 2px; }
 
 .comments-labal-top-padding {
   padding-top: 1em; }
+
+.save-button-left-padding {
+  padding-left: 1em;}
+
+.external-label-left-padding {
+  padding-left: 0em;}
+
+.comment-text-left-margin {
+  margin-left: -2em;}
+
 
 .review-block-labal-top-padding {
   padding-top: 2px; }
@@ -1761,7 +1770,8 @@ ol.selected-group > li > button {
   position: relative; }
 
 .date-input-height {
-  height: 33px !important; }
+  height: 33px !important;
+  padding-left: 5px !important;}
 
 .date-div-width {
   max-width: 240px; }
