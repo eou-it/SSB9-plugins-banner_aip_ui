@@ -51,6 +51,7 @@ module AIP {
         selectedContact;
         dirtyFlag:boolean;
         actionItemDetailsClone;
+        selectNone;
 
         constructor($scope, $state, AIPReviewService, AIPUserService, SpinnerService, $timeout, $q, $uibModal, APP_ROOT, $sce, $filter) {
             $scope.vm = this;
@@ -85,6 +86,7 @@ module AIP {
             this.selectedReviewState = {};
             this.dirtyFlag = false;
             this.actionItemDetailsClone=null;
+            this.selectNone =$filter("i18n_aip")("js.aip.action.selected.name");
 
             $scope.header = [{
                 name: "id",
@@ -172,6 +174,12 @@ module AIP {
                 this.aipReviewService.getContactInformation()
                     .then((response) => {
                         this.contactInformationList = response.data;
+                        var selectObject = {
+                        	"name": "",
+                        	"type": "string",
+                        	"value": this.selectNone,
+                        };
+                        this.contactInformationList.unshift(selectObject);
                     })
             );
             this.getReviewStatusList();
