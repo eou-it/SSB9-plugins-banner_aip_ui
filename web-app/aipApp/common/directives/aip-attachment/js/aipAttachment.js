@@ -6,7 +6,7 @@
 ///<reference path="../../../services/spinnerService.ts"/>
 var AIPUI;
 (function (AIPUI) {
-    var AIPAttachment = /** @class */ (function () {
+    var AIPAttachment = (function () {
         function AIPAttachment($filter, $q, AIPUploadService, SpinnerService) {
             this.restrict = "AE";
             this.replace = false;
@@ -290,7 +290,9 @@ var AIPUI;
                 AIPUploadService.restrictedFileTypes()
                     .then(function (response) {
                     if (response.data.restrictedFileTypes) {
-                        if (response.data.restrictedFileTypes.indexOf(selectedFileType) !== -1) {
+                        //if (response.data.restrictedFileTypes.indexOf(selectedFileType) !== -1) {                        }
+                        //if ((((response.data.restrictedFileTypes).toUpperCase()).indexOf(selectedFileType.toUpperCase())) !== -1) {
+                        if (isFileTypeRestricted(response.data.restrictedFileTypes, selectedFileType)) {
                             SpinnerService.showSpinner(false);
                             errorNotification($filter("i18n_aip")("aip.uploadDocument.file.type.restricted.error"));
                             deferred.resolve('false');
@@ -325,10 +327,43 @@ var AIPUI;
                 });
                 return deferred.promise;
             };
+            var isFileTypeRestricted = function (restrictedFileTypes, selectedFileType) {
+                var systemRestrictedFileType = 'EXE';
+                if (systemRestrictedFileType === (selectedFileType.toUpperCase())) {
+                    return true;
+                }
+                var fileTypes = restrictedFileTypes.substring(1, restrictedFileTypes.length - 1);
+                var restrictedFileTypesList = [];
+                if (fileTypes.search(',') !== -1) {
+                    while (fileTypes.search(',') !== -1) {
+                        restrictedFileTypesList.push((fileTypes.substring(0, fileTypes.indexOf(','))).trim());
+                        fileTypes = fileTypes.substring(fileTypes.indexOf(',') + 1, fileTypes.length);
+                    }
+                    restrictedFileTypesList.push(fileTypes.trim());
+                }
+                else {
+                    if (fileTypes === (selectedFileType.toUpperCase())) {
+                        return true;
+                    }
+                }
+                for (var i = 0; i < restrictedFileTypesList.length; i++) {
+                    var listItem = restrictedFileTypesList[i];
+                    if ((listItem.toUpperCase()) === (selectedFileType.toUpperCase())) {
+                        return true;
+                    }
+                }
+                /*restrictedFileTypesList.each(function(value) {
+                 if((value.toUpperCase()) === (selectedFileType.toUpperCase())) {
+                 return true
+                 }
+                 });*/
+                return false;
+            };
         };
         AIPAttachment.$inject = ["$filter", "$q", "AIPUploadService", "SpinnerService"];
         return AIPAttachment;
-    }());
+    })();
     AIPUI.AIPAttachment = AIPAttachment;
 })(AIPUI || (AIPUI = {}));
 register("bannerAIPUI").directive("aipAttachment", AIPUI.AIPAttachment);
+//# sourceMappingURL=aipAttachment.js.map
