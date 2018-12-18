@@ -12,6 +12,7 @@ import org.junit.Test
 import static org.junit.Assert.*
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.context.SecurityContextHolder
+import net.hedtech.banner.aip.ActionItem
 
 /**
  * AipReviewControllerIntegrationTests.
@@ -19,6 +20,7 @@ import org.springframework.security.core.context.SecurityContextHolder
 class AipReviewControllerIntegrationTests extends BaseIntegrationTestCase {
 
     def monitorActionItemCompositeService
+    ActionItem drugAndAlcoholPolicyActionItem;
    
 
     @Before
@@ -27,7 +29,8 @@ class AipReviewControllerIntegrationTests extends BaseIntegrationTestCase {
         controller = new AipReviewController()
         super.setUp()
         loginSSB('AIPADM001', '111111')
-      
+        drugAndAlcoholPolicyActionItem = ActionItem.findByName("Drug and Alcohol Policy")
+        assertNotNull drugAndAlcoholPolicyActionItem
     }
 
     @After
@@ -49,7 +52,7 @@ class AipReviewControllerIntegrationTests extends BaseIntegrationTestCase {
     @Test
     void searchActionItemsByActionIdAndExsitingPersonID() {
 
-        controller.params.actionItemId = "3"
+        controller.params.actionItemId = drugAndAlcoholPolicyActionItem.id.toString()
         controller.params.sortColumnName="spridenId"
         controller.params.ascending=true
         controller.params.max="50"
@@ -72,7 +75,7 @@ class AipReviewControllerIntegrationTests extends BaseIntegrationTestCase {
     @Test
     void searchActionItemsByActionIdAndNonExsitingPersonID() {
 
-        controller.params.actionItemId= "3"
+        controller.params.actionItemId= drugAndAlcoholPolicyActionItem.id.toString()
         controller.params.personId = "CSRSTABCD"
         controller.request.contentType = "text/json"
         controller.params.ascending=true
@@ -117,7 +120,7 @@ class AipReviewControllerIntegrationTests extends BaseIntegrationTestCase {
     @Test
     void searchActionItemsByActionIdAndExsitingPersonName() {
 
-        controller.params.actionItemId= "3"
+        controller.params.actionItemId= drugAndAlcoholPolicyActionItem.id.toString()
         controller.params.personName = "Cliff Starr"
         controller.request.contentType = "text/json"
 
@@ -139,7 +142,7 @@ class AipReviewControllerIntegrationTests extends BaseIntegrationTestCase {
     @Test
     void searchActionItemsByActionIdAndNonExsitingPersonName() {
 
-        controller.params.actionItemId= "3"
+        controller.params.actionItemId= drugAndAlcoholPolicyActionItem.id.toString()
         controller.params.personName = "Osama Bin Ladden"
         controller.request.contentType = "text/json"
         controller.params.ascending=true
@@ -183,7 +186,7 @@ class AipReviewControllerIntegrationTests extends BaseIntegrationTestCase {
     @Test
     void searchActionItemsBygActionIdAndPartialPersonName() {
 
-        controller.params.actionItemId= "3"
+        controller.params.actionItemId= drugAndAlcoholPolicyActionItem.id.toString()
         controller.params.personName = "Cliff"
         controller.request.contentType = "text/json"
 
@@ -206,7 +209,7 @@ class AipReviewControllerIntegrationTests extends BaseIntegrationTestCase {
     @Test
     void searchActionItemsByActionItemOnly() {
 
-        controller.params.actionItemId= "3"
+        controller.params.actionItemId= drugAndAlcoholPolicyActionItem.id.toString()
 
         controller.request.contentType = "text/json"
 

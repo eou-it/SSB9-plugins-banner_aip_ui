@@ -7,7 +7,7 @@
 ///<reference path="../../common/services/spinnerService.ts"/>
 var AIP;
 (function (AIP) {
-    var ReviewActionItemCtrl = (function () {
+    var ReviewActionItemCtrl = /** @class */ (function () {
         function ReviewActionItemCtrl($scope, $state, AIPReviewService, AIPUserService, SpinnerService, $timeout, $q, $uibModal, APP_ROOT, $sce, $filter) {
             this.$inject = ["$scope", "$state", "AIPReviewService", "AIPUserService", "SpinnerService", "$timeout", "$q", "$uibModal", "APP_ROOT", "$sce", "$filter", "datePicker"];
             /**
@@ -110,6 +110,7 @@ var AIP;
             this.selectedReviewState = {};
             this.dirtyFlag = false;
             this.actionItemDetailsClone = null;
+            this.selectNone = $filter("i18n_aip")("js.aip.action.selected.name");
             $scope.header = [{
                     name: "id",
                     title: "ID",
@@ -191,6 +192,12 @@ var AIP;
             }), this.aipReviewService.getContactInformation()
                 .then(function (response) {
                 _this.contactInformationList = response.data;
+                var selectObject = {
+                    "name": "",
+                    "type": "string",
+                    "value": _this.selectNone
+                };
+                _this.contactInformationList.unshift(selectObject);
             }));
             this.getReviewStatusList();
         };
@@ -298,8 +305,7 @@ var AIP;
             return isFiledsModified;
         };
         return ReviewActionItemCtrl;
-    })();
+    }());
     AIP.ReviewActionItemCtrl = ReviewActionItemCtrl;
 })(AIP || (AIP = {}));
 register("bannerAIPReview").controller("reviewActionItemCtrl", AIP.ReviewActionItemCtrl);
-//# sourceMappingURL=reviewActionItemCtrl.js.map
