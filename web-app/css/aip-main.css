@@ -235,11 +235,15 @@ aip-list .enddate {
   margin-right: 10px; }
 
 /*CSS for Page builder templates*/
-input.pb-item.pb-text,
-input.pb-item.pb-number,
-input.pb-item.pb-datetime,
-input.pb-item.pb-email,
-input.pb-item.pb-tel {
+#pbid-PersonalInformationAndEmergencyContacts input.pb-item.pb-text,
+#pbid-PersonalInformationAndEmergencyContacts input.pb-item.pb-number,
+#pbid-PersonalInformationAndEmergencyContacts input.pb-item.pb-datetime,
+#pbid-PersonalInformationAndEmergencyContacts input.pb-item.pb-email,
+#pbid-PersonalInformationAndEmergencyContacts input.pb-item.pb-tel, #pbid-CurrentProgrammeofStudyinformation input.pb-item.pb-text,
+#pbid-CurrentProgrammeofStudyinformation input.pb-item.pb-number,
+#pbid-CurrentProgrammeofStudyinformation input.pb-item.pb-datetime,
+#pbid-CurrentProgrammeofStudyinformation input.pb-item.pb-email,
+#pbid-CurrentProgrammeofStudyinformation input.pb-item.pb-tel {
   font-size: 1.25em;
   font-family: "OpenSans-semibold";
   color: darkSlateGray;
@@ -250,54 +254,45 @@ input.pb-item.pb-tel {
   -webkit-border-radius: 4px;
   margin-left: 15px;
   border-radius: 4px; }
-
-input.pb-item:focus {
+#pbid-PersonalInformationAndEmergencyContacts input.pb-item:focus, #pbid-CurrentProgrammeofStudyinformation input.pb-item:focus {
   border: 1px solid #206E9F;
   box-shadow: inset 0px 2px 2px #CBE2E8;
   color: #4F585F; }
-
-input.pb-item.hasDatepicker {
+#pbid-PersonalInformationAndEmergencyContacts input.pb-item.hasDatepicker, #pbid-CurrentProgrammeofStudyinformation input.pb-item.hasDatepicker {
   height: inherit; }
-
-h2.pb-block-label {
+#pbid-PersonalInformationAndEmergencyContacts h2.pb-block-label, #pbid-CurrentProgrammeofStudyinformation h2.pb-block-label {
   color: #4F585F;
   font-size: 1.875em;
   font-family: "OpenSans-semibold";
   margin: 5px 0;
   padding: 0.75em 0.75em; }
-
-h3.pb-form-label {
+#pbid-PersonalInformationAndEmergencyContacts h3.pb-form-label, #pbid-CurrentProgrammeofStudyinformation h3.pb-form-label {
   color: #4F585F;
   font-size: 1.5em;
   font-family: "OpenSans-semibold";
   margin: 5px 0;
   padding: 0.75em 0.75em; }
-
-div.pb-literal {
+#pbid-PersonalInformationAndEmergencyContacts div.pb-literal, #pbid-CurrentProgrammeofStudyinformation div.pb-literal {
   color: #4F585F;
   font-size: 1.15em;
   margin-top: 5px;
   padding-left: 0.75em;
   margin-top: 25px; }
-
-label, span.pb-detail {
+#pbid-PersonalInformationAndEmergencyContacts label, #pbid-PersonalInformationAndEmergencyContacts span.pb-detail, #pbid-CurrentProgrammeofStudyinformation label, #pbid-CurrentProgrammeofStudyinformation span.pb-detail {
   font-size: 1.25em;
   line-height: 30px;
   padding-left: 0.75em; }
-
-label.pb-label {
+#pbid-PersonalInformationAndEmergencyContacts label.pb-label, #pbid-CurrentProgrammeofStudyinformation label.pb-label {
   font-size: 1.5em;
   font-weight: bold;
   margin-bottom: 1px;
   padding: 0.75em 0.75em;
   margin-left: 6px;
   display: block; }
-
-label.pb-label.pb-boolean {
+#pbid-PersonalInformationAndEmergencyContacts label.pb-label.pb-boolean, #pbid-CurrentProgrammeofStudyinformation label.pb-label.pb-boolean {
   font-size: 1.25em;
   display: inline-block; }
-
-select.pb-item.pb-select {
+#pbid-PersonalInformationAndEmergencyContacts select.pb-item.pb-select, #pbid-CurrentProgrammeofStudyinformation select.pb-item.pb-select {
   font-size: 1.25em;
   font-family: "OpenSans-semibold";
   color: darkSlateGray;
@@ -308,36 +303,28 @@ select.pb-item.pb-select {
   -webkit-border-radius: 4px;
   margin-left: 15px;
   border-radius: 4px; }
-
-select.pb-select:focus {
+#pbid-PersonalInformationAndEmergencyContacts select.pb-select:focus, #pbid-CurrentProgrammeofStudyinformation select.pb-select:focus {
   background-color: #FFFFFF;
   border: 2px solid #206E9F;
   background-color: #FFFFFF;
   color: #000000; }
-
-option:empty {
+#pbid-PersonalInformationAndEmergencyContacts option:empty, #pbid-CurrentProgrammeofStudyinformation option:empty {
   display: none; }
-
-.pb-radio {
+#pbid-PersonalInformationAndEmergencyContacts .pb-radio, #pbid-CurrentProgrammeofStudyinformation .pb-radio {
   margin-top: -20px; }
-
-.pb-button {
+#pbid-PersonalInformationAndEmergencyContacts .pb-button, #pbid-CurrentProgrammeofStudyinformation .pb-button {
   padding: 0.75em 0.75em; }
-
-.ui-datepicker {
+#pbid-PersonalInformationAndEmergencyContacts .ui-datepicker, #pbid-CurrentProgrammeofStudyinformation .ui-datepicker {
   height: 22em !important; }
-
-input[type="checkbox"] {
+#pbid-PersonalInformationAndEmergencyContacts input[type="checkbox"], #pbid-CurrentProgrammeofStudyinformation input[type="checkbox"] {
   width: 20px;
   height: 18px;
   line-height: normal;
   padding: 0.75em 0.75em;
   margin-left: 9px; }
-
-input:read-only {
+#pbid-PersonalInformationAndEmergencyContacts input:read-only, #pbid-CurrentProgrammeofStudyinformation input:read-only {
   background-color: #ebebe4; }
-
-#pbid-Name-0 {
+#pbid-PersonalInformationAndEmergencyContacts #pbid-Name-0, #pbid-CurrentProgrammeofStudyinformation #pbid-Name-0 {
   width: 600px; }
 
 .AIP-landing-container {
