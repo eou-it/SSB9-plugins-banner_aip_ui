@@ -4,8 +4,10 @@
 package net.hedtech.banner.aip
 
 import grails.converters.JSON
+import net.hedtech.banner.exceptions.ApplicationException
 import net.hedtech.banner.i18n.MessageHelper
 import net.hedtech.banner.general.ConfigurationData
+import org.codehaus.groovy.grails.plugins.web.taglib.ValidationTagLib
 
 /** Controller for Review Action Items **/
 
@@ -93,7 +95,11 @@ class AipReviewController {
             result =[success:false,message:MessageHelper.message('aip.review.action.update.review.state.error')]
         }
         if(!result){
+            try {
             result = monitorActionItemCompositeService.updateActionItemReview(map)
+            } catch (ApplicationException e) {
+                result = [ success: false,message : e.returnMap( { mapToLocalize -> new ValidationTagLib().message( mapToLocalize ) } ).message ]
+            }
         }
         render result as JSON
     }
