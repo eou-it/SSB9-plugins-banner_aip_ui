@@ -195,7 +195,7 @@ var AIP;
                 var selectObject = {
                     "name": "",
                     "type": "string",
-                    "value": _this.selectNone,
+                    "value": _this.selectNone
                 };
                 _this.contactInformationList.unshift(selectObject);
             }));

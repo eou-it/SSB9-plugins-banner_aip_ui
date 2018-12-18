@@ -177,7 +177,7 @@ module AIP {
                         var selectObject = {
                         	"name": "",
                         	"type": "string",
-                        	"value": this.selectNone,
+                        	"value": this.selectNone
                         };
                         this.contactInformationList.unshift(selectObject);
                     })
