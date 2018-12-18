@@ -115,7 +115,7 @@ module AIP {
             }, {
                 name: "actionItemPersonName",
                 title: this.$filter("i18n_aip")("js.aip.review.monitor.action.item.grid.header.personName"),
-                ariaLable: this.$filter("i18n_aip")("js.aip.review.monitor.action.item.grid.hear.personName"),
+                ariaLabel: this.$filter("i18n_aip")("js.aip.review.monitor.action.item.grid.hear.personName"),
                 width: "100px",
                 options: {
                     sortable: true,
@@ -126,7 +126,7 @@ module AIP {
             }, {
                 name: "spridenId",
                 title: this.$filter("i18n_aip")("js.aip.review.monitor.action.item.grid.header.spridenId"),
-                ariaLable: this.$filter("i18n_aip")("js.aip.review.monitor.action.item.grid.header.spridenId"),
+                ariaLabel: this.$filter("i18n_aip")("js.aip.review.monitor.action.item.grid.header.spridenId"),
                 width: "100px",
                 options: {
                     sortable: true,
@@ -136,7 +136,7 @@ module AIP {
             }, {
                 name: "actionItemGroupName",
                 title: this.$filter("i18n_aip")("js.aip.review.monitor.action.item.grid.header.actionItemGroupName"),
-                ariaLable: this.$filter("i18n_aip")("js.aip.review.monitor.action.item.grid.header.actionItemGroupName"),
+                ariaLabel: this.$filter("i18n_aip")("js.aip.review.monitor.action.item.grid.header.actionItemGroupName"),
                 width: "100px",
                 options: {
                     sortable: true,
@@ -148,7 +148,7 @@ module AIP {
                 {
                     name: "actionItemName",
                     title: this.$filter("i18n_aip")("js.aip.review.monitor.action.item.grid.header.actionItemName"),
-                    ariaLable: this.$filter("i18n_aip")("js.aip.review.monitor.action.item.grid.header.actionItemName"),
+                    ariaLabel: this.$filter("i18n_aip")("js.aip.review.monitor.action.item.grid.header.actionItemName"),
                     width: "100px",
                     options: {
                         sortable: true,
@@ -160,7 +160,7 @@ module AIP {
                 {
                     name: "status",
                     title: this.$filter("i18n_aip")("js.aip.review.monitor.action.item.grid.header.status"),
-                    ariaLable: this.$filter("i18n_aip")("js.aip.review.monitor.action.item.grid.header.status"),
+                    ariaLabel: this.$filter("i18n_aip")("js.aip.review.monitor.action.item.grid.header.status"),
                     width: "100px",
                     options: {
                         sortable: true,
@@ -173,7 +173,7 @@ module AIP {
                 {
                     name: "responseDate",
                     title: this.$filter("i18n_aip")("js.aip.review.monitor.action.item.grid.header.responseDate"),
-                    ariaLable: this.$filter("i18n_aip")("js.aip.review.monitor.action.item.grid.header.responseDate"),
+                    ariaLabel: this.$filter("i18n_aip")("js.aip.review.monitor.action.item.grid.header.responseDate"),
                     width: "100px",
                     options: {
                         sortable: true,
@@ -187,7 +187,7 @@ module AIP {
                 {
                     name: "currentResponseText",
                     title: this.$filter("i18n_aip")("js.aip.review.monitor.action.item.grid.header.currentResponseText"),
-                    ariaLable: this.$filter("i18n_aip")("js.aip.review.monitor.action.item.grid.header.currentResponseText"),
+                    ariaLabel: this.$filter("i18n_aip")("js.aip.review.monitor.action.item.grid.header.currentResponseText"),
                     width: "100px",
                     options: {
                         sortable: true,
@@ -199,7 +199,7 @@ module AIP {
                 {
                     name: "displayStartDate",
                     title: this.$filter("i18n_aip")("js.aip.review.monitor.action.item.grid.header.displayStartDate"),
-                    ariaLable: this.$filter("i18n_aip")("js.aip.review.monitor.action.item.grid.header.displayStartDate"),
+                    ariaLabel: this.$filter("i18n_aip")("js.aip.review.monitor.action.item.grid.header.displayStartDate"),
                     width: "100px",
                     options: {
                         sortable: true,
@@ -211,7 +211,7 @@ module AIP {
                 {
                     name: "displayEndDate",
                     title: this.$filter("i18n_aip")("js.aip.review.monitor.action.item.grid.header.displayEndDate"),
-                    ariaLable: this.$filter("i18n_aip")("js.aip.review.monitor.action.item.grid.header.displayEndDate"),
+                    ariaLabel: this.$filter("i18n_aip")("js.aip.review.monitor.action.item.grid.header.displayEndDate"),
                     width: "100px",
                     options: {
                         sortable: true,
@@ -223,7 +223,7 @@ module AIP {
                 {
                     name: "reviewIndicator",
                     title: this.$filter("i18n_aip")("js.aip.review.monitor.action.item.grid.header.reviewIndicator"),
-                    ariaLable: this.$filter("i18n_aip")("js.aip.review.monitor.action.item.grid.header.reviewIndicator"),
+                    ariaLabel: this.$filter("i18n_aip")("js.aip.review.monitor.action.item.grid.header.reviewIndicator"),
                     width: "25px",
                     options: {
                         sortable: true,
@@ -236,7 +236,7 @@ module AIP {
                 {
                     name: "attachments",
                     title: this.$filter("i18n_aip")("js.aip.review.monitor.action.item.grid.header.attachments"),
-                    ariaLable: this.$filter("i18n_aip")("js.aip.review.monitor.action.item.grid.header.attachments"),
+                    ariaLabel: this.$filter("i18n_aip")("js.aip.review.monitor.action.item.grid.header.attachments"),
                     width: "25px",
                     options: {
                         sortable: true,
@@ -247,7 +247,7 @@ module AIP {
                 }, {
                     name: "reviewStateCode",
                     title: this.$filter("i18n_aip")("js.aip.review.monitor.action.item.grid.header.reviewState"),
-                    ariaLable: this.$filter("i18n_aip")("js.aip.review.monitor.action.item.grid.header.reviewState"),
+                    ariaLabel: this.$filter("i18n_aip")("js.aip.review.monitor.action.item.grid.header.reviewState"),
                     width: "100px",
                     options: {
                         sortable: true,
