@@ -351,7 +351,7 @@ module AIP {
                 this.setMaxAttachmentParam(allowedAttachments,paperClipId,responseId);
                 responseElement.after(paperClipElement);
                 window.params.userActionItemId = userActionItemId;
-                window.params.isResponseLocked = isResponseLocked
+                window.params.isResponseLocked = isResponseLocked;
                 $('#' + paperClipId).on("click", function () {
                     var selectedPaperClip = this.id
                     var currentId = selectedPaperClip.substring(selectedPaperClip.length - 1, selectedPaperClip.length);
