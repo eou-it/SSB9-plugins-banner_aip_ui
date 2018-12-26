@@ -153,7 +153,7 @@ class AipDocumentManagementController {
     private boolean restrictedFileTypesValidation(selectedFileName){
         def restrictedFileTypesSession = getRestrictedFileTypes()
         if(restrictedFileTypesSession.restrictedFileTypes) {
-            if(restrictedFileTypesSession.restrictedFileTypes.contains(getFileExtension(selectedFileName))) {
+            if((restrictedFileTypesSession.restrictedFileTypes.toUpperCase().indexOf(getFileExtension(selectedFileName.toUpperCase()))) != -1) {
                 return false
             }
         }

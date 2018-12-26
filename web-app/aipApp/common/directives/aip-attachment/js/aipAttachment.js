@@ -6,7 +6,7 @@
 ///<reference path="../../../services/spinnerService.ts"/>
 var AIPUI;
 (function (AIPUI) {
-    var AIPAttachment = /** @class */ (function () {
+    var AIPAttachment = (function () {
         function AIPAttachment($filter, $q, AIPUploadService, SpinnerService) {
             this.restrict = "AE";
             this.replace = false;
@@ -290,7 +290,7 @@ var AIPUI;
                 AIPUploadService.restrictedFileTypes()
                     .then(function (response) {
                     if (response.data.restrictedFileTypes) {
-                        if (response.data.restrictedFileTypes.indexOf(selectedFileType) !== -1) {
+                        if ((((response.data.restrictedFileTypes).toUpperCase()).indexOf(selectedFileType.toUpperCase())) !== -1) {
                             SpinnerService.showSpinner(false);
                             errorNotification($filter("i18n_aip")("aip.uploadDocument.file.type.restricted.error"));
                             deferred.resolve('false');
@@ -328,7 +328,8 @@ var AIPUI;
         };
         AIPAttachment.$inject = ["$filter", "$q", "AIPUploadService", "SpinnerService"];
         return AIPAttachment;
-    }());
+    })();
     AIPUI.AIPAttachment = AIPAttachment;
 })(AIPUI || (AIPUI = {}));
 register("bannerAIPUI").directive("aipAttachment", AIPUI.AIPAttachment);
+//# sourceMappingURL=aipAttachment.js.map
