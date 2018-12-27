@@ -115,7 +115,7 @@ module AIP {
             }, {
                 name: "actionItemPersonName",
                 title: this.$filter("i18n_aip")("js.aip.review.monitor.action.item.grid.header.personName"),
-                ariaLabel: this.$filter("i18n_aip")("js.aip.review.monitor.action.item.grid.hear.personName"),
+                ariaLabel: this.$filter("i18n_aip")("js.aip.review.monitor.action.item.grid.header.personName"),
                 width: "100px",
                 options: {
                     sortable: true,
