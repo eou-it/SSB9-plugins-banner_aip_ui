@@ -234,6 +234,9 @@ aip-list .enddate {
   font-size: 11px;
   margin-right: 10px; }
 
+.ui-datepicker {
+  height: 22em !important; }
+
 /*CSS for Page builder templates*/
 #pbid-PersonalInformationAndEmergencyContacts input.pb-item.pb-text,
 #pbid-PersonalInformationAndEmergencyContacts input.pb-item.pb-number,
@@ -320,8 +323,6 @@ aip-list .enddate {
   margin-top: -20px; }
 #pbid-PersonalInformationAndEmergencyContacts .pb-button, #pbid-CurrentProgrammeofStudyinformation .pb-button, #pbid-ConfirmEnrollment .pb-button {
   padding: 0.75em 0.75em; }
-#pbid-PersonalInformationAndEmergencyContacts .ui-datepicker, #pbid-CurrentProgrammeofStudyinformation .ui-datepicker, #pbid-ConfirmEnrollment .ui-datepicker {
-  height: 22em !important; }
 #pbid-PersonalInformationAndEmergencyContacts input[type="checkbox"], #pbid-CurrentProgrammeofStudyinformation input[type="checkbox"], #pbid-ConfirmEnrollment input[type="checkbox"] {
   width: 20px;
   height: 18px;
