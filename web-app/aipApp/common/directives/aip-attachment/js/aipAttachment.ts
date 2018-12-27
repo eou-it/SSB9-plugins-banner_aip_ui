@@ -378,19 +378,11 @@ module AIPUI {
             var element = $(elem);
             var SPACE_KEY = 32;
 
-            if (attrs.spaceClick) {
-                element.closest(attrs.spaceClick).on('keydown', elem, function (e) {
-                    if(e.keyCode == SPACE_KEY) {
-                        element.click();
-                    }
-                })
-            } else {
-                element.on('keydown', function (e) {
-                    if(e.keyCode == SPACE_KEY) {
-                        element.click();
-                    }
-                })
-            }
+            element.on('keydown', function (e) {
+                if(e.keyCode == SPACE_KEY) {
+                    element.click();
+                }
+            });
         }
     }
 }

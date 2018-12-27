@@ -229,6 +229,9 @@ var AIP;
             this.paginationConfig = this.commonPaginationConfig;
         };
         MonitorActionItemCtrl.prototype.search = function () {
+            if (notifications.hasErrors()) {
+                notifications.clearNotifications();
+            }
             if ((!this.personName || this.personName === "") && (!this.personId || this.personId === "") && (!this.selected || !this.selected.id)) {
                 var n = new Notification({
                     message: this.$filter("i18n_aip")("js.aip.review.monitor.action.item.search.parameter.error.message"),

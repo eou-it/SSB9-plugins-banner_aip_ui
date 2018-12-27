@@ -298,6 +298,10 @@ module AIP {
 
         search() {
 
+            if(notifications.hasErrors()) {
+                notifications.clearNotifications();
+            }
+
             if ((!this.personName || this.personName === "") && (!this.personId || this.personId === "") && (!this.selected || !this.selected.id )) {
                 var n = new Notification({
                     message: this.$filter("i18n_aip")("js.aip.review.monitor.action.item.search.parameter.error.message"),
