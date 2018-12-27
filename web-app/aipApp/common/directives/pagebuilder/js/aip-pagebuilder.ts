@@ -46,7 +46,8 @@ module PB {
         }
         link(scope, element, attrs) {
             var self = this;
-            attrs.$observe('aid', (tpl)  => {
+
+            scope.getPagebuilderDetails = function (tpl) {
                 self.ItemListViewService.getPagebuilderPage(attrs.page, attrs.aid, attrs.gid)
                     .then((val) => {
                         element.children().empty();
@@ -56,9 +57,9 @@ module PB {
 
                         var aipController = {};
                         var pbController = "CustomPageController_" + attrs.page;
-                        var appModule = appModule||angular.module('BannerOnAngular');
+                        var appModule = appModule || angular.module('BannerOnAngular');
 
-                        appModule.requires.push('ngResource','ngGrid','ui', 'pbrun.directives', 'ngSanitize', 'xe-ui-components');
+                        appModule.requires.push('ngResource', 'ngGrid', 'ui', 'pbrun.directives', 'ngSanitize', 'xe-ui-components');
 
                         /* disable debug: */
                         appModule.config(['$compileProvider', function ($compileProvider) {
@@ -74,12 +75,14 @@ module PB {
                                 appModule.controller(pc, aipController[pc]);
                             }
                         }
-
-
                         angular.bootstrap(bodyContent, ["BannerOnAngular"]);
                         element.append(bodyContent);
                     });
-            })
+            }
+            scope.$watch(function () {
+                return [attrs.aid, attrs.page];
+            },  scope.getPagebuilderDetails, true);
+
 
         }
         controller($scope) {

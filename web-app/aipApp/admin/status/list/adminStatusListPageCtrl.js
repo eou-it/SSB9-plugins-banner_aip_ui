@@ -150,7 +150,6 @@ var AIP;
                     _this.$scope.refreshGrid(true); //use scope to call grid directive's function
                 }
                 else {
-                    //TODO:: send error notification
                 }
             }, function (error) {
                 console.log(error);
@@ -227,7 +226,8 @@ var AIP;
             this.selectedRecord = data;
         };
         return AdminStatusListPageCtrl;
-    }());
+    })();
     AIP.AdminStatusListPageCtrl = AdminStatusListPageCtrl;
 })(AIP || (AIP = {}));
 register("bannerAIP").controller("AdminStatusListPageCtrl", AIP.AdminStatusListPageCtrl);
+//# sourceMappingURL=adminStatusListPageCtrl.js.map

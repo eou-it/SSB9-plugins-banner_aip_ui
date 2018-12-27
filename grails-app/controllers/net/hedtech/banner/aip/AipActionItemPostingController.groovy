@@ -13,10 +13,15 @@ import org.codehaus.groovy.grails.plugins.web.taglib.ValidationTagLib
  */
 class AipActionItemPostingController {
     private static final def LOGGER = Logger.getLogger( this.class )
+
     def actionItemPostCompositeService
+
     def actionItemGroupAssignReadOnlyService
+
     def actionItemProcessingCommonService
+
     def actionItemPostReadOnlyService
+
     def actionItemPostDetailService
     /**
      * Add Action Item Post
@@ -33,7 +38,7 @@ class AipActionItemPostingController {
         } catch (ApplicationException e) {
             model = [fail: true]
             LOGGER.error( e.getMessage() )
-            model.message = e.returnMap( {mapToLocalize -> new ValidationTagLib().message( mapToLocalize )} ).message
+            model.message = e.returnMap( { mapToLocalize -> new ValidationTagLib().message( mapToLocalize ) } ).message
         }
         render model as JSON
     }
@@ -53,11 +58,10 @@ class AipActionItemPostingController {
         } catch (ApplicationException e) {
             model = [fail: true]
             LOGGER.error( e.getMessage() )
-            model.message = e.returnMap( {mapToLocalize -> new ValidationTagLib().message( mapToLocalize )} ).message
+            model.message = e.returnMap( { mapToLocalize -> new ValidationTagLib().message( mapToLocalize ) } ).message
         }
         render model as JSON
     }
-
 
     /**
      * API for folders LOV
@@ -97,18 +101,30 @@ class AipActionItemPostingController {
         render results as JSON
     }
 
+
     def getStatusValue() {
         def value = actionItemPostReadOnlyService.statusPosted( (params.postID ?: 0) as long )
         render value as String
     }
+
 
     def getJobDetailsByPostId() {
         def result = actionItemPostReadOnlyService.JobDetailsByPostId( (params.postID ?: 0) as long )
         render result as JSON
     }
 
+
     def getActionItemByPostId() {
         def result = actionItemPostDetailService.fetchByActionItemPostId( (params.postID ?: 0) as long )
+        render result as JSON
+    }
+
+    /* Fetch the Processed server date,time and timezone for user selected
+    * */
+    def getProcessedServerDateTimeAndTimezone() {
+        def map = [:]
+        map = request.JSON
+        def result = actionItemProcessingCommonService.fetchProcessedServerDateTimeAndTimezone( map )
         render result as JSON
     }
 }

@@ -54,5 +54,5 @@ module AIP {
         }
     }
 }
+register("bannerCommonAIP").controller("ItemConfirmCtrl", AIP.ItemConfirmCtrl);
 
-register("bannerAIP").controller("ItemConfirmCtrl", AIP.ItemConfirmCtrl);

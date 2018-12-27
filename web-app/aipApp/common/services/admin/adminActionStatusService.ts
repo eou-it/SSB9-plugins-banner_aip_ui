@@ -138,6 +138,15 @@ module AIP {
             return request;
         }
 
+        getMaxAttachmentsVal()
+        {
+            var request = this.$http({
+                method: "GET",
+                url: this.ENDPOINT.admin.getMaxAttachmentsVal
+            });
+            return request;
+        }
+
         getActionItemsById(PostId)
         {
             var request = this.$http({
@@ -146,6 +155,17 @@ module AIP {
             });
             return request;
         }
+
+        getProcessedServerDateTimeAndTimezone(selectedUserVal)
+        {
+            var request = this.$http({
+                method: "POST",
+                data:selectedUserVal,
+                url: this.ENDPOINT.admin.processedDateTime
+            });
+            return request;
+        }
+
 
         /*
          getFolder() {

@@ -9,7 +9,7 @@ var AIP;
         SelectionType[SelectionType["Group"] = 0] = "Group";
         SelectionType[SelectionType["ActionItem"] = 1] = "ActionItem";
     })(SelectionType || (SelectionType = {}));
-    var ItemListViewService = (function () {
+    var ItemListViewService = /** @class */ (function () {
         function ItemListViewService($http, $q, APP_PATH) {
             this.$http = $http;
             this.$q = $q;
@@ -81,7 +81,7 @@ var AIP;
                     dataType: 'script',
                     success: function () {
                         angular.module("BannerOnAngular").controller(data.controllerId, data.controllerId);
-                        var params = { action: "page", controller: "customPage", id: data.pageName, actionItemId: actionItemId, groupId: groupId, saved: false };
+                        params = { action: "page", controller: "customPage", id: data.pageName, actionItemId: actionItemId, groupId: groupId, saved: false };
                         defer.resolve(data);
                     },
                     async: true
@@ -93,9 +93,9 @@ var AIP;
         };
         ItemListViewService.prototype.confirmItem = function (id) {
         };
+        ItemListViewService.$inject = ["$http", "$q", "APP_PATH"];
         return ItemListViewService;
     }());
-    ItemListViewService.$inject = ["$http", "$q", "APP_PATH"];
     AIP.ItemListViewService = ItemListViewService;
 })(AIP || (AIP = {}));
-register("bannerAIP").service("ItemListViewService", AIP.ItemListViewService);
+register("bannerCommonAIP").service("ItemListViewService", AIP.ItemListViewService);

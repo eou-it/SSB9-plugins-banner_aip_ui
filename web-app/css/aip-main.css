@@ -2,7 +2,7 @@
 Copyright 2018 Ellucian Company L.P. and its affiliates.
 ********************************************************************************/
 /*********************************************************************************
- Copyright 2017 Ellucian Company L.P. and its affiliates.
+ Copyright 2017-2018 Ellucian Company L.P. and its affiliates.
  **********************************************************************************/
 aip-list .aip-list-container {
   border: none;
@@ -22,6 +22,11 @@ aip-list .aip-list-container {
     background-color: #A4C6E4;
     height: 1px;
     border: 0; }
+  aip-list .aip-list-container .halt-icon {
+    font-size: large;
+    color: #d12121; }
+  aip-list .aip-list-container .aip-icons {
+    float: right; }
   aip-list .aip-list-container .panel-heading {
     background-color: #ECECEC;
     border: none;
@@ -43,9 +48,8 @@ aip-list .aip-list-container {
           color: #206E9f; }
       aip-list .aip-list-container .panel-heading .panel-title .item-group .group-toggle-indicator {
         float: right;
-        padding-right: 8px; }
+        padding-left: 20px; }
       aip-list .aip-list-container .panel-heading .panel-title .item-group .group-title {
-        white-space: nowrap;
         padding: 0 0 16px 0; }
         aip-list .aip-list-container .panel-heading .panel-title .item-group .group-title .group-title-text {
           font-size: 1em;
@@ -56,7 +60,7 @@ aip-list .aip-list-container {
         padding-right: 0;
         padding-left: 16px; }
       aip-list .aip-list-container .panel-heading .panel-title .item-group .badge {
-        margin-left: 5px;
+        margin-left: 25px;
         border: 1px solid #222222;
         background-color: #555555; }
         aip-list .aip-list-container .panel-heading .panel-title .item-group .badge.pending {
@@ -108,10 +112,11 @@ aip-list .aip-list-container {
         background-color: #F3FCFF; }
       aip-list .aip-list-container .list-body-container .list-body .list-item .aipReadmore {
         word-break: normal; }
-      aip-list .aip-list-container .list-body-container .list-body .list-item .cell.title {
+      aip-list .aip-list-container .list-body-container .list-body .list-item .title {
         padding-left: 10px;
-        float: left; }
-        aip-list .aip-list-container .list-body-container .list-body .list-item .cell.title h3, aip-list .aip-list-container .list-body-container .list-body .list-item .cell.title h4 {
+        float: left;
+        width: 70%; }
+        aip-list .aip-list-container .list-body-container .list-body .list-item .title h3, aip-list .aip-list-container .list-body-container .list-body .list-item .title h4 {
           font-weight: bold;
           font-size: 1.5em;
           word-wrap: break-word;
@@ -125,15 +130,19 @@ aip-list .aip-list-container {
           padding-bottom: 3px;
           padding-right: 10px;
           padding-left: 0; }
-      aip-list .aip-list-container .list-body-container .list-body .list-item .cell.state {
-        padding: 0; }
-        aip-list .aip-list-container .list-body-container .list-body .list-item .cell.state span:first-letter {
+      aip-list .aip-list-container .list-body-container .list-body .list-item .status {
+        padding: 0 5px 0 0; }
+        aip-list .aip-list-container .list-body-container .list-body .list-item .status span:first-letter {
           text-transform: uppercase; }
       aip-list .aip-list-container .list-body-container .list-body .list-item .badge {
         border-radius: 4px;
         color: #3a3737;
-        margin-right: 8px;
-        float: right; }
+        margin-right: 10px;
+        float: right;
+        white-space: normal;
+        word-wrap: break-word;
+        line-height: 1.2em;
+        max-width: 120px; }
         aip-list .aip-list-container .list-body-container .list-body .list-item .badge.pending {
           border: 1px solid #B0ABD0;
           background-color: #DAD5FF; }
@@ -143,32 +152,187 @@ aip-list .aip-list-container {
         aip-list .aip-list-container .list-body-container .list-body .list-item .badge.approve {
           border: 1px solid #4EC76A;
           background-color: #C9F0C7; }
-      aip-list .aip-list-container .list-body-container .list-body .list-item .cell.completedDate {
-        font-size: 1.3em;
+      aip-list .aip-list-container .list-body-container .list-body .list-item .actionItemParams {
+        font-family: "OpenSans-regular";
+        font-size: 12px;
         border-bottom: none;
-        padding: 25px 8px 0px 10px; }
-        aip-list .aip-list-container .list-body-container .list-body .list-item .cell.completedDate span.data-label {
+        padding: 2px 8px 0px 8px;
+        clear: both; }
+        aip-list .aip-list-container .list-body-container .list-body .list-item .actionItemParams span.data-label {
           font-family: "OpenSans-bold";
-          display: inline-block; }
-      aip-list .aip-list-container .list-body-container .list-body .list-item .cell.description {
+          display: inline-block;
+          padding: 2px; }
+      aip-list .aip-list-container .list-body-container .list-body .list-item .haltProcessList h4 {
+        font-size: 14px;
+        word-wrap: break-word;
+        margin-top: 3px;
+        /*line-height: 1.8em;*/
+        color: #206E9f;
+        display: inline;
+        /*border-bottom: solid 1px #206E9f;*/
+        font-family: "OpenSans-semibold";
+        padding-bottom: 3px;
+        padding-right: 10px;
+        padding-left: 10px; }
+      aip-list .aip-list-container .list-body-container .list-body .list-item .haltProcessList li {
+        list-style: none;
+        padding-left: 2px; }
+      aip-list .aip-list-container .list-body-container .list-body .list-item .haltProcessList ul {
+        padding: 0;
+        margin: 0; }
+      aip-list .aip-list-container .list-body-container .list-body .list-item .description {
         font-size: 1.3em;
         border-bottom: 1px solid #A4C6E4;
-        padding: 10px 5px 15px 10px; }
-  @media screen and (max-width: 768px) {
-    aip-list .aip-list-container .header .list-item .title {
-      padding-left: 0; }
-      aip-list .aip-list-container .header .list-item .title .badge {
-        float: right; }
+        padding: 10px 10px 15px 10px;
+        clear: both; }
+  @media (min-width: 768px) and (max-width: 1024px) {
+    aip-list .aip-list-container .list-body .list-item .title {
+      width: 60% !important; }
     aip-list .aip-list-container .list-body .list-item .badge {
-      float: right; } }
-  @media screen and (max-width: 480px) {
-    aip-list .aip-list-container .list-body .description {
-      padding-top: 8px; } }
+      max-width: 80px !important;
+      margin-right: 5px !important; }
+    aip-list .aip-list-container .list-body .list-item .enddate {
+      margin-right: 5px !important; }
+    aip-list .aip-list-container .list-body .list-item .description {
+      padding-right: 5px !important; } }
+  @media screen and (max-width: 768px) {
+    aip-list .aip-list-container .list-item .title {
+      width: 60% !important; }
+    aip-list .aip-list-container .list-item .badge {
+      max-width: 80px !important;
+      margin-right: 5px !important; }
+    aip-list .aip-list-container .list-item .enddate {
+      margin-right: 5px !important; }
+    aip-list .aip-list-container .list-item .description {
+      padding-right: 5px !important; } }
+  @media (min-width: 360px) and (max-width: 640px) {
+    aip-list .aip-list-container .list-body .list-item .badge {
+      max-width: 80px !important;
+      margin-right: 5px !important; }
+    aip-list .aip-list-container .list-body .list-item .enddate {
+      margin-right: 5px !important; }
+    aip-list .aip-list-container .list-body .list-item .description {
+      padding-right: 5px !important; } }
+@media screen and (min-width: 360px) and (max-width: 640px) and (max-width: 480px) {
+  aip-list .aip-list-container .list-body .list-item .badge {
+    max-width: 80px !important;
+    margin-right: 5px !important; }
+  aip-list .aip-list-container .list-body .list-item .enddate {
+    margin-right: 5px !important; }
+  aip-list .aip-list-container .list-body .list-item .description {
+    padding-top: 8px !important;
+    padding-right: 5px !important; } }
+  @media (min-width: 360px) and (max-width: 640px) {
+    aip-list .aip-list-container .item-group .badge {
+      margin-left: 10px; }
+    aip-list .aip-list-container .item-group .group-toggle-indicator {
+      padding-left: 10px; } }
 aip-list .enddate {
   text-align: right;
   margin-bottom: 15px;
   font-weight: bold;
-  font-size: 11px; }
+  font-size: 11px;
+  margin-right: 10px; }
+
+.ui-datepicker {
+  height: 22em !important; }
+
+/*CSS for Page builder templates*/
+#pbid-PersonalInformationAndEmergencyContacts input.pb-item.pb-text,
+#pbid-PersonalInformationAndEmergencyContacts input.pb-item.pb-number,
+#pbid-PersonalInformationAndEmergencyContacts input.pb-item.pb-datetime,
+#pbid-PersonalInformationAndEmergencyContacts input.pb-item.pb-email,
+#pbid-PersonalInformationAndEmergencyContacts input.pb-item.pb-tel, #pbid-CurrentProgrammeofStudyinformation input.pb-item.pb-text,
+#pbid-CurrentProgrammeofStudyinformation input.pb-item.pb-number,
+#pbid-CurrentProgrammeofStudyinformation input.pb-item.pb-datetime,
+#pbid-CurrentProgrammeofStudyinformation input.pb-item.pb-email,
+#pbid-CurrentProgrammeofStudyinformation input.pb-item.pb-tel, #pbid-ConfirmEnrollment input.pb-item.pb-text,
+#pbid-ConfirmEnrollment input.pb-item.pb-number,
+#pbid-ConfirmEnrollment input.pb-item.pb-datetime,
+#pbid-ConfirmEnrollment input.pb-item.pb-email,
+#pbid-ConfirmEnrollment input.pb-item.pb-tel {
+  font-size: 1em;
+  font-family: "OpenSans-semibold";
+  color: darkSlateGray;
+  border: 1px solid #869fb1;
+  padding: 8px 5px;
+  width: 18.75em;
+  -moz-border-radius: 4px;
+  -webkit-border-radius: 4px;
+  margin-left: 15px;
+  border-radius: 4px; }
+#pbid-PersonalInformationAndEmergencyContacts input.pb-item:focus, #pbid-CurrentProgrammeofStudyinformation input.pb-item:focus, #pbid-ConfirmEnrollment input.pb-item:focus {
+  border: 1px solid #206E9F;
+  box-shadow: inset 0px 2px 2px #CBE2E8;
+  color: #4F585F; }
+#pbid-PersonalInformationAndEmergencyContacts input.pb-item.hasDatepicker, #pbid-CurrentProgrammeofStudyinformation input.pb-item.hasDatepicker, #pbid-ConfirmEnrollment input.pb-item.hasDatepicker {
+  height: inherit; }
+#pbid-PersonalInformationAndEmergencyContacts h2.pb-block-label, #pbid-PersonalInformationAndEmergencyContacts h2.pb-form-label, #pbid-CurrentProgrammeofStudyinformation h2.pb-block-label, #pbid-CurrentProgrammeofStudyinformation h2.pb-form-label, #pbid-ConfirmEnrollment h2.pb-block-label, #pbid-ConfirmEnrollment h2.pb-form-label {
+  color: #4F585F;
+  font-size: 1.5em;
+  font-family: "OpenSans-semibold";
+  margin: 5px 0;
+  padding: 0.75em 0.5em; }
+#pbid-PersonalInformationAndEmergencyContacts span.pb-form, #pbid-CurrentProgrammeofStudyinformation span.pb-form, #pbid-ConfirmEnrollment span.pb-form {
+  color: #4F585F;
+  font-family: "OpenSans-semibold"; }
+#pbid-PersonalInformationAndEmergencyContacts h3.pb-form-label, #pbid-CurrentProgrammeofStudyinformation h3.pb-form-label, #pbid-ConfirmEnrollment h3.pb-form-label {
+  color: #4F585F;
+  font-size: 1.5em;
+  font-family: "OpenSans-semibold";
+  margin: 5px 0;
+  padding: 0.75em 0.5em; }
+#pbid-PersonalInformationAndEmergencyContacts div.pb-literal, #pbid-CurrentProgrammeofStudyinformation div.pb-literal, #pbid-ConfirmEnrollment div.pb-literal {
+  color: #4F585F;
+  font-size: 1.15em;
+  margin-top: 5px;
+  padding-left: 0.75em;
+  margin-top: 25px; }
+#pbid-PersonalInformationAndEmergencyContacts label, #pbid-PersonalInformationAndEmergencyContacts span.pb-detail, #pbid-CurrentProgrammeofStudyinformation label, #pbid-CurrentProgrammeofStudyinformation span.pb-detail, #pbid-ConfirmEnrollment label, #pbid-ConfirmEnrollment span.pb-detail {
+  font-size: 1em;
+  line-height: 30px;
+  padding-left: 0.75em; }
+#pbid-PersonalInformationAndEmergencyContacts label.pb-label, #pbid-CurrentProgrammeofStudyinformation label.pb-label, #pbid-ConfirmEnrollment label.pb-label {
+  font-size: 1.10em;
+  font-weight: bold;
+  margin-bottom: 1px;
+  padding: 0.75em 0.75em;
+  display: block; }
+#pbid-PersonalInformationAndEmergencyContacts label.pb-label.pb-boolean, #pbid-CurrentProgrammeofStudyinformation label.pb-label.pb-boolean, #pbid-ConfirmEnrollment label.pb-label.pb-boolean {
+  font-size: 1.25em;
+  display: inline-block; }
+#pbid-PersonalInformationAndEmergencyContacts select.pb-item.pb-select, #pbid-CurrentProgrammeofStudyinformation select.pb-item.pb-select, #pbid-ConfirmEnrollment select.pb-item.pb-select {
+  font-size: 1em;
+  font-family: "OpenSans-semibold";
+  color: darkSlateGray;
+  border: 1px solid #869fb1;
+  padding: 8px 5px;
+  width: 18.75em;
+  -moz-border-radius: 4px;
+  -webkit-border-radius: 4px;
+  margin-left: 15px;
+  border-radius: 4px; }
+#pbid-PersonalInformationAndEmergencyContacts select.pb-select:focus, #pbid-CurrentProgrammeofStudyinformation select.pb-select:focus, #pbid-ConfirmEnrollment select.pb-select:focus {
+  background-color: #FFFFFF;
+  border: 2px solid #206E9F;
+  background-color: #FFFFFF;
+  color: #000000; }
+#pbid-PersonalInformationAndEmergencyContacts option:empty, #pbid-CurrentProgrammeofStudyinformation option:empty, #pbid-ConfirmEnrollment option:empty {
+  display: none; }
+#pbid-PersonalInformationAndEmergencyContacts .pb-radio, #pbid-CurrentProgrammeofStudyinformation .pb-radio, #pbid-ConfirmEnrollment .pb-radio {
+  margin-top: -20px; }
+#pbid-PersonalInformationAndEmergencyContacts .pb-button, #pbid-CurrentProgrammeofStudyinformation .pb-button, #pbid-ConfirmEnrollment .pb-button {
+  padding: 0.75em 0.75em; }
+#pbid-PersonalInformationAndEmergencyContacts input[type="checkbox"], #pbid-CurrentProgrammeofStudyinformation input[type="checkbox"], #pbid-ConfirmEnrollment input[type="checkbox"] {
+  width: 20px;
+  height: 18px;
+  line-height: normal;
+  padding: 0.75em 0.75em;
+  margin-left: 9px; }
+#pbid-PersonalInformationAndEmergencyContacts input:read-only, #pbid-CurrentProgrammeofStudyinformation input:read-only, #pbid-ConfirmEnrollment input:read-only {
+  background-color: #ebebe4; }
+#pbid-PersonalInformationAndEmergencyContacts #pbid-Name-0, #pbid-CurrentProgrammeofStudyinformation #pbid-Name-0, #pbid-ConfirmEnrollment #pbid-Name-0 {
+  width: 600px; }
 
 .AIP-landing-container {
   padding: 16px; }
@@ -226,6 +390,36 @@ aip-list .enddate {
       padding: 8px; }
     .landingItem-container .landing-context .landing-description {
       padding: 8px; } }
+#fileupload_label {
+  width: 100%; }
+
+.btn-right {
+  float: right;
+  margin-right: 5px; }
+
+.aip-attachments-container .modal-body {
+  padding: 10px; }
+.aip-attachments-container .attachmentsTable {
+  margin-top: 1em; }
+  .aip-attachments-container .attachmentsTable .view-attachment-icon {
+    background: url(../images/aip_view_attachment.svg) no-repeat;
+    cursor: pointer;
+    height: 1.5em;
+    width: 1.8em;
+    border: none;
+    margin-right: 2em; }
+  .aip-attachments-container .attachmentsTable .delete-attachment-icon {
+    background: url(../images/aip_delete_attachment.svg) no-repeat;
+    cursor: pointer;
+    height: 1.5em;
+    width: 1.8em;
+    border: none; }
+  .aip-attachments-container .attachmentsTable .noDataMsg {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%); }
+
 .aip-item-detail-container {
   height: inherit;
   background: #F3FCFF; }
@@ -241,7 +435,7 @@ aip-list .enddate {
       .aip-item-detail-container .detail-content .detail-title h4 {
         font-size: 1.5em; }
     .aip-item-detail-container .detail-content .detail {
-      padding-bottom: 24px;
+      padding-bottom: 36px;
       font-size: 1.4em; }
       .aip-item-detail-container .detail-content .detail pre {
         border: none;
@@ -273,10 +467,13 @@ aip-list .enddate {
   border-color: #357ebd; }
 
 .pb-detail.pb-radio.pb-item {
-  display: flex; }
+  display: block; }
 
 .pb-detail.pb-item.pb-radiolabel {
-  margin: 20px 30px 20px 0px; }
+  margin: 0px 20px 20px 0px; }
+
+.pb-detail.pb-item.pb-paperclip {
+  margin-bottom: -5px; }
 
 input[type="radio"] {
   -webkit-appearance: initial;
@@ -365,6 +562,12 @@ input[type="radio"]:checked:after {
         left: auto;
         right: 8px;
         color: #4F585F; }
+      .groupAddContainer .groupInfo .groupInfoRow .groupElement .folder-minwidth {
+        width: 250px; }
+      .groupAddContainer .groupInfo .groupInfoRow .groupElement #folderid .ui-select-dropdown .select2-search input {
+        width: 240px !important; }
+      .groupAddContainer .groupInfo .groupInfoRow .groupElement #folderid .ui-select-dropdown {
+        width: 250px !important; }
       .groupAddContainer .groupInfo .groupInfoRow .groupElement [lang='ar'] .titleValue.supplement {
         left: 8px;
         right: auto; }
@@ -507,6 +710,8 @@ ol.selected-group > li > button {
   .groupOpenContainer .row {
     margin-left: 0;
     margin-right: 0; }
+    .groupOpenContainer .row .ui-select-container .select2-choice {
+      min-height: 2.9em !important; }
   .groupOpenContainer .groupInfo {
     margin-bottom: 20px; }
     .groupOpenContainer .groupInfo .groupInfoRow {
@@ -540,7 +745,8 @@ ol.selected-group > li > button {
               padding: 0;
               border-right: 1px solid #b3b3b3; }
             .groupOpenContainer .groupInfo .groupInfoRow .groupElement .xe-tab-container .contentInfo .contentText #select2actionItems .row.additionalInfo .actionItemFolder {
-              padding: 0 0 0 16px; }
+              padding: 0 0 0 16px;
+              min-height: 15px; }
           .groupOpenContainer .groupInfo .groupInfoRow .groupElement .xe-tab-container .contentInfo table {
             width: 100%;
             border: 1px solid #b3b3b3; }
@@ -579,6 +785,9 @@ ol.selected-group > li > button {
           padding: 8px; }
         .groupOpenContainer .groupInfo .groupInfoRow .groupElement #openGroupDetail .content-area {
           overflow: auto; }
+  .groupOpenContainer .row:after {
+    display: table !important;
+    content: " "; }
 
 .actionListContainer {
   overflow-y: auto;
@@ -671,6 +880,12 @@ ol.selected-group > li > button {
           font-style: italic;
           position: relative;
           padding: 0 24px; }
+        .actionItemAddContainer .actionItemInfo .actionItemInfoRow .actionItemElement .folder-minwidth {
+          width: 250px; }
+        .actionItemAddContainer .actionItemInfo .actionItemInfoRow .actionItemElement #folderid .ui-select-dropdown .select2-search input {
+          width: 240px !important; }
+        .actionItemAddContainer .actionItemInfo .actionItemInfoRow .actionItemElement #folderid .ui-select-dropdown {
+          width: 250px !important; }
         .actionItemAddContainer .actionItemInfo .actionItemInfoRow .actionItemElement [lang='ar'] .titleValue.supplement {
           left: 8px;
           right: auto; }
@@ -815,15 +1030,34 @@ ol.selected-group > li > button {
             .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .status-rules .status-response {
               padding: 10px 0px;
               border-bottom: 1px solid #C0C0C0; }
+              .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .status-rules .status-response .reviewRequired {
+                width: 1.5em;
+                height: 25px;
+                margin-left: 3px; }
               @media screen and (max-width: 768px) {
                 .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .status-rules .status-response .response-field {
-                  margin-bottom: 10px; } }
+                  margin-bottom: 10px;
+                  padding: 0; }
+                .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .status-rules .status-response .reviewRequired {
+                  margin-left: 10px; } }
+              @media screen and (min-width: 768px) {
+                .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .status-rules .status-response .response-field {
+                  margin-bottom: 10px;
+                  padding: 0;
+                  white-space: nowrap; }
+                .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .status-rules .status-response .reviewRequired {
+                  margin-left: 10px; } }
             .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .status-rules button.delete, .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .status-rules button.sort {
               color: #206E9F;
               border: none; }
+            @media screen and (max-width: 768px) {
+              .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .status-rules .record-controls {
+                padding: 0; } }
             @media screen and (min-width: 768px) {
               .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .status-rules .record-controls {
-                margin-top: 30px; } }
+                margin-top: 20px; }
+              .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .status-rules .delete {
+                padding: 15px; } }
             .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .status-rules .add-link {
               font-family: "OpenSans-semibold";
               margin: 20px 0 20px 15px; }
@@ -852,7 +1086,8 @@ ol.selected-group > li > button {
       padding: 4px 0;
       margin-bottom: 30px; }
     .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent {
-      padding: 0; }
+      padding: 0;
+      height: auto !important; }
       .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .contentContainer {
         margin-top: 0;
         margin-bottom: 0px; }
@@ -860,7 +1095,11 @@ ol.selected-group > li > button {
           padding: 8px;
           border-bottom: 1px solid #C0C0C0; }
         .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .contentContainer table.ruleListReadOnly {
-          border: 0; }
+          border: 0;
+          /*td:last-child {
+            border-bottom: 0;
+            display: none;
+          }*/ }
           .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .contentContainer table.ruleListReadOnly caption {
             border: 0;
             padding: 0;
@@ -882,9 +1121,6 @@ ol.selected-group > li > button {
               text-indent: 0; }
           .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .contentContainer table.ruleListReadOnly td:first-child {
             border-top: 1px solid; }
-          .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .contentContainer table.ruleListReadOnly td:last-child {
-            border-bottom: 0;
-            display: none; }
           .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .contentContainer table.ruleListReadOnly td:before {
             display: table-row;
             width: 100%;
@@ -1401,6 +1637,147 @@ ol.selected-group > li > button {
   .aip-modal .actionFolderName {
     font-size: 12px; } }
 
+.monitor-action-item-accordion-container {
+  border: none;
+  box-shadow: none; }
+  .monitor-action-item-accordion-container .accordion-toggle {
+    color: #000000; }
+  .monitor-action-item-accordion-container .label-padding {
+    padding-top: 5px; }
+  .monitor-action-item-accordion-container .select2-results {
+    max-height: 100px; }
+  .monitor-action-item-accordion-container .titleValue {
+    font-size: 1.5em;
+    font-weight: bold; }
+  .monitor-action-item-accordion-container .titleValue.required:after {
+    content: " *"; }
+  .monitor-action-item-accordion-container .titleValue.supplement {
+    font-size: 1.0em;
+    font-style: italic;
+    position: absolute;
+    bottom: 0;
+    left: auto;
+    right: 8px;
+    color: #4F585F; }
+  .monitor-action-item-accordion-container .titleValue.supplement.dimmed {
+    font-style: italic;
+    position: relative;
+    padding: 0 24px; }
+  .monitor-action-item-accordion-container input[type="radio"] {
+    -webkit-appearance: initial;
+    appearance: initial;
+    background: white;
+    width: 20px;
+    height: 20px;
+    border: 1px solid #a4a4ca;
+    background: white;
+    position: relative;
+    border-radius: 15px;
+    vertical-align: -40%;
+    box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.25); }
+  .monitor-action-item-accordion-container input[type="radio"]:checked {
+    background: #1c8445; }
+  .monitor-action-item-accordion-container input[type="radio"]:checked:after {
+    content: '';
+    color: #fff;
+    position: absolute;
+    border: 1px solid #fff;
+    -webkit-transform: rotate(0deg);
+    -moz-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    -ms-transform: rotate(0deg);
+    width: 7px;
+    height: 7px;
+    top: 5px;
+    left: 6px;
+    border-radius: 16px;
+    background: #fff; }
+  .monitor-action-item-accordion-container .attachmentimage {
+    height: 10px;
+    width: 10px; }
+  .monitor-action-item-accordion-container .actionListContainer {
+    overflow-y: auto;
+    font-size: 14px; }
+  .monitor-action-item-accordion-container .row {
+    margin-right: 0;
+    margin-left: 0; }
+  .monitor-action-item-accordion-container .control {
+    float: right;
+    padding-top: 8px;
+    margin-right: 0.2em; }
+  .monitor-action-item-accordion-container .actionListTable {
+    overflow: auto; }
+    .monitor-action-item-accordion-container .actionListTable .table-container {
+      margin-top: 8px; }
+      .monitor-action-item-accordion-container .actionListTable .table-container .row.actionItemActions {
+        display: flex;
+        margin-right: 16px;
+        margin-left: 16px; }
+        .monitor-action-item-accordion-container .actionListTable .table-container .row.actionItemActions div {
+          flex: 1;
+          margin-right: 10px; }
+        .monitor-action-item-accordion-container .actionListTable .table-container .row.actionItemActions div:last-child {
+          margin-right: 0; }
+
+@media screen and (max-width: 768px) {
+  .monitor-action-item-container .row .control {
+    padding: 0; } }
+.titleValue {
+  font-size: 1.5em;
+  font-weight: bold;
+  white-space: nowrap; }
+
+.fieldValue {
+  font-size: 1.5em;
+  white-space: nowrap; }
+
+.review-action-item-container {
+  padding: 2px; }
+
+.comments-labal-top-padding {
+  padding-top: 1em; }
+
+.review-block-labal-top-padding {
+  padding-top: 2px; }
+
+.row-top-padding {
+  padding-top: 1em; }
+
+.external-check-box-height {
+  width: 16px;
+  height: 16px; }
+
+.calendar-img {
+  float: right;
+  margin-right: 10px;
+  top: -28px;
+  position: relative; }
+
+.date-input-height {
+  height: 33px !important;
+  padding-left: 5px !important; }
+
+.date-div-width {
+  max-width: 240px; }
+
+.view-attachment-icon {
+  background: url(../images/aip_view_attachment.svg) no-repeat;
+  cursor: pointer;
+  height: 1.5em;
+  width: 1.8em;
+  border: none;
+  margin-right: 2em;
+  margin-left: 1em !important; }
+
+.save-button-left-padding {
+  padding-left: 1em; }
+
+.external-label-left-padding {
+  padding-left: 0em; }
+
+.comment-text-left-margin {
+  margin-left: -2em; }
+
 #gridCaption {
   color: gray;
   font-size: 18px; }
@@ -1432,7 +1809,7 @@ ol.selected-group > li > button {
     top: 105px !important; }
     #content .viewContainer {
       padding: 0 8px;
-      overflow: auto; }
+      overflow: hidden; }
     #content .actionItemAddContainer .enddate {
       padding-left: 0px; } }
 #breadcrumbHeader a.breadcrumbButton.leaf-breadcrumb {
@@ -1485,6 +1862,11 @@ label {
       color: #557287; }
   .viewContainer .listActionItem .welcometext {
     font-size: 1.5em; }
+  .viewContainer .listActionItem .returnBtn {
+    float: right;
+    margin-bottom: 1em;
+    margin-top: 1em;
+    text-align: right; }
   .viewContainer .listActionItem .row {
     margin: 0; }
   .viewContainer .listActionItem .listActionItem-container .itemList .groupList {
@@ -1734,9 +2116,9 @@ ol.selected-group > li > button {
 .search-container .simple-input-field {
   font-size: 0.875em !important; }
 
-.search-container .simple-input-field::-webkit-input-placeholder {
-  color: #869fb1 !important; }
-
+@media screen and (min-width: 769px) {
+  .search-container .simple-input-field::-webkit-input-placeholder {
+    color: #869fb1 !important; } }
 .search-container .simple-input-field::-moz-placeholder {
   color: #869fb1 !important; }
 
@@ -1759,7 +2141,6 @@ ol.selected-group > li > button {
 .column-filter-button {
   padding: 0.6em !important;
   padding-left: 2em !important;
-  width: 13.3em !important;
   margin-right: 1em !important; }
   .column-filter-button .placeholder {
     color: #869fb1 !important;

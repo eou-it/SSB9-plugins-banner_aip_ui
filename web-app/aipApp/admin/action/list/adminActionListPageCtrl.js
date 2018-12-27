@@ -202,7 +202,8 @@ var AIP;
             this.$state.go("admin-action-open", { actionItemId: id });
         };
         return AdminActionListPageCtrl;
-    }());
+    })();
     AIP.AdminActionListPageCtrl = AdminActionListPageCtrl;
 })(AIP || (AIP = {}));
 register("bannerAIP").controller("AdminActionListPageCtrl", AIP.AdminActionListPageCtrl);
+//# sourceMappingURL=adminActionListPageCtrl.js.map

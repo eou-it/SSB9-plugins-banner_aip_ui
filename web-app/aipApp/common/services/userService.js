@@ -20,9 +20,10 @@ var AIP;
             });
             return userRequest;
         };
+        UserService.$inject = ["$http", "$q", "APP_PATH"];
         return UserService;
-    }());
-    UserService.$inject = ["$http", "$q", "APP_PATH"];
+    })();
     AIP.UserService = UserService;
 })(AIP || (AIP = {}));
-register("bannerAIP").service("AIPUserService", AIP.UserService);
+register("bannerCommonAIP").service("AIPUserService", AIP.UserService);
+//# sourceMappingURL=userService.js.map

@@ -8,7 +8,7 @@
     <meta name="headerAttributes" content=""/>
     <title></title>
     <meta name="layout" content="bannerSelfServicePage"/>
-    <r:require modules="bannerAIPUI"/>
+    <r:require modules="bannerAdminAIPUI"/>
     <g:if test="${message(code: 'default.language.direction')  == 'rtl'}">
         <r:require modules="bannerAIPUIRTL"/>
     </g:if>
@@ -17,16 +17,17 @@
     <ckeditor:resources/>
     <script type="text/javascript">
         // Track calling page for breadcrumbs
+
         (function () {
             // URLs to exclude from updating genAppCallingPage, because they're actually either the authentication
             // page or App Nav, and are not "calling pages."
             var referrerUrl = document.referrer,
-                    excludedRegex = [
-                        /\${applicationContextRoot}\/login\/auth?/,
-                        /\/seamless/,
-                        /\${applicationContextRoot}\//
-                    ],
-                    isExcluded;
+                excludedRegex = [
+                    /\${applicationContextRoot}\/login\/auth?/,
+                    /\/seamless/,
+                    /\${applicationContextRoot}\//
+                ],
+                isExcluded;
 
             if (referrerUrl) {
                 isExcluded = _.find(excludedRegex, function (regex) {
@@ -42,14 +43,12 @@
     </script>
     <script type="text/javascript">
         var pageControllers = {};
-
         <g:i18n_setup/>
         <g:aipVersion/>
         <g:if env="development">
-            window.aip?window.aip.dev="development":window.aip={dev:"development"};
+        window.aip?window.aip.dev="development":window.aip={dev:"development"};
         </g:if>
         <g:javascript>
-        var isActionItemAdmin = ${isActionItemAdmin};
         if ("${fragment}") {
             window.location.href = "${fragment}";
         }

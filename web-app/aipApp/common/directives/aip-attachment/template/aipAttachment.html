@@ -1,0 +1,71 @@
+<!--*******************************************************************************
+   Copyright 2018 Ellucian Company L.P. and its affiliates.
+   *******************************************************************************-->
+<div id="attachmentsDiv" class="aip-attachments-container">
+    <xe-popup-modal show="showModal" focusbackelement="tools"
+                    pageheader={{"js.aip.user.action.item.attachment.modal.title"|i18n_aip}}>
+        <popup-content>
+            <div class="modal-body">
+                <div ng-if="!responseLocked">
+                    <label>
+                        {{"js.aip.user.action.item.maximum.attachments.label"|i18n_aip}}: <span
+                            id="maxAttachments">{{maxAttachments}}</span>
+                    </label>
+                    <form name="UploadFile" role="form">
+                        <div class="row">
+                            <input class="btn btn-primary btn-right" type="button" name="uploadButton" tabindex="2"
+                                   ng-click="uploadDocument(selectedFile);selectedFile=null"
+                                   value={{"js.aip.common.upload.button.label"|i18n_aip}}
+                                   aria-label="{{'js.aip.common.upload.button.label'|i18n_aip}}">
+                            <input class="btn btn-default btn-right" type="button" name="resetButton" tabindex="3"
+                                   ng-click="reset();selectedFile=null"
+                                   value={{"js.aip.common.reset.button.label"|i18n_aip}}
+                                   aria-label="{{'js.aip.common.reset.button.label'|i18n_aip}}">
+                        </div>
+                        <div class="row">
+                            <input id="fileupload_label" type="file" ngf-select ng-model="selectedFile"
+                                   name="file"/>
+                        </div>
+                    </form>
+                </div>
+
+
+                <div class="attachmentsTable">
+                    <xe-table-grid
+                            table-id="dataTableAttachmentsList"
+                            header="header"
+                            fetch="fetchData(query)"
+                            content="gridData.row"
+                            results-found="records"
+                            toolbar="false"
+                            paginate="false"
+                            on-row-click="selectRecord(data)"
+                            no-data-msg="{{'aip.common.no.results.found'|i18n_aip}}"
+                            search-config="searchConfig"
+                            pagination-config="paginationConfig"
+                            mobile-layout="mobileConfig"
+                            draggable-column-names="draggableColumnNames"
+                            continuous-scrolling="true"
+                            continuous-scroll-parent="attachmentsTable"
+                            refresh-grid="refreshGrid"
+                            height="10em">
+                        <xe-cell-markup column-name="attachmentActions">
+                            <div class="row attachmentActions">
+                                <button class="view-attachment-icon" ng-click="previewDocument()"
+                                        title="{{'aip.common.open.action.item.jaws'|i18n_aip}}"
+                                        aria-label="{{'aip.common.open.action.item.jaws'|i18n_aip}}">
+                                </button>
+                                <button class="delete-attachment-icon" ng-click="deleteDocument()"
+                                        title="{{'aip.common.delete.group.jaws'|i18n_aip}}"
+                                        aria-label="{{'aip.common.delete.group.jaws'|i18n_aip}}" ng-if="!responseLocked">
+                                </button>
+                            </div>
+                        </xe-cell-markup>
+                    </xe-table-grid>
+                </div>
+            </div>
+        </popup-content>
+        <popup-buttons>
+        </popup-buttons>
+    </xe-popup-modal>
+</div>

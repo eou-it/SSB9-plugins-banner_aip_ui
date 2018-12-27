@@ -1,0 +1,38 @@
+#fileupload_label {
+  width: 100%;
+}
+
+.btn-right {
+  float:right;
+  margin-right:5px;
+}
+
+.aip-attachments-container{
+  .modal-body{
+    padding:10px;
+  }
+  .attachmentsTable{
+    margin-top: 1em;
+    .view-attachment-icon{
+      background: url(../images/aip_view_attachment.svg) no-repeat;
+      cursor: pointer;
+      height: 1.5em;
+      width: 1.8em;
+      border: none;
+      margin-right: 2em;
+    }
+    .delete-attachment-icon{
+      background: url(../images/aip_delete_attachment.svg) no-repeat;
+      cursor: pointer;
+      height: 1.5em;
+      width: 1.8em;
+      border: none;
+    }
+    .noDataMsg{
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translateX(-50%) translateY(-50%);
+    }
+  }
+}

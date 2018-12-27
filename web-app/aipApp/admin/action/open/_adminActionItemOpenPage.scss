@@ -150,9 +150,29 @@ $link-color: #275c8a;
                     padding: 10px 0px;
                     border-bottom: 1px solid $border-color;
 
+                    .reviewRequired{
+                      width: 1.5em;
+                      height: 25px;
+                      margin-left: 3px;
+                    }
+
                     @media screen and (max-width: 768px) {
                       .response-field {
                         margin-bottom: 10px;
+                        padding: 0;
+                      }
+                      .reviewRequired {
+                        margin-left: 10px;
+                      }
+                    }
+                    @media screen and (min-width: 768px) {
+                      .response-field {
+                        margin-bottom: 10px;
+                        padding: 0;
+                        white-space: nowrap;
+                      }
+                      .reviewRequired {
+                        margin-left: 10px;
                       }
                     }
                   }
@@ -162,9 +182,17 @@ $link-color: #275c8a;
                     border: none;
                   }
 
+                  @media screen and (max-width: 768px) {
+                    .record-controls {
+                      padding: 0;
+                    }
+                  }
                   @media screen and (min-width: 768px) {
                     .record-controls {
-                      margin-top: 30px;
+                      margin-top: 20px;
+                    }
+                    .delete{
+                      padding: 15px;
                     }
                   }
                   .add-link {
@@ -223,6 +251,7 @@ $link-color: #275c8a;
               #openActionItemContent {
                 .actionItemContent {
                   padding: 0;
+                  height: auto !important;
                   .contentContainer {
                     margin-top: 0;
                     margin-bottom: 0px;
@@ -259,10 +288,10 @@ $link-color: #275c8a;
                       td:first-child {
                         border-top: 1px solid;
                       }
-                      td:last-child {
+                      /*td:last-child {
                         border-bottom: 0;
                         display: none;
-                      }
+                      }*/
                       td:before {
                         display: table-row;
                         width: 100%;

@@ -1,0 +1,138 @@
+<!--*******************************************************************************
+Copyright 2018 Ellucian Company L.P. and its affiliates.
+*******************************************************************************-->
+<div class="monitor-action-item-container" id="monitorActionItemPage" ng-controller="monitorActionItemCtrl">
+    <div>
+        <uib-accordion close-others="oneAtATime">
+            <uib-accordion-group class="monitor-action-item-accordion-container" role="tablist" is-open="true">
+                <uib-accordion-heading id="heading" role="tab"
+                                       aria-label="{{'js.aip.review.monitor.title.heading'|i18n_aip}}">
+                    {{"js.aip.review.monitor.title.heading"|i18n_aip}}
+                </uib-accordion-heading>
+
+                <div class="row ">
+                    <div class="col-xs-2 col-sm-2 col-md-1 label-padding" >
+                        <label for="actionItem" class="titleValue " id="actionItem">{{"js.aip.review.monitor.action.itemLabel"|i18n_aip}}
+                        </label>
+                    </div>
+                    <div class="col-xs-11 col-sm-11 col-md-7">
+                        <xe-ui-select id="actionItemName"
+                                      ng-model="vm.selected"
+                                      theme="select2" ng-disabled="disabled">
+
+                            <xe-ui-select-match class="placeholderDisplay" placeholder={{"js.aip.action.selected.name"|i18n_aip}}>
+                                <div class="actionItemName" ng-bind-html="vm.selected.name"></div>
+                                <div class="select-placeholder">{{"js.aip.action.selected.name"|i18n_aip}}</div>
+                            </xe-ui-select-match>
+
+                            <xe-ui-select-choices repeat="item in vm.actionItemNamesList | propsFilter: {name: $select.search}">
+                                <div ng-bind-html="item.name | highlight: $select.search"></div>
+                            </xe-ui-select-choices>
+                        </xe-ui-select>
+                    </div>
+                </div>
+                <div class="row ">
+                    <div class="col-xs-2 col-sm-3 col-md-3 label-padding">
+                        <label for="searchBy" class="titleValue " id="searchBy">{{"js.aip.review.monitor.action.searchLabel"|i18n_aip}}
+                        </label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-7 col-sm-3 col-md-3">
+                        <input type="radio" id="personId" name="content" ng-model="vm.option" ng-value="'personId'">
+                        <label class="titleValue " for="personId">{{"js.aip.review.monitor.action.personId.label"|i18n_aip}}</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-7 col-sm-3 col-md-3">
+                        <input type="radio" id="personName" name="content" ng-model="vm.option" ng-value="'personName'">
+                        <label class="titleValue " for="personName">{{"js.aip.review.monitor.action.personName.label"|i18n_aip}}</label>
+
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-7 col-sm-2 col-md-3">
+                        <label for="searchByPersonId" class="titleValue " id="searchByPersonId"
+                               ng-if="vm.option == 'personId'">
+                            {{"js.aip.review.monitor.action.personId.label"|i18n_aip}}
+                        </label>
+                        <label for="searchByPersonName" class="titleValue " id="searchByPersonName"
+                               ng-if="vm.option == 'personName'">
+                            {{"js.aip.review.monitor.action.personName.label"|i18n_aip}}
+                        </label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-4 col-sm-3 col-md-3">
+                        <input id="personIdVal" type="text" class="form-control" ng-if="vm.option == 'personId'"
+                               ng-model="vm.personId" aria-label="{{'js.aip.review.monitor.action.personId.label'|i18n_aip}}">
+                        <input id="personNameVal" type="text" class="form-control" ng-if="vm.option == 'personName'"
+                               ng-model="vm.personName" aria-label="{{'js.aip.review.monitor.action.personName.label'|i18n_aip}}">
+
+                    </div>
+                    <div class="col-xs-12 col-sm-8">
+                        <div class="col-sm-6 offset-sm-8 col-xs-12 ">
+                        <span>
+                            <button name="search" type="button" class="btn"
+                                ng-click="vm.search()" ng-disabled="!vm.searchEnabled" ng-class="{'btn-primary': vm.searchEnabled}">
+                            {{"js.aip.review.monitor.action.searchButtonLabel"|i18n_aip}}
+                            </button>
+                        </span>
+                        <span>
+                            <button name="startOver" type="button" class="btn"
+                                    ng-click="vm.reset()" ng-class="{'btn-primary': !vm.searchEnabled,'btn-secondary':vm.searchEnabled}" >
+                                {{"js.aip.review.monitor.action.resetButtonLabel"|i18n_aip}}
+                            </button>
+                        </span>
+                        </div>
+                    </div>
+                </div>
+
+            </uib-accordion-group>
+        </uib-accordion>
+    </div>
+    <div id="monitorActionItemGrid" class="actionListContainer" ng-if="vm.gridEnabled">
+        <div class="actionListTable">
+            <xe-table-grid
+                    caption="{{'js.aip.review.monitor.action.item.grid.caption'|i18n_aip}}"
+                    table-id="dataTableAdminActionList"
+                    header="vm.header"
+                    fetch="vm.fetchData(query)"
+                    end-point=""
+                    content="vm.gridData.row"
+                    results-found="vm.records"
+                    toolbar="true"
+                    paginate="true"
+                    on-row-click="vm.selectRecord(data)"
+                    no-data-msg="{{'aip.common.no.results.found'|i18n_aip}}"
+                    empty-table-msg="emptyTableMsg"
+                    search-config="vm.searchConfig"
+                    pagination-config="vm.paginationConfig"
+                    mobile-layout="vm.mobileConfig"
+                    refresh-grid="refreshGrid"
+                    draggable-column-names="vm.draggableColumnNames"
+                    continuous-scrolling="vm.mobileSize"
+                    continuous-scroll-parent="monitorActionItemGrid">
+
+                <xe-cell-markup column-name="reviewIndicator">
+                    <div ng-show="row.reviewIndicator==true" class="row actionItemActions ng-scope">
+                        <a class="icon icon-view-CO" space-click
+                                title="{{'aip.common.open.action.item.jaws'|i18n_aip}}"
+                                aria-label="{{'aip.review.monitor.action.item.press.space.to.review.jaws'|i18n_aip}}"
+                                href="aipReview#/monitor/review/{{row.id}}">
+                        </a>
+                        <!-- TODO: After refresh grid changes we need to modify the above link to button and call on clik to method in controller -->
+                    </div>
+                </xe-cell-markup>
+
+                <xe-cell-markup column-name="attachments">
+                    <div ng-if="row.attachments>0" class="row actionItemActions">
+                        <img src="../images/attach_icon_default.svg" aria-label="{{'aip.review.monitor.action.item.has.attachment.jaws'|i18n_aip}}" class="attachmentimage"/>
+                    </div>
+                </xe-cell-markup>
+            </xe-table-grid>
+
+        </div>
+    </div>
+</div>
+

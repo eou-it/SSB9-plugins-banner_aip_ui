@@ -6,7 +6,7 @@
 ///<reference path="../../../common/services/admin/adminActionService.ts"/>
 var AIP;
 (function (AIP) {
-    var AdminActionItemAddPageCtrl = (function () {
+    var AdminActionItemAddPageCtrl = /** @class */ (function () {
         function AdminActionItemAddPageCtrl($scope, $rootScope, $q, $state, $filter, $sce, $timeout, $window, SpinnerService, AdminActionService, $location) {
             var _this = this;
             this.$inject = ["$scope", "$rootScope", "$q", "$state", "$filter", "$location", "$sce", "$timeout", "$window", "SpinnerService", "AdminActionService"];
@@ -78,8 +78,8 @@ var AIP;
                     item.value = _this.$filter("i18n_aip")("aip.status." + item.value.charAt(0));
                     return item;
                 });
-                _this.actionItemInfo.status = _this.status[0].value;
-                _this.selectedstatusval = _this.status[0];
+                _this.actionItemInfo.status = _this.status[1].value;
+                _this.selectedstatusval = _this.status[1];
             }));
             allPromises.push(this.adminActionService.getFolder()
                 .then(function (response) {

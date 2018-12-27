@@ -1,6 +1,7 @@
 /*******************************************************************************
  Copyright 2018 Ellucian Company L.P. and its affiliates.
  ********************************************************************************/
+
 ///<reference path="../../../../typings/tsd.d.ts"/>
 ///<reference path="../../../common/services/admin/adminActionService.ts"/>
 declare var register: any;
@@ -38,6 +39,8 @@ module AIP {
         mobileConfig;
         mobileSize: boolean;
         selectedRecord;
+        localeTime;
+        timezones;
 
 
         constructor($scope: IActionListPageCtrlScope, $state, $window, $filter, $q, ENDPOINT, PAGINATIONCONFIG,
@@ -49,6 +52,8 @@ module AIP {
             this.endPoint = ENDPOINT;   //ENDPOINT.admin.actionList
             this.paginationConfig = PAGINATIONCONFIG;
             this.actionListService = AdminActionService;
+            this.localeTime={};
+            this.timezones={};
             this.init();
             angular.element($window).bind('resize', function () {
                 $scope.$apply();
@@ -57,6 +62,7 @@ module AIP {
 
         init() {
             this.gridData = {};
+            var allPromises = [];
             this.draggableColumnNames = [];
             this.mobileConfig = {
                 jobState: 3,
@@ -70,7 +76,7 @@ module AIP {
             };
 
             if (this.$state.params.noti) {
-                this.handleNotification( this.$state.params.noti );
+                this.handleNotification(this.$state.params.noti);
             }
             this.mobileSize = angular.element("body").width() > 768 ? false : true;
             this.searchConfig = {
@@ -97,7 +103,7 @@ module AIP {
                 width: "100px",
                 options: {
                     sortable: true,
-                    ascending:true,
+                    ascending: true,
                     visible: true,
                     columnShowHide: true
                 }
@@ -114,7 +120,7 @@ module AIP {
                 }
             },
                 {
-                    name: "postingDisplayStartDate",
+                    name: "postingDisplayDateTime",
                     title: this.$filter("i18n_aip")("aip.admin.actionItem.post.grid.job.start-schedule.date"),
                     ariaLabel: this.$filter("i18n_aip")("aip.admin.actionItem.post.grid.job.start-schedule.date"),
                     width: "100px",
@@ -123,7 +129,30 @@ module AIP {
                         visible: true,
                         columnShowHide: true
                     }
-                }, {
+                },
+                {
+                    name: "postingDisplayTime",
+                    title: this.$filter("i18n_aip")("aip.admin.actionItem.post.grid.job.start-schedule.time"),
+                    ariaLabel: this.$filter("i18n_aip")("aip.admin.actionItem.post.grid.job.start-schedule.time"),
+                    width: "100px",
+                    options: {
+                        sortable: false,
+                        visible: true,
+                        columnShowHide: true
+                    }
+                },
+                {
+                    name: "postingTimeZone",
+                    title: this.$filter("i18n_aip")("aip.admin.actionItem.post.grid.job.timezone"),
+                    ariaLabel: this.$filter("i18n_aip")("aip.admin.actionItem.post.grid.job.timezone"),
+                    width: "100px",
+                    options: {
+                        sortable: false,
+                        visible: true,
+                        columnShowHide: true
+                    }
+                },
+                {
                     name: "groupFolderName",
                     title: this.$filter("i18n_aip")("aip.admin.actionItem.post.grid.job.group.folder"),
                     ariaLabel: this.$filter("i18n_aip")("aip.admin.actionItem.post.grid.job.group.folder"),
@@ -179,9 +208,22 @@ module AIP {
                     }
                 }
 
-                ];
+            ];
+            allPromises.push(
+                this.actionListService.getCurrentTimeLocale()
+                    .then((response: any) => {
+                        this.localeTime = response.data.use12HourClock;
 
+                    })
+            );
 
+            allPromises.push(
+                this.actionListService.getCurrentTimeZoneLocale()
+                    .then((response: any) => {
+                        var that = this;
+                        this.timezones = response.data.timezones;
+                    })
+            );
         }
 
         getHeight() {
@@ -213,8 +255,20 @@ module AIP {
         fetchTableData(query: AIP.IPostActionItemListQuery) {
 
             var deferred = this.$q.defer();
+            var am = this.$filter("i18n_aip")("aip.admin.communication.timepicker.time.am.label");
+            var pm = this.$filter("i18n_aip")("aip.admin.communication.timepicker.time.pm.label");
             this.actionListService.fetchTableData(query)
                 .then((response: AIP.IPostActionItemFetchResponse) => {
+                    for(var k = 0 ; k < response.result.length ; k++) {
+                        if(response.result[k].postingDisplayTime) {
+                            response.result[k].postingDisplayTime = response.result[k].postingDisplayTime.replace(new RegExp('AM', 'i'), am)
+                                                                                                         .replace(new RegExp('PM', 'i'), pm)
+                                                                                                         .replace(new RegExp('a. m.', 'i'), am)
+                                                                                                         .replace(new RegExp('p. m.', 'i'), pm)
+                                                                                                         .replace(new RegExp('a.m.', 'i'), am)
+                                                                                                         .replace(new RegExp('p.m.', 'i'), pm);
+                        }
+                    }
                     deferred.resolve(response);
                 }, (error) => {
                     console.log(error);

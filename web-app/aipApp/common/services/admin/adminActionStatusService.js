@@ -4,7 +4,7 @@
 ///<reference path="../../../../typings/tsd.d.ts"/>
 var AIP;
 (function (AIP) {
-    var AdminActionStatusService = (function () {
+    var AdminActionStatusService = /** @class */ (function () {
         function AdminActionStatusService($http, $q, $filter, ENDPOINT) {
             this.$http = $http;
             this.$q = $q;
@@ -60,6 +60,13 @@ var AIP;
             });
             return request;
         };
+        AdminActionStatusService.prototype.getMaxAttachmentsVal = function () {
+            var request = this.$http({
+                method: "GET",
+                url: this.ENDPOINT.admin.getMaxAttachmentsVal
+            });
+            return request;
+        };
         AdminActionStatusService.prototype.getActionItemsById = function (PostId) {
             var request = this.$http({
                 method: "GET",
@@ -67,9 +74,17 @@ var AIP;
             });
             return request;
         };
+        AdminActionStatusService.prototype.getProcessedServerDateTimeAndTimezone = function (selectedUserVal) {
+            var request = this.$http({
+                method: "POST",
+                data: selectedUserVal,
+                url: this.ENDPOINT.admin.processedDateTime
+            });
+            return request;
+        };
+        AdminActionStatusService.$inject = ["$http", "$q", "$filter", "ENDPOINT"];
         return AdminActionStatusService;
     }());
-    AdminActionStatusService.$inject = ["$http", "$q", "$filter", "ENDPOINT"];
     AIP.AdminActionStatusService = AdminActionStatusService;
 })(AIP || (AIP = {}));
 register("bannerAIP").service("AdminActionStatusService", AIP.AdminActionStatusService);

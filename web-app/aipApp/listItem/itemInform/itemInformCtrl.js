@@ -3,13 +3,12 @@
  ********************************************************************************/
 var AIP;
 (function (AIP) {
-    var ItemInformCtrl = (function () {
-        function ItemInformCtrl($scope, $uibModalInstance, $window, ENDPOINT, APP_ROOT) {
-            this.$inject = ["$scope", "$uibModalInstance", "$window", "AdminActionStatusService", "ENDPOINT", "APP_ROOT"];
+    var ItemInformCtrl = /** @class */ (function () {
+        function ItemInformCtrl($scope, $uibModalInstance, $window, APP_ROOT) {
+            this.$inject = ["$scope", "$uibModalInstance", "$window", "APP_ROOT"];
             $scope.vm = this;
             this.$uibModalInstance = $uibModalInstance;
             this.$window = $window;
-            this.ENDPOINT = ENDPOINT;
             this.APP_ROOT = APP_ROOT;
         }
         ItemInformCtrl.prototype.goAhead = function () {
@@ -25,4 +24,4 @@ var AIP;
     }());
     AIP.ItemInformCtrl = ItemInformCtrl;
 })(AIP || (AIP = {}));
-register("bannerAIP").controller("ItemInformCtrl", AIP.ItemInformCtrl);
+register("bannerCommonAIP").controller("ItemInformCtrl", AIP.ItemInformCtrl);
