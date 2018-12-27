@@ -234,6 +234,9 @@ aip-list .enddate {
   font-size: 11px;
   margin-right: 10px; }
 
+.ui-datepicker {
+  height: 22em !important; }
+
 /*CSS for Page builder templates*/
 #pbid-PersonalInformationAndEmergencyContacts input.pb-item.pb-text,
 #pbid-PersonalInformationAndEmergencyContacts input.pb-item.pb-number,
@@ -243,8 +246,12 @@ aip-list .enddate {
 #pbid-CurrentProgrammeofStudyinformation input.pb-item.pb-number,
 #pbid-CurrentProgrammeofStudyinformation input.pb-item.pb-datetime,
 #pbid-CurrentProgrammeofStudyinformation input.pb-item.pb-email,
-#pbid-CurrentProgrammeofStudyinformation input.pb-item.pb-tel {
-  font-size: 1.25em;
+#pbid-CurrentProgrammeofStudyinformation input.pb-item.pb-tel, #pbid-ConfirmEnrollment input.pb-item.pb-text,
+#pbid-ConfirmEnrollment input.pb-item.pb-number,
+#pbid-ConfirmEnrollment input.pb-item.pb-datetime,
+#pbid-ConfirmEnrollment input.pb-item.pb-email,
+#pbid-ConfirmEnrollment input.pb-item.pb-tel {
+  font-size: 1em;
   font-family: "OpenSans-semibold";
   color: darkSlateGray;
   border: 1px solid #869fb1;
@@ -254,46 +261,48 @@ aip-list .enddate {
   -webkit-border-radius: 4px;
   margin-left: 15px;
   border-radius: 4px; }
-#pbid-PersonalInformationAndEmergencyContacts input.pb-item:focus, #pbid-CurrentProgrammeofStudyinformation input.pb-item:focus {
+#pbid-PersonalInformationAndEmergencyContacts input.pb-item:focus, #pbid-CurrentProgrammeofStudyinformation input.pb-item:focus, #pbid-ConfirmEnrollment input.pb-item:focus {
   border: 1px solid #206E9F;
   box-shadow: inset 0px 2px 2px #CBE2E8;
   color: #4F585F; }
-#pbid-PersonalInformationAndEmergencyContacts input.pb-item.hasDatepicker, #pbid-CurrentProgrammeofStudyinformation input.pb-item.hasDatepicker {
+#pbid-PersonalInformationAndEmergencyContacts input.pb-item.hasDatepicker, #pbid-CurrentProgrammeofStudyinformation input.pb-item.hasDatepicker, #pbid-ConfirmEnrollment input.pb-item.hasDatepicker {
   height: inherit; }
-#pbid-PersonalInformationAndEmergencyContacts h2.pb-block-label, #pbid-CurrentProgrammeofStudyinformation h2.pb-block-label {
-  color: #4F585F;
-  font-size: 1.875em;
-  font-family: "OpenSans-semibold";
-  margin: 5px 0;
-  padding: 0.75em 0.75em; }
-#pbid-PersonalInformationAndEmergencyContacts h3.pb-form-label, #pbid-CurrentProgrammeofStudyinformation h3.pb-form-label {
+#pbid-PersonalInformationAndEmergencyContacts h2.pb-block-label, #pbid-PersonalInformationAndEmergencyContacts h2.pb-form-label, #pbid-CurrentProgrammeofStudyinformation h2.pb-block-label, #pbid-CurrentProgrammeofStudyinformation h2.pb-form-label, #pbid-ConfirmEnrollment h2.pb-block-label, #pbid-ConfirmEnrollment h2.pb-form-label {
   color: #4F585F;
   font-size: 1.5em;
   font-family: "OpenSans-semibold";
   margin: 5px 0;
-  padding: 0.75em 0.75em; }
-#pbid-PersonalInformationAndEmergencyContacts div.pb-literal, #pbid-CurrentProgrammeofStudyinformation div.pb-literal {
+  padding: 0.75em 0.5em; }
+#pbid-PersonalInformationAndEmergencyContacts span.pb-form, #pbid-CurrentProgrammeofStudyinformation span.pb-form, #pbid-ConfirmEnrollment span.pb-form {
+  color: #4F585F;
+  font-family: "OpenSans-semibold"; }
+#pbid-PersonalInformationAndEmergencyContacts h3.pb-form-label, #pbid-CurrentProgrammeofStudyinformation h3.pb-form-label, #pbid-ConfirmEnrollment h3.pb-form-label {
+  color: #4F585F;
+  font-size: 1.5em;
+  font-family: "OpenSans-semibold";
+  margin: 5px 0;
+  padding: 0.75em 0.5em; }
+#pbid-PersonalInformationAndEmergencyContacts div.pb-literal, #pbid-CurrentProgrammeofStudyinformation div.pb-literal, #pbid-ConfirmEnrollment div.pb-literal {
   color: #4F585F;
   font-size: 1.15em;
   margin-top: 5px;
   padding-left: 0.75em;
   margin-top: 25px; }
-#pbid-PersonalInformationAndEmergencyContacts label, #pbid-PersonalInformationAndEmergencyContacts span.pb-detail, #pbid-CurrentProgrammeofStudyinformation label, #pbid-CurrentProgrammeofStudyinformation span.pb-detail {
-  font-size: 1.25em;
+#pbid-PersonalInformationAndEmergencyContacts label, #pbid-PersonalInformationAndEmergencyContacts span.pb-detail, #pbid-CurrentProgrammeofStudyinformation label, #pbid-CurrentProgrammeofStudyinformation span.pb-detail, #pbid-ConfirmEnrollment label, #pbid-ConfirmEnrollment span.pb-detail {
+  font-size: 1em;
   line-height: 30px;
   padding-left: 0.75em; }
-#pbid-PersonalInformationAndEmergencyContacts label.pb-label, #pbid-CurrentProgrammeofStudyinformation label.pb-label {
-  font-size: 1.5em;
+#pbid-PersonalInformationAndEmergencyContacts label.pb-label, #pbid-CurrentProgrammeofStudyinformation label.pb-label, #pbid-ConfirmEnrollment label.pb-label {
+  font-size: 1.10em;
   font-weight: bold;
   margin-bottom: 1px;
   padding: 0.75em 0.75em;
-  margin-left: 6px;
   display: block; }
-#pbid-PersonalInformationAndEmergencyContacts label.pb-label.pb-boolean, #pbid-CurrentProgrammeofStudyinformation label.pb-label.pb-boolean {
+#pbid-PersonalInformationAndEmergencyContacts label.pb-label.pb-boolean, #pbid-CurrentProgrammeofStudyinformation label.pb-label.pb-boolean, #pbid-ConfirmEnrollment label.pb-label.pb-boolean {
   font-size: 1.25em;
   display: inline-block; }
-#pbid-PersonalInformationAndEmergencyContacts select.pb-item.pb-select, #pbid-CurrentProgrammeofStudyinformation select.pb-item.pb-select {
-  font-size: 1.25em;
+#pbid-PersonalInformationAndEmergencyContacts select.pb-item.pb-select, #pbid-CurrentProgrammeofStudyinformation select.pb-item.pb-select, #pbid-ConfirmEnrollment select.pb-item.pb-select {
+  font-size: 1em;
   font-family: "OpenSans-semibold";
   color: darkSlateGray;
   border: 1px solid #869fb1;
@@ -303,28 +312,26 @@ aip-list .enddate {
   -webkit-border-radius: 4px;
   margin-left: 15px;
   border-radius: 4px; }
-#pbid-PersonalInformationAndEmergencyContacts select.pb-select:focus, #pbid-CurrentProgrammeofStudyinformation select.pb-select:focus {
+#pbid-PersonalInformationAndEmergencyContacts select.pb-select:focus, #pbid-CurrentProgrammeofStudyinformation select.pb-select:focus, #pbid-ConfirmEnrollment select.pb-select:focus {
   background-color: #FFFFFF;
   border: 2px solid #206E9F;
   background-color: #FFFFFF;
   color: #000000; }
-#pbid-PersonalInformationAndEmergencyContacts option:empty, #pbid-CurrentProgrammeofStudyinformation option:empty {
+#pbid-PersonalInformationAndEmergencyContacts option:empty, #pbid-CurrentProgrammeofStudyinformation option:empty, #pbid-ConfirmEnrollment option:empty {
   display: none; }
-#pbid-PersonalInformationAndEmergencyContacts .pb-radio, #pbid-CurrentProgrammeofStudyinformation .pb-radio {
+#pbid-PersonalInformationAndEmergencyContacts .pb-radio, #pbid-CurrentProgrammeofStudyinformation .pb-radio, #pbid-ConfirmEnrollment .pb-radio {
   margin-top: -20px; }
-#pbid-PersonalInformationAndEmergencyContacts .pb-button, #pbid-CurrentProgrammeofStudyinformation .pb-button {
+#pbid-PersonalInformationAndEmergencyContacts .pb-button, #pbid-CurrentProgrammeofStudyinformation .pb-button, #pbid-ConfirmEnrollment .pb-button {
   padding: 0.75em 0.75em; }
-#pbid-PersonalInformationAndEmergencyContacts .ui-datepicker, #pbid-CurrentProgrammeofStudyinformation .ui-datepicker {
-  height: 22em !important; }
-#pbid-PersonalInformationAndEmergencyContacts input[type="checkbox"], #pbid-CurrentProgrammeofStudyinformation input[type="checkbox"] {
+#pbid-PersonalInformationAndEmergencyContacts input[type="checkbox"], #pbid-CurrentProgrammeofStudyinformation input[type="checkbox"], #pbid-ConfirmEnrollment input[type="checkbox"] {
   width: 20px;
   height: 18px;
   line-height: normal;
   padding: 0.75em 0.75em;
   margin-left: 9px; }
-#pbid-PersonalInformationAndEmergencyContacts input:read-only, #pbid-CurrentProgrammeofStudyinformation input:read-only {
+#pbid-PersonalInformationAndEmergencyContacts input:read-only, #pbid-CurrentProgrammeofStudyinformation input:read-only, #pbid-ConfirmEnrollment input:read-only {
   background-color: #ebebe4; }
-#pbid-PersonalInformationAndEmergencyContacts #pbid-Name-0, #pbid-CurrentProgrammeofStudyinformation #pbid-Name-0 {
+#pbid-PersonalInformationAndEmergencyContacts #pbid-Name-0, #pbid-CurrentProgrammeofStudyinformation #pbid-Name-0, #pbid-ConfirmEnrollment #pbid-Name-0 {
   width: 600px; }
 
 .AIP-landing-container {
@@ -1730,16 +1737,6 @@ ol.selected-group > li > button {
 .comments-labal-top-padding {
   padding-top: 1em; }
 
-.save-button-left-padding {
-  padding-left: 1em;}
-
-.external-label-left-padding {
-  padding-left: 0em;}
-
-.comment-text-left-margin {
-  margin-left: -2em;}
-
-
 .review-block-labal-top-padding {
   padding-top: 2px; }
 
@@ -1758,7 +1755,7 @@ ol.selected-group > li > button {
 
 .date-input-height {
   height: 33px !important;
-  padding-left: 5px !important;}
+  padding-left: 5px !important; }
 
 .date-div-width {
   max-width: 240px; }
@@ -1771,6 +1768,15 @@ ol.selected-group > li > button {
   border: none;
   margin-right: 2em;
   margin-left: 1em !important; }
+
+.save-button-left-padding {
+  padding-left: 1em; }
+
+.external-label-left-padding {
+  padding-left: 0em; }
+
+.comment-text-left-margin {
+  margin-left: -2em; }
 
 #gridCaption {
   color: gray;
