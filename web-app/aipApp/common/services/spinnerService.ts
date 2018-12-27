@@ -1,6 +1,7 @@
 /*******************************************************************************
  Copyright 2018 Ellucian Company L.P. and its affiliates.
  ********************************************************************************/
+
 ///<reference path="../../../typings/tsd.d.ts"/>
 declare var register;
 
@@ -20,5 +21,4 @@ module AIP {
         }
     }
 }
-
-register("bannerAIP").service("SpinnerService", AIP.SpinnerService);
+register("bannerCommonAIP").service("SpinnerService", AIP.SpinnerService);

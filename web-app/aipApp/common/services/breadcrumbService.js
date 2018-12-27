@@ -77,7 +77,8 @@ var AIP;
             });
         };
         return AIPBreadcrumbService;
-    }());
+    })();
     AIP.AIPBreadcrumbService = AIPBreadcrumbService;
 })(AIP || (AIP = {}));
-angular.module("bannerAIP").service("BreadcrumbService", AIP.AIPBreadcrumbService);
+angular.module("bannerCommonAIP").service("BreadcrumbService", AIP.AIPBreadcrumbService);
+//# sourceMappingURL=breadcrumbService.js.map

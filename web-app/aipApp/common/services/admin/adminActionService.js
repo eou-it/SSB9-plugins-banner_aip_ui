@@ -10,7 +10,7 @@ var AIP;
         Status[Status["Active"] = 2] = "Active";
         Status[Status["Inactive"] = 3] = "Inactive";
     })(Status || (Status = {}));
-    var AdminActionService = /** @class */ (function () {
+    var AdminActionService = (function () {
         function AdminActionService($http, $q, $filter, ENDPOINT) {
             this.$http = $http;
             this.$q = $q;
@@ -167,7 +167,7 @@ var AIP;
             });
             return request;
         };
-        AdminActionService.prototype.savePostActionItem = function (postActionItem, selected, modalResult, selectedPopulation, postNow, sendTime, timeZone, regeneratePopulation) {
+        AdminActionService.prototype.savePostActionItem = function (postActionItem, selected, modalResult, selectedPopulation, postNow, sendTime, timeZone, regeneratePopulation, displayDatetimeZone) {
             var params = {
                 postId: postActionItem.postId,
                 postingName: postActionItem.name,
@@ -181,7 +181,8 @@ var AIP;
                 scheduledStartDate: postActionItem.scheduledStartDate,
                 scheduledStartTime: sendTime,
                 timezoneStringOffset: timeZone,
-                populationRegenerateIndicator: regeneratePopulation
+                populationRegenerateIndicator: regeneratePopulation,
+                displayDatetimeZone: displayDatetimeZone
             };
             var request = this.$http({
                 method: "POST",
@@ -296,8 +297,9 @@ var AIP;
         };
         AdminActionService.$inject = ["$http", "$q", "$filter", "ENDPOINT"];
         return AdminActionService;
-    }());
+    })();
     AIP.AdminActionService = AdminActionService;
 })(AIP || (AIP = {}));
 register("bannerAIP").service("AdminActionService", AIP.AdminActionService);
 register("bannerAIP").service("dateFormatService", AIP.AdminActionService);
+//# sourceMappingURL=adminActionService.js.map

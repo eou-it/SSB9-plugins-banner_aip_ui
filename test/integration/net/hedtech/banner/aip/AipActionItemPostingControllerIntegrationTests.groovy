@@ -46,7 +46,8 @@ class AipActionItemPostingControllerIntegrationTests extends BaseIntegrationTest
             "displayStartDate":"${dynamicData.displayStartDate}",
             "displayEndDate":"${dynamicData.displayEndDate}",
             "postNow":"true",
-            "populationRegenerateIndicator":false
+            "populationRegenerateIndicator":false,
+            "displayDatetimeZone": "06/21/2018 0330 (GMT+5:30) Asia/Kolkata"
             }"""
     }
 
@@ -65,7 +66,8 @@ class AipActionItemPostingControllerIntegrationTests extends BaseIntegrationTest
             "scheduledStartDate":"${dynamicData.scheduledStartDate}",
             "scheduledStartTime":"${dynamicData.scheduledStartTime}",
             "timezoneStringOffset":"${dynamicData.timezoneStringOffset}",
-            "populationRegenerateIndicator":false
+            "populationRegenerateIndicator":false,
+            "displayDatetimeZone":"06/21/2018 0330 (GMT+5:30) Asia/Kolkata"
             }"""
     }
 
@@ -139,6 +141,22 @@ class AipActionItemPostingControllerIntegrationTests extends BaseIntegrationTest
 
 
     @Test
+    void testGetProcessedServerDateTimeAndTimezone() {
+        controller.request.contentType = "text/json"
+        String inputString = """{"userEnterDate":"06/21/2018",
+                                "userEnterTime":"1330",
+                                "userEnterTimeZone":"US/Alaska"}"""
+        controller.request.json = inputString
+        controller.getProcessedServerDateTimeAndTimezone()
+        assertEquals 200, controller.response.status
+        def ret = controller.response.contentAsString
+        def data = JSON.parse( ret )
+        assert data.serverDate !=null
+        assert data.serverTime !=null
+        assert data.serverTimeZone !=null
+    }
+
+    @Test
     void addActionItemPostingFailedCase() {
         controller.request.contentType = "text/json"
         String inputString = getCreateActionItemJSONWithoutName()
@@ -172,7 +190,7 @@ class AipActionItemPostingControllerIntegrationTests extends BaseIntegrationTest
         assertEquals 200, controller.response.status
         def ret = controller.response.contentAsString
         def data = JSON.parse( ret )
-        assert data.find {it.groupName.contains( 'Enrollment' )}.groupName == 'Enrollment'
+        assert data.find { it.groupName.contains( 'Enrollment' ) }.groupName == 'Enrollment'
     }
 
 
@@ -209,7 +227,7 @@ class AipActionItemPostingControllerIntegrationTests extends BaseIntegrationTest
         List<ActionItemGroup> actionItemGroups = ActionItemGroup.fetchActionItemGroups()
         assert actionItemGroups.size() > 0
         def actionItemGroup = actionItemGroups[0]
-        List<Long> actionItemIds = ActionItemGroupAssign.fetchByGroupId( actionItemGroup.id ).collect {it.actionItemId}
+        List<Long> actionItemIds = ActionItemGroupAssign.fetchByGroupId( actionItemGroup.id ).collect { it.actionItemId }
         assert actionItemIds.size() > 0
         def requestMap = [:]
         requestMap.postingName = 'TEST_INTEGRATION_TEST'
@@ -222,6 +240,7 @@ class AipActionItemPostingControllerIntegrationTests extends BaseIntegrationTest
         requestMap.displayEndDate = testingDateFormat.format( new Date() + 50 )
         requestMap.scheduledStartDate = new Date() + 1
         requestMap.actionItemIds = actionItemIds
+        requestMap.displayDatetimeZone = "06/21/2018 0330 (GMT+5:30) Asia/Kolkata"
         actionItemPostCompositeService.sendAsynchronousPostItem( requestMap )
         controller.request.contentType = "text/json"
         controller.params.searchParam = null
@@ -231,7 +250,7 @@ class AipActionItemPostingControllerIntegrationTests extends BaseIntegrationTest
         assertEquals 200, controller.response.status
         def ret = controller.response.contentAsString
         def data = JSON.parse( ret )
-        assertTrue data.result.find {it.postingName == 'TEST_INTEGRATION_TEST'}.postingName == 'TEST_INTEGRATION_TEST'
+        assertTrue data.result.find { it.postingName == 'TEST_INTEGRATION_TEST' }.postingName == 'TEST_INTEGRATION_TEST'
 
     }
 
@@ -244,7 +263,7 @@ class AipActionItemPostingControllerIntegrationTests extends BaseIntegrationTest
         List<ActionItemGroup> actionItemGroups = ActionItemGroup.fetchActionItemGroups()
         assert actionItemGroups.size() > 0
         def actionItemGroup = actionItemGroups[0]
-        List<Long> actionItemIds = ActionItemGroupAssign.fetchByGroupId( actionItemGroup.id ).collect {it.actionItemId}
+        List<Long> actionItemIds = ActionItemGroupAssign.fetchByGroupId( actionItemGroup.id ).collect { it.actionItemId }
         assert actionItemIds.size() > 0
         def requestMap = [:]
         requestMap.postingName = 'TEST_INTEGRATION_TEST1'
@@ -257,6 +276,7 @@ class AipActionItemPostingControllerIntegrationTests extends BaseIntegrationTest
         requestMap.displayEndDate = testingDateFormat.format( new Date() + 50 )
         requestMap.scheduledStartDate = new Date() + 1
         requestMap.actionItemIds = actionItemIds
+        requestMap.displayDatetimeZone = "06/21/2018 0330 (GMT+5:30) Asia/Kolkata"
         def postingId = actionItemPostCompositeService.sendAsynchronousPostItem( requestMap ).savedJob.id
         controller.request.contentType = "text/json"
         controller.params.postID = postingId
@@ -277,7 +297,7 @@ class AipActionItemPostingControllerIntegrationTests extends BaseIntegrationTest
         List<ActionItemGroup> actionItemGroups = ActionItemGroup.fetchActionItemGroups()
         assert actionItemGroups.size() > 0
         def actionItemGroup = actionItemGroups[0]
-        List<Long> actionItemIds = ActionItemGroupAssign.fetchByGroupId( actionItemGroup.id ).collect {it.actionItemId}
+        List<Long> actionItemIds = ActionItemGroupAssign.fetchByGroupId( actionItemGroup.id ).collect { it.actionItemId }
         assert actionItemIds.size() > 0
 
         def requestMap = [:]
@@ -291,6 +311,7 @@ class AipActionItemPostingControllerIntegrationTests extends BaseIntegrationTest
         requestMap.displayEndDate = testingDateFormat.format( new Date() + 50 )
         requestMap.scheduledStartDate = new Date() + 1
         requestMap.actionItemIds = actionItemIds
+        requestMap.displayDatetimeZone = "06/21/2018 0330 (GMT+5:30) Asia/Kolkata"
         def postingId = actionItemPostCompositeService.sendAsynchronousPostItem( requestMap ).savedJob.id
         controller.request.contentType = "text/json"
         controller.params.postID = postingId
@@ -311,7 +332,7 @@ class AipActionItemPostingControllerIntegrationTests extends BaseIntegrationTest
         List<ActionItemGroup> actionItemGroups = ActionItemGroup.fetchActionItemGroups()
         assert actionItemGroups.size() > 0
         def actionItemGroup = actionItemGroups[0]
-        List<Long> actionItemIds = ActionItemGroupAssign.fetchByGroupId( actionItemGroup.id ).collect {it.actionItemId}
+        List<Long> actionItemIds = ActionItemGroupAssign.fetchByGroupId( actionItemGroup.id ).collect { it.actionItemId }
         assert actionItemIds.size() > 0
 
         def requestMap = [:]
@@ -325,6 +346,7 @@ class AipActionItemPostingControllerIntegrationTests extends BaseIntegrationTest
         requestMap.displayEndDate = testingDateFormat.format( new Date() + 50 )
         requestMap.scheduledStartDate = new Date() + 1
         requestMap.actionItemIds = actionItemIds
+        requestMap.displayDatetimeZone = "06/21/2018 0330 (GMT+5:30) Asia/Kolkata"
         def postingId = actionItemPostCompositeService.sendAsynchronousPostItem( requestMap ).savedJob.id
         controller.request.contentType = "text/json"
         controller.params.postID = postingId
@@ -345,7 +367,7 @@ class AipActionItemPostingControllerIntegrationTests extends BaseIntegrationTest
         List<ActionItemGroup> actionItemGroups = ActionItemGroup.fetchActionItemGroups()
         assert actionItemGroups.size() > 0
         def actionItemGroup = actionItemGroups[0]
-        List<Long> actionItemIds = ActionItemGroupAssign.fetchByGroupId( actionItemGroup.id ).collect {it.actionItemId}
+        List<Long> actionItemIds = ActionItemGroupAssign.fetchByGroupId( actionItemGroup.id ).collect { it.actionItemId }
         assert actionItemIds.size() > 0
 
 
@@ -366,7 +388,7 @@ class AipActionItemPostingControllerIntegrationTests extends BaseIntegrationTest
         List<ActionItemGroup> actionItemGroups = ActionItemGroup.fetchActionItemGroups()
         assert actionItemGroups.size() > 0
         def actionItemGroup = actionItemGroups[0]
-        List<Long> actionItemIds = ActionItemGroupAssign.fetchByGroupId( actionItemGroup.id ).collect {it.actionItemId}
+        List<Long> actionItemIds = ActionItemGroupAssign.fetchByGroupId( actionItemGroup.id ).collect { it.actionItemId }
         assert actionItemIds.size() > 0
         dynamicData.actionItemIds = actionItemIds[0]
         dynamicData.populationId = populationListView.id

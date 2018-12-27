@@ -2,14 +2,19 @@
  Copyright 2018 Ellucian Company L.P. and its affiliates.
  *******************************************************************************/
 
-angular.module("bannerAIP").service( 'breadcrumbService', ['$filter', '$rootScope', function ($filter, $rootScope) {
+//angular.module("bannerAIP").service( 'breadcrumbService', ['$filter', '$rootScope', function ($filter, $rootScope) {
+angular.module("bannerCommonAIP").service( 'breadcrumbService', ['$filter', '$rootScope', function ($filter, $rootScope) {
     var constantBreadCrumb = [],
         callingUrl,
         CALLING_URL = 1,
         GEN_LANDING_PAGE_SIGNATURE;
 
+
+
     $rootScope.applicationContextRoot = $('meta[name=applicationContextRoot]').attr("content");
     GEN_LANDING_PAGE_SIGNATURE = new RegExp($rootScope.applicationContextRoot +'/ssb/general$');
+
+    console.log("ApplicationContext", $rootScope.applicationContextRoot);
 
     this.reset = function() {
         var label;

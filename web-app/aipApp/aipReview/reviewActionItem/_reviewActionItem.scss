@@ -1,0 +1,68 @@
+
+.titleValue {
+    font-size: 1.5em;
+    font-weight: bold;
+    white-space:nowrap;
+  }
+
+.fieldValue {
+    font-size: 1.5em;
+    white-space:nowrap;
+  }
+
+.review-action-item-container {
+    padding:2px;
+}
+
+.comments-labal-top-padding {
+    padding-top: 1em;
+}
+.review-block-labal-top-padding {
+    padding-top: 2px;
+}
+
+.row-top-padding {
+    padding-top: 1em;
+}
+
+.external-check-box-height {
+    width: 16px;
+    height: 16px;
+}
+
+.calendar-img{float: right;
+    margin-right: 10px;
+    top: -28px;
+    position: relative;
+}
+
+.date-input-height{
+    height: 33px !important;
+    padding-left: 5px !important;
+}
+
+.date-div-width {
+    max-width: 240px;
+}
+
+.view-attachment-icon {
+    background: url(../images/aip_view_attachment.svg) no-repeat;
+    cursor: pointer;
+    height: 1.5em;
+    width: 1.8em;
+    border: none;
+    margin-right: 2em;
+    margin-left: 1em !important;
+}
+
+.save-button-left-padding {
+    padding-left: 1em;
+}
+
+.external-label-left-padding {
+    padding-left: 0em;
+}
+
+.comment-text-left-margin {
+    margin-left: -2em;
+}

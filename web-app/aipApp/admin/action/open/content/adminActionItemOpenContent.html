@@ -16,7 +16,7 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
                 <div class="control col-xs-2 col-sm-4">
                     <div class="h2-container">
                         <button name="Edit" type="button" class="btn btn-default edit" ng-click="vm.selectTemplate()"
-                                aria-label="">
+                                aria-label="{{'aip.common.edit.action.item.jaws'|i18n_aip}}">
                             <span class="icon icon-edit-CO"></span>
                             <span class="button-text hidden-sm-down">{{'aip.common.text.edit'|i18n_aip}}</span>
                         </button>
@@ -56,14 +56,10 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
             <div class="row">
                 <textarea id="templateContent" ng-required="true" aria-required="true" name="templateContent"
                           ckeditor="ckEditorConfig" ng-model="vm.actionItem.actionItemContent" ng-change="vm.detectContentChange(vm.actionItem.actionItemContent); vm.dataChanged()"></textarea>
-
-
             </div>
-
             <div class="contentContainer">
-
                 <div class="row">
-                    <aip-status-rule rules="vm.rules" status="vm.statuses" changes="vm.contentChanged"></aip-status-rule>
+                    <aip-status-rule rules="vm.rules" status="vm.statuses" attachments="vm.maxAttachmentsList" changes="vm.contentChanged"></aip-status-rule>
                 </div>
             </div>
         </div>
@@ -80,7 +76,7 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
                     <div class="col-xs-6 col-sm-6 actionButton">
                         <button type="button" name="Save" class="btn btn-primary"
                                 ng-disabled="!vm.validateActionItemRule()" ng-click="vm.saveTemplate()">
-                            {{"aip.common.saveandreturn"|i18n_aip}}
+                            {{"aip.common.save.and.return"|i18n_aip}}
                         </button>
                     </div>
                 </div>
@@ -100,7 +96,7 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
                 <div class="control col-xs-2 col-sm-4">
                     <div class="h2-container"  ng-if="vm.actionItemPostedStatus == 'N'">
                         <button name="Edit" type="button" class="btn btn-default edit" ng-click="vm.selectTemplate()"
-                                aria-label="">
+                                aria-label="{{'aip.common.edit.action.item.jaws'|i18n_aip}}">
                             <span class="icon icon-edit-CO"></span>
                             <span class="button-text hidden-sm-down">{{'aip.common.text.edit'|i18n_aip}}</span>
                         </button>
@@ -151,7 +147,9 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
                                 {{'aip.admin.status.rules.table.header.responseOptionText'|i18n_aip}}
                             </th>
                             <th class="ruleStatus">{{'aip.admin.status.rules.table.header.status'|i18n_aip}}</th>
-                            <th class="ruleStatus"></th>
+                            <th class="ruleStatus">{{'aip.admin.status.rules.table.header.haltStatus'|i18n_aip}}</th>
+                            <th class="ruleStatus">{{'aip.admin.status.rules.table.header.reviewReqInd'|i18n_aip}}</th>
+                            <th class="ruleStatus">{{'aip.admin.status.rules.table.header.allowedAttachment'|i18n_aip}}</th>
                             </thead>
                             <tbody>
                             <tr ng-repeat="rule in vm.rules">
@@ -163,8 +161,14 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
                                             {{rule.statusName}}
                                         </span>
                                 </td>
-                                <td>
+                                <td data-label="{{'aip.admin.status.rules.table.header.haltStatus'|i18n_aip}}">
                                     {{(rule.statusBlockProcessInd=="Y"?"aip.admin.status.rules.table.blockText.block":"aip.admin.status.rules.table.blockText.unblock")|i18n_aip}}
+                                </td>
+                                <td data-label="{{'aip.admin.status.rules.table.header.reviewReqInd'|i18n_aip}}">
+                                    {{(rule.reviewReqInd?"aip.admin.status.rules.table.data.reviewRequired":"aip.admin.status.rules.table.data.reviewNotRequired")|i18n_aip}}
+                                </td>
+                                <td data-label="{{'aip.admin.status.rules.table.header.allowedAttachment'|i18n_aip}}"
+                                 data-ng-bind-html="rule.statusAllowedAttachment">
                                 </td>
                             </tr>
                             </tbody>
@@ -172,7 +176,7 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
                     </div>
                     <div class="contentContainer" ng-if="vm.rules.length===0">
                         <div class="noResponses">
-                            {{"aip.admin.status.rules.noREsponses"|i18n_aip}}
+                            {{"aip.admin.status.rules.noResponses"|i18n_aip}}
                         </div>
                     </div>
                 </div>

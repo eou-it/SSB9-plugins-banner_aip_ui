@@ -12,6 +12,7 @@ var AIPUI;
             this.scope = {
                 rules: "=",
                 status: "=",
+                attachments: "=",
                 inputs: "&",
                 ngModel: '=',
                 ngChange: '&',
@@ -31,10 +32,11 @@ var AIPUI;
             $scope.addRule = function ($event) {
                 $scope.rules.push({
                     statusName: "",
-                    status: $scope.status[0]
+                    status: $scope.status[0],
+                    allowedAttachments: $scope.attachments[0]
                 });
                 setTimeout(function () {
-                    var btnTarget = $("input#response-" + $scope.rules.length) /*+ $scope.rules.length*/;
+                    var btnTarget = $("input#response-" + $scope.rules.length);
                     $(btnTarget).focus();
                 }, 500);
             };
@@ -111,7 +113,8 @@ var AIPUI;
             };
         };
         return AIPStatusRuleDirective;
-    }());
+    })();
     AIPUI.AIPStatusRuleDirective = AIPStatusRuleDirective;
 })(AIPUI || (AIPUI = {}));
 register("bannerAIPUI").directive("aipStatusRule", AIPUI.AIPStatusRuleDirective);
+//# sourceMappingURL=statusRule.js.map

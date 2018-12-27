@@ -88,7 +88,8 @@ angular.module("timepicker.html", []).run(["$templateCache", function($templateC
                 require: 'ngModel',
                 scope: {
                     ngModel: '=',
-                    ngModel24Hr: '=?'
+                    ngModel24Hr: '=?',
+                    change: '&'
                 },
                 replace: true,
                 link: function (scope, element, attrs, ctrl) {
@@ -301,6 +302,7 @@ angular.module("timepicker.html", []).run(["$templateCache", function($templateC
                         }
                         ctrl.$setViewValue(dateFilter(getUpdatedDate(time), scope.timepicker.timeFormat));
                         ctrl.$render();
+                        scope.change();
                     };
 
                     // Checks for current active item

@@ -7,8 +7,8 @@
 var AIP;
 (function (AIP) {
     var ListItemPageCtrl = (function () {
-        function ListItemPageCtrl($scope, $state, ItemListViewService, AIPUserService, SpinnerService, $timeout, $q, $uibModal, APP_ROOT, $sce) {
-            this.$inject = ["$scope", "$state", "ItemListViewService", "AIPUserService", "SpinnerService", "$timeout", "$q", "$uibModal", , "APP_ROOT", "$sce"];
+        function ListItemPageCtrl($scope, $state, ItemListViewService, AIPUserService, SpinnerService, $timeout, $q, $uibModal, APP_ROOT, $sce, $compile) {
+            this.$inject = ["$scope", "$state", "ItemListViewService", "AIPUserService", "SpinnerService", "$timeout", "$q", "$uibModal", "APP_ROOT", "$sce", "$compile"];
             this.trustHTML = function (txtString) {
                 var sanitized = txtString ? this.$sce.trustAsHtml(txtString) : "";
                 return sanitized;
@@ -24,11 +24,30 @@ var AIP;
             this.APP_ROOT = APP_ROOT;
             this.$sce = $sce;
             this.modalInstance;
+            this.isFromGateKeeper = false;
             this.initialOpenGroup = -1;
+            this.$compile = $compile;
+            $scope.showModal = false;
             $scope.$watch("vm.detailView", function (newVal, oldVal) {
                 if (!$scope.$$phase) {
-                    $scope.apply();
+                    $scope.$apply();
                 }
+            });
+            //Listen to your custom event
+            window.addEventListener('responseChanged', function (e) {
+                $scope.responseId = window.params.responseId;
+                $scope.userActionItemId = window.params.userActionItemId;
+                $scope.maxAttachments = window.params.maxAttachments;
+                $scope.isResponseLocked = window.params.isResponseLocked;
+                var listItemPageDiv = $('.listActionItem');
+                var attachmentModal = $('aip-attachment');
+                if (attachmentModal.length > 0) {
+                    attachmentModal.remove();
+                }
+                var aipAttachmentDirective = $compile("<aip-attachment show-modal='showModal' response-id ='responseId' user-action-item-id='userActionItemId' max-attachments ='maxAttachments' response-locked = 'isResponseLocked'></aip-attachment>")($scope);
+                listItemPageDiv.append(aipAttachmentDirective);
+                $scope.showModal = true;
+                $scope.$apply();
             });
             notifications.on('add', function (e) {
                 setTimeout(function (e) {
@@ -36,30 +55,30 @@ var AIP;
                         //$scope.vm.init();
                         $scope.vm.refreshList();
                     }
-                    ;
                 }, 500);
             });
             this.init();
+            $scope.previousLink = function () {
+                if (window.reUrl && window.reUrl != '') {
+                    window.location.replace(decodeURI(window.reUrl));
+                }
+                else {
+                    window.history.back();
+                }
+            };
         }
         ListItemPageCtrl.prototype.init = function () {
             var _this = this;
-            this.informModal(this.$state.params['inform']);
+            var href = window.location.href;
+            if (href.indexOf("/informedList") > 0) {
+                this.isFromGateKeeper = true;
+            }
+            this.informModal(this.isFromGateKeeper);
             this.spinnerService.showSpinner(true);
             this.userService.getUserInfo().then(function (userData) {
                 var userInfo = userData;
                 _this.userName = userData.fullName;
                 _this.itemListViewService.getActionItems(userInfo).then(function (actionItems) {
-                    angular.forEach(actionItems.groups, function (group) {
-                        angular.forEach(group.items, function (item) {
-                            item.state = item.state;
-                            /*todo: can probably drop the message properties for these status since it's coming from the db*/
-                            /*
-                            ==="Completed"?
-                                "aip.status.complete":
-                                "aip.status.pending";
-                           */
-                        });
-                    });
                     _this.actionItems = actionItems;
                     angular.forEach(_this.actionItems.groups, function (item) {
                         item.dscParams = _this.getParams(item.title, userInfo);
@@ -85,12 +104,6 @@ var AIP;
                 var userInfo = userData;
                 _this.userName = userData.fullName;
                 _this.itemListViewService.getActionItems(userInfo).then(function (actionItems) {
-                    angular.forEach(actionItems.groups, function (group) {
-                        angular.forEach(group.items, function (item) {
-                            item.state = item.state;
-                            /*todo: can probably drop the message properties for these status since it's coming from the db*/
-                        });
-                    });
                     _this.actionItems = actionItems;
                     angular.forEach(_this.actionItems.groups, function (item) {
                         item.dscParams = _this.getParams(item.title, userInfo);
@@ -98,7 +111,6 @@ var AIP;
                     // this.resetSelection();
                 }).finally(function () {
                     _this.spinnerService.showSpinner(false);
-                    console.log(_this.selectedData);
                     setTimeout(function () {
                         $("#item-" + params.groupId + "-" + params.actionItemId).focus()
                             , 100;
@@ -199,8 +211,12 @@ var AIP;
                 _this.selectedData = response;
                 _this.selectedData.info.content = _this.trustHTML(response.info.content);
                 if (selectionType === "actionItem") {
-                    var group = _this.actionItems.groups.filter(function (item) { return item.id === groupId; });
-                    var acitonItem = group[0].items.filter(function (item) { return item.actionItemId === itemId; });
+                    var group = _this.actionItems.groups.filter(function (item) {
+                        return item.id === groupId;
+                    });
+                    var actionItem = group[0].items.filter(function (item) {
+                        return item.id === itemId;
+                    });
                     _this.selectedData.info.title = actionItem[0].title;
                 }
                 defer.resolve();
@@ -240,6 +256,45 @@ var AIP;
         ListItemPageCtrl.prototype.resetSelection = function () {
             this.selectedData = undefined;
         };
+        ListItemPageCtrl.prototype.documentUploader = function (userActionItemId, paperClipId, responseElement, allowedAttachments, responseId, isResponseLocked) {
+            var isElementPresent = document.getElementById(paperClipId);
+            if (isElementPresent === null && responseElement.length > 0) {
+                var paperClipElement = angular.element("<input id=" + paperClipId + " type='image' " +
+                    "src='../images/attach_icon_disabled.svg' title = 'Click to add documents' " +
+                    "class=' pb-detail pb-item pb-paperclip'/>");
+                this.setMaxAttachmentParam(allowedAttachments, paperClipId, responseId);
+                responseElement.after(paperClipElement);
+                window.params.userActionItemId = userActionItemId;
+                window.params.isResponseLocked = isResponseLocked;
+                $('#' + paperClipId).on("click", function () {
+                    var selectedPaperClip = this.id;
+                    var currentId = selectedPaperClip.substring(selectedPaperClip.length - 1, selectedPaperClip.length);
+                    currentId = "#pbid-ActionItemStatusAgree-radio-0-" + currentId;
+                    if ($(currentId)[0].checked === true) {
+                        //make sure paper clip is enabled
+                        window.params.responseId = $(currentId)[0].value;
+                        window.params.maxAttachments = $("#maxAttachment" + paperClipId + $(currentId)[0].value).val();
+                        $("#" + selectedPaperClip)[0].setAttribute("src", "../images/attach_icon_default.svg");
+                        var evt = new CustomEvent('responseChanged');
+                        window.dispatchEvent(evt);
+                    }
+                });
+            }
+        };
+        ListItemPageCtrl.prototype.setMaxAttachmentParam = function (allowedAttachments, paperClipId, responseId) {
+            var maxAttachmentHiddenElement = $("#maxAttachment" + paperClipId + responseId);
+            if (maxAttachmentHiddenElement.length === 0) {
+                $('<input>', {
+                    type: 'hidden',
+                    id: 'maxAttachment' + paperClipId + responseId,
+                    name: 'maxAttachment' + paperClipId + responseId,
+                    value: allowedAttachments
+                }).appendTo('body');
+            }
+            else {
+                maxAttachmentHiddenElement.val(allowedAttachments);
+            }
+        };
         ListItemPageCtrl.prototype.informModal = function (show) {
             if (show) {
                 this.modalInstance = this.$uibModal.open({
@@ -263,4 +318,5 @@ var AIP;
     }());
     AIP.ListItemPageCtrl = ListItemPageCtrl;
 })(AIP || (AIP = {}));
-register("bannerAIP").controller("ListItemPageCtrl", AIP.ListItemPageCtrl);
+register("bannerNonAdminAIP").controller("ListItemPageCtrl", AIP.ListItemPageCtrl);
+//# sourceMappingURL=listItemPageCtrl.js.map

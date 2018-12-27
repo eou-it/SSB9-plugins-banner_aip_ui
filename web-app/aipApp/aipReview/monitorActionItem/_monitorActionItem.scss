@@ -1,0 +1,130 @@
+
+$accordion-toggle: #000000;
+
+.monitor-action-item-accordion-container {
+  border: none;
+  box-shadow: none;
+
+  .accordion-toggle {
+    color: $accordion-toggle;
+  }
+  .label-padding {
+    padding-top: 5px;
+  }
+
+  .select2-results {
+    max-height: 100px;
+  }
+
+  .titleValue {
+    font-size: 1.5em;
+    font-weight: bold;
+  }
+  .titleValue.required:after {
+    content: " *";
+  }
+  .titleValue.supplement {
+    font-size: 1.0em;
+    font-style: italic;
+    position: absolute;
+    bottom: 0;
+    left: auto;
+    right: 8px;
+    color: #4F585F;
+  }
+
+  .titleValue.supplement.dimmed {
+    font-style: italic;
+    position: relative;
+    padding: 0 24px;
+  }
+
+  input[type="radio"] {
+    -webkit-appearance: initial;
+    appearance: initial;
+    background: white;
+    width: 20px;
+    height: 20px;
+    border: 1px solid #a4a4ca;
+    background: white;
+    position: relative;
+    border-radius: 15px;
+    vertical-align: -40%;
+    box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.25);
+  }
+  input[type="radio"]:checked {
+    background: #1c8445;
+  }
+  input[type="radio"]:checked:after {
+    content: '';
+    color: #fff;
+    position: absolute;
+    border: 1px solid #fff;
+    -webkit-transform: rotate(0deg);
+    -moz-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    -ms-transform: rotate(0deg);
+    width: 7px;
+    height: 7px;
+    top: 5px;
+    left: 6px;
+    border-radius: 16px;
+    background: #fff;
+
+  }
+
+  .attachmentimage{
+    height:10px;
+    width:10px;
+  }
+
+
+  .actionListContainer {
+    overflow-y: auto;
+    font-size: 14px;
+    }
+    .row {
+      margin-right: 0;
+      margin-left: 0;
+    }
+    .control {
+      float: right;
+      padding-top: 8px;
+      margin-right: 0.2em;
+    }
+
+    .actionListTable {
+      overflow: auto;
+      //padding-top: 16px;
+      .table-container {
+        margin-top: 8px;
+
+        .row.actionItemActions {
+          display: flex;
+          margin-right: 16px;
+          margin-left: 16px;
+
+          div {
+            flex: 1;
+            margin-right: 10px;
+          }
+          div:last-child {
+            margin-right: 0;
+
+          }
+        }
+      }
+    }
+  }
+
+
+@media screen and (max-width: 768px) {
+
+  .monitor-action-item-container {
+    .row {
+      .control {
+        padding: 0;
+      }
+    }
+  }
+}

@@ -1,0 +1,213 @@
+<!--*******************************************************************************
+Copyright 2018 Ellucian Company L.P. and its affiliates.
+*******************************************************************************-->
+<div id="reviewactionitem">
+    <div class="row ">
+        <div class="col-xs-12 col-sm-2 col-md-2">
+            <label for="personId" class="titleValue" id="personId">{{"js.aip.review.monitor.action.personId.label"|i18n_aip}}
+            </label>
+        </div>
+        <div class="col-xs-12 col-sm-7 col-md-7">
+            <div class="fieldValue">{{vm.actionItemDetails.spridenId}}</div>
+        </div>
+    </div>
+    <div class="row ">
+        <div class="col-xs-12 col-sm-2 col-md-2">
+            <label for="personName" class="titleValue" id="personName">{{"js.aip.review.monitor.action.personName.label"|i18n_aip}}
+            </label>
+        </div>
+        <div class="col-xs-12 col-sm-7 col-md-7">
+            <div class="fieldValue">{{vm.actionItemDetails.actionItemPersonName}}</div>
+        </div>
+    </div>
+    <div class="row ">
+        <div class="col-xs-12 col-sm-2 col-md-2">
+            <label for="actionItem" class="titleValue " id="actionItem">{{"js.aip.review.monitor.action.itemLabel"|i18n_aip}}
+            </label>
+        </div>
+        <div class="col-xs-12 col-sm-7 col-md-7">
+            <div class="fieldValue">{{vm.actionItemDetails.actionItemName}}</div>
+        </div>
+    </div>
+    <div class="row ">
+        <div class="col-xs-12 col-sm-2 col-md-2">
+            <label for="currentResponse" class="titleValue " id="currentResponse">{{"aip.user.action.item.last.response"|i18n_aip}}
+            </label>
+        </div>
+        <div class="col-xs-12 col-sm-7 col-md-7">
+            <div class="fieldValue">{{vm.actionItemDetails.currentResponseText}}</div>
+        </div>
+    </div>
+    <div class="row ">
+        <div class="col-xs-12 col-sm-2 col-md-2">
+            <label class="titleValue">{{"js.aip.review.monitor.action.status.response.label"|i18n_aip}}
+            </label>
+        </div>
+        <div class="col-xs-12 col-sm-7 col-md-7">
+            <div class="fieldValue">{{vm.actionItemDetails.status}}</div>
+        </div>
+    </div>
+    <div class="row ">
+        <div class="col-xs-12 col-sm-2 col-md-2">
+            <label class="titleValue">{{"js.aip.review.monitor.action.response.date.label"|i18n_aip}}
+            </label>
+        </div>
+        <div class="col-xs-12 col-sm-7 col-md-7">
+            <div class="fieldValue">{{vm.actionItemDetails.responseDate}}</div>
+        </div>
+    </div>
+    <div class="row ">
+        <div class="col-xs-12 col-sm-2 col-md-2">
+            <label class="titleValue">{{"js.aip.review.monitor.action.display.start.date.label"|i18n_aip}}
+            </label>
+        </div>
+        <div class="col-xs-12 col-sm-7 col-md-7">
+            <div class="fieldValue">{{vm.actionItemDetails.displayStartDate}}</div>
+        </div>
+    </div>
+    <div class="row ">
+        <div class="col-xs-12 col-sm-2 col-md-2">
+            <label for="endDate" class="titleValue " id="endDate">{{"js.aip.review.monitor.action.diplay.end.date.label"|i18n_aip}}
+            </label>
+        </div>
+        <div class="col-xs-12 col-sm-7 col-md-7">
+            <div class="fieldValue">{{vm.actionItemDetails.displayEndDate}}</div>
+        </div>
+    </div>
+    <div class="row ">
+        <div class="col-xs-12 col-sm-2 col-md-2">
+            <label for="numberOfAttachments" class="titleValue " id="numberOfAttachments">{{"js.aip.review.monitor.action.numberOfAttachmentsLabel"|i18n_aip}}
+            </label>
+        </div>
+        <div class="col-xs-12 col-sm-7 col-md-7">
+            <div class="fieldValue">{{vm.actionItemDetails.attachments}}</div>
+        </div>
+    </div>
+    <div ng-if="vm.actionItemDetails.attachments>0" class="row">
+        <div class="col-xs-12 col-sm-2 col-md-2">
+            <label for="viewAttachments" class="titleValue " id="viewAttachments">{{"js.aip.review.monitor.action.viewAttachmentsLabel"|i18n_aip}}
+            </label>
+        </div>
+        <div class="col-xs-12 col-sm-7 col-md-7">
+            <input type="image" src="../images/attach_icon_default.svg" class="attachmentimage" ng-click="vm.viewAttachments()">
+        </div>
+    </div>
+    <form name="actionItemReviewForm">
+        <div class="row row-top-padding">
+            <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
+                <label class="titleValue review-block-labal-top-padding">{{"js.aip.review.monitor.action.review.status.label"|i18n_aip}}</label>
+            </div>
+            <div class="col-xs-12 col-sm-7 col-md-7 col-lg-7" class="actionItemElement">
+                <xe-ui-select class="folder-minwidth" ng-model="vm.selectedReviewState"
+                              theme="select2" ng-change = "vm.onValueChange()">
+                    <xe-ui-select-match placeholder="{{''|i18n_aip}}">
+                        <div ng-bind-html="vm.selectedReviewState.name"></div>
+                    </xe-ui-select-match>
+                    <xe-ui-select-choices
+                            repeat="item in vm.actionItemReviewStatusList | propsFilter: {name: $select.search}">
+                        <div ng-bind-html="item.name"></div>
+                    </xe-ui-select-choices>
+                </xe-ui-select>
+            </div>
+        </div>
+        <div class="row row-top-padding">
+            <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
+                <label class="titleValue">{{"js.aip.review.monitor.action.comments.label"|i18n_aip}}</label>
+            </div>
+            <div class="col-xs-12 col-sm-7 col-md-7 col-lg-7" class="actionItemElement">
+                <div class="col-xs-12 col-sm-2 col-md-1 col-lg-1 external-label-left-padding">
+                    {{"js.aip.review.monitor.action.external.label"|i18n_aip}}
+                    <input type="checkbox" ng-model="vm.externalCommentInd" value="Y" checked="true" class="external-check-box-height">
+                </div>
+                <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8 comment-text-left-margin" >
+                    <input type="text" class="form-control" ng-model="vm.reviewComments" ng-change = "vm.onValueChange()"/>
+                </div>
+            </div>
+        </div>
+        <div class="row row-top-padding">
+            <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
+                <label class="titleValue review-block-labal-top-padding">{{"js.aip.review.monitor.action.diplay.end.date.label"|i18n_aip}}</label>
+            </div>
+            <div class="col-xs-12 col-sm-7 col-md-7 col-lg-7 date-div-width">
+                <input type="text"  date-picker ng-model="vm.actionItemDetails.displayEndDate"
+                       class="form-control  Datelement date-input-height" name="displayEndDate"
+                       aria-required="true" required autocomplete="off"
+                       placeholder='{{"default.date.format.watermark"|i18n_aip}}' ng-change = "vm.onValueChange()"/>
+            </div>
+        </div>
+        <div class="row row-top-padding">
+            <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
+                <label class="titleValue review-block-labal-top-padding">{{"js.aip.review.monitor.action.contact.label"|i18n_aip}}</label>
+            </div>
+            <div class="col-xs-12 col-sm-7 col-md-7 col-lg-7" class="actionItemElement">
+                <xe-ui-select id="contactInformation"
+                              ng-model="vm.selectedContact"
+                              theme="select2" ng-disabled="disabled" ng-change = "vm.onValueChange()">
+
+                    <xe-ui-select-match class="placeholderDisplay"
+                                        placeholder={{"js.aip.action.selected.name"|i18n_aip}}>
+                        <div class="actionItemName" ng-bind-html="vm.selectedContact.name"></div>
+                        <div class="select-placeholder">{{"js.aip.action.selected.name"|i18n_aip}}
+                        </div>
+                    </xe-ui-select-match>
+
+                    <xe-ui-select-choices repeat="item in vm.contactInformationList |
+                                propsFilter: {name: $select.search}">
+                        <div ng-bind-html="item.value | highlight: $select.search"></div>
+
+                    </xe-ui-select-choices>
+                </xe-ui-select>
+            </div>
+        </div>
+        <div class="row row-top-padding">
+            <div class="col-xs-2 col-sm-2 col-md-6 col-lg-6">
+            </div>
+            <div class="col-xs-8 col-sm-8 col-md-6 col-lg-6" class="actionItemElement">
+             <span>
+                <button name="Cancel" type="button" class="btn btn-primary" ng-click="vm.reset(vm)"
+                        ng-disabled="!vm.dirtyFlag">
+                    {{"js.aip.review.monitor.action.resetButtonLabel"|i18n_aip}}
+                </button>
+             </span>
+            <span class="save-button-left-padding">
+                <button name="Save" type="button" class="btn btn-primary"
+                        ng-click="vm.updateActionItemReview();actionItemReviewForm.$setPristine();"
+                        ng-disabled="!vm.dirtyFlag">
+                    {{"default.button.save.label"|i18n_aip}}
+                </button>
+            </span>
+            </div>
+        </div>
+    </form>
+    <xe-popup-modal show=vm.showModal focusbackelement="tools"
+                    pageheader={{"js.aip.review.monitor.action.viewAttachments.modal.title"|i18n_aip}}>
+        <popup-content>
+            <div class="attachmentsTable" ng-if="vm.showModal">
+                <xe-table-grid
+                        table-id="dataTableAttachmentsList"
+                        header="header"
+                        fetch="vm.fetchData(query)"
+                        content="vm.gridData.row"
+                        results-found="records"
+                        toolbar="false"
+                        paginate="false"
+                        on-row-click="vm.selectRecord(data)"
+                        no-data-msg="{{'aip.common.no.results.found'|i18n_aip}}"
+                        pagination-config="paginationConfig"
+                        continuous-scrolling="true"
+                        continuous-scroll-parent="attachmentsTable"
+                        height="10em">
+                    <xe-cell-markup column-name="attachmentActions">
+                        <div class="row attachmentActions">
+                            <button class="view-attachment-icon"
+                                    ng-click="vm.previewDocument(row, vm.actionItemDetails.spridenId)"
+                                    title="{{'aip.common.open.action.item.jaws'|i18n_aip}}"
+                                    aria-label="{{'aip.common.open.action.item.jaws'|i18n_aip}}">
+                            </button>
+                        </div>
+                    </xe-cell-markup>
+                </xe-table-grid>
+            </div>
+        </popup-content>
+    </xe-popup-modal>
+</div>

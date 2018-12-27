@@ -130,7 +130,7 @@ module AIP {
                         dataType: 'script',
                         success: function() {
                             angular.module("BannerOnAngular").controller(data.controllerId, data.controllerId);
-                            var params = {action: "page", controller: "customPage", id: data.pageName, actionItemId: actionItemId, groupId:groupId, saved:false};
+                            params = {action: "page", controller: "customPage", id: data.pageName, actionItemId: actionItemId, groupId:groupId, saved:false};
                             defer.resolve(data);
                         },
                         async: true
@@ -145,5 +145,4 @@ module AIP {
         }
     }
 }
-
-register("bannerAIP").service("ItemListViewService", AIP.ItemListViewService);
+register("bannerCommonAIP").service("ItemListViewService", AIP.ItemListViewService);

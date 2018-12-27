@@ -1,5 +1,5 @@
 /*********************************************************************************
- Copyright 2017 Ellucian Company L.P. and its affiliates.
+ Copyright 2017-2018 Ellucian Company L.P. and its affiliates.
  **********************************************************************************/
 $badge-color: #FFCDAA;
 $badge-border-color: #FD9F5E;
@@ -41,6 +41,13 @@ aip-list {
       height: 1px;
       border: 0;
     }
+    .halt-icon{
+      font-size: large;
+      color: #d12121;
+    }
+    .aip-icons{
+      float: right;
+    }
     .panel-heading {
       background-color: $heading-background;
       border: none;
@@ -68,10 +75,9 @@ aip-list {
           }
           .group-toggle-indicator {
             float: right;
-            padding-right: 8px;
+            padding-left: 20px;
           }
           .group-title {
-            white-space: nowrap;
             padding: 0 0 16px 0;
             .group-title-text {
               font-size: 1em;
@@ -89,9 +95,10 @@ aip-list {
           }
           .badge {
             //float: right;
-            margin-left: 5px;
+            margin-left: 25px;
             border: 1px solid #222222;
             background-color: #555555;
+
             &.pending {
               border: 1px solid #B0ABD0;
               background-color: #DAD5FF;
@@ -178,9 +185,10 @@ aip-list {
             //-webkit-hyphens: auto;
             //mso-hyphenate: auto;
           }
-          .cell.title {
+          .title {
             padding-left: 10px;
             float: left;
+            width:70%;
             h3,h4 {
               font-weight: bold;
               font-size: 1.5em;
@@ -197,8 +205,9 @@ aip-list {
               padding-left: 0;
             }
           }
-          .cell.state {
-            padding: 0;
+
+          .status {
+            padding: 0 5px 0 0;
             span:first-letter {
               text-transform: uppercase;
             }
@@ -206,10 +215,12 @@ aip-list {
           .badge {
             border-radius: 4px;
             color: $badge-text;
-            margin-right: 8px;
-            //padding: 7px 10px;
+            margin-right: 10px;
             float: right;
-            //width: 100%;
+            white-space: normal;
+            word-wrap: break-word;
+            line-height: 1.2em;
+            max-width: 120px;           
             &.pending {
               border: 1px solid #B0ABD0;
               background-color: #DAD5FF;
@@ -223,57 +234,254 @@ aip-list {
               background-color: #C9F0C7;
             }
           }
-          .cell.completedDate {
-            font-size: 1.3em;
+          .actionItemParams {
+            font-family: "OpenSans-regular";
+            font-size: 12px;
             border-bottom: none;
-            padding: 25px 8px 0px 10px;
+            padding: 2px 8px 0px 8px;
+            clear:both;
             span.data-label {
               font-family: "OpenSans-bold";
               display: inline-block;
+              padding: 2px;
             }
           }
-          .cell.description {
+          .haltProcessList{
+            h4{
+              //font-weight: bold;
+              font-size: 14px;
+              word-wrap: break-word;
+              margin-top: 3px;
+              /*line-height: 1.8em;*/
+              color: $link-color;
+              display: inline;
+              /*border-bottom: solid 1px #206E9f;*/
+              font-family:"OpenSans-semibold";
+              padding-bottom: 3px;
+              padding-right: 10px;
+              padding-left: 10px;
+            }
+            li{
+              list-style: none;
+              padding-left: 2px;
+            }
+            ul{
+              padding: 0;
+              margin: 0;
+            }
+
+          }
+
+          .description {
             font-size: 1.3em;
             border-bottom: 1px solid $cell-text;
-            padding: 10px 5px 15px 10px;
+            padding: 10px 10px 15px 10px;
+            clear:both;
           }
         }
       }
     }
-    //small size (tablet)
-    @media screen and (max-width: 768px) {
-      .header {
-        .list-item {
-          .title {
-            padding-left: 0;
-            .badge {
-              float: right;
-            }
-          }
-          //.description {
-          //  display: none;
-          //}
-        }
-      }
+    @media (min-width: 768px) and (max-width: 1024px) {
       .list-body {
         .list-item {
-          .badge {
-            float: right;
+          .title {
+            width:60% !important;
+          }
+          .badge{
+            max-width: 80px !important;
+            margin-right:5px !important;
+          }
+          .enddate{
+            margin-right:5px !important;
+          }
+          .description {
+            padding-right:5px !important;
           }
         }
+      }
+      //CSS
+
+    }
+    //small size (tablet)
+    @media screen and (max-width: 768px) {
+
+        .list-item {
+          .title {
+            width: 60% !important;
+          }
+          .badge{
+            max-width: 80px !important;
+            margin-right:5px !important;
+          }
+          .enddate{
+            margin-right:5px !important;
+          }
+          .description {
+            padding-right:5px !important;
+          }
+      }
+    }
+    @media (min-width:360px) and (max-width: 640px){
+      .list-body{
+        .list-item{
+          .badge{
+            max-width: 80px !important;
+            margin-right:5px !important;
+          }
+          .enddate{
+            margin-right:5px !important;
+          }
+          .description {
+            padding-right:5px !important;
+          }
       }
     }
     //extra small size (phone)
     @media screen and (max-width: 480px) {
       .list-body {
-        .description {
-          padding-top: 8px;
+        .list-item{
+          .badge{
+            max-width: 80px !important;
+            margin-right:5px !important;
+          }
+          .enddate{
+            margin-right:5px !important;
+          }
+          .description {
+            padding-top: 8px !important;
+            padding-right:5px !important;
+          }
         }
       }
+    }
+    .item-group{
+      .badge{
+        margin-left:10px;
+      }
+      .group-toggle-indicator{
+        padding-left:10px;
+      }
+    }
     }
   }
   .enddate{text-align: right;
     margin-bottom: 15px;
     font-weight: bold;
-    font-size: 11px;}
+    font-size: 11px;
+    margin-right: 10px;
+  }
+}
+.ui-datepicker {
+  height: 22em !important;
+}
+/*CSS for Page builder templates*/
+#pbid-PersonalInformationAndEmergencyContacts,#pbid-CurrentProgrammeofStudyinformation,#pbid-ConfirmEnrollment{
+  input.pb-item.pb-text,
+  input.pb-item.pb-number,
+  input.pb-item.pb-datetime,
+  input.pb-item.pb-email,
+  input.pb-item.pb-tel
+  {
+    font-size: 1em;
+    font-family: "OpenSans-semibold";
+    color: darkSlateGray;
+    border: 1px solid #869fb1;
+    padding: 8px 5px;
+    width: 18.75em;
+    -moz-border-radius  : 4px;
+    -webkit-border-radius : 4px;
+    margin-left: 15px;
+    border-radius:4px;
+  }
+  input.pb-item:focus {
+    border: 1px solid #206E9F;
+    box-shadow: inset 0px 2px 2px #CBE2E8;
+    color: #4F585F;
+  }
+  input.pb-item.hasDatepicker{
+    height:inherit;
+  }
+
+  h2.pb-block-label,h2.pb-form-label{
+    color: #4F585F;
+    font-size: 1.5em;
+    font-family: "OpenSans-semibold";
+    margin: 5px 0;
+    padding:0.75em 0.5em;
+  }
+  span.pb-form{
+    color: #4F585F;
+    font-family: "OpenSans-semibold";
+  }
+  h3.pb-form-label {
+    color: #4F585F;
+    font-size: 1.5em;
+    font-family: "OpenSans-semibold";
+    margin: 5px 0;
+    padding:0.75em 0.5em;
+  }
+  div.pb-literal{
+    color: #4F585F;
+    font-size: 1.15em;
+    margin-top: 5px;
+    padding-left:0.75em;
+    margin-top: 25px;
+  }
+  label,span.pb-detail{
+    font-size: 1em;
+    line-height: 30px;
+    padding-left:0.75em;
+  }
+  label.pb-label{
+    font-size: 1.10em;
+    font-weight: bold;
+    margin-bottom: 1px;
+    padding: 0.75em 0.75em;
+    display: block;
+  }
+  label.pb-label.pb-boolean{
+    font-size: 1.25em;
+    display:inline-block;
+  }
+  select.pb-item.pb-select {
+    font-size: 1em;
+    font-family: "OpenSans-semibold";
+    color: darkSlateGray;
+    border: 1px solid #869fb1;
+    padding: 8px 5px;
+    width: 18.75em;
+    -moz-border-radius  : 4px;
+    -webkit-border-radius : 4px;
+    margin-left: 15px;
+    border-radius:4px;
+  }
+  select.pb-select:focus {
+    background-color: #FFFFFF;
+    border: 2px solid #206E9F;
+    background-color: #FFFFFF;
+    color: #000000;
+  }
+  option:empty
+  {
+    display:none;
+  }
+  .pb-radio{
+    margin-top:-20px;
+  }
+  .pb-button{
+    padding: 0.75em 0.75em;
+  }
+  input[type="checkbox"] {
+    width: 20px;
+    height: 18px;
+    line-height: normal;
+    padding:0.75em 0.75em;
+    margin-left:9px;
+  }
+  input:read-only {
+    background-color: rgb(235, 235, 228);
+  }
+  #pbid-Name-0{
+    width:600px;
+  }
 }

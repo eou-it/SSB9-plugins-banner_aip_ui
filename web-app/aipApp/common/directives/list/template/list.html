@@ -7,21 +7,26 @@
             <div class="row">
                 <div class="group-title col-sm-12 col-xs-12">
                     <div aria-label="{{itemgroup.title}} {{completedItem().length}} of {{itemgroup.items.length}} {{'aip.common.text.completed'|i18n_aip}}"
-                        id="h2-{{itemgroup.id}}" class="group-title-text col-xs-9" tabindex="-1"
-                        ng-click="openGroup(itemgroup.id)" aria-expanded="{{isOpen}}">
+                        id="h2-{{itemgroup.id}}" class="group-title-text col-sm-6 col-xs-6" tabindex="-1">
                         <h2 id="group-title-heading-{{itemgroup.id}}" class="group-title-text" ng-bind-html="itemgroup.title"></h2>
                     </div>
-                    <span class="badge" ng-if="!isOpen" aria-label="{{completedItem().length}} of {{itemgroup.items.length}} {{'aip.common.text.completed'|i18n_aip}}">
-                        <span >{{completedItem().length}}/</span> <span >{{itemgroup.items.length}}</span>
-                    </span>
-                    <i role="presentation" class="group-toggle-indicator fa col-xs-1" ng-class="{'fa-caret-up':isOpen, 'fa-caret-down':!isOpen}"></i>
+                    <div class="aip-icons">
+                        <span class="halt-icon">
+                            <i class="fa fa-ban" ng-if="itemgroup.groupHalted" title="{{'aip.user.action.item.group.haltIcon.title'|i18n_aip}}" aria-label="{{'aip.user.action.item.group.haltIcon.title'|i18n_aip}}"></i>
+                        </span>
+                        <span class="badge" ng-if="!isOpen">
+                            <span >{{completedItem().length}}/</span> <span >{{itemgroup.items.length}}</span>
+                        </span>
+                        <i role="presentation" class="group-toggle-indicator fa col-xs-1" ng-class="{'fa-caret-up':isOpen, 'fa-caret-down':!isOpen}"></i>
+                    </div>
+
                 </div>
             </div>
 
             <div class="row">
                 <div class="group-progress col-sm-12" ng-if="isOpen">
-                    <uib-progressbar  max="itemgroup.items.length" value="completedItem().length" ng-class='{"progresssuccessfull" : {{completedItem().length}} === {{itemgroup.items.length}}}'>
-                        <span id="progressbar"><span   class="progress_bar_status_left" >{{completedItem().length}} {{'aip.progressbar.stats.of'|i18n_aip }}</span> <span >{{itemgroup.items.length}}</span></span>
+                    <uib-progressbar  max="itemgroup.items.length" value="completedItem().length" ng-class='{"progresssuccessfull" : completedItem().length === itemgroup.items.length}'>
+                        <span id="progressbar"><span class="progress_bar_status_left" >{{completedItem().length}} {{'aip.progressbar.stats.of'|i18n_aip }}</span> <span >{{itemgroup.items.length}}</span></span>
                     </uib-progressbar>
                 </div>
             </div>
@@ -29,7 +34,7 @@
             <div class="row instruction">
                 <div class="group-title-icon" ng-if="isOpen">
                     <a class="group-instructions" ng-focus="focusing($event)" tabindex="0" href="javascript:void(0);"
-                          ng-click="displayGroupInfo(itemgroup.id, $event)" aria-label="{{'aip.common.text.group.instructions'|i18n_aip}}">
+                       ng-click="displayGroupInfo(itemgroup.id, $event)" ng-keypress="displayGroupInfo(itemgroup.id, $event)" aria-label="{{'aip.common.text.group.instructions'|i18n_aip}}">
                         {{'aip.common.text.group.instructions'|i18n_aip}}</a>
                 </div>
             </div>
@@ -40,32 +45,50 @@
             <div id="group-{{itemgroup.id}}" class="list-body" role="tabpanel" aria-labelledby="group-title-heading-{{itemgroup.id}}">
                 <div id="item-{{itemgroup.id}}-{{row.id}}"
                      class="row list-item" ng-repeat="row in itemgroup.items" ng-click="selectItem(itemgroup, row, $event)">
-                    <div ng-if="row.displayEndDate" class="enddate"><span class="completedDate" >{{'aip.common.text.date.end'|i18n_aip}}</span>{{row.displayEndDate}}</div>
-                    <div ng-repeat="key in itemgroup.header" class="{{getStyle(key)}}">
+                    <div ng-if="row.displayEndDate" class="enddate"><span>{{'aip.common.text.date.end'|i18n_aip}}</span>{{row.displayEndDate}}</div>
+                    <div>
+                        <div>
+                            <div class="title">
+                                <h3 ng-if="row['title']" ng-bind-html="row['title']" ></h3>
+                            </div>
+                            <div class="aip-icons">
+                                <span class="halt-icon">
+                                    <i class="fa fa-ban" ng-if="row['actionItemHalted']" title="{{'aip.user.action.item.haltIcon.title'|i18n_aip}}" aria-label="{{'aip.user.action.item.haltIcon.title'|i18n_aip}}"></i>
+                                </span>
+                                    <span class="status">
+                                    <span ng-class="{'badge pending':row['status']==='Pending',
+                                    'badge approve':row['status']==='Completed'||(row['status']!=='Completed'&&row['status']!=='Rejected'&&row['status']!=='Pending'), 'badge reject':row['status']==='Rejected'}">
+                                        <span class="data-label" ng-if="row['status']==='Rejected'">{{'aip.user.action.item.status.rejected'|i18n_aip}}</span>
+                                        <span class="data-label" ng-if="row['status']==='Completed'">{{'aip.user.action.item.status.completed'|i18n_aip}}</span>
+                                        <span class="data-label" ng-if="row['status']==='Pending'">{{'aip.user.action.item.status.pending'|i18n_aip}}</span>
+                                        <span class="data-label" ng-if="row['status'] !=='Pending' && row['status'] !== 'Completed' && row['status']!== 'Rejected'">{{row['status']}}</span>
+                                        <!--<span class="notification-icon" ng-if="row['isBlocking']"></span>-->
+                                    </span>
+                                </span>
+                            </div>
+                        </div>
 
-                        <h3 ng-if="key==='title'" ng-bind-html="row[key]"></h3>
-                           <span ng-if="key==='status'">
-                            <span ng-class="{'badge pending':key==='status'&&row[key]==='Pending',
-                            'badge approve':key==='status'&&row[key]==='Completed'||(key==='status'&&row[key]!=='Completed'&&row[key]!=='Rejected'&&row[key]!=='Pending'), 'badge reject':key==='status'&&row[key]==='Rejected'}">
-                                <span class="data-label" ng-if="row['status']==='Rejected'">{{'aip.user.action.item.status.rejected'|i18n_aip}}</span>
-                                <span class="data-label" ng-if="row['status']==='Completed'">{{'aip.user.action.item.status.completed'|i18n_aip}}</span>
-                                <span class="data-label" ng-if="row['status']==='Pending'">{{'aip.user.action.item.status.pending'|i18n_aip}}</span>
-                                <span class="data-label" ng-if="row['status'] !=='Pending' && row['status'] !== 'Completed' && row['status']!== 'Rejected'">{{row['status']}}</span>
-                                <!--<span class="notification-icon" ng-if="row['isBlocking']"></span>-->
-                            </span>
-                        </span>
+                        <div class="actionItemParams">
+                            <div ng-if="row['completedDate']!==null">
+                                <div><span class="data-label" >{{'aip.common.text.date.response.saved'|i18n_aip}}</span>{{row['completedDate']}}</div>
+                                <div><span class="data-label">{{'aip.user.action.item.last.response'|i18n_aip}}</span>{{row['currentResponse']}}</div>
+                                <div ng-if="row['currentReviewState']!==null"><span class="data-label">{{'aip.user.action.item.last.reviewState'|i18n_aip}}</span>{{row['currentReviewState']}}</div>
+                                <div ng-if="row['currentContact']!==null"><span class="data-label">{{'aip.user.action.item.last.currentContact'|i18n_aip}}</span>{{row['currentContact']}}</div>
+                                <div ng-if="row['currentComment']!==null"><span class="data-label">{{'aip.user.action.item.last.currentComment'|i18n_aip}}</span>{{row['currentComment']}}</div>
 
 
-                        <span class="completedDate" ng-if="key==='completedDate'&&row[key]!==null">
-                            <span class="data-label" >{{'aip.common.text.date.response.saved'|i18n_aip}}</span>
-                           <!-- <span class="data-label" ng-if="row['status']==='Rejected'">{{'aip.common.text.date.rejected'|i18n_aip}}</span>-->
-                            {{row[key]}}
-                           <!-- <span class="notification-icon" ng-if="row['isBlocking']"></span>-->
-                        </span>
-                        <span class="completedDate" ng-if="key==='completedDate'&&row[key]!==null"><p><span class="data-label">{{'aip.user.action.item.last.response'|i18n_aip}}</span>
-                        {{row['currentResponse']}}</p></span>
+                            </div>
+                            <div class="haltProcessList" ng-if="row['actionItemHalted']">
+                                <span class="data-label">{{'aip.user.action.item.haltProcess.list'|i18n_aip}}</span>
+                                <ul>
+                                    <li ng-repeat="haltProcessName in row['haltProcesses']">{{haltProcessName}}</li>
+                                </ul>
+                            </div>
+                        </div>
 
-                        <pre ng-show="key==='description' && row[key].length>0">  <aip-readmore class="aipReadmore" ng-if="key==='description'" ng-bind-html="row[key]"></aip-readmore> </pre>
+                        <div class="description">
+                            <pre ng-show="row['description'].length>0">  <aip-readmore class="aipReadmore" ng-bind-html="row['description']"></aip-readmore> </pre>
+                        </div>
                     </div>
 
                 </div>

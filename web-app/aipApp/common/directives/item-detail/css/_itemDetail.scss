@@ -22,7 +22,7 @@ $border-color: #A4C6E4;
       }
     }
     .detail {
-      padding-bottom: 24px;
+      padding-bottom: 36px;
       font-size:1.4em;
       pre {
         border: none;
@@ -62,9 +62,22 @@ $border-color: #A4C6E4;
     }
   }
 }
-#pbid-ActionItemContentDetail-save-button{background-color: #275c8a;color: #fff; border-color: #357ebd;}
-.pb-detail.pb-radio.pb-item { display: flex}
-.pb-detail.pb-item.pb-radiolabel { margin: 20px 30px 20px 0px}
+
+#pbid-ActionItemContentDetail-save-button{
+  background-color: #275c8a;
+  color: #fff;
+  border-color: #357ebd;
+}
+.pb-detail.pb-radio.pb-item {
+  display: block;
+}
+.pb-detail.pb-item.pb-radiolabel {
+  margin: 0px 20px 20px 0px;
+}
+
+.pb-detail.pb-item.pb-paperclip {
+  margin-bottom: -5px;
+}
 input[type="radio"] {
   -webkit-appearance: initial;
   appearance: initial;
