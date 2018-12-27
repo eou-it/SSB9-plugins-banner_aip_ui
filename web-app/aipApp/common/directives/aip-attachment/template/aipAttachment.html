@@ -6,25 +6,29 @@
                     pageheader={{"js.aip.user.action.item.attachment.modal.title"|i18n_aip}}>
         <popup-content>
             <div class="modal-body">
-                <label>
-                    {{"js.aip.user.action.item.maximum.attachments.label"|i18n_aip}}: <span
-                        id="maxAttachments">{{maxAttachments}}</span>
-                </label>
-                <form name="UploadFile" role="form">
-                    <div class="row">
-                        <input class="btn btn-primary btn-right" type="button" name="uploadButton" tabindex="2"
-                               ng-click="uploadDocument(selectedFile);selectedFile=null"
-                               value={{"js.aip.common.upload.button.label"|i18n_aip}}
-                               aria-label="{{'js.aip.common.upload.button.label'|i18n_aip}}">
-                        <input class="btn btn-default btn-right" type="button" name="resetButton"  tabindex="3" ng-click="reset();selectedFile=null"
-                               value={{"js.aip.common.reset.button.label"|i18n_aip}}
-                               aria-label="{{'js.aip.common.reset.button.label'|i18n_aip}}">
-                    </div>
-                    <div class="row">
-                        <input id="fileupload_label" type="file" ngf-select ng-model="selectedFile"
-                               name="file"/>
-                    </div>
-                </form>
+                <div ng-if="!responseLocked">
+                    <label>
+                        {{"js.aip.user.action.item.maximum.attachments.label"|i18n_aip}}: <span
+                            id="maxAttachments">{{maxAttachments}}</span>
+                    </label>
+                    <form name="UploadFile" role="form">
+                        <div class="row">
+                            <input class="btn btn-primary btn-right" type="button" name="uploadButton" tabindex="2"
+                                   ng-click="uploadDocument(selectedFile);selectedFile=null"
+                                   value={{"js.aip.common.upload.button.label"|i18n_aip}}
+                                   aria-label="{{'js.aip.common.upload.button.label'|i18n_aip}}">
+                            <input class="btn btn-default btn-right" type="button" name="resetButton" tabindex="3"
+                                   ng-click="reset();selectedFile=null"
+                                   value={{"js.aip.common.reset.button.label"|i18n_aip}}
+                                   aria-label="{{'js.aip.common.reset.button.label'|i18n_aip}}">
+                        </div>
+                        <div class="row">
+                            <input id="fileupload_label" type="file" ngf-select ng-model="selectedFile"
+                                   name="file"/>
+                        </div>
+                    </form>
+                </div>
+
 
                 <div class="attachmentsTable">
                     <xe-table-grid
@@ -53,7 +57,7 @@
                                 </button>
                                 <button class="delete-attachment-icon" ng-click="deleteDocument()"
                                         title="{{'aip.common.delete.group.jaws'|i18n_aip}}"
-                                        aria-label="{{'aip.common.delete.group.jaws'|i18n_aip}}">
+                                        aria-label="{{'aip.common.delete.group.jaws'|i18n_aip}}" ng-if="!responseLocked">
                                 </button>
                             </div>
                         </xe-cell-markup>

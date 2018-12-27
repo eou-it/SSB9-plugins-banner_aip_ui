@@ -32,7 +32,8 @@ module AIPUI {
                 showModal: "=",
                 responseId: "=",
                 userActionItemId: "=",
-                maxAttachments: "="
+                maxAttachments: "=",
+                responseLocked:"="
             };
             this.$q = $q;
             this.$filter = $filter;
