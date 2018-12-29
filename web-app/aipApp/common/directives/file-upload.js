@@ -275,7 +275,7 @@
                 evt.preventDefault();
                 evt.stopPropagation();
             }
-            var fileElem = createFileInput(evt);
+            var fileElem = createFileInput();
 
             function clickAndAssign(evt) {
                 if (evt) {
