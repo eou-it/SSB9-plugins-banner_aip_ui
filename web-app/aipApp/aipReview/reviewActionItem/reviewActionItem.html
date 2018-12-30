@@ -117,7 +117,7 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
             <div class="col-xs-12 col-sm-7 col-md-7 col-lg-7" class="actionItemElement">
                 <div class="col-xs-12 col-sm-2 col-md-1 col-lg-1 external-label-left-padding">
                     {{"js.aip.review.monitor.action.external.label"|i18n_aip}}
-                    <input type="checkbox" ng-model="vm.externalCommentInd" value="Y" checked="true" class="external-check-box-height">
+                    <input type="checkbox" ng-model="vm.externalCommentInd" value="Y" ng-checked="vm.externalCommentInd" class="external-check-box-height"  ng-change = "vm.onValueChange()">
                 </div>
                 <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8 comment-text-left-margin" >
                     <input type="text" class="form-control" ng-model="vm.reviewComments" ng-change = "vm.onValueChange()"/>

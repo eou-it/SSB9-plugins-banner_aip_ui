@@ -7,7 +7,7 @@
 ///<reference path="../../common/services/spinnerService.ts"/>
 var AIP;
 (function (AIP) {
-    var ReviewActionItemCtrl = /** @class */ (function () {
+    var ReviewActionItemCtrl = (function () {
         function ReviewActionItemCtrl($scope, $state, AIPReviewService, AIPUserService, SpinnerService, $timeout, $q, $uibModal, APP_ROOT, $sce, $filter) {
             this.$inject = ["$scope", "$state", "AIPReviewService", "AIPUserService", "SpinnerService", "$timeout", "$q", "$uibModal", "APP_ROOT", "$sce", "$filter", "datePicker"];
             /**
@@ -188,7 +188,11 @@ var AIP;
                 _this.userActionItemId = _this.actionItemDetails.id;
                 _this.responseId = _this.actionItemDetails.responseId;
                 _this.selectedReviewState = _this.actionItemDetails.reviewStateObject;
-                _this.selectedContact.name = _this.actionItemDetails.contactInfo;
+                if (_this.actionItemDetails.reviewAuditObject) {
+                    _this.selectedContact.name = _this.actionItemDetails.reviewAuditObject.contactInfo;
+                    _this.externalCommentInd = _this.actionItemDetails.reviewAuditObject.externalCommentInd;
+                    _this.reviewComments = _this.actionItemDetails.reviewAuditObject.reviewComments;
+                }
             }), this.aipReviewService.getContactInformation()
                 .then(function (response) {
                 _this.contactInformationList = response.data;
@@ -256,9 +260,7 @@ var AIP;
                 if (response.data.success) {
                     _this.displayNotification(response.data.message, "success");
                     _this.dirtyFlag = false;
-                    _this.actionItemDetailsClone.reviewStateObject.code = _this.selectedReviewState.code;
-                    _this.actionItemDetailsClone.displayEndDate = _this.actionItemDetails.displayEndDate;
-                    _this.actionItemDetailsClone.contactInfo = _this.selectedContact.name;
+                    _this.$state.reload();
                 }
                 else {
                     _this.displayNotification(response.data.message, "error");
@@ -277,7 +279,7 @@ var AIP;
             this.dirtyFlag = true;
         };
         ReviewActionItemCtrl.prototype.resetValues = function () {
-            location.reload();
+            this.$state.reload();
         };
         ReviewActionItemCtrl.prototype.reviewStateValidation = function (selectedCode) {
             var isValidReveiwCode = false;
@@ -296,16 +298,20 @@ var AIP;
             if (!isFiledsModified && this.actionItemDetailsClone.displayEndDate !== this.actionItemDetails.displayEndDate) {
                 isFiledsModified = true;
             }
-            if (!isFiledsModified && this.actionItemDetailsClone.contactInfo !== this.selectedContact.name) {
+            if (!isFiledsModified && this.actionItemDetailsClone.reviewAuditObject.contactInfo !== this.selectedContact.name) {
                 isFiledsModified = true;
             }
-            if (!isFiledsModified && this.reviewComments !== '') {
+            if (!isFiledsModified && this.actionItemDetailsClone.reviewAuditObject.reviewComments !== this.reviewComments) {
+                isFiledsModified = true;
+            }
+            if (!isFiledsModified && this.actionItemDetailsClone.reviewAuditObject.externalCommentInd !== this.externalCommentInd) {
                 isFiledsModified = true;
             }
             return isFiledsModified;
         };
         return ReviewActionItemCtrl;
-    }());
+    })();
     AIP.ReviewActionItemCtrl = ReviewActionItemCtrl;
 })(AIP || (AIP = {}));
 register("bannerAIPReview").controller("reviewActionItemCtrl", AIP.ReviewActionItemCtrl);
+//# sourceMappingURL=reviewActionItemCtrl.js.map

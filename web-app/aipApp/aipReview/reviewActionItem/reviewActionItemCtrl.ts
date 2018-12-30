@@ -168,7 +168,12 @@ module AIP {
                         this.userActionItemId = this.actionItemDetails.id;
                         this.responseId = this.actionItemDetails.responseId;
                         this.selectedReviewState = this.actionItemDetails.reviewStateObject;
-                        this.selectedContact.name = this.actionItemDetails.contactInfo;
+                        if(this.actionItemDetails.reviewAuditObject){
+                            this.selectedContact.name = this.actionItemDetails.reviewAuditObject.contactInfo;
+                            this.externalCommentInd = this.actionItemDetails.reviewAuditObject.externalCommentInd;
+                            this.reviewComments = this.actionItemDetails.reviewAuditObject.reviewComments;
+                        }
+
 
                     }),
                 this.aipReviewService.getContactInformation()
@@ -312,9 +317,7 @@ module AIP {
                     if (response.data.success) {
                         this.displayNotification(response.data.message, "success");
                         this.dirtyFlag = false;
-                        this.actionItemDetailsClone.reviewStateObject.code = this.selectedReviewState.code;
-                        this.actionItemDetailsClone.displayEndDate = this.actionItemDetails.displayEndDate;
-                        this.actionItemDetailsClone.contactInfo = this.selectedContact.name;
+                        this.$state.reload();
                     } else {
                         this.displayNotification(response.data.message, "error");
                     }
@@ -335,7 +338,8 @@ module AIP {
         }
 
         resetValues(){
-            location.reload();
+            this.$state.reload();
+
         }
 
         reviewStateValidation(selectedCode){
@@ -357,10 +361,13 @@ module AIP {
                 isFiledsModified = true;
             }
 
-            if(!isFiledsModified && this.actionItemDetailsClone.contactInfo !== this.selectedContact.name){
+            if(!isFiledsModified && this.actionItemDetailsClone.reviewAuditObject.contactInfo !== this.selectedContact.name){
                 isFiledsModified = true;
             }
-            if(!isFiledsModified  && this.reviewComments !== ''){
+            if(!isFiledsModified  && this.actionItemDetailsClone.reviewAuditObject.reviewComments !== this.reviewComments){
+                isFiledsModified = true;
+            }
+            if(!isFiledsModified  && this.actionItemDetailsClone.reviewAuditObject.externalCommentInd !== this.externalCommentInd){
                 isFiledsModified = true;
             }
             return  isFiledsModified ;
