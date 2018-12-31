@@ -76,14 +76,12 @@ module AIP {
         init() {
             this.searchEnabled=true;
             this.gridEnabled = false;
-            var allPromises = [];
-            allPromises.push(
-                this.aipReviewService.getActionItemList()
-                    .then((response) => {
-                        this.actionItemNamesList = response.data;
-                    })
-            );
-
+            this.spinnerService.showSpinner(true);
+            this.aipReviewService.getActionItemList()
+                .then((response) => {
+                    this.spinnerService.showSpinner(false);
+                    this.actionItemNamesList = response.data;
+                });
             this.gridData = {};
             this.draggableColumnNames = [];
 

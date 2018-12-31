@@ -159,6 +159,7 @@ module AIP {
         }
 
         init() {
+            this.spinnerService.showSpinner(true);
             var allPromises = [];
             allPromises.push(
                 this.aipReviewService.getActionItem(this.$state.params.userActionItemID)
@@ -173,8 +174,6 @@ module AIP {
                             this.externalCommentInd = this.actionItemDetails.reviewAuditObject.externalCommentInd;
                             this.reviewComments = this.actionItemDetails.reviewAuditObject.reviewComments;
                         }
-
-
                     }),
                 this.aipReviewService.getContactInformation()
                     .then((response) => {
@@ -185,9 +184,16 @@ module AIP {
                         	"value": this.selectNone
                         };
                         this.contactInformationList.unshift(selectObject);
+                    }),
+                this.aipReviewService.getReviewStatusList()
+                    .then((response) => {
+                        this.actionItemReviewStatusList = response;
                     })
             );
-            this.getReviewStatusList();
+            this.$q.all(allPromises).then(() => {
+                this.spinnerService.showSpinner(false);
+            });
+
         }
 
         /**
@@ -268,14 +274,6 @@ module AIP {
             this.responseId = this.actionItemDetails.responseId;
         }
 
-
-        getReviewStatusList() {
-            this.aipReviewService.getReviewStatusList()
-                .then((response) => {
-                    this.actionItemReviewStatusList = response;
-                })
-        }
-
         reset(vm) {
             var notification = new Notification({
                 message: this.$filter("i18n_aip")("js.aip.review.monitor.reset.prompt.message"),
@@ -296,7 +294,7 @@ module AIP {
                 this.displayNotification(this.$filter("i18n_aip")("aip.review.action.update.review.state.error"), "error");
                 return;
             }
-            if(!this.isFiledsModified()){
+            if(!this.isAnyFieldModified()){
                 this.displayNotification(this.$filter("i18n_aip")("aip.review.action.update.review.fields.validation.error"), "error");
                 return;
             }
@@ -343,34 +341,34 @@ module AIP {
         }
 
         reviewStateValidation(selectedCode){
-            var isValidReveiwCode = false;
+            var isValidReviewCode = false;
             this.actionItemReviewStatusList.forEach(function(element) {
                 if(element.code === selectedCode ){
-                    isValidReveiwCode = true;
+                    isValidReviewCode = true;
                 }
             });
-            return isValidReveiwCode;
+            return isValidReviewCode;
         }
 
-        isFiledsModified(){
-            var isFiledsModified = false;
+        isAnyFieldModified(){
+            var isAnyFieldModified = false;
             if(this.selectedReviewState.code !== this.actionItemDetailsClone.reviewStateObject.code){
-                isFiledsModified = true;
+                isAnyFieldModified = true;
             }
-            if(!isFiledsModified && this.actionItemDetailsClone.displayEndDate !== this.actionItemDetails.displayEndDate){
-                isFiledsModified = true;
+            if(!isAnyFieldModified && this.actionItemDetailsClone.displayEndDate !== this.actionItemDetails.displayEndDate){
+                isAnyFieldModified = true;
             }
 
-            if(!isFiledsModified && this.actionItemDetailsClone.reviewAuditObject.contactInfo !== this.selectedContact.name){
-                isFiledsModified = true;
+            if(!isAnyFieldModified && this.actionItemDetailsClone.reviewAuditObject.contactInfo !== this.selectedContact.name){
+                isAnyFieldModified = true;
             }
-            if(!isFiledsModified  && this.actionItemDetailsClone.reviewAuditObject.reviewComments !== this.reviewComments){
-                isFiledsModified = true;
+            if(!isAnyFieldModified  && this.actionItemDetailsClone.reviewAuditObject.reviewComments !== this.reviewComments){
+                isAnyFieldModified = true;
             }
-            if(!isFiledsModified  && this.actionItemDetailsClone.reviewAuditObject.externalCommentInd !== this.externalCommentInd){
-                isFiledsModified = true;
+            if(!isAnyFieldModified  && this.actionItemDetailsClone.reviewAuditObject.externalCommentInd !== this.externalCommentInd){
+                isAnyFieldModified = true;
             }
-            return  isFiledsModified ;
+            return  isAnyFieldModified ;
         }
 
     }

@@ -6,7 +6,7 @@
 ///<reference path="../../common/services/userService.ts"/>
 var AIP;
 (function (AIP) {
-    var MonitorActionItemCtrl = (function () {
+    var MonitorActionItemCtrl = /** @class */ (function () {
         function MonitorActionItemCtrl($scope, $state, AIPReviewService, AIPUserService, SpinnerService, $timeout, $q, $uibModal, APP_ROOT, $sce, $filter, PAGINATIONCONFIG) {
             this.$inject = ["$scope", "$state", "AIPReviewService", "AIPUserService", "SpinnerService", "$timeout", "$q", "$uibModal", "APP_ROOT", "$sce", "$filter", "PAGINATIONCONFIG"];
             this.fetchData = function (query) {
@@ -53,11 +53,12 @@ var AIP;
             var _this = this;
             this.searchEnabled = true;
             this.gridEnabled = false;
-            var allPromises = [];
-            allPromises.push(this.aipReviewService.getActionItemList()
+            this.spinnerService.showSpinner(true);
+            this.aipReviewService.getActionItemList()
                 .then(function (response) {
+                _this.spinnerService.showSpinner(false);
                 _this.actionItemNamesList = response.data;
-            }));
+            });
             this.gridData = {};
             this.draggableColumnNames = [];
             this.mobileConfig = {
@@ -203,7 +204,7 @@ var AIP;
                     options: {
                         sortable: true,
                         ascending: true,
-                        visible: true
+                        visible: true,
                     }
                 }, {
                     name: "reviewStateCode",
@@ -262,4 +263,3 @@ var AIP;
     AIP.MonitorActionItemCtrl = MonitorActionItemCtrl;
 })(AIP || (AIP = {}));
 register("bannerAIPReview").controller("monitorActionItemCtrl", AIP.MonitorActionItemCtrl);
-//# sourceMappingURL=monitorActionItemCtrl.js.map
