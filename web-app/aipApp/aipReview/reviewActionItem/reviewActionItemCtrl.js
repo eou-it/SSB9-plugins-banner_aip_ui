@@ -180,6 +180,7 @@ var AIP;
         }
         ReviewActionItemCtrl.prototype.init = function () {
             var _this = this;
+            this.spinnerService.showSpinner(true);
             var allPromises = [];
             allPromises.push(this.aipReviewService.getActionItem(this.$state.params.userActionItemID)
                 .then(function (response) {
@@ -188,7 +189,11 @@ var AIP;
                 _this.userActionItemId = _this.actionItemDetails.id;
                 _this.responseId = _this.actionItemDetails.responseId;
                 _this.selectedReviewState = _this.actionItemDetails.reviewStateObject;
-                _this.selectedContact.name = _this.actionItemDetails.contactInfo;
+                if (_this.actionItemDetails.reviewAuditObject) {
+                    _this.selectedContact.name = _this.actionItemDetails.reviewAuditObject.contactInfo;
+                    _this.externalCommentInd = _this.actionItemDetails.reviewAuditObject.externalCommentInd;
+                    _this.reviewComments = _this.actionItemDetails.reviewAuditObject.reviewComments;
+                }
             }), this.aipReviewService.getContactInformation()
                 .then(function (response) {
                 _this.contactInformationList = response.data;
@@ -198,8 +203,13 @@ var AIP;
                     "value": _this.selectNone
                 };
                 _this.contactInformationList.unshift(selectObject);
+            }), this.aipReviewService.getReviewStatusList()
+                .then(function (response) {
+                _this.actionItemReviewStatusList = response;
             }));
-            this.getReviewStatusList();
+            this.$q.all(allPromises).then(function () {
+                _this.spinnerService.showSpinner(false);
+            });
         };
         /**
          * Show of grid in the model window with list of attachments.
@@ -208,13 +218,6 @@ var AIP;
             this.showModal = true;
             this.userActionItemId = this.actionItemDetails.id;
             this.responseId = this.actionItemDetails.responseId;
-        };
-        ReviewActionItemCtrl.prototype.getReviewStatusList = function () {
-            var _this = this;
-            this.aipReviewService.getReviewStatusList()
-                .then(function (response) {
-                _this.actionItemReviewStatusList = response;
-            });
         };
         ReviewActionItemCtrl.prototype.reset = function (vm) {
             var notification = new Notification({
@@ -236,7 +239,7 @@ var AIP;
                 this.displayNotification(this.$filter("i18n_aip")("aip.review.action.update.review.state.error"), "error");
                 return;
             }
-            if (!this.isFiledsModified()) {
+            if (!this.isAnyFieldModified()) {
                 this.displayNotification(this.$filter("i18n_aip")("aip.review.action.update.review.fields.validation.error"), "error");
                 return;
             }
@@ -256,9 +259,7 @@ var AIP;
                 if (response.data.success) {
                     _this.displayNotification(response.data.message, "success");
                     _this.dirtyFlag = false;
-                    _this.actionItemDetailsClone.reviewStateObject.code = _this.selectedReviewState.code;
-                    _this.actionItemDetailsClone.displayEndDate = _this.actionItemDetails.displayEndDate;
-                    _this.actionItemDetailsClone.contactInfo = _this.selectedContact.name;
+                    _this.$state.reload();
                 }
                 else {
                     _this.displayNotification(response.data.message, "error");
@@ -277,32 +278,35 @@ var AIP;
             this.dirtyFlag = true;
         };
         ReviewActionItemCtrl.prototype.resetValues = function () {
-            location.reload();
+            this.$state.reload();
         };
         ReviewActionItemCtrl.prototype.reviewStateValidation = function (selectedCode) {
-            var isValidReveiwCode = false;
+            var isValidReviewCode = false;
             this.actionItemReviewStatusList.forEach(function (element) {
                 if (element.code === selectedCode) {
-                    isValidReveiwCode = true;
+                    isValidReviewCode = true;
                 }
             });
-            return isValidReveiwCode;
+            return isValidReviewCode;
         };
-        ReviewActionItemCtrl.prototype.isFiledsModified = function () {
-            var isFiledsModified = false;
+        ReviewActionItemCtrl.prototype.isAnyFieldModified = function () {
+            var isAnyFieldModified = false;
             if (this.selectedReviewState.code !== this.actionItemDetailsClone.reviewStateObject.code) {
-                isFiledsModified = true;
+                isAnyFieldModified = true;
             }
-            if (!isFiledsModified && this.actionItemDetailsClone.displayEndDate !== this.actionItemDetails.displayEndDate) {
-                isFiledsModified = true;
+            if (!isAnyFieldModified && this.actionItemDetailsClone.displayEndDate !== this.actionItemDetails.displayEndDate) {
+                isAnyFieldModified = true;
             }
-            if (!isFiledsModified && this.actionItemDetailsClone.contactInfo !== this.selectedContact.name) {
-                isFiledsModified = true;
+            if (!isAnyFieldModified && this.actionItemDetailsClone.reviewAuditObject.contactInfo !== this.selectedContact.name) {
+                isAnyFieldModified = true;
             }
-            if (!isFiledsModified && this.reviewComments !== '') {
-                isFiledsModified = true;
+            if (!isAnyFieldModified && this.actionItemDetailsClone.reviewAuditObject.reviewComments !== this.reviewComments) {
+                isAnyFieldModified = true;
             }
-            return isFiledsModified;
+            if (!isAnyFieldModified && this.actionItemDetailsClone.reviewAuditObject.externalCommentInd !== this.externalCommentInd) {
+                isAnyFieldModified = true;
+            }
+            return isAnyFieldModified;
         };
         return ReviewActionItemCtrl;
     }());
