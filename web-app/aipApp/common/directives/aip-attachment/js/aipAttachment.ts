@@ -223,28 +223,45 @@ module AIPUI {
                             } else {
                                 var base64Encoded = response.data.documentContent
                                 var fileNameSplit = data.documentName.split('.')
-                                var fileExtension = fileNameSplit[fileNameSplit.length - 1]
+                                var fileExtension = fileNameSplit[fileNameSplit.length - 1];
+
+                             if (fileExtension ==='pdf'|| fileExtension ==='jpg' || fileExtension ==='jpeg' || fileExtension ==='png' ||fileExtension ==='txt') {
+                                 if (navigator.userAgent.indexOf("Chrome") != -1) {
+                                     var x = window.open('about:whatever');
+                                 }
+                                 else if (navigator.userAgent.indexOf("Firefox") != -1 || ((navigator.userAgent.indexOf("MSIE") != -1) || (!!document.documentMode == true))) {
+                                     var x = window.open();
+                                 }
+                                 var iframe = x.document.createElement('iframe')
+                                 iframe.width = '100%';
+                                 iframe.height = '100%';
+                             }
 
                                 switch (fileExtension) {
                                     case "pdf":
                                         var pdfWindow = "data:application/pdf;base64," + base64Encoded;
-                                        window.open(pdfWindow);
+                                        iframe.src=pdfWindow;
+                                        x.document.body.appendChild(iframe);
                                         break;
                                     case "jpg":
                                         var jpgWindow = "data:image/jpeg;base64," + base64Encoded;
-                                        window.open(jpgWindow);
+                                        iframe.src=jpgWindow;
+                                        x.document.body.appendChild(iframe);
                                         break;
                                     case "jpeg":
-                                        var jpgWindow = "data:image/jpeg;base64," + base64Encoded;
-                                        window.open(jpgWindow);
+                                        var jpegWindow = "data:image/jpeg;base64," + base64Encoded;
+                                        iframe.src=jpegWindow;
+                                        x.document.body.appendChild(iframe);
                                         break;
                                     case "png":
                                         var pngWindow = "data:image/png;base64," + base64Encoded;
-                                        window.open(pngWindow);
+                                        iframe.src=pngWindow;
+                                        x.document.body.appendChild(iframe);
                                         break;
                                     case "txt":
                                         var txtWindow = "data:text/plain;base64," + base64Encoded;
-                                        window.open(txtWindow);
+                                        iframe.src=txtWindow;
+                                        x.document.body.appendChild(iframe);
                                         break;
                                     default:
                                         $scope.dataURI = "data:application/octet-stream;base64," + base64Encoded;
