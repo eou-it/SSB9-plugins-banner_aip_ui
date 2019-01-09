@@ -170,6 +170,11 @@ module AIPUI {
                     return false;
                 }
 
+                if(selectedFile.name.size()>60){
+                    errorNotification($filter("i18n_aip")("js.aip.uploadDocument.file.size.error"));
+                    return false;
+                }
+
                 if (!($scope.gridData.row.length < $scope.maxAttachments)) {
                     errorNotification($filter("i18n_aip")("aip.uploadDocument.maximum.attachment.error"));
                     resetSeletedFileValue();
@@ -295,18 +300,20 @@ module AIPUI {
 
             $scope.deleteDocument = function () {
                 var data = this.row;
+                angular.element($('#attachmentsDiv')).css("pointer-events", "none");
                 var n = new Notification({
                     message: $filter("i18n_aip")("js.aip.attachments.delete.prompt.message"),
                     type: "warning"
                 });
                 n.addPromptAction($filter("i18n_aip")("aip.common.text.no"), function () {
                     notifications.remove(n);
-
+                    angular.element($('#attachmentsDiv')).css("pointer-events", "auto");
                 });
                 n.addPromptAction($filter("i18n_aip")("aip.common.text.yes"), function () {
                     SpinnerService.showSpinner(true);
                     deleteFile(data.id);
                     notifications.remove(n);
+                    angular.element($('#attachmentsDiv')).css("pointer-events", "auto");
                 });
                 notifications.addNotification(n);
             };
