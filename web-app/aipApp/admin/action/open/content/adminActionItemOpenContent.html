@@ -1,5 +1,5 @@
 <!--*******************************************************************************
-Copyright 2018 Ellucian Company L.P. and its affiliates.
+Copyright 2019 Ellucian Company L.P. and its affiliates.
 *******************************************************************************-->
 <div id="openActionItemContent">
 
@@ -36,7 +36,7 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
             <div class="row">
                 <div class="col-sm-4">
                     <select id="actionItemTemplate" class="actionItemSelect form-control" xe-data="" required
-                            aria-required="true" ng-model="vm.selectedTemplate" ng-change="vm.getRules(); vm.dataChanged()">
+                            aria-required="true" ng-model="vm.selectedTemplate" ng-change="vm.setDescription(); vm.getRules(); vm.dataChanged()">
                         <option selected="selected" disabled selected value="">
                             {{"aip.admin.action.open.tab.content.templatePlaceholder"|i18n_aip}}
                         </option>
@@ -50,6 +50,16 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
 
         <!-- edit view -->
         <div class="contentContainer" ng-if="!vm.isNoTemplateSelected()">
+            <div class="row">
+                <div class="row input-actionItem">
+                        <label for="actionItemTemplateDesc" class="templateSelect" id="actionItemTemplateDescSelector">
+                            {{'aip.admin.action.open.tab.content.templateDescription'|i18n_aip}}
+                        </label>
+                    </div>
+                <div class="col-sm-8">
+                    <pre><code id="actionItemTemplateDesc"ng-bind-html="vm.selectedTempDescription"></code></pre>
+                </div>
+            </div>
             <div class="row">
                 <label for="templateContent" class="titleValue" id="template-content">{{'aip.common.text.content'|i18n_aip}}</label>
             </div>
@@ -112,6 +122,14 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
                     <div class="templateText">
                         {{vm.actionItem.actionItemTemplateName||'aip.admin.action.open.tab.content.templateContent'|i18n_aip}}
                         ({{vm.templateSource}})
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-sm-8">
+                    <h2>{{'aip.admin.action.open.tab.content.templateDescription'|i18n_aip}}</h2>
+                    <div class="templateText">
+                        <pre><code ng-bind-html="vm.selectedTempDescription"></code></pre>
                     </div>
                 </div>
             </div>

@@ -1,5 +1,5 @@
 /*******************************************************************************
- Copyright 2018 Ellucian Company L.P. and its affiliates.
+ Copyright 2019 Ellucian Company L.P. and its affiliates.
  ********************************************************************************/
 ///<reference path="../../../../typings/tsd.d.ts"/>
 ///<reference path="../../../common/services/admin/adminActionService.ts"/>
@@ -49,6 +49,7 @@ var AIP;
             this.allActionItems = [];
             this.originalAssign = [];
             this.selectedTemplate;
+            this.selectedTempDescription;
             this.actionFolder;
             this.templateSource;
             this.saving = false;
@@ -79,7 +80,6 @@ var AIP;
             promises.push(this.getStatus());
             promises.push(this.getRules());
             this.$q.all(promises).then(function () {
-                //TODO:: turn off the spinner
                 _this.spinnerService.showSpinner(false);
                 _this.contentChanged = false;
                 _this.specialCharacterTranslation();
@@ -151,6 +151,7 @@ var AIP;
                 _this.actionItem = response.data.actionItem;
                 _this.actionItem.actionItemContent = _this.trustAsHtml(response.data.actionItem.actionItemContent);
                 _this.selectedTemplate = _this.actionItem.actionItemTemplateId;
+                _this.selectedTempDescription = (_this.actionItem.actionItemTemplateDesc) ? _this.actionItem.actionItemTemplateDesc : _this.$filter("i18n_aip")("aip.admin.action.open.tab.content.templateDescription.not.available");
                 _this.actionItemPostedStatus = _this.actionItem.actionItemPostedStatus;
                 console.log(_this.actionItemPostedStatus);
                 if (_this.templateSelect) {
@@ -173,7 +174,6 @@ var AIP;
                 _this.getTemplateSource();
                 _this.contentChanged = false;
                 if (_this.templateSelect) {
-                    _this.selectTemplate();
                     _this.selectTemplate();
                 }
             }, function (error) {
@@ -263,6 +263,15 @@ var AIP;
                 }
             }
         };
+        AdminActionItemOpenPageCtrl.prototype.stripTags = function (str) {
+            return str.replace(/<\w+(\s+("[^"]*"|'[^']*'|[^>])+)?>|<\/\w+>/gi, '');
+        };
+        AdminActionItemOpenPageCtrl.prototype.escapeHTML = function (str) {
+            return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+        };
+        AdminActionItemOpenPageCtrl.prototype.unescapeHTML = function (str) {
+            return this.stripTags(str).replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&amp;/g, '&');
+        };
         AdminActionItemOpenPageCtrl.prototype.specialCharacterTranslation = function () {
             for (var j = 0; j < this.rules.length; j++) {
                 if (this.rules[j].statusName.indexOf('&amp;') > -1) {
@@ -322,6 +331,13 @@ var AIP;
                 //action item selected temlate
             }, 500);
         };
+        AdminActionItemOpenPageCtrl.prototype.setDescription = function () {
+            var _this = this;
+            var selectedTemplate = this.templates.filter(function (item) {
+                return item.id === parseInt(_this.selectedTemplate);
+            })[0];
+            this.selectedTempDescription = (selectedTemplate.description) ? this.unescapeHTML(selectedTemplate.description) : this.$filter("i18n_aip")("aip.admin.action.open.tab.content.templateDescription.not.available");
+        };
         AdminActionItemOpenPageCtrl.prototype.cancelContentEdit = function (option) {
             var _this = this;
             var deferred = this.$q.defer();
@@ -339,7 +355,6 @@ var AIP;
                         promises.push(_this.getStatus());
                         promises.push(_this.getRules());
                         _this.$q.all(promises).then(function () {
-                            //TODO:: turn off the spinner
                             _this.spinnerService.showSpinner(false);
                             _this.contentChanged = false;
                         });
