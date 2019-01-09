@@ -228,9 +228,11 @@ module AIPUI {
                                 var iframe;
 
                              if (fileExtension ==='pdf'|| fileExtension ==='jpg' || fileExtension ==='jpeg' || fileExtension ==='png' ||fileExtension ==='txt') {
-                                  windowRefObject = window.open();
                                  if (navigator.userAgent.indexOf("Chrome") != -1) {
                                       windowRefObject = window.open('about:whatever');
+                                 }
+                                 else{
+                                     windowRefObject = window.open();
                                  }
                                  iframe = windowRefObject.document.createElement('iframe')
                                  iframe.width = '100%';
