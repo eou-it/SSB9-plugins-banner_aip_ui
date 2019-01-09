@@ -223,28 +223,47 @@ module AIPUI {
                             } else {
                                 var base64Encoded = response.data.documentContent
                                 var fileNameSplit = data.documentName.split('.')
-                                var fileExtension = fileNameSplit[fileNameSplit.length - 1]
+                                var fileExtension = fileNameSplit[fileNameSplit.length - 1].toLowerCase();
+                                var windowRefObject;
+                                var iframe;
+
+                             if (fileExtension ==='pdf'|| fileExtension ==='jpg' || fileExtension ==='jpeg' || fileExtension ==='png' ||fileExtension ==='txt') {
+                                 if (navigator.userAgent.indexOf("Chrome") != -1) {
+                                      windowRefObject = window.open('about:whatever');
+                                 }
+                                 else{
+                                     windowRefObject = window.open();
+                                 }
+                                 iframe = windowRefObject.document.createElement('iframe')
+                                 iframe.width = '100%';
+                                 iframe.height = '100%';
+                             }
 
                                 switch (fileExtension) {
                                     case "pdf":
                                         var pdfWindow = "data:application/pdf;base64," + base64Encoded;
-                                        window.open(pdfWindow);
+                                        iframe.src=pdfWindow;
+                                        windowRefObject.document.body.appendChild(iframe);
                                         break;
                                     case "jpg":
                                         var jpgWindow = "data:image/jpeg;base64," + base64Encoded;
-                                        window.open(jpgWindow);
+                                        iframe.src=jpgWindow;
+                                        windowRefObject.document.body.appendChild(iframe);
                                         break;
                                     case "jpeg":
-                                        var jpgWindow = "data:image/jpeg;base64," + base64Encoded;
-                                        window.open(jpgWindow);
+                                        var jpegWindow = "data:image/jpeg;base64," + base64Encoded;
+                                        iframe.src=jpegWindow;
+                                        windowRefObject.document.body.appendChild(iframe);
                                         break;
                                     case "png":
                                         var pngWindow = "data:image/png;base64," + base64Encoded;
-                                        window.open(pngWindow);
+                                        iframe.src=pngWindow;
+                                        windowRefObject.document.body.appendChild(iframe);
                                         break;
                                     case "txt":
                                         var txtWindow = "data:text/plain;base64," + base64Encoded;
-                                        window.open(txtWindow);
+                                        iframe.src=txtWindow;
+                                        windowRefObject.document.body.appendChild(iframe);
                                         break;
                                     default:
                                         $scope.dataURI = "data:application/octet-stream;base64," + base64Encoded;
@@ -278,18 +297,20 @@ module AIPUI {
 
             $scope.deleteDocument = function () {
                 var data = this.row;
+                angular.element($('#attachmentsDiv')).css("pointer-events", "none");
                 var n = new Notification({
                     message: $filter("i18n_aip")("js.aip.attachments.delete.prompt.message"),
                     type: "warning"
                 });
                 n.addPromptAction($filter("i18n_aip")("aip.common.text.no"), function () {
                     notifications.remove(n);
-
+                    angular.element($('#attachmentsDiv')).css("pointer-events", "auto");
                 });
                 n.addPromptAction($filter("i18n_aip")("aip.common.text.yes"), function () {
                     SpinnerService.showSpinner(true);
                     deleteFile(data.id);
                     notifications.remove(n);
+                    angular.element($('#attachmentsDiv')).css("pointer-events", "auto");
                 });
                 notifications.addNotification(n);
             };
