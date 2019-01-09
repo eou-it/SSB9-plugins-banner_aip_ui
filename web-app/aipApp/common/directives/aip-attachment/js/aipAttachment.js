@@ -141,10 +141,6 @@ var AIPUI;
                     errorNotification($filter("i18n_aip")("js.aip.common.file.not.selected"));
                     return false;
                 }
-                if (selectedFile.name.size() > 60) {
-                    errorNotification($filter("i18n_aip")("js.aip.uploadDocument.file.size.error"));
-                    return false;
-                }
                 if (!($scope.gridData.row.length < $scope.maxAttachments)) {
                     errorNotification($filter("i18n_aip")("aip.uploadDocument.maximum.attachment.error"));
                     resetSeletedFileValue();
