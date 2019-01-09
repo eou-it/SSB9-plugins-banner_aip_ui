@@ -192,15 +192,15 @@ var AIPUI;
                         else {
                             var base64Encoded = response.data.documentContent;
                             var fileNameSplit = data.documentName.split('.');
-                            var fileExtension = fileNameSplit[fileNameSplit.length - 1];
+                            var fileExtension = fileNameSplit[fileNameSplit.length - 1].toLowerCase();
+                            var windowRefObject;
+                            var iframe;
                             if (fileExtension === 'pdf' || fileExtension === 'jpg' || fileExtension === 'jpeg' || fileExtension === 'png' || fileExtension === 'txt') {
+                                windowRefObject = window.open();
                                 if (navigator.userAgent.indexOf("Chrome") != -1) {
-                                    var x = window.open('about:whatever');
+                                    windowRefObject = window.open('about:whatever');
                                 }
-                                else if (navigator.userAgent.indexOf("Firefox") != -1 || ((navigator.userAgent.indexOf("MSIE") != -1) || (!!document.documentMode == true))) {
-                                    var x = window.open();
-                                }
-                                var iframe = x.document.createElement('iframe');
+                                iframe = windowRefObject.document.createElement('iframe');
                                 iframe.width = '100%';
                                 iframe.height = '100%';
                             }
@@ -208,27 +208,27 @@ var AIPUI;
                                 case "pdf":
                                     var pdfWindow = "data:application/pdf;base64," + base64Encoded;
                                     iframe.src = pdfWindow;
-                                    x.document.body.appendChild(iframe);
+                                    windowRefObject.document.body.appendChild(iframe);
                                     break;
                                 case "jpg":
                                     var jpgWindow = "data:image/jpeg;base64," + base64Encoded;
                                     iframe.src = jpgWindow;
-                                    x.document.body.appendChild(iframe);
+                                    windowRefObject.document.body.appendChild(iframe);
                                     break;
                                 case "jpeg":
                                     var jpegWindow = "data:image/jpeg;base64," + base64Encoded;
                                     iframe.src = jpegWindow;
-                                    x.document.body.appendChild(iframe);
+                                    windowRefObject.document.body.appendChild(iframe);
                                     break;
                                 case "png":
                                     var pngWindow = "data:image/png;base64," + base64Encoded;
                                     iframe.src = pngWindow;
-                                    x.document.body.appendChild(iframe);
+                                    windowRefObject.document.body.appendChild(iframe);
                                     break;
                                 case "txt":
                                     var txtWindow = "data:text/plain;base64," + base64Encoded;
                                     iframe.src = txtWindow;
-                                    x.document.body.appendChild(iframe);
+                                    windowRefObject.document.body.appendChild(iframe);
                                     break;
                                 default:
                                     $scope.dataURI = "data:application/octet-stream;base64," + base64Encoded;
