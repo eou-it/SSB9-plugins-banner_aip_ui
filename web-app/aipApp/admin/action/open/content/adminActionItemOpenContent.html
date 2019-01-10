@@ -34,16 +34,15 @@ Copyright 2019 Ellucian Company L.P. and its affiliates.
                     {{'aip.character.astrick'|i18n_aip}}</label>
             </div>
             <div class="row">
-                <div class="col-sm-4">
-                    <select id="actionItemTemplate" class="actionItemSelect form-control" xe-data="" required
-                            aria-required="true" ng-model="vm.selectedTemplate" ng-change="vm.setDescription(); vm.getRules(); vm.dataChanged()">
-                        <option selected="selected" disabled selected value="">
-                            {{"aip.admin.action.open.tab.content.templatePlaceholder"|i18n_aip}}
-                        </option>
-                        <option ng-repeat="item in vm.templates" value="{{item.id}}">{{item.title}}
-                            ({{vm.templateSource}})
-                        </option>
-                    </select>
+                <div class="col-sm-8 actionItemSelectTemplate">
+                    <xe-ui-select id="actionItemTemplate" ng-model="vm.selectedTemplateObj" theme="select2" ng-change="vm.setDescription(); vm.getRules(); vm.dataChanged()">
+                        <xe-ui-select-match  placeholder="{{'aip.admin.action.open.tab.content.templatePlaceholder'|i18n_aip}}">
+                            {{vm.selectedTemplateObj.title}} ({{vm.getTemplateSource(vm.selectedTemplateObj.sourceInd)}})
+                        </xe-ui-select-match>
+                        <xe-ui-select-choices  repeat="item in vm.templates | propsFilter: {title: $select.search}">
+                            <div>{{item.title}} ({{vm.getTemplateSource(item.sourceInd)}})</div>
+                        </xe-ui-select-choices>
+                    </xe-ui-select>
                 </div>
             </div>
         </div>
@@ -51,17 +50,15 @@ Copyright 2019 Ellucian Company L.P. and its affiliates.
         <!-- edit view -->
         <div class="contentContainer" ng-if="!vm.isNoTemplateSelected()">
             <div class="row">
-                <div class="row input-actionItem">
-                        <label for="actionItemTemplateDesc" class="templateSelect" id="actionItemTemplateDescSelector">
-                            {{'aip.admin.action.open.tab.content.templateDescription'|i18n_aip}}
-                        </label>
-                    </div>
-                <div class="col-sm-8">
-                    <pre><code id="actionItemTemplateDesc"ng-bind-html="vm.selectedTempDescription"></code></pre>
-                </div>
+                <label class="templateSelect" for="actionItemTemplateDesc" id="actionItemTemplateDescSelector">
+                    {{'aip.admin.action.open.tab.content.templateDescription'|i18n_aip}}
+                </label>
             </div>
             <div class="row">
-                <label for="templateContent" class="titleValue" id="template-content">{{'aip.common.text.content'|i18n_aip}}</label>
+                <pre id="actionItemTemplateDesc" class="templateDescription">{{vm.selectedTempDescription}}</pre>
+            </div>
+            <div class="row">
+                <label for="templateContent" id="template-content">{{'aip.common.text.content'|i18n_aip}}</label>
             </div>
             <div class="row">
                 <textarea id="templateContent" ng-required="true" aria-required="true" name="templateContent"
@@ -126,10 +123,10 @@ Copyright 2019 Ellucian Company L.P. and its affiliates.
                 </div>
             </div>
             <div class="row">
-                <div class="col-xs-12 col-sm-8">
+                <div class="col-xs-12 col-sm-12">
                     <h2>{{'aip.admin.action.open.tab.content.templateDescription'|i18n_aip}}</h2>
-                    <div class="templateText">
-                        <pre><code ng-bind-html="vm.selectedTempDescription"></code></pre>
+                    <div>
+                        <pre class="templateDescription">{{vm.selectedTempDescription}}</pre>
                     </div>
                 </div>
             </div>

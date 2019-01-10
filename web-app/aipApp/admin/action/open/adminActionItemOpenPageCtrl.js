@@ -49,6 +49,7 @@ var AIP;
             this.allActionItems = [];
             this.originalAssign = [];
             this.selectedTemplate;
+            this.selectedTemplateObj;
             this.selectedTempDescription;
             this.actionFolder;
             this.templateSource;
@@ -151,7 +152,7 @@ var AIP;
                 _this.actionItem = response.data.actionItem;
                 _this.actionItem.actionItemContent = _this.trustAsHtml(response.data.actionItem.actionItemContent);
                 _this.selectedTemplate = _this.actionItem.actionItemTemplateId;
-                _this.selectedTempDescription = (_this.actionItem.actionItemTemplateDesc) ? _this.actionItem.actionItemTemplateDesc : _this.$filter("i18n_aip")("aip.admin.action.open.tab.content.templateDescription.not.available");
+                _this.selectedTempDescription = (_this.actionItem.actionItemTemplateDesc) ? _this.actionItem.actionItemTemplateDesc : _this.$filter("i18n_aip")("aip.admin.action.open.tab.content.noTemplateDescription");
                 _this.actionItemPostedStatus = _this.actionItem.actionItemPostedStatus;
                 console.log(_this.actionItemPostedStatus);
                 if (_this.templateSelect) {
@@ -171,7 +172,6 @@ var AIP;
                 _this.templates = response.data;
                 console.log(_this.templates);
                 deferred.resolve(_this.openPanel("content"));
-                _this.getTemplateSource();
                 _this.contentChanged = false;
                 if (_this.templateSelect) {
                     _this.selectTemplate();
@@ -305,38 +305,28 @@ var AIP;
                 return true;
             }
         };
-        AdminActionItemOpenPageCtrl.prototype.getTemplateSource = function () {
-            if (this.templates) {
-                if (this.templates[0].sourceInd == 'B') {
-                    this.templateSource = this.$filter("i18n_aip")("aip.common.baseline");
-                }
-                else {
-                    this.templateSource = this.$filter("i18n_aip")("aip.common.local");
-                }
+        AdminActionItemOpenPageCtrl.prototype.getTemplateSource = function (sourceInd) {
+            if (this.templates[0].sourceInd == 'B') {
+                this.templateSource = this.$filter("i18n_aip")("aip.common.baseline");
+            }
+            else {
+                this.templateSource = this.$filter("i18n_aip")("aip.common.local");
             }
             return this.templateSource;
         };
         AdminActionItemOpenPageCtrl.prototype.selectTemplate = function () {
             var _this = this;
             this.templateSelect = true;
-            this.$timeout(function () {
-                var actionItemTemplate = $("#actionItemTemplate");
-                if (_this.actionItem.actionItemTemplateId && actionItemTemplate) {
-                    if ($("#actionItemTemplate > option:selected").val() !== _this.actionItem.actionItemTemplateId.toString()) {
-                        $("#actionItemTemplate > option:selected").remove();
-                    }
-                }
-                $(".actionItemContent").height($(".actionItemElement").height() - $(".xe-tab-nav").height());
-                //TODO: find better and proper way to set defalut value in SELECT2 - current one is just dom object hack.
-                //action item selected temlate
-            }, 500);
+            var actionItemTemplate = $("#actionItemTemplate");
+            if (this.actionItem.actionItemTemplateId && actionItemTemplate) {
+                this.selectedTemplateObj = this.templates.filter(function (item) {
+                    return item.id === parseInt(_this.selectedTemplate);
+                })[0];
+            }
         };
         AdminActionItemOpenPageCtrl.prototype.setDescription = function () {
-            var _this = this;
-            var selectedTemplate = this.templates.filter(function (item) {
-                return item.id === parseInt(_this.selectedTemplate);
-            })[0];
-            this.selectedTempDescription = (selectedTemplate.description) ? this.unescapeHTML(selectedTemplate.description) : this.$filter("i18n_aip")("aip.admin.action.open.tab.content.templateDescription.not.available");
+            this.selectedTemplate = this.selectedTemplateObj.id;
+            this.selectedTempDescription = (this.selectedTemplateObj.description) ? this.unescapeHTML(this.selectedTemplateObj.description) : this.$filter("i18n_aip")("aip.admin.action.open.tab.content.noTemplateDescription");
         };
         AdminActionItemOpenPageCtrl.prototype.cancelContentEdit = function (option) {
             var _this = this;
@@ -348,6 +338,13 @@ var AIP;
                 .then(function (response) {
                 _this.actionItem = response.data.actionItem;
                 _this.selectedTemplate = _this.actionItem.actionItemTemplateId;
+                _this.selectedTemplateObj = null;
+                if (_this.selectedTemplate) {
+                    _this.selectedTemplateObj = _this.templates.filter(function (item) {
+                        return item.id === parseInt(_this.selectedTemplate);
+                    })[0];
+                }
+                _this.selectedTempDescription = (_this.actionItem.actionItemTemplateDesc) ? _this.actionItem.actionItemTemplateDesc : _this.$filter("i18n_aip")("aip.admin.action.open.tab.content.noTemplateDescription");
                 _this.trustActionItemContent();
                 switch (option) {
                     case "content":
@@ -382,6 +379,13 @@ var AIP;
                 .then(function (response) {
                 _this.actionItem = response.data.actionItem;
                 _this.selectedTemplate = _this.actionItem.actionItemTemplateId;
+                _this.selectedTempDescription = (_this.actionItem.actionItemTemplateDesc) ? _this.actionItem.actionItemTemplateDesc : _this.$filter("i18n_aip")("aip.admin.action.open.tab.content.noTemplateDescription");
+                _this.selectedTemplateObj = null;
+                if (_this.selectedTemplate) {
+                    _this.selectedTemplateObj = _this.templates.filter(function (item) {
+                        return item.id === parseInt(_this.selectedTemplate);
+                    })[0];
+                }
                 _this.trustActionItemContent();
                 switch (option) {
                     case "content":
@@ -389,7 +393,6 @@ var AIP;
                         promises.push(_this.getStatus());
                         promises.push(_this.getRules());
                         _this.$q.all(promises).then(function () {
-                            //TODO:: turn off the spinner
                             _this.spinnerService.showSpinner(false);
                             _this.contentChanged = false;
                         });
@@ -437,7 +440,6 @@ var AIP;
         };
         AdminActionItemOpenPageCtrl.prototype.saveTemplate = function () {
             var _this = this;
-            //TODO:: implement to save rules
             var allDefer = [];
             this.saving = true;
             if (this.actionItem.actionItemContent && $.type(this.actionItem.actionItemContent) != 'string') {

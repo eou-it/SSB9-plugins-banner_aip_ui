@@ -44,6 +44,7 @@ module AIP {
         statuses;
         rules;
         selectedTemplate;
+        selectedTemplateObj;
         selectedTempDescription;
         saving;
         contentChanged;
@@ -87,6 +88,7 @@ module AIP {
             this.allActionItems = [];
             this.originalAssign = [];
             this.selectedTemplate;
+            this.selectedTemplateObj;
             this.selectedTempDescription;
             this.actionFolder;
             this.templateSource;
@@ -194,7 +196,7 @@ module AIP {
                     this.actionItem = response.data.actionItem;
                     this.actionItem.actionItemContent = this.trustAsHtml(response.data.actionItem.actionItemContent);
                     this.selectedTemplate = this.actionItem.actionItemTemplateId;
-                    this.selectedTempDescription = (this.actionItem.actionItemTemplateDesc) ? this.actionItem.actionItemTemplateDesc : this.$filter("i18n_aip")("aip.admin.action.open.tab.content.templateDescription.not.available");
+                    this.selectedTempDescription = (this.actionItem.actionItemTemplateDesc) ? this.actionItem.actionItemTemplateDesc : this.$filter("i18n_aip")("aip.admin.action.open.tab.content.noTemplateDescription");
                     this.actionItemPostedStatus = this.actionItem.actionItemPostedStatus;
                     console.log(this.actionItemPostedStatus);
                     if (this.templateSelect) {
@@ -214,7 +216,6 @@ module AIP {
                     this.templates = response.data;
                     console.log(this.templates);
                     deferred.resolve(this.openPanel("content"));
-                    this.getTemplateSource();
                     this.contentChanged = false;
                     if (this.templateSelect) {
                         this.selectTemplate();
@@ -306,15 +307,15 @@ module AIP {
                 }
             }
         }
+
         stripTags(str) {
             return str.replace(/<\w+(\s+("[^"]*"|'[^']*'|[^>])+)?>|<\/\w+>/gi, '');
-          }
-        escapeHTML(str) {
-          return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
         }
 
+       
+
         unescapeHTML(str) {
-          return this.stripTags(str).replace(/&lt;/g,'<').replace(/&gt;/g,'>').replace(/&amp;/g,'&');
+            return this.stripTags(str).replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&amp;/g, '&');
         }
 
         specialCharacterTranslation() {
@@ -355,14 +356,12 @@ module AIP {
             }
         }
 
-        getTemplateSource() {
-            if (this.templates) {
-                if (this.templates[0].sourceInd == 'B') {
-                    this.templateSource = this.$filter("i18n_aip")("aip.common.baseline");
-                }
-                else {
-                    this.templateSource = this.$filter("i18n_aip")("aip.common.local");
-                }
+        getTemplateSource(sourceInd) {
+            if (this.templates[0].sourceInd == 'B') {
+                this.templateSource = this.$filter("i18n_aip")("aip.common.baseline");
+            }
+            else {
+                this.templateSource = this.$filter("i18n_aip")("aip.common.local");
             }
             return this.templateSource;
         }
@@ -384,27 +383,17 @@ module AIP {
 
         selectTemplate() {
             this.templateSelect = true;
-            this.$timeout(() => {
-                var actionItemTemplate: any = $("#actionItemTemplate");
-                if (this.actionItem.actionItemTemplateId && actionItemTemplate) {
-
-                    if ($("#actionItemTemplate > option:selected").val() !== this.actionItem.actionItemTemplateId.toString()) {
-                        $("#actionItemTemplate > option:selected").remove();
-                    }
-
-                }
-                $(".actionItemContent").height($(".actionItemElement").height() - $(".xe-tab-nav").height());
-                //TODO: find better and proper way to set defalut value in SELECT2 - current one is just dom object hack.
-                //action item selected temlate
-
-            }, 500);
+            var actionItemTemplate: any = $("#actionItemTemplate");
+            if (this.actionItem.actionItemTemplateId && actionItemTemplate) {
+                this.selectedTemplateObj = this.templates.filter((item) => {
+                    return item.id === parseInt(this.selectedTemplate);
+                })[0];
+            }
         }
 
         setDescription() {
-            var selectedTemplate = this.templates.filter((item) => {
-                return item.id === parseInt(this.selectedTemplate);
-            })[0];
-            this.selectedTempDescription = (selectedTemplate.description) ? this.unescapeHTML(selectedTemplate.description) : this.$filter("i18n_aip")("aip.admin.action.open.tab.content.templateDescription.not.available");
+            this.selectedTemplate = this.selectedTemplateObj.id;
+            this.selectedTempDescription = (this.selectedTemplateObj.description) ? this.unescapeHTML(this.selectedTemplateObj.description) : this.$filter("i18n_aip")("aip.admin.action.open.tab.content.noTemplateDescription");
         }
 
         cancelContentEdit(option) {
@@ -416,6 +405,13 @@ module AIP {
                 .then((response: AIP.IActionItemOpenResponse) => {
                     this.actionItem = response.data.actionItem;
                     this.selectedTemplate = this.actionItem.actionItemTemplateId;
+                    this.selectedTemplateObj = null;
+                    if (this.selectedTemplate) {
+                        this.selectedTemplateObj = this.templates.filter((item) => {
+                            return item.id === parseInt(this.selectedTemplate);
+                        })[0];
+                    }
+                    this.selectedTempDescription = (this.actionItem.actionItemTemplateDesc) ? this.actionItem.actionItemTemplateDesc : this.$filter("i18n_aip")("aip.admin.action.open.tab.content.noTemplateDescription");
                     this.trustActionItemContent();
 
                     switch (option) {
@@ -454,6 +450,13 @@ module AIP {
                 .then((response: AIP.IActionItemOpenResponse) => {
                     this.actionItem = response.data.actionItem;
                     this.selectedTemplate = this.actionItem.actionItemTemplateId;
+                    this.selectedTempDescription = (this.actionItem.actionItemTemplateDesc) ? this.actionItem.actionItemTemplateDesc : this.$filter("i18n_aip")("aip.admin.action.open.tab.content.noTemplateDescription");
+                    this.selectedTemplateObj = null;
+                    if (this.selectedTemplate) {
+                        this.selectedTemplateObj = this.templates.filter((item) => {
+                            return item.id === parseInt(this.selectedTemplate);
+                        })[0];
+                    }
                     this.trustActionItemContent();
 
                     switch (option) {
@@ -462,7 +465,6 @@ module AIP {
                             promises.push(this.getStatus());
                             promises.push(this.getRules());
                             this.$q.all(promises).then(() => {
-                                //TODO:: turn off the spinner
                                 this.spinnerService.showSpinner(false);
                                 this.contentChanged = false;
                             });
@@ -519,7 +521,6 @@ module AIP {
         }
 
         saveTemplate() {
-            //TODO:: implement to save rules
             var allDefer = [];
             this.saving = true;
             if (this.actionItem.actionItemContent && $.type(this.actionItem.actionItemContent) != 'string') {
