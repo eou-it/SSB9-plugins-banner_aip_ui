@@ -1878,6 +1878,9 @@ label {
       color: #557287; }
   .viewContainer .listActionItem .welcometext {
     font-size: 1.5em; }
+  .viewContainer .listActionItem .no-item-available {
+    font-size: 1.3em;
+  }
   .viewContainer .listActionItem .returnBtn {
     float: right;
     margin-bottom: 1em;
