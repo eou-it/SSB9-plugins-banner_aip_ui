@@ -159,6 +159,9 @@ module AIPUI {
 
             $scope.uploadDocument = function (selectedFiles) {
 
+                if($("#fileupload_label").val()===""){
+                    selectedFiles = null;
+                }
                 if (!selectedFiles) {
                     errorNotification($filter("i18n_aip")("js.aip.common.file.not.selected"));
                     return false;
