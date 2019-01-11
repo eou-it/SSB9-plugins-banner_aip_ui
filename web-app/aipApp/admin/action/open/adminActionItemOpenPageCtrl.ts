@@ -345,7 +345,7 @@ module AIP {
         }
 
         getTemplateSource(sourceInd) {
-            if (this.templates[0].sourceInd == 'B') {
+            if (sourceInd == 'B') {
                 this.templateSource = this.$filter("i18n_aip")("aip.common.baseline");
             }
             else {
