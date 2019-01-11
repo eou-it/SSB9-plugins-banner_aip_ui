@@ -1,5 +1,5 @@
 /*******************************************************************************
- Copyright 2018 Ellucian Company L.P. and its affiliates.
+ Copyright 2019 Ellucian Company L.P. and its affiliates.
  ********************************************************************************/
 ///<reference path="../../../../../typings/tsd.d.ts"/>
 ///<reference path="../../../services/aipAttachmentService.ts"/>
@@ -142,7 +142,7 @@ var AIPUI;
                     return false;
                 }
                 if (selectedFile && selectedFile.name.length > 60) {
-                    errorNotification($filter("i18n_aip")("js.aip.uploadDocument.file.name.length.error"));
+                    errorNotification($filter("i18n_aip")("aip.uploadDocument.file.name.length.error"));
                     return false;
                 }
                 if (!($scope.gridData.row.length < $scope.maxAttachments)) {
