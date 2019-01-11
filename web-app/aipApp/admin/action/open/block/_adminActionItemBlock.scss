@@ -2,7 +2,7 @@ $button-color: #206E9F;
 
 
 #actionItemBlockProcess {
-  padding: 16px 0;
+  padding: 16px 0px 16px 15px;
   button.iconButton {
     border: none;
     background-color: transparent;
@@ -48,6 +48,7 @@ $button-color: #206E9F;
     background: white;
     position: relative;
     border-radius: 4px;
+    margin-bottom: 4px;
     vertical-align: -40%;
     box-shadow: inset 0 2px 5px rgba(0,0,0,0.25);
   }
@@ -125,5 +126,14 @@ $button-color: #206E9F;
   @media (max-width:1200px) {
     .smalldevicefix{padding: 0px;}
     .smalldeviceglobal{margin-bottom: 20px;}
+  }
+}
+
+@media screen and (max-width:768px) {
+  #actionItemBlockProcess {
+    padding: 16px 0px 16px 0px;
+  }
+  .deleteButton {
+    padding: 3px 6px 3px 6px;
   }
 }

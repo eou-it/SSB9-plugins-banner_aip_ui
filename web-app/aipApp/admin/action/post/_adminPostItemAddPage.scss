@@ -45,11 +45,8 @@
     top: -28px;
     position: relative;}
 
-  .startdate{padding-left:0px;position:relative;}
-  .calendar-img{float: right;
-    margin-right: 10px;
-    top: -28px;
-    position: relative;}
+  .enddate{padding-left:0px;position:relative;}
+
   input.hasMultiCalendarPicker{height:35px;border-radius: 5px;
     padding-left: 15px;}
 
@@ -57,6 +54,7 @@
     position: relative;
     width: 100%;
     bottom: 10px;
+    margin-top: 15px;
     margin-bottom: 15px;
     height: 5em;
     .actionItemButton {
@@ -112,8 +110,8 @@
     -webkit-appearance: initial;
     appearance: initial;
     background: white;
-    width: 20px;
-    height: 20px;
+    width: 19px;
+    height: 19px;
     border: 1px solid #a4a4ca;
     background: white;
     position: relative;
@@ -140,7 +138,7 @@
     width: 7px;
     height: 7px;
     top: 5px;
-    left: 6px;
+    left: 5px;
     border-radius: 16px;
     background: #fff;
 

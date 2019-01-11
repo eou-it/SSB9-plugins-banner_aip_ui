@@ -1,21 +1,21 @@
 <!--*******************************************************************************
-Copyright 2018 Ellucian Company L.P. and its affiliates.
+Copyright 2019 Ellucian Company L.P. and its affiliates.
 *******************************************************************************-->
 <div id="openActionItemDetail">
     <div class="row">
         <div class="actionItemElement actionItemDetail col-xs-12 col-sm-8 col-height">
                 <div class="col-xs-12 col-sm-10">
-                    <h2 name="titleLabel">{{"aip.admin.action.actionItem.name"|i18n_aip}}</h2>
-                    <p class="openActionItemTitle">{{vm.actionItem.actionItemName}}</p>
-                    <h2 name="folderLabel">{{"aip.common.folder"|i18n_aip}}</h2>
-                    <p class="openActionItemFolder">{{vm.actionItem.folderName}}</p>
-                    <h2 name="statusLabel">{{"aip.common.status"|i18n_aip}}</h2>
-                    <p class="openActionItemStatus">{{vm.actionItem.actionItemStatus}}</p>
-                    <h2 name="titleLabel">{{"aip.admin.action.actionItem.title"|i18n_aip}}</h2>
+                    <label class="titleValue" name="titleLabel">{{"aip.admin.action.actionItem.name"|i18n_aip}}</label>
+                    <p>{{vm.actionItem.actionItemName}}</p>
+                    <label class="titleValue" name="folderLabel">{{"aip.common.folder"|i18n_aip}}</label>
+                    <p>{{vm.actionItem.folderName}}</p>
+                    <label class="titleValue" name="statusLabel">{{"aip.common.status"|i18n_aip}}</label>
+                    <p>{{vm.actionItem.actionItemStatus}}</p>
+                    <label class="titleValue" name="titleLabel">{{"aip.admin.action.actionItem.title"|i18n_aip}}</label>
                     <!--<p class="openActionItemTitle">{{vm.actionItem.actionItemName}}</p>-->
-                    <p class="openActionItemTitle" ng-bind-html="vm.actionItem.actionItemTitle | html"></p>
-                    <h2 name="descriptionLabel">{{"aip.common.description"|i18n_aip}}</h2>
-                   <pre> <p class="openActionItemDesc">{{vm.actionItem.actionItemDesc}}</p></pre>
+                    <p ng-bind-html="vm.actionItem.actionItemTitle | html"></p>
+                    <label class="titleValue" name="descriptionLabel">{{"aip.common.description"|i18n_aip}}</label>
+                   <pre> <p>{{vm.actionItem.actionItemDesc}}</p></pre>
                 </div>
             <div class="col-xs-12 col-sm-2 overviewEdit">
                 <button name="Edit" type="button" class="btn btn-default edit" ng-click="vm.validateEdit('overview')"
@@ -35,13 +35,13 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
         <div class="actionItemElement activity col-xs-12 col-sm-3" ng-style="vm.getSeparatorHeight()">
             <div class="col-sm-12">
                 <div class="actionItemElement">
-                    <h2 name="updatedByLabel">{{"aip.common.last.updated.by"|i18n_aip}}</h2>
-                    <p class="openActionItemLastUpdatedBy">{{vm.actionItem.actionItemLastUserId}}</p>
+                    <label class="titleValue" name="updatedByLabel">{{"aip.common.last.updated.by"|i18n_aip}}</label>
+                    <p>{{vm.actionItem.actionItemLastUserId}}</p>
                 </div>
                 <hr />
                 <div class="actionItemElement">
-                    <h2 name="activityDateLabel">{{"aip.common.activity.date"|i18n_aip}}</h2>
-                    <p class="openActionItemActivityDate">{{vm.actionItem.actionItemCompositeDate}}</p>
+                    <label class="titleValue" name="activityDateLabel">{{"aip.common.activity.date"|i18n_aip}}</label>
+                    <p>{{vm.actionItem.actionItemCompositeDate}}</p>
                 </div>
             </div>
         </div>
