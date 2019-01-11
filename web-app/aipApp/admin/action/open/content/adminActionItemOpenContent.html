@@ -35,7 +35,7 @@ Copyright 2019 Ellucian Company L.P. and its affiliates.
             </div>
             <div class="row">
                 <div class="col-sm-8 actionItemSelectTemplate">
-                    <xe-ui-select id="actionItemTemplate" ng-model="vm.selectedTemplateObj" theme="select2" ng-change="vm.setDescription(); vm.getRules(); vm.dataChanged()">
+                    <xe-ui-select id="actionItemTemplate" ng-model="vm.selectedTemplateObj" theme="select2" ng-change="vm.setTemplateDetails(); vm.getRules(); vm.dataChanged()">
                         <xe-ui-select-match  placeholder="{{'aip.admin.action.open.tab.content.templatePlaceholder'|i18n_aip}}">
                             {{vm.selectedTemplateObj.title}} ({{vm.getTemplateSource(vm.selectedTemplateObj.sourceInd)}})
                         </xe-ui-select-match>
@@ -117,8 +117,7 @@ Copyright 2019 Ellucian Company L.P. and its affiliates.
             <div class="row">
                 <div class="col-xs-12 col-sm-8">
                     <div class="templateText">
-                        {{vm.actionItem.actionItemTemplateName||'aip.admin.action.open.tab.content.templateContent'|i18n_aip}}
-                        ({{vm.templateSource}})
+                        {{vm.selectedTemplateObj.title}} ({{vm.getTemplateSource(vm.selectedTemplateObj.sourceInd)}})
                     </div>
                 </div>
             </div>

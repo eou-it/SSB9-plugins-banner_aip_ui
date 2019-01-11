@@ -1098,7 +1098,7 @@ ol.selected-group > li > button {
       .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .ui-select-container {
         width: 20em !important; }
       .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .ui-select-choices ul li {
-        line-height: 1.8em !important; }
+        line-height: 2em !important; }
       .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .contentContainer {
         margin-top: 0;
         margin-bottom: 0px; }

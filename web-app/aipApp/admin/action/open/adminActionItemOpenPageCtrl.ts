@@ -106,7 +106,6 @@ module AIP {
                     $scope.$apply();
                 }
             });
-            console.log(this.actionItemPostedStatus);
         };
 
         init() {
@@ -134,14 +133,12 @@ module AIP {
             this.getMaxAttachments();
         }
 
-
         detectContentChange(content) {
             if (this.templateSelect) {
                 this.contentChanged = true;
                 this.dataChanged();
             }
         }
-
 
         handleNotification(noti) {
             if (noti.notiType === "saveSuccess" || noti.notiType === "editSuccess") {
@@ -198,10 +195,6 @@ module AIP {
                     this.selectedTemplate = this.actionItem.actionItemTemplateId;
                     this.selectedTempDescription = (this.actionItem.actionItemTemplateDesc) ? this.actionItem.actionItemTemplateDesc : this.$filter("i18n_aip")("aip.admin.action.open.tab.content.noTemplateDescription");
                     this.actionItemPostedStatus = this.actionItem.actionItemPostedStatus;
-                    console.log(this.actionItemPostedStatus);
-                    if (this.templateSelect) {
-                        this.selectTemplate();
-                    }
                     deferred.resolve(this.openPanel("overview"));
                 }, (err) => {
                     console.log(err);
@@ -214,13 +207,13 @@ module AIP {
             this.adminActionService.getActionItemTemplates()
                 .then((response: AIP.IActionItemOpenResponse) => {
                     this.templates = response.data;
-                    console.log(this.templates);
                     deferred.resolve(this.openPanel("content"));
                     this.contentChanged = false;
-                    if (this.templateSelect) {
-                        this.selectTemplate();
+                    if (this.selectedTemplate) {
+                        this.selectedTemplateObj = this.templates.filter((item) => {
+                            return item.id === parseInt(this.selectedTemplate);
+                        })[0];
                     }
-
                 }, (error) => {
                     console.log(error);
                 });
@@ -289,8 +282,6 @@ module AIP {
         }
 
         validateEdit(type) {
-            console.log("Type val", type);
-            console.log(this.actionItem.actionItemId);
             if (type === "overview") {
                 this.$state.go("admin-action-edit", {actionItemId: this.actionItem.actionItemId, isEdit: true});
             }
@@ -311,8 +302,6 @@ module AIP {
         stripTags(str) {
             return str.replace(/<\w+(\s+("[^"]*"|'[^']*'|[^>])+)?>|<\/\w+>/gi, '');
         }
-
-       
 
         unescapeHTML(str) {
             return this.stripTags(str).replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&amp;/g, '&');
@@ -342,7 +331,6 @@ module AIP {
             }
 
         }
-
 
         isNoTemplateSelected() {
             if (this.templateSelect) {
@@ -380,18 +368,11 @@ module AIP {
             return this.rules.statusRuleLabelText;
         }
 
-
         selectTemplate() {
             this.templateSelect = true;
-            var actionItemTemplate: any = $("#actionItemTemplate");
-            if (this.actionItem.actionItemTemplateId && actionItemTemplate) {
-                this.selectedTemplateObj = this.templates.filter((item) => {
-                    return item.id === parseInt(this.selectedTemplate);
-                })[0];
-            }
         }
 
-        setDescription() {
+        setTemplateDetails() {
             this.selectedTemplate = this.selectedTemplateObj.id;
             this.selectedTempDescription = (this.selectedTemplateObj.description) ? this.unescapeHTML(this.selectedTemplateObj.description) : this.$filter("i18n_aip")("aip.admin.action.open.tab.content.noTemplateDescription");
         }

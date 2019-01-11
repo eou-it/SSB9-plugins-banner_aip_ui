@@ -66,7 +66,6 @@ var AIP;
                     $scope.$apply();
                 }
             });
-            console.log(this.actionItemPostedStatus);
         }
         ;
         AdminActionItemOpenPageCtrl.prototype.init = function () {
@@ -154,10 +153,6 @@ var AIP;
                 _this.selectedTemplate = _this.actionItem.actionItemTemplateId;
                 _this.selectedTempDescription = (_this.actionItem.actionItemTemplateDesc) ? _this.actionItem.actionItemTemplateDesc : _this.$filter("i18n_aip")("aip.admin.action.open.tab.content.noTemplateDescription");
                 _this.actionItemPostedStatus = _this.actionItem.actionItemPostedStatus;
-                console.log(_this.actionItemPostedStatus);
-                if (_this.templateSelect) {
-                    _this.selectTemplate();
-                }
                 deferred.resolve(_this.openPanel("overview"));
             }, function (err) {
                 console.log(err);
@@ -170,11 +165,12 @@ var AIP;
             this.adminActionService.getActionItemTemplates()
                 .then(function (response) {
                 _this.templates = response.data;
-                console.log(_this.templates);
                 deferred.resolve(_this.openPanel("content"));
                 _this.contentChanged = false;
-                if (_this.templateSelect) {
-                    _this.selectTemplate();
+                if (_this.selectedTemplate) {
+                    _this.selectedTemplateObj = _this.templates.filter(function (item) {
+                        return item.id === parseInt(_this.selectedTemplate);
+                    })[0];
                 }
             }, function (error) {
                 console.log(error);
@@ -244,8 +240,6 @@ var AIP;
             }
         };
         AdminActionItemOpenPageCtrl.prototype.validateEdit = function (type) {
-            console.log("Type val", type);
-            console.log(this.actionItem.actionItemId);
             if (type === "overview") {
                 this.$state.go("admin-action-edit", { actionItemId: this.actionItem.actionItemId, isEdit: true });
             }
@@ -265,9 +259,6 @@ var AIP;
         };
         AdminActionItemOpenPageCtrl.prototype.stripTags = function (str) {
             return str.replace(/<\w+(\s+("[^"]*"|'[^']*'|[^>])+)?>|<\/\w+>/gi, '');
-        };
-        AdminActionItemOpenPageCtrl.prototype.escapeHTML = function (str) {
-            return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
         };
         AdminActionItemOpenPageCtrl.prototype.unescapeHTML = function (str) {
             return this.stripTags(str).replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&amp;/g, '&');
@@ -315,16 +306,9 @@ var AIP;
             return this.templateSource;
         };
         AdminActionItemOpenPageCtrl.prototype.selectTemplate = function () {
-            var _this = this;
             this.templateSelect = true;
-            var actionItemTemplate = $("#actionItemTemplate");
-            if (this.actionItem.actionItemTemplateId && actionItemTemplate) {
-                this.selectedTemplateObj = this.templates.filter(function (item) {
-                    return item.id === parseInt(_this.selectedTemplate);
-                })[0];
-            }
         };
-        AdminActionItemOpenPageCtrl.prototype.setDescription = function () {
+        AdminActionItemOpenPageCtrl.prototype.setTemplateDetails = function () {
             this.selectedTemplate = this.selectedTemplateObj.id;
             this.selectedTempDescription = (this.selectedTemplateObj.description) ? this.unescapeHTML(this.selectedTemplateObj.description) : this.$filter("i18n_aip")("aip.admin.action.open.tab.content.noTemplateDescription");
         };
