@@ -85,8 +85,18 @@ $link-color: #275c8a;
               }
               .actionItemContent {
                 padding: 16px;
+                .ui-select-container {
+                  width: 40em !important;
+                }
                 .contentContainer {
                   margin: 10px 0 10px 0;
+                  .actionItemSelectTemplate {
+                      padding-left: 5px;
+                   }
+                  .templateDescription {
+                    max-height: 15.4em;
+                    overflow-y: auto;
+                  }
                   .noResponses {
                     font-size: 1.2em;
                     font-weight: bold;
@@ -229,8 +239,8 @@ $link-color: #275c8a;
     .actionItemInfo {
       .actionItemInfoRow {
         .row {
-          margin-right: 0;
-          margin-left: 0;
+          margin-right: 5px;
+          margin-left: 5px;
         }
         .actionItemElement {
           padding-right: 0;
@@ -252,9 +262,22 @@ $link-color: #275c8a;
                 .actionItemContent {
                   padding: 0;
                   height: auto !important;
+                  .ui-select-container {
+                    width: 20em !important;
+                  }
+                  .ui-select-choices ul li{
+                    line-height:2em !important;
+                  }
                   .contentContainer {
                     margin-top: 0;
                     margin-bottom: 0px;
+                    .actionItemSelectTemplate {
+                       margin-bottom: 1em;
+                     }
+                    .templateDescription {
+                      max-height: 8.2em;
+                      overflow-y: auto;
+                    }
                     .contentPreview {
                       padding: 8px;
                       border-bottom: 1px solid $border-color;

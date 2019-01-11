@@ -986,8 +986,15 @@ ol.selected-group > li > button {
             border: none; }
           .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent {
             padding: 16px; }
+            .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .ui-select-container {
+              width: 40em !important; }
             .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .contentContainer {
               margin: 10px 0 10px 0; }
+              .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .contentContainer .actionItemSelectTemplate {
+                padding-left: 5px; }
+              .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .contentContainer .templateDescription {
+                max-height: 15.4em;
+                overflow-y: auto; }
               .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .contentContainer .noResponses {
                 font-size: 1.2em;
                 font-weight: bold;
@@ -1075,8 +1082,8 @@ ol.selected-group > li > button {
 
 @media screen and (max-width: 768px) {
   .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .row {
-    margin-right: 0;
-    margin-left: 0; }
+    margin-right: 5px;
+    margin-left: 5px; }
   .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement {
     padding-right: 0;
     padding-left: 0; }
@@ -1088,9 +1095,18 @@ ol.selected-group > li > button {
     .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent {
       padding: 0;
       height: auto !important; }
+      .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .ui-select-container {
+        width: 20em !important; }
+      .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .ui-select-choices ul li {
+        line-height: 2em !important; }
       .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .contentContainer {
         margin-top: 0;
         margin-bottom: 0px; }
+        .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .contentContainer .actionItemSelectTemplate {
+          margin-bottom: 1em; }
+        .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .contentContainer .templateDescription {
+          max-height: 8.2em;
+          overflow-y: auto; }
         .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .contentContainer .contentPreview {
           padding: 8px;
           border-bottom: 1px solid #C0C0C0; }
@@ -2093,8 +2109,11 @@ ol.selected-group > li > button {
   font-size: 13px !important;
   line-height: 1.75em !important; }
 
+.select2-choice .ui-select-match {
+  width: inherit; }
+
 .ui-select-choices .select2-result-label {
-  font-size: 1.25em;
+  font-size: inherit;
   font-family: OpenSans-semibold !important;
   color: darkSlateGray !important;
   word-wrap: break-word !important; }
@@ -2105,7 +2124,7 @@ ol.selected-group > li > button {
   background: #fff; }
 
 .ui-select-dropdown {
-  width: 21.35em; }
+  width: inherit; }
 
 .ui-select-dropdown .select2-search input {
   width: inherit !important; }
