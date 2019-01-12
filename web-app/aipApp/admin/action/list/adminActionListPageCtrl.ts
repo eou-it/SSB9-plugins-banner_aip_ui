@@ -1,5 +1,5 @@
 /*******************************************************************************
- Copyright 2018 Ellucian Company L.P. and its affiliates.
+ Copyright 2018-2019 Ellucian Company L.P. and its affiliates.
  ********************************************************************************/
 ///<reference path="../../../../typings/tsd.d.ts"/>
 ///<reference path="../../../common/services/admin/adminActionService.ts"/>
@@ -35,6 +35,7 @@ module AIP {
         mobileConfig;
         mobileSize: boolean;
         selectedRecord;
+        gridHeight:number;
 
         constructor($scope: IActionListPageCtrlScope, $state, $window, $filter, $q, ENDPOINT, PAGINATIONCONFIG,
             AdminActionService: AIP.AdminActionService) {
@@ -52,6 +53,13 @@ module AIP {
             });
         }
         init() {
+            this.gridHeight = $(document).height() -
+                $("#breadcrumb-panel").height() -
+                $("#title-panel").height() -
+                $("#header-main-section").height() -
+                $("#outerFooter").height() -
+                $(".actionListContainer .control").height() -
+                30;
             this.gridData = {};
             this.draggableColumnNames=[];
             this.mobileConfig = {

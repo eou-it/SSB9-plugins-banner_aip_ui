@@ -1,5 +1,5 @@
 /*******************************************************************************
- Copyright 2018 Ellucian Company L.P. and its affiliates.
+ Copyright 2018-2019 Ellucian Company L.P. and its affiliates.
  ********************************************************************************/
 ///<reference path="../../../../typings/tsd.d.ts"/>
 ///<reference path="../../../common/services/admin/adminGroupService.ts"/>
@@ -26,6 +26,7 @@ module AIP {
         adminGroupService;
         selectedRecord;
         $scope;
+        gridHeight:number;
 
         constructor($scope, $state, $window, $filter, $q, ENDPOINT, PAGINATIONCONFIG,
             AdminGroupService) {
@@ -37,6 +38,13 @@ module AIP {
             this.endPoint = ENDPOINT;   //ENDPOINT.admin.actionList
             this.paginationConfig = PAGINATIONCONFIG;
             this.adminGroupService = AdminGroupService;
+            this.gridHeight = $(document).height() -
+                $("#breadcrumb-panel").height() -
+                $("#title-panel").height() -
+                $("#header-main-section").height() -
+                $("#outerFooter").height() -
+                $(".groupListContainer .control").height() -
+                30;
             this.init();
             angular.element($window).bind('resize', function() {
                 $scope.$apply();

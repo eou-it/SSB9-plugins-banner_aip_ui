@@ -1,5 +1,5 @@
 /*******************************************************************************
- Copyright 2018 Ellucian Company L.P. and its affiliates.
+ Copyright 2018-2019 Ellucian Company L.P. and its affiliates.
  ********************************************************************************/
 ///<reference path="../../../../typings/tsd.d.ts"/>
 ///<reference path="../../../common/services/admin/adminActionService.ts"/>
@@ -23,6 +23,13 @@ var AIP;
             });
         }
         AdminActionListPageCtrl.prototype.init = function () {
+            this.gridHeight = $(document).height() -
+                $("#breadcrumb-panel").height() -
+                $("#title-panel").height() -
+                $("#header-main-section").height() -
+                $("#outerFooter").height() -
+                $(".actionListContainer .control").height() -
+                30;
             this.gridData = {};
             this.draggableColumnNames = [];
             this.mobileConfig = {
