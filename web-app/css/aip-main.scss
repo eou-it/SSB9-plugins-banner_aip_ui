@@ -462,8 +462,11 @@ ol.selected-group > li > button {
   font-size: 13px !important;
   line-height: 1.75em !important;
 }
+.select2-choice .ui-select-match{
+  width:inherit;
+}
 .ui-select-choices .select2-result-label{
-  font-size: 1.25em;
+  font-size: inherit;
   font-family: OpenSans-semibold !important;
   color: darkSlateGray !important;
   word-wrap: break-word !important;
@@ -473,7 +476,8 @@ ol.selected-group > li > button {
   width: 21em;
   background: #fff;
 }
-.ui-select-dropdown{width: 21.35em;}
+.ui-select-dropdown{width: inherit;}
+
 .ui-select-dropdown .select2-search input {
   width: inherit !important;}
 .ui-select-container .select2-default > .select2-chosen{

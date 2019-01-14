@@ -1,5 +1,5 @@
 <!--*******************************************************************************
-Copyright 2018 Ellucian Company L.P. and its affiliates.
+Copyright 2019 Ellucian Company L.P. and its affiliates.
 *******************************************************************************-->
 <div class="groupAddContainer" >
     <div class="groupInfo">
@@ -30,7 +30,7 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
             </div>
             <div class="groupElement col-xs-12 col-sm-5">
                 <div class="row">
-                    <xe-ui-select class="folder-minwidth"  id="folderid" ng-model="vm.groupInfo.folder" theme="select2" ng-disabled="vm.groupInfo.postedInd" ng-change="vm.dataChanged()">
+                    <xe-ui-select class="folder-minwidth folderStatus-margin"  id="folderid" ng-model="vm.groupInfo.folder" theme="select2" ng-disabled="vm.groupInfo.postedInd" ng-change="vm.dataChanged()">
                         <xe-ui-select-match placeholder="{{'aip.common.select.folder.default'|i18n_aip}}" >
                             {{vm.groupInfo.folder.name}}
                         </xe-ui-select-match>
@@ -48,7 +48,7 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
             </div>
             <div class="groupElement col-xs-12 col-sm-5">
                 <div class="row">
-                    <xe-ui-select id="groupStatus" ng-model="vm.groupInfo.status" theme="select2" ng-disabled="disabled" ng-change="vm.dataChanged()" search-enabled="false"
+                    <xe-ui-select class="folderStatus-margin" id="groupStatus" ng-model="vm.groupInfo.status" theme="select2" ng-disabled="disabled" ng-change="vm.dataChanged()" search-enabled="false"
                                   on-select="vm.selectStatus($item, $index)">
 
                         <xe-ui-select-match>

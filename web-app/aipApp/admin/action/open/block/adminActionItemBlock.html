@@ -1,5 +1,5 @@
 <!--*******************************************************************************
-Copyright 2018 Ellucian Company L.P. and its affiliates.
+Copyright 2019 Ellucian Company L.P. and its affiliates.
 *******************************************************************************-->
 <div id="actionItemBlockProcess" ng-controller="AdminActionItemBlockCtrl">
 
@@ -8,7 +8,7 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
         <div class="contentText">
             <div class="row">
                 <div class="col-xs-10 col-sm-8">
-                    <h2>{{'aip.admin.block.no.block.process'|i18n_aip}}</h2>
+                    <label class="titleValue">{{'aip.admin.block.no.block.process'|i18n_aip}}</label>
                     <div ng-if="vm.allBlockProcessList.length===0">
                         {{"aip.admin.block.no.processes.blocked"|i18n_aip}} <br />
                         {{"aip.admin.block.select.edit"|i18n_aip}}
@@ -69,7 +69,7 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
         <div class="contentText">
             <div class="row">
                 <div class="col-xs-10 col-sm-8">
-                    <h2>{{'aip.admin.block.no.block.process'|i18n_aip}}</h2>
+                    <label class="titleValue">{{'aip.admin.block.no.block.process'|i18n_aip}}</label>
                 </div>
             </div>
 
@@ -131,7 +131,7 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
                          </div>
                      </div>-->
                     <div class="col-xs-4 col-sm-4 col-lg-1">
-                        <div type="button" class="btn btn-default vertical col-xs-6" ng-click="vm.delete(item)" aria-label="{{'aip.admin.group.actionItem.delete'|i18n_aip}}"
+                        <div type="button" class="btn btn-default vertical col-xs-6 deleteButton" ng-click="vm.delete(item)" aria-label="{{'aip.admin.group.actionItem.delete'|i18n_aip}}"
                              title="{{'aip.admin.group.actionItem.delete'|i18n_aip}}">
                             <i class="icon icon-delete-CO" aria-hidden="true"></i>
                         </div>

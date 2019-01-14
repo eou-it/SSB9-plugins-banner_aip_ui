@@ -1,5 +1,5 @@
 /*******************************************************************************
- Copyright 2018 Ellucian Company L.P. and its affiliates.
+ Copyright 2019 Ellucian Company L.P. and its affiliates.
  ********************************************************************************/
 ///<reference path="../../../../typings/tsd.d.ts"/>
 ///<reference path="../../../common/services/admin/adminActionService.ts"/>
@@ -49,6 +49,8 @@ var AIP;
             this.allActionItems = [];
             this.originalAssign = [];
             this.selectedTemplate;
+            this.selectedTemplateObj;
+            this.selectedTempDescription;
             this.actionFolder;
             this.templateSource;
             this.saving = false;
@@ -64,7 +66,6 @@ var AIP;
                     $scope.$apply();
                 }
             });
-            console.log(this.actionItemPostedStatus);
         }
         ;
         AdminActionItemOpenPageCtrl.prototype.init = function () {
@@ -79,7 +80,6 @@ var AIP;
             promises.push(this.getStatus());
             promises.push(this.getRules());
             this.$q.all(promises).then(function () {
-                //TODO:: turn off the spinner
                 _this.spinnerService.showSpinner(false);
                 _this.contentChanged = false;
                 _this.specialCharacterTranslation();
@@ -151,11 +151,8 @@ var AIP;
                 _this.actionItem = response.data.actionItem;
                 _this.actionItem.actionItemContent = _this.trustAsHtml(response.data.actionItem.actionItemContent);
                 _this.selectedTemplate = _this.actionItem.actionItemTemplateId;
+                _this.selectedTempDescription = (_this.actionItem.actionItemTemplateDesc) ? _this.actionItem.actionItemTemplateDesc : _this.$filter("i18n_aip")("aip.admin.action.open.tab.content.noTemplateDescription");
                 _this.actionItemPostedStatus = _this.actionItem.actionItemPostedStatus;
-                console.log(_this.actionItemPostedStatus);
-                if (_this.templateSelect) {
-                    _this.selectTemplate();
-                }
                 deferred.resolve(_this.openPanel("overview"));
             }, function (err) {
                 console.log(err);
@@ -168,13 +165,12 @@ var AIP;
             this.adminActionService.getActionItemTemplates()
                 .then(function (response) {
                 _this.templates = response.data;
-                console.log(_this.templates);
                 deferred.resolve(_this.openPanel("content"));
-                _this.getTemplateSource();
                 _this.contentChanged = false;
-                if (_this.templateSelect) {
-                    _this.selectTemplate();
-                    _this.selectTemplate();
+                if (_this.selectedTemplate) {
+                    _this.selectedTemplateObj = _this.templates.filter(function (item) {
+                        return item.id === parseInt(_this.selectedTemplate);
+                    })[0];
                 }
             }, function (error) {
                 console.log(error);
@@ -244,8 +240,6 @@ var AIP;
             }
         };
         AdminActionItemOpenPageCtrl.prototype.validateEdit = function (type) {
-            console.log("Type val", type);
-            console.log(this.actionItem.actionItemId);
             if (type === "overview") {
                 this.$state.go("admin-action-edit", { actionItemId: this.actionItem.actionItemId, isEdit: true });
             }
@@ -262,6 +256,12 @@ var AIP;
                     return false;
                 }
             }
+        };
+        AdminActionItemOpenPageCtrl.prototype.stripTags = function (str) {
+            return str.replace(/<\w+(\s+("[^"]*"|'[^']*'|[^>])+)?>|<\/\w+>/gi, '');
+        };
+        AdminActionItemOpenPageCtrl.prototype.unescapeHTML = function (str) {
+            return this.stripTags(str).replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&amp;/g, '&');
         };
         AdminActionItemOpenPageCtrl.prototype.specialCharacterTranslation = function () {
             for (var j = 0; j < this.rules.length; j++) {
@@ -296,31 +296,21 @@ var AIP;
                 return true;
             }
         };
-        AdminActionItemOpenPageCtrl.prototype.getTemplateSource = function () {
-            if (this.templates) {
-                if (this.templates[0].sourceInd == 'B') {
-                    this.templateSource = this.$filter("i18n_aip")("aip.common.baseline");
-                }
-                else {
-                    this.templateSource = this.$filter("i18n_aip")("aip.common.local");
-                }
+        AdminActionItemOpenPageCtrl.prototype.getTemplateSource = function (sourceInd) {
+            if (sourceInd == 'B') {
+                this.templateSource = this.$filter("i18n_aip")("aip.common.baseline");
+            }
+            else {
+                this.templateSource = this.$filter("i18n_aip")("aip.common.local");
             }
             return this.templateSource;
         };
         AdminActionItemOpenPageCtrl.prototype.selectTemplate = function () {
-            var _this = this;
             this.templateSelect = true;
-            this.$timeout(function () {
-                var actionItemTemplate = $("#actionItemTemplate");
-                if (_this.actionItem.actionItemTemplateId && actionItemTemplate) {
-                    if ($("#actionItemTemplate > option:selected").val() !== _this.actionItem.actionItemTemplateId.toString()) {
-                        $("#actionItemTemplate > option:selected").remove();
-                    }
-                }
-                $(".actionItemContent").height($(".actionItemElement").height() - $(".xe-tab-nav").height());
-                //TODO: find better and proper way to set defalut value in SELECT2 - current one is just dom object hack.
-                //action item selected temlate
-            }, 500);
+        };
+        AdminActionItemOpenPageCtrl.prototype.setTemplateDetails = function () {
+            this.selectedTemplate = this.selectedTemplateObj.id;
+            this.selectedTempDescription = (this.selectedTemplateObj.description) ? this.unescapeHTML(this.selectedTemplateObj.description) : this.$filter("i18n_aip")("aip.admin.action.open.tab.content.noTemplateDescription");
         };
         AdminActionItemOpenPageCtrl.prototype.cancelContentEdit = function (option) {
             var _this = this;
@@ -332,6 +322,13 @@ var AIP;
                 .then(function (response) {
                 _this.actionItem = response.data.actionItem;
                 _this.selectedTemplate = _this.actionItem.actionItemTemplateId;
+                _this.selectedTemplateObj = null;
+                if (_this.selectedTemplate) {
+                    _this.selectedTemplateObj = _this.templates.filter(function (item) {
+                        return item.id === parseInt(_this.selectedTemplate);
+                    })[0];
+                }
+                _this.selectedTempDescription = (_this.actionItem.actionItemTemplateDesc) ? _this.actionItem.actionItemTemplateDesc : _this.$filter("i18n_aip")("aip.admin.action.open.tab.content.noTemplateDescription");
                 _this.trustActionItemContent();
                 switch (option) {
                     case "content":
@@ -339,7 +336,6 @@ var AIP;
                         promises.push(_this.getStatus());
                         promises.push(_this.getRules());
                         _this.$q.all(promises).then(function () {
-                            //TODO:: turn off the spinner
                             _this.spinnerService.showSpinner(false);
                             _this.contentChanged = false;
                         });
@@ -367,6 +363,13 @@ var AIP;
                 .then(function (response) {
                 _this.actionItem = response.data.actionItem;
                 _this.selectedTemplate = _this.actionItem.actionItemTemplateId;
+                _this.selectedTempDescription = (_this.actionItem.actionItemTemplateDesc) ? _this.actionItem.actionItemTemplateDesc : _this.$filter("i18n_aip")("aip.admin.action.open.tab.content.noTemplateDescription");
+                _this.selectedTemplateObj = null;
+                if (_this.selectedTemplate) {
+                    _this.selectedTemplateObj = _this.templates.filter(function (item) {
+                        return item.id === parseInt(_this.selectedTemplate);
+                    })[0];
+                }
                 _this.trustActionItemContent();
                 switch (option) {
                     case "content":
@@ -374,7 +377,6 @@ var AIP;
                         promises.push(_this.getStatus());
                         promises.push(_this.getRules());
                         _this.$q.all(promises).then(function () {
-                            //TODO:: turn off the spinner
                             _this.spinnerService.showSpinner(false);
                             _this.contentChanged = false;
                         });
@@ -422,7 +424,6 @@ var AIP;
         };
         AdminActionItemOpenPageCtrl.prototype.saveTemplate = function () {
             var _this = this;
-            //TODO:: implement to save rules
             var allDefer = [];
             this.saving = true;
             if (this.actionItem.actionItemContent && $.type(this.actionItem.actionItemContent) != 'string') {
