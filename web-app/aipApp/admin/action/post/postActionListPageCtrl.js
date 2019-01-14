@@ -1,11 +1,11 @@
 /*******************************************************************************
- Copyright 2018 Ellucian Company L.P. and its affiliates.
+ Copyright 2018-2019 Ellucian Company L.P. and its affiliates.
  ********************************************************************************/
 ///<reference path="../../../../typings/tsd.d.ts"/>
 ///<reference path="../../../common/services/admin/adminActionService.ts"/>
 var AIP;
 (function (AIP) {
-    var PostActionListPageCtrl = /** @class */ (function () {
+    var PostActionListPageCtrl = (function () {
         function PostActionListPageCtrl($scope, $state, $window, $filter, $q, ENDPOINT, PAGINATIONCONFIG, AdminActionService) {
             this.$inject = ["$scope", "$state", "$window", "$filter", "$q", "ENDPOINT", "PAGINATIONCONFIG",
                 "AdminActionService"];
@@ -25,6 +25,13 @@ var AIP;
         }
         PostActionListPageCtrl.prototype.init = function () {
             var _this = this;
+            this.gridHeight = $(document).height() -
+                $("#breadcrumb-panel").height() -
+                $("#title-panel").height() -
+                $("#header-main-section").height() -
+                $("#outerFooter").height() -
+                $(".actionListContainer .control").height() -
+                30;
             this.gridData = {};
             var allPromises = [];
             this.draggableColumnNames = [];
@@ -270,7 +277,8 @@ var AIP;
             });
         };
         return PostActionListPageCtrl;
-    }());
+    })();
     AIP.PostActionListPageCtrl = PostActionListPageCtrl;
 })(AIP || (AIP = {}));
 register("bannerAIP").controller("PostActionListPageCtrl", AIP.PostActionListPageCtrl);
+//# sourceMappingURL=postActionListPageCtrl.js.map
