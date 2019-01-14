@@ -8,7 +8,7 @@ Copyright 2019 Ellucian Company L.P. and its affiliates.
         <div class="contentText">
             <div class="row">
                 <div class="col-xs-10 col-sm-8">
-                    <h2>{{'aip.common.text.template'|i18n_aip}}</h2>
+                    <label class="titleValue">{{'aip.common.text.template'|i18n_aip}}</label>
                     {{'aip.admin.action.open.tab.content.noItem1'|i18n_aip}} <br/>
                     {{'aip.admin.action.open.tab.content.noItem2'|i18n_aip}}
                 </div>
@@ -30,7 +30,7 @@ Copyright 2019 Ellucian Company L.P. and its affiliates.
     <div class="actionItemContent row" ng-if="!vm.isNoTemplate() && vm.templateSelect">
         <div class="contentContainer">
             <div class="row input-actionItem">
-                <label for="actionItemTemplate" class="templateSelect required" id="actionItemTemplateSelector">{{'aip.admin.action.open.tab.content.templateSelect'|i18n_aip}}
+                <label for="actionItemTemplate" class="titleValue required" id="actionItemTemplateSelector">{{'aip.admin.action.open.tab.content.templateSelect'|i18n_aip}}
                     {{'aip.character.astrick'|i18n_aip}}</label>
             </div>
             <div class="row">
@@ -50,7 +50,7 @@ Copyright 2019 Ellucian Company L.P. and its affiliates.
         <!-- edit view -->
         <div class="contentContainer" ng-if="!vm.isNoTemplateSelected()">
             <div class="row">
-                <label class="templateSelect" for="actionItemTemplateDesc" id="actionItemTemplateDescSelector">
+                <label class="titleValue" for="actionItemTemplateDesc" id="actionItemTemplateDescSelector">
                     {{'aip.admin.action.open.tab.content.templateDescription'|i18n_aip}}
                 </label>
             </div>
@@ -58,7 +58,7 @@ Copyright 2019 Ellucian Company L.P. and its affiliates.
                 <pre id="actionItemTemplateDesc" class="templateDescription">{{vm.selectedTempDescription}}</pre>
             </div>
             <div class="row">
-                <label for="templateContent" id="template-content">{{'aip.common.text.content'|i18n_aip}}</label>
+                <label class="titleValue" for="templateContent" id="template-content">{{'aip.common.text.content'|i18n_aip}}</label>
             </div>
             <div class="row">
                 <textarea id="templateContent" ng-required="true" aria-required="true" name="templateContent"
@@ -98,7 +98,7 @@ Copyright 2019 Ellucian Company L.P. and its affiliates.
         <div class="contentContainer">
             <div class="row">
                 <div class="col-xs-10 col-sm-8">
-                    <h2>{{'aip.common.text.template'|i18n_aip}}</h2>
+                    <label class="titleValue">{{'aip.common.text.template'|i18n_aip}}</label>
                 </div>
                 <div class="control col-xs-2 col-sm-4">
                     <div class="h2-container"  ng-if="vm.actionItemPostedStatus == 'N'">
@@ -123,7 +123,7 @@ Copyright 2019 Ellucian Company L.P. and its affiliates.
             </div>
             <div class="row">
                 <div class="col-xs-12 col-sm-12">
-                    <h2>{{'aip.admin.action.open.tab.content.templateDescription'|i18n_aip}}</h2>
+                    <label class="titleValue">{{'aip.admin.action.open.tab.content.templateDescription'|i18n_aip}}</label>
                     <div>
                         <pre class="templateDescription">{{vm.selectedTempDescription}}</pre>
                     </div>
@@ -131,7 +131,7 @@ Copyright 2019 Ellucian Company L.P. and its affiliates.
             </div>
             <div class="row">
                 <div class="col-xs-12 col-sm-12">
-                    <h2>{{'aip.common.text.content'|i18n_aip}}</h2>
+                    <label class="titleValue">{{'aip.common.text.content'|i18n_aip}}</label>
                     <div ng-if="!vm.isNoContent()">
                         <!--
                         <div class="contentPreview">
@@ -149,7 +149,7 @@ Copyright 2019 Ellucian Company L.P. and its affiliates.
 
             <div class="row">
                 <div class="col-xs-12 col-sm-12">
-                    <h2>{{'aip.admin.status.rules.table.heading'|i18n_aip}}</h2>
+                    <label class="titleValue">{{'aip.admin.status.rules.table.heading'|i18n_aip}}</label>
 
                     <div class="contentContainer" ng-if="vm.rules.length>0">
                         <table class="ruleListReadOnly">

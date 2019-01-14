@@ -30,6 +30,7 @@ $link-color: #275c8a;
       .actionItemElement {
         height: 100%;
         color: $text-color;
+        padding-top: 16px;
         padding-bottom: 20px;
         .h2-container {
           margin-top: 0px;
@@ -67,9 +68,7 @@ $link-color: #275c8a;
 
             #openActionItemContent {
               .actionItemContentNoInfo {
-                .contentText {
-                  padding-top: 1.5em;
-                }
+                padding: 16px 16px 0px 15px;
               }
               .control {
                 .h2-container {
@@ -103,6 +102,7 @@ $link-color: #275c8a;
                     padding: 8px;
                   }
                   .templateText {
+                    margin-top: 10px;
                     margin-bottom: 20px;
                   }
                   table.ruleListReadOnly {
@@ -145,6 +145,7 @@ $link-color: #275c8a;
                 }
 
                 .status-rules {
+                  margin-top: 10px;
                   .row {
                     .headings {
                       font-size: 1em;
@@ -155,6 +156,9 @@ $link-color: #275c8a;
                         margin: 0 0 20px 15px;
                       }
                     }
+                  }
+                  .status-label {
+                    font-size: 1em;
                   }
                   .status-response {
                     padding: 10px 0px;
@@ -259,8 +263,13 @@ $link-color: #275c8a;
           xe-tab-panel {
             .xe-tab-container {
               #openActionItemContent {
+                .actionItemContentNoInfo {
+                  padding: 0px;
+                  margin: 16px 0px 16px 0px;
+                }
                 .actionItemContent {
                   padding: 0;
+                  margin: 16px 0px 16px 0px;
                   height: auto !important;
                   .ui-select-container {
                     width: 20em !important;

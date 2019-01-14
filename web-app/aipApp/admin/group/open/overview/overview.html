@@ -1,19 +1,19 @@
 <!--*******************************************************************************
-Copyright 2018 Ellucian Company L.P. and its affiliates.
+Copyright 2019 Ellucian Company L.P. and its affiliates.
 *******************************************************************************-->
 <div id="openGroupDetail">
     <div class="groupElement groupDetail col-xs-12 col-sm-8">
         <div class="row content-area">
             <div class="col-xs-12 col-sm-10">
-                <h3>{{"aip.common.group.name"|i18n_aip}}</h3>
-                <p class="openGroupTitle" ng-bind-html="vm.groupFolder.groupName"/>
-                <h3>{{"aip.common.folder"|i18n_aip}}</h3>
-                <p class="openGroupFolder" ng-bind-html="vm.groupFolder.folderName"/>
-                <h3>{{"aip.common.status"|i18n_aip}}</h3>
-                <p class="openGroupStatus" ng-bind-html="vm.groupFolder.groupStatus"/>
-                <h3>{{"aip.common.group.title"|i18n_aip}}</h3>
-                <p class="openGroupTitle" ng-bind-html="vm.groupFolder.groupTitle"/>
-                <h3>{{"aip.common.group.description"|i18n_aip}}</h3>
+                <label class="titleValue">{{"aip.common.group.name"|i18n_aip}}</label>
+                <p ng-bind-html="vm.groupFolder.groupName"/>
+                <label class="titleValue">{{"aip.common.folder"|i18n_aip}}</label>
+                <p ng-bind-html="vm.groupFolder.folderName"/>
+                <label class="titleValue">{{"aip.common.status"|i18n_aip}}</label>
+                <p ng-bind-html="vm.groupFolder.groupStatus"/>
+                <label class="titleValue">{{"aip.common.group.title"|i18n_aip}}</label>
+                <p ng-bind-html="vm.groupFolder.groupTitle"/>
+                <label class="titleValue">{{"aip.common.group.description"|i18n_aip}}</label>
                 <div class="openGroupDesc" ng-bind-html = "vm.trustHTML(vm.groupFolder.groupDesc)"></div>
             </div>
             <div class="col-xs-12 col-sm-2 overviewEdit">
@@ -28,17 +28,17 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
     </div>
 
     <div class="groupElement col-xs-12 col-sm-4">
-        <h3>{{"aip.common.activity"|i18n_aip}}</h3>
+        <label class="titleValue">{{"aip.common.activity"|i18n_aip}}</label>
         <hr />
         <div class="groupElement">
-            <h4>{{"aip.common.last.updated.by"|i18n_aip}}</h4>
-            <p class="openGroupLastUpdatedBy">{{vm.groupFolder.groupUserId}}</p>
+            <label class="titleValue">{{"aip.common.last.updated.by"|i18n_aip}}</label>
+            <p>{{vm.groupFolder.groupUserId}}</p>
         </div>
 
         <hr />
         <div class="groupElement">
-            <h4>{{"aip.common.activity.date"|i18n_aip}}</h4>
-            <p class="openGroupActivityDate">{{vm.groupFolder.groupActivityDate}}</p>
+            <label class="titleValue">{{"aip.common.activity.date"|i18n_aip}}</label>
+            <p>{{vm.groupFolder.groupActivityDate}}</p>
         </div>
     </div>
 </div>

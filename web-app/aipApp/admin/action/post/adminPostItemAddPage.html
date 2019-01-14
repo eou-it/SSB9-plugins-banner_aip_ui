@@ -1,5 +1,5 @@
 <!--*******************************************************************************
-Copyright 2018 Ellucian Company L.P. and its affiliates.
+Copyright 2019 Ellucian Company L.P. and its affiliates.
 *******************************************************************************-->
 
 <div>
@@ -168,13 +168,12 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
             <div class="">
                 <input type="radio" id="chkPost" name="content" ng-model="vm.postNow" data-ng-value="true"
                        ng-change="vm.checkChanges()">
-                <label class="titleValue  required" for="chkPost"><span class="postChk">{{"aip.admin.action.postactionItem.post.now"|i18n_aip}}</span></label>
+                <label class="titleValue  required" for="chkPost">{{"aip.admin.action.postactionItem.post.now"|i18n_aip}}</label>
 
                 <br/>
                 <input type="radio" id="chkDate" name="content" ng-model="vm.postNow" data-ng-value="false"
                        ng-change="vm.checkChanges()">
-                <label class="titleValue  required" for="chkDate">
-                    <span class="postChk">{{"aip.admin.action.postactionItem.scheduleDate"|i18n_aip}}</span></label>
+                <label class="titleValue  required" for="chkDate">{{"aip.admin.action.postactionItem.scheduleDate"|i18n_aip}}</label>
 
                 <div ng-hide="vm.postNow" class="col-sm-12">
                     <div class="row actionItemInfoRow actionItemStatus">
@@ -197,7 +196,7 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
                             </div>
                             <div class="col-sm-4 enddate">
                                 <div class="actionItemElement row input-actionItem">
-                                    <label for="postActionItemTime" id="postActionItemTime" class="titleValue col-sm-4 required" >{{"aip.admin.action.postactionItem.time"|i18n_aip}}
+                                    <label for="postActionItemTime" id="postActionItemTime" class="titleValue required" >{{"aip.admin.action.postactionItem.time"|i18n_aip}}
                                     </label>
                                 </div>
                                 <div class="actionItemElement Datelement col-sm-4 dateRow form-container" role="textbox">
@@ -268,7 +267,7 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
                             </div>
                             <div class="col-sm-4 enddate">
                                 <div class="actionItemElement row input-actionItem">
-                                    <label for="labelappServerTime" id="labelappServerTime" class="titleValue col-sm-4" id="">{{"aip.admin.action.postactionItem.time"|i18n_aip}}
+                                    <label for="labelappServerTime" id="labelappServerTime" class="titleValue">{{"aip.admin.action.postactionItem.time"|i18n_aip}}
                                     </label>
                                 </div>
                                 <div class="actionItemElement Datelement col-sm-4 dateRow form-container" role="textbox">
