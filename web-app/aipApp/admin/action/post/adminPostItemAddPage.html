@@ -274,11 +274,11 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
                                 <div class="actionItemElement Datelement col-sm-4 dateRow form-container" role="textbox">
                                     <div class="row input-daterange form-group right-inner-addon dateRange-minwidth">
                                         <input id="appServerTime" type="text" class="form-control"
-                                               xe-time-picker-box input_24_hr_string="{{vm.localeTime ? 'N' : 'Y'}}" change='vm.checkChanges();vm.getProcessedServerDateTimeAndTimezone()'
+										       xe-time-picker-box input_24_hr_string="{{vm.localeTime ? 'N' : 'Y'}}"
                                                hour-format-12="{{vm.localeTime ? 'Y' : 'N'}}"
                                                am-label='{{"aip.admin.communication.timepicker.time.am.label"|i18n_aip}}'
                                                pm-label='{{"aip.admin.communication.timepicker.time.pm.label"|i18n_aip}}'
-                                               ng-model="vm.appServerTime"
+										       ng-model="vm.appServerTime"
                                                aria-required="true" ng-disabled="true">
                                     </div>
                                 </div>

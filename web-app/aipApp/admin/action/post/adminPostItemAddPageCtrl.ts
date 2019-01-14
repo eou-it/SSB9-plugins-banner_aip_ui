@@ -129,7 +129,7 @@ module AIP {
             this.postIDvalue=0;
             this.dirtyFlag=false;
             this.selectedActionListVal=[];
-            this.displayDatetimeZone=null;
+            this.displayDatetimeZone={};
             this.defaultTimeZoneNameWithOffset=null;
             this.serverinfo={};
             this.appServerDate=null;
@@ -248,7 +248,7 @@ module AIP {
                                 this.defaultTimeZone = this.$filter("i18n_aip")("timezone." + postingTimeZone[postingTimeZone.length-1]);
 
                                 for(var k=0;k<this.timezones.length;k++) {
-                                    if(this.actionPost1.postingTimeZone === this.timezones[k].displayName)
+                                    if(this.defaultTimeZone === this.timezones[k].displayNameWithoutOffset)
                                     {
                                         this.setTimezone(this.timezones[k])
                                     }
@@ -568,7 +568,9 @@ module AIP {
                 var currentTime = this.$filter('date')(CurrentDateTimeDetails, 'HHmm');
                 this.getDefaultTimeZone();
                 var CurrentTimeZone= this.defaultTimeZoneNameWithOffset;
-                this.displayDatetimeZone=currentDate.toString()+' '+currentTime.toString()+' '+CurrentTimeZone;
+                this.displayDatetimeZone.dateVal=currentDate.toString();
+                this.displayDatetimeZone.timeVal=currentTime.toString();
+                this.displayDatetimeZone.timeZoneVal=CurrentTimeZone;
 
             } else {
                 if (this.editMode && !(this.sendTime instanceof Date)) {
@@ -579,7 +581,11 @@ module AIP {
                         this.timeConversion()
                         userSelectedTime = this.selectedTime
                     }
-                    this.displayDatetimeZone=this.postActionItemInfo.scheduledStartDate+' '+this.selectedTime+' '+this.timezone.stringOffset+' '+this.timezone.timezoneId;
+                    this.displayDatetimeZone.dateVal=this.postActionItemInfo.scheduledStartDate;
+                    this.displayDatetimeZone.timeVal=this.selectedTime;
+                    this.displayDatetimeZone.timeZoneVal=this.timezone.stringOffset+' '+this.timezone.timezoneId;
+
+
 
                 } else {
                     if(this.sendTime instanceof Date) {
@@ -588,7 +594,9 @@ module AIP {
                     else{
                         userSelectedTime= this.sendTime
                     }
-                    this.displayDatetimeZone=this.postActionItemInfo.scheduledStartDate+' '+this.selectedTime+' '+this.timezone.stringOffset+' '+this.timezone.timezoneId;
+                    this.displayDatetimeZone.dateVal=this.postActionItemInfo.scheduledStartDate;
+                    this.displayDatetimeZone.timeVal=this.selectedTime;
+                    this.displayDatetimeZone.timeZoneVal=this.timezone.stringOffset+' '+this.timezone.timezoneId;
                 }
             }
 
