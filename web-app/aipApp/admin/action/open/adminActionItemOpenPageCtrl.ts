@@ -193,7 +193,7 @@ module AIP {
                     this.actionItem = response.data.actionItem;
                     this.actionItem.actionItemContent = this.trustAsHtml(response.data.actionItem.actionItemContent);
                     this.selectedTemplate = this.actionItem.actionItemTemplateId;
-                    this.selectedTempDescription = (this.actionItem.actionItemTemplateDesc) ? this.actionItem.actionItemTemplateDesc : this.$filter("i18n_aip")("aip.admin.action.open.tab.content.noTemplateDescription");
+                    this.selectedTempDescription = (this.actionItem.actionItemTemplateDesc.trim()) ? this.actionItem.actionItemTemplateDesc : this.$filter("i18n_aip")("aip.admin.action.open.tab.content.noTemplateDescription");
                     this.actionItemPostedStatus = this.actionItem.actionItemPostedStatus;
                     deferred.resolve(this.openPanel("overview"));
                 }, (err) => {
@@ -304,32 +304,13 @@ module AIP {
         }
 
         unescapeHTML(str) {
-            return this.stripTags(str).replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&amp;/g, '&');
+            return this.stripTags(str).replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&amp;/g, '&').replace(/&ldquo;/g, '\"').replace(/&rdquo;/g, '\"').replace(/&#039;/g, '\'').replace(/&quot;/g, '\"').replace(/&#39;/g, '\"');
         }
 
         specialCharacterTranslation() {
             for (var j = 0; j < this.rules.length; j++) {
-                if (this.rules[j].statusName.indexOf('&amp;') > -1) {
-                    this.rules[j].statusName = this.rules[j].statusName.replace("&amp;", "&");
-                }
-                if (this.rules[j].statusName.indexOf('&quot;') > -1) {
-                    this.rules[j].statusName = this.rules[j].statusName.replace("&quot;", "\"");
-
-                }
-                if ((this.rules[j].statusName.indexOf('&#039;') > -1) || (this.rules[j].statusName.indexOf('&#39;') > -1)) {
-                    this.rules[j].statusName = this.rules[j].statusName.replace("&#039;", "\'");
-                    this.rules[j].statusName = this.rules[j].statusName.replace("&#39;", "\'");
-                }
-                if (this.rules[j].statusName.indexOf('&lt;') > -1) {
-                    this.rules[j].statusName = this.rules[j].statusName.replace("&lt;", "<");
-
-                }
-                if (this.rules[j].statusName.indexOf('&gt;') > -1) {
-                    this.rules[j].statusName = this.rules[j].statusName.replace("&gt;", ">");
-
-                }
+                this.rules[j].statusName = this.unescapeHTML(this.rules[j].statusName);
             }
-
         }
 
         isNoTemplateSelected() {
@@ -374,7 +355,7 @@ module AIP {
 
         setTemplateDetails() {
             this.selectedTemplate = this.selectedTemplateObj.id;
-            this.selectedTempDescription = (this.selectedTemplateObj.description) ? this.unescapeHTML(this.selectedTemplateObj.description) : this.$filter("i18n_aip")("aip.admin.action.open.tab.content.noTemplateDescription");
+            this.selectedTempDescription = (this.selectedTemplateObj.description.trim()) ? this.unescapeHTML(this.selectedTemplateObj.description) : this.$filter("i18n_aip")("aip.admin.action.open.tab.content.noTemplateDescription");
         }
 
         cancelContentEdit(option) {
@@ -392,7 +373,7 @@ module AIP {
                             return item.id === parseInt(this.selectedTemplate);
                         })[0];
                     }
-                    this.selectedTempDescription = (this.actionItem.actionItemTemplateDesc) ? this.actionItem.actionItemTemplateDesc : this.$filter("i18n_aip")("aip.admin.action.open.tab.content.noTemplateDescription");
+                    this.selectedTempDescription = (this.actionItem.actionItemTemplateDesc.trim()) ? this.actionItem.actionItemTemplateDesc : this.$filter("i18n_aip")("aip.admin.action.open.tab.content.noTemplateDescription");
                     this.trustActionItemContent();
 
                     switch (option) {

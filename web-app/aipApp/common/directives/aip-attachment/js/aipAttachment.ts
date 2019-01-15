@@ -1,5 +1,5 @@
 /*******************************************************************************
- Copyright 2018 Ellucian Company L.P. and its affiliates.
+ Copyright 2019 Ellucian Company L.P. and its affiliates.
  ********************************************************************************/
 ///<reference path="../../../../../typings/tsd.d.ts"/>
 ///<reference path="../../../services/aipAttachmentService.ts"/>
@@ -159,6 +159,9 @@ module AIPUI {
 
             $scope.uploadDocument = function (selectedFiles) {
 
+                if($("#fileupload_label").val()===""){
+                    selectedFiles = null;
+                }
                 if (!selectedFiles) {
                     errorNotification($filter("i18n_aip")("js.aip.common.file.not.selected"));
                     return false;
@@ -167,6 +170,10 @@ module AIPUI {
                 var selectedFile = selectedFiles[0];
                 if (!selectedFile) {
                     errorNotification($filter("i18n_aip")("js.aip.common.file.not.selected"));
+                    return false;
+                }
+                if (selectedFile && selectedFile.name.length > 60) {
+                    errorNotification($filter("i18n_aip")("aip.uploadDocument.file.name.length.error"));
                     return false;
                 }
 

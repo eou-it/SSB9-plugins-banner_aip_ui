@@ -6,7 +6,7 @@
 ///<reference path="../common/services/userService.ts"/>
 var AIP;
 (function (AIP) {
-    var ListItemPageCtrl = (function () {
+    var ListItemPageCtrl = /** @class */ (function () {
         function ListItemPageCtrl($scope, $state, ItemListViewService, AIPUserService, SpinnerService, $timeout, $q, $uibModal, APP_ROOT, $sce, $compile) {
             this.$inject = ["$scope", "$state", "ItemListViewService", "AIPUserService", "SpinnerService", "$timeout", "$q", "$uibModal", "APP_ROOT", "$sce", "$compile"];
             this.trustHTML = function (txtString) {
@@ -275,8 +275,11 @@ var AIP;
                         window.params.responseId = $(currentId)[0].value;
                         window.params.maxAttachments = $("#maxAttachment" + paperClipId + $(currentId)[0].value).val();
                         $("#" + selectedPaperClip)[0].setAttribute("src", "../images/attach_icon_default.svg");
-                        var evt = new CustomEvent('responseChanged');
-                        window.dispatchEvent(evt);
+                        // Create the event.
+                        var event = document.createEvent('Event');
+                        // Define that the event name is 'responseChanged'.
+                        event.initEvent('responseChanged', true, true);
+                        window.dispatchEvent(event);
                     }
                 });
             }
@@ -319,4 +322,3 @@ var AIP;
     AIP.ListItemPageCtrl = ListItemPageCtrl;
 })(AIP || (AIP = {}));
 register("bannerNonAdminAIP").controller("ListItemPageCtrl", AIP.ListItemPageCtrl);
-//# sourceMappingURL=listItemPageCtrl.js.map
