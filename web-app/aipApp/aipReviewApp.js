@@ -172,7 +172,7 @@ var bannerAIPReviewApp = angular.module("bannerAIPReview", [
             $rootScope.$on("$stateChangeSuccess", function (event, toState, toParams, fromState, fromParams) {
                 $state.previous = fromState;
                 $state.previousParams = fromParams;
-                retainBreadcrumbsBrowserRefresh(toState,BreadcrumbService);
+                retainBreadcrumbsOnBrowserRefresh(toState,BreadcrumbService);
                 BreadcrumbService.updateBreadcrumb(toState.data.breadcrumbs);
             });
 
@@ -216,7 +216,7 @@ angular.module("templates/dropdown.html", []).run(["$templateCache", function ($
         "<div class=\"btn-group\"><button type=\"button\" ng-disabled=\"{{disabled}}\" ng-class=\"{disabledDD:disabled}\" data-toggle=\"dropdown\" class=\"btn btn-default dropdown dropdown-toggle\" role=\"listbox\" aria-expanded=\"false\" aria-haspopup=\"true\"><span class=\"placeholder\" ng-show=\"!ngModel\">{{::xeLabel}}</span> <span class=\"placeholder\">{{ dropDownLabel }}</span> <span class=\"glyphicon glyphicon-chevron-down\"></span></button><ul class=\"dropdown-menu\" role=\"listbox\" aria-expanded=\"false\" role=\"listbox\"><li ng-hide=\"!ngModel\" ng-click=\"updateModel(xeLabel)\">{{::xeLabel}}</li><li ng-if=\"!isObject\" role=\"option\" ng-repeat=\"option in xeOptions track by $index\" ng-click=\"updateModel(option)\" ng-class=\"{'selected':option===ngModel}\">{{::option}}</li><li ng-if=\"isObject\" ng-repeat=\"option in xeOptions track by $index\" ng-click=\"updateModel(option)\">{{::option.label}}</li></ul></div>");
 }]);
 
-var retainBreadcrumbsBrowserRefresh = function (toState,BreadcrumbService) {
+var retainBreadcrumbsOnBrowserRefresh = function (toState,BreadcrumbService) {
     var rootBreadcrumbs = {title: "js.aip.review.monitor.action.item",url: "/aipReview"};
     if(toState.data.breadcrumbs.title !== rootBreadcrumbs.title){
         BreadcrumbService.updateBreadcrumb(rootBreadcrumbs);

@@ -363,7 +363,7 @@ var bannerAIPApp = angular.module("bannerAIP", [
             $rootScope.$on("$stateChangeSuccess", function (event, toState, toParams, fromState, fromParams) {
                 $state.previous = fromState;
                 $state.previousParams = fromParams;
-                retainBreadcrumbsBrowserRefresh(toState,BreadcrumbService);
+                retainBreadcrumbsOnBrowserRefresh(toState,BreadcrumbService);
                 BreadcrumbService.updateBreadcrumb(toState.data.breadcrumbs);
             });
 
@@ -515,7 +515,7 @@ angular.module("BannerOnAngular")
         params.saved = false;
     }]);
 
-var retainBreadcrumbsBrowserRefresh = function (toState,BreadcrumbService) {
+var retainBreadcrumbsOnBrowserRefresh = function (toState,BreadcrumbService) {
     var rootBreadcrumbs = {title: "aip.admin.landing",url: "/aipAdmin/#/landing"};
     if(toState.data.breadcrumbs.title !== rootBreadcrumbs.title){
         BreadcrumbService.updateBreadcrumb(rootBreadcrumbs);
