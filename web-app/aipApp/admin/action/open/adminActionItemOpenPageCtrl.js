@@ -151,7 +151,7 @@ var AIP;
                 _this.actionItem = response.data.actionItem;
                 _this.actionItem.actionItemContent = _this.trustAsHtml(response.data.actionItem.actionItemContent);
                 _this.selectedTemplate = _this.actionItem.actionItemTemplateId;
-                _this.selectedTempDescription = (_this.actionItem.actionItemTemplateDesc) ? _this.actionItem.actionItemTemplateDesc : _this.$filter("i18n_aip")("aip.admin.action.open.tab.content.noTemplateDescription");
+                _this.selectedTempDescription = (_this.actionItem.actionItemTemplateDesc.trim()) ? _this.actionItem.actionItemTemplateDesc : _this.$filter("i18n_aip")("aip.admin.action.open.tab.content.noTemplateDescription");
                 _this.actionItemPostedStatus = _this.actionItem.actionItemPostedStatus;
                 deferred.resolve(_this.openPanel("overview"));
             }, function (err) {
@@ -261,26 +261,11 @@ var AIP;
             return str.replace(/<\w+(\s+("[^"]*"|'[^']*'|[^>])+)?>|<\/\w+>/gi, '');
         };
         AdminActionItemOpenPageCtrl.prototype.unescapeHTML = function (str) {
-            return this.stripTags(str).replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&amp;/g, '&');
+            return this.stripTags(str).replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&amp;/g, '&').replace(/&ldquo;/g, '\"').replace(/&rdquo;/g, '\"').replace(/&#039;/g, '\'').replace(/&quot;/g, '\"').replace(/&#39;/g, '\"');
         };
         AdminActionItemOpenPageCtrl.prototype.specialCharacterTranslation = function () {
             for (var j = 0; j < this.rules.length; j++) {
-                if (this.rules[j].statusName.indexOf('&amp;') > -1) {
-                    this.rules[j].statusName = this.rules[j].statusName.replace("&amp;", "&");
-                }
-                if (this.rules[j].statusName.indexOf('&quot;') > -1) {
-                    this.rules[j].statusName = this.rules[j].statusName.replace("&quot;", "\"");
-                }
-                if ((this.rules[j].statusName.indexOf('&#039;') > -1) || (this.rules[j].statusName.indexOf('&#39;') > -1)) {
-                    this.rules[j].statusName = this.rules[j].statusName.replace("&#039;", "\'");
-                    this.rules[j].statusName = this.rules[j].statusName.replace("&#39;", "\'");
-                }
-                if (this.rules[j].statusName.indexOf('&lt;') > -1) {
-                    this.rules[j].statusName = this.rules[j].statusName.replace("&lt;", "<");
-                }
-                if (this.rules[j].statusName.indexOf('&gt;') > -1) {
-                    this.rules[j].statusName = this.rules[j].statusName.replace("&gt;", ">");
-                }
+                this.rules[j].statusName = this.unescapeHTML(this.rules[j].statusName);
             }
         };
         AdminActionItemOpenPageCtrl.prototype.isNoTemplateSelected = function () {
@@ -310,7 +295,7 @@ var AIP;
         };
         AdminActionItemOpenPageCtrl.prototype.setTemplateDetails = function () {
             this.selectedTemplate = this.selectedTemplateObj.id;
-            this.selectedTempDescription = (this.selectedTemplateObj.description) ? this.unescapeHTML(this.selectedTemplateObj.description) : this.$filter("i18n_aip")("aip.admin.action.open.tab.content.noTemplateDescription");
+            this.selectedTempDescription = (this.selectedTemplateObj.description.trim()) ? this.unescapeHTML(this.selectedTemplateObj.description) : this.$filter("i18n_aip")("aip.admin.action.open.tab.content.noTemplateDescription");
         };
         AdminActionItemOpenPageCtrl.prototype.cancelContentEdit = function (option) {
             var _this = this;
@@ -328,7 +313,7 @@ var AIP;
                         return item.id === parseInt(_this.selectedTemplate);
                     })[0];
                 }
-                _this.selectedTempDescription = (_this.actionItem.actionItemTemplateDesc) ? _this.actionItem.actionItemTemplateDesc : _this.$filter("i18n_aip")("aip.admin.action.open.tab.content.noTemplateDescription");
+                _this.selectedTempDescription = (_this.actionItem.actionItemTemplateDesc.trim()) ? _this.actionItem.actionItemTemplateDesc : _this.$filter("i18n_aip")("aip.admin.action.open.tab.content.noTemplateDescription");
                 _this.trustActionItemContent();
                 switch (option) {
                     case "content":

@@ -55,7 +55,7 @@ Copyright 2019 Ellucian Company L.P. and its affiliates.
                 </label>
             </div>
             <div class="row">
-                <pre id="actionItemTemplateDesc" class="templateDescription">{{vm.selectedTempDescription}}</pre>
+                <pre id="actionItemTemplateDesc" class="template-description" ng-bind-html="vm.selectedTempDescription"></pre>
             </div>
             <div class="row">
                 <label class="titleValue" for="templateContent" id="template-content">{{'aip.common.text.content'|i18n_aip}}</label>
@@ -125,7 +125,7 @@ Copyright 2019 Ellucian Company L.P. and its affiliates.
                 <div class="col-xs-12 col-sm-12">
                     <label class="titleValue">{{'aip.admin.action.open.tab.content.templateDescription'|i18n_aip}}</label>
                     <div>
-                        <pre class="templateDescription">{{vm.selectedTempDescription}}</pre>
+                        <pre class="template-description description-overview" ng-bind-html="vm.selectedTempDescription"></pre>
                     </div>
                 </div>
             </div>
