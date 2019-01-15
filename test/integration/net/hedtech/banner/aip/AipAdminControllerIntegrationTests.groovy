@@ -1,5 +1,5 @@
 /*********************************************************************************
- Copyright 2018 Ellucian Company L.P. and its affiliates.
+ Copyright 2018-2019 Ellucian Company L.P. and its affiliates.
  **********************************************************************************/
 package net.hedtech.banner.aip
 
@@ -16,8 +16,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.context.SecurityContextHolder
 import net.hedtech.banner.general.overall.IntegrationConfiguration
 
-
-import javax.validation.constraints.NotNull
 
 /**
  * AipAdminControllerIntegrationTests.
@@ -654,8 +652,6 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
         def admin = PersonUtility.getPerson( "AIPADM001" ) // role: advisor
         assertNotNull admin
 
-        List<ActionItemGroup> actionItemGroups = actionItemGroupService.listActionItemGroups()
-
         def auth = selfServiceBannerAuthenticationProvider.authenticate(
                 new UsernamePasswordAuthenticationToken( admin.bannerId, '111111' ) )
         SecurityContextHolder.getContext().setAuthentication( auth )
@@ -683,7 +679,6 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
         controller.params.offset = 0
 
         controller.actionItemList()
-        def answer = JSON.parse( controller.response.contentAsString )
 
         assertEquals 200, controller.response.status
     }
@@ -702,7 +697,6 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
         controller.params.ascending = false
         controller.params.max = 20
         controller.actionItemStatusGridList()
-        def answer = JSON.parse( controller.response.contentAsString )
         assertEquals 200, controller.response.status
 
     }
@@ -721,7 +715,6 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
         controller.params.ascending = false
         controller.params.max = 20
         controller.actionItemList()
-        def answer = JSON.parse( controller.response.contentAsString )
         assertEquals 200, controller.response.status
 
     }
@@ -743,18 +736,7 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
         controller.params.offset = 0
 
         controller.actionItemStatusGridList()
-        def answer = JSON.parse( controller.response.contentAsString )
 
-        answer.result.each {
-            def person = PersonUtility.getPerson( it.lastModifiedBy )
-        }
-        def testpn = PersonUtility.getPerson( '207001837' )
-        if (testpn) {
-            def params = [pidm: testpn.pidm, usage: 'DEFAULT']
-            def preferredName = preferredNameService.getPreferredName( params );
-        } else {
-            println "no person record"
-        }
         assertEquals 200, controller.response.status
     }
 
@@ -779,7 +761,7 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
         controller.request.json = requestObj
 
         controller.groupList()
-        def answer = JSON.parse( controller.response.contentAsString )
+
         assertEquals 200, controller.response.status
     }
 

@@ -1,18 +1,14 @@
 /*********************************************************************************
- Copyright 2018 Ellucian Company L.P. and its affiliates.
+ Copyright 2019 Ellucian Company L.P. and its affiliates.
  **********************************************************************************/
 package net.hedtech.banner.aip
 
+import org.junit.Assert
 import grails.converters.JSON
-import net.hedtech.banner.general.person.PersonUtility
 import net.hedtech.banner.testing.BaseIntegrationTestCase
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
-import static org.junit.Assert.*
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
-import org.springframework.security.core.context.SecurityContextHolder
-import net.hedtech.banner.aip.ActionItem
 
 /**
  * AipReviewControllerIntegrationTests.
@@ -41,7 +37,7 @@ class AipReviewControllerIntegrationTests extends BaseIntegrationTestCase {
 
     @Test
     void listActionItemNames() {
-        def result =controller.fetchActionItemNames()
+        controller.fetchActionItemNames()
         def ActionItemList = JSON.parse( controller.response.contentAsString )
         assertNotNull( ActionItemList )
         assertTrue( ActionItemList.size() > 0 )
