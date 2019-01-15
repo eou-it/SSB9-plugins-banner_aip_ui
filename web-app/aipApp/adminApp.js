@@ -363,6 +363,7 @@ var bannerAIPApp = angular.module("bannerAIP", [
             $rootScope.$on("$stateChangeSuccess", function (event, toState, toParams, fromState, fromParams) {
                 $state.previous = fromState;
                 $state.previousParams = fromParams;
+                retainBreadcrumbsBrowserRefresh(toState,BreadcrumbService);
                 BreadcrumbService.updateBreadcrumb(toState.data.breadcrumbs);
             });
 
@@ -514,4 +515,19 @@ angular.module("BannerOnAngular")
         params.saved = false;
     }]);
 
+var retainBreadcrumbsBrowserRefresh = function (toState,BreadcrumbService) {
+    var rootBreadcrumbs = {title: "aip.admin.landing",url: "/aipAdmin/#/landing"};
+    if(toState.data.breadcrumbs.title !== rootBreadcrumbs.title){
+        BreadcrumbService.updateBreadcrumb(rootBreadcrumbs);
+    }
+    if(toState.data.breadcrumbs.title === "aip.admin.group.open" || toState.data.breadcrumbs.title === "aip.admin.group.add" || toState.data.breadcrumbs.title === "aip.admin.group.edit"){
+        BreadcrumbService.updateBreadcrumb({title: "aip.admin.groups",url: "/aipAdmin/#/group"});
+    }
+    if(toState.data.breadcrumbs.title === "aip.admin.action.edit.actionItem" || toState.data.breadcrumbs.title === "aip.admin.action.open" || toState.data.breadcrumbs.title === "aip.admin.action.add.actionItem"){
+        BreadcrumbService.updateBreadcrumb({title: "aip.admin.action",url: "/aipAdmin/#/action"});
+    }
+    if(toState.data.breadcrumbs.title === "aip.admin.action.actionItem.editJob" || toState.data.breadcrumbs.title === "aip.admin.action.actionItem.addJob"){
+        BreadcrumbService.updateBreadcrumb({title: "aip.admin.action.item.post.item",url: "/aipAdmin/#/post"});
+    }
+}
 
