@@ -361,8 +361,11 @@ module AIP {
                         window.params.responseId = $(currentId)[0].value;
                         window.params.maxAttachments = $("#maxAttachment"+paperClipId+$(currentId)[0].value).val();
                         $("#" + selectedPaperClip)[0].setAttribute("src", "../images/attach_icon_default.svg");
-                        var evt = new CustomEvent('responseChanged');
-                        window.dispatchEvent(evt);
+                        // Create the event.
+                        var event = document.createEvent('Event');
+                        // Define that the event name is 'responseChanged'.
+                        event.initEvent('responseChanged', true, true);
+                        window.dispatchEvent(event);
                     }
                 });
             }
