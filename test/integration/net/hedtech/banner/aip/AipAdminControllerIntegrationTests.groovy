@@ -880,7 +880,6 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
                 new UsernamePasswordAuthenticationToken( admin.bannerId, '111111' ) )
         SecurityContextHolder.getContext().setAuthentication( auth )
 
-        ActionItemStatus status = new ActionItemStatus()
         def requestObj = [:]
         requestObj.title = "integration test status"
         requestObj.block = true
