@@ -151,7 +151,11 @@ var AIP;
                 _this.actionItem = response.data.actionItem;
                 _this.actionItem.actionItemContent = _this.trustAsHtml(response.data.actionItem.actionItemContent);
                 _this.selectedTemplate = _this.actionItem.actionItemTemplateId;
-                _this.selectedTempDescription = (_this.actionItem.actionItemTemplateDesc.trim()) ? _this.actionItem.actionItemTemplateDesc : _this.$filter("i18n_aip")("aip.admin.action.open.tab.content.noTemplateDescription");
+                var description = _this.actionItem.actionItemTemplateDesc;
+                if (description) {
+                    description = description.trim();
+                }
+                _this.selectedTempDescription = (description) ? description : _this.$filter("i18n_aip")("aip.admin.action.open.tab.content.noTemplateDescription");
                 _this.actionItemPostedStatus = _this.actionItem.actionItemPostedStatus;
                 deferred.resolve(_this.openPanel("overview"));
             }, function (err) {
@@ -295,7 +299,11 @@ var AIP;
         };
         AdminActionItemOpenPageCtrl.prototype.setTemplateDetails = function () {
             this.selectedTemplate = this.selectedTemplateObj.id;
-            this.selectedTempDescription = (this.selectedTemplateObj.description.trim()) ? this.unescapeHTML(this.selectedTemplateObj.description) : this.$filter("i18n_aip")("aip.admin.action.open.tab.content.noTemplateDescription");
+            var description = this.selectedTemplateObj.description;
+            if (description) {
+                description = description.trim();
+            }
+            this.selectedTempDescription = (description) ? this.unescapeHTML(description) : this.$filter("i18n_aip")("aip.admin.action.open.tab.content.noTemplateDescription");
         };
         AdminActionItemOpenPageCtrl.prototype.cancelContentEdit = function (option) {
             var _this = this;
@@ -313,7 +321,11 @@ var AIP;
                         return item.id === parseInt(_this.selectedTemplate);
                     })[0];
                 }
-                _this.selectedTempDescription = (_this.actionItem.actionItemTemplateDesc.trim()) ? _this.actionItem.actionItemTemplateDesc : _this.$filter("i18n_aip")("aip.admin.action.open.tab.content.noTemplateDescription");
+                var description = _this.actionItem.actionItemTemplateDesc;
+                if (description) {
+                    description = description.trim();
+                }
+                _this.selectedTempDescription = description ? description : _this.$filter("i18n_aip")("aip.admin.action.open.tab.content.noTemplateDescription");
                 _this.trustActionItemContent();
                 switch (option) {
                     case "content":
@@ -348,7 +360,11 @@ var AIP;
                 .then(function (response) {
                 _this.actionItem = response.data.actionItem;
                 _this.selectedTemplate = _this.actionItem.actionItemTemplateId;
-                _this.selectedTempDescription = (_this.actionItem.actionItemTemplateDesc) ? _this.actionItem.actionItemTemplateDesc : _this.$filter("i18n_aip")("aip.admin.action.open.tab.content.noTemplateDescription");
+                var description = _this.actionItem.actionItemTemplateDesc;
+                if (description) {
+                    description = description.trim();
+                }
+                _this.selectedTempDescription = description ? description : _this.$filter("i18n_aip")("aip.admin.action.open.tab.content.noTemplateDescription");
                 _this.selectedTemplateObj = null;
                 if (_this.selectedTemplate) {
                     _this.selectedTemplateObj = _this.templates.filter(function (item) {

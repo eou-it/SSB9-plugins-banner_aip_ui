@@ -3,7 +3,6 @@
  **********************************************************************************/
 package net.hedtech.banner.aip
 
-import org.junit.Assert
 import grails.converters.JSON
 import net.hedtech.banner.testing.BaseIntegrationTestCase
 import org.junit.After
