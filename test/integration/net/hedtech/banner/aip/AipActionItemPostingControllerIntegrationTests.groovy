@@ -1,5 +1,5 @@
 /*********************************************************************************
- Copyright 2018 Ellucian Company L.P. and its affiliates.
+ Copyright 2018-2019 Ellucian Company L.P. and its affiliates.
  **********************************************************************************/
 package net.hedtech.banner.aip
 
@@ -283,7 +283,6 @@ class AipActionItemPostingControllerIntegrationTests extends BaseIntegrationTest
         controller.getStatusValue()
         assertEquals 200, controller.response.status
         def ret = controller.response.contentAsString
-        def data = JSON.parse( ret )
         assertTrue ret == 'N'
 
     }
