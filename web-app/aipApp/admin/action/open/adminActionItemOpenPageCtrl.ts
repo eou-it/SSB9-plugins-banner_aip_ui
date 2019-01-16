@@ -193,7 +193,11 @@ module AIP {
                     this.actionItem = response.data.actionItem;
                     this.actionItem.actionItemContent = this.trustAsHtml(response.data.actionItem.actionItemContent);
                     this.selectedTemplate = this.actionItem.actionItemTemplateId;
-                    this.selectedTempDescription = (this.actionItem.actionItemTemplateDesc.trim()) ? this.actionItem.actionItemTemplateDesc : this.$filter("i18n_aip")("aip.admin.action.open.tab.content.noTemplateDescription");
+                    let description = this.actionItem.actionItemTemplateDesc;
+                    if (description) {
+                        description = description.trim();
+                    }
+                    this.selectedTempDescription = (description) ? description : this.$filter("i18n_aip")("aip.admin.action.open.tab.content.noTemplateDescription");
                     this.actionItemPostedStatus = this.actionItem.actionItemPostedStatus;
                     deferred.resolve(this.openPanel("overview"));
                 }, (err) => {
@@ -355,7 +359,11 @@ module AIP {
 
         setTemplateDetails() {
             this.selectedTemplate = this.selectedTemplateObj.id;
-            this.selectedTempDescription = (this.selectedTemplateObj.description.trim()) ? this.unescapeHTML(this.selectedTemplateObj.description) : this.$filter("i18n_aip")("aip.admin.action.open.tab.content.noTemplateDescription");
+            let description = this.selectedTemplateObj.description;
+            if (description) {
+                description = description.trim();
+            }
+            this.selectedTempDescription = (description) ? this.unescapeHTML(description) : this.$filter("i18n_aip")("aip.admin.action.open.tab.content.noTemplateDescription");
         }
 
         cancelContentEdit(option) {
@@ -373,7 +381,12 @@ module AIP {
                             return item.id === parseInt(this.selectedTemplate);
                         })[0];
                     }
-                    this.selectedTempDescription = (this.actionItem.actionItemTemplateDesc.trim()) ? this.actionItem.actionItemTemplateDesc : this.$filter("i18n_aip")("aip.admin.action.open.tab.content.noTemplateDescription");
+                    let description = this.actionItem.actionItemTemplateDesc;
+                    if (description) {
+                        description = description.trim();
+                    }
+                    this.selectedTempDescription = description ? description : this.$filter("i18n_aip")("aip.admin.action.open.tab.content.noTemplateDescription");
+
                     this.trustActionItemContent();
 
                     switch (option) {
@@ -412,7 +425,11 @@ module AIP {
                 .then((response: AIP.IActionItemOpenResponse) => {
                     this.actionItem = response.data.actionItem;
                     this.selectedTemplate = this.actionItem.actionItemTemplateId;
-                    this.selectedTempDescription = (this.actionItem.actionItemTemplateDesc) ? this.actionItem.actionItemTemplateDesc : this.$filter("i18n_aip")("aip.admin.action.open.tab.content.noTemplateDescription");
+                    let description = this.actionItem.actionItemTemplateDesc;
+                    if (description) {
+                        description = description.trim();
+                    }
+                    this.selectedTempDescription = description ? description : this.$filter("i18n_aip")("aip.admin.action.open.tab.content.noTemplateDescription");
                     this.selectedTemplateObj = null;
                     if (this.selectedTemplate) {
                         this.selectedTemplateObj = this.templates.filter((item) => {
