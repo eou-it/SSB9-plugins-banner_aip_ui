@@ -263,7 +263,9 @@ var AIP;
                 .then(function (response) {
                 _this.processedServerDetails = response.data;
                 _this.appServerDate = (_this.postActionItemInfo.scheduledStartDate !== undefined) ? _this.processedServerDetails.serverDate : null;
+                console.log(typeof _this.processedServerDetails.serverTime);
                 _this.appServerTime = _this.processedServerDetails.serverTime;
+                console.log(typeof _this.appServerTime);
                 var serverTimeZone = _this.processedServerDetails.serverTimeZone.split(" ");
                 _this.appServerTimeZone = serverTimeZone[serverTimeZone.length - 1];
             });

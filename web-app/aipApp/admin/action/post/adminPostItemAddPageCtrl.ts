@@ -250,7 +250,7 @@ module AIP {
                                 for(var k=0;k<this.timezones.length;k++) {
                                     if(this.defaultTimeZone === this.timezones[k].displayNameWithoutOffset)
                                     {
-                                        this.setTimezone(this.timezones[k])
+                                        this.setTimezone(this.timezones[k]);
                                     }
                                 }
 
@@ -413,7 +413,9 @@ module AIP {
                 .then((response) => {
                     this.processedServerDetails =response.data;
                     this.appServerDate= (this.postActionItemInfo.scheduledStartDate !== undefined) ?  this.processedServerDetails.serverDate:null;
+                   console.log( typeof this.processedServerDetails.serverTime )
                     this.appServerTime= this.processedServerDetails.serverTime;
+                    console.log( typeof this.appServerTime)
                     var serverTimeZone= this.processedServerDetails.serverTimeZone.split(" ")
                     this.appServerTimeZone=serverTimeZone[serverTimeZone.length-1];
 
@@ -575,11 +577,11 @@ module AIP {
             } else {
                 if (this.editMode && !(this.sendTime instanceof Date)) {
                     if(this.selectedTime) {
-                        userSelectedTime = this.selectedTime
+                        userSelectedTime = this.selectedTime;
                     }
                     else{
                         this.timeConversion()
-                        userSelectedTime = this.selectedTime
+                        userSelectedTime = this.selectedTime;
                     }
                     this.displayDatetimeZone.dateVal=this.postActionItemInfo.scheduledStartDate;
                     this.displayDatetimeZone.timeVal=this.selectedTime;
@@ -589,10 +591,10 @@ module AIP {
 
                 } else {
                     if(this.sendTime instanceof Date) {
-                        userSelectedTime = this.$filter("date")(this.sendTime, "HHmm")
+                        userSelectedTime = this.$filter("date")(this.sendTime, "HHmm");
                     }
                     else{
-                        userSelectedTime= this.sendTime
+                        userSelectedTime= this.sendTime;
                     }
                     this.displayDatetimeZone.dateVal=this.postActionItemInfo.scheduledStartDate;
                     this.displayDatetimeZone.timeVal=this.selectedTime;
