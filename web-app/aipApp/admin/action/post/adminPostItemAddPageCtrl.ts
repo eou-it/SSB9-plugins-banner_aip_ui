@@ -413,9 +413,7 @@ module AIP {
                 .then((response) => {
                     this.processedServerDetails =response.data;
                     this.appServerDate= (this.postActionItemInfo.scheduledStartDate !== undefined) ?  this.processedServerDetails.serverDate:null;
-                   console.log( typeof this.processedServerDetails.serverTime )
                     this.appServerTime= this.processedServerDetails.serverTime;
-                    console.log( typeof this.appServerTime)
                     var serverTimeZone= this.processedServerDetails.serverTimeZone.split(" ")
                     this.appServerTimeZone=serverTimeZone[serverTimeZone.length-1];
 
