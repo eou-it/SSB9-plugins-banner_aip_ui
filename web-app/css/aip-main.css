@@ -420,9 +420,7 @@ aip-list .enddate {
     left: 50%;
     transform: translateX(-50%) translateY(-50%); }
 .aip-attachments-container .xe-popup-close {
-  padding: 1.5em;
-  border-radius: 0 6px 0 0;
-  height: auto; }
+  width: 0; }
 
 .aip-item-detail-container {
   height: inherit;
@@ -1824,9 +1822,7 @@ ol.selected-group > li > button {
   margin-left: -2em; }
 
 .xe-popup-close {
-  padding: 1.5em;
-  border-radius: 0 6px 0 0;
-  height: auto; }
+  width: 0; }
 
 #gridCaption {
   color: gray;
