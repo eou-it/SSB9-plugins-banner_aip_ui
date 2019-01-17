@@ -6,7 +6,7 @@
 ///<reference path="../../../common/services/admin/adminActionService.ts"/>
 var AIP;
 (function (AIP) {
-    var AdminPostItemAddPageCtrl = (function () {
+    var AdminPostItemAddPageCtrl = /** @class */ (function () {
         function AdminPostItemAddPageCtrl($scope, $q, $state, $uibModal, $filter, $timeout, SpinnerService, APP_ROOT, AdminActionStatusService, AdminActionService) {
             this.$inject = ["$scope", "$q", "$state", "$filter", "$timeout", "SpinnerService", "AdminActionStatusService", "AdminActionService", "$uibModal", "APP_ROOT", "datePicker"];
             $scope.vm = this;
@@ -43,7 +43,7 @@ var AIP;
             this.postIDvalue = 0;
             this.dirtyFlag = false;
             this.selectedActionListVal = [];
-            this.displayDatetimeZone = null;
+            this.displayDatetimeZone = {};
             this.defaultTimeZoneNameWithOffset = null;
             this.serverinfo = {};
             this.appServerDate = null;
@@ -129,7 +129,7 @@ var AIP;
                             var postingTimeZone = _this.actionPost1.postingTimeZone.split(" ");
                             _this.defaultTimeZone = _this.$filter("i18n_aip")("timezone." + postingTimeZone[postingTimeZone.length - 1]);
                             for (var k = 0; k < _this.timezones.length; k++) {
-                                if (_this.actionPost1.postingTimeZone === _this.timezones[k].displayName) {
+                                if (_this.defaultTimeZone === _this.timezones[k].displayNameWithoutOffset) {
                                     _this.setTimezone(_this.timezones[k]);
                                 }
                             }
@@ -263,7 +263,9 @@ var AIP;
                 .then(function (response) {
                 _this.processedServerDetails = response.data;
                 _this.appServerDate = (_this.postActionItemInfo.scheduledStartDate !== undefined) ? _this.processedServerDetails.serverDate : null;
+                console.log(typeof _this.processedServerDetails.serverTime);
                 _this.appServerTime = _this.processedServerDetails.serverTime;
+                console.log(typeof _this.appServerTime);
                 var serverTimeZone = _this.processedServerDetails.serverTimeZone.split(" ");
                 _this.appServerTimeZone = serverTimeZone[serverTimeZone.length - 1];
             });
@@ -403,7 +405,9 @@ var AIP;
                 var currentTime = this.$filter('date')(CurrentDateTimeDetails, 'HHmm');
                 this.getDefaultTimeZone();
                 var CurrentTimeZone = this.defaultTimeZoneNameWithOffset;
-                this.displayDatetimeZone = currentDate.toString() + ' ' + currentTime.toString() + ' ' + CurrentTimeZone;
+                this.displayDatetimeZone.dateVal = currentDate.toString();
+                this.displayDatetimeZone.timeVal = currentTime.toString();
+                this.displayDatetimeZone.timeZoneVal = CurrentTimeZone;
             }
             else {
                 if (this.editMode && !(this.sendTime instanceof Date)) {
@@ -414,7 +418,9 @@ var AIP;
                         this.timeConversion();
                         userSelectedTime = this.selectedTime;
                     }
-                    this.displayDatetimeZone = this.postActionItemInfo.scheduledStartDate + ' ' + this.selectedTime + ' ' + this.timezone.stringOffset + ' ' + this.timezone.timezoneId;
+                    this.displayDatetimeZone.dateVal = this.postActionItemInfo.scheduledStartDate;
+                    this.displayDatetimeZone.timeVal = this.selectedTime;
+                    this.displayDatetimeZone.timeZoneVal = this.timezone.stringOffset + ' ' + this.timezone.timezoneId;
                 }
                 else {
                     if (this.sendTime instanceof Date) {
@@ -423,7 +429,9 @@ var AIP;
                     else {
                         userSelectedTime = this.sendTime;
                     }
-                    this.displayDatetimeZone = this.postActionItemInfo.scheduledStartDate + ' ' + this.selectedTime + ' ' + this.timezone.stringOffset + ' ' + this.timezone.timezoneId;
+                    this.displayDatetimeZone.dateVal = this.postActionItemInfo.scheduledStartDate;
+                    this.displayDatetimeZone.timeVal = this.selectedTime;
+                    this.displayDatetimeZone.timeZoneVal = this.timezone.stringOffset + ' ' + this.timezone.timezoneId;
                 }
             }
             this.adminActionService.savePostActionItem(this.postActionItemInfo, this.selected, this.modalResults, this.selectedPopulation, this.postNow, userSelectedTime, this.timezone.timezoneId, this.regeneratePopulation, this.displayDatetimeZone)
@@ -459,4 +467,3 @@ var AIP;
     AIP.AdminPostItemAddPageCtrl = AdminPostItemAddPageCtrl;
 })(AIP || (AIP = {}));
 register("bannerAIP").controller("AdminPostItemAddPageCtrl", AIP.AdminPostItemAddPageCtrl);
-//# sourceMappingURL=adminPostItemAddPageCtrl.js.map
