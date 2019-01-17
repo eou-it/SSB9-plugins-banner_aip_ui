@@ -192,8 +192,11 @@ module AIP {
             );
             this.$q.all(allPromises).then(() => {
                 this.spinnerService.showSpinner(false);
-            });
 
+                if(!this.selectedReviewState.name) {
+                    this.displayNotification(this.$filter("i18n_aip")("aip.review.status.text.unavailable"), "error");
+                }
+            });
         }
 
         /**
