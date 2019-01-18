@@ -188,14 +188,13 @@ module AIP {
                 this.aipReviewService.getReviewStatusList()
                     .then((response) => {
                         this.actionItemReviewStatusList = response;
+                        if(this.actionItemReviewStatusList.isEmpty()){
+                            this.displayNotification(this.$filter("i18n_aip")("aip.review.status.text.unavailable"), "error");
+                        }
                     })
             );
             this.$q.all(allPromises).then(() => {
                 this.spinnerService.showSpinner(false);
-
-                if(!this.selectedReviewState.name) {
-                    this.displayNotification(this.$filter("i18n_aip")("aip.review.status.text.unavailable"), "error");
-                }
             });
         }
 
