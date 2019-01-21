@@ -188,7 +188,7 @@ module AIP {
                 this.aipReviewService.getReviewStatusList()
                     .then((response) => {
                         this.actionItemReviewStatusList = response;
-                        if(this.actionItemReviewStatusList.isEmpty()){
+                        if(this.actionItemReviewStatusList.length == 0){
                             this.displayNotification(this.$filter("i18n_aip")("aip.review.status.text.unavailable"), "error");
                         }
                     })
