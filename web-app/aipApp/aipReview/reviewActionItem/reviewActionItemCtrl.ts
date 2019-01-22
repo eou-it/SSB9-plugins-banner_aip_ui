@@ -1,5 +1,5 @@
 /*********************************************************************************
- Copyright 2018 Ellucian Company L.P. and its affiliates.
+ Copyright 2018-2019 Ellucian Company L.P. and its affiliates.
  **********************************************************************************/
 
 ///<reference path="../../../typings/tsd.d.ts"/>
@@ -188,12 +188,14 @@ module AIP {
                 this.aipReviewService.getReviewStatusList()
                     .then((response) => {
                         this.actionItemReviewStatusList = response;
+                        if(this.actionItemReviewStatusList.length == 0){
+                            this.displayNotification(this.$filter("i18n_aip")("aip.review.status.text.unavailable"), "error");
+                        }
                     })
             );
             this.$q.all(allPromises).then(() => {
                 this.spinnerService.showSpinner(false);
             });
-
         }
 
         /**
