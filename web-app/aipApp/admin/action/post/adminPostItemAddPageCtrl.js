@@ -59,6 +59,7 @@ var AIP;
             this.sendTime = new Date();
             this.sendTime.setMinutes(Math.ceil(this.sendTime.getMinutes() / 30) * 30);
             this.currentBrowserDate = this.$filter('date')(new Date(), this.$filter("i18n_aip")("default.date.format"));
+            this.currentBrowserDate = this.monthCapitalize(this.currentBrowserDate);
         };
         ;
         AdminPostItemAddPageCtrl.prototype.init = function () {
@@ -391,6 +392,10 @@ var AIP;
                 that.$state.go("admin-post-list");
             }
         };
+        AdminPostItemAddPageCtrl.prototype.monthCapitalize = function (date) {
+            var date = date.replace('.', '');
+            return date.replace(/\b\w/g, function (month) { return month.toUpperCase(); });
+        };
         AdminPostItemAddPageCtrl.prototype.save = function () {
             var _this = this;
             this.saving = true;
@@ -399,13 +404,11 @@ var AIP;
                 this.sendTime = null;
                 this.timezone = null;
                 var CurrentDateTimeDetails = new Date();
-                var currentDate = this.$filter('date')(CurrentDateTimeDetails, this.$filter("i18n_aip")("default.date.format"));
                 var currentTime = this.$filter('date')(CurrentDateTimeDetails, 'HHmm');
                 this.getDefaultTimeZone();
-                var CurrentTimeZone = this.defaultTimeZoneNameWithOffset;
-                this.displayDatetimeZone.dateVal = currentDate.toString();
+                this.displayDatetimeZone.dateVal = this.currentBrowserDate;
                 this.displayDatetimeZone.timeVal = currentTime.toString();
-                this.displayDatetimeZone.timeZoneVal = CurrentTimeZone;
+                this.displayDatetimeZone.timeZoneVal = this.timezone.stringOffset + ' ' + this.timezone.timezoneId;
             }
             else {
                 if (this.editMode && !(this.sendTime instanceof Date)) {
