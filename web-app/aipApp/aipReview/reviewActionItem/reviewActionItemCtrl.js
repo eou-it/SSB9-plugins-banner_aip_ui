@@ -1,5 +1,5 @@
 /*********************************************************************************
- Copyright 2018 Ellucian Company L.P. and its affiliates.
+ Copyright 2018-2019 Ellucian Company L.P. and its affiliates.
  **********************************************************************************/
 ///<reference path="../../../typings/tsd.d.ts"/>
 ///<reference path="../../common/services/aipReviewService.ts"/>
@@ -7,7 +7,7 @@
 ///<reference path="../../common/services/spinnerService.ts"/>
 var AIP;
 (function (AIP) {
-    var ReviewActionItemCtrl = /** @class */ (function () {
+    var ReviewActionItemCtrl = (function () {
         function ReviewActionItemCtrl($scope, $state, AIPReviewService, AIPUserService, SpinnerService, $timeout, $q, $uibModal, APP_ROOT, $sce, $filter) {
             this.$inject = ["$scope", "$state", "AIPReviewService", "AIPUserService", "SpinnerService", "$timeout", "$q", "$uibModal", "APP_ROOT", "$sce", "$filter", "datePicker"];
             /**
@@ -206,6 +206,9 @@ var AIP;
             }), this.aipReviewService.getReviewStatusList()
                 .then(function (response) {
                 _this.actionItemReviewStatusList = response;
+                if (_this.actionItemReviewStatusList.length == 0) {
+                    _this.displayNotification(_this.$filter("i18n_aip")("aip.review.status.text.unavailable"), "error");
+                }
             }));
             this.$q.all(allPromises).then(function () {
                 _this.spinnerService.showSpinner(false);
@@ -309,7 +312,8 @@ var AIP;
             return isAnyFieldModified;
         };
         return ReviewActionItemCtrl;
-    }());
+    })();
     AIP.ReviewActionItemCtrl = ReviewActionItemCtrl;
 })(AIP || (AIP = {}));
 register("bannerAIPReview").controller("reviewActionItemCtrl", AIP.ReviewActionItemCtrl);
+//# sourceMappingURL=reviewActionItemCtrl.js.map
