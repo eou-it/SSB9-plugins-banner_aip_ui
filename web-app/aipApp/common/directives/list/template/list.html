@@ -73,7 +73,7 @@
                                 <div><span class="data-label" >{{'aip.common.text.date.response.saved'|i18n_aip}}</span>{{row['completedDate']}}</div>
                                 <div><span class="data-label">{{'aip.user.action.item.last.response'|i18n_aip}}</span>{{row['currentResponse']}}</div>
                                 <div ng-if="row['currentReviewState']!==null"><span class="data-label">{{'aip.user.action.item.last.reviewState'|i18n_aip}}</span>{{row['currentReviewState']}}</div>
-                                <div ng-if="row['currentContact']!==null"><span class="data-label">{{'aip.user.action.item.last.currentContact'|i18n_aip}}</span>{{row['currentContact']}}</div>
+                                <div ng-if="row['currentContact']!==null && row['currentContact']!=='undefined'"><span class="data-label">{{'aip.user.action.item.last.currentContact'|i18n_aip}}</span>{{row['currentContact']}}</div>
                                 <div ng-if="row['currentComment']!==null"><span class="data-label">{{'aip.user.action.item.last.currentComment'|i18n_aip}}</span>{{row['currentComment']}}</div>
 
 
