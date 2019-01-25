@@ -255,7 +255,7 @@ module AIP {
 
                                 this.appServerDate=this.actionPost1.postingScheduleDateTime;
                                 this.appServerTime=this.actionPost1.scheduledStartTime;
-                                this.appServerTimeZone=this.actionPost1.timezoneStringOffset.displayNameWithoutOffset;
+                                this.appServerTimeZone=angular.element('<div></div>').html(this.actionPost1.timezoneStringOffset.displayNameWithoutOffset).text();
 
                                 this.changedValue();
 
@@ -415,7 +415,7 @@ module AIP {
                     this.appServerDate= (this.postActionItemInfo.scheduledStartDate !== undefined) ?  this.processedServerDetails.serverDate:null;
                     this.appServerTime= this.processedServerDetails.serverTime;
                     var serverTimeZone= this.processedServerDetails.serverTimeZone.split(" ")
-                    this.appServerTimeZone=serverTimeZone[serverTimeZone.length-1];
+                    this.appServerTimeZone=angular.element('<div></div>').html(serverTimeZone[serverTimeZone.length-1]).text();
 
                 });
         }
