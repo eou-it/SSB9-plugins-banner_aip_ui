@@ -1000,7 +1000,8 @@ ol.selected-group > li > button {
               .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .contentContainer .template-description {
                 max-height: 15.4em;
                 overflow-y: auto;
-                word-break: normal; }
+                word-break: normal;
+                font: inherit; }
               .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .contentContainer .description-overview {
                 max-height: 15em;
                 background-color: white;
@@ -1126,7 +1127,8 @@ ol.selected-group > li > button {
         .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .contentContainer .template-description {
           max-height: 8.2em;
           overflow-y: auto;
-          word-break: normal; }
+          word-break: normal;
+          font: inherit; }
         .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .contentContainer .description-overview {
           background-color: white;
           border: 0; }
