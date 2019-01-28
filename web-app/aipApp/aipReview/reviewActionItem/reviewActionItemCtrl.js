@@ -190,7 +190,7 @@ var AIP;
                 _this.responseId = _this.actionItemDetails.responseId;
                 _this.selectedReviewState = _this.actionItemDetails.reviewStateObject;
                 if (_this.actionItemDetails.reviewAuditObject) {
-                    _this.selectedContact.name = _this.actionItemDetails.reviewAuditObject.contactInfo;
+                    _this.selectedContact.name = (_this.actionItemDetails.reviewAuditObject.contactInfo === "undefined") ? _this.selectNone : _this.actionItemDetails.reviewAuditObject.contactInfo;
                     _this.externalCommentInd = _this.actionItemDetails.reviewAuditObject.externalCommentInd;
                     _this.reviewComments = _this.actionItemDetails.reviewAuditObject.reviewComments;
                 }
@@ -198,7 +198,7 @@ var AIP;
                 .then(function (response) {
                 _this.contactInformationList = response.data;
                 var selectObject = {
-                    "name": "",
+                    "name": _this.selectNone,
                     "type": "string",
                     "value": _this.selectNone
                 };

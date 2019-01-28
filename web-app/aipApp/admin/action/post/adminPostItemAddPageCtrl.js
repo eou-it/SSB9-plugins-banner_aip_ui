@@ -1,5 +1,5 @@
 /*******************************************************************************
- Copyright 2018 Ellucian Company L.P. and its affiliates.
+ Copyright 2018-2019 Ellucian Company L.P. and its affiliates.
  ********************************************************************************/
 ///<reference path="../../../../typings/tsd.d.ts"/>
 ///<reference path="../../../common/services/spinnerService.ts"/>
@@ -136,7 +136,7 @@ var AIP;
                             }
                             _this.appServerDate = _this.actionPost1.postingScheduleDateTime;
                             _this.appServerTime = _this.actionPost1.scheduledStartTime;
-                            _this.appServerTimeZone = _this.actionPost1.timezoneStringOffset.displayNameWithoutOffset;
+                            _this.appServerTimeZone = angular.element('<div></div>').html(_this.actionPost1.timezoneStringOffset.displayNameWithoutOffset).text();
                             _this.changedValue();
                             _this.adminActionStatusService.getActionItemsById(_this.$state.params.postIdval)
                                 .then(function (response) {
@@ -266,7 +266,7 @@ var AIP;
                 _this.appServerDate = (_this.postActionItemInfo.scheduledStartDate !== undefined) ? _this.processedServerDetails.serverDate : null;
                 _this.appServerTime = _this.processedServerDetails.serverTime;
                 var serverTimeZone = _this.processedServerDetails.serverTimeZone.split(" ");
-                _this.appServerTimeZone = serverTimeZone[serverTimeZone.length - 1];
+                _this.appServerTimeZone = angular.element('<div></div>').html(serverTimeZone[serverTimeZone.length - 1]).text();
             });
         };
         AdminPostItemAddPageCtrl.prototype.editPage = function () {
