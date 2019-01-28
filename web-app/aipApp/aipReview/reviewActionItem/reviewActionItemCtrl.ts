@@ -170,7 +170,7 @@ module AIP {
                         this.responseId = this.actionItemDetails.responseId;
                         this.selectedReviewState = this.actionItemDetails.reviewStateObject;
                         if(this.actionItemDetails.reviewAuditObject){
-                            this.selectedContact.name = this.actionItemDetails.reviewAuditObject.contactInfo;
+                            this.selectedContact.name = (this.actionItemDetails.reviewAuditObject.contactInfo === "undefined") ? this.selectNone : this.actionItemDetails.reviewAuditObject.contactInfo;
                             this.externalCommentInd = this.actionItemDetails.reviewAuditObject.externalCommentInd;
                             this.reviewComments = this.actionItemDetails.reviewAuditObject.reviewComments;
                         }
@@ -179,7 +179,7 @@ module AIP {
                     .then((response) => {
                         this.contactInformationList = response.data;
                         var selectObject = {
-                        	"name": "",
+                        	"name": this.selectNone,
                         	"type": "string",
                         	"value": this.selectNone
                         };

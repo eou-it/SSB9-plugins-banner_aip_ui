@@ -98,6 +98,7 @@ $link-color: #275c8a;
                     max-height: 15.4em;
                     overflow-y: auto;
                     word-break: normal;
+                    font: inherit;
                   }
                   .description-overview {
                     max-height: 15em;
@@ -295,6 +296,7 @@ $link-color: #275c8a;
                       max-height: 8.2em;
                       overflow-y: auto;
                       word-break: normal;
+                      font: inherit;
                     }
                     .description-overview {
                       background-color: white;
