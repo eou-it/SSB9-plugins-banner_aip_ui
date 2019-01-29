@@ -172,7 +172,7 @@ module AIP {
                         if(this.actionItemDetails.reviewAuditObject){
                             this.selectedContact.name = (this.actionItemDetails.reviewAuditObject.contactInfo === "undefined") ? this.selectNone : this.actionItemDetails.reviewAuditObject.contactInfo;
                             this.externalCommentInd = this.actionItemDetails.reviewAuditObject.externalCommentInd;
-                            this.reviewComments = this.actionItemDetails.reviewAuditObject.reviewComments;
+                            this.reviewComments = (this.actionItemDetails.reviewAuditObject.reviewComments) ? this.actionItemDetails.reviewAuditObject.reviewComments : "";
                         }
                     }),
                 this.aipReviewService.getContactInformation()
@@ -306,8 +306,8 @@ module AIP {
                 reviewStateCode: this.selectedReviewState.code,
                 displayEndDate: this.actionItemDetails.displayEndDate,
                 externalCommentInd: this.externalCommentInd,
-                reviewComments: this.reviewComments,
-                contactInfo: encodeURIComponent(this.selectedContact.name)
+                reviewComments: (this.reviewComments) ? this.reviewComments : "",
+                contactInfo: encodeURIComponent((this.selectedContact.name && (this.selectedContact.name !== this.selectNone)) ? this.selectedContact.name : "")
             };
 
             this.spinnerService.showSpinner(true);
