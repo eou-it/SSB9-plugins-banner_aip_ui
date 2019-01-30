@@ -233,7 +233,6 @@ module AIP {
                 '&offset=' + (query.offset || 0 )+
                 '&max=' + realMax;
 
-
             this.$http({
                 method: "GET",
                 url: url
@@ -251,11 +250,15 @@ module AIP {
             var realMax = parseInt(query.max) - parseInt(query.offset);
             var url = this.ENDPOINT.admin.actionItemPostJobList +
                 '?searchParam=' + (query.searchString || '') +
+                '&sortColumnName=' + (query.sortColumnName || 'postingName') +
+                '&ascending=' + (query.ascending.toString() || "")+
                 '&offset=' + (query.offset || 0 )+
                 '&max=' + realMax;
+
+
             var params = {
                 filterName: query.searchParam||"%",
-                sortColumn: query.sortColumnName||"id",
+                sortColumn: query.sortColumnName||"postingName",
                 sortAscending: query.ascending||false,
                 max: realMax||"",
                 offset: query.offset || 0

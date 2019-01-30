@@ -97,8 +97,16 @@ class AipActionItemPostingController {
      * @return
      */
     def actionItemPostJobList() {
-        def results = actionItemPostReadOnlyService.listActionItemPostJobList( [searchParam: params.searchParam], [max: params.max as int, offset: params.offset as int] )
+
+        def paramObj = [searchParam  : params.searchParam ?:"%",
+                        sortColumn   : params.sortColumnName ?: "id",
+                        sortAscending: params.ascending ? params.ascending.toBoolean() : false,
+                        max          : params.max.toInteger(),
+                        offset       : params.offset ? params.offset.toInteger() : 0]
+
+        def results = actionItemPostReadOnlyService.listActionItemPostJobList(paramObj )
         render results as JSON
+
     }
 
 

@@ -244,6 +244,8 @@ class AipActionItemPostingControllerIntegrationTests extends BaseIntegrationTest
         actionItemPostCompositeService.sendAsynchronousPostItem( requestMap )
         controller.request.contentType = "text/json"
         controller.params.searchParam = null
+        controller.params.sortColumnName="postingName"
+        controller.params.ascending=true
         controller.params.max = 1000
         controller.params.offset = 0
         controller.actionItemPostJobList()

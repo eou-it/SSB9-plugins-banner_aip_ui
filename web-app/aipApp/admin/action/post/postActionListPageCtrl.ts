@@ -100,8 +100,9 @@ module AIP {
                 title: "id",
                 width: "0px",
                 options: {
-                    sortable: true,
+                    sortable: false,
                     visible: false,
+                    ascending:true,
                     columnShowHide: false
                 }
             }, {
@@ -111,9 +112,9 @@ module AIP {
                 width: "100px",
                 options: {
                     sortable: true,
-                    ascending: true,
                     visible: true,
-                    columnShowHide: true
+                    columnShowHide: false
+
                 }
             }, {
                 name: "postingName",
@@ -121,10 +122,10 @@ module AIP {
                 ariaLabel: this.$filter("i18n_aip")("aip.admin.actionItem.post.grid.job.name"),
                 width: "100px",
                 options: {
-                    sortable: false,
+                    sortable: true,
                     visible: true,
-                    columnShowHide: true,
-                    ascending: true
+                    ascending:true,
+                    columnShowHide: false
                 }
             },
                 {
@@ -133,7 +134,7 @@ module AIP {
                     ariaLabel: this.$filter("i18n_aip")("aip.admin.actionItem.post.grid.job.start-schedule.date"),
                     width: "100px",
                     options: {
-                        sortable: false,
+                        sortable: true,
                         visible: true,
                         columnShowHide: true
                     }
@@ -144,7 +145,7 @@ module AIP {
                     ariaLabel: this.$filter("i18n_aip")("aip.admin.actionItem.post.grid.job.start-schedule.time"),
                     width: "100px",
                     options: {
-                        sortable: false,
+                        sortable: true,
                         visible: true,
                         columnShowHide: true
                     }
@@ -155,7 +156,7 @@ module AIP {
                     ariaLabel: this.$filter("i18n_aip")("aip.admin.actionItem.post.grid.job.timezone"),
                     width: "100px",
                     options: {
-                        sortable: false,
+                        sortable: true,
                         visible: true,
                         columnShowHide: true
                     }
@@ -166,7 +167,7 @@ module AIP {
                     ariaLabel: this.$filter("i18n_aip")("aip.admin.actionItem.post.grid.job.group.folder"),
                     width: "100px",
                     options: {
-                        sortable: false,
+                        sortable: true,
                         visible: true,
                         columnShowHide: true
                     }
@@ -177,7 +178,7 @@ module AIP {
                     ariaLabel: this.$filter("i18n_aip")("aip.admin.actionItem.post.grid.job.population"),
                     width: "100px",
                     options: {
-                        sortable: false,
+                        sortable: true,
                         visible: true,
                         columnShowHide: true
                     }
@@ -188,7 +189,7 @@ module AIP {
                     ariaLabel: this.$filter("i18n_aip")("aip.admin.actionItem.post.grid.job.group.name"),
                     width: "100px",
                     options: {
-                        sortable: false,
+                        sortable: true,
                         visible: true,
                         columnShowHide: true
                     }
@@ -199,9 +200,9 @@ module AIP {
                     ariaLabel: this.$filter("i18n_aip")("aip.admin.actionItem.post.grid.job.submittedBy"),
                     width: "100px",
                     options: {
-                        sortable: false,
+                        sortable: true,
                         visible: true,
-                        columnShowHide: true
+                        columnShowHide: false
                     }
                 },
                 {
@@ -210,9 +211,9 @@ module AIP {
                     ariaLabel: this.$filter("i18n_aip")("aip.admin.actionItem.post.grid.job.actionstatus"),
                     width: "100px",
                     options: {
-                        sortable: false,
+                        sortable: true,
                         visible: true,
-                        columnShowHide: true
+                        columnShowHide: false
                     }
                 }
 
