@@ -1,5 +1,5 @@
 /*********************************************************************************
- Copyright 2018 Ellucian Company L.P. and its affiliates.
+ Copyright 2019 Ellucian Company L.P. and its affiliates.
  **********************************************************************************/
 ///<reference path="../../typings/tsd.d.ts"/>
 ///<reference path="../common/services/itemListViewService.ts"/>
@@ -7,8 +7,9 @@
 var AIP;
 (function (AIP) {
     var ListItemPageCtrl = /** @class */ (function () {
-        function ListItemPageCtrl($scope, $state, ItemListViewService, AIPUserService, SpinnerService, $timeout, $q, $uibModal, APP_ROOT, $sce, $compile) {
-            this.$inject = ["$scope", "$state", "ItemListViewService", "AIPUserService", "SpinnerService", "$timeout", "$q", "$uibModal", "APP_ROOT", "$sce", "$compile"];
+        function ListItemPageCtrl($scope, $state, ItemListViewService, AIPUserService, SpinnerService, $timeout, $q, $uibModal, APP_ROOT, $sce, $compile, $filter) {
+            var _this = this;
+            this.$inject = ["$scope", "$state", "ItemListViewService", "AIPUserService", "SpinnerService", "$timeout", "$q", "$uibModal", "APP_ROOT", "$sce", "$compile", "$filter"];
             this.trustHTML = function (txtString) {
                 var sanitized = txtString ? this.$sce.trustAsHtml(txtString) : "";
                 return sanitized;
@@ -27,13 +28,21 @@ var AIP;
             this.isFromGateKeeper = false;
             this.initialOpenGroup = -1;
             this.$compile = $compile;
+            this.$filter = $filter;
             $scope.showModal = false;
             $scope.$watch("vm.detailView", function (newVal, oldVal) {
                 if (!$scope.$$phase) {
                     $scope.$apply();
                 }
             });
-            //Listen to your custom event
+            window.onbeforeunload = function (event) {
+                if (window.params.isResponseDirty) {
+                    return _this.$filter("i18n_aip")("aip.common.admin.unsaved");
+                }
+                // reset to default event listener
+                window.onbeforeunload = null;
+            };
+            //Listen to custom event
             window.addEventListener('responseChanged', function (e) {
                 $scope.responseId = window.params.responseId;
                 $scope.userActionItemId = window.params.userActionItemId;
@@ -52,20 +61,13 @@ var AIP;
             notifications.on('add', function (e) {
                 setTimeout(function (e) {
                     if (params.saved == true) {
+                        window.params.isResponseDirty = false;
                         //$scope.vm.init();
                         $scope.vm.refreshList();
                     }
                 }, 500);
             });
             this.init();
-            $scope.previousLink = function () {
-                if (window.reUrl && window.reUrl != '') {
-                    window.location.replace(decodeURI(window.reUrl));
-                }
-                else {
-                    window.history.back();
-                }
-            };
         }
         ListItemPageCtrl.prototype.init = function () {
             var _this = this;
@@ -93,9 +95,25 @@ var AIP;
                             _this.selectedData.info.content = _this.trustHTML(response.info.content);
                         });
                     }
-                    ;
                 });
             });
+        };
+        ListItemPageCtrl.prototype.previousLink = function () {
+            if (window.params.isResponseDirty) {
+                this.itemListViewService.saveChangesNotification(this.goBack, this, null, null);
+            }
+            else {
+                this.goBack();
+            }
+        };
+        ;
+        ListItemPageCtrl.prototype.goBack = function () {
+            if (window.reUrl && window.reUrl != '') {
+                window.location.replace(decodeURI(window.reUrl));
+            }
+            else {
+                window.history.back();
+            }
         };
         ListItemPageCtrl.prototype.refreshList = function () {
             var _this = this;
@@ -194,8 +212,15 @@ var AIP;
             }
         };
         ListItemPageCtrl.prototype.selectItem = function (groupId, itemId) {
+            if (window.params.isResponseDirty) {
+                this.itemListViewService.saveChangesNotification(this.displayActionItem, this, groupId, itemId);
+            }
+            else {
+                this.displayActionItem(groupId, itemId);
+            }
+        };
+        ListItemPageCtrl.prototype.displayActionItem = function (groupId, itemId) {
             var _this = this;
-            var defer = this.$q.defer();
             var index = this.getIndex(groupId, itemId);
             if (index.group === -1) {
                 throw new Error("Group does not exist with ID ");
@@ -219,9 +244,7 @@ var AIP;
                     });
                     _this.selectedData.info.title = actionItem[0].title;
                 }
-                defer.resolve();
             });
-            return defer.promise;
         };
         ListItemPageCtrl.prototype.getIndex = function (groupId, itemId) {
             var index = { group: -1, item: null };

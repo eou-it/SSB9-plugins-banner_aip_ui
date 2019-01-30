@@ -7,7 +7,7 @@
             <div class="row">
                 <div class="group-title col-sm-12 col-xs-12">
                     <div aria-label="{{itemgroup.title}} {{completedItem().length}} of {{itemgroup.items.length}} {{'aip.common.text.completed'|i18n_aip}}"
-                        id="h2-{{itemgroup.id}}" class="group-title-text col-sm-6 col-xs-6" tabindex="-1">
+                        id="h2-{{itemgroup.id}}" class="group-title-text col-sm-6 col-xs-6" tabindex="-1"  ng-click="openGroup(itemgroup.id)">
                         <h2 id="group-title-heading-{{itemgroup.id}}" class="group-title-text" ng-bind-html="itemgroup.title"></h2>
                     </div>
                     <div class="aip-icons">

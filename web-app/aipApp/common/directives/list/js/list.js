@@ -1,10 +1,11 @@
 /*******************************************************************************
- Copyright 2018 Ellucian Company L.P. and its affiliates.
+ Copyright 2019 Ellucian Company L.P. and its affiliates.
  ********************************************************************************/
 ///<reference path="../../../../../typings/tsd.d.ts"/>
+///<reference path="../../../services/itemListViewService.ts"/>
 var AIPUI;
 (function (AIPUI) {
-    var AIPListDirective = (function () {
+    var AIPListDirective = /** @class */ (function () {
         function AIPListDirective() {
             this.restrict = "AE";
             this.scope = {
@@ -22,50 +23,13 @@ var AIPUI;
         };
         AIPListDirective.prototype.link = function (scope) {
         };
-        AIPListDirective.prototype.controller = function ($scope) {
+        AIPListDirective.prototype.controller = function ($scope, $filter, ItemListViewService) {
             if ($scope.idx === $scope.opengroup) {
                 $scope.isOpen = true;
             }
             else {
                 $scope.isOpen = false;
             }
-            var waitForAccordionElements = function () {
-                setTimeout(function () {
-                    var accordionToggle = document.querySelector('.accordion-toggle');
-                    if ($(accordionToggle).length > 0) {
-                        /*
-                        * To add aria-expanded attribute to all the groups.
-                        * True for selected group & false for other groups
-                        * */
-                        var selectedGroup = document.querySelectorAll('div[aria-selected=true] .accordion-toggle');
-                        if ($(selectedGroup[$scope.idx]).length > 0) {
-                            $(selectedGroup[$scope.idx]).attr("aria-expanded", "true");
-                        }
-                        var otherGroups = document.querySelectorAll('div[aria-selected=false] .accordion-toggle');
-                        if ($(otherGroups[$scope.idx]).length > 0) {
-                            $(otherGroups[$scope.idx]).attr("aria-expanded", "false");
-                        }
-                        /*
-                        * Event handler to toggle group & update aria-expanded attribute accordingly.
-                        * */
-                        var panelHeading = document.querySelectorAll('.panel-heading');
-                        $(panelHeading[$scope.idx]).click(function (event) {
-                            event.stopImmediatePropagation();
-                            event.preventDefault();
-                            if (event.target.className === "group-instructions") {
-                                $scope.displayGroupInfo($scope.itemgroup.id, event);
-                            }
-                            else {
-                                $scope.openGroup($scope.itemgroup.id, event);
-                            }
-                        });
-                    }
-                    else {
-                        waitForAccordionElements();
-                    }
-                }, 100);
-            };
-            waitForAccordionElements();
             $scope.getStyle = function (key) {
                 return $scope.stylefunction({ key: key });
             };
@@ -79,13 +43,26 @@ var AIPUI;
                 });
             };
             $scope.openGroup = function (groupId, evt) {
+                if (window.params.isResponseDirty) {
+                    ItemListViewService.saveChangesNotification($scope.expandGroup, $scope, groupId, evt);
+                }
+                else {
+                    $scope.expandGroup(groupId, evt);
+                }
+            };
+            $scope.expandGroup = function (groupId, evt) {
                 this.resetSelection();
-                var accordionToggle = $(evt.currentTarget).find('.accordion-toggle');
-                var toggle = this.isOpen;
-                $(accordionToggle).attr('aria-expanded', toggle.toString());
-                $scope.togglegroup({ state: { groupId: groupId, open: this.isOpen } });
+                $scope.togglegroup({ state: { groupId: groupId, open: !this.isOpen } });
             };
             $scope.displayGroupInfo = function (groupId, evt) {
+                if (window.params.isResponseDirty) {
+                    ItemListViewService.saveChangesNotification($scope.displayGroup, $scope, groupId, evt);
+                }
+                else {
+                    $scope.displayGroup(groupId, evt);
+                }
+            };
+            $scope.displayGroup = function (groupId, evt) {
                 evt.stopPropagation();
                 evt.preventDefault();
                 this.resetSelection();
@@ -122,8 +99,7 @@ var AIPUI;
             };
         };
         return AIPListDirective;
-    })();
+    }());
     AIPUI.AIPListDirective = AIPListDirective;
 })(AIPUI || (AIPUI = {}));
 register("bannerAIPUI").directive("aipList", AIPUI.AIPListDirective);
-//# sourceMappingURL=list.js.map
