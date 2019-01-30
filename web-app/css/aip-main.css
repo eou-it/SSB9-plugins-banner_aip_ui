@@ -826,7 +826,9 @@ ol.selected-group > li > button {
   .actionListContainer .row .control {
     padding: 0; } }
 .actionItemAddContainer {
-  padding: 8px 0; }
+  padding: 8px 0;
+  overflow-y: auto;
+  height: 450px; }
   .actionItemAddContainer .row {
     margin-left: 0 !important;
     margin-right: 0; }
@@ -1442,7 +1444,7 @@ ol.selected-group > li > button {
     margin-bottom: 15px;
     height: 5em; }
     .actionItemAddContainer .actionItemControl .actionItemButton {
-      float: left; }
+      float: right; }
       .actionItemAddContainer .actionItemControl .actionItemButton span {
         padding-left: 24px; }
         .actionItemAddContainer .actionItemControl .actionItemButton span button {
