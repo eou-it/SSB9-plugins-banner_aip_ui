@@ -73,7 +73,7 @@ var AIP;
                     ariaLabel: this.$filter("i18n_aip")("aip.admin.actionItem.post.grid.job.status"),
                     width: "100px",
                     options: {
-                        sortable: true,
+                        sortable: false,
                         visible: true,
                         columnShowHide: false
                     }
@@ -106,7 +106,7 @@ var AIP;
                     ariaLabel: this.$filter("i18n_aip")("aip.admin.actionItem.post.grid.job.start-schedule.time"),
                     width: "100px",
                     options: {
-                        sortable: true,
+                        sortable: false,
                         visible: true,
                         columnShowHide: true
                     }
@@ -172,7 +172,7 @@ var AIP;
                     ariaLabel: this.$filter("i18n_aip")("aip.admin.actionItem.post.grid.job.actionstatus"),
                     width: "100px",
                     options: {
-                        sortable: true,
+                        sortable: false,
                         visible: true,
                         columnShowHide: false
                     }
