@@ -1,9 +1,6 @@
 /*******************************************************************************
-Copyright 2018 Ellucian Company L.P. and its affiliates.
+Copyright 2017-2019 Ellucian Company L.P. and its affiliates.
 ********************************************************************************/
-/*********************************************************************************
- Copyright 2017-2018 Ellucian Company L.P. and its affiliates.
- **********************************************************************************/
 aip-list .aip-list-container {
   border: none;
   box-shadow: none; }
@@ -389,9 +386,9 @@ aip-list .enddate {
       padding: 8px; }
     .landingItem-container .landing-context .landing-description {
       padding: 8px; } }
-#fileupload_label {
-  width: 100%; }
-
+@media (width: 50%) {
+  #fileupload_label {
+    width: 100%; } }
 .btn-right {
   float: right;
   margin-right: 5px; }
@@ -425,7 +422,7 @@ aip-list .enddate {
   height: inherit;
   background: #F3FCFF; }
   .aip-item-detail-container .detail-content {
-    height: inherit;
+    height: 400px;
     border: 1px solid #A4C6E4;
     padding: 0px 16px 16px 16px;
     overflow-y: scroll; }
@@ -825,7 +822,9 @@ ol.selected-group > li > button {
   .actionListContainer .row .control {
     padding: 0; } }
 .actionItemAddContainer {
-  padding: 8px 0; }
+  padding: 8px 0;
+  overflow-y: auto;
+  height: 450px; }
   .actionItemAddContainer .row {
     margin-left: 0 !important;
     margin-right: 0; }
@@ -1441,7 +1440,7 @@ ol.selected-group > li > button {
     margin-bottom: 15px;
     height: 5em; }
     .actionItemAddContainer .actionItemControl .actionItemButton {
-      float: left; }
+      float: right; }
       .actionItemAddContainer .actionItemControl .actionItemButton span {
         padding-left: 24px; }
         .actionItemAddContainer .actionItemControl .actionItemButton span button {
@@ -1834,7 +1833,7 @@ ol.selected-group > li > button {
   padding-right: 0.5em; }
 
 #content {
-  overflow: auto;
+  overflow: hidden;
   background: #edf2f7; }
   #content #title-panel h1 {
     line-height: normal; }
