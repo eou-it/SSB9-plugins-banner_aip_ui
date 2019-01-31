@@ -415,15 +415,14 @@ aip-list {
   }
   h3.pb-form-label {
     color: #4F585F;
-    font-size: 1.5em;
+    font-size: 1.25em;
     font-family: "OpenSans-semibold";
-    margin: 5px 0;
+    margin-left: 5px ;
     padding:0.75em 0.5em;
   }
   div.pb-literal{
     color: #4F585F;
     font-size: 1.15em;
-    margin-top: 5px;
     padding-left:0.75em;
     margin-top: 25px;
   }
@@ -435,12 +434,13 @@ aip-list {
   label.pb-label{
     font-size: 1.10em;
     font-weight: bold;
+    margin-left: 4px;
     margin-bottom: 1px;
     padding: 0.75em 0.75em;
     display: block;
   }
   label.pb-label.pb-boolean{
-    font-size: 1.25em;
+    font-size: 1.15em;
     display:inline-block;
   }
   select.pb-item.pb-select {
@@ -456,7 +456,6 @@ aip-list {
     border-radius:4px;
   }
   select.pb-select:focus {
-    background-color: #FFFFFF;
     border: 2px solid #206E9F;
     background-color: #FFFFFF;
     color: #000000;
