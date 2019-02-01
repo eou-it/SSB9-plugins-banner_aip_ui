@@ -1,5 +1,5 @@
 /*********************************************************************************
- Copyright 2019 Ellucian Company L.P. and its affiliates.
+ Copyright 2018-2019 Ellucian Company L.P. and its affiliates.
  **********************************************************************************/
 ///<reference path="../../typings/tsd.d.ts"/>
 ///<reference path="../common/services/itemListViewService.ts"/>
@@ -90,7 +90,7 @@ module AIP {
                 }
             );
             window.onbeforeunload = (event) => {
-                if (window.params.isResponseDirty) {
+                if (params.isResponseModified) {
                     return this.$filter("i18n_aip")("aip.common.admin.unsaved");
                 }
                 // reset to default event listener
@@ -116,7 +116,7 @@ module AIP {
             notifications.on('add', function (e) {
                 setTimeout(function (e) {
                     if (params.saved == true) {
-                        window.params.isResponseDirty = false;
+                        params.isResponseModified = false;
                         //$scope.vm.init();
                         $scope.vm.refreshList();
                     }
@@ -161,7 +161,7 @@ module AIP {
         }
 
         previousLink() {
-            if (window.params.isResponseDirty) {
+            if (params.isResponseModified) {
                 this.itemListViewService.saveChangesNotification(this.goBack, this, null, null);
             } else {
                 this.goBack();
@@ -287,7 +287,7 @@ module AIP {
         }
 
         selectItem(groupId, itemId) {
-            if (window.params.isResponseDirty) {
+            if (params.isResponseModified) {
                 this.itemListViewService.saveChangesNotification(this.displayActionItem, this, groupId, itemId);
             } else {
                 this.displayActionItem(groupId, itemId);

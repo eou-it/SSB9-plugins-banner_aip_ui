@@ -1,5 +1,5 @@
 /*********************************************************************************
- Copyright 2019 Ellucian Company L.P. and its affiliates.
+ Copyright 2018-2019 Ellucian Company L.P. and its affiliates.
  **********************************************************************************/
 ///<reference path="../../../typings/tsd.d.ts"/>
 var AIP;
@@ -112,7 +112,7 @@ var AIP;
             n.addPromptAction(this.$filter("i18n_aip")("aip.common.text.yes"), function () {
                 var boundCallback = callbackFunc.bind(scope);
                 boundCallback(callbackParam1, callbackParam2);
-                window.params.isResponseDirty = false;
+                params.isResponseModified = false;
                 notifications.remove(n);
             });
             notifications.addNotification(n);

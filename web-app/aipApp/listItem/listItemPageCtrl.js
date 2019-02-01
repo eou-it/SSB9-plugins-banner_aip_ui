@@ -1,5 +1,5 @@
 /*********************************************************************************
- Copyright 2019 Ellucian Company L.P. and its affiliates.
+ Copyright 2018-2019 Ellucian Company L.P. and its affiliates.
  **********************************************************************************/
 ///<reference path="../../typings/tsd.d.ts"/>
 ///<reference path="../common/services/itemListViewService.ts"/>
@@ -36,7 +36,7 @@ var AIP;
                 }
             });
             window.onbeforeunload = function (event) {
-                if (window.params.isResponseDirty) {
+                if (params.isResponseModified) {
                     return _this.$filter("i18n_aip")("aip.common.admin.unsaved");
                 }
                 // reset to default event listener
@@ -61,7 +61,7 @@ var AIP;
             notifications.on('add', function (e) {
                 setTimeout(function (e) {
                     if (params.saved == true) {
-                        window.params.isResponseDirty = false;
+                        params.isResponseModified = false;
                         //$scope.vm.init();
                         $scope.vm.refreshList();
                     }
@@ -99,7 +99,7 @@ var AIP;
             });
         };
         ListItemPageCtrl.prototype.previousLink = function () {
-            if (window.params.isResponseDirty) {
+            if (params.isResponseModified) {
                 this.itemListViewService.saveChangesNotification(this.goBack, this, null, null);
             }
             else {
@@ -212,7 +212,7 @@ var AIP;
             }
         };
         ListItemPageCtrl.prototype.selectItem = function (groupId, itemId) {
-            if (window.params.isResponseDirty) {
+            if (params.isResponseModified) {
                 this.itemListViewService.saveChangesNotification(this.displayActionItem, this, groupId, itemId);
             }
             else {

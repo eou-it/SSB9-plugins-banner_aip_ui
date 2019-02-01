@@ -1,5 +1,5 @@
 /*******************************************************************************
- Copyright 2019 Ellucian Company L.P. and its affiliates.
+ Copyright 2018-2019 Ellucian Company L.P. and its affiliates.
  ********************************************************************************/
 ///<reference path="../../../../../typings/tsd.d.ts"/>
 ///<reference path="../../../services/itemListViewService.ts"/>
@@ -22,14 +22,14 @@ var AIPUI;
         AIPListDirective.prototype.compile = function () {
         };
         AIPListDirective.prototype.link = function (scope) {
-        };
-        AIPListDirective.prototype.controller = function ($scope, $filter, ItemListViewService) {
-            if ($scope.idx === $scope.opengroup) {
-                $scope.isOpen = true;
+            if (scope.idx === scope.opengroup) {
+                scope.isOpen = true;
             }
             else {
-                $scope.isOpen = false;
+                scope.isOpen = false;
             }
+        };
+        AIPListDirective.prototype.controller = function ($scope, $filter, ItemListViewService) {
             $scope.getStyle = function (key) {
                 return $scope.stylefunction({ key: key });
             };
@@ -42,20 +42,20 @@ var AIPUI;
                     }, 100);
                 });
             };
-            $scope.openGroup = function (groupId, evt) {
-                if (window.params.isResponseDirty) {
-                    ItemListViewService.saveChangesNotification($scope.expandGroup, $scope, groupId, evt);
+            $scope.openGroup = function (groupId) {
+                if (params.isResponseModified) {
+                    ItemListViewService.saveChangesNotification($scope.expandGroup, $scope, groupId, this.isOpen);
                 }
                 else {
-                    $scope.expandGroup(groupId, evt);
+                    $scope.expandGroup(groupId, this.isOpen);
                 }
             };
-            $scope.expandGroup = function (groupId, evt) {
+            $scope.expandGroup = function (groupId, open) {
                 this.resetSelection();
-                $scope.togglegroup({ state: { groupId: groupId, open: !this.isOpen } });
+                $scope.togglegroup({ state: { groupId: groupId, open: !open } });
             };
             $scope.displayGroupInfo = function (groupId, evt) {
-                if (window.params.isResponseDirty) {
+                if (params.isResponseModified) {
                     ItemListViewService.saveChangesNotification($scope.displayGroup, $scope, groupId, evt);
                 }
                 else {
