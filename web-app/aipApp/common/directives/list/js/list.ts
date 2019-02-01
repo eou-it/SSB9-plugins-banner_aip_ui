@@ -33,15 +33,41 @@ module AIPUI {
         }
 
         link(scope) {
-            if (scope.idx === scope.opengroup) {
-                scope.isOpen = true;
-            } else {
-                scope.isOpen = false;
-            }
+
         }
 
         controller($scope, $filter, ItemListViewService) {
+            if ($scope.idx === $scope.opengroup) {
+                $scope.isOpen = true;
+            } else {
+                $scope.isOpen = false;
+            }
+            var waitForAccordionElements = function () {
+                setTimeout(function () {
+                    var accordionToggle = document.querySelector('.accordion-toggle');
+                    if ($(accordionToggle).length > 0) {
+                       /*
+                        * Event handler to toggle group & update aria-expanded attribute accordingly.
+                        * */
+                        var panelHeading = document.querySelectorAll('.panel-heading');
+                        $(panelHeading[$scope.idx]).click(function (event) {
+                            event.stopImmediatePropagation();
+                            event.preventDefault();
+                            if (event.target.className === "group-instructions") {
+                                $scope.displayGroupInfo($scope.itemgroup.id, event);
+                            }
+                            else {
+                                $scope.openGroup($scope.itemgroup.id, event);
+                            }
+                        });
 
+                    } else {
+                        waitForAccordionElements();
+                    }
+                }, 10);
+            };
+
+            waitForAccordionElements();
             $scope.getStyle = function (key) {
                 return $scope.stylefunction({key: key});
             };
@@ -49,12 +75,7 @@ module AIPUI {
             $scope.selectItem = function (group, row, evt) {
                 this.resetSelection();
                 this.addSelection(evt.currentTarget);
-                $scope.click({groupId: group.id, itemId: row.id}).then(function () {
-                    setTimeout(function () {
-                        $scope.changeFocus(".detail");
-
-                    }, 100);
-                });
+                $scope.click({groupId: group.id, itemId: row.id});
             };
 
             $scope.openGroup = function (groupId) {
@@ -65,28 +86,29 @@ module AIPUI {
                 }
             };
 
-            $scope.expandGroup = function (groupId,open) {
+            $scope.expandGroup = function (groupId, open) {
                 this.resetSelection();
-                $scope.togglegroup({state: {groupId: groupId, open: !open}});
+                $scope.togglegroup({state: {groupId: groupId, open: open}});
+                $scope.isOpen = open;
             };
 
             $scope.displayGroupInfo = function (groupId, evt) {
-                if (params.isResponseModified) {
-                    ItemListViewService.saveChangesNotification($scope.displayGroup, $scope, groupId, evt);
-                } else {
-                    $scope.displayGroup(groupId, evt);
-                }
-            };
-            $scope.displayGroup = function (groupId, evt) {
                 evt.stopPropagation();
                 evt.preventDefault();
+                if (params.isResponseModified) {
+                    ItemListViewService.saveChangesNotification($scope.displayGroup, $scope, groupId, null);
+                } else {
+                    $scope.displayGroup(groupId);
+                }
+            };
+            $scope.displayGroup = function (groupId) {
                 this.resetSelection();
                 $scope.togglegroup({state: {groupId: groupId, open: true}});
                 $scope.isOpen = true;
                 $scope.showgroupinfo({groupId: groupId});
-                setTimeout(function () {
+                setTimeout(function() {
                     $scope.changeFocus(".detail");
-                }, 100);
+                }, 10);
             };
 
             $scope.completedItem = function () {

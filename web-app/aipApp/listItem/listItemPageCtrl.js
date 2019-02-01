@@ -244,6 +244,9 @@ var AIP;
                     });
                     _this.selectedData.info.title = actionItem[0].title;
                 }
+                setTimeout(function () {
+                    $(".detail").focus();
+                }, 10);
             });
         };
         ListItemPageCtrl.prototype.getIndex = function (groupId, itemId) {

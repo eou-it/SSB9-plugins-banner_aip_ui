@@ -101,6 +101,8 @@ var AIP;
         };
         ItemListViewService.prototype.confirmItem = function (id) {
         };
+        /*Function to notify about unsaved changes. Accepts parameters - callback function,
+        scope to which callback function should be bound to and input parameters for callback function */
         ItemListViewService.prototype.saveChangesNotification = function (callbackFunc, scope, callbackParam1, callbackParam2) {
             var n = new Notification({
                 message: this.$filter("i18n_aip")("aip.admin.actionItem.saveChanges"),
@@ -110,10 +112,11 @@ var AIP;
                 notifications.remove(n);
             });
             n.addPromptAction(this.$filter("i18n_aip")("aip.common.text.yes"), function () {
-                var boundCallback = callbackFunc.bind(scope);
-                boundCallback(callbackParam1, callbackParam2);
                 params.isResponseModified = false;
                 notifications.remove(n);
+                var boundCallback = callbackFunc.bind(scope);
+                boundCallback(callbackParam1, callbackParam2);
+                scope.$apply();
             });
             notifications.addNotification(n);
         };

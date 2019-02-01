@@ -157,7 +157,6 @@ module AIP {
                     }
                 });
             });
-
         }
 
         previousLink() {
@@ -319,6 +318,9 @@ module AIP {
                     });
                     this.selectedData.info.title = actionItem[0].title;
                 }
+                setTimeout(function() {
+                    $(".detail").focus();
+                }, 10);
             })
         }
 
@@ -355,7 +357,7 @@ module AIP {
                     })
 
             } else {
-                this.selectedData = undefined;
+                 this.selectedData = undefined;
             }
         }
 
