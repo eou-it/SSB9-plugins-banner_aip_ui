@@ -427,8 +427,7 @@ aip-list .enddate {
   .aip-item-detail-container .detail-content {
     height: inherit;
     border: 1px solid #A4C6E4;
-    padding: 0px 16px 16px 16px;
-    overflow-y: scroll; }
+    padding: 0px 16px 16px 16px; }
     .aip-item-detail-container .detail-content hr {
       border-color: #A4C6E4 !important; }
     .aip-item-detail-container .detail-content .detail-title {
@@ -1923,7 +1922,7 @@ label {
     padding-left: 0;
     float: left; }
   .viewContainer .listActionItem .listActionItem-container .itemList .groupDetail {
-    overfloat-y: auto;
+    overflow-y: auto;
     padding-right: 0;
     padding-left: 0;
     float: right; }
