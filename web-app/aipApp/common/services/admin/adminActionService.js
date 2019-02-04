@@ -1,5 +1,5 @@
 /*******************************************************************************
- Copyright 2018 Ellucian Company L.P. and its affiliates.
+ Copyright 2018-2019 Ellucian Company L.P. and its affiliates.
  *******************************************************************************/
 ///<reference path="../../../../typings/tsd.d.ts"/>
 var AIP;
@@ -10,7 +10,7 @@ var AIP;
         Status[Status["Active"] = 2] = "Active";
         Status[Status["Inactive"] = 3] = "Inactive";
     })(Status || (Status = {}));
-    var AdminActionService = (function () {
+    var AdminActionService = /** @class */ (function () {
         function AdminActionService($http, $q, $filter, ENDPOINT) {
             this.$http = $http;
             this.$q = $q;
@@ -41,11 +41,13 @@ var AIP;
             var realMax = parseInt(query.max) - parseInt(query.offset);
             var url = this.ENDPOINT.admin.actionItemPostJobList +
                 '?searchParam=' + (query.searchString || '') +
+                '&sortColumnName=' + (query.sortColumnName || 'postingName') +
+                '&ascending=' + (query.ascending.toString() || "") +
                 '&offset=' + (query.offset || 0) +
                 '&max=' + realMax;
             var params = {
                 filterName: query.searchParam || "%",
-                sortColumn: query.sortColumnName || "id",
+                sortColumn: query.sortColumnName || "postingName",
                 sortAscending: query.ascending || false,
                 max: realMax || "",
                 offset: query.offset || 0
@@ -297,9 +299,8 @@ var AIP;
         };
         AdminActionService.$inject = ["$http", "$q", "$filter", "ENDPOINT"];
         return AdminActionService;
-    })();
+    }());
     AIP.AdminActionService = AdminActionService;
 })(AIP || (AIP = {}));
 register("bannerAIP").service("AdminActionService", AIP.AdminActionService);
 register("bannerAIP").service("dateFormatService", AIP.AdminActionService);
-//# sourceMappingURL=adminActionService.js.map

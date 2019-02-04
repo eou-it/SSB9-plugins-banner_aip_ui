@@ -1,5 +1,5 @@
 /*********************************************************************************
- Copyright 2018 Ellucian Company L.P. and its affiliates.
+ Copyright 2018-2019 Ellucian Company L.P. and its affiliates.
  **********************************************************************************/
 ///<reference path="../../typings/tsd.d.ts"/>
 ///<reference path="../common/services/itemListViewService.ts"/>
@@ -45,7 +45,7 @@ module AIP {
 
     export class ListItemPageCtrl implements IListItemPageCtrl {
 
-        $inject = ["$scope", "$state", "ItemListViewService", "AIPUserService", "SpinnerService", "$timeout", "$q", "$uibModal", "APP_ROOT", "$sce", "$compile"];
+        $inject = ["$scope", "$state", "ItemListViewService", "AIPUserService", "SpinnerService", "$timeout", "$q", "$uibModal", "APP_ROOT", "$sce", "$compile", "$filter"];
         itemListViewService: AIP.ItemListViewService;
         userService: AIP.UserService;
         actionItems: IUserItem;
@@ -62,9 +62,10 @@ module AIP {
         modalInstance;
         isFromGateKeeper;
         $compile;
+        $filter;
         showModal;
 
-        constructor($scope, $state, ItemListViewService, AIPUserService, SpinnerService, $timeout, $q, $uibModal, APP_ROOT, $sce, $compile) {
+        constructor($scope, $state, ItemListViewService, AIPUserService, SpinnerService, $timeout, $q, $uibModal, APP_ROOT, $sce, $compile, $filter) {
             $scope.vm = this;
             this.$state = $state;
             this.itemListViewService = ItemListViewService;
@@ -79,6 +80,7 @@ module AIP {
             this.isFromGateKeeper = false;
             this.initialOpenGroup = -1;
             this.$compile = $compile;
+            this.$filter = $filter;
             $scope.showModal = false;
             $scope.$watch(
                 "vm.detailView", function (newVal, oldVal) {
@@ -87,7 +89,14 @@ module AIP {
                     }
                 }
             );
-            //Listen to your custom event
+            window.onbeforeunload = (event) => {
+                if (params.isResponseModified) {
+                    return this.$filter("i18n_aip")("aip.common.admin.unsaved");
+                }
+                // reset to default event listener
+                window.onbeforeunload = null;
+            };
+            //Listen to custom event
             window.addEventListener('responseChanged', function (e) {
                 $scope.responseId = window.params.responseId;
                 $scope.userActionItemId = window.params.userActionItemId;
@@ -107,6 +116,7 @@ module AIP {
             notifications.on('add', function (e) {
                 setTimeout(function (e) {
                     if (params.saved == true) {
+                        params.isResponseModified = false;
                         //$scope.vm.init();
                         $scope.vm.refreshList();
                     }
@@ -114,14 +124,6 @@ module AIP {
             });
 
             this.init();
-
-            $scope.previousLink = function () {
-                if (window.reUrl && window.reUrl != '') {
-                    window.location.replace(decodeURI(window.reUrl));
-                } else {
-                    window.history.back();
-                }
-            };
 
         }
 
@@ -153,10 +155,24 @@ module AIP {
                                 this.selectedData.info.content = this.trustHTML(response.info.content);
                             });
                     }
-                    ;
                 });
             });
+        }
 
+        previousLink() {
+            if (params.isResponseModified) {
+                this.itemListViewService.saveChangesNotification(this.goBack, this, null, null);
+            } else {
+                this.goBack();
+            }
+        };
+
+        goBack() {
+            if (window.reUrl && window.reUrl != '') {
+                window.location.replace(decodeURI(window.reUrl));
+            } else {
+                window.history.back();
+            }
         }
 
         refreshList() {
@@ -270,7 +286,14 @@ module AIP {
         }
 
         selectItem(groupId, itemId) {
-            var defer = this.$q.defer();
+            if (params.isResponseModified) {
+                this.itemListViewService.saveChangesNotification(this.displayActionItem, this, groupId, itemId);
+            } else {
+                this.displayActionItem(groupId, itemId);
+            }
+        }
+
+        displayActionItem(groupId, itemId) {
             var index = this.getIndex(groupId, itemId);
             if (index.group === -1) {
                 throw new Error("Group does not exist with ID ");
@@ -283,7 +306,6 @@ module AIP {
             var actionItem = group[0].items.filter((item) => {
                 return item.id == itemId;
             });
-
             this.itemListViewService.getDetailInformation(groupId, selectionType, itemId).then((response: ISelectedData) => {
                 this.selectedData = response;
                 this.selectedData.info.content = this.trustHTML(response.info.content);
@@ -296,9 +318,10 @@ module AIP {
                     });
                     this.selectedData.info.title = actionItem[0].title;
                 }
-                defer.resolve();
+                setTimeout(function() {
+                    $(".detail").focus();
+                }, 10);
             })
-            return defer.promise;
         }
 
         getIndex(groupId, itemId) {
@@ -334,7 +357,7 @@ module AIP {
                     })
 
             } else {
-                this.selectedData = undefined;
+                 this.selectedData = undefined;
             }
         }
 
@@ -348,7 +371,7 @@ module AIP {
                 var paperClipElement = angular.element("<input id=" + paperClipId + " type='image' " +
                     "src='../images/attach_icon_disabled.svg' title = 'Click to add documents' " +
                     "class=' pb-detail pb-item pb-paperclip'/>");
-                this.setMaxAttachmentParam(allowedAttachments,paperClipId,responseId);
+                this.setMaxAttachmentParam(allowedAttachments, paperClipId, responseId);
                 responseElement.after(paperClipElement);
                 window.params.userActionItemId = userActionItemId;
                 window.params.isResponseLocked = isResponseLocked;
@@ -359,7 +382,7 @@ module AIP {
                     if ($(currentId)[0].checked === true) {
                         //make sure paper clip is enabled
                         window.params.responseId = $(currentId)[0].value;
-                        window.params.maxAttachments = $("#maxAttachment"+paperClipId+$(currentId)[0].value).val();
+                        window.params.maxAttachments = $("#maxAttachment" + paperClipId + $(currentId)[0].value).val();
                         $("#" + selectedPaperClip)[0].setAttribute("src", "../images/attach_icon_default.svg");
                         // Create the event.
                         var event = document.createEvent('Event');
@@ -371,18 +394,17 @@ module AIP {
             }
         }
 
-       setMaxAttachmentParam(allowedAttachments,paperClipId,responseId){
-            var maxAttachmentHiddenElement = $("#maxAttachment"+paperClipId+responseId);
-            if (maxAttachmentHiddenElement.length === 0)
-            {
+        setMaxAttachmentParam(allowedAttachments, paperClipId, responseId) {
+            var maxAttachmentHiddenElement = $("#maxAttachment" + paperClipId + responseId);
+            if (maxAttachmentHiddenElement.length === 0) {
                 $('<input>', {
                     type: 'hidden',
-                    id: 'maxAttachment'+paperClipId+responseId,
-                    name: 'maxAttachment'+paperClipId+responseId,
+                    id: 'maxAttachment' + paperClipId + responseId,
+                    name: 'maxAttachment' + paperClipId + responseId,
                     value: allowedAttachments
                 }).appendTo('body');
 
-            }else{
+            } else {
                 maxAttachmentHiddenElement.val(allowedAttachments);
             }
         }

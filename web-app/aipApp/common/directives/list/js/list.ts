@@ -1,16 +1,19 @@
 /*******************************************************************************
- Copyright 2018 Ellucian Company L.P. and its affiliates.
+ Copyright 2018-2019 Ellucian Company L.P. and its affiliates.
  ********************************************************************************/
 ///<reference path="../../../../../typings/tsd.d.ts"/>
+///<reference path="../../../services/itemListViewService.ts"/>
 
 declare var register;
+declare var notifications;
 
 module AIPUI {
     export class AIPListDirective {
 
         templateUrl: string;
         restrict: string;
-        scope:any;
+        scope: any;
+
         constructor() {
             this.restrict = "AE";
             this.scope = {
@@ -24,117 +27,115 @@ module AIPUI {
                 selectedFocus: "&"
             }
         }
+
         compile() {
 
         }
+
         link(scope) {
 
-
         }
-        controller($scope) {
 
+        controller($scope, $filter, ItemListViewService) {
             if ($scope.idx === $scope.opengroup) {
                 $scope.isOpen = true;
             } else {
                 $scope.isOpen = false;
             }
-            var waitForAccordionElements = function(){
-                setTimeout(function(){
+            var waitForAccordionElements = function () {
+                setTimeout(function () {
                     var accordionToggle = document.querySelector('.accordion-toggle');
-                    if($(accordionToggle).length>0){
-                        /*
-                        * To add aria-expanded attribute to all the groups.
-                        * True for selected group & false for other groups
-                        * */
-                        var selectedGroup = document.querySelectorAll('div[aria-selected=true] .accordion-toggle');
-                        if($(selectedGroup[$scope.idx]).length >0){
-                            $(selectedGroup[$scope.idx]).attr("aria-expanded","true");
-                        }
-                        var otherGroups = document.querySelectorAll('div[aria-selected=false] .accordion-toggle');
-
-                        if($(otherGroups[$scope.idx]).length >0){
-                            $(otherGroups[$scope.idx]).attr("aria-expanded","false");
-                        }
-
-                        /*
+                    if ($(accordionToggle).length > 0) {
+                       /*
                         * Event handler to toggle group & update aria-expanded attribute accordingly.
                         * */
                         var panelHeading = document.querySelectorAll('.panel-heading');
-                        $(panelHeading[$scope.idx]).click(function(event){
+                        $(panelHeading[$scope.idx]).click(function (event) {
                             event.stopImmediatePropagation();
                             event.preventDefault();
-                            if(event.target.className === "group-instructions"){
+                            if (event.target.className === "group-instructions") {
                                 $scope.displayGroupInfo($scope.itemgroup.id, event);
                             }
-                            else{
+                            else {
                                 $scope.openGroup($scope.itemgroup.id, event);
                             }
                         });
 
-                    }else{
+                    } else {
                         waitForAccordionElements();
                     }
-                },100);
+                }, 10);
             };
 
             waitForAccordionElements();
-
-
-            $scope.getStyle = function(key) {
+            $scope.getStyle = function (key) {
                 return $scope.stylefunction({key: key});
             };
-            $scope.selectItem = function(group, row, evt) {
+
+            $scope.selectItem = function (group, row, evt) {
                 this.resetSelection();
                 this.addSelection(evt.currentTarget);
-                $scope.click({groupId: group.id, itemId:row.id}).then(function() {
-                    setTimeout(function() {
-                        $scope.changeFocus(".detail");
-
-                    }, 100);
-                });
+                $scope.click({groupId: group.id, itemId: row.id});
             };
-            $scope.openGroup = function(groupId,evt) {
+
+            $scope.openGroup = function (groupId) {
+                if (params.isResponseModified) {
+                    ItemListViewService.saveChangesNotification($scope.expandGroup, $scope, groupId, this.isOpen);
+                } else {
+                    $scope.expandGroup(groupId, this.isOpen);
+                }
+            };
+
+            $scope.expandGroup = function (groupId, open) {
                 this.resetSelection();
-                var accordionToggle = $(evt.currentTarget).find('.accordion-toggle');
-                var toggle = this.isOpen;
-                $(accordionToggle).attr('aria-expanded', toggle.toString());
-                $scope.togglegroup({state: {groupId:groupId, open:this.isOpen}});
+                $scope.togglegroup({state: {groupId: groupId, open: open}});
+                $scope.isOpen = open;
             };
 
-            $scope.displayGroupInfo = function(groupId, evt) {
+            $scope.displayGroupInfo = function (groupId, evt) {
                 evt.stopPropagation();
                 evt.preventDefault();
+                if (params.isResponseModified) {
+                    ItemListViewService.saveChangesNotification($scope.displayGroup, $scope, groupId, null);
+                } else {
+                    $scope.displayGroup(groupId);
+                }
+            };
+            $scope.displayGroup = function (groupId) {
                 this.resetSelection();
-                $scope.togglegroup({state: {groupId:groupId, open:true}});
+                $scope.togglegroup({state: {groupId: groupId, open: true}});
                 $scope.isOpen = true;
-                $scope.showgroupinfo({groupId:groupId});
+                $scope.showgroupinfo({groupId: groupId});
                 setTimeout(function() {
                     $scope.changeFocus(".detail");
-                }, 100);
-
+                }, 10);
             };
 
-            $scope.completedItem = function() {
+            $scope.completedItem = function () {
                 var items = $scope.itemgroup.items.filter((_item) => {
                     return _item.status !== "Pending";
                 });
                 return items;
             };
-            $scope.resetSelection = function() {
+
+            $scope.resetSelection = function () {
                 $(".list-item").removeClass("selected");
             };
-            $scope.addSelection = function(element) {
+
+            $scope.addSelection = function (element) {
                 $(element).addClass("selected");
             };
-            $scope.changeFocus = function(element) {
+
+            $scope.changeFocus = function (element) {
                 $(element).focus();
             };
-            $scope.focusing = function(evt) {
+
+            $scope.focusing = function (evt) {
                 var target = evt.target;
-                if(target.className === "accordion-toggle") {
+                if (target.className === "accordion-toggle") {
                     $scope.selectedFocus = "header";
                 }
-                if(target.className === "group-instructions") {
+                if (target.className === "group-instructions") {
                     $scope.selectedFocus = "description";
                 }
             }
