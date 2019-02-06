@@ -24,7 +24,14 @@ module AIP {
         }
 
         goBack() {
-            this.$window.history.back()
+            let previousLink=document.referrer;
+            let isLoginPage:boolean = previousLink.toLowerCase().indexOf("login")!= -1;
+            if (isLoginPage) {
+                history.go(-2) ;
+            }
+            else{
+                history.go(-1);
+            }
         }
 
         closeDialog() {
