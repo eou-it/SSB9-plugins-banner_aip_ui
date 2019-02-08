@@ -15,6 +15,7 @@ import org.junit.Test
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.context.SecurityContextHolder
 import net.hedtech.banner.general.overall.IntegrationConfiguration
+import net.hedtech.banner.general.configuration.ConfigProperties
 
 
 /**
@@ -1054,9 +1055,8 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
         assertEquals 200, controller.response.status
         def ret = controller.response.contentAsString
         def data = JSON.parse( ret )
-        assertTrue data.success
-        data.message.toString() == 'null'
-        assert data.rules.size() > 0
+        assertFalse data.success
+        assertNotEquals 'null',data.message
     }
 
 
@@ -1217,62 +1217,60 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
 
     @Test
     void checkMaxAttachmentVal() {
-        def nameSQL = """update goriccr set goriccr_value = ? where goriccr_icsn_code = 'ACTION.ITEM.ATTACHMENT.MAXIMUM' and goriccr_sqpr_code = 'GENERAL_SSB'"""
-        sessionFactory.getCurrentSession().createSQLQuery( nameSQL ).setString( 0, '5' ).executeUpdate()
-        assertEquals( '5', IntegrationConfiguration.fetchByProcessCodeAndSettingName( 'GENERAL_SSB', 'ACTION.ITEM.ATTACHMENT.MAXIMUM' ).value )
+        setConfigProperties('aip.action.item.maximum.attachment', '5')
         controller.request.contentType = "text/json"
         controller.getMaxAttachmentsVal()
         assertEquals 200, controller.response.status
         def data = JSON.parse( controller.response.contentAsString )
-        assert data.maxAttachment == 5
+        assertEquals 5, data.maxAttachment
     }
 
     @Test
     void testCharMaxAttachmentVal() {
-        def nameSQL1 = """update goriccr set goriccr_value = ? where goriccr_icsn_code = 'ACTION.ITEM.ATTACHMENT.MAXIMUM' and goriccr_sqpr_code = 'GENERAL_SSB'"""
-        sessionFactory.getCurrentSession().createSQLQuery( nameSQL1 ).setString( 0, 'S' ).executeUpdate()
-        assertEquals( 'S', IntegrationConfiguration.fetchByProcessCodeAndSettingName( 'GENERAL_SSB', 'ACTION.ITEM.ATTACHMENT.MAXIMUM' ).value )
+        setConfigProperties('aip.action.item.maximum.attachment', 'S')
         controller.request.contentType = "text/json"
         controller.getMaxAttachmentsVal()
         assertEquals 200, controller.response.status
         def data1 = JSON.parse( controller.response.contentAsString )
-        assert data1.maxAttachment == 10
+        assertEquals 10, data1.maxAttachment
     }
 
     @Test
     void testZeroMaxAttachmentVal() {
-        def nameSQL1 = """update goriccr set goriccr_value = ? where goriccr_icsn_code = 'ACTION.ITEM.ATTACHMENT.MAXIMUM' and goriccr_sqpr_code = 'GENERAL_SSB'"""
-        sessionFactory.getCurrentSession().createSQLQuery( nameSQL1 ).setString( 0, '0' ).executeUpdate()
-        assertEquals( '0', IntegrationConfiguration.fetchByProcessCodeAndSettingName( 'GENERAL_SSB', 'ACTION.ITEM.ATTACHMENT.MAXIMUM' ).value )
+        setConfigProperties('aip.action.item.maximum.attachment', '0')
         controller.request.contentType = "text/json"
         controller.getMaxAttachmentsVal()
         assertEquals 200, controller.response.status
         def data1 = JSON.parse( controller.response.contentAsString )
-        assert data1.maxAttachment == 10
+        assertEquals 10, data1.maxAttachment
     }
 
     @Test
     void testnullMaxAttachmentVal() {
-        def nameSQL1 = """update goriccr set goriccr_value = ? where goriccr_icsn_code = 'ACTION.ITEM.ATTACHMENT.MAXIMUM' and goriccr_sqpr_code = 'GENERAL_SSB'"""
-        sessionFactory.getCurrentSession().createSQLQuery( nameSQL1 ).setString( 0, ' ' ).executeUpdate()
-        assertEquals( ' ', IntegrationConfiguration.fetchByProcessCodeAndSettingName( 'GENERAL_SSB', 'ACTION.ITEM.ATTACHMENT.MAXIMUM' ).value )
+        setConfigProperties('aip.action.item.maximum.attachment', '')
         controller.request.contentType = "text/json"
         controller.getMaxAttachmentsVal()
         assertEquals 200, controller.response.status
         def data1 = JSON.parse( controller.response.contentAsString )
-        assert data1.maxAttachment == 10
+        assertEquals 10, data1.maxAttachment
     }
 
     @Test
     void testnegativeMaxAttachmentVal() {
-        def nameSQL1 = """update goriccr set goriccr_value = ? where goriccr_icsn_code = 'ACTION.ITEM.ATTACHMENT.MAXIMUM' and goriccr_sqpr_code = 'GENERAL_SSB'"""
-        sessionFactory.getCurrentSession().createSQLQuery( nameSQL1 ).setString( 0, '-2' ).executeUpdate()
-        assertEquals( '-2', IntegrationConfiguration.fetchByProcessCodeAndSettingName( 'GENERAL_SSB', 'ACTION.ITEM.ATTACHMENT.MAXIMUM' ).value )
+        setConfigProperties('aip.action.item.maximum.attachment', '-1')
         controller.request.contentType = "text/json"
         controller.getMaxAttachmentsVal()
         assertEquals 200, controller.response.status
         def data1 = JSON.parse( controller.response.contentAsString )
-        assert data1.maxAttachment == 10
+        assertEquals 10, data1.maxAttachment
+    }
+
+    private void setConfigProperties(String configName, String configValue) {
+        ConfigProperties configProperties = ConfigProperties.fetchByConfigNameAndAppId(configName, 'GENERAL_SS')
+        if (configProperties) {
+            configProperties.configValue = configValue
+            configProperties.save(flush: true, failOnError: true)
+        }
     }
 
 }
