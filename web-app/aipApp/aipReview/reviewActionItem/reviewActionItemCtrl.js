@@ -192,7 +192,7 @@ var AIP;
                 if (_this.actionItemDetails.reviewAuditObject) {
                     _this.selectedContact.name = (_this.actionItemDetails.reviewAuditObject.contactInfo === "undefined") ? _this.selectNone : _this.actionItemDetails.reviewAuditObject.contactInfo;
                     _this.externalCommentInd = _this.actionItemDetails.reviewAuditObject.externalCommentInd;
-                    _this.reviewComments = _this.actionItemDetails.reviewAuditObject.reviewComments;
+                    _this.reviewComments = (_this.actionItemDetails.reviewAuditObject.reviewComments) ? _this.actionItemDetails.reviewAuditObject.reviewComments : "";
                 }
             }), this.aipReviewService.getContactInformation()
                 .then(function (response) {
@@ -252,8 +252,8 @@ var AIP;
                 reviewStateCode: this.selectedReviewState.code,
                 displayEndDate: this.actionItemDetails.displayEndDate,
                 externalCommentInd: this.externalCommentInd,
-                reviewComments: this.reviewComments,
-                contactInfo: encodeURIComponent(this.selectedContact.name)
+                reviewComments: (this.reviewComments) ? this.reviewComments : "",
+                contactInfo: encodeURIComponent((this.selectedContact.name && (this.selectedContact.name !== this.selectNone)) ? this.selectedContact.name : "")
             };
             this.spinnerService.showSpinner(true);
             this.aipReviewService.updateActionItemReview(reqParams)

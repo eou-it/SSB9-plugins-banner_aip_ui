@@ -1,5 +1,5 @@
 /*******************************************************************************
-Copyright 2018 Ellucian Company L.P. and its affiliates.
+Copyright 2018-2019 Ellucian Company L.P. and its affiliates.
 ********************************************************************************/
 @import '../aipApp/common/directives/list/css/list';
 @import '../aipApp/common/directives/admin/landing-item/css/landingItem';
@@ -179,7 +179,7 @@ label {
           //height: calc(100vh - 170px);
         }
         .groupDetail {
-          overfloat-y: auto;
+          overflow-y: auto;
           padding-right: 0;
           padding-left: 0;
           float: right;
