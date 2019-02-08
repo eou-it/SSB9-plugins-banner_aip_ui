@@ -1217,7 +1217,7 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
 
     @Test
     void checkMaxAttachmentVal() {
-        setConfigProperties('aip.action.item.maximum.attachment', '5')
+        controller.request.session.setAttribute("maxAttachment", 5)
         controller.request.contentType = "text/json"
         controller.getMaxAttachmentsVal()
         assertEquals 200, controller.response.status
@@ -1227,7 +1227,7 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
 
     @Test
     void testCharMaxAttachmentVal() {
-        setConfigProperties('aip.action.item.maximum.attachment', 'S')
+        setConfigProperties('aip.institution.maximum.attachment.number', 'S')
         controller.request.contentType = "text/json"
         controller.getMaxAttachmentsVal()
         assertEquals 200, controller.response.status
@@ -1237,7 +1237,7 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
 
     @Test
     void testZeroMaxAttachmentVal() {
-        setConfigProperties('aip.action.item.maximum.attachment', '0')
+        setConfigProperties('aip.institution.maximum.attachment.number', 0)
         controller.request.contentType = "text/json"
         controller.getMaxAttachmentsVal()
         assertEquals 200, controller.response.status
@@ -1247,7 +1247,7 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
 
     @Test
     void testnullMaxAttachmentVal() {
-        setConfigProperties('aip.action.item.maximum.attachment', '')
+        setConfigProperties('aip.institution.maximum.attachment.number', '')
         controller.request.contentType = "text/json"
         controller.getMaxAttachmentsVal()
         assertEquals 200, controller.response.status
@@ -1257,7 +1257,7 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
 
     @Test
     void testnegativeMaxAttachmentVal() {
-        setConfigProperties('aip.action.item.maximum.attachment', '-1')
+        setConfigProperties('aip.institution.maximum.attachment.number', -1)
         controller.request.contentType = "text/json"
         controller.getMaxAttachmentsVal()
         assertEquals 200, controller.response.status
@@ -1265,7 +1265,7 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
         assertEquals 10, data1.maxAttachment
     }
 
-    private void setConfigProperties(String configName, String configValue) {
+    private void setConfigProperties(String configName, def configValue) {
         ConfigProperties configProperties = ConfigProperties.fetchByConfigNameAndAppId(configName, 'GENERAL_SS')
         if (configProperties) {
             configProperties.configValue = configValue
