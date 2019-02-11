@@ -24,8 +24,20 @@ modules = {
         dependsOn 'bannerAIPUI'
         dependsOn 'bannerAIPReviewApp'
     }
+    'bannerAdminAIPUIRTL' {
+        dependsOn 'bannerAdminAIPUI'
+        dependsOn 'bannerAIPUIRTL'
+    }
+    'bannerNonAdminAIPUIRTL' {
+        dependsOn 'bannerNonAdminAIPUI'
+        dependsOn 'bannerAIPUIRTL'
+    }
+    'bannerAIPReviewUIRTL' {
+        dependsOn 'bannerAIPReviewUI'
+        dependsOn 'bannerAIPUIRTL'
+    }
+
     'bannerAIPUIRTL' {
-        dependsOn 'bannerAIPUI', 'bannerAdminAIPUI', 'bannerNonAdminAIPUI', 'bannerAIPReviewUI'
         dependsOn 'bannerSelfServiceCommonRTL, extensibilityAngularRTL, commonComponentsRTL'
         dependsOn "jquery"
         resource url: [plugin: 'banner-ui-ss', file: 'bootstrap/css/bootstrap-rtl.css'], attrs: [media: 'screen, projection']
