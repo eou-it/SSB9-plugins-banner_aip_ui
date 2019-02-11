@@ -175,6 +175,7 @@ var AIPUI;
                                         successNotification(response.message);
                                         $scope.refreshData();
                                         resetSeletedFileValue();
+                                        triggerChangeInResponse();
                                     }
                                     else {
                                         errorNotification(response.message);
@@ -184,6 +185,11 @@ var AIPUI;
                         });
                     }
                 });
+            };
+            var triggerChangeInResponse = function () {
+                var selectedResponse = $("input[id^='pbid-ActionItemStatusAgree-radio']:checked");
+                selectedResponse.click();
+                selectedResponse.prop("checked", true);
             };
             $scope.previewDocument = function () {
                 SpinnerService.showSpinner(true);
@@ -261,6 +267,7 @@ var AIPUI;
                     if (response.data.success === true) {
                         successNotification(response.data.message);
                         $scope.refreshData();
+                        triggerChangeInResponse();
                     }
                     else {
                         errorNotification(response.data.message);
