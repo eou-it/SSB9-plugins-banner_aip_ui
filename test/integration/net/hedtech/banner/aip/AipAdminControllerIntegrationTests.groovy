@@ -14,7 +14,6 @@ import org.junit.Before
 import org.junit.Test
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.context.SecurityContextHolder
-import net.hedtech.banner.general.overall.IntegrationConfiguration
 import net.hedtech.banner.general.configuration.ConfigProperties
 
 
