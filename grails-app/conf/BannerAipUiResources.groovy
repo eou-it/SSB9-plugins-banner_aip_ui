@@ -36,7 +36,6 @@ modules = {
         dependsOn 'bannerAIPReviewUI'
         dependsOn 'bannerAIPUIRTL'
     }
-
     'bannerAIPUIRTL' {
         dependsOn 'bannerSelfServiceCommonRTL, extensibilityAngularRTL, commonComponentsRTL'
         dependsOn "jquery"
