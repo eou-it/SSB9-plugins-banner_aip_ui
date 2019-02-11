@@ -52,7 +52,7 @@ class AipActionItemPostingControllerIntegrationTests extends BaseIntegrationTest
             "displayEndDate":"${dynamicData.displayEndDate}",
             "postNow":"true",
             "populationRegenerateIndicator":false,
-            "displayDatetimeZone.dateVal": correspondingServerDetails   
+            "displayDatetimeZone": ${correspondingServerDetails}
             }"""
     }
 
@@ -76,7 +76,7 @@ class AipActionItemPostingControllerIntegrationTests extends BaseIntegrationTest
             "scheduledStartTime":"${dynamicData.scheduledStartTime}",
             "timezoneStringOffset":"${dynamicData.timezoneStringOffset}",
             "populationRegenerateIndicator":false,
-            "displayDatetimeZone":correspondingServerDetails
+            "displayDatetimeZone": ${correspondingServerDetails}
             }"""
     }
 
