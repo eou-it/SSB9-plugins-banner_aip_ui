@@ -186,9 +186,11 @@ var AIPUI;
                     }
                 });
             };
+            //Trigger change in response on file upload or delete.
             var triggerChangeInResponse = function () {
                 var selectedResponse = $("input[id^='pbid-ActionItemStatusAgree-radio']:checked");
                 selectedResponse.click();
+                //To keep the checkbox checked even after click
                 selectedResponse.prop("checked", true);
             };
             $scope.previewDocument = function () {
