@@ -10,7 +10,7 @@
     <meta name="layout" content="bannerSelfServicePage"/>
     <r:require modules="bannerNonAdminAIPUI"/>
     <g:if test="${message(code: 'default.language.direction')  == 'rtl'}">
-        <r:require modules="bannerAIPUIRTL"/>
+        <r:require modules="bannerNonAdminAIPUIRTL"/>
     </g:if>
     <meta name="menuEndPoint" content="${g.createLink(controller: 'selfServiceMenu', action: 'data')}"/>
     <meta name="menuBaseURL" content="${createLink(uri: '/ssb')}" />
