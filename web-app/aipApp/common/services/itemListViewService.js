@@ -1,5 +1,5 @@
 /*********************************************************************************
- Copyright 2018 Ellucian Company L.P. and its affiliates.
+ Copyright 2018-2019 Ellucian Company L.P. and its affiliates.
  **********************************************************************************/
 ///<reference path="../../../typings/tsd.d.ts"/>
 var AIP;
@@ -10,10 +10,11 @@ var AIP;
         SelectionType[SelectionType["ActionItem"] = 1] = "ActionItem";
     })(SelectionType || (SelectionType = {}));
     var ItemListViewService = /** @class */ (function () {
-        function ItemListViewService($http, $q, APP_PATH) {
+        function ItemListViewService($http, $q, APP_PATH, $filter) {
             this.$http = $http;
             this.$q = $q;
             this.APP_PATH = APP_PATH;
+            this.$filter = $filter;
         }
         ItemListViewService.prototype.getActionItems = function (userInfo) {
             var request = this.$http({
@@ -81,7 +82,14 @@ var AIP;
                     dataType: 'script',
                     success: function () {
                         angular.module("BannerOnAngular").controller(data.controllerId, data.controllerId);
-                        params = { action: "page", controller: "customPage", id: data.pageName, actionItemId: actionItemId, groupId: groupId, saved: false };
+                        params = {
+                            action: "page",
+                            controller: "customPage",
+                            id: data.pageName,
+                            actionItemId: actionItemId,
+                            groupId: groupId,
+                            saved: false
+                        };
                         defer.resolve(data);
                     },
                     async: true
@@ -93,7 +101,26 @@ var AIP;
         };
         ItemListViewService.prototype.confirmItem = function (id) {
         };
-        ItemListViewService.$inject = ["$http", "$q", "APP_PATH"];
+        /*Function to notify about unsaved changes. Accepts parameters - callback function,
+        scope to which callback function should be bound to and input parameters for callback function */
+        ItemListViewService.prototype.saveChangesNotification = function (callbackFunc, scope, callbackParam1, callbackParam2) {
+            var n = new Notification({
+                message: this.$filter("i18n_aip")("aip.admin.actionItem.saveChanges"),
+                type: "warning"
+            });
+            n.addPromptAction(this.$filter("i18n_aip")("aip.common.text.no"), function () {
+                notifications.remove(n);
+            });
+            n.addPromptAction(this.$filter("i18n_aip")("aip.common.text.yes"), function () {
+                params.isResponseModified = false;
+                notifications.remove(n);
+                var boundCallback = callbackFunc.bind(scope);
+                boundCallback(callbackParam1, callbackParam2);
+                scope.$apply();
+            });
+            notifications.addNotification(n);
+        };
+        ItemListViewService.$inject = ["$http", "$q", "APP_PATH", "$filter"];
         return ItemListViewService;
     }());
     AIP.ItemListViewService = ItemListViewService;

@@ -1,5 +1,5 @@
 /*******************************************************************************
-Copyright 2018 Ellucian Company L.P. and its affiliates.
+Copyright 2018-2019 Ellucian Company L.P. and its affiliates.
 ********************************************************************************/
 /*********************************************************************************
  Copyright 2017-2018 Ellucian Company L.P. and its affiliates.
@@ -278,14 +278,13 @@ aip-list .enddate {
   font-family: "OpenSans-semibold"; }
 #pbid-PersonalInformationAndEmergencyContacts h3.pb-form-label, #pbid-CurrentProgrammeofStudyinformation h3.pb-form-label, #pbid-ConfirmEnrollment h3.pb-form-label {
   color: #4F585F;
-  font-size: 1.5em;
+  font-size: 1.25em;
   font-family: "OpenSans-semibold";
-  margin: 5px 0;
+  margin-left: 5px;
   padding: 0.75em 0.5em; }
 #pbid-PersonalInformationAndEmergencyContacts div.pb-literal, #pbid-CurrentProgrammeofStudyinformation div.pb-literal, #pbid-ConfirmEnrollment div.pb-literal {
   color: #4F585F;
   font-size: 1.15em;
-  margin-top: 5px;
   padding-left: 0.75em;
   margin-top: 25px; }
 #pbid-PersonalInformationAndEmergencyContacts label, #pbid-PersonalInformationAndEmergencyContacts span.pb-detail, #pbid-CurrentProgrammeofStudyinformation label, #pbid-CurrentProgrammeofStudyinformation span.pb-detail, #pbid-ConfirmEnrollment label, #pbid-ConfirmEnrollment span.pb-detail {
@@ -295,11 +294,12 @@ aip-list .enddate {
 #pbid-PersonalInformationAndEmergencyContacts label.pb-label, #pbid-CurrentProgrammeofStudyinformation label.pb-label, #pbid-ConfirmEnrollment label.pb-label {
   font-size: 1.10em;
   font-weight: bold;
+  margin-left: 4px;
   margin-bottom: 1px;
   padding: 0.75em 0.75em;
   display: block; }
 #pbid-PersonalInformationAndEmergencyContacts label.pb-label.pb-boolean, #pbid-CurrentProgrammeofStudyinformation label.pb-label.pb-boolean, #pbid-ConfirmEnrollment label.pb-label.pb-boolean {
-  font-size: 1.25em;
+  font-size: 1.15em;
   display: inline-block; }
 #pbid-PersonalInformationAndEmergencyContacts select.pb-item.pb-select, #pbid-CurrentProgrammeofStudyinformation select.pb-item.pb-select, #pbid-ConfirmEnrollment select.pb-item.pb-select {
   font-size: 1em;
@@ -313,7 +313,6 @@ aip-list .enddate {
   margin-left: 15px;
   border-radius: 4px; }
 #pbid-PersonalInformationAndEmergencyContacts select.pb-select:focus, #pbid-CurrentProgrammeofStudyinformation select.pb-select:focus, #pbid-ConfirmEnrollment select.pb-select:focus {
-  background-color: #FFFFFF;
   border: 2px solid #206E9F;
   background-color: #FFFFFF;
   color: #000000; }
@@ -390,9 +389,9 @@ aip-list .enddate {
       padding: 8px; }
     .landingItem-container .landing-context .landing-description {
       padding: 8px; } }
-#fileupload_label {
-  width: 100%; }
-
+@media (width: 50%) {
+  #fileupload_label {
+    width: 100%; } }
 .btn-right {
   float: right;
   margin-right: 5px; }
@@ -428,8 +427,7 @@ aip-list .enddate {
   .aip-item-detail-container .detail-content {
     height: inherit;
     border: 1px solid #A4C6E4;
-    padding: 0px 16px 16px 16px;
-    overflow-y: scroll; }
+    padding: 0px 16px 16px 16px; }
     .aip-item-detail-container .detail-content hr {
       border-color: #A4C6E4 !important; }
     .aip-item-detail-container .detail-content .detail-title {
@@ -1442,7 +1440,7 @@ ol.selected-group > li > button {
     margin-bottom: 15px;
     height: 5em; }
     .actionItemAddContainer .actionItemControl .actionItemButton {
-      float: left; }
+      float: right; }
       .actionItemAddContainer .actionItemControl .actionItemButton span {
         padding-left: 24px; }
         .actionItemAddContainer .actionItemControl .actionItemButton span button {
@@ -1687,7 +1685,8 @@ ol.selected-group > li > button {
   .monitor-action-item-accordion-container .accordion-toggle {
     color: #000000; }
   .monitor-action-item-accordion-container .label-padding {
-    padding-top: 5px; }
+    padding-top: 5px;
+    width: auto; }
   .monitor-action-item-accordion-container .select2-results {
     max-height: 100px; }
   .monitor-action-item-accordion-container .titleValue {
@@ -1910,9 +1909,6 @@ label {
       color: #557287; }
   .viewContainer .listActionItem .welcometext {
     font-size: 1.5em; }
-  .viewContainer .listActionItem .no-item-available {
-    font-size: 1.3em;
-  }
   .viewContainer .listActionItem .returnBtn {
     float: right;
     margin-bottom: 1em;
@@ -1926,7 +1922,7 @@ label {
     padding-left: 0;
     float: left; }
   .viewContainer .listActionItem .listActionItem-container .itemList .groupDetail {
-    overfloat-y: auto;
+    overflow-y: auto;
     padding-right: 0;
     padding-left: 0;
     float: right; }
