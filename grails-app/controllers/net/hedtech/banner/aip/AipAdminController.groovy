@@ -398,7 +398,7 @@ class AipAdminController {
     }
 
     /**
-     * Get configured Max Attachment Val from GORICCR table
+     * Get configured Max Attachment Val from gurocfg table
      * @return
      */
     def getMaxAttachmentsVal() {
@@ -411,7 +411,7 @@ class AipAdminController {
             }
         }
         else{
-            results = [maxAttachment: maxAttachment]
+            results = [maxAttachment: Integer.parseInt(maxAttachment)]
         }
         render results as JSON
     }
