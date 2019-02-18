@@ -1,23 +1,23 @@
 /*******************************************************************************
 Copyright 2019 Ellucian Company L.P. and its affiliates.
 ********************************************************************************/
-/*#header-main-section-east-part {*/
-    /*left: 0 !important;*/
-    /*right: auto !important;*/
-/*}*/
+#header-main-section-east-part {
+    left: 0 !important;
+    right: auto !important;
+}
 
-/*#header-main-section-east-part #userDiv, #header-main-section-east-part #toolsButton {*/
-    /*float: right !important;*/
-/*}*/
+#header-main-section-east-part #userDiv, #header-main-section-east-part #toolsButton {
+    float: right !important;
+}
 
-/*#header-main-section-west-part {*/
-    /*right: 0 !important;*/
-    /*left: auto !important;*/
-/*}*/
+#header-main-section-west-part {
+    right: 0 !important;
+    left: auto !important;
+}
 
-/*#header-main-section-west-part #bannerMenuDiv, #header-main-section-west-part #brandingDiv {*/
-    /*float: right !important;*/
-/*}*/
+#header-main-section-west-part #bannerMenuDiv, #header-main-section-west-part #brandingDiv {
+    float: right !important;
+}
 
 .xe-popup-container .xe-popup-close {
     right: auto !important;
