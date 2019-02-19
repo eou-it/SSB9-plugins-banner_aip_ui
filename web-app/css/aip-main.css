@@ -1388,6 +1388,7 @@ ol.selected-group > li > button {
     transform: rotate(-0deg);
   }*/ }
   .actionItemAddContainer input.hasMultiCalendarPicker {
+    width: 170px;
     height: 35px;
     border-radius: 5px;
     padding-left: 15px; }
@@ -1422,7 +1423,6 @@ ol.selected-group > li > button {
     position: relative; }
   .actionItemAddContainer .calendar-img {
     float: right;
-    margin-right: 10px;
     top: -28px;
     position: relative; }
   .actionItemAddContainer .enddate {
@@ -1792,7 +1792,6 @@ ol.selected-group > li > button {
 
 .calendar-img {
   float: right;
-  margin-right: 10px;
   top: -28px;
   position: relative; }
 
