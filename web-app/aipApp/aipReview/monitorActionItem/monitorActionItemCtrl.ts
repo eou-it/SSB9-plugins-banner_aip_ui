@@ -316,13 +316,7 @@ module AIP {
         }
 
         reset() {
-            this.selected = {};
-            this.option = "";
-            this.personId = "";
-            this.personName = "";
-            this.gridData = {};
-            this.gridEnabled = false;
-            this.searchEnabled=true;
+            this.$state.reload();
         }
 
 

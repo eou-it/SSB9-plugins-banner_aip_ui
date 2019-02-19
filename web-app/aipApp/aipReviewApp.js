@@ -163,6 +163,7 @@ var bannerAIPReviewApp = angular.module("bannerAIPReview", [
 
             $rootScope.$on('$stateChangeStart', function (e, to) {
                 if ($rootScope.DataChanged) {
+                    $rootScope.$broadcast('DetectChanges', {state: next});
                     e.preventDefault();
                 }
             });
