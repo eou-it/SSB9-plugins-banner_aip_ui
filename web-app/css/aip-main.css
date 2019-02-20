@@ -1143,17 +1143,12 @@ ol.selected-group > li > button {
             border: 0;
             padding: 0;
             line-height: 2em; }
-          .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .contentContainer table.ruleListReadOnly thead {
-            display: none; }
           .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .contentContainer table.ruleListReadOnly tr {
             margin-bottom: 10px;
-            display: block;
-            border: none;
-            height: auto; }
+            height: auto;
+            border: solid 1px; }
           .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .contentContainer table.ruleListReadOnly td {
-            display: table;
             border: 0;
-            width: 100%;
             text-indent: 8px;
             border-color: #C0C0C0; }
             .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .contentContainer table.ruleListReadOnly td .labels {
@@ -1163,7 +1158,6 @@ ol.selected-group > li > button {
           .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .contentContainer table.ruleListReadOnly td:before {
             display: table-row;
             width: 100%;
-            content: attr(data-label);
             font-size: 1.1em;
             font-weight: bold;
             padding-right: 8px;
