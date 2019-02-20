@@ -8,8 +8,9 @@
 var AIP;
 (function (AIP) {
     var ReviewActionItemCtrl = (function () {
-        function ReviewActionItemCtrl($scope, $state, AIPReviewService, AIPUserService, SpinnerService, $timeout, $q, $uibModal, APP_ROOT, $sce, $filter) {
-            this.$inject = ["$scope", "$state", "AIPReviewService", "AIPUserService", "SpinnerService", "$timeout", "$q", "$uibModal", "APP_ROOT", "$sce", "$filter", "datePicker"];
+        function ReviewActionItemCtrl($scope, $rootScope, $state, AIPReviewService, AIPUserService, SpinnerService, $timeout, $q, $uibModal, APP_ROOT, $sce, $filter, $window) {
+            var _this = this;
+            this.$inject = ["$scope", "$rootScope", "$state", "AIPReviewService", "AIPUserService", "SpinnerService", "$timeout", "$q", "$uibModal", "APP_ROOT", "$sce", "$filter", "$window", "datePicker"];
             /**
              * Gets list of attached document for a response.
              * @param query
@@ -79,6 +80,8 @@ var AIP;
                 });
             };
             $scope.vm = this;
+            this.$scope = $scope;
+            this.$rootScope = $rootScope;
             this.$state = $state;
             this.aipReviewService = AIPReviewService;
             this.userService = AIPUserService;
@@ -111,6 +114,7 @@ var AIP;
             this.dirtyFlag = false;
             this.actionItemDetailsClone = null;
             this.selectNone = $filter("i18n_aip")("js.aip.action.selected.name");
+            this.redirectval = "";
             $scope.header = [{
                     name: "id",
                     title: "ID",
@@ -177,6 +181,12 @@ var AIP;
             $scope.selectRecord = function (data) {
                 $scope.selectedRecord = data;
             };
+            $window.onbeforeunload = function (event) {
+                if (_this.dirtyFlag) {
+                    return _this.$filter("i18n_aip")("aip.common.admin.unsaved");
+                }
+                $window.onbeforeunload = null;
+            };
         }
         ReviewActionItemCtrl.prototype.init = function () {
             var _this = this;
@@ -212,6 +222,13 @@ var AIP;
             }));
             this.$q.all(allPromises).then(function () {
                 _this.spinnerService.showSpinner(false);
+            });
+            var that = this;
+            this.$scope.$on("DetectChanges", function (event, args) {
+                if (that.dirtyFlag) {
+                    that.redirectval = args.state;
+                    that.checkchangesDone();
+                }
             });
         };
         /**
@@ -279,6 +296,7 @@ var AIP;
         };
         ReviewActionItemCtrl.prototype.onValueChange = function () {
             this.dirtyFlag = true;
+            this.$rootScope.DataChanged = true;
         };
         ReviewActionItemCtrl.prototype.resetValues = function () {
             this.$state.reload();
@@ -310,6 +328,24 @@ var AIP;
                 isAnyFieldModified = true;
             }
             return isAnyFieldModified;
+        };
+        ReviewActionItemCtrl.prototype.checkchangesDone = function () {
+            if (this.dirtyFlag) {
+                var n = new Notification({
+                    message: this.$filter("i18n_aip")("aip.admin.actionItem.saveChanges"),
+                    type: "warning"
+                });
+                n.addPromptAction(this.$filter("i18n_aip")("aip.common.text.no"), function () {
+                    notifications.remove(n);
+                });
+                n.addPromptAction(this.$filter("i18n_aip")("aip.common.text.yes"), function () {
+                    location.href = this.redirectval;
+                    this.dirtyFlag = false;
+                    this.$rootScope.DataChanged = false;
+                    notifications.remove(n);
+                });
+                notifications.addNotification(n);
+            }
         };
         return ReviewActionItemCtrl;
     })();

@@ -19,13 +19,15 @@ module AIP {
 
     export class ReviewActionItemCtrl implements IReviewActionItemCtrl {
 
-        $inject = ["$scope", "$state", "AIPReviewService", "AIPUserService", "SpinnerService", "$timeout", "$q", "$uibModal", "APP_ROOT", "$sce", "$filter", "datePicker"];
+        $inject = ["$scope","$rootScope","$state", "AIPReviewService", "AIPUserService", "SpinnerService", "$timeout", "$q", "$uibModal", "APP_ROOT", "$sce", "$filter","$window", "datePicker"];
         aipReviewService: AIP.AIPReviewService;
         userService: AIP.UserService;
         $uibModal;
         spinnerService;
         $sce;
         $timeout;
+        $scope;
+        $rootScope;
         $state;
         $filter;
         $q;
@@ -52,9 +54,12 @@ module AIP {
         dirtyFlag:boolean;
         actionItemDetailsClone;
         selectNone;
+        redirectval;
 
-        constructor($scope, $state, AIPReviewService, AIPUserService, SpinnerService, $timeout, $q, $uibModal, APP_ROOT, $sce, $filter) {
+        constructor($scope,$rootScope, $state, AIPReviewService, AIPUserService, SpinnerService, $timeout, $q, $uibModal, APP_ROOT, $sce, $filter,$window) {
             $scope.vm = this;
+            this.$scope = $scope;
+            this.$rootScope = $rootScope;
             this.$state = $state;
             this.aipReviewService = AIPReviewService;
             this.userService = AIPUserService;
@@ -87,6 +92,7 @@ module AIP {
             this.dirtyFlag = false;
             this.actionItemDetailsClone=null;
             this.selectNone =$filter("i18n_aip")("js.aip.action.selected.name");
+            this.redirectval="";
 
             $scope.header = [{
                 name: "id",
@@ -156,6 +162,13 @@ module AIP {
             $scope.selectRecord = function (data) {
                 $scope.selectedRecord = data;
             };
+
+            $window.onbeforeunload = (event)=> {
+                if(this.dirtyFlag) {
+                    return this.$filter("i18n_aip")("aip.common.admin.unsaved");
+                }
+                $window.onbeforeunload = null;
+            };
         }
 
         init() {
@@ -196,6 +209,18 @@ module AIP {
             this.$q.all(allPromises).then(() => {
                 this.spinnerService.showSpinner(false);
             });
+            var that=this;
+            this.$scope.$on("DetectChanges",function(event, args)
+            {
+                if (that.dirtyFlag){
+                    that.redirectval = args.state;
+                    that.checkchangesDone();
+                }
+            });
+
+
+
+
         }
 
         /**
@@ -335,6 +360,7 @@ module AIP {
 
         onValueChange(){
             this.dirtyFlag = true;
+            this.$rootScope.DataChanged = true;
         }
 
         resetValues(){
@@ -371,6 +397,26 @@ module AIP {
                 isAnyFieldModified = true;
             }
             return  isAnyFieldModified ;
+        }
+
+        checkchangesDone() {
+            if (this.dirtyFlag) {
+                var n = new Notification({
+                    message: this.$filter("i18n_aip")( "aip.admin.actionItem.saveChanges"),
+                    type: "warning"
+                });
+                n.addPromptAction(this.$filter("i18n_aip")("aip.common.text.no"), function () {
+                    notifications.remove(n);
+
+                })
+                n.addPromptAction(this.$filter("i18n_aip")("aip.common.text.yes"), function () {
+                    location.href = this.redirectval;
+                    this.dirtyFlag = false;
+                    this.$rootScope.DataChanged=false;
+                    notifications.remove(n);
+                });
+                notifications.addNotification(n);
+            }
         }
 
     }

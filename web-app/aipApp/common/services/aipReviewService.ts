@@ -51,10 +51,11 @@ module AIP {
         }
 
         getActionItemList() {
-            var request = this.$http({
+            let request = this.$http({
                 method: "GET",
-                url: this.ENDPOINT.review.listActionItemNames
-            })
+                url: this.ENDPOINT.review.listActionItemNames,
+                cache:true
+            });
             return request;
         }
 
@@ -73,7 +74,8 @@ module AIP {
 
             var request = this.$http({
                 method: "GET",
-                url: url
+                url: url,
+                cache:true
             }).then(function (response) {
                 deferred.resolve(response.data);
             }, function (response) {
