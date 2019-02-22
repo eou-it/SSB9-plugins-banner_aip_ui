@@ -210,6 +210,17 @@ var AIPUI;
                             var fileExtension = fileNameSplit[fileNameSplit.length - 1].toLowerCase();
                             var windowRefObject;
                             var iframe;
+                            if (window.navigator && window.navigator.msSaveOrOpenBlob) {
+                                var byteCharacters = atob(base64Encoded);
+                                var byteNumbers = new Array(byteCharacters.length);
+                                for (var i = 0; i < byteCharacters.length; i++) {
+                                    byteNumbers[i] = byteCharacters.charCodeAt(i);
+                                }
+                                var byteArray = new Uint8Array(byteNumbers);
+                                var blob = new Blob([byteArray], { type: 'application/pdf' });
+                                window.navigator.msSaveOrOpenBlob(blob, data.documentName);
+                                return;
+                            }
                             if (fileExtension === 'pdf' || fileExtension === 'jpg' || fileExtension === 'jpeg' || fileExtension === 'png' || fileExtension === 'txt') {
                                 if (navigator.userAgent.indexOf("Chrome") != -1) {
                                     windowRefObject = window.open('about:whatever');

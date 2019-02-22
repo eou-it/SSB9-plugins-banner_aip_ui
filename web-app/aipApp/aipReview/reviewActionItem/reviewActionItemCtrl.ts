@@ -255,32 +255,63 @@ module AIP {
                         } else {
                             var base64Encoded = response.data.documentContent
                             var fileNameSplit = row.documentName.split('.')
-                            var fileExtension = fileNameSplit[fileNameSplit.length - 1]
+                            var fileExtension = fileNameSplit[fileNameSplit.length - 1].toLowerCase();
+                            var windowRefObject;
+                            var iframe;
+
+                            if (window.navigator && window.navigator.msSaveOrOpenBlob) { // IE
+                                var byteCharacters = atob(base64Encoded);
+                                var byteNumbers = new Array(byteCharacters.length);
+                                for (var i = 0; i < byteCharacters.length; i++) {
+                                    byteNumbers[i] = byteCharacters.charCodeAt(i);
+                                }
+                                var byteArray = new Uint8Array(byteNumbers);
+                                var blob = new Blob([byteArray], {type: 'application/pdf'});
+                                window.navigator.msSaveOrOpenBlob(blob, row.documentName);
+                                return;
+                            }
+
+                            if (fileExtension ==='pdf'|| fileExtension ==='jpg' || fileExtension ==='jpeg' || fileExtension ==='png' ||fileExtension ==='txt') {
+                                if (navigator.userAgent.indexOf("Chrome") != -1 ) {   //chrome
+                                    windowRefObject = window.open('about:whatever');
+                                }
+                                else{  //firefox and other browsers not IE
+                                    windowRefObject = window.open();
+                                }
+                                iframe = windowRefObject.document.createElement('iframe')
+                                iframe.width = '100%';
+                                iframe.height = '100%';
+                            }
 
                             switch (fileExtension) {
                                 case "pdf":
                                     var pdfWindow = "data:application/pdf;base64," + base64Encoded;
-                                    window.open(pdfWindow);
+                                    iframe.src = pdfWindow;
+                                    windowRefObject.document.body.appendChild(iframe);
                                     break;
                                 case "jpg":
                                     var jpgWindow = "data:image/jpeg;base64," + base64Encoded;
-                                    window.open(jpgWindow);
+                                    iframe.src = jpgWindow;
+                                    windowRefObject.document.body.appendChild(iframe);
                                     break;
                                 case "jpeg":
-                                    var jpgWindow = "data:image/jpeg;base64," + base64Encoded;
-                                    window.open(jpgWindow);
+                                    var jpegWindow = "data:image/jpeg;base64," + base64Encoded;
+                                    iframe.src = jpegWindow;
+                                    windowRefObject.document.body.appendChild(iframe);
                                     break;
                                 case "png":
                                     var pngWindow = "data:image/png;base64," + base64Encoded;
-                                    window.open(pngWindow);
+                                    iframe.src = pngWindow;
+                                    windowRefObject.document.body.appendChild(iframe);
                                     break;
                                 case "txt":
                                     var txtWindow = "data:text/plain;base64," + base64Encoded;
-                                    window.open(txtWindow);
+                                    iframe.src = txtWindow;
+                                    windowRefObject.document.body.appendChild(iframe);
                                     break;
                                 default:
-                                    var dataURI = "data:application/octet-stream;base64," + base64Encoded;
-                                    var link = document.createElement('a');
+                                   var dataURI = "data:application/octet-stream;base64," + base64Encoded;
+                                   var link = document.createElement('a');
                                     document.body.appendChild(link);
                                     link.href = dataURI;
                                     link.download = row.documentName;
