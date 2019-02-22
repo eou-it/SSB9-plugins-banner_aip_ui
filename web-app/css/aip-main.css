@@ -333,6 +333,23 @@ aip-list .enddate {
 #pbid-PersonalInformationAndEmergencyContacts #pbid-Name-0, #pbid-CurrentProgrammeofStudyinformation #pbid-Name-0, #pbid-ConfirmEnrollment #pbid-Name-0 {
   width: 600px; }
 
+.view-attachment-icon {
+  font-family: open-sans-semi-bold;
+  background: url(../images/aip_view_attachment.png) 50% 50% no-repeat;
+  cursor: pointer;
+  height: 1.5em;
+  width: 1.8em;
+  border: none;
+  margin-right: 2em; }
+
+.delete-attachment-icon {
+  font-family: open-sans-semi-bold;
+  background: url(../images/aip_delete_attachment.png) 50% 50% no-repeat;
+  cursor: pointer;
+  height: 1.5em;
+  width: 1.8em;
+  border: none; }
+
 .AIP-landing-container {
   padding: 16px; }
 
@@ -400,19 +417,6 @@ aip-list .enddate {
   padding: 10px; }
 .aip-attachments-container .attachmentsTable {
   margin-top: 1em; }
-  .aip-attachments-container .attachmentsTable .view-attachment-icon {
-    background: url(../images/aip_view_attachment.svg) no-repeat;
-    cursor: pointer;
-    height: 1.5em;
-    width: 1.8em;
-    border: none;
-    margin-right: 2em; }
-  .aip-attachments-container .attachmentsTable .delete-attachment-icon {
-    background: url(../images/aip_delete_attachment.svg) no-repeat;
-    cursor: pointer;
-    height: 1.5em;
-    width: 1.8em;
-    border: none; }
   .aip-attachments-container .attachmentsTable .noDataMsg {
     position: absolute;
     top: 50%;
@@ -1756,6 +1760,16 @@ ol.selected-group > li > button {
         .monitor-action-item-accordion-container .actionListTable .table-container .row.actionItemActions div:last-child {
           margin-right: 0; }
 
+.view-attachment-icon {
+  font-family: open-sans-semi-bold;
+  background: url(../images/aip_view_attachment.png) 50% 50% no-repeat;
+  cursor: pointer;
+  height: 1.5em;
+  width: 1.8em;
+  border: none;
+  margin-right: 2em;
+  margin-left: 1em !important; }
+
 @media screen and (max-width: 768px) {
   .monitor-action-item-container .row .control {
     padding: 0; } }
@@ -1796,15 +1810,6 @@ ol.selected-group > li > button {
 .date-div {
   max-width: 240px;
   height: 35px; }
-
-.view-attachment-icon {
-  background: url(../images/aip_view_attachment.svg) no-repeat;
-  cursor: pointer;
-  height: 1.5em;
-  width: 1.8em;
-  border: none;
-  margin-right: 2em;
-  margin-left: 1em !important; }
 
 .save-button-left-padding {
   padding-left: 1em; }

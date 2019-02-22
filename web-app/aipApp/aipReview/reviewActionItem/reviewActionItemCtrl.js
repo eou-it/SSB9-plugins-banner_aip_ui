@@ -7,7 +7,7 @@
 ///<reference path="../../common/services/spinnerService.ts"/>
 var AIP;
 (function (AIP) {
-    var ReviewActionItemCtrl = (function () {
+    var ReviewActionItemCtrl = /** @class */ (function () {
         function ReviewActionItemCtrl($scope, $rootScope, $state, AIPReviewService, AIPUserService, SpinnerService, $timeout, $q, $uibModal, APP_ROOT, $sce, $filter, $window) {
             var _this = this;
             this.$inject = ["$scope", "$rootScope", "$state", "AIPReviewService", "AIPUserService", "SpinnerService", "$timeout", "$q", "$uibModal", "APP_ROOT", "$sce", "$filter", "$window", "datePicker"];
@@ -45,27 +45,56 @@ var AIP;
                         else {
                             var base64Encoded = response.data.documentContent;
                             var fileNameSplit = row.documentName.split('.');
-                            var fileExtension = fileNameSplit[fileNameSplit.length - 1];
+                            var fileExtension = fileNameSplit[fileNameSplit.length - 1].toLowerCase();
+                            var windowRefObject;
+                            var iframe;
+                            if (window.navigator && window.navigator.msSaveOrOpenBlob) {
+                                var byteCharacters = atob(base64Encoded);
+                                var byteNumbers = new Array(byteCharacters.length);
+                                for (var i = 0; i < byteCharacters.length; i++) {
+                                    byteNumbers[i] = byteCharacters.charCodeAt(i);
+                                }
+                                var byteArray = new Uint8Array(byteNumbers);
+                                var blob = new Blob([byteArray], { type: 'application/pdf' });
+                                window.navigator.msSaveOrOpenBlob(blob, row.documentName);
+                                return;
+                            }
+                            if (fileExtension === 'pdf' || fileExtension === 'jpg' || fileExtension === 'jpeg' || fileExtension === 'png' || fileExtension === 'txt') {
+                                if (navigator.userAgent.indexOf("Chrome") != -1) {
+                                    windowRefObject = window.open('about:whatever');
+                                }
+                                else {
+                                    windowRefObject = window.open();
+                                }
+                                iframe = windowRefObject.document.createElement('iframe');
+                                iframe.width = '100%';
+                                iframe.height = '100%';
+                            }
                             switch (fileExtension) {
                                 case "pdf":
                                     var pdfWindow = "data:application/pdf;base64," + base64Encoded;
-                                    window.open(pdfWindow);
+                                    iframe.src = pdfWindow;
+                                    windowRefObject.document.body.appendChild(iframe);
                                     break;
                                 case "jpg":
                                     var jpgWindow = "data:image/jpeg;base64," + base64Encoded;
-                                    window.open(jpgWindow);
+                                    iframe.src = jpgWindow;
+                                    windowRefObject.document.body.appendChild(iframe);
                                     break;
                                 case "jpeg":
-                                    var jpgWindow = "data:image/jpeg;base64," + base64Encoded;
-                                    window.open(jpgWindow);
+                                    var jpegWindow = "data:image/jpeg;base64," + base64Encoded;
+                                    iframe.src = jpegWindow;
+                                    windowRefObject.document.body.appendChild(iframe);
                                     break;
                                 case "png":
                                     var pngWindow = "data:image/png;base64," + base64Encoded;
-                                    window.open(pngWindow);
+                                    iframe.src = pngWindow;
+                                    windowRefObject.document.body.appendChild(iframe);
                                     break;
                                 case "txt":
                                     var txtWindow = "data:text/plain;base64," + base64Encoded;
-                                    window.open(txtWindow);
+                                    iframe.src = txtWindow;
+                                    windowRefObject.document.body.appendChild(iframe);
                                     break;
                                 default:
                                     var dataURI = "data:application/octet-stream;base64," + base64Encoded;
@@ -348,8 +377,7 @@ var AIP;
             }
         };
         return ReviewActionItemCtrl;
-    })();
+    }());
     AIP.ReviewActionItemCtrl = ReviewActionItemCtrl;
 })(AIP || (AIP = {}));
 register("bannerAIPReview").controller("reviewActionItemCtrl", AIP.ReviewActionItemCtrl);
-//# sourceMappingURL=reviewActionItemCtrl.js.map
