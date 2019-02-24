@@ -1,6 +1,11 @@
 .actionItemAddContainer {
-  input.hasMultiCalendarPicker{height:35px;border-radius: 5px;
-    padding-left: 15px;}
+  input.hasMultiCalendarPicker
+  {
+    width:170px;
+    height:35px;
+    border-radius: 5px;
+    padding-left: 15px;
+   }
 
   .actionItemEdit{font-size: 14px;
     margin-left:0 !important;
@@ -13,7 +18,6 @@
     margin-left: 15px;
     color: #565e96;
     text-decoration: underline;
-
   }
  .dateRange-minwidth{
    min-width: 160px;
@@ -40,16 +44,18 @@
     background-position: 2px 0px;
   }
   .startdate{padding-left:0px;position:relative;}
-  .calendar-img{float: right;
-    margin-right: 10px;
+  .calendar-img{
+    float: right;
     top: -28px;
     position: relative;}
 
   .enddate{padding-left:0px;position:relative;}
 
-  input.hasMultiCalendarPicker{height:35px;border-radius: 5px;
-    padding-left: 15px;}
-
+  input.hasMultiCalendarPicker{
+    height:35px;
+    border-radius: 5px;
+    padding-left: 15px;
+  }
     .actionItemControl {
     position: relative;
     width: 100%;
@@ -299,5 +305,4 @@
     padding-left:0px;
     padding-right:0px;
   }
-
 }

@@ -314,18 +314,14 @@ $link-color: #275c8a;
                         line-height: 2em;
                       }
                       thead {
-                        display: none;
                       }
                       tr {
                         margin-bottom: 10px;
-                        display: block;
-                        border: none;
                         height: auto;
+                        border: solid 1px;
                       }
                       td {
-                        display: table;
                         border: 0;
-                        width: 100%;
                         text-indent: 8px;
                         border-color: $border-color;
                         .labels {
@@ -342,7 +338,6 @@ $link-color: #275c8a;
                       td:before {
                         display: table-row;
                         width: 100%;
-                        content: attr(data-label);
                         font-size: 1.1em;
                         font-weight: bold;
                         padding-right: 8px;

@@ -243,52 +243,65 @@ module AIPUI {
                                 var windowRefObject;
                                 var iframe;
 
+                                if (window.navigator && window.navigator.msSaveOrOpenBlob) { // IE
+                                        var byteCharacters = atob(base64Encoded);
+                                        var byteNumbers = new Array(byteCharacters.length);
+                                        for (var i = 0; i < byteCharacters.length; i++) {
+                                            byteNumbers[i] = byteCharacters.charCodeAt(i);
+                                        }
+                                        var byteArray = new Uint8Array(byteNumbers);
+                                        var blob = new Blob([byteArray], {type: 'application/pdf'});
+                                        window.navigator.msSaveOrOpenBlob(blob, data.documentName);
+                                        return;
+                                }
+
+
                              if (fileExtension ==='pdf'|| fileExtension ==='jpg' || fileExtension ==='jpeg' || fileExtension ==='png' ||fileExtension ==='txt') {
-                                 if (navigator.userAgent.indexOf("Chrome") != -1) {
+                                 if (navigator.userAgent.indexOf("Chrome") != -1 ) {   //chrome
                                       windowRefObject = window.open('about:whatever');
                                  }
-                                 else{
+                                 else{  //firefox and other browsers not IE
                                      windowRefObject = window.open();
                                  }
                                  iframe = windowRefObject.document.createElement('iframe')
                                  iframe.width = '100%';
                                  iframe.height = '100%';
-                             }
+                               }
 
-                                switch (fileExtension) {
-                                    case "pdf":
-                                        var pdfWindow = "data:application/pdf;base64," + base64Encoded;
-                                        iframe.src=pdfWindow;
-                                        windowRefObject.document.body.appendChild(iframe);
-                                        break;
-                                    case "jpg":
-                                        var jpgWindow = "data:image/jpeg;base64," + base64Encoded;
-                                        iframe.src=jpgWindow;
-                                        windowRefObject.document.body.appendChild(iframe);
-                                        break;
-                                    case "jpeg":
-                                        var jpegWindow = "data:image/jpeg;base64," + base64Encoded;
-                                        iframe.src=jpegWindow;
-                                        windowRefObject.document.body.appendChild(iframe);
-                                        break;
-                                    case "png":
-                                        var pngWindow = "data:image/png;base64," + base64Encoded;
-                                        iframe.src=pngWindow;
-                                        windowRefObject.document.body.appendChild(iframe);
-                                        break;
-                                    case "txt":
-                                        var txtWindow = "data:text/plain;base64," + base64Encoded;
-                                        iframe.src=txtWindow;
-                                        windowRefObject.document.body.appendChild(iframe);
-                                        break;
-                                    default:
-                                        $scope.dataURI = "data:application/octet-stream;base64," + base64Encoded;
-                                        var link = document.createElement('a');
-                                        document.body.appendChild(link);
-                                        link.href = $scope.dataURI;
-                                        link.download = data.documentName;
-                                        link.click();
-                                }
+                                    switch (fileExtension) {
+                                        case "pdf":
+                                            var pdfWindow = "data:application/pdf;base64," + base64Encoded;
+                                            iframe.src = pdfWindow;
+                                            windowRefObject.document.body.appendChild(iframe);
+                                            break;
+                                        case "jpg":
+                                            var jpgWindow = "data:image/jpeg;base64," + base64Encoded;
+                                            iframe.src = jpgWindow;
+                                            windowRefObject.document.body.appendChild(iframe);
+                                            break;
+                                        case "jpeg":
+                                            var jpegWindow = "data:image/jpeg;base64," + base64Encoded;
+                                            iframe.src = jpegWindow;
+                                            windowRefObject.document.body.appendChild(iframe);
+                                            break;
+                                        case "png":
+                                            var pngWindow = "data:image/png;base64," + base64Encoded;
+                                            iframe.src = pngWindow;
+                                            windowRefObject.document.body.appendChild(iframe);
+                                            break;
+                                        case "txt":
+                                            var txtWindow = "data:text/plain;base64," + base64Encoded;
+                                            iframe.src = txtWindow;
+                                            windowRefObject.document.body.appendChild(iframe);
+                                            break;
+                                        default:
+                                            $scope.dataURI = "data:application/octet-stream;base64," + base64Encoded;
+                                            var link = document.createElement('a');
+                                            document.body.appendChild(link);
+                                            link.href = $scope.dataURI;
+                                            link.download = data.documentName;
+                                            link.click();
+                                    }
                             }
                         } else {
                             errorNotification(response.data.message);

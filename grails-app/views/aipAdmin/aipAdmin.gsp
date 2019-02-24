@@ -1,5 +1,5 @@
 <!--*******************************************************************************
- Copyright 2018 Ellucian Company L.P. and its affiliates.
+ Copyright 2018-2019 Ellucian Company L.P. and its affiliates.
  *******************************************************************************-->
 <%@ page contentType="text/html;charset=UTF-8" %>
 <html>
@@ -8,12 +8,14 @@
     <meta name="headerAttributes" content=""/>
     <title></title>
     <meta name="layout" content="bannerSelfServicePage"/>
-    <r:require modules="bannerAdminAIPUI"/>
+    <meta name="menuEndPoint" content="${g.createLink(controller: 'selfServiceMenu', action: 'data')}"/>
+    <meta name="menuBaseURL" content="${createLink(uri: '/ssb')}" />
     <g:if test="${message(code: 'default.language.direction')  == 'rtl'}">
         <r:require modules="bannerAdminAIPUIRTL"/>
     </g:if>
-    <meta name="menuEndPoint" content="${g.createLink(controller: 'selfServiceMenu', action: 'data')}"/>
-    <meta name="menuBaseURL" content="${createLink(uri: '/ssb')}" />
+    <g:else>
+        <r:require modules="bannerAdminAIPUI"/>
+    </g:else>
     <ckeditor:resources/>
     <script type="text/javascript">
         // Track calling page for breadcrumbs
@@ -22,12 +24,12 @@
             // URLs to exclude from updating genAppCallingPage, because they're actually either the authentication
             // page or App Nav, and are not "calling pages."
             var referrerUrl = document.referrer,
-                excludedRegex = [
-                    /\${applicationContextRoot}\/login\/auth?/,
-                    /\/seamless/,
-                    /\${applicationContextRoot}\//
-                ],
-                isExcluded;
+                    excludedRegex = [
+                        /\${applicationContextRoot}\/login\/auth?/,
+                        /\${applicationContextRoot}\//,
+                        /\/seamless/
+                    ],
+                    isExcluded;
 
             if (referrerUrl) {
                 isExcluded = _.find(excludedRegex, function (regex) {

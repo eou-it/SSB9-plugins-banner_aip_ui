@@ -405,6 +405,7 @@ var AIP;
                 this.timezone = null;
                 var CurrentDateTimeDetails = new Date();
                 var currentTime = this.$filter('date')(CurrentDateTimeDetails, 'HHmm');
+                this.today();
                 this.getDefaultTimeZone();
                 this.displayDatetimeZone.dateVal = this.currentBrowserDate;
                 this.displayDatetimeZone.timeVal = currentTime.toString();

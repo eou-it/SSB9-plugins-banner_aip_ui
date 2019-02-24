@@ -68,6 +68,16 @@ var AIP;
                         columnShowHide: false
                     }
                 }, {
+                    name: "lastModified",
+                    title: "modifiedOn",
+                    width: "0px",
+                    options: {
+                        sortable: true,
+                        visible: false,
+                        ascending: false,
+                        columnShowHide: false
+                    }
+                }, {
                     name: "jobState",
                     title: this.$filter("i18n_aip")("aip.admin.actionItem.post.grid.job.status"),
                     ariaLabel: this.$filter("i18n_aip")("aip.admin.actionItem.post.grid.job.status"),
@@ -85,7 +95,6 @@ var AIP;
                     options: {
                         sortable: true,
                         visible: true,
-                        ascending: true,
                         columnShowHide: false
                     }
                 },

@@ -7,9 +7,10 @@
 ///<reference path="../../common/services/spinnerService.ts"/>
 var AIP;
 (function (AIP) {
-    var ReviewActionItemCtrl = (function () {
-        function ReviewActionItemCtrl($scope, $state, AIPReviewService, AIPUserService, SpinnerService, $timeout, $q, $uibModal, APP_ROOT, $sce, $filter) {
-            this.$inject = ["$scope", "$state", "AIPReviewService", "AIPUserService", "SpinnerService", "$timeout", "$q", "$uibModal", "APP_ROOT", "$sce", "$filter", "datePicker"];
+    var ReviewActionItemCtrl = /** @class */ (function () {
+        function ReviewActionItemCtrl($scope, $rootScope, $state, AIPReviewService, AIPUserService, SpinnerService, $timeout, $q, $uibModal, APP_ROOT, $sce, $filter, $window) {
+            var _this = this;
+            this.$inject = ["$scope", "$rootScope", "$state", "AIPReviewService", "AIPUserService", "SpinnerService", "$timeout", "$q", "$uibModal", "APP_ROOT", "$sce", "$filter", "$window", "datePicker"];
             /**
              * Gets list of attached document for a response.
              * @param query
@@ -44,27 +45,56 @@ var AIP;
                         else {
                             var base64Encoded = response.data.documentContent;
                             var fileNameSplit = row.documentName.split('.');
-                            var fileExtension = fileNameSplit[fileNameSplit.length - 1];
+                            var fileExtension = fileNameSplit[fileNameSplit.length - 1].toLowerCase();
+                            var windowRefObject;
+                            var iframe;
+                            if (window.navigator && window.navigator.msSaveOrOpenBlob) {
+                                var byteCharacters = atob(base64Encoded);
+                                var byteNumbers = new Array(byteCharacters.length);
+                                for (var i = 0; i < byteCharacters.length; i++) {
+                                    byteNumbers[i] = byteCharacters.charCodeAt(i);
+                                }
+                                var byteArray = new Uint8Array(byteNumbers);
+                                var blob = new Blob([byteArray], { type: 'application/pdf' });
+                                window.navigator.msSaveOrOpenBlob(blob, row.documentName);
+                                return;
+                            }
+                            if (fileExtension === 'pdf' || fileExtension === 'jpg' || fileExtension === 'jpeg' || fileExtension === 'png' || fileExtension === 'txt') {
+                                if (navigator.userAgent.indexOf("Chrome") != -1) {
+                                    windowRefObject = window.open('about:whatever');
+                                }
+                                else {
+                                    windowRefObject = window.open();
+                                }
+                                iframe = windowRefObject.document.createElement('iframe');
+                                iframe.width = '100%';
+                                iframe.height = '100%';
+                            }
                             switch (fileExtension) {
                                 case "pdf":
                                     var pdfWindow = "data:application/pdf;base64," + base64Encoded;
-                                    window.open(pdfWindow);
+                                    iframe.src = pdfWindow;
+                                    windowRefObject.document.body.appendChild(iframe);
                                     break;
                                 case "jpg":
                                     var jpgWindow = "data:image/jpeg;base64," + base64Encoded;
-                                    window.open(jpgWindow);
+                                    iframe.src = jpgWindow;
+                                    windowRefObject.document.body.appendChild(iframe);
                                     break;
                                 case "jpeg":
-                                    var jpgWindow = "data:image/jpeg;base64," + base64Encoded;
-                                    window.open(jpgWindow);
+                                    var jpegWindow = "data:image/jpeg;base64," + base64Encoded;
+                                    iframe.src = jpegWindow;
+                                    windowRefObject.document.body.appendChild(iframe);
                                     break;
                                 case "png":
                                     var pngWindow = "data:image/png;base64," + base64Encoded;
-                                    window.open(pngWindow);
+                                    iframe.src = pngWindow;
+                                    windowRefObject.document.body.appendChild(iframe);
                                     break;
                                 case "txt":
                                     var txtWindow = "data:text/plain;base64," + base64Encoded;
-                                    window.open(txtWindow);
+                                    iframe.src = txtWindow;
+                                    windowRefObject.document.body.appendChild(iframe);
                                     break;
                                 default:
                                     var dataURI = "data:application/octet-stream;base64," + base64Encoded;
@@ -79,6 +109,8 @@ var AIP;
                 });
             };
             $scope.vm = this;
+            this.$scope = $scope;
+            this.$rootScope = $rootScope;
             this.$state = $state;
             this.aipReviewService = AIPReviewService;
             this.userService = AIPUserService;
@@ -111,6 +143,7 @@ var AIP;
             this.dirtyFlag = false;
             this.actionItemDetailsClone = null;
             this.selectNone = $filter("i18n_aip")("js.aip.action.selected.name");
+            this.redirectval = "";
             $scope.header = [{
                     name: "id",
                     title: "ID",
@@ -177,6 +210,12 @@ var AIP;
             $scope.selectRecord = function (data) {
                 $scope.selectedRecord = data;
             };
+            $window.onbeforeunload = function (event) {
+                if (_this.dirtyFlag) {
+                    return _this.$filter("i18n_aip")("aip.common.admin.unsaved");
+                }
+                $window.onbeforeunload = null;
+            };
         }
         ReviewActionItemCtrl.prototype.init = function () {
             var _this = this;
@@ -212,6 +251,13 @@ var AIP;
             }));
             this.$q.all(allPromises).then(function () {
                 _this.spinnerService.showSpinner(false);
+            });
+            var that = this;
+            this.$scope.$on("DetectChanges", function (event, args) {
+                if (that.dirtyFlag) {
+                    that.redirectval = args.state;
+                    that.checkchangesDone();
+                }
             });
         };
         /**
@@ -279,6 +325,7 @@ var AIP;
         };
         ReviewActionItemCtrl.prototype.onValueChange = function () {
             this.dirtyFlag = true;
+            this.$rootScope.DataChanged = true;
         };
         ReviewActionItemCtrl.prototype.resetValues = function () {
             this.$state.reload();
@@ -311,9 +358,26 @@ var AIP;
             }
             return isAnyFieldModified;
         };
+        ReviewActionItemCtrl.prototype.checkchangesDone = function () {
+            if (this.dirtyFlag) {
+                var n = new Notification({
+                    message: this.$filter("i18n_aip")("aip.admin.actionItem.saveChanges"),
+                    type: "warning"
+                });
+                n.addPromptAction(this.$filter("i18n_aip")("aip.common.text.no"), function () {
+                    notifications.remove(n);
+                });
+                n.addPromptAction(this.$filter("i18n_aip")("aip.common.text.yes"), function () {
+                    location.href = this.redirectval;
+                    this.dirtyFlag = false;
+                    this.$rootScope.DataChanged = false;
+                    notifications.remove(n);
+                });
+                notifications.addNotification(n);
+            }
+        };
         return ReviewActionItemCtrl;
-    })();
+    }());
     AIP.ReviewActionItemCtrl = ReviewActionItemCtrl;
 })(AIP || (AIP = {}));
 register("bannerAIPReview").controller("reviewActionItemCtrl", AIP.ReviewActionItemCtrl);
-//# sourceMappingURL=reviewActionItemCtrl.js.map

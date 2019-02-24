@@ -118,6 +118,16 @@ $accordion-toggle: #000000;
     }
   }
 
+.view-attachment-icon {
+  font-family: open-sans-semi-bold;
+  background: url(../images/aip_view_attachment.png) 50% 50% no-repeat;
+  cursor: pointer;
+  height: 1.5em;
+  width: 1.8em;
+  border: none;
+  margin-right: 2em;
+  margin-left: 1em !important;
+}
 
 @media screen and (max-width: 768px) {
 

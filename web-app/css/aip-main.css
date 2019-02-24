@@ -333,6 +333,23 @@ aip-list .enddate {
 #pbid-PersonalInformationAndEmergencyContacts #pbid-Name-0, #pbid-CurrentProgrammeofStudyinformation #pbid-Name-0, #pbid-ConfirmEnrollment #pbid-Name-0 {
   width: 600px; }
 
+.view-attachment-icon {
+  font-family: open-sans-semi-bold;
+  background: url(../images/aip_view_attachment.png) 50% 50% no-repeat;
+  cursor: pointer;
+  height: 1.5em;
+  width: 1.8em;
+  border: none;
+  margin-right: 2em; }
+
+.delete-attachment-icon {
+  font-family: open-sans-semi-bold;
+  background: url(../images/aip_delete_attachment.png) 50% 50% no-repeat;
+  cursor: pointer;
+  height: 1.5em;
+  width: 1.8em;
+  border: none; }
+
 .AIP-landing-container {
   padding: 16px; }
 
@@ -400,19 +417,6 @@ aip-list .enddate {
   padding: 10px; }
 .aip-attachments-container .attachmentsTable {
   margin-top: 1em; }
-  .aip-attachments-container .attachmentsTable .view-attachment-icon {
-    background: url(../images/aip_view_attachment.svg) no-repeat;
-    cursor: pointer;
-    height: 1.5em;
-    width: 1.8em;
-    border: none;
-    margin-right: 2em; }
-  .aip-attachments-container .attachmentsTable .delete-attachment-icon {
-    background: url(../images/aip_delete_attachment.svg) no-repeat;
-    cursor: pointer;
-    height: 1.5em;
-    width: 1.8em;
-    border: none; }
   .aip-attachments-container .attachmentsTable .noDataMsg {
     position: absolute;
     top: 50%;
@@ -1143,17 +1147,12 @@ ol.selected-group > li > button {
             border: 0;
             padding: 0;
             line-height: 2em; }
-          .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .contentContainer table.ruleListReadOnly thead {
-            display: none; }
           .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .contentContainer table.ruleListReadOnly tr {
             margin-bottom: 10px;
-            display: block;
-            border: none;
-            height: auto; }
+            height: auto;
+            border: solid 1px; }
           .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .contentContainer table.ruleListReadOnly td {
-            display: table;
             border: 0;
-            width: 100%;
             text-indent: 8px;
             border-color: #C0C0C0; }
             .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .contentContainer table.ruleListReadOnly td .labels {
@@ -1163,7 +1162,6 @@ ol.selected-group > li > button {
           .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .contentContainer table.ruleListReadOnly td:before {
             display: table-row;
             width: 100%;
-            content: attr(data-label);
             font-size: 1.1em;
             font-weight: bold;
             padding-right: 8px;
@@ -1388,6 +1386,7 @@ ol.selected-group > li > button {
     transform: rotate(-0deg);
   }*/ }
   .actionItemAddContainer input.hasMultiCalendarPicker {
+    width: 170px;
     height: 35px;
     border-radius: 5px;
     padding-left: 15px; }
@@ -1422,7 +1421,6 @@ ol.selected-group > li > button {
     position: relative; }
   .actionItemAddContainer .calendar-img {
     float: right;
-    margin-right: 10px;
     top: -28px;
     position: relative; }
   .actionItemAddContainer .enddate {
@@ -1762,6 +1760,16 @@ ol.selected-group > li > button {
         .monitor-action-item-accordion-container .actionListTable .table-container .row.actionItemActions div:last-child {
           margin-right: 0; }
 
+.view-attachment-icon {
+  font-family: open-sans-semi-bold;
+  background: url(../images/aip_view_attachment.png) 50% 50% no-repeat;
+  cursor: pointer;
+  height: 1.5em;
+  width: 1.8em;
+  border: none;
+  margin-right: 2em;
+  margin-left: 1em !important; }
+
 @media screen and (max-width: 768px) {
   .monitor-action-item-container .row .control {
     padding: 0; } }
@@ -1792,7 +1800,6 @@ ol.selected-group > li > button {
 
 .calendar-img {
   float: right;
-  margin-right: 10px;
   top: -28px;
   position: relative; }
 
@@ -1803,15 +1810,6 @@ ol.selected-group > li > button {
 .date-div {
   max-width: 240px;
   height: 35px; }
-
-.view-attachment-icon {
-  background: url(../images/aip_view_attachment.svg) no-repeat;
-  cursor: pointer;
-  height: 1.5em;
-  width: 1.8em;
-  border: none;
-  margin-right: 2em;
-  margin-left: 1em !important; }
 
 .save-button-left-padding {
   padding-left: 1em; }
