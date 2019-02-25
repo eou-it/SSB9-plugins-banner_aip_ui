@@ -22,7 +22,8 @@ class AipPageBuilderController {
      * @return
      */
     def page() {
-        def model = aipPageBuilderCompositeService.page( params.id )
-        render model as JSON
+        Map model=[:]
+        model =  aipPageBuilderCompositeService.page( params.id )
+        render model  as JSON
     }
 }
