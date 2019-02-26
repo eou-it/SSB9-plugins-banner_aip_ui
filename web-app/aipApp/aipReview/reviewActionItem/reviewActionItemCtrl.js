@@ -46,8 +46,6 @@ var AIP;
                             var base64Encoded = response.data.documentContent;
                             var fileNameSplit = row.documentName.split('.');
                             var fileExtension = fileNameSplit[fileNameSplit.length - 1].toLowerCase();
-                            var windowRefObject;
-                            var iframe;
                             if (window.navigator && window.navigator.msSaveOrOpenBlob) {
                                 var byteCharacters = atob(base64Encoded);
                                 var byteNumbers = new Array(byteCharacters.length);
@@ -59,54 +57,69 @@ var AIP;
                                 window.navigator.msSaveOrOpenBlob(blob, row.documentName);
                                 return;
                             }
-                            if (fileExtension === 'pdf' || fileExtension === 'jpg' || fileExtension === 'jpeg' || fileExtension === 'png' || fileExtension === 'txt') {
-                                if (navigator.userAgent.indexOf("Chrome") != -1) {
-                                    windowRefObject = window.open('about:whatever');
-                                }
-                                else {
-                                    windowRefObject = window.open();
-                                }
-                                iframe = windowRefObject.document.createElement('iframe');
-                                iframe.width = '100%';
-                                iframe.height = '100%';
-                            }
+                            //Other Browsers
                             switch (fileExtension) {
                                 case "pdf":
-                                    var pdfWindow = "data:application/pdf;base64," + base64Encoded;
-                                    iframe.src = pdfWindow;
-                                    windowRefObject.document.body.appendChild(iframe);
+                                    var contentType = 'application/pdf';
+                                    var blob = _this.b64toBlob(base64Encoded, contentType);
+                                    var blobUrl = URL.createObjectURL(blob);
+                                    window.open(blobUrl);
                                     break;
                                 case "jpg":
-                                    var jpgWindow = "data:image/jpeg;base64," + base64Encoded;
-                                    iframe.src = jpgWindow;
-                                    windowRefObject.document.body.appendChild(iframe);
+                                    var contentType = 'image/jpeg';
+                                    var blob = _this.b64toBlob(base64Encoded, contentType);
+                                    var blobUrl = URL.createObjectURL(blob);
+                                    window.open(blobUrl);
                                     break;
                                 case "jpeg":
-                                    var jpegWindow = "data:image/jpeg;base64," + base64Encoded;
-                                    iframe.src = jpegWindow;
-                                    windowRefObject.document.body.appendChild(iframe);
+                                    var contentType = 'image/jpeg';
+                                    var blob = _this.b64toBlob(base64Encoded, contentType);
+                                    var blobUrl = URL.createObjectURL(blob);
+                                    window.open(blobUrl);
                                     break;
                                 case "png":
-                                    var pngWindow = "data:image/png;base64," + base64Encoded;
-                                    iframe.src = pngWindow;
-                                    windowRefObject.document.body.appendChild(iframe);
+                                    var contentType = 'image/png';
+                                    var blob = _this.b64toBlob(base64Encoded, contentType);
+                                    var blobUrl = URL.createObjectURL(blob);
+                                    window.open(blobUrl);
                                     break;
                                 case "txt":
-                                    var txtWindow = "data:text/plain;base64," + base64Encoded;
-                                    iframe.src = txtWindow;
-                                    windowRefObject.document.body.appendChild(iframe);
+                                    var contentType = 'text/plain';
+                                    var blob = _this.b64toBlob(base64Encoded, contentType);
+                                    var blobUrl = URL.createObjectURL(blob);
+                                    window.open(blobUrl);
                                     break;
                                 default:
-                                    var dataURI = "data:application/octet-stream;base64," + base64Encoded;
+                                    var contentType = 'application/octet-stream';
+                                    var blob = _this.b64toBlob(base64Encoded, contentType);
+                                    var blobUrl = URL.createObjectURL(blob);
                                     var link = document.createElement('a');
                                     document.body.appendChild(link);
-                                    link.href = dataURI;
+                                    link.href = blobUrl;
                                     link.download = row.documentName;
                                     link.click();
                             }
                         }
                     }
                 });
+            };
+            /*Convert base64 to blob*/
+            this.b64toBlob = function (b64Data, contentType, sliceSize) {
+                contentType = contentType || '';
+                sliceSize = sliceSize || 512;
+                var byteCharacters = atob(b64Data);
+                var byteArrays = [];
+                for (var offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+                    var slice = byteCharacters.slice(offset, offset + sliceSize);
+                    var byteNumbers = new Array(slice.length);
+                    for (var i = 0; i < slice.length; i++) {
+                        byteNumbers[i] = slice.charCodeAt(i);
+                    }
+                    var byteArray = new Uint8Array(byteNumbers);
+                    byteArrays.push(byteArray);
+                }
+                var blob = new Blob(byteArrays, { type: contentType });
+                return blob;
             };
             $scope.vm = this;
             this.$scope = $scope;
