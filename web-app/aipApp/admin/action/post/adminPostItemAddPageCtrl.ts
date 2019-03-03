@@ -354,7 +354,7 @@ module AIP {
         {
             var that=this;
             var timeZoneOffset = new Date().getTimezoneOffset();
-            var offset = "(GMT"+((timeZoneOffset<0? '+':'-')+ this.pad(parseInt(Math.abs(timeZoneOffset/60)), 2)+ ":" + this.pad(Math.abs(timeZoneOffset%60), 2)) + ")";
+            var offset = "(GMT"+((timeZoneOffset<=0? '+':'-')+ this.pad(parseInt(Math.abs(timeZoneOffset/60)), 2)+ ":" + this.pad(Math.abs(timeZoneOffset%60), 2)) + ")";
             var finalValue=''
             var timeZone=''
             angular.forEach(this.timezones, function (key, value) {
