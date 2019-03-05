@@ -266,7 +266,7 @@ class AipDocumentManagementControllerIntegrationTests extends BaseIntegrationTes
         File testFile
         try {
             String data = content
-            String tempPath = "test"+File.separator+"data"
+            String tempPath = System.getProperty("base.dir") + File.separator+"test"+File.separator+"data"
             testFile = new File(tempPath, filename)
             if (!testFile.exists()) {
                 testFile.createNewFile()
@@ -422,7 +422,7 @@ class AipDocumentManagementControllerIntegrationTests extends BaseIntegrationTes
         File testFile
         try {
             String data = " Test data for integration testing"
-            String tempPath = "test"+File.separator+"data"
+            String tempPath = System.getProperty("base.dir") + File.separator+"test"+File.separator+"data"
             testFile = new File(tempPath, filename)
             if (!testFile.exists()) {
                 testFile.createNewFile()
