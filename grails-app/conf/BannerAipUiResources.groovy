@@ -1,16 +1,25 @@
 /** *****************************************************************************
- Copyright 2018 Ellucian Company L.P. and its affiliates.
+ Copyright 2018-2019 Ellucian Company L.P. and its affiliates.
  ****************************************************************************** */
 
 modules = {
 
     'bannerAIPUI' {
         dependsOn 'angularApp'
-        dependsOn 'bannerSelfServiceCommonLTR, extensibilityCommon, extensibilityAngular, commonComponents, commonComponentsLTR, bootstrap'
+        dependsOn 'bannerSelfServiceCommonLTR, extensibilityCommon, extensibilityAngular, bootstrap, commonComponents, commonComponentsLTR'
         dependsOn 'font-awesome'
         resource url: [plugin: 'banner-aip-ui', file: 'js/angular-ui-bootstrap/dist/ui-bootstrap-csp.css']
         resource url: [plugin: 'banner-aip-ui', file: 'css/aip-main.css']
         resource url: [plugin: 'banner-aip-ui', file: 'css/iconFonts.css']
+    }
+    'bannerAIPUIRTL' {
+        dependsOn 'angularApp'
+        dependsOn 'bannerSelfServiceCommonRTL, extensibilityCommonRTL, extensibilityAngularRTL, bootstrapRTL, commonComponents, commonComponentsRTL'
+        dependsOn 'font-awesome'
+        resource url: [plugin: 'banner-aip-ui', file: 'js/angular-ui-bootstrap/dist/ui-bootstrap-csp-rtl.css']
+        resource url: [plugin: 'banner-aip-ui', file: 'css/aip-main-rtl.css']
+        resource url: [plugin: 'banner-aip-ui', file: 'css/aip-main-rtl-patch.css']
+        resource url: [plugin: 'banner-aip-ui', file: 'css/iconFonts-rtl.css']
     }
     'bannerAdminAIPUI' {
         dependsOn 'bannerAIPUI'
@@ -25,25 +34,16 @@ modules = {
         dependsOn 'bannerAIPReviewApp'
     }
     'bannerAdminAIPUIRTL' {
-        dependsOn 'bannerAdminAIPUI'
+        dependsOn 'bannerAdminAIPApp'
         dependsOn 'bannerAIPUIRTL'
     }
     'bannerNonAdminAIPUIRTL' {
-        dependsOn 'bannerNonAdminAIPUI'
+        dependsOn 'bannerNonAdminAIPApp'
         dependsOn 'bannerAIPUIRTL'
     }
     'bannerAIPReviewUIRTL' {
-        dependsOn 'bannerAIPReviewUI'
+        dependsOn 'bannerAIPReviewApp'
         dependsOn 'bannerAIPUIRTL'
-    }
-    'bannerAIPUIRTL' {
-        dependsOn 'bannerSelfServiceCommonRTL, extensibilityAngularRTL, commonComponentsRTL'
-        dependsOn "jquery"
-        resource url: [plugin: 'banner-ui-ss', file: 'bootstrap/css/bootstrap-rtl.css'], attrs: [media: 'screen, projection']
-        resource url: [plugin: 'banner-ui-ss', file: 'css/bootstrap-fixes-rtl.css'], attrs: [media: 'screen, projection']
-        resource url: [plugin: 'banner-aip-ui', file: 'js/angular-ui-bootstrap/dist/ui-bootstrap-csp-rtl.css']
-        resource url: [plugin: 'banner-aip-ui', file: 'css/aip-main-rtl.css']
-        resource url: [plugin: 'banner-aip-ui', file: 'css/aip-main-rtl-patch.css']
     }
     'bannerAIPUtils' {
         resource url: [plugin: 'banner-aip-ui', file: 'js/angular-aria.js']
@@ -55,6 +55,18 @@ modules = {
         resource url: [plugin: 'banner-aip-ui', file: 'js/angular-ui-bootstrap/dist/ui-bootstrap-tpls.js']
     }
 
+    'commonComponents' {
+        resource url: [file: 'js/d3/d3.min.js']
+        resource url: [file: 'js/xe-components/xe-ui-components.js']
+    }
+    'commonComponentsLTR' {
+        dependsOn 'commonComponents'
+        resource url: [file: 'css/xe-components/xe-ui-components.min.css']
+    }
+    'commonComponentsRTL' {
+        dependsOn 'commonComponents'
+        resource url: [file: 'css/xe-components/xe-ui-components-rtl.min.css']
+    }
 
     'bannerCommonAIPApp' {
 

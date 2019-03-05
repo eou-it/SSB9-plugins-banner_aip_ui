@@ -1,5 +1,5 @@
 <!--*******************************************************************************
- Copyright 2018 Ellucian Company L.P. and its affiliates.
+ Copyright 2018-2019 Ellucian Company L.P. and its affiliates.
  *******************************************************************************-->
 <%@ page contentType="text/html;charset=UTF-8" %>
 <html>
@@ -8,12 +8,14 @@
     <meta name="headerAttributes" content=""/>
     <title></title>
     <meta name="layout" content="bannerSelfServicePage"/>
-    <r:require modules="bannerAIPReviewUI"/>
+    <meta name="menuEndPoint" content="${g.createLink(controller: 'selfServiceMenu', action: 'data')}"/>
+    <meta name="menuBaseURL" content="${createLink(uri: '/ssb')}" />
     <g:if test="${message(code: 'default.language.direction')  == 'rtl'}">
         <r:require modules="bannerAIPReviewUIRTL"/>
     </g:if>
-    <meta name="menuEndPoint" content="${g.createLink(controller: 'selfServiceMenu', action: 'data')}"/>
-    <meta name="menuBaseURL" content="${createLink(uri: '/ssb')}" />
+    <g:else>
+        <r:require modules="bannerAIPReviewUI"/>
+    </g:else>
     <ckeditor:resources/>
     <script type="text/javascript">
 
@@ -24,8 +26,8 @@
             var referrerUrl = document.referrer,
                 excludedRegex = [
                     /\${applicationContextRoot}\/login\/auth?/,
-                    /\/seamless/,
-                    /\${applicationContextRoot}\//
+                    /\${applicationContextRoot}\//,
+                    /\/seamless/
                 ],
                 isExcluded;
 

@@ -19,13 +19,15 @@ module AIP {
 
     export class ReviewActionItemCtrl implements IReviewActionItemCtrl {
 
-        $inject = ["$scope", "$state", "AIPReviewService", "AIPUserService", "SpinnerService", "$timeout", "$q", "$uibModal", "APP_ROOT", "$sce", "$filter", "datePicker"];
+        $inject = ["$scope","$rootScope","$state", "AIPReviewService", "AIPUserService", "SpinnerService", "$timeout", "$q", "$uibModal", "APP_ROOT", "$sce", "$filter","$window", "datePicker"];
         aipReviewService: AIP.AIPReviewService;
         userService: AIP.UserService;
         $uibModal;
         spinnerService;
         $sce;
         $timeout;
+        $scope;
+        $rootScope;
         $state;
         $filter;
         $q;
@@ -52,9 +54,12 @@ module AIP {
         dirtyFlag:boolean;
         actionItemDetailsClone;
         selectNone;
+        redirectval;
 
-        constructor($scope, $state, AIPReviewService, AIPUserService, SpinnerService, $timeout, $q, $uibModal, APP_ROOT, $sce, $filter) {
+        constructor($scope,$rootScope, $state, AIPReviewService, AIPUserService, SpinnerService, $timeout, $q, $uibModal, APP_ROOT, $sce, $filter,$window) {
             $scope.vm = this;
+            this.$scope = $scope;
+            this.$rootScope = $rootScope;
             this.$state = $state;
             this.aipReviewService = AIPReviewService;
             this.userService = AIPUserService;
@@ -87,6 +92,7 @@ module AIP {
             this.dirtyFlag = false;
             this.actionItemDetailsClone=null;
             this.selectNone =$filter("i18n_aip")("js.aip.action.selected.name");
+            this.redirectval="";
 
             $scope.header = [{
                 name: "id",
@@ -156,6 +162,13 @@ module AIP {
             $scope.selectRecord = function (data) {
                 $scope.selectedRecord = data;
             };
+
+            $window.onbeforeunload = (event)=> {
+                if(this.dirtyFlag) {
+                    return this.$filter("i18n_aip")("aip.common.admin.unsaved");
+                }
+                $window.onbeforeunload = null;
+            };
         }
 
         init() {
@@ -196,6 +209,18 @@ module AIP {
             this.$q.all(allPromises).then(() => {
                 this.spinnerService.showSpinner(false);
             });
+            var that=this;
+            this.$scope.$on("DetectChanges",function(event, args)
+            {
+                if (that.dirtyFlag){
+                    that.redirectval = args.state;
+                    that.checkchangesDone();
+                }
+            });
+
+
+
+
         }
 
         /**
@@ -230,34 +255,59 @@ module AIP {
                         } else {
                             var base64Encoded = response.data.documentContent
                             var fileNameSplit = row.documentName.split('.')
-                            var fileExtension = fileNameSplit[fileNameSplit.length - 1]
+                            var fileExtension = fileNameSplit[fileNameSplit.length - 1].toLowerCase();
 
+                            if (window.navigator && window.navigator.msSaveOrOpenBlob) { // IE
+                                var byteCharacters = atob(base64Encoded);
+                                var byteNumbers = new Array(byteCharacters.length);
+                                for (var i = 0; i < byteCharacters.length; i++) {
+                                    byteNumbers[i] = byteCharacters.charCodeAt(i);
+                                }
+                                var byteArray = new Uint8Array(byteNumbers);
+                                var blob = new Blob([byteArray], {type: 'application/pdf'});
+                                window.navigator.msSaveOrOpenBlob(blob, row.documentName);
+                                return;
+                            }
+
+                            //Other Browsers
                             switch (fileExtension) {
                                 case "pdf":
-                                    var pdfWindow = "data:application/pdf;base64," + base64Encoded;
-                                    window.open(pdfWindow);
+                                    var contentType = 'application/pdf';
+                                    var blob = this.b64toBlob(base64Encoded, contentType);
+                                    var blobUrl = URL.createObjectURL(blob);
+                                    window.open(blobUrl);
                                     break;
                                 case "jpg":
-                                    var jpgWindow = "data:image/jpeg;base64," + base64Encoded;
-                                    window.open(jpgWindow);
+                                    var contentType = 'image/jpeg';
+                                    var blob = this.b64toBlob(base64Encoded, contentType);
+                                    var blobUrl = URL.createObjectURL(blob);
+                                    window.open(blobUrl);
                                     break;
                                 case "jpeg":
-                                    var jpgWindow = "data:image/jpeg;base64," + base64Encoded;
-                                    window.open(jpgWindow);
+                                    var contentType = 'image/jpeg';
+                                    var blob = this.b64toBlob(base64Encoded, contentType);
+                                    var blobUrl = URL.createObjectURL(blob);
+                                    window.open(blobUrl);
                                     break;
                                 case "png":
-                                    var pngWindow = "data:image/png;base64," + base64Encoded;
-                                    window.open(pngWindow);
+                                    var contentType = 'image/png';
+                                    var blob = this.b64toBlob(base64Encoded, contentType);
+                                    var blobUrl = URL.createObjectURL(blob);
+                                    window.open(blobUrl);
                                     break;
                                 case "txt":
-                                    var txtWindow = "data:text/plain;base64," + base64Encoded;
-                                    window.open(txtWindow);
+                                    var contentType = 'text/plain';
+                                    var blob = this.b64toBlob(base64Encoded, contentType);
+                                    var blobUrl = URL.createObjectURL(blob);
+                                    window.open(blobUrl);
                                     break;
                                 default:
-                                    var dataURI = "data:application/octet-stream;base64," + base64Encoded;
+                                    var contentType = 'application/octet-stream';
+                                    var blob = this.b64toBlob(base64Encoded, contentType);
+                                    var blobUrl = URL.createObjectURL(blob);
                                     var link = document.createElement('a');
                                     document.body.appendChild(link);
-                                    link.href = dataURI;
+                                    link.href = blobUrl;
                                     link.download = row.documentName;
                                     link.click();
                             }
@@ -266,6 +316,26 @@ module AIP {
 
                 });
         };
+
+        /*Convert base64 to blob*/
+        b64toBlob=function(b64Data, contentType, sliceSize) {
+            contentType = contentType || '';
+            sliceSize = sliceSize || 512;
+            var byteCharacters = atob(b64Data);
+            var byteArrays = [];
+
+            for (var offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+                var slice = byteCharacters.slice(offset, offset + sliceSize);
+                var byteNumbers = new Array(slice.length);
+                for (var i = 0; i < slice.length; i++) {
+                    byteNumbers[i] = slice.charCodeAt(i);
+                }
+                var byteArray = new Uint8Array(byteNumbers);
+                byteArrays.push(byteArray);
+            }
+            var blob = new Blob(byteArrays, {type: contentType});
+            return blob;
+        }
 
         /**
          * Show of grid in the model window with list of attachments.
@@ -335,6 +405,7 @@ module AIP {
 
         onValueChange(){
             this.dirtyFlag = true;
+            this.$rootScope.DataChanged = true;
         }
 
         resetValues(){
@@ -371,6 +442,26 @@ module AIP {
                 isAnyFieldModified = true;
             }
             return  isAnyFieldModified ;
+        }
+
+        checkchangesDone() {
+            if (this.dirtyFlag) {
+                var n = new Notification({
+                    message: this.$filter("i18n_aip")( "aip.admin.actionItem.saveChanges"),
+                    type: "warning"
+                });
+                n.addPromptAction(this.$filter("i18n_aip")("aip.common.text.no"), function () {
+                    notifications.remove(n);
+
+                })
+                n.addPromptAction(this.$filter("i18n_aip")("aip.common.text.yes"), function () {
+                    location.href = this.redirectval;
+                    this.dirtyFlag = false;
+                    this.$rootScope.DataChanged=false;
+                    notifications.remove(n);
+                });
+                notifications.addNotification(n);
+            }
         }
 
     }

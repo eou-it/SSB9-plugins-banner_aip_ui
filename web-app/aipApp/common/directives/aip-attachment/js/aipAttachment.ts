@@ -240,55 +240,61 @@ module AIPUI {
                                 var base64Encoded = response.data.documentContent
                                 var fileNameSplit = data.documentName.split('.')
                                 var fileExtension = fileNameSplit[fileNameSplit.length - 1].toLowerCase();
-                                var windowRefObject;
-                                var iframe;
 
-                             if (fileExtension ==='pdf'|| fileExtension ==='jpg' || fileExtension ==='jpeg' || fileExtension ==='png' ||fileExtension ==='txt') {
-                                 if (navigator.userAgent.indexOf("Chrome") != -1) {
-                                      windowRefObject = window.open('about:whatever');
-                                 }
-                                 else{
-                                     windowRefObject = window.open();
-                                 }
-                                 iframe = windowRefObject.document.createElement('iframe')
-                                 iframe.width = '100%';
-                                 iframe.height = '100%';
-                             }
-
-                                switch (fileExtension) {
-                                    case "pdf":
-                                        var pdfWindow = "data:application/pdf;base64," + base64Encoded;
-                                        iframe.src=pdfWindow;
-                                        windowRefObject.document.body.appendChild(iframe);
-                                        break;
-                                    case "jpg":
-                                        var jpgWindow = "data:image/jpeg;base64," + base64Encoded;
-                                        iframe.src=jpgWindow;
-                                        windowRefObject.document.body.appendChild(iframe);
-                                        break;
-                                    case "jpeg":
-                                        var jpegWindow = "data:image/jpeg;base64," + base64Encoded;
-                                        iframe.src=jpegWindow;
-                                        windowRefObject.document.body.appendChild(iframe);
-                                        break;
-                                    case "png":
-                                        var pngWindow = "data:image/png;base64," + base64Encoded;
-                                        iframe.src=pngWindow;
-                                        windowRefObject.document.body.appendChild(iframe);
-                                        break;
-                                    case "txt":
-                                        var txtWindow = "data:text/plain;base64," + base64Encoded;
-                                        iframe.src=txtWindow;
-                                        windowRefObject.document.body.appendChild(iframe);
-                                        break;
-                                    default:
-                                        $scope.dataURI = "data:application/octet-stream;base64," + base64Encoded;
-                                        var link = document.createElement('a');
-                                        document.body.appendChild(link);
-                                        link.href = $scope.dataURI;
-                                        link.download = data.documentName;
-                                        link.click();
+                                if (window.navigator && window.navigator.msSaveOrOpenBlob) { // IE
+                                        var byteCharacters = atob(base64Encoded);
+                                        var byteNumbers = new Array(byteCharacters.length);
+                                        for (var i = 0; i < byteCharacters.length; i++) {
+                                            byteNumbers[i] = byteCharacters.charCodeAt(i);
+                                        }
+                                        var byteArray = new Uint8Array(byteNumbers);
+                                        var blob = new Blob([byteArray], {type: 'application/pdf'});
+                                        window.navigator.msSaveOrOpenBlob(blob, data.documentName);
+                                        return;
                                 }
+
+                                //Other Browsers
+                                    switch (fileExtension) {
+                                        case "pdf":
+                                            var contentType = 'application/pdf';
+                                            var blob = $scope.b64toBlob(base64Encoded, contentType);
+                                            var blobUrl = URL.createObjectURL(blob);
+                                            window.open(blobUrl);
+                                            break;
+                                        case "jpg":
+                                            var contentType = 'image/jpeg';
+                                            var blob = $scope.b64toBlob(base64Encoded, contentType);
+                                            var blobUrl = URL.createObjectURL(blob);
+                                            window.open(blobUrl);
+                                            break;
+                                        case "jpeg":
+                                            var contentType = 'image/jpeg';
+                                            var blob = $scope.b64toBlob(base64Encoded, contentType);
+                                            var blobUrl = URL.createObjectURL(blob);
+                                            window.open(blobUrl);
+                                            break;
+                                        case "png":
+                                            var contentType = 'image/png';
+                                            var blob = $scope.b64toBlob(base64Encoded, contentType);
+                                            var blobUrl = URL.createObjectURL(blob);
+                                            window.open(blobUrl);
+                                            break;
+                                        case "txt":
+                                            var contentType = 'text/plain';
+                                            var blob = $scope.b64toBlob(base64Encoded, contentType);
+                                            var blobUrl = URL.createObjectURL(blob);
+                                            window.open(blobUrl);
+                                            break;
+                                        default:
+                                            var contentType = 'application/octet-stream';
+                                            var blob = $scope.b64toBlob(base64Encoded, contentType);
+                                            var blobUrl = URL.createObjectURL(blob);
+                                            var link = document.createElement('a');
+                                            document.body.appendChild(link);
+                                            link.href = blobUrl;
+                                            link.download = data.documentName;
+                                            link.click();
+                                    }
                             }
                         } else {
                             errorNotification(response.data.message);
@@ -296,6 +302,27 @@ module AIPUI {
 
                     });
             }
+
+            /*Convert base64 to blob*/
+           $scope.b64toBlob=function(b64Data, contentType, sliceSize) {
+                contentType = contentType || '';
+                sliceSize = sliceSize || 512;
+                var byteCharacters = atob(b64Data);
+                var byteArrays = [];
+
+                for (var offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+                    var slice = byteCharacters.slice(offset, offset + sliceSize);
+                    var byteNumbers = new Array(slice.length);
+                    for (var i = 0; i < slice.length; i++) {
+                        byteNumbers[i] = slice.charCodeAt(i);
+                    }
+                    var byteArray = new Uint8Array(byteNumbers);
+                    byteArrays.push(byteArray);
+                }
+                var blob = new Blob(byteArrays, {type: contentType});
+                return blob;
+            }
+
 
             var deleteFile = function (documentId) {
                 AIPUploadService.deleteDocument(documentId)
@@ -386,7 +413,7 @@ module AIPUI {
             var maxFileSizeValidate = function (selectedFileSize) {
                 var deferred = $q.defer();
                 AIPUploadService.maxFileSize()
-                    .then((response: any) => {
+                    .then((response: any) =>
                         if (response.data.maxFileSize) {
                             if (selectedFileSize > parseInt(response.data.maxFileSize)) {
                                 errorNotification($filter("i18n_aip")("aip.uploadDocument.file.maxsize.error"));

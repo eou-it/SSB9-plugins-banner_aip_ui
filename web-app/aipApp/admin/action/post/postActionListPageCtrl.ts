@@ -105,6 +105,16 @@ module AIP {
                     ascending:true,
                     columnShowHide: false
                 }
+            },{
+                name:"lastModified",
+                title: "modifiedOn",
+                width: "0px",
+                options: {
+                    sortable: true,
+                    visible: false,
+                    ascending:false,
+                    columnShowHide: false
+                }
             }, {
                 name: "jobState",
                 title: this.$filter("i18n_aip")("aip.admin.actionItem.post.grid.job.status"),
@@ -114,7 +124,6 @@ module AIP {
                     sortable: false,
                     visible: true,
                     columnShowHide: false
-
                 }
             }, {
                 name: "postingName",
@@ -124,7 +133,6 @@ module AIP {
                 options: {
                     sortable: true,
                     visible: true,
-                    ascending:true,
                     columnShowHide: false
                 }
             },
@@ -216,7 +224,6 @@ module AIP {
                         columnShowHide: false
                     }
                 }
-
             ];
             allPromises.push(
                 this.actionListService.getCurrentTimeLocale()

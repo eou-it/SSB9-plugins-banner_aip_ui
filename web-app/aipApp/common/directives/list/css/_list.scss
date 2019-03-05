@@ -484,3 +484,22 @@ aip-list {
     width:600px;
   }
 }
+
+.view-attachment-icon{
+  font-family: open-sans-semi-bold;
+  background: url(../images/aip_view_attachment.png) 50% 50% no-repeat;
+  cursor: pointer;
+  height: 1.5em;
+  width: 1.8em;
+  border: none;
+  margin-right: 2em;
+}
+
+.delete-attachment-icon{
+  font-family: open-sans-semi-bold;
+  background: url(../images/aip_delete_attachment.png) 50% 50% no-repeat;
+  cursor: pointer;
+  height: 1.5em;
+  width: 1.8em;
+  border: none;
+}
