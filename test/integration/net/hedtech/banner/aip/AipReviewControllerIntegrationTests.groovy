@@ -4,10 +4,16 @@
 package net.hedtech.banner.aip
 
 import grails.converters.JSON
+import net.hedtech.banner.general.configuration.ConfigApplication
+import net.hedtech.banner.general.configuration.ConfigProperties
+import net.hedtech.banner.general.person.PersonUtility
 import net.hedtech.banner.testing.BaseIntegrationTestCase
+import org.apache.commons.io.IOUtils
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
+import org.springframework.mock.web.MockMultipartFile
+import org.springframework.web.multipart.MultipartFile
 
 /**
  * AipReviewControllerIntegrationTests.
@@ -15,7 +21,10 @@ import org.junit.Test
 class AipReviewControllerIntegrationTests extends BaseIntegrationTestCase {
 
     def monitorActionItemCompositeService
+    def uploadDocumentCompositeService
+    def userActionItemReadOnlyCompositeService
     ActionItem drugAndAlcoholPolicyActionItem;
+
    
 
     @Before
@@ -354,5 +363,171 @@ class AipReviewControllerIntegrationTests extends BaseIntegrationTestCase {
         assertNotNull jsonResp
         assertEquals 0, jsonResp.length
     }
+
+    @Test
+    void getContactInformation() {
+        controller.request.contentType = "text/json"
+        controller.getContactInformation()
+        def response = controller.response.getContentAsString()
+        assertEquals 200, controller.response.status
+        def configDataList = JSON.parse(response)
+        assertNotNull configDataList
+    }
+
+    @Test
+    void getReviewStatusList() {
+        def result = monitorActionItemCompositeService.getReviewStatusList()
+        assertNotNull result
+        controller.request.contentType = "text/json"
+        controller.getReviewStatusList()
+        def response = controller.response.getContentAsString()
+        assertEquals 200, controller.response.status
+        def jsonResp = JSON.parse(response)
+        assertNotNull jsonResp
+    }
+
+    @Test
+    void updateActionItemReviewInvalid() {
+        controller.request.contentType = "text/json"
+        controller.updateActionItemReview()
+        def response = controller.response.getContentAsString()
+        assertEquals 200, controller.response.status
+        def result = JSON.parse(response)
+        assertNotNull result
+        assertEquals false , result.success
+    }
+
+    @Test
+    void getActionItem() {
+        loginSSB( 'CSRSTU004', '111111' )
+        def actionItemResult = userActionItemReadOnlyCompositeService.listActionItemByPidmWithinDate()
+        assert actionItemResult.groups.size() > 0
+        assert actionItemResult.groups.items.size() > 0
+        def group = actionItemResult.groups.find{it.title == 'Enrollment'}
+        def item = group.items.find {it.name == 'Drug and Alcohol Policy'}
+        assert item.name == 'Drug and Alcohol Policy'
+        Long actionItemId = item.id
+        def person = PersonUtility.getPerson( "CSRSTU004" )
+        List<UserActionItem> gcraactIdList = UserActionItem.fetchUserActionItemsByPidm(person.pidm)
+        UserActionItem gcraact = gcraactIdList.find { it.actionItemId = actionItemId }
+        def userActionItemId = gcraact.id
+        controller.params.userActionItemID= userActionItemId
+        controller.request.contentType = "text/json"
+        def result = monitorActionItemCompositeService.getActionItem(userActionItemId)
+        assertNotNull result
+        controller.getActionItem()
+        def response = controller.response.getContentAsString()
+        assertEquals 200, controller.response.status
+        def jsonResp = JSON.parse(response)
+        assertNotNull jsonResp
+    }
+
+    @Test
+    void listDocuments() {
+        setConfigProperties('aip.attachment.file.storage.location', 'AIP', 'string')
+        loginSSB( 'CSRSTU004', '111111' )
+        def actionItemResult = userActionItemReadOnlyCompositeService.listActionItemByPidmWithinDate()
+        assert actionItemResult.groups.size() > 0
+        assert actionItemResult.groups.items.size() > 0
+        def group = actionItemResult.groups.find{it.title == 'Enrollment'}
+        def item = group.items.find {it.name == 'Drug and Alcohol Policy'}
+        assert item.name == 'Drug and Alcohol Policy'
+        Long actionItemId = item.id
+        def person = PersonUtility.getPerson( "CSRSTU004" )
+        List<UserActionItem> gcraactIdList = UserActionItem.fetchUserActionItemsByPidm(person.pidm)
+        UserActionItem gcraact = gcraactIdList.find { it.actionItemId = actionItemId }
+        def userActionItemId = gcraact.id
+
+        List<ActionItemStatusRule> responsesList = ActionItemStatusRule.fetchActionItemStatusRulesByActionItemId(actionItemId)
+        ActionItemStatusRule response = responsesList.find { it.labelText == 'Not in my life time.' }
+        def responseId = response.id
+
+        def saveResult = saveUploadDocumentService(userActionItemId, responseId, 'AIPTestFileTXT.txt')
+        assert saveResult.success == true
+        def paramsObj = [
+                userActionItemId: userActionItemId.toString(),
+                responseId      : responseId.toString(),
+                sortColumn      : "id",
+                sortAscending   : false
+        ]
+        def docResponse = uploadDocumentCompositeService.fetchDocuments(paramsObj)
+        assert docResponse.result.size() > 0
+        assert docResponse.length > 0
+
+        controller.params.userActionItemId = userActionItemId
+        controller.params.responseId = responseId
+        controller.params.sortColumn = "id"
+        controller.params.sortAscending = false
+        controller.request.contentType = "text/json"
+        controller.listDocuments()
+        def controllerResponse = controller.response.getContentAsString()
+        assertEquals 200, controller.response.status
+        def result = JSON.parse(controllerResponse)
+        assertNotNull result
+    }
+
+
+    /**
+     * Form file Object
+     */
+    private MockMultipartFile formFileObject(filename) {
+        File testFile
+        try {
+            String data = " Test data for integration testing"
+            String tempPath = "test/data"
+            testFile = new File(tempPath, filename)
+            if (!testFile.exists()) {
+                testFile.createNewFile()
+                FileWriter fileWritter = new FileWriter(testFile, true)
+                BufferedWriter bufferWritter = new BufferedWriter(fileWritter)
+                bufferWritter.write(data)
+                bufferWritter.close()
+            }
+        } catch (IOException e) {
+            throw e
+        }
+        FileInputStream input = new FileInputStream(testFile);
+        MultipartFile multipartFile = new MockMultipartFile("file",
+                testFile.getName(), "text/plain", IOUtils.toByteArray(input))
+        multipartFile
+    }
+
+
+    private def saveUploadDocumentService(userActionItemId, responseId, fileName) {
+        MockMultipartFile multipartFile = formFileObject(fileName)
+        def result = uploadDocumentCompositeService.addDocument(
+                [userActionItemId: userActionItemId, responseId: responseId, documentName: fileName, documentUploadedDate: new Date(), fileLocation: 'AIP', file: multipartFile])
+        result
+    }
+
+
+    private void setConfigProperties(String configName, String configValue, String configType) {
+        ConfigProperties configProperties = ConfigProperties.fetchByConfigNameAndAppId(configName, 'GENERAL_SS')
+        if (configProperties) {
+            configProperties.configValue = configValue
+            configProperties.save(flush: true, failOnError: true)
+        } else {
+            ConfigApplication configApplication = ConfigApplication.fetchByAppId('GENERAL_SS')
+            if (!configApplication) {
+                configApplication = new ConfigApplication(
+                        lastModified: new Date(),
+                        appName: 'BannerGeneralSsb',
+                        appId: 'GENERAL_SS'
+                )
+                configApplication.save(failOnError: true, flush: true)
+                configApplication = configApplication.refresh()
+            }
+            configProperties = new ConfigProperties(
+                    configName: configName,
+                    configType: configType,
+                    configValue: configValue,
+                    configComment: 'TEST_COMMENT'
+            )
+            configProperties.setConfigApplication(configApplication)
+            configProperties.save(failOnError: true, flush: true)
+        }
+
+    }
+
 
 }
