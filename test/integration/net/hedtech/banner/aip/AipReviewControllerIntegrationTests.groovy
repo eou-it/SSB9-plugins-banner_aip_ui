@@ -283,7 +283,7 @@ class AipReviewControllerIntegrationTests extends BaseIntegrationTestCase {
 
 
 
-    @Test
+      @Test
     void searchActionItemByNameOnlyPartial() {
         controller.params.personName = "Cliff"
         controller.request.contentType = "text/json"
@@ -391,8 +391,8 @@ class AipReviewControllerIntegrationTests extends BaseIntegrationTestCase {
         assert actionItemResult.groups.size() > 0
         assert actionItemResult.groups.items.size() > 0
         def group = actionItemResult.groups.find{it.title == 'Enrollment'}
-        def item = group.items.find {it.name == 'Drug and Alcohol Policy'}
-        assert item.name == 'Drug and Alcohol Policy'
+        def item = group.items.find {it.name == 'Personal Information'}
+        assert item.name == 'Personal Information'
         Long actionItemId = item.id
         def person = PersonUtility.getPerson( "CSRSTU004" )
         List<UserActionItem> gcraactIdList = UserActionItem.fetchUserActionItemsByPidm(person.pidm)
@@ -415,8 +415,8 @@ class AipReviewControllerIntegrationTests extends BaseIntegrationTestCase {
         assert docResponse.result.size() > 0
         assert docResponse.length > 0
 
-        controller.params.userActionItemId = userActionItemId
-        controller.params.responseId = responseId
+        controller.params.userActionItemId = userActionItemId.toString()
+        controller.params.responseId = responseId.toString()
         controller.params.sortColumn = "id"
         controller.params.sortAscending = false
         controller.request.contentType = "text/json"
