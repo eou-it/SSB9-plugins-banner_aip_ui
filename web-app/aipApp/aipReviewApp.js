@@ -1,10 +1,10 @@
 /*******************************************************************************
- Copyright 2018 Ellucian Company L.P. and its affiliates.
+ Copyright 2018-2019 Ellucian Company L.P. and its affiliates.
  ********************************************************************************/
 // angular module init and configuration
 "use strict";
 
-var aipAppRoot = "/" + extensibilityInfo.application + "/plugins/" +
+var aipAppRoot = $('meta[name=applicationContextRoot]').attr("content") + "/plugins/" +
     window.aipApp.fileSystemName + "/aipApp/";
 var aipAppAbsPath = window.location.protocol + "//" + window.location.host + Application.getApplicationPath() + "/";
 
@@ -28,24 +28,24 @@ var xhrHttpInterceptor = function () {
 }
 
 var bannerAIPReviewApp = angular.module("bannerAIPReview", [
-    "ngResource",
-    "ngSanitize",
-    "ui.router",
-    "extensibility",
-    "ui.bootstrap",
-    "ngAria",
-    "ngAnimate",
-    "xe-ui-components",
-    "bannerAIPUI",
-    "bannerCommonAIP",
-    "ngRoute",
-    "SCEAIP",
-    "I18nAIP",
-    'dateParser',
-    'cm.timepicker'
-])
+        "ngResource",
+        "ngSanitize",
+        "ui.router",
+        "extensibility",
+        "ui.bootstrap",
+        "ngAria",
+        "ngAnimate",
+        "xe-ui-components",
+        "bannerAIPUI",
+        "bannerCommonAIP",
+        "ngRoute",
+        "SCEAIP",
+        "I18nAIP",
+        'dateParser',
+        'cm.timepicker'
+    ])
 
-//set application root url
+    //set application root url
     .constant('APP_ROOT', aipAppRoot)
 
     .constant('APP_PATH', Application.getApplicationPath())
@@ -173,7 +173,7 @@ var bannerAIPReviewApp = angular.module("bannerAIPReview", [
             $rootScope.$on("$stateChangeSuccess", function (event, toState, toParams, fromState, fromParams) {
                 $state.previous = fromState;
                 $state.previousParams = fromParams;
-                retainBreadcrumbsOnBrowserRefresh(toState,BreadcrumbService);
+                retainBreadcrumbsOnBrowserRefresh(toState, BreadcrumbService);
                 BreadcrumbService.updateBreadcrumb(toState.data.breadcrumbs);
             });
 
@@ -217,9 +217,9 @@ angular.module("templates/dropdown.html", []).run(["$templateCache", function ($
         "<div class=\"btn-group\"><button type=\"button\" ng-disabled=\"{{disabled}}\" ng-class=\"{disabledDD:disabled}\" data-toggle=\"dropdown\" class=\"btn btn-default dropdown dropdown-toggle\" role=\"listbox\" aria-expanded=\"false\" aria-haspopup=\"true\"><span class=\"placeholder\" ng-show=\"!ngModel\">{{::xeLabel}}</span> <span class=\"placeholder\">{{ dropDownLabel }}</span> <span class=\"glyphicon glyphicon-chevron-down\"></span></button><ul class=\"dropdown-menu\" role=\"listbox\" aria-expanded=\"false\" role=\"listbox\"><li ng-hide=\"!ngModel\" ng-click=\"updateModel(xeLabel)\">{{::xeLabel}}</li><li ng-if=\"!isObject\" role=\"option\" ng-repeat=\"option in xeOptions track by $index\" ng-click=\"updateModel(option)\" ng-class=\"{'selected':option===ngModel}\">{{::option}}</li><li ng-if=\"isObject\" ng-repeat=\"option in xeOptions track by $index\" ng-click=\"updateModel(option)\">{{::option.label}}</li></ul></div>");
 }]);
 
-var retainBreadcrumbsOnBrowserRefresh = function (toState,BreadcrumbService) {
-    var rootBreadcrumbs = {title: "js.aip.review.monitor.action.item",url: "/aipReview"};
-    if(toState.data.breadcrumbs.title !== rootBreadcrumbs.title){
+var retainBreadcrumbsOnBrowserRefresh = function (toState, BreadcrumbService) {
+    var rootBreadcrumbs = {title: "js.aip.review.monitor.action.item", url: "/aipReview"};
+    if (toState.data.breadcrumbs.title !== rootBreadcrumbs.title) {
         BreadcrumbService.updateBreadcrumb(rootBreadcrumbs);
     }
 }
