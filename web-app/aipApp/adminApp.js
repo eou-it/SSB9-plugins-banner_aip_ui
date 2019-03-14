@@ -1,10 +1,10 @@
 /*******************************************************************************
- Copyright 2018 Ellucian Company L.P. and its affiliates.
+ Copyright 2018-2019 Ellucian Company L.P. and its affiliates.
  ********************************************************************************/
 // angular module init and configuration
 "use strict";
 
-var aipAppRoot = "/" + extensibilityInfo.application + "/plugins/" +
+var aipAppRoot = $('meta[name=applicationContextRoot]').attr("content") + "/plugins/" +
     window.aipApp.fileSystemName + "/aipApp/";
 var aipAppAbsPath = window.location.protocol + "//" + window.location.host + Application.getApplicationPath() + "/";
 var bcmRoot = window.location.protocol + Application.getApplicationPath();

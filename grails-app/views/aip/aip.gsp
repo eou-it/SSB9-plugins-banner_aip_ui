@@ -10,6 +10,8 @@
     <meta name="layout" content="bannerSelfServicePage"/>
     <meta name="menuEndPoint" content="${g.createLink(controller: 'selfServiceMenu', action: 'data')}"/>
     <meta name="menuBaseURL" content="${createLink(uri: '/ssb')}" />
+    <g:set var="applicationContextRoot" value="${application.contextPath}"/>
+    <meta name="applicationContextRoot" content="${applicationContextRoot}">
     <g:if test="${message(code: 'default.language.direction')  == 'rtl'}">
         <r:require modules="bannerNonAdminAIPUIRTL"/>
     </g:if>
