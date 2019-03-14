@@ -63,15 +63,23 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-xs-4 col-sm-3 col-md-3">
-                        <input id="personIdVal" type="text" class="form-control" ng-if="vm.option == 'personId'"
+                    <div class="col-xs-8 col-sm-3 col-md-3" ng-if="vm.option == 'personId'">
+                        <input id="personIdVal" type="text" class="form-control"
                                ng-model="vm.personId" aria-label="{{'js.aip.review.monitor.action.personId.label'|i18n_aip}}">
-                        <input id="personNameVal" type="text" class="form-control" ng-if="vm.option == 'personName'"
-                               ng-model="vm.personName" aria-label="{{'js.aip.review.monitor.action.personName.label'|i18n_aip}}">
-
                     </div>
-                    <div class="col-xs-12 col-sm-8">
-                        <div class="col-sm-6 offset-sm-8 col-xs-12 ">
+                    <div ng-if="vm.option == 'personName'">
+                        <span class="col-xs-8 col-sm-3 col-md-3">
+                            <input id="personNameVal" type="text" class="form-control"
+                                                           ng-model="vm.personName" aria-label="{{'js.aip.review.monitor.action.personName.label'|i18n_aip}}">
+                        </span>
+                        <span class="col-xs-4 col-sm-2 col-md-2 instruction alert alert-info">
+                            {{"js.aip.review.monitor.action.item.person.name.search.instruction"|i18n_aip}}
+                        </span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 col-sm-5">
+                        <div class="search-buttons">
                         <span>
                             <button name="search" type="button" class="btn"
                                 ng-click="vm.search()" ng-disabled="!vm.searchEnabled" ng-class="{'btn-primary': vm.searchEnabled}">

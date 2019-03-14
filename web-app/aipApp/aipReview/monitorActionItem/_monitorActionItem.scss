@@ -73,6 +73,13 @@ $accordion-toggle: #000000;
     background: #fff;
 
   }
+  .instruction{
+    padding: 0.75em;
+    font-size: 12px;
+  }
+  .search-buttons{
+    float:right;
+  }
 
   .attachmentimage{
     height:10px;
@@ -132,6 +139,10 @@ $accordion-toggle: #000000;
 @media screen and (max-width: 768px) {
 
   .monitor-action-item-container {
+    .search-buttons{
+        float:right;
+        margin-top: 0.5em;
+    }
     .row {
       .control {
         padding: 0;
