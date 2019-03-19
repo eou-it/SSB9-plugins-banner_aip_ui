@@ -1,5 +1,5 @@
 <!--*******************************************************************************
-Copyright 2018 Ellucian Company L.P. and its affiliates.
+Copyright 2019 Ellucian Company L.P. and its affiliates.
 *******************************************************************************-->
 <div class="monitor-action-item-container" id="monitorActionItemPage">
     <div>
@@ -69,7 +69,7 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
                     </div>
                     <div ng-if="vm.option == 'personName'">
                         <span class="col-xs-8 col-sm-3 col-md-3">
-                            <input id="personNameVal" type="text" class="form-control"
+                            <input id="personNameVal" type="text" class="form-control" ng-trim="false"
                                                            ng-model="vm.personName" aria-label="{{'js.aip.review.monitor.action.personName.label'|i18n_aip}}">
                         </span>
                         <span class="col-xs-4 col-sm-2 col-md-2 instruction alert alert-info">

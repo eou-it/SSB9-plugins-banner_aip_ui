@@ -6,8 +6,8 @@
 ///<reference path="../../common/services/aipReviewService.ts"/>
 ///<reference path="../../common/services/userService.ts"/>
 declare var register;
-declare var Notification:any;
-declare var notifications:any;
+declare var Notification: any;
+declare var notifications: any;
 
 module AIP {
 
@@ -20,8 +20,8 @@ module AIP {
     export class MonitorActionItemCtrl implements IMonitorActionItemCtrl {
 
         $inject = ["$scope", "$state", "AIPReviewService", "AIPUserService", "SpinnerService", "$timeout", "$q", "$uibModal", "APP_ROOT", "$sce", "$filter", "PAGINATIONCONFIG"];
-        aipReviewService:AIP.AIPReviewService;
-        userService:AIP.UserService;
+        aipReviewService: AIP.AIPReviewService;
+        userService: AIP.UserService;
         $uibModal;
         spinnerService;
         $sce;
@@ -47,10 +47,10 @@ module AIP {
         mobileConfig;
         draggableColumnNames;
         mobileSize;
-        query:ISearchActionItemQuery;
+        query: ISearchActionItemQuery;
         commonPaginationConfig;
-        gridEnabled:boolean;
-        searchEnabled:boolean;
+        gridEnabled: boolean;
+        searchEnabled: boolean;
 
         constructor($scope, $state, AIPReviewService, AIPUserService, SpinnerService, $timeout, $q, $uibModal, APP_ROOT, $sce, $filter, PAGINATIONCONFIG) {
             $scope.vm = this;
@@ -74,7 +74,7 @@ module AIP {
         }
 
         init() {
-            this.searchEnabled=true;
+            this.searchEnabled = true;
             this.gridEnabled = false;
             this.spinnerService.showSpinner(true);
             this.aipReviewService.getActionItemList()
@@ -92,12 +92,12 @@ module AIP {
                 actionItemName: 3,
                 status: 3,
                 responseDate: 3,
-                currentResponseText:3,
-                displayStartDate:3,
-                displayEndDate:3,
-                reviewIndicator:3,
-                attachments:3,
-                reviewStateCode:3
+                currentResponseText: 3,
+                displayStartDate: 3,
+                displayEndDate: 3,
+                reviewIndicator: 3,
+                attachments: 3,
+                reviewStateCode: 3
             };
             this.mobileSize = angular.element("body").width() > 768 ? false : true;
 
@@ -296,22 +296,23 @@ module AIP {
 
         search() {
 
-            if(notifications.hasErrors()) {
+            if (notifications.hasErrors()) {
                 notifications.clearNotifications();
             }
 
-            if ((!this.personName || this.personName === "") && (!this.personId || this.personId === "") && (!this.selected || !this.selected.id )) {
-                var n = new Notification({
+            this.personName = this.personName?this.personName.replace(/^\s+/g, " ").replace(/\s*$/, ""):this.personName;
+            if((!this.personName || this.personName === "") && (!this.personId || this.personId === "") && (!this.selected || !this.selected.id)) {
+                let errorNotification = new Notification({
                     message: this.$filter("i18n_aip")("js.aip.review.monitor.action.item.search.parameter.error.message"),
                     type: "error",
                     flash: true
                 });
-                notifications.addNotification(n);
+                notifications.addNotification(errorNotification);
                 return;
             }
 
             this.gridEnabled = true;
-            this.searchEnabled= false;
+            this.searchEnabled = false;
 
         }
 
@@ -320,7 +321,7 @@ module AIP {
         }
 
 
-        review(userActionItemID:string) {
+        review(userActionItemID: string) {
             console.log("parameter passed", userActionItemID)
             this.$state.go("review-action-item", {userActionItemID: userActionItemID});
         }
