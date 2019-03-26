@@ -6,7 +6,7 @@
 ///<reference path="../../common/services/userService.ts"/>
 var AIP;
 (function (AIP) {
-    var MonitorActionItemCtrl = (function () {
+    var MonitorActionItemCtrl = /** @class */ (function () {
         function MonitorActionItemCtrl($scope, $state, AIPReviewService, AIPUserService, SpinnerService, $timeout, $q, $uibModal, APP_ROOT, $sce, $filter, PAGINATIONCONFIG) {
             this.$inject = ["$scope", "$state", "AIPReviewService", "AIPUserService", "SpinnerService", "$timeout", "$q", "$uibModal", "APP_ROOT", "$sce", "$filter", "PAGINATIONCONFIG"];
             this.fetchData = function (query) {
@@ -204,7 +204,7 @@ var AIP;
                     options: {
                         sortable: true,
                         ascending: true,
-                        visible: true
+                        visible: true,
                     }
                 }, {
                     name: "reviewStateCode",
@@ -233,13 +233,14 @@ var AIP;
             if (notifications.hasErrors()) {
                 notifications.clearNotifications();
             }
+            this.personName = this.personName ? this.personName.replace(/^\s+/g, " ").replace(/\s*$/, "") : this.personName;
             if ((!this.personName || this.personName === "") && (!this.personId || this.personId === "") && (!this.selected || !this.selected.id)) {
-                var n = new Notification({
+                var errorNotification = new Notification({
                     message: this.$filter("i18n_aip")("js.aip.review.monitor.action.item.search.parameter.error.message"),
                     type: "error",
                     flash: true
                 });
-                notifications.addNotification(n);
+                notifications.addNotification(errorNotification);
                 return;
             }
             this.gridEnabled = true;
@@ -253,8 +254,7 @@ var AIP;
             this.$state.go("review-action-item", { userActionItemID: userActionItemID });
         };
         return MonitorActionItemCtrl;
-    })();
+    }());
     AIP.MonitorActionItemCtrl = MonitorActionItemCtrl;
 })(AIP || (AIP = {}));
 register("bannerAIPReview").controller("monitorActionItemCtrl", AIP.MonitorActionItemCtrl);
-//# sourceMappingURL=monitorActionItemCtrl.js.map

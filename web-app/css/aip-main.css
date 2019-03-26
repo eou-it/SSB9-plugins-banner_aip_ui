@@ -1685,6 +1685,23 @@ ol.selected-group > li > button {
   .monitor-action-item-accordion-container .label-padding {
     padding-top: 5px;
     width: auto; }
+  .monitor-action-item-accordion-container .search-info-icon {
+    color: #2874BB;
+    font-size: medium; }
+  .monitor-action-item-accordion-container .search-instruction {
+    padding: 0;
+    margin: 0;
+    width: 4%; }
+  .monitor-action-item-accordion-container .search-buttons {
+    float: left; }
+  .monitor-action-item-accordion-container p {
+    text-align: justify;
+    word-break: break-word; }
+  .monitor-action-item-accordion-container .search-text-box {
+    padding-right: 0.75em; }
+  .monitor-action-item-accordion-container .xe-popup-container {
+    width: 45% !important;
+    height: auto !important; }
   .monitor-action-item-accordion-container .select2-results {
     max-height: 100px; }
   .monitor-action-item-accordion-container .titleValue {
@@ -1770,7 +1787,12 @@ ol.selected-group > li > button {
   margin-right: 2em;
   margin-left: 1em !important; }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 760px) {
+  .monitor-action-item-container .search-buttons {
+    float: right; }
+  .monitor-action-item-container .xe-popup-container {
+    width: 95% !important;
+    height: auto !important; }
   .monitor-action-item-container .row .control {
     padding: 0; } }
 .titleValue {

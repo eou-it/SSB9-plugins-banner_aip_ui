@@ -1,5 +1,5 @@
 /*******************************************************************************
- Copyright 2018 Ellucian Company L.P. and its affiliates.
+ Copyright 2019 Ellucian Company L.P. and its affiliates.
  ********************************************************************************/
 package net.hedtech.banner.aip
 
@@ -46,7 +46,7 @@ class AipReviewController {
         def criteriaMap = [:]
         def filterData = [params: paramsMap, criteria: criteriaMap]
 
-        def result = monitorActionItemCompositeService.searchMonitorActionItems(actionItemid, params?.personName?.trim(), params?.personId?.trim(), filterData, pagingAndSortParams)
+        def result = monitorActionItemCompositeService.searchMonitorActionItems(actionItemid, params?.personName, params?.personId?.trim(), filterData, pagingAndSortParams)
         render result as JSON
     }
 
