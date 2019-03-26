@@ -1,4 +1,3 @@
-
 $accordion-toggle: #000000;
 
 .monitor-action-item-accordion-container {
@@ -12,7 +11,29 @@ $accordion-toggle: #000000;
     padding-top: 5px;
     width: auto;
   }
-
+  .search-info-icon {
+    color: #2874BB;
+    font-size: medium;
+  }
+  .search-instruction {
+    padding: 0;
+    margin: 0;
+    width: 4%;
+  }
+  .search-buttons {
+    float: left;
+  }
+  p{
+    text-align: justify;
+    word-break: break-word;
+  }
+  .search-text-box{
+    padding-right: 0.75em;
+  }
+  .xe-popup-container {
+    width: 45% !important;
+    height: auto !important;
+  }
   .select2-results {
     max-height: 100px;
   }
@@ -71,59 +92,50 @@ $accordion-toggle: #000000;
     left: 5px;
     border-radius: 16px;
     background: #fff;
-
-  }
-  .instruction{
-    padding: 0.75em;
-    font-size: 12px;
-  }
-  .search-buttons{
-    float:right;
   }
 
-  .attachmentimage{
-    height:10px;
-    width:10px;
+  .attachmentimage {
+    height: 10px;
+    width: 10px;
   }
-
 
   .actionListContainer {
     overflow-y: auto;
     font-size: 14px;
-    }
-    .row {
-      margin-right: 0;
-      margin-left: 0;
-    }
-    .control {
-      float: right;
-      padding-top: 8px;
-      margin-right: 0.2em;
-    }
+  }
+  .row {
+    margin-right: 0;
+    margin-left: 0;
+  }
+  .control {
+    float: right;
+    padding-top: 8px;
+    margin-right: 0.2em;
+  }
 
-    .actionListTable {
-      overflow: auto;
-      //padding-top: 16px;
-      .table-container {
-        margin-top: 8px;
+  .actionListTable {
+    overflow: auto;
+    //padding-top: 16px;
+    .table-container {
+      margin-top: 8px;
 
-        .row.actionItemActions {
-          display: flex;
-          margin-right: 16px;
-          margin-left: 16px;
+      .row.actionItemActions {
+        display: flex;
+        margin-right: 16px;
+        margin-left: 16px;
 
-          div {
-            flex: 1;
-            margin-right: 10px;
-          }
-          div:last-child {
-            margin-right: 0;
+        div {
+          flex: 1;
+          margin-right: 10px;
+        }
+        div:last-child {
+          margin-right: 0;
 
-          }
         }
       }
     }
   }
+}
 
 .view-attachment-icon {
   font-family: open-sans-semi-bold;
@@ -136,12 +148,15 @@ $accordion-toggle: #000000;
   margin-left: 1em !important;
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 760px) {
 
   .monitor-action-item-container {
-    .search-buttons{
-        float:right;
-        margin-top: 0.5em;
+    .search-buttons {
+      float: right;
+    }
+    .xe-popup-container {
+      width: 95% !important;
+      height: auto !important;
     }
     .row {
       .control {
