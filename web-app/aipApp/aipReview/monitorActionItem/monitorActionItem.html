@@ -76,7 +76,7 @@ Copyright 2019 Ellucian Company L.P. and its affiliates.
                         </span>
                         <span class="col-xs-1 col-sm-1 col-md-1 search-instruction">
                             <i ng-if="vm.option == 'personName'" class="icon icon-info-CF search-info-icon"
-                                                       ng-click="vm.showInfo=true;"/>
+                                                       ng-click="vm.showInfo=true;" aria-label="{{'js.aip.review.monitor.action.item.person.name.search.instruction.tooltip'|i18n_aip}}" title="{{'js.aip.review.monitor.action.item.person.name.search.instruction.tooltip'|i18n_aip}}"/>
                         </span>
                         <div ng-show="vm.showInfo">
                             <xe-popup-modal show=vm.showInfo>
