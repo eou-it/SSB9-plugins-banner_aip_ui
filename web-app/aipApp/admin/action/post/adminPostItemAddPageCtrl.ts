@@ -6,8 +6,8 @@
 ///<reference path="../../../common/services/spinnerService.ts"/>
 ///<reference path="../../../common/services/admin/adminActionService.ts"/>
 declare var register;
-declare var Notification: any;
-declare var notifications: any;
+declare var Notification:any;
+declare var notifications:any;
 
 
 module AIP {
@@ -18,7 +18,7 @@ module AIP {
 
         save(): void;
 
-        saveErrorCallback(message: string): void;
+        saveErrorCallback(message:string): void;
 
         setTimezone(timezone:any): void;
 
@@ -37,22 +37,23 @@ module AIP {
     }
 
     export class AdminPostItemAddPageCtrl implements IAdminPostItemAddPageCtrl {
-        $inject = ["$scope", "$q", "$state", "$filter", "$timeout", "SpinnerService","AdminActionStatusService", "AdminActionService", "$uibModal", "APP_ROOT", "datePicker"];
+        $inject = ["$scope", "$q", "$state", "$filter", "$timeout", "SpinnerService", "AdminActionStatusService", "AdminActionService", "$uibModal", "APP_ROOT", "datePicker"];
         $scope;
         $uibModal;
-        status: [AIP.IStatus];
-        folders: [AIP.IFolder];
-        groupList: [AIP.IGroup];
-        actionItemList: [AIP.IGroupActionItem];
+        status:[AIP.IStatus];
+        folders:[AIP.IFolder];
+        groupList:[AIP.IGroup];
+        actionItemList:[AIP.IGroupActionItem];
+       
 
-        populationList: [AIP.IPopulation];
-        postActionItemInfo: AIP.IPostActionItemParam | any;
-        errorMessage: any;
-        adminActionService: AIP.AdminActionService;
+        populationList:[AIP.IPopulation];
+        postActionItemInfo:AIP.IPostActionItemParam | any;
+        errorMessage:any;
+        adminActionService:AIP.AdminActionService;
         adminActionStatusService:AIP.AdminActionStatusService;
-        spinnerService: AIP.SpinnerService;
-        saving: boolean;
-        $q: ng.IQService;
+        spinnerService:AIP.SpinnerService;
+        saving:boolean;
+        $q:ng.IQService;
         $state;
         $filter;
         selected;
@@ -65,7 +66,7 @@ module AIP {
         modalResults;
         itemLength;
         scheduleDate;
-        regeneratePopulation: boolean;
+        regeneratePopulation:boolean;
         APP_ROOT;
         sendTime;
         modalInstance;
@@ -77,7 +78,7 @@ module AIP {
         defaultTimeZoneNameWithOffset;
         showTimezoneIcon;
         actionPost1;
-        editMode: boolean;
+        editMode:boolean;
         postIDvalue;
         selectedActionListVal;
         changeFlag:boolean;
@@ -91,74 +92,97 @@ module AIP {
         currentBrowserDate;
         selectedTime;
         enteredDate;
+        recurCount:number;
+        displayStartDateOffset:number;
+        recurranceStartDate:any;
+        recurrTime:any;
+        recurrEndDate:any;
+ 		showSchedule:boolean;
+        showRecurrance:boolean;
+        scheduleType:string;
+        recEndType:string;
+ 		recurFreqeunecyList:any;
 
 
-        constructor($scope: IActionItemAddPageScope, $q: ng.IQService, $state, $uibModal, $filter, $timeout,
-                    SpinnerService: AIP.SpinnerService, APP_ROOT,AdminActionStatusService, AdminActionService: AIP.AdminActionService) {
+        constructor($scope:IActionItemAddPageScope, $q:ng.IQService, $state, $uibModal, $filter, $timeout,
+                    SpinnerService:AIP.SpinnerService, APP_ROOT, AdminActionStatusService, AdminActionService:AIP.AdminActionService) {
             $scope.vm = this;
             this.$q = $q;
             this.$scope = $scope;
             this.$state = $state;
             this.$filter = $filter;
             this.$uibModal = $uibModal;
-            this.modalInstance=null;
+            this.modalInstance = null;
             this.$timeout = $timeout;
             this.spinnerService = SpinnerService;
             this.adminActionService = AdminActionService;
-            this.adminActionStatusService=AdminActionStatusService;
+            this.adminActionStatusService = AdminActionStatusService;
             this.saving = false;
-            this.IsVisible=false;
-            this.localeDate={};
-            this.localeTimezone={};
+            this.IsVisible = false;
+            this.localeDate = {};
+            this.localeTimezone = {};
             this.selected = {};
-            this.localeTime={};
+            this.localeTime = {};
             this.modalResult = {};
             this.modalResults = [];
             this.regeneratePopulation = false;
-            this.itemLength=0;
-            this.sendTime={};
-            this.scheduleDate=null;
-            this.postNow=true;
+            this.itemLength = 0;
+            this.sendTime = {};
+            this.scheduleDate = null;
+            this.scheduleType = "POSTNOW";
+            this.showRecurrance = false;
+            this.showSchedule = false;
             this.showTimezoneIcon = true;
             this.selectedPopulation = {};
             this.APP_ROOT = APP_ROOT;
             this.errorMessage = {};
             this.editMode = false;
-            this.changeFlag=false;
-            this.actionPost1 ={};
-            this.postIDvalue=0;
-            this.dirtyFlag=false;
-            this.selectedActionListVal=[];
-            this.displayDatetimeZone={};
-            this.defaultTimeZoneNameWithOffset=null;
-            this.serverinfo={};
-            this.appServerDate=null;
-            this.appServerTime=null;
-            this.appServerTimeZone=null;
-            this.processedServerDetails={};
-            this.currentBrowserDate=null;
-            this.selectedTime=null;
-            this.enteredDate=null;
+            this.changeFlag = false;
+            this.actionPost1 = {};
+            this.postIDvalue = 0;
+            this.dirtyFlag = false;
+            this.selectedActionListVal = [];
+            this.displayDatetimeZone = {};
+            this.defaultTimeZoneNameWithOffset = null;
+            this.serverinfo = {};
+            this.appServerDate = null;
+            this.appServerTime = null;
+            this.appServerTimeZone = null;
+            this.processedServerDetails = {};
+            this.currentBrowserDate = null;
+            this.selectedTime = null;
+            this.enteredDate = null;
             this.init();
         }
 
-        today(){
+        today() {
             this.sendTime = new Date();
             this.sendTime.setMinutes(Math.ceil(this.sendTime.getMinutes() / 30) * 30);
             this.currentBrowserDate = this.$filter('date')(new Date(), this.$filter("i18n_aip")("default.date.format"));
-            this.currentBrowserDate=this.monthCapitalize(this.currentBrowserDate)
+            this.currentBrowserDate = this.monthCapitalize(this.currentBrowserDate)
         };
 
         init() {
+
             this.spinnerService.showSpinner(true);
+            this.recurFreqeunecyList=
+                [{
+                    frequency: this.$filter("i18n_aip")("aip.admin.action.postactionItem.recurringPosting.recurr.constant.days"),
+                    value: 'DAYS'
+                },
+                    {
+                        frequency: this.$filter("i18n_aip")("aip.admin.action.postactionItem.recurringPosting.recurr.constant.hours"),
+                        value: 'HOURS'
+                    }]
+            ;
             var allPromises = [];
             this.postActionItemInfo = {};
-            this.editMode = this.$state.params.isEdit==="true" ? true : false;
-            this.postIDvalue=this.$state.params.postIdval;
+            this.editMode = this.$state.params.isEdit === "true" ? true : false;
+            this.postIDvalue = this.$state.params.postIdval;
 
             allPromises.push(
                 this.adminActionService.getGrouplist()
-                    .then((response: AIP.IPostActionItemGroupResponse) => {
+                    .then((response:AIP.IPostActionItemGroupResponse) => {
                         this.groupList = response.data;
                         this.postActionItemInfo.group = this.groupList;
 
@@ -167,7 +191,7 @@ module AIP {
 
             allPromises.push(
                 this.adminActionService.getPopulationlist()
-                    .then((response: AIP.IPostActionItemPopulationResponse) => {
+                    .then((response:AIP.IPostActionItemPopulationResponse) => {
                         this.populationList = response.data;
                         this.postActionItemInfo.population = this.populationList;
 
@@ -233,18 +257,24 @@ module AIP {
                                     }
                                 }
 
-                                this.selected= this.$scope.group;
-                                this.selectedPopulation =   this.$scope.population;
+                                this.selected = this.$scope.group;
+                                this.selectedPopulation = this.$scope.population;
                                 this.postActionItemInfo.groupName = this.actionPost1.groupName;
                                 this.postActionItemInfo.displayStartDate = this.actionPost1.postingDisplayStartDate;
-                                this.postActionItemInfo.displayEndDate =  this.actionPost1.postingDisplayEndDate;
+                                this.postActionItemInfo.displayEndDate = this.actionPost1.postingDisplayEndDate;
                                 this.postActionItemInfo.scheduledStartDate = this.actionPost1.postingDisplayDateTime;
 
-                                this.postNow = false;
-                                this.regeneratePopulation=this.actionPost1.populationRegenerateIndicator;
-                                this.sendTime=this.actionPost1.postingDisplayTime;
+                                if(this.actionPost1.postingCurrentState==='Scheduled'){
+                                    console.log('code has been reached');
+                                    this.scheduleType='SCHEDULE';
+                                }else{
+                                    console.log('oops recurrance is reached',this.postActionItemInfo);
+                                    this.scheduleType='RECUR';
+                                }
+                                this.regeneratePopulation = this.actionPost1.populationRegenerateIndicator;
+                                this.sendTime = this.actionPost1.postingDisplayTime;
                                 var postingTimeZone = this.actionPost1.postingTimeZone.split(" ");
-                                this.defaultTimeZone = this.$filter("i18n_aip")("timezone." + postingTimeZone[postingTimeZone.length-1]);
+                                this.defaultTimeZone = this.$filter("i18n_aip")("timezone." + postingTimeZone[postingTimeZone.length - 1]);
 
                                 for(var k=0;k<this.timezones.length;k++) {
                                     if(this.defaultTimeZone === this.timezones[k].displayNameWithoutOffset)

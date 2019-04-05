@@ -6,7 +6,7 @@
 ///<reference path="../../../common/services/admin/adminActionService.ts"/>
 var AIP;
 (function (AIP) {
-    var AdminPostItemAddPageCtrl = /** @class */ (function () {
+    var AdminPostItemAddPageCtrl = (function () {
         function AdminPostItemAddPageCtrl($scope, $q, $state, $uibModal, $filter, $timeout, SpinnerService, APP_ROOT, AdminActionStatusService, AdminActionService) {
             this.$inject = ["$scope", "$q", "$state", "$filter", "$timeout", "SpinnerService", "AdminActionStatusService", "AdminActionService", "$uibModal", "APP_ROOT", "datePicker"];
             $scope.vm = this;
@@ -32,7 +32,9 @@ var AIP;
             this.itemLength = 0;
             this.sendTime = {};
             this.scheduleDate = null;
-            this.postNow = true;
+            this.scheduleType = "POSTNOW";
+            this.showRecurrance = false;
+            this.showSchedule = false;
             this.showTimezoneIcon = true;
             this.selectedPopulation = {};
             this.APP_ROOT = APP_ROOT;
@@ -65,6 +67,15 @@ var AIP;
         AdminPostItemAddPageCtrl.prototype.init = function () {
             var _this = this;
             this.spinnerService.showSpinner(true);
+            this.recurFreqeunecyList =
+                [{
+                        frequency: this.$filter("i18n_aip")("aip.admin.action.postactionItem.recurringPosting.recurr.constant.days"),
+                        value: 'DAYS'
+                    },
+                    {
+                        frequency: this.$filter("i18n_aip")("aip.admin.action.postactionItem.recurringPosting.recurr.constant.hours"),
+                        value: 'HOURS'
+                    }];
             var allPromises = [];
             this.postActionItemInfo = {};
             this.editMode = this.$state.params.isEdit === "true" ? true : false;
@@ -124,7 +135,14 @@ var AIP;
                             _this.postActionItemInfo.displayStartDate = _this.actionPost1.postingDisplayStartDate;
                             _this.postActionItemInfo.displayEndDate = _this.actionPost1.postingDisplayEndDate;
                             _this.postActionItemInfo.scheduledStartDate = _this.actionPost1.postingDisplayDateTime;
-                            _this.postNow = false;
+                            if (_this.actionPost1.postingCurrentState === 'Scheduled') {
+                                console.log('code has been reached');
+                                _this.scheduleType = 'SCHEDULE';
+                            }
+                            else {
+                                console.log('oops recurrance is reached', _this.postActionItemInfo);
+                                _this.scheduleType = 'RECUR';
+                            }
                             _this.regeneratePopulation = _this.actionPost1.populationRegenerateIndicator;
                             _this.sendTime = _this.actionPost1.postingDisplayTime;
                             var postingTimeZone = _this.actionPost1.postingTimeZone.split(" ");
@@ -465,7 +483,7 @@ var AIP;
             notifications.addNotification(n);
         };
         return AdminPostItemAddPageCtrl;
-    }());
+    })();
     AIP.AdminPostItemAddPageCtrl = AdminPostItemAddPageCtrl;
 })(AIP || (AIP = {}));
 register("bannerAIP").controller("AdminPostItemAddPageCtrl", AIP.AdminPostItemAddPageCtrl);
