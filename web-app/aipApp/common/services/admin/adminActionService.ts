@@ -415,6 +415,36 @@ module AIP {
             return request;
         }
 
+        saveRecurringActionItem(postActionItem,selected,modalResult,selectedPopulation,regeneratePopulation,recurCount,recurFreqeunecy,displayStartDateOffset,recDisplayEndDateType,displayEndDateOffset,recurDisplayEndDate,recurranceStartDate,recurranceEndDate,recurrTime,recurrTimeZone){
+
+            var params = {postId:postActionItem.postId,
+                postingName: postActionItem.name,
+                postingActionItemGroupId: selected.groupId,
+                actionItemIds: modalResult,
+                populationId: selectedPopulation.id,
+                displayStartDate:postActionItem.displayStartDate,
+                displayEndDate:postActionItem.displayEndDate,
+                recurr:'true',
+                populationRegenerateIndicator:regeneratePopulation,
+                recurCount:recurCount,
+                recurFreqeunecy:recurFreqeunecy,
+                displayStartDateOffset:displayStartDateOffset,
+                recDisplayEndDateType:recDisplayEndDateType,
+                displayEndDateOffset:displayEndDateOffset,
+                recurDisplayEndDate:recurDisplayEndDate,
+                recurranceStartDate:recurranceStartDate,
+                recurranceEndDate:recurranceEndDate,
+                recurrTime:recurrTime,
+                recurrTimeZone:recurrTimeZone
+            }
+            var request = this.$http({
+                method: "POST",
+                data: params,
+                url:  postActionItem.postId? this.ENDPOINT.admin.updateActionItemPosting : this.ENDPOINT.admin.addRecurringActionItemPosting
+            });
+            return request;
+        }
+
         saveActionItem(actionItem) {
             var params = {
                 title: actionItem.title,

@@ -236,6 +236,7 @@ Copyright 2019 Ellucian Company L.P. and its affiliates.
 
                                         <xe-ui-select class="col-xs-12 col-sm-12 timeZoneChange timezone-minwidth"
                                                       ng-model="vm.timezone"
+
                                                       ng-change="vm.setTimezone(vm.timezone);vm.checkChanges();vm.getProcessedServerDateTimeAndTimezone()"
                                                       theme="select2" ng-show="!vm.showTimezoneIcon">
                                             <xe-ui-select-match
@@ -321,14 +322,18 @@ Copyright 2019 Ellucian Company L.P. and its affiliates.
                                        aria-required="true" required autocomplete="off"/>
                             </div>
                             <div class="col-xs-4 col-sm-2  col-md-1 ">
-                                <xe-ui-select id="recurFrequency" ng-model="vm.recurFreqeunecyList" theme="select2" ng-disabled="disabled" search-enabled="false"
-                                              on-select="" ng-change="vm.dataChanged()">
-                                    <xe-ui-select-match>
-                                        {{vm.recurFreqeunecyList.frequency}}
-                                    </xe-ui-select-match>
-                                    <xe-ui-select-choices repeat="item in vm.recurFreqeunecyList |orderBy:'id'">
-                                        <div ng-bind-html="item.frequency"></div>
-                                    </xe-ui-select-choices>
+                                    <xe-ui-select id="recurFrequency" ng-model="vm.selectedRecurFrequency"
+                                              theme="select2"
+                                              ng-disabled="disabled"
+                                              search-enabled="false"
+                                              ng-change="vm.dataChanged()"
+                                              ">
+                                        <xe-ui-select-match>
+                                            <div class="row actionItemName" ng-bind-html="vm.selectedRecurFrequency.frequency"></div>
+                                        </xe-ui-select-match>
+                                        <xe-ui-select-choices repeat="item in vm.recurFreqeunecyList">
+                                            <div ng-bind-html="item.frequency"></div>
+                                        </xe-ui-select-choices>
                                 </xe-ui-select>
                             </div>
 
@@ -356,18 +361,18 @@ Copyright 2019 Ellucian Company L.P. and its affiliates.
 
                             <div class=" row form-group  ">
                                 <div class="col-sm-1 col-md-1 col-lg-1 col-xs-1">
-                                    <input type="radio" id="chkendoffset" name="recEndType" ng-model="vm.recEndType" value="OFFSET"
-                                           ng-change="vm.checkChanges();vm.schedulingTypeChanged()"/>
+                                    <input type="radio" id="chkendoffset" name="recEndType" ng-model="vm.recDisplayEndDateType" value="OFFSET"
+                                           ng-change="vm.checkChanges();"/>
                                 </div>
                                 <div class="col-sm-2 col-md-2 col-lg-2 col-xs-3">
-                                    <input type="number" class="form-control" name="displayEndDateOffset" aria-required="true" required autocomplete="off" ng-model ="displayStartDateOffset"/>
+                                    <input type="number" class="form-control" name="displayEndDateOffset" aria-required="true" required autocomplete="off" ng-model ="vm.displayEndDateOffset" ng-disabled="vm.recDisplayEndDateType==='EXACT'"/>
                                 </div>
                                 <div class=" displayInstruction">{{"aip.admin.action.postactionItem.recurringPosting.displayOffset.instructions"|i18n_aip}}</div>
                             </div>
                             <div class=" row form-group  ">
                                 <div class="col-sm-1 col-md-1 col-lg-1 col-xs-1">
-                                    <input type="radio" id="chkendExact" name="recEndType" ng-model="vm.recEndType" value="EXACT"
-                                           ng-change="vm.checkChanges();vm.schedulingTypeChanged()"/>
+                                    <input type="radio" id="chkendExact" name="recEndType" ng-model="vm.recDisplayEndDateType" value="EXACT"
+                                           ng-change="vm.checkChanges();"/>
                                 </div>
 
                                     <div class="actionItemElement Datelement col-xs-1 col-sm-2  dateRow form-container"
@@ -379,7 +384,8 @@ Copyright 2019 Ellucian Company L.P. and its affiliates.
                                                    ng-model="vm.recurDisplayEndDate" ng-change="vm.checkChanges()"
                                                    aria-required="true" required autocomplete="off"
                                                    aria-label="{{'aip.admin.action.postactionItem.end.date'|i18n_aip}}"
-                                                   placeholder='{{"default.date.format.watermark"|i18n_aip}}'/>
+                                                   placeholder='{{"default.date.format.watermark"|i18n_aip}}'
+                                                ng-disabled="vm.recDisplayEndDateType==='OFFSET'"/>
                                         </div>
                                     </div>
 
@@ -448,7 +454,7 @@ Copyright 2019 Ellucian Company L.P. and its affiliates.
                                         </div>
 
                                         <xe-ui-select class="col-xs-12 col-sm-12 timeZoneChange timezone-minwidth"
-                                                      ng-model="vm.timezone"
+                                                          ng-model="vm.timezone"
                                                       ng-change="vm.setTimezone(vm.timezone);vm.checkChanges();vm.getProcessedServerDateTimeAndTimezone()"
                                                       theme="select2" ng-show="!vm.showTimezoneIcon">
                                             <xe-ui-select-match
