@@ -163,7 +163,10 @@ Copyright 2019 Ellucian Company L.P. and its affiliates.
                 </div>
             </div>
         </div>
-
+        <div class="row actionItemInfoRow actionItemStatus" >
+                <input id="regeneratePopulation" name="content" type="checkbox" ng-model="vm.regeneratePopulation" ng-change="vm.checkChanges()" />
+                <label  class="titleValue  required" for="regeneratePopulation">{{'aip.admin.action.postactionItem.regeneratePopulation'|i18n_aip}}</label>
+       </div>
         <div class="row actionItemInfoRow actionItemStatus">
             <div class="">
                 <input type="radio" id="chkPost" name="content" ng-model="vm.postNow" data-ng-value="true"
