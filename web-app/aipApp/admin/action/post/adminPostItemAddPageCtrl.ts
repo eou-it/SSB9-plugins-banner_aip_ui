@@ -406,8 +406,12 @@ module AIP {
 
         timeConversion()
         {
+            if(this.scheduleType === "RECUR"){
+                this.postActionItemInfo.scheduledStartDate = this.recurranceStartDate
+            }
 
             this.enteredDate= (this.postActionItemInfo.scheduledStartDate === undefined) ? this.currentBrowserDate : this.postActionItemInfo.scheduledStartDate;
+
 
             if (this.sendTime instanceof Date){
                 this.selectedTime =  this.$filter("date")(this.sendTime, "HHmm")
@@ -439,7 +443,7 @@ module AIP {
             this.timeConversion()
             var userSelectedVal=
             {
-                "userEnterDate": this.enteredDate,
+                "userEnterDate": this.enteredDate  ,
                 "userEnterTime": this.selectedTime,
                 "userEnterTimeZone": this.timezone.timezoneId
             };
@@ -634,14 +638,14 @@ module AIP {
         }
 
         save() {
-            this.saving = true;
-            var userSelectedTime=null;
+            var userSelectedTime;
             if(this.postNow===true){
-
-                this.sendTime=null;
-                this.timezone=null;
+                this.saving = true;
+                var userSelectedTime=null;
                 var CurrentDateTimeDetails = new Date();
                 var currentTime = this.$filter('date')(CurrentDateTimeDetails, 'HHmm');
+                this.sendTime=null;
+                this.timezone=null;
                 this.today();
                 this.getDefaultTimeZone();
                 this.displayDatetimeZone.dateVal=this.currentBrowserDate;
@@ -675,7 +679,8 @@ module AIP {
             }
             if(this.scheduleType==='RECUR'){
                 console.log("Recurrance is being used");
-                this.adminActionService.saveRecurringActionItem(this.postActionItemInfo, this.selected,this.modalResult,this.selectedPopulation,this.regeneratePopulation,this.recurCount,this.selectedRecurFrequency, this.displayStartDateOffset,this.recDisplayEndDateType,this.displayEndDateOffset,this.recurDisplayEndDate,this.recurranceStartDate,this.recurranceEndDate,this.recurrTime,this.timezone)
+
+                this.adminActionService.saveRecurringActionItem(this.postActionItemInfo, this.selected,this.modalResults,this.selectedPopulation,this.regeneratePopulation,this.recurCount,this.selectedRecurFrequency, this.displayStartDateOffset,this.recDisplayEndDateType,this.displayEndDateOffset,this.recurDisplayEndDate,this.recurranceStartDate,this.recurranceEndDate,userSelectedTime,this.timezone.timezoneId,this.displayDatetimeZone)
                     .then((response:AIP.IPostActionItemSaveResponse) => {
                         this.saving = false;
                         var notiParams = {};

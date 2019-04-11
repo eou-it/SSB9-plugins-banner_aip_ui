@@ -248,6 +248,9 @@ var AIP;
             this.defaultTimeZone = finalValue;
         };
         AdminPostItemAddPageCtrl.prototype.timeConversion = function () {
+            if (this.scheduleType === "RECUR") {
+                this.postActionItemInfo.scheduledStartDate = this.recurranceStartDate;
+            }
             this.enteredDate = (this.postActionItemInfo.scheduledStartDate === undefined) ? this.currentBrowserDate : this.postActionItemInfo.scheduledStartDate;
             if (this.sendTime instanceof Date) {
                 this.selectedTime = this.$filter("date")(this.sendTime, "HHmm");
@@ -447,13 +450,14 @@ var AIP;
         };
         AdminPostItemAddPageCtrl.prototype.save = function () {
             var _this = this;
-            this.saving = true;
-            var userSelectedTime = null;
+            var userSelectedTime;
             if (this.postNow === true) {
-                this.sendTime = null;
-                this.timezone = null;
+                this.saving = true;
+                var userSelectedTime = null;
                 var CurrentDateTimeDetails = new Date();
                 var currentTime = this.$filter('date')(CurrentDateTimeDetails, 'HHmm');
+                this.sendTime = null;
+                this.timezone = null;
                 this.today();
                 this.getDefaultTimeZone();
                 this.displayDatetimeZone.dateVal = this.currentBrowserDate;
@@ -487,7 +491,7 @@ var AIP;
             }
             if (this.scheduleType === 'RECUR') {
                 console.log("Recurrance is being used");
-                this.adminActionService.saveRecurringActionItem(this.postActionItemInfo, this.selected, this.modalResult, this.selectedPopulation, this.regeneratePopulation, this.recurCount, this.selectedRecurFrequency, this.displayStartDateOffset, this.recDisplayEndDateType, this.displayEndDateOffset, this.recurDisplayEndDate, this.recurranceStartDate, this.recurranceEndDate, this.recurrTime, this.timezone)
+                this.adminActionService.saveRecurringActionItem(this.postActionItemInfo, this.selected, this.modalResults, this.selectedPopulation, this.regeneratePopulation, this.recurCount, this.selectedRecurFrequency, this.displayStartDateOffset, this.recDisplayEndDateType, this.displayEndDateOffset, this.recurDisplayEndDate, this.recurranceStartDate, this.recurranceEndDate, userSelectedTime, this.timezone.timezoneId, this.displayDatetimeZone)
                     .then(function (response) {
                     _this.saving = false;
                     var notiParams = {};
@@ -542,3 +546,4 @@ var AIP;
     AIP.AdminPostItemAddPageCtrl = AdminPostItemAddPageCtrl;
 })(AIP || (AIP = {}));
 register("bannerAIP").controller("AdminPostItemAddPageCtrl", AIP.AdminPostItemAddPageCtrl);
+//# sourceMappingURL=adminPostItemAddPageCtrl.js.map

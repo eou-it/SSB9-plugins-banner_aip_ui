@@ -415,7 +415,7 @@ module AIP {
             return request;
         }
 
-        saveRecurringActionItem(postActionItem,selected,modalResult,selectedPopulation,regeneratePopulation,recurCount,recurFreqeunecy,displayStartDateOffset,recDisplayEndDateType,displayEndDateOffset,recurDisplayEndDate,recurranceStartDate,recurranceEndDate,recurrTime,recurrTimeZone){
+        saveRecurringActionItem(postActionItem,selected,modalResult,selectedPopulation,regeneratePopulation,recurCount,recurFreqeunecy,displayStartDateOffset,recDisplayEndDateType,displayEndDateOffset,recurDisplayEndDate,recurranceStartDate,recurranceEndDate,recurrTime,recurrTimeZone,displayDatetimeZone){
 
             var params = {postId:postActionItem.postId,
                 postingName: postActionItem.name,
@@ -424,18 +424,17 @@ module AIP {
                 populationId: selectedPopulation.id,
                 displayStartDate:postActionItem.displayStartDate,
                 displayEndDate:postActionItem.displayEndDate,
-                recurr:'true',
                 populationRegenerateIndicator:regeneratePopulation,
-                recurCount:recurCount,
-                recurFreqeunecy:recurFreqeunecy,
-                displayStartDateOffset:displayStartDateOffset,
-                recDisplayEndDateType:recDisplayEndDateType,
-                displayEndDateOffset:displayEndDateOffset,
-                recurDisplayEndDate:recurDisplayEndDate,
-                recurranceStartDate:recurranceStartDate,
-                recurranceEndDate:recurranceEndDate,
-                recurrTime:recurrTime,
-                recurrTimeZone:recurrTimeZone
+                recurFrequency:recurCount,
+                recurFrequencyType:recurFreqeunecy.value,
+                postingDispStartDays:displayStartDateOffset,
+                postingDispEndDays:recDisplayEndDateType==='OFFSET'?displayEndDateOffset:null,
+                postingDisplayEndDate:recDisplayEndDateType==='OFFSET'?recurDisplayEndDate:null,
+                recurStartDate:recurranceStartDate,
+                recurEndDate:recurranceEndDate,
+                recurStartTime:recurrTime,
+                displayDatetimeZone:displayDatetimeZone,
+                recurPostTimezone:recurrTimeZone
             }
             var request = this.$http({
                 method: "POST",

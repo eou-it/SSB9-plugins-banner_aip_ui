@@ -482,7 +482,7 @@ Copyright 2019 Ellucian Company L.P. and its affiliates.
                                     <div class="row input-daterange form-group right-inner-addon dateRange-minwidth">
                                         <input type="text" id="recurrEndDate" date-picker
                                                ng-model="vm.recurranceEndDate"
-                                               ng-change="vm.checkChanges();vm.getProcessedServerDateTimeAndTimezone()"
+                                               ng-change="vm.checkChanges()"
                                                class="form-control  Datelement " name="recurrEndDate"
                                                aria-required="true" required autocomplete="off"
                                                placeholder='{{"default.date.format.watermark"|i18n_aip}}'/>
