@@ -23,6 +23,28 @@ class AipActionItemPostingController {
     def actionItemPostReadOnlyService
 
     def actionItemPostDetailService
+
+    /**
+     * Add recurring action Item Post
+     * @return
+     */
+
+    def addRecurringActionItemPosting(){
+        def map = [:]
+        map = request.JSON
+        LOGGER.trace "Recurring post add - {$request.JSON.toString()}";
+        def model
+        try{
+        model = actionItemPostCompositeService.addRecurringActionItemPosting(map)
+        }catch(ApplicationException e){
+            model = [fail: true]
+            LOGGER.error( e.getMessage() )
+            model.message = e.returnMap( { mapToLocalize -> new ValidationTagLib().message( mapToLocalize ) } ).message
+        }
+        render model as JSON;
+    }
+
+
     /**
      * Add Action Item Post
      * @return
@@ -42,6 +64,8 @@ class AipActionItemPostingController {
         }
         render model as JSON
     }
+
+    
 
     /**
      * update Action Item Post

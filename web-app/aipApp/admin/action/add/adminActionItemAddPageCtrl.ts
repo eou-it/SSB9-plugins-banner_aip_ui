@@ -333,7 +333,7 @@ module AIP {
             }
         }
 
-        dataChanged(this)
+        dataChanged()
         {
             this.actionItemDataChanged=true;
             this.$rootScope.DataChanged=this.actionItemDataChanged;

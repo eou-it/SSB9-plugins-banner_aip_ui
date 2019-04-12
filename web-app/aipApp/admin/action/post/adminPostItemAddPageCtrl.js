@@ -6,7 +6,7 @@
 ///<reference path="../../../common/services/admin/adminActionService.ts"/>
 var AIP;
 (function (AIP) {
-    var AdminPostItemAddPageCtrl = /** @class */ (function () {
+    var AdminPostItemAddPageCtrl = (function () {
         function AdminPostItemAddPageCtrl($scope, $q, $state, $uibModal, $filter, $timeout, SpinnerService, APP_ROOT, AdminActionStatusService, AdminActionService) {
             this.$inject = ["$scope", "$q", "$state", "$filter", "$timeout", "SpinnerService", "AdminActionStatusService", "AdminActionService", "$uibModal", "APP_ROOT", "datePicker"];
             $scope.vm = this;
@@ -32,7 +32,9 @@ var AIP;
             this.itemLength = 0;
             this.sendTime = {};
             this.scheduleDate = null;
-            this.postNow = true;
+            this.scheduleType = "POSTNOW";
+            this.showRecurrance = false;
+            this.showSchedule = false;
             this.showTimezoneIcon = true;
             this.selectedPopulation = {};
             this.APP_ROOT = APP_ROOT;
@@ -65,6 +67,16 @@ var AIP;
         AdminPostItemAddPageCtrl.prototype.init = function () {
             var _this = this;
             this.spinnerService.showSpinner(true);
+            this.recDisplayEndDateType = "OFFSET";
+            this.recurFreqeunecyList =
+                [{
+                        frequency: this.$filter("i18n_aip")("aip.admin.action.postactionItem.recurringPosting.recurr.constant.days"),
+                        value: 'DAYS'
+                    },
+                    {
+                        frequency: this.$filter("i18n_aip")("aip.admin.action.postactionItem.recurringPosting.recurr.constant.hours"),
+                        value: 'HOURS'
+                    }];
             var allPromises = [];
             this.postActionItemInfo = {};
             this.editMode = this.$state.params.isEdit === "true" ? true : false;
@@ -124,7 +136,12 @@ var AIP;
                             _this.postActionItemInfo.displayStartDate = _this.actionPost1.postingDisplayStartDate;
                             _this.postActionItemInfo.displayEndDate = _this.actionPost1.postingDisplayEndDate;
                             _this.postActionItemInfo.scheduledStartDate = _this.actionPost1.postingDisplayDateTime;
-                            _this.postNow = false;
+                            if (_this.actionPost1.postingCurrentState === 'Scheduled') {
+                                _this.scheduleType = 'SCHEDULE';
+                            }
+                            else {
+                                _this.scheduleType = 'RECUR';
+                            }
                             _this.regeneratePopulation = _this.actionPost1.populationRegenerateIndicator;
                             _this.sendTime = _this.actionPost1.postingDisplayTime;
                             var postingTimeZone = _this.actionPost1.postingTimeZone.split(" ");
@@ -229,6 +246,9 @@ var AIP;
             this.defaultTimeZone = finalValue;
         };
         AdminPostItemAddPageCtrl.prototype.timeConversion = function () {
+            if (this.scheduleType === "RECUR") {
+                this.postActionItemInfo.scheduledStartDate = this.recurranceStartDate;
+            }
             this.enteredDate = (this.postActionItemInfo.scheduledStartDate === undefined) ? this.currentBrowserDate : this.postActionItemInfo.scheduledStartDate;
             if (this.sendTime instanceof Date) {
                 this.selectedTime = this.$filter("date")(this.sendTime, "HHmm");
@@ -328,13 +348,13 @@ var AIP;
             else {
                 delete this.errorMessage.name;
             }
-            if (!this.postActionItemInfo.displayStartDate || this.postActionItemInfo.displayStartDate === null || this.postActionItemInfo.displayStartDate === "") {
+            if ((this.scheduleType === 'POSTNOW' || this.scheduleType === 'SCHEDULE') && !this.postActionItemInfo.displayStartDate || this.postActionItemInfo.displayStartDate === null || this.postActionItemInfo.displayStartDate === "") {
                 this.errorMessage.startDate = "invalid StartDate";
             }
             else {
                 delete this.errorMessage.startDate;
             }
-            if (!this.postActionItemInfo.displayEndDate || this.postActionItemInfo.displayEndDate === null || this.postActionItemInfo.displayEndDate === "") {
+            if ((this.scheduleType === 'POSTNOW' || this.scheduleType === 'SCHEDULE') && !this.postActionItemInfo.displayEndDate || this.postActionItemInfo.displayEndDate === null || this.postActionItemInfo.displayEndDate === "") {
                 this.errorMessage.endDate = "invalid EndDate";
             }
             else {
@@ -357,6 +377,36 @@ var AIP;
             }
             else {
                 delete this.errorMessage.success;
+            }
+            if (this.scheduleType === "RECUR" && this.recurCount || this.recurCount < 0) {
+                this.errorMessage.success = "Recurance count cannot be zero ";
+            }
+            if (this.scheduleType === "RECUR" && !this.recurCount) {
+                this.errorMessage.success = "Recurance count cannot be zero ";
+            }
+            else {
+                delete this.errorMessage.success;
+            }
+            console.log("start date offset", this.displayStartDateOffset);
+            if (this.scheduleType === "RECUR" && (!this.displayStartDateOffset || this.displayStartDateOffset < 0)) {
+                this.errorMessage.success = "Display Start offset date cannot be empty";
+            }
+            console.log("start date offset", this.displayEndDateOffset);
+            if (this.scheduleType === "RECUR" && this.recEndType === "OFFSET" && (!this.displayEndDateOffset || this.displayEndDateOffset < 0)) {
+                this.errorMessage.success = "Invalid End date offset";
+            }
+            console.log("start date offset", this.displayStartDateOffset);
+            if (this.scheduleType === "RECUR" && this.recEndType === "EXACT" && (!this.recurDisplayEndDate || this.recurDisplayEndDate === null || this.recurDisplayEndDate === "")) {
+                this.errorMessage.success = "Invalid End dates";
+            }
+            if (this.scheduleType === "RECUR" && (!this.recurrTime || this.recurrTime === null || this.recurrTime === "")) {
+                this.errorMessage.success = "Invalid  time";
+            }
+            if (this.scheduleType === "RECUR" && (!this.recurranceEndDate || this.recurranceEndDate === null || this.recurranceEndDate === "")) {
+                this.errorMessage.success = "Invalid recurr end date";
+            }
+            if (this.scheduleType === "RECUR" && !this.selectedRecurFrequency) {
+                this.errorMessage.success = "Recurrance frequency cannot be more null";
             }
             if (Object.keys(this.errorMessage).length > 0) {
                 return false;
@@ -398,13 +448,14 @@ var AIP;
         };
         AdminPostItemAddPageCtrl.prototype.save = function () {
             var _this = this;
-            this.saving = true;
-            var userSelectedTime = null;
+            var userSelectedTime;
             if (this.postNow === true) {
-                this.sendTime = null;
-                this.timezone = null;
+                this.saving = true;
+                var userSelectedTime = null;
                 var CurrentDateTimeDetails = new Date();
                 var currentTime = this.$filter('date')(CurrentDateTimeDetails, 'HHmm');
+                this.sendTime = null;
+                this.timezone = null;
                 this.today();
                 this.getDefaultTimeZone();
                 this.displayDatetimeZone.dateVal = this.currentBrowserDate;
@@ -436,25 +487,49 @@ var AIP;
                     this.displayDatetimeZone.timeZoneVal = this.timezone.stringOffset + ' ' + this.timezone.timezoneId;
                 }
             }
-            this.adminActionService.savePostActionItem(this.postActionItemInfo, this.selected, this.modalResults, this.selectedPopulation, this.postNow, userSelectedTime, this.timezone.timezoneId, this.regeneratePopulation, this.displayDatetimeZone)
-                .then(function (response) {
-                _this.saving = false;
-                var notiParams = {};
-                if (response.data.success) {
-                    notiParams = {
-                        notiType: "saveSuccess",
-                        data: response.data
-                    };
-                    _this.$state.go("admin-post-list", { noti: notiParams, data: response.data.savedJob.id });
-                }
-                else {
-                    _this.saveErrorCallback(response.data.message);
-                }
-            }, function (err) {
-                _this.saving = false;
-                //TODO:: handle error call
-                console.log(err);
-            });
+            if (this.scheduleType === 'RECUR') {
+                console.log("Recurrance is being used");
+                this.adminActionService.saveRecurringActionItem(this.postActionItemInfo, this.selected, this.modalResults, this.selectedPopulation, this.regeneratePopulation, this.recurCount, this.selectedRecurFrequency, this.displayStartDateOffset, this.recDisplayEndDateType, this.displayEndDateOffset, this.recurDisplayEndDate, this.recurranceStartDate, this.recurranceEndDate, userSelectedTime, this.timezone.timezoneId, this.displayDatetimeZone)
+                    .then(function (response) {
+                    _this.saving = false;
+                    var notiParams = {};
+                    if (response.data.success) {
+                        notiParams = {
+                            notiType: "saveSuccess",
+                            data: response.data
+                        };
+                        _this.$state.go("admin-post-list", { noti: notiParams, data: response.data.savedJob.id });
+                    }
+                    else {
+                        _this.saveErrorCallback(response.data.message);
+                    }
+                }, function (err) {
+                    _this.saving = false;
+                    //TODO:: handle error call
+                    console.log(err);
+                });
+            }
+            else {
+                this.adminActionService.savePostActionItem(this.postActionItemInfo, this.selected, this.modalResults, this.selectedPopulation, this.postNow, userSelectedTime, this.timezone.timezoneId, this.regeneratePopulation, this.displayDatetimeZone)
+                    .then(function (response) {
+                    _this.saving = false;
+                    var notiParams = {};
+                    if (response.data.success) {
+                        notiParams = {
+                            notiType: "saveSuccess",
+                            data: response.data
+                        };
+                        _this.$state.go("admin-post-list", { noti: notiParams, data: response.data.savedJob.id });
+                    }
+                    else {
+                        _this.saveErrorCallback(response.data.message);
+                    }
+                }, function (err) {
+                    _this.saving = false;
+                    //TODO:: handle error call
+                    console.log(err);
+                });
+            }
         };
         AdminPostItemAddPageCtrl.prototype.saveErrorCallback = function (message) {
             var n = new Notification({
@@ -465,7 +540,8 @@ var AIP;
             notifications.addNotification(n);
         };
         return AdminPostItemAddPageCtrl;
-    }());
+    })();
     AIP.AdminPostItemAddPageCtrl = AdminPostItemAddPageCtrl;
 })(AIP || (AIP = {}));
 register("bannerAIP").controller("AdminPostItemAddPageCtrl", AIP.AdminPostItemAddPageCtrl);
+//# sourceMappingURL=adminPostItemAddPageCtrl.js.map

@@ -415,6 +415,35 @@ module AIP {
             return request;
         }
 
+        saveRecurringActionItem(postActionItem,selected,modalResult,selectedPopulation,regeneratePopulation,recurCount,recurFreqeunecy,displayStartDateOffset,recDisplayEndDateType,displayEndDateOffset,recurDisplayEndDate,recurranceStartDate,recurranceEndDate,recurrTime,recurrTimeZone,displayDatetimeZone){
+
+            var params = {postId:postActionItem.postId,
+                postingName: postActionItem.name,
+                postingActionItemGroupId: selected.groupId,
+                actionItemIds: modalResult,
+                populationId: selectedPopulation.id,
+                displayStartDate:postActionItem.displayStartDate,
+                displayEndDate:postActionItem.displayEndDate,
+                populationRegenerateIndicator:regeneratePopulation,
+                recurFrequency:recurCount,
+                recurFrequencyType:recurFreqeunecy.value,
+                postingDispStartDays:displayStartDateOffset,
+                postingDispEndDays:recDisplayEndDateType==='OFFSET'?displayEndDateOffset:null,
+                postingDisplayEndDate:recDisplayEndDateType==='EXACT'?recurDisplayEndDate:null,
+                recurStartDate:recurranceStartDate,
+                recurEndDate:recurranceEndDate,
+                recurStartTime:recurrTime,
+                displayDatetimeZone:displayDatetimeZone,
+                recurPostTimezone:recurrTimeZone
+            }
+            var request = this.$http({
+                method: "POST",
+                data: params,
+                url:  postActionItem.postId? this.ENDPOINT.admin.updateActionItemPosting : this.ENDPOINT.admin.addRecurringActionItemPosting
+            });
+            return request;
+        }
+
         saveActionItem(actionItem) {
             var params = {
                 title: actionItem.title,

@@ -119,7 +119,7 @@ module AIP {
                 name: "jobState",
                 title: this.$filter("i18n_aip")("aip.admin.actionItem.post.grid.job.status"),
                 ariaLabel: this.$filter("i18n_aip")("aip.admin.actionItem.post.grid.job.status"),
-                width: "100px",
+                width: "125px",
                 options: {
                     sortable: false,
                     visible: true,
