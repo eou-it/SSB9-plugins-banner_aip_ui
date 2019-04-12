@@ -137,11 +137,9 @@ var AIP;
                             _this.postActionItemInfo.displayEndDate = _this.actionPost1.postingDisplayEndDate;
                             _this.postActionItemInfo.scheduledStartDate = _this.actionPost1.postingDisplayDateTime;
                             if (_this.actionPost1.postingCurrentState === 'Scheduled') {
-                                console.log('code has been reached');
                                 _this.scheduleType = 'SCHEDULE';
                             }
                             else {
-                                console.log('oops recurrance is reached', _this.postActionItemInfo);
                                 _this.scheduleType = 'RECUR';
                             }
                             _this.regeneratePopulation = _this.actionPost1.populationRegenerateIndicator;

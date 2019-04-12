@@ -270,10 +270,8 @@ module AIP {
                                 this.postActionItemInfo.scheduledStartDate = this.actionPost1.postingDisplayDateTime;
 
                                 if (this.actionPost1.postingCurrentState === 'Scheduled') {
-                                    console.log('code has been reached');
                                     this.scheduleType = 'SCHEDULE';
                                 } else {
-                                    console.log('oops recurrance is reached', this.postActionItemInfo);
                                     this.scheduleType = 'RECUR';
                                 }
                                 this.regeneratePopulation = this.actionPost1.populationRegenerateIndicator;
@@ -287,7 +285,6 @@ module AIP {
                                         this.setTimezone(this.timezones[k]);
                                     }
                                 }
-
                                 this.appServerDate = this.actionPost1.postingScheduleDateTime;
                                 this.appServerTime = this.actionPost1.scheduledStartTime;
                                 this.appServerTimeZone = angular.element('<div></div>').html(this.actionPost1.timezoneStringOffset.displayNameWithoutOffset).text();

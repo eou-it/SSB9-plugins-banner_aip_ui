@@ -429,7 +429,7 @@ module AIP {
                 recurFrequencyType:recurFreqeunecy.value,
                 postingDispStartDays:displayStartDateOffset,
                 postingDispEndDays:recDisplayEndDateType==='OFFSET'?displayEndDateOffset:null,
-                postingDisplayEndDate:recDisplayEndDateType==='OFFSET'?recurDisplayEndDate:null,
+                postingDisplayEndDate:recDisplayEndDateType==='EXACT'?recurDisplayEndDate:null,
                 recurStartDate:recurranceStartDate,
                 recurEndDate:recurranceEndDate,
                 recurStartTime:recurrTime,
