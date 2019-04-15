@@ -636,6 +636,7 @@ module AIP {
 
         save() {
             var userSelectedTime;
+            this.postNow = this.scheduleType === 'POSTNOW'?true:false
             if(this.postNow===true){
                 this.saving = true;
                 var userSelectedTime=null;
@@ -696,7 +697,7 @@ module AIP {
                         console.log(err);
                     });
             }else{
-            this.adminActionService.savePostActionItem(this.postActionItemInfo, this.selected, this.modalResults, this.selectedPopulation, this.postNow, userSelectedTime, this.timezone.timezoneId, this.regeneratePopulation, this.displayDatetimeZone)
+                this.adminActionService.savePostActionItem(this.postActionItemInfo, this.selected, this.modalResults, this.selectedPopulation, this.postNow, userSelectedTime, this.timezone.timezoneId, this.regeneratePopulation, this.displayDatetimeZone)
                 .then((response:AIP.IPostActionItemSaveResponse) => {
                     this.saving = false;
                     var notiParams = {};

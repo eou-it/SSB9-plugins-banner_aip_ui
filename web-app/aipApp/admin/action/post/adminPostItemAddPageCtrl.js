@@ -449,6 +449,7 @@ var AIP;
         AdminPostItemAddPageCtrl.prototype.save = function () {
             var _this = this;
             var userSelectedTime;
+            this.postNow = this.scheduleType === 'POSTNOW' ? true : false;
             if (this.postNow === true) {
                 this.saving = true;
                 var userSelectedTime = null;
