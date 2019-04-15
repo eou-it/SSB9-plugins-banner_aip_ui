@@ -8,7 +8,7 @@ import net.hedtech.banner.aip.common.AipTimezone
 import net.hedtech.banner.exceptions.ApplicationException
 import net.hedtech.banner.i18n.MessageHelper
 import org.apache.log4j.Logger
-import org.codehaus.groovy.grails.plugins.web.taglib.ValidationTagLib
+import org.grails.plugins.web.taglib.ValidationTagLib
 
 /**
  * Controller class for AIP Admin
