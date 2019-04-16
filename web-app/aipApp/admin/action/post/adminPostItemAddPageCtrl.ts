@@ -560,17 +560,14 @@ module AIP {
             else {
                 delete this.errorMessage.success;
             }
-            console.log("start date offset",this.displayStartDateOffset);
             if (this.scheduleType === "RECUR" && (!this.displayStartDateOffset || this.displayStartDateOffset < 0 )) {
                 this.errorMessage.success = "Display Start offset date cannot be empty";
             }
 
-            console.log("start date offset",this.displayEndDateOffset);
-            if (this.scheduleType === "RECUR" && this.recEndType==="OFFSET" && (!this.displayEndDateOffset || this.displayEndDateOffset<0)) {
+            if (this.scheduleType === "RECUR" && this.recDisplayEndDateType==="OFFSET" && (!this.displayEndDateOffset || this.displayEndDateOffset<0)) {
                 this.errorMessage.success = "Invalid End date offset";
             }
-            console.log("start date offset",this.displayStartDateOffset);
-            if (this.scheduleType === "RECUR" && this.recEndType==="EXACT"&&(!this.recurDisplayEndDate || this.recurDisplayEndDate === null || this.recurDisplayEndDate === "")) {
+            if (this.scheduleType === "RECUR" && this.recDisplayEndDateType==="EXACT"&&(!this.recurDisplayEndDate || this.recurDisplayEndDate === null || this.recurDisplayEndDate === "")) {
                 this.errorMessage.success = "Invalid End dates";
             }
             if (this.scheduleType === "RECUR" && (!this.recurrTime || this.recurrTime === null || this.recurrTime === "")) {
@@ -649,8 +646,7 @@ module AIP {
                 this.displayDatetimeZone.dateVal=this.currentBrowserDate;
                 this.displayDatetimeZone.timeVal=currentTime.toString();
                 this.displayDatetimeZone.timeZoneVal=this.timezone.stringOffset+' '+this.timezone.timezoneId;
-
-            } else {
+            } else if(this.scheduleType === 'SCHEDULE'){
                 if (this.editMode && !(this.sendTime instanceof Date)) {
                     if(this.selectedTime) {
                         userSelectedTime = this.selectedTime;
@@ -674,10 +670,19 @@ module AIP {
                     this.displayDatetimeZone.timeVal=this.selectedTime;
                     this.displayDatetimeZone.timeZoneVal=this.timezone.stringOffset+' '+this.timezone.timezoneId;
                 }
+            }else{
+                if(this.recurrTime instanceof Date) {
+                    userSelectedTime = this.$filter("date")(this.recurrTime, "HHmm");
+                }
+                else{
+                    userSelectedTime= this.recurrTime;
+                }
+                this.displayDatetimeZone.dateVal=this.postActionItemInfo.scheduledStartDate;
+                this.displayDatetimeZone.timeVal=this.selectedTime;
+                this.displayDatetimeZone.timeZoneVal=this.timezone.stringOffset+' '+this.timezone.timezoneId;
+
             }
             if(this.scheduleType==='RECUR'){
-                console.log("Recurrance is being used");
-
                 this.adminActionService.saveRecurringActionItem(this.postActionItemInfo, this.selected,this.modalResults,this.selectedPopulation,this.regeneratePopulation,this.recurCount,this.selectedRecurFrequency, this.displayStartDateOffset,this.recDisplayEndDateType,this.displayEndDateOffset,this.recurDisplayEndDate,this.recurranceStartDate,this.recurranceEndDate,userSelectedTime,this.timezone.timezoneId,this.displayDatetimeZone)
                     .then((response:AIP.IPostActionItemSaveResponse) => {
                         this.saving = false;
