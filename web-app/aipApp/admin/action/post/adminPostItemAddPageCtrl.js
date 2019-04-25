@@ -7,11 +7,12 @@
 var AIP;
 (function (AIP) {
     var AdminPostItemAddPageCtrl = (function () {
-        function AdminPostItemAddPageCtrl($scope, $q, $state, $uibModal, $filter, $timeout, SpinnerService, APP_ROOT, AdminActionStatusService, AdminActionService) {
-            this.$inject = ["$scope", "$q", "$state", "$filter", "$timeout", "SpinnerService", "AdminActionStatusService", "AdminActionService", "$uibModal", "APP_ROOT", "datePicker"];
+        function AdminPostItemAddPageCtrl($scope, $rootScope, $q, $state, $uibModal, $filter, $timeout, SpinnerService, APP_ROOT, AdminActionStatusService, AdminActionService) {
+            this.$inject = ["$scope", "$rootScope", "$q", "$state", "$filter", "$timeout", "SpinnerService", "AdminActionStatusService", "AdminActionService", "$uibModal", "APP_ROOT", "datePicker"];
             $scope.vm = this;
             this.$q = $q;
             this.$scope = $scope;
+            this.$rootScope = $rootScope;
             this.$state = $state;
             this.$filter = $filter;
             this.$uibModal = $uibModal;
@@ -179,6 +180,13 @@ var AIP;
                     _this.getProcessedServerDateTimeAndTimezone();
                 }
                 _this.spinnerService.showSpinner(false);
+            });
+            var that = this;
+            this.$scope.$on("DetectChanges", function (event, args) {
+                if (that.dirtyFlag) {
+                    that.redirectval = args.state;
+                    that.checkChangeDone();
+                }
             });
         };
         AdminPostItemAddPageCtrl.prototype.specialCharacterTranslation = function () {
@@ -392,11 +400,11 @@ var AIP;
                 this.errorMessage.success = "Display Start offset date cannot be empty";
             }
             console.log("start date offset", this.displayEndDateOffset);
-            if (this.scheduleType === "RECUR" && this.recEndType === "OFFSET" && (!this.displayEndDateOffset || this.displayEndDateOffset < 0)) {
+            if (this.scheduleType === "RECUR" && this.recDisplayEndDateType === "OFFSET" && (!this.displayEndDateOffset || this.displayEndDateOffset < 0)) {
                 this.errorMessage.success = "Invalid End date offset";
             }
             console.log("start date offset", this.displayStartDateOffset);
-            if (this.scheduleType === "RECUR" && this.recEndType === "EXACT" && (!this.recurDisplayEndDate || this.recurDisplayEndDate === null || this.recurDisplayEndDate === "")) {
+            if (this.scheduleType === "RECUR" && this.recDisplayEndDateType === "EXACT" && (!this.recurDisplayEndDate || this.recurDisplayEndDate === null || this.recurDisplayEndDate === "")) {
                 this.errorMessage.success = "Invalid End dates";
             }
             if (this.scheduleType === "RECUR" && (!this.recurrTime || this.recurrTime === null || this.recurrTime === "")) {
@@ -416,9 +424,38 @@ var AIP;
             }
         };
         AdminPostItemAddPageCtrl.prototype.checkChanges = function () {
+            this.dirtyFlag = true;
+            this.$rootScope.DataChanged = this.dirtyFlag;
+        };
+        AdminPostItemAddPageCtrl.prototype.checkChangeDone = function () {
             var that = this;
-            if (that.editMode) {
-                that.dirtyFlag = true;
+            if (that.dirtyFlag === true) {
+                var n = new Notification({
+                    message: this.$filter("i18n_aip")("aip.common.action.post.status.edit.warning"),
+                    type: "warning"
+                });
+                n.addPromptAction(this.$filter("i18n_aip")("aip.common.text.no"), function () {
+                    that.$state.go("admin-post-list");
+                    notifications.remove(n);
+                });
+                n.addPromptAction(this.$filter("i18n_aip")("aip.common.text.yes"), function () {
+                    if (that.validateInput()) {
+                        that.save();
+                        that.dirtyFlag = false;
+                        that.$rootScope.DataChanged = false;
+                        if (that.redirectval === "NoData") {
+                            that.$state.go('admin-post-list');
+                        }
+                        else {
+                            location.href = that.redirectval;
+                        }
+                    }
+                    notifications.remove(n);
+                });
+                notifications.addNotification(n);
+            }
+            else {
+                that.$state.go("admin-post-list");
             }
         };
         AdminPostItemAddPageCtrl.prototype.cancel = function () {
@@ -449,6 +486,7 @@ var AIP;
         AdminPostItemAddPageCtrl.prototype.save = function () {
             var _this = this;
             var userSelectedTime;
+            this.postNow = this.scheduleType === 'POSTNOW' ? true : false;
             if (this.postNow === true) {
                 this.saving = true;
                 var userSelectedTime = null;
@@ -462,7 +500,7 @@ var AIP;
                 this.displayDatetimeZone.timeVal = currentTime.toString();
                 this.displayDatetimeZone.timeZoneVal = this.timezone.stringOffset + ' ' + this.timezone.timezoneId;
             }
-            else {
+            else if (this.scheduleType === 'SCHEDULE') {
                 if (this.editMode && !(this.sendTime instanceof Date)) {
                     if (this.selectedTime) {
                         userSelectedTime = this.selectedTime;
@@ -487,8 +525,18 @@ var AIP;
                     this.displayDatetimeZone.timeZoneVal = this.timezone.stringOffset + ' ' + this.timezone.timezoneId;
                 }
             }
+            else {
+                if (this.recurrTime instanceof Date) {
+                    userSelectedTime = this.$filter("date")(this.recurrTime, "HHmm");
+                }
+                else {
+                    userSelectedTime = this.recurrTime;
+                }
+                this.displayDatetimeZone.dateVal = this.postActionItemInfo.scheduledStartDate;
+                this.displayDatetimeZone.timeVal = this.selectedTime;
+                this.displayDatetimeZone.timeZoneVal = this.timezone.stringOffset + ' ' + this.timezone.timezoneId;
+            }
             if (this.scheduleType === 'RECUR') {
-                console.log("Recurrance is being used");
                 this.adminActionService.saveRecurringActionItem(this.postActionItemInfo, this.selected, this.modalResults, this.selectedPopulation, this.regeneratePopulation, this.recurCount, this.selectedRecurFrequency, this.displayStartDateOffset, this.recDisplayEndDateType, this.displayEndDateOffset, this.recurDisplayEndDate, this.recurranceStartDate, this.recurranceEndDate, userSelectedTime, this.timezone.timezoneId, this.displayDatetimeZone)
                     .then(function (response) {
                     _this.saving = false;

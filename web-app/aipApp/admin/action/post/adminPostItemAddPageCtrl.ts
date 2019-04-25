@@ -37,8 +37,9 @@ module AIP {
     }
 
     export class AdminPostItemAddPageCtrl implements IAdminPostItemAddPageCtrl {
-        $inject = ["$scope", "$q", "$state", "$filter", "$timeout", "SpinnerService", "AdminActionStatusService", "AdminActionService", "$uibModal", "APP_ROOT", "datePicker"];
+        $inject = ["$scope","$rootScope", "$q", "$state", "$filter", "$timeout", "SpinnerService", "AdminActionStatusService", "AdminActionService", "$uibModal", "APP_ROOT", "datePicker"];
         $scope;
+        $rootScope;
         $uibModal;
         status:[AIP.IStatus];
         folders:[AIP.IFolder];
@@ -105,14 +106,16 @@ module AIP {
         showRecurrance:boolean;
         scheduleType:string;
         recDisplayEndDateType:string;
-
+        isDataModified:boolean;
         selectedRecurFrequency:any;
+        redirectval:any;
 
-        constructor($scope:IActionItemAddPageScope, $q:ng.IQService, $state, $uibModal, $filter, $timeout,
+        constructor($scope:IActionItemAddPageScope,$rootScope, $q:ng.IQService, $state, $uibModal, $filter, $timeout,
                     SpinnerService:AIP.SpinnerService, APP_ROOT, AdminActionStatusService, AdminActionService:AIP.AdminActionService) {
             $scope.vm = this;
             this.$q = $q;
             this.$scope = $scope;
+            this.$rootScope=$rootScope;
             this.$state = $state;
             this.$filter = $filter;
             this.$uibModal = $uibModal;
@@ -316,6 +319,16 @@ module AIP {
                     this.getProcessedServerDateTimeAndTimezone()
                 }
                 this.spinnerService.showSpinner(false);
+            });
+
+            var that=this;
+            this.$scope.$on("DetectChanges",function(event, args)
+            {
+                if (that.dirtyFlag) {
+                    that.redirectval = args.state;
+                    that.checkChangeDone();
+                }
+
             });
         }
 
@@ -521,7 +534,6 @@ module AIP {
             } else {
                 delete this.errorMessage.name;
             }
-
             if ((this.scheduleType === 'POSTNOW' || this.scheduleType === 'SCHEDULE') && !this.postActionItemInfo.displayStartDate || this.postActionItemInfo.displayStartDate === null || this.postActionItemInfo.displayStartDate === "") {
                 this.errorMessage.startDate = "invalid StartDate";
             } else {
@@ -566,11 +578,11 @@ module AIP {
             }
 
             console.log("start date offset",this.displayEndDateOffset);
-            if (this.scheduleType === "RECUR" && this.recEndType==="OFFSET" && (!this.displayEndDateOffset || this.displayEndDateOffset<0)) {
+            if (this.scheduleType === "RECUR" && this.recDisplayEndDateType==="OFFSET" && (!this.displayEndDateOffset || this.displayEndDateOffset<0)) {
                 this.errorMessage.success = "Invalid End date offset";
             }
             console.log("start date offset",this.displayStartDateOffset);
-            if (this.scheduleType === "RECUR" && this.recEndType==="EXACT"&&(!this.recurDisplayEndDate || this.recurDisplayEndDate === null || this.recurDisplayEndDate === "")) {
+            if (this.scheduleType === "RECUR" && this.recDisplayEndDateType==="EXACT"&&(!this.recurDisplayEndDate || this.recurDisplayEndDate === null || this.recurDisplayEndDate === "")) {
                 this.errorMessage.success = "Invalid End dates";
             }
             if (this.scheduleType === "RECUR" && (!this.recurrTime || this.recurrTime === null || this.recurrTime === "")) {
@@ -595,12 +607,50 @@ module AIP {
         }
 
         checkChanges() {
+            this.dirtyFlag=true;
+            this.$rootScope.DataChanged=this.dirtyFlag;
 
-            var that = this;
-            if (that.editMode) {
-                that.dirtyFlag = true
-            }
         }
+
+        checkChangeDone(){
+            var that=this;
+            if (that.dirtyFlag === true) {
+
+                var n = new Notification({
+                    message: this.$filter("i18n_aip")("aip.common.action.post.status.edit.warning"),
+                    type: "warning"
+                });
+                n.addPromptAction(this.$filter("i18n_aip")("aip.common.text.no"), function () {
+                    that.$state.go("admin-post-list");
+                    notifications.remove(n);
+                });
+
+                n.addPromptAction(this.$filter("i18n_aip")("aip.common.text.yes"), function () {
+                    if(that.validateInput())
+                    {
+                        that.save();
+                        that.dirtyFlag=false;
+                        that.$rootScope.DataChanged=false;
+                        if (that.redirectval==="NoData")
+                        {
+                            that.$state.go('admin-post-list');
+                        }
+                        else {
+                            location.href = that.redirectval;
+                        }
+                    }
+
+                    notifications.remove(n);
+                });
+                notifications.addNotification(n);
+            }
+            else
+            {
+                that.$state.go("admin-post-list");
+            }
+
+        }
+
 
         cancel() {
 
@@ -636,6 +686,7 @@ module AIP {
 
         save() {
             var userSelectedTime;
+            this.postNow = this.scheduleType === 'POSTNOW'?true:false
             if(this.postNow===true){
                 this.saving = true;
                 var userSelectedTime=null;
@@ -648,8 +699,7 @@ module AIP {
                 this.displayDatetimeZone.dateVal=this.currentBrowserDate;
                 this.displayDatetimeZone.timeVal=currentTime.toString();
                 this.displayDatetimeZone.timeZoneVal=this.timezone.stringOffset+' '+this.timezone.timezoneId;
-
-            } else {
+            } else if(this.scheduleType === 'SCHEDULE'){
                 if (this.editMode && !(this.sendTime instanceof Date)) {
                     if(this.selectedTime) {
                         userSelectedTime = this.selectedTime;
@@ -673,10 +723,19 @@ module AIP {
                     this.displayDatetimeZone.timeVal=this.selectedTime;
                     this.displayDatetimeZone.timeZoneVal=this.timezone.stringOffset+' '+this.timezone.timezoneId;
                 }
+            }else{
+                if(this.recurrTime instanceof Date) {
+                    userSelectedTime = this.$filter("date")(this.recurrTime, "HHmm");
+                }
+                else{
+                    userSelectedTime= this.recurrTime;
+                }
+                this.displayDatetimeZone.dateVal=this.postActionItemInfo.scheduledStartDate;
+                this.displayDatetimeZone.timeVal=this.selectedTime;
+                this.displayDatetimeZone.timeZoneVal=this.timezone.stringOffset+' '+this.timezone.timezoneId;
+
             }
             if(this.scheduleType==='RECUR'){
-                console.log("Recurrance is being used");
-
                 this.adminActionService.saveRecurringActionItem(this.postActionItemInfo, this.selected,this.modalResults,this.selectedPopulation,this.regeneratePopulation,this.recurCount,this.selectedRecurFrequency, this.displayStartDateOffset,this.recDisplayEndDateType,this.displayEndDateOffset,this.recurDisplayEndDate,this.recurranceStartDate,this.recurranceEndDate,userSelectedTime,this.timezone.timezoneId,this.displayDatetimeZone)
                     .then((response:AIP.IPostActionItemSaveResponse) => {
                         this.saving = false;
