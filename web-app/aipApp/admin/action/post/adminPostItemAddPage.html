@@ -122,6 +122,7 @@ Copyright 2019 Ellucian Company L.P. and its affiliates.
 
 
         </div>
+        <!--Display dates for onetime schedule and post now -->
         <div id="displayDatesParent" ng-if="vm.scheduleType!='RECUR'">
             <div class="row actionItemInfoRow actionItemName">
                 <div class="actionItemElement row input-actionItem ">
@@ -173,7 +174,7 @@ Copyright 2019 Ellucian Company L.P. and its affiliates.
                 </div>
             </div>
         </div>
-
+        <!--END:Display dates for onetime schedule and post now -->
 
         <div class="row actionItemInfoRow actionItemStatus">
             
@@ -321,7 +322,7 @@ Copyright 2019 Ellucian Company L.P. and its affiliates.
                     <div class="actionItemElement col-xs-6">
                         <xe-ui-select id="recurFrequency" ng-model="vm.selectedRecurFrequency" theme="select2"
                                       ng-disabled="disabled" search-enabled="false" ng-change="vm.dataChanged()"
-                                      style="width:10em">
+                                     >
                             <xe-ui-select-match>
                                 <div class=" row actionItemName"
                                      ng-bind-html="vm.selectedRecurFrequency.frequency">
@@ -344,7 +345,7 @@ Copyright 2019 Ellucian Company L.P. and its affiliates.
                             <div class="col-sm-3 col-md-3 col-xs-4">
                                 <input type="number" min="0" class="form-control" name="displayStartDateOffset" aria-required="true" required autocomplete="off" ng-model="vm.displayStartDateOffset"/>
                             </div>
-                            <div class=" displayInstruction">{{"aip.admin.action.postactionItem.recurringPosting.displayOffset.instructions"|i18n_aip}}</div>
+                            <div class=" displayInstruction recuranceInstrcution">{{"aip.admin.action.postactionItem.recurringPosting.displayOffset.instructions"|i18n_aip}}</div>
                         </div>
                     </div>
                     <!--For END DATE-->
@@ -362,7 +363,7 @@ Copyright 2019 Ellucian Company L.P. and its affiliates.
                             <div class="col-sm-2 col-md-2 col-lg-2 col-xs-3 actionItemElement">
                                 <input type="number" min="0" class="form-control" name="displayEndDateOffset" aria-required="true" required autocomplete="off" ng-model ="vm.displayEndDateOffset" ng-disabled="vm.recDisplayEndDateType==='EXACT'"/>
                             </div>
-                            <div class=" displayInstruction">{{"aip.admin.action.postactionItem.recurringPosting.displayOffset.instructions"|i18n_aip}}</div>
+                            <div class=" displayInstruction recuranceInstrcution">{{"aip.admin.action.postactionItem.recurringPosting.displayOffset.instructions"|i18n_aip}}</div>
                         </div>
                         <div class="  row actionItemElement   ">
                             <div class="col-sm-1 col-md-1 col-lg-1 col-xs-1">

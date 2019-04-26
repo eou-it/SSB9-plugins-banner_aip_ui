@@ -431,26 +431,22 @@ var AIP;
             var that = this;
             if (that.dirtyFlag === true) {
                 var n = new Notification({
-                    message: this.$filter("i18n_aip")("aip.common.action.post.status.edit.warning"),
+                    message: this.$filter("i18n_aip")("aip.admin.actionItem.saveChanges"),
                     type: "warning"
                 });
                 n.addPromptAction(this.$filter("i18n_aip")("aip.common.text.no"), function () {
-                    that.$state.go("admin-post-list");
                     notifications.remove(n);
                 });
                 n.addPromptAction(this.$filter("i18n_aip")("aip.common.text.yes"), function () {
-                    if (that.validateInput()) {
-                        that.save();
-                        that.dirtyFlag = false;
-                        that.$rootScope.DataChanged = false;
-                        if (that.redirectval === "NoData") {
-                            that.$state.go('admin-post-list');
-                        }
-                        else {
-                            location.href = that.redirectval;
-                        }
-                    }
                     notifications.remove(n);
+                    that.dirtyFlag = false;
+                    that.$rootScope.DataChanged = false;
+                    if (that.redirectval === "NoData") {
+                        that.$state.go("admin-post-list");
+                    }
+                    else {
+                        location.href = that.redirectval;
+                    }
                 });
                 notifications.addNotification(n);
             }
@@ -459,25 +455,8 @@ var AIP;
             }
         };
         AdminPostItemAddPageCtrl.prototype.cancel = function () {
-            var that = this;
-            if (that.editMode === true && that.dirtyFlag === true) {
-                var n = new Notification({
-                    message: this.$filter("i18n_aip")("aip.common.action.post.status.edit.warning"),
-                    type: "warning"
-                });
-                n.addPromptAction(this.$filter("i18n_aip")("aip.common.text.no"), function () {
-                    that.$state.go("admin-post-list");
-                    notifications.remove(n);
-                });
-                n.addPromptAction(this.$filter("i18n_aip")("aip.common.text.yes"), function () {
-                    that.save();
-                    notifications.remove(n);
-                });
-                notifications.addNotification(n);
-            }
-            else {
-                that.$state.go("admin-post-list");
-            }
+            this.redirectval = "NoData";
+            this.checkChangeDone();
         };
         AdminPostItemAddPageCtrl.prototype.monthCapitalize = function (date) {
             var date = date.replace('.', '');

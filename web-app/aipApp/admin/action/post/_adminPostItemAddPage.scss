@@ -129,7 +129,7 @@
     border-radius: 15px;
     vertical-align: -40%;
     box-shadow: inset 0 2px 5px rgba(0,0,0,0.25);
-    margin-right: 20px;
+    margin-right: 5px;
   }
   input[type="radio"]:checked {
     background: #0074DB;
@@ -324,8 +324,16 @@
     padding-right:0px;
   }
 
-  .row .actionItemInfoRow .actionItemScheduleType{
+  .actionItemScheduleType{
      padding-left : 8px;
 
    }
+
+  #recurFrequency{
+    width: 10em;
+  }
+  .recuranceInstrcution{
+    font-size: 16px;
+    padding-top:3px;
+  }
 }
