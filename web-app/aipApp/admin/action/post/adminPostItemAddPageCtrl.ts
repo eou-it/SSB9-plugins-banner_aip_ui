@@ -109,6 +109,7 @@ module AIP {
         isDataModified:boolean;
         selectedRecurFrequency:any;
         redirectval:any;
+        serverRecurEndDate:any;
 
         constructor($scope:IActionItemAddPageScope,$rootScope, $q:ng.IQService, $state, $uibModal, $filter, $timeout,
                     SpinnerService:AIP.SpinnerService, APP_ROOT, AdminActionStatusService, AdminActionService:AIP.AdminActionService) {
@@ -164,6 +165,8 @@ module AIP {
 
         today() {
             this.sendTime = new Date();
+            this.recurrTime = new Date();
+            this.recurrTime.setMinutes(Math.ceil(this.recurrTime.getMinutes() / 30) * 30);
             this.sendTime.setMinutes(Math.ceil(this.sendTime.getMinutes() / 30) * 30);
             this.currentBrowserDate = this.$filter('date')(new Date(), this.$filter("i18n_aip")("default.date.format"));
             this.currentBrowserDate = this.monthCapitalize(this.currentBrowserDate)
@@ -469,6 +472,23 @@ module AIP {
                 });
         }
 
+        getProcessedServerRecuranceEndDate()
+        {
+
+            var userSelectedVal=
+            {
+                "userEnterDate": this.recurranceEndDate,
+                "userEnterTime": "2359",
+                "userEnterTimeZone": this.timezone.timezoneId
+            };
+
+            this.adminActionStatusService.getProcessedServerDateTimeAndTimezone(userSelectedVal)
+                .then((response) => {
+                    this.processedServerDetails = response.data;
+                    this.serverRecurEndDate = this.processedServerDetails.serverDate
+                });
+        }
+
         editPage() {
 
             this.modalInstance = this.$uibModal.open({
@@ -529,7 +549,6 @@ module AIP {
                 return false;
             }
             if (!this.postActionItemInfo.name || this.postActionItemInfo.name === null || this.postActionItemInfo.name === "") {
-
                 this.errorMessage.name = "invalid title";
             } else {
                 delete this.errorMessage.name;
@@ -572,16 +591,15 @@ module AIP {
             else {
                 delete this.errorMessage.success;
             }
-            console.log("start date offset",this.displayStartDateOffset);
+
             if (this.scheduleType === "RECUR" && (!this.displayStartDateOffset || this.displayStartDateOffset < 0 )) {
                 this.errorMessage.success = "Display Start offset date cannot be empty";
             }
 
-            console.log("start date offset",this.displayEndDateOffset);
             if (this.scheduleType === "RECUR" && this.recDisplayEndDateType==="OFFSET" && (!this.displayEndDateOffset || this.displayEndDateOffset<0)) {
                 this.errorMessage.success = "Invalid End date offset";
             }
-            console.log("start date offset",this.displayStartDateOffset);
+
             if (this.scheduleType === "RECUR" && this.recDisplayEndDateType==="EXACT"&&(!this.recurDisplayEndDate || this.recurDisplayEndDate === null || this.recurDisplayEndDate === "")) {
                 this.errorMessage.success = "Invalid End dates";
             }
@@ -597,8 +615,6 @@ module AIP {
                 this.errorMessage.success = "Recurrance frequency cannot be more null";
             }
 
-
-            
             if (Object.keys(this.errorMessage).length > 0) {
                 return false;
             } else {

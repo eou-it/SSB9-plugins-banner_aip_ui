@@ -60,6 +60,8 @@ var AIP;
         }
         AdminPostItemAddPageCtrl.prototype.today = function () {
             this.sendTime = new Date();
+            this.recurrTime = new Date();
+            this.recurrTime.setMinutes(Math.ceil(this.recurrTime.getMinutes() / 30) * 30);
             this.sendTime.setMinutes(Math.ceil(this.sendTime.getMinutes() / 30) * 30);
             this.currentBrowserDate = this.$filter('date')(new Date(), this.$filter("i18n_aip")("default.date.format"));
             this.currentBrowserDate = this.monthCapitalize(this.currentBrowserDate);
@@ -297,6 +299,19 @@ var AIP;
                 _this.appServerTimeZone = angular.element('<div></div>').html(serverTimeZone[serverTimeZone.length - 1]).text();
             });
         };
+        AdminPostItemAddPageCtrl.prototype.getProcessedServerRecuranceEndDate = function () {
+            var _this = this;
+            var userSelectedVal = {
+                "userEnterDate": this.recurranceEndDate,
+                "userEnterTime": "2359",
+                "userEnterTimeZone": this.timezone.timezoneId
+            };
+            this.adminActionStatusService.getProcessedServerDateTimeAndTimezone(userSelectedVal)
+                .then(function (response) {
+                _this.processedServerDetails = response.data;
+                _this.serverRecurEndDate = _this.processedServerDetails.serverDate;
+            });
+        };
         AdminPostItemAddPageCtrl.prototype.editPage = function () {
             var _this = this;
             this.modalInstance = this.$uibModal.open({
@@ -395,15 +410,12 @@ var AIP;
             else {
                 delete this.errorMessage.success;
             }
-            console.log("start date offset", this.displayStartDateOffset);
             if (this.scheduleType === "RECUR" && (!this.displayStartDateOffset || this.displayStartDateOffset < 0)) {
                 this.errorMessage.success = "Display Start offset date cannot be empty";
             }
-            console.log("start date offset", this.displayEndDateOffset);
             if (this.scheduleType === "RECUR" && this.recDisplayEndDateType === "OFFSET" && (!this.displayEndDateOffset || this.displayEndDateOffset < 0)) {
                 this.errorMessage.success = "Invalid End date offset";
             }
-            console.log("start date offset", this.displayStartDateOffset);
             if (this.scheduleType === "RECUR" && this.recDisplayEndDateType === "EXACT" && (!this.recurDisplayEndDate || this.recurDisplayEndDate === null || this.recurDisplayEndDate === "")) {
                 this.errorMessage.success = "Invalid End dates";
             }
