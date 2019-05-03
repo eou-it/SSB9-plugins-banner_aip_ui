@@ -543,6 +543,8 @@ var AIP;
                             notiType: "saveSuccess",
                             data: response.data
                         };
+                        _this.dirtyFlag = false;
+                        _this.$rootScope.DataChanged = false;
                         _this.$state.go("admin-post-list", { noti: notiParams, data: response.data.savedJob.id });
                     }
                     else {
@@ -564,6 +566,8 @@ var AIP;
                             notiType: "saveSuccess",
                             data: response.data
                         };
+                        _this.dirtyFlag = false;
+                        _this.$rootScope.DataChanged = false;
                         _this.$state.go("admin-post-list", { noti: notiParams, data: response.data.savedJob.id });
                     }
                     else {
@@ -589,4 +593,3 @@ var AIP;
     AIP.AdminPostItemAddPageCtrl = AdminPostItemAddPageCtrl;
 })(AIP || (AIP = {}));
 register("bannerAIP").controller("AdminPostItemAddPageCtrl", AIP.AdminPostItemAddPageCtrl);
-//# sourceMappingURL=adminPostItemAddPageCtrl.js.map
