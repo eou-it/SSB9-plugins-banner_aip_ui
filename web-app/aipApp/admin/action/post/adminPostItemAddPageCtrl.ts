@@ -592,7 +592,7 @@ module AIP {
                 delete this.errorMessage.success;
             }
 
-            if (this.scheduleType === "RECUR" &&  this.displayEndDateOffset ==null ) {
+            if (this.scheduleType === "RECUR" &&  this.displayStartDateOffset ==null ) {
                 this.errorMessage.success = "Display Start offset date cannot be empty";
             }
 
