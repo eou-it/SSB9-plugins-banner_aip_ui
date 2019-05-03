@@ -592,11 +592,19 @@ module AIP {
                 delete this.errorMessage.success;
             }
 
-            if (this.scheduleType === "RECUR" && (!this.displayStartDateOffset || this.displayStartDateOffset < 0 )) {
+            if (this.scheduleType === "RECUR" &&  this.displayEndDateOffset ==null ) {
                 this.errorMessage.success = "Display Start offset date cannot be empty";
             }
 
-            if (this.scheduleType === "RECUR" && this.recDisplayEndDateType==="OFFSET" && (!this.displayEndDateOffset || this.displayEndDateOffset<0)) {
+            if (this.scheduleType === "RECUR" &&  this.displayStartDateOffset < 0 ) {
+                this.errorMessage.success = "Display Start offset date cannot be less than 0";
+            }
+
+            if (this.scheduleType === "RECUR" && this.recDisplayEndDateType==="OFFSET" &&  this.displayEndDateOffset ==null ) {
+                this.errorMessage.success = "Display End date offset cannot be blank";
+            }
+
+            if (this.scheduleType === "RECUR" && this.recDisplayEndDateType==="OFFSET" &&  this.displayEndDateOffset<0 ) {
                 this.errorMessage.success = "Invalid End date offset";
             }
 
