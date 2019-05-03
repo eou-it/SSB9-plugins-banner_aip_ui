@@ -7,11 +7,12 @@
 var AIP;
 (function (AIP) {
     var AdminPostItemAddPageCtrl = (function () {
-        function AdminPostItemAddPageCtrl($scope, $q, $state, $uibModal, $filter, $timeout, SpinnerService, APP_ROOT, AdminActionStatusService, AdminActionService) {
-            this.$inject = ["$scope", "$q", "$state", "$filter", "$timeout", "SpinnerService", "AdminActionStatusService", "AdminActionService", "$uibModal", "APP_ROOT", "datePicker"];
+        function AdminPostItemAddPageCtrl($scope, $rootScope, $q, $state, $uibModal, $filter, $timeout, SpinnerService, APP_ROOT, AdminActionStatusService, AdminActionService) {
+            this.$inject = ["$scope", "$rootScope", "$q", "$state", "$filter", "$timeout", "SpinnerService", "AdminActionStatusService", "AdminActionService", "$uibModal", "APP_ROOT", "datePicker"];
             $scope.vm = this;
             this.$q = $q;
             this.$scope = $scope;
+            this.$rootScope = $rootScope;
             this.$state = $state;
             this.$filter = $filter;
             this.$uibModal = $uibModal;
@@ -59,6 +60,8 @@ var AIP;
         }
         AdminPostItemAddPageCtrl.prototype.today = function () {
             this.sendTime = new Date();
+            this.recurrTime = new Date();
+            this.recurrTime.setMinutes(Math.ceil(this.recurrTime.getMinutes() / 30) * 30);
             this.sendTime.setMinutes(Math.ceil(this.sendTime.getMinutes() / 30) * 30);
             this.currentBrowserDate = this.$filter('date')(new Date(), this.$filter("i18n_aip")("default.date.format"));
             this.currentBrowserDate = this.monthCapitalize(this.currentBrowserDate);
@@ -180,6 +183,13 @@ var AIP;
                 }
                 _this.spinnerService.showSpinner(false);
             });
+            var that = this;
+            this.$scope.$on("DetectChanges", function (event, args) {
+                if (that.dirtyFlag) {
+                    that.redirectval = args.state;
+                    that.checkChangeDone();
+                }
+            });
         };
         AdminPostItemAddPageCtrl.prototype.specialCharacterTranslation = function () {
             for (var j = 0; j < this.postActionItemInfo.population.length; j++) {
@@ -289,6 +299,19 @@ var AIP;
                 _this.appServerTimeZone = angular.element('<div></div>').html(serverTimeZone[serverTimeZone.length - 1]).text();
             });
         };
+        AdminPostItemAddPageCtrl.prototype.getProcessedServerRecuranceEndDate = function () {
+            var _this = this;
+            var userSelectedVal = {
+                "userEnterDate": this.recurranceEndDate,
+                "userEnterTime": "2359",
+                "userEnterTimeZone": this.timezone.timezoneId
+            };
+            this.adminActionStatusService.getProcessedServerDateTimeAndTimezone(userSelectedVal)
+                .then(function (response) {
+                _this.processedServerDetails = response.data;
+                _this.serverRecurEndDate = _this.processedServerDetails.serverDate;
+            });
+        };
         AdminPostItemAddPageCtrl.prototype.editPage = function () {
             var _this = this;
             this.modalInstance = this.$uibModal.open({
@@ -387,10 +410,16 @@ var AIP;
             else {
                 delete this.errorMessage.success;
             }
-            if (this.scheduleType === "RECUR" && (!this.displayStartDateOffset || this.displayStartDateOffset < 0)) {
+            if (this.scheduleType === "RECUR" && this.displayStartDateOffset == null) {
                 this.errorMessage.success = "Display Start offset date cannot be empty";
             }
-            if (this.scheduleType === "RECUR" && this.recDisplayEndDateType === "OFFSET" && (!this.displayEndDateOffset || this.displayEndDateOffset < 0)) {
+            if (this.scheduleType === "RECUR" && this.displayStartDateOffset < 0) {
+                this.errorMessage.success = "Display Start offset date cannot be less than 0";
+            }
+            if (this.scheduleType === "RECUR" && this.recDisplayEndDateType === "OFFSET" && this.displayEndDateOffset == null) {
+                this.errorMessage.success = "Display End date offset cannot be blank";
+            }
+            if (this.scheduleType === "RECUR" && this.recDisplayEndDateType === "OFFSET" && this.displayEndDateOffset < 0) {
                 this.errorMessage.success = "Invalid End date offset";
             }
             if (this.scheduleType === "RECUR" && this.recDisplayEndDateType === "EXACT" && (!this.recurDisplayEndDate || this.recurDisplayEndDate === null || this.recurDisplayEndDate === "")) {
@@ -413,31 +442,39 @@ var AIP;
             }
         };
         AdminPostItemAddPageCtrl.prototype.checkChanges = function () {
-            var that = this;
-            if (that.editMode) {
-                that.dirtyFlag = true;
-            }
+            this.dirtyFlag = true;
+            this.$rootScope.DataChanged = this.dirtyFlag;
         };
-        AdminPostItemAddPageCtrl.prototype.cancel = function () {
+        AdminPostItemAddPageCtrl.prototype.checkChangeDone = function () {
             var that = this;
-            if (that.editMode === true && that.dirtyFlag === true) {
+            if (that.dirtyFlag === true) {
                 var n = new Notification({
-                    message: this.$filter("i18n_aip")("aip.common.action.post.status.edit.warning"),
+                    message: this.$filter("i18n_aip")("aip.admin.actionItem.saveChanges"),
                     type: "warning"
                 });
                 n.addPromptAction(this.$filter("i18n_aip")("aip.common.text.no"), function () {
-                    that.$state.go("admin-post-list");
                     notifications.remove(n);
                 });
                 n.addPromptAction(this.$filter("i18n_aip")("aip.common.text.yes"), function () {
-                    that.save();
                     notifications.remove(n);
+                    that.dirtyFlag = false;
+                    that.$rootScope.DataChanged = false;
+                    if (that.redirectval === "NoData") {
+                        that.$state.go("admin-post-list");
+                    }
+                    else {
+                        location.href = that.redirectval;
+                    }
                 });
                 notifications.addNotification(n);
             }
             else {
                 that.$state.go("admin-post-list");
             }
+        };
+        AdminPostItemAddPageCtrl.prototype.cancel = function () {
+            this.redirectval = "NoData";
+            this.checkChangeDone();
         };
         AdminPostItemAddPageCtrl.prototype.monthCapitalize = function (date) {
             var date = date.replace('.', '');

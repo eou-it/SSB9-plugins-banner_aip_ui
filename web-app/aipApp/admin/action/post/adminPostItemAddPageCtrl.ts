@@ -37,8 +37,9 @@ module AIP {
     }
 
     export class AdminPostItemAddPageCtrl implements IAdminPostItemAddPageCtrl {
-        $inject = ["$scope", "$q", "$state", "$filter", "$timeout", "SpinnerService", "AdminActionStatusService", "AdminActionService", "$uibModal", "APP_ROOT", "datePicker"];
+        $inject = ["$scope","$rootScope", "$q", "$state", "$filter", "$timeout", "SpinnerService", "AdminActionStatusService", "AdminActionService", "$uibModal", "APP_ROOT", "datePicker"];
         $scope;
+        $rootScope;
         $uibModal;
         status:[AIP.IStatus];
         folders:[AIP.IFolder];
@@ -105,14 +106,17 @@ module AIP {
         showRecurrance:boolean;
         scheduleType:string;
         recDisplayEndDateType:string;
-
+        isDataModified:boolean;
         selectedRecurFrequency:any;
+        redirectval:any;
+        serverRecurEndDate:any;
 
-        constructor($scope:IActionItemAddPageScope, $q:ng.IQService, $state, $uibModal, $filter, $timeout,
+        constructor($scope:IActionItemAddPageScope,$rootScope, $q:ng.IQService, $state, $uibModal, $filter, $timeout,
                     SpinnerService:AIP.SpinnerService, APP_ROOT, AdminActionStatusService, AdminActionService:AIP.AdminActionService) {
             $scope.vm = this;
             this.$q = $q;
             this.$scope = $scope;
+            this.$rootScope=$rootScope;
             this.$state = $state;
             this.$filter = $filter;
             this.$uibModal = $uibModal;
@@ -161,6 +165,8 @@ module AIP {
 
         today() {
             this.sendTime = new Date();
+            this.recurrTime = new Date();
+            this.recurrTime.setMinutes(Math.ceil(this.recurrTime.getMinutes() / 30) * 30);
             this.sendTime.setMinutes(Math.ceil(this.sendTime.getMinutes() / 30) * 30);
             this.currentBrowserDate = this.$filter('date')(new Date(), this.$filter("i18n_aip")("default.date.format"));
             this.currentBrowserDate = this.monthCapitalize(this.currentBrowserDate)
@@ -317,6 +323,16 @@ module AIP {
                 }
                 this.spinnerService.showSpinner(false);
             });
+
+            var that=this;
+            this.$scope.$on("DetectChanges",function(event, args)
+            {
+                if (that.dirtyFlag) {
+                    that.redirectval = args.state;
+                    that.checkChangeDone();
+                }
+
+            });
         }
 
         specialCharacterTranslation()
@@ -456,6 +472,23 @@ module AIP {
                 });
         }
 
+        getProcessedServerRecuranceEndDate()
+        {
+
+            var userSelectedVal=
+            {
+                "userEnterDate": this.recurranceEndDate,
+                "userEnterTime": "2359",
+                "userEnterTimeZone": this.timezone.timezoneId
+            };
+
+            this.adminActionStatusService.getProcessedServerDateTimeAndTimezone(userSelectedVal)
+                .then((response) => {
+                    this.processedServerDetails = response.data;
+                    this.serverRecurEndDate = this.processedServerDetails.serverDate
+                });
+        }
+
         editPage() {
 
             this.modalInstance = this.$uibModal.open({
@@ -516,12 +549,10 @@ module AIP {
                 return false;
             }
             if (!this.postActionItemInfo.name || this.postActionItemInfo.name === null || this.postActionItemInfo.name === "") {
-
                 this.errorMessage.name = "invalid title";
             } else {
                 delete this.errorMessage.name;
             }
-
             if ((this.scheduleType === 'POSTNOW' || this.scheduleType === 'SCHEDULE') && !this.postActionItemInfo.displayStartDate || this.postActionItemInfo.displayStartDate === null || this.postActionItemInfo.displayStartDate === "") {
                 this.errorMessage.startDate = "invalid StartDate";
             } else {
@@ -560,13 +591,23 @@ module AIP {
             else {
                 delete this.errorMessage.success;
             }
-            if (this.scheduleType === "RECUR" && (!this.displayStartDateOffset || this.displayStartDateOffset < 0 )) {
+
+            if (this.scheduleType === "RECUR" &&  this.displayStartDateOffset ==null ) {
                 this.errorMessage.success = "Display Start offset date cannot be empty";
             }
 
-            if (this.scheduleType === "RECUR" && this.recDisplayEndDateType==="OFFSET" && (!this.displayEndDateOffset || this.displayEndDateOffset<0)) {
+            if (this.scheduleType === "RECUR" &&  this.displayStartDateOffset < 0 ) {
+                this.errorMessage.success = "Display Start offset date cannot be less than 0";
+            }
+
+            if (this.scheduleType === "RECUR" && this.recDisplayEndDateType==="OFFSET" &&  this.displayEndDateOffset ==null ) {
+                this.errorMessage.success = "Display End date offset cannot be blank";
+            }
+
+            if (this.scheduleType === "RECUR" && this.recDisplayEndDateType==="OFFSET" &&  this.displayEndDateOffset<0 ) {
                 this.errorMessage.success = "Invalid End date offset";
             }
+
             if (this.scheduleType === "RECUR" && this.recDisplayEndDateType==="EXACT"&&(!this.recurDisplayEndDate || this.recurDisplayEndDate === null || this.recurDisplayEndDate === "")) {
                 this.errorMessage.success = "Invalid End dates";
             }
@@ -582,8 +623,6 @@ module AIP {
                 this.errorMessage.success = "Recurrance frequency cannot be more null";
             }
 
-
-            
             if (Object.keys(this.errorMessage).length > 0) {
                 return false;
             } else {
@@ -592,31 +631,30 @@ module AIP {
         }
 
         checkChanges() {
+            this.dirtyFlag=true;
+            this.$rootScope.DataChanged=this.dirtyFlag;
 
-            var that = this;
-            if (that.editMode) {
-                that.dirtyFlag = true
-            }
         }
 
-        cancel() {
-
+        checkChangeDone(){
             var that=this;
-
-            if (that.editMode === true && that.dirtyFlag === true) {
-
+            if (that.dirtyFlag === true) {
                 var n = new Notification({
-                    message: this.$filter("i18n_aip")("aip.common.action.post.status.edit.warning"),
+                    message: this.$filter("i18n_aip")("aip.admin.actionItem.saveChanges"),
                     type: "warning"
                 });
                 n.addPromptAction(this.$filter("i18n_aip")("aip.common.text.no"), function () {
-                    that.$state.go("admin-post-list");
-                    notifications.remove(n);
+                      notifications.remove(n);
                 });
-
                 n.addPromptAction(this.$filter("i18n_aip")("aip.common.text.yes"), function () {
-                    that.save();
                     notifications.remove(n);
+                    that.dirtyFlag=false;
+                    that.$rootScope.DataChanged=false;
+                    if(that.redirectval==="NoData"){
+                        that.$state.go("admin-post-list");
+                    }else{
+                        location.href = that.redirectval;
+                    }
                 });
                 notifications.addNotification(n);
             }
@@ -624,6 +662,13 @@ module AIP {
             {
                 that.$state.go("admin-post-list");
             }
+        }
+
+
+        cancel() {
+
+            this.redirectval="NoData";
+            this.checkChangeDone();
         }
 
         monthCapitalize(date) {
@@ -702,7 +747,7 @@ module AIP {
                         console.log(err);
                     });
             }else{
-                this.adminActionService.savePostActionItem(this.postActionItemInfo, this.selected, this.modalResults, this.selectedPopulation, this.postNow, userSelectedTime, this.timezone.timezoneId, this.regeneratePopulation, this.displayDatetimeZone)
+            this.adminActionService.savePostActionItem(this.postActionItemInfo, this.selected, this.modalResults, this.selectedPopulation, this.postNow, userSelectedTime, this.timezone.timezoneId, this.regeneratePopulation, this.displayDatetimeZone)
                 .then((response:AIP.IPostActionItemSaveResponse) => {
                     this.saving = false;
                     var notiParams = {};
