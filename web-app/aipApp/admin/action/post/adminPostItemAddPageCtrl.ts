@@ -737,6 +737,8 @@ module AIP {
                                 notiType: "saveSuccess",
                                 data: response.data
                             };
+                            this.dirtyFlag = false;
+                            this.$rootScope.DataChanged=false;
                             this.$state.go("admin-post-list", {noti: notiParams, data: response.data.savedJob.id});
                         } else {
                             this.saveErrorCallback(response.data.message);
@@ -756,6 +758,8 @@ module AIP {
                             notiType: "saveSuccess",
                             data: response.data
                         };
+                        this.dirtyFlag = false;
+                        this.$rootScope.DataChanged=false;
                         this.$state.go("admin-post-list", {noti: notiParams, data: response.data.savedJob.id});
                     } else {
                         this.saveErrorCallback(response.data.message);
