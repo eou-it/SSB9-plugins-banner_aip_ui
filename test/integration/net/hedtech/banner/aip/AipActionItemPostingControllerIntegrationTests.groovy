@@ -254,6 +254,7 @@ class AipActionItemPostingControllerIntegrationTests extends BaseIntegrationTest
         requestMap.scheduledStartDate = new Date() + 1
         requestMap.actionItemIds = actionItemIds
         requestMap.displayDatetimeZone=correspondingServerDetails
+        requestMap.populationRegenerateIndicator=true
         actionItemPostCompositeService.sendAsynchronousPostItem( requestMap )
         requestMap.postingName = 'INTEGRATION_TEST'
         requestMap.populationId = populationListView.id
