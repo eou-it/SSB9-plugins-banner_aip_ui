@@ -110,8 +110,13 @@ module AIP {
         selectedRecurFrequency:any;
         redirectval:any;
         serverRecurEndDate:any;
+        serverRecurStartDate:any;
+        serverRecurrStartDate:any;
+        serverRecurStartTime:any;
+        serverRecurTimeZone:any;
+        END_OF_DAY:string="2359";
 
-        constructor($scope:IActionItemAddPageScope,$rootScope, $q:ng.IQService, $state, $uibModal, $filter, $timeout,
+        constructor($scope:IActionItemAddPageScope, $rootScope, $q:ng.IQService, $state, $uibModal, $filter, $timeout,
                     SpinnerService:AIP.SpinnerService, APP_ROOT, AdminActionStatusService, AdminActionService:AIP.AdminActionService) {
             $scope.vm = this;
             this.$q = $q;
@@ -471,14 +476,12 @@ module AIP {
 
                 });
         }
+        getProcessedServerRecurranceEndDate() {
 
-        getProcessedServerRecuranceEndDate()
-        {
-
-            var userSelectedVal=
+            var userSelectedVal =
             {
                 "userEnterDate": this.recurranceEndDate,
-                "userEnterTime": "2359",
+                "userEnterTime": this.END_OF_DAY,
                 "userEnterTimeZone": this.timezone.timezoneId
             };
 
@@ -486,6 +489,25 @@ module AIP {
                 .then((response) => {
                     this.processedServerDetails = response.data;
                     this.serverRecurEndDate = this.processedServerDetails.serverDate
+                });
+        }
+
+        getProcessedServerRecurranceStartDate() {
+            this.timeConversion();
+            var userSelectedVal =
+            {
+                "userEnterDate": this.recurranceStartDate,
+                "userEnterTime": this.$filter("date")(this.recurrTime, "HHmm"),
+                "userEnterTimeZone": this.timezone.timezoneId
+            };
+
+            this.adminActionStatusService.getProcessedServerDateTimeAndTimezone(userSelectedVal)
+                .then((response) => {
+                    this.processedServerDetails = response.data;
+                    this.serverRecurrStartDate = this.processedServerDetails.serverDate;
+                    this.serverRecurStartTime = this.processedServerDetails.serverTime;
+                    var recurserverTimeZone = this.processedServerDetails.serverTimeZone.split(" ");
+                    this.serverRecurTimeZone = angular.element('<div></div>').html(recurserverTimeZone[recurserverTimeZone.length - 1]).text();
                 });
         }
 
@@ -723,12 +745,14 @@ module AIP {
                     userSelectedTime= this.recurrTime;
                 }
                 this.displayDatetimeZone.dateVal=this.postActionItemInfo.scheduledStartDate;
-                this.displayDatetimeZone.timeVal=this.selectedTime;
+                this.displayDatetimeZone.timeVal = userSelectedTime;
                 this.displayDatetimeZone.timeZoneVal=this.timezone.stringOffset+' '+this.timezone.timezoneId;
 
             }
-            if(this.scheduleType==='RECUR'){
-                this.adminActionService.saveRecurringActionItem(this.postActionItemInfo, this.selected,this.modalResults,this.selectedPopulation,this.regeneratePopulation,this.recurCount,this.selectedRecurFrequency, this.displayStartDateOffset,this.recDisplayEndDateType,this.displayEndDateOffset,this.recurDisplayEndDate,this.recurranceStartDate,this.recurranceEndDate,userSelectedTime,this.timezone.timezoneId,this.displayDatetimeZone)
+            if (this.scheduleType === 'RECUR') {
+                this.postActionItemInfo.scheduledStartDate = this.recurranceStartDate
+                this.enteredDate=this.recurranceStartDate
+                this.adminActionService.saveRecurringActionItem(this.postActionItemInfo, this.selected, this.modalResults, this.selectedPopulation, this.regeneratePopulation, this.recurCount, this.selectedRecurFrequency, this.displayStartDateOffset, this.recDisplayEndDateType, this.displayEndDateOffset, this.recurDisplayEndDate, this.recurranceStartDate, this.recurranceEndDate, userSelectedTime, this.timezone.timezoneId, this.displayDatetimeZone)
                     .then((response:AIP.IPostActionItemSaveResponse) => {
                         this.saving = false;
                         var notiParams = {};

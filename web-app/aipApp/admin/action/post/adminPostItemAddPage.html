@@ -404,7 +404,7 @@ Copyright 2019 Ellucian Company L.P. and its affiliates.
                             <div class="row input-daterange form-group right-inner-addon dateRange-minwidth" aria-label="{{'aip.admin.action.postactionItem.recurringPosting.recurr.start.date.aria.label'|i18n_aip}}">
                                 <input type="text" id="recurrStartDate" date-picker
                                        ng-model="vm.recurranceStartDate"
-                                       ng-change="vm.checkChanges();vm.getProcessedServerDateTimeAndTimezone()"
+                                       ng-change="vm.checkChanges();vm.getProcessedServerRecurranceStartDate()"
                                        class="form-control  Datelement " name="recurranceStartDate"
                                        aria-required="true" required autocomplete="off"
                                        placeholder='{{"default.date.format.watermark"|i18n_aip}}'/>
@@ -477,7 +477,7 @@ Copyright 2019 Ellucian Company L.P. and its affiliates.
                             <div class="row input-daterange form-group right-inner-addon dateRange-minwidth">
                                 <input type="text" id="recurrEndDate" date-picker
                                        ng-model="vm.recurranceEndDate"
-                                       ng-change="vm.checkChanges();vm.getProcessedServerRecuranceEndDate()"
+                                       ng-change="vm.checkChanges();vm.getProcessedServerRecurranceEndDate()"
                                        class="form-control  Datelement " name="recurrEndDate"
                                        aria-required="true"
                                        aria-label="{{'aip.admin.action.postactionItem.recurringPosting.recurr.end.date.aria.label'|i18n_aip}}"
@@ -506,26 +506,12 @@ Copyright 2019 Ellucian Company L.P. and its affiliates.
 
                             <div class="row input-daterange form-group right-inner-addon dateRange-minwidth">
                                 <input id="appServerDateRecur" type="text" class="form-control"
-                                       ng-model="vm.appServerDate"
+                                       ng-model="vm.serverRecurrStartDate"
                                        aria-required="true" ng-disabled="true">
                             </div>
                         </div>
                     </div>
-                    <div class="col-sm-3 startdate">
-                        <div class="actionItemElement row input-actionItem">
-                            <label for="appServerRecurEndDateRecurr" class="titleValue" id="labelappServerRecurEndDateRecurr">{{"aip.admin.action.postactionItem.recurringPosting.recurr.end.date"|i18n_aip}}
-                            </label>
-                        </div>
-                        <div class="actionItemElement Datelement col-sm-4  dateRow form-container"
-                             role="textbox">
 
-                            <div class="row input-daterange form-group right-inner-addon dateRange-minwidth">
-                                <input id="appServerRecurEndDateRecurr" type="text" class="form-control"
-                                       ng-model="vm.serverRecurEndDate"
-                                       aria-required="true" ng-disabled="true">
-                            </div>
-                        </div>
-                    </div>
                     <div class="col-sm-3 enddate">
                         <div class="actionItemElement row input-actionItem">
                             <label for="appServerTimeRecurr" id="labelappServerTimeRecurr" class="titleValue">{{"aip.admin.action.postactionItem.time"|i18n_aip}}
@@ -538,7 +524,7 @@ Copyright 2019 Ellucian Company L.P. and its affiliates.
                                        xe-time-picker-box
                                        am-label='{{"aip.admin.communication.timepicker.time.am.label"|i18n_aip}}'
                                        pm-label='{{"aip.admin.communication.timepicker.time.pm.label"|i18n_aip}}'
-                                       ng-model="vm.appServerTime"
+                                       ng-model="vm.serverRecurStartTime"
                                        aria-required="true" ng-disabled="true">
                             </div>
                         </div>
@@ -551,11 +537,24 @@ Copyright 2019 Ellucian Company L.P. and its affiliates.
                         </div>
                         <div class="actionItemElement Datelement col-sm-4  dateRow form-container"
                              role="textbox">
-                            <div class="row input-daterange form-group right-inner-addon timezone-minwidth ">
+                            <div class="row input-daterange form-group right-inner-addon timeZone timezone-minwidth ">
                                 <input id="appServerTimeZoneRecurr" type="text" class="form-control"
-                                       ng-model="vm.appServerTimeZone"
+                                       ng-model="vm.serverRecurTimeZone"
                                        aria-required="true" ng-disabled="true">
-
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-3 startdate">
+                        <div class="actionItemElement row input-actionItem">
+                            <label for="appServerRecurEndDateRecurr" class="titleValue" id="labelappServerRecurEndDateRecurr">{{"aip.admin.action.postactionItem.recurringPosting.recurr.end.date"|i18n_aip}}
+                            </label>
+                        </div>
+                        <div class="actionItemElement Datelement col-sm-4  dateRow form-container"
+                             role="textbox">
+                            <div class="row input-daterange form-group right-inner-addon dateRange-minwidth">
+                                <input id="appServerRecurEndDateRecurr" type="text" class="form-control"
+                                       ng-model="vm.serverRecurEndDate"
+                                       aria-required="true" ng-disabled="true">
                             </div>
                         </div>
                     </div>
