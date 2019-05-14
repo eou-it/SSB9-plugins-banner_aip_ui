@@ -422,7 +422,7 @@ Copyright 2019 Ellucian Company L.P. and its affiliates.
                             <div class="row input-daterange form-group right-inner-addon dateRange-minwidth" >
                                 <input type="text" class="form-control" name="recurrActionItemTime" aria-required="true"
                                        xe-time-picker-box input_24_hr_string="{{vm.localeTime ? 'N' : 'Y'}}"
-                                       change='vm.checkChanges();vm.getProcessedServerDateTimeAndTimezone()'
+                                       change='vm.checkChanges();vm.getProcessedServerRecurranceStartDate()'
                                        hour-format-12="{{vm.localeTime ? 'Y' : 'N'}}"
                                        am-label='{{"aip.admin.communication.timepicker.time.am.label"|i18n_aip}}'
                                        pm-label='{{"aip.admin.communication.timepicker.time.pm.label"|i18n_aip}}'
