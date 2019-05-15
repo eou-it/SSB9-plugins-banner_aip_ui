@@ -450,7 +450,7 @@ Copyright 2019 Ellucian Company L.P. and its affiliates.
 
                                 <xe-ui-select class="col-xs-12 col-sm-12 timeZoneChange timezone-minwidth"
                                               ng-model="vm.timezone"
-                                              ng-change="vm.setTimezone(vm.timezone);vm.checkChanges();vm.getProcessedServerDateTimeAndTimezone()"
+                                              ng-change="vm.setTimezone(vm.timezone);vm.checkChanges();vm.getProcessedServerRecurranceStartDate()"
                                               theme="select2" ng-show="!vm.showTimezoneIcon">
                                     <xe-ui-select-match
                                             placeholder="{{'aip.admin.communication.sendMessage.timezonePlaceHolder' | i18n_aip}}">
