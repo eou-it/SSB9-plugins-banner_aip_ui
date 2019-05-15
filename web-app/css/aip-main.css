@@ -1386,6 +1386,10 @@ ol.selected-group > li > button {
     transform: rotate(-0deg);
   }*/
   /* Webkit browsers like Safari and Chrome */ }
+  .actionItemAddContainer .noPaddingLeft {
+    padding-left: 0px; }
+  .actionItemAddContainer .noPaddingRight {
+    padding-right: 0px; }
   .actionItemAddContainer .actionItemScheduleType {
     padding-left: 8px; }
   .actionItemAddContainer input.hasMultiCalendarPicker {
@@ -1613,7 +1617,11 @@ ol.selected-group > li > button {
     width: 10em; }
   .actionItemAddContainer .recuranceInstrcution {
     font-size: 16px;
-    padding-top: 3px; }
+    padding-top: 3px;
+    width: auto !important; }
+
+#recurFrequency.ui-select-container .select2-choice {
+  min-height: 3.5em !important; }
 
 .aip-modal .modal-dialog .modal-header .row.blockProcess {
   padding: 16px; }

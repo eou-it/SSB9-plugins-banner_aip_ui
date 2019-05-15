@@ -1,4 +1,10 @@
 .actionItemAddContainer {
+  .noPaddingLeft{
+    padding-left : 0px;
+  }
+  .noPaddingRight{
+    padding-right: 0px;
+  }
   .actionItemScheduleType{
     padding-left:8px;
   }
@@ -335,5 +341,9 @@
   .recuranceInstrcution{
     font-size: 16px;
     padding-top:3px;
+    width:auto !important;
   }
+}
+#recurFrequency.ui-select-container .select2-choice  {
+  min-height: 3.5em !important;
 }
