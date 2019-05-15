@@ -138,17 +138,19 @@ Copyright 2019 Ellucian Company L.P. and its affiliates.
                     <div class="row">{{"aip.admin.action.actionItem.displayDates.instructions"|i18n_aip}}</div>
                 </div>
             </div>
-
-            <div class="row actionItemInfoRow actionItemStatus" >
-                <div class="col-sm-3 col-md-3 col-lg-2 col-xs-12 startdate">
-                    <div class="actionItemElement row input-actionItem col-xs-12">
+            <!--DATES DIV-->
+            <div class="row actionItemInfoRow  " >
+                <div class=" noPaddingLeft col-md-3 col-sm-3 col-lg-2 col-xs-12 ">
+                    <!--LABEL DIV-->
+                    <div class="actionItemElement row input-actionItem ">
                         <label for="labelDisplayStartDate" id="labelDisplayStartDate" class="titleValue required">{{"aip.admin.action.postactionItem.start.date"|i18n_aip}}
                         </label>
                     </div>
-                    <div class="actionItemElement Datelement col-xs-1 col-sm-2  dateRow form-container"
+                    <!--END LABEL DIV-->
+                    <div class="actionItemElement Datelement dateRow row form-container"
                          role="textbox">
 
-                        <div class="row input-daterange form-group right-inner-addon dateRange-minwidth">
+                        <div class=" col-xs-3 col-sm-2 input-daterange form-group right-inner-addon dateRange-minwidth noPaddingLeft noPaddingRight">
                             <input type="text" id="date" date-picker ng-model="vm.postActionItemInfo.displayStartDate"
                                    today="{{today}}" ng-change="vm.checkChanges()"
                                    class="form-control  Datelement" name="displaystartDate"
@@ -159,14 +161,16 @@ Copyright 2019 Ellucian Company L.P. and its affiliates.
                         </div>
                     </div>
                 </div>
-                <div class="col-sm-3 col-md-3 col-lg-2 enddate">
+                <div class="noPaddingLeft col-md-3 col-sm-3 col-lg-2 col-xs-12">
+                    <!--LABEL DIV-->
                     <div class="actionItemElement row input-actionItem ">
-                        <label for="labelDisplayEndDate" id="labelDisplayEndDate" class="titleValue required col-xs-12">{{"aip.admin.action.postactionItem.end.date"|i18n_aip}}
+                        <label for="labelDisplayEndDate" id="labelDisplayEndDate" class="titleValue required ">{{"aip.admin.action.postactionItem.end.date"|i18n_aip}}
                         </label>
                     </div>
-                    <div class="actionItemElement Datelement col-xs-1 col-sm-2  dateRow form-container" role="textbox"
+                    <!--END LABEL DIV-->
+                    <div class="actionItemElement Datelement dateRow row  form-container" role="textbox"
                          id="DisplayEndDate">
-                        <div class="row input-daterange form-group right-inner-addon dateRange-minwidth">
+                        <div class="col-xs-3 col-sm-3 input-daterange form-group right-inner-addon dateRange-minwidth noPaddingLeft noPaddingRight">
                             <input type="text" date-picker id="datepickerdisplayEndDate"
                                    class="form-control  Datelement" name="displayEndDate"
                                    ng-model="vm.postActionItemInfo.displayEndDate" ng-change="vm.checkChanges()"
@@ -177,23 +181,27 @@ Copyright 2019 Ellucian Company L.P. and its affiliates.
                     </div>
                 </div>
             </div>
+            <!--END DATES DIV-->
         </div>
         <!--END:Display dates for onetime schedule and post now -->
 
         <!--One Time posting-->
         <div class="row actionItemInfoRow actionItemStatus">
 
-            <div  class="col-sm-8" ng-if="vm.scheduleType=='SCHEDULE'">
+            <div ng-if="vm.scheduleType=='SCHEDULE'">
                 <div class="row actionItemInfoRow actionItemStatus">
-                    <div class="col-sm-12 col-md-12 startdate">
-                        <div class="col-sm-3 startdate">
+                    <!--date section-->
+                    <div class="col-sm-12 col-md-12  col-xs-12 startdate">
+                        <div class="col-sm-3 col-lg-2 col-xs-12 startdate">
+                            <!--Start date label-->
                             <div class="actionItemElement row input-actionItem">
                                 <label for="labelScheduledStartDate" class="titleValue required" id="labelScheduledStartDate">{{"aip.admin.action.postactionItem.schdeule.start.date"|i18n_aip}}
                                 </label>
                             </div>
-                            <div class="actionItemElement Datelement col-xs-1 col-sm-2  dateRow form-container" role="textbox">
+                            <!--End : Start date label-->
+                            <div class="actionItemElement Datelement row form-container" role="textbox">
 
-                                <div class="row input-daterange form-group right-inner-addon dateRange-minwidth">
+                                <div class="col-xs-3 col-sm-3 input-daterange form-group right-inner-addon dateRange-minwidth noPaddingLeft noPaddingRight">
                                     <input type="text" id="scheduledStartDate" date-picker
                                            ng-model="vm.postActionItemInfo.scheduledStartDate" ng-change="vm.checkChanges();vm.getProcessedServerDateTimeAndTimezone()"
                                            class="form-control  Datelement " name="scheduledStartDate"
@@ -202,12 +210,12 @@ Copyright 2019 Ellucian Company L.P. and its affiliates.
                                 </div>
                             </div>
                         </div>
-                        <div class="col-sm-3 enddate">
+                        <div class="col-sm-3 col-lg-2 col-xs-12 enddate">
                             <div class="actionItemElement row input-actionItem ">
-                                <label for="postActionItemTime" id="postActionItemTime" class="titleValue required col-xs-12">{{"aip.admin.action.postactionItem.time"|i18n_aip}}
+                                <label for="postActionItemTime" id="postActionItemTime" class="titleValue required ">{{"aip.admin.action.postactionItem.time"|i18n_aip}}
                                 </label>
                             </div>
-                            <div class="actionItemElement Datelement col-sm-4  dateRow form-container" role="textbox">
+                            <div class="actionItemElement Datelement col-sm-4 col-md-4 dateRow form-container" role="textbox">
 
                                 <div class="row input-daterange form-group right-inner-addon dateRange-minwidth">
                                     <input type="text" class="form-control   " name="" aria-required="true"
@@ -220,7 +228,7 @@ Copyright 2019 Ellucian Company L.P. and its affiliates.
                                 </div>
                             </div>
                         </div>
-                        <div class="col-sm-3 enddate">
+                        <div class="col-sm-3 col-lg-2 col-xs-12 enddate">
                             <div class="actionItemElement row input-actionItem">
                                 <label for="postActionItemPopulation" class="titleValue required ">{{"aip.admin.action.postactionItem.timezone"|i18n_aip}}
                                 </label>
@@ -252,6 +260,7 @@ Copyright 2019 Ellucian Company L.P. and its affiliates.
                             </div>
                         </div>
                     </div>
+                    <!--End Start date section-->
                 </div>
                 <div class="row actionItemInfoRow actionItemStatus">
                     <div class="actionItemElement row input-actionItem">
@@ -259,7 +268,7 @@ Copyright 2019 Ellucian Company L.P. and its affiliates.
                         </label>
                     </div>
                     <div class="col-sm-12 col-md-12 startdate">
-                        <div class="col-sm-3 startdate">
+                        <div class="col-sm-3 col-lg-2 col-xs-12  startdate">
                             <div class="actionItemElement row input-actionItem">
                                 <label for="labelappServerDate" class="titleValue" id="labelappServerDate">{{"aip.admin.action.postactionItem.schdeule.start.date"|i18n_aip}}
                                 </label>
@@ -273,7 +282,7 @@ Copyright 2019 Ellucian Company L.P. and its affiliates.
                                 </div>
                             </div>
                         </div>
-                        <div class="col-sm-3 enddate">
+                        <div class="col-sm-3 col-lg-2 col-xs-12 enddate">
                             <div class="actionItemElement row input-actionItem">
                                 <label for="labelappServerTime" id="labelappServerTime" class="titleValue">{{"aip.admin.action.postactionItem.time"|i18n_aip}}
                                 </label>
@@ -289,7 +298,7 @@ Copyright 2019 Ellucian Company L.P. and its affiliates.
                                 </div>
                             </div>
                         </div>
-                        <div class="col-sm-3 enddate">
+                        <div class="col-sm-3 col-lg-2 col-xs-12 enddate">
                             <div class="actionItemElement row input-actionItem">
                                 <label for="labelappServerTimeZone" class="titleValue " id="labelappServerTimeZone">{{"aip.admin.action.postactionItem.timezone"|i18n_aip}}
                                 </label>
@@ -307,22 +316,21 @@ Copyright 2019 Ellucian Company L.P. and its affiliates.
                 </div>
 
             </div>
-            <div ng-if="vm.scheduleType=='RECUR'" class="col-sm-8">
+            <div ng-if="vm.scheduleType=='RECUR'">
                 <!--Recurcount and recurr frequency-->
                 <div class="row actionItemInfoRow recurFrequency">
                     <div class="actionItemElement row input-actionItem">
-
-                        <label class="titleValue required" id="labelrecurCount"
+                       <label class="titleValue required" id="labelrecurCount"
                                for="recurCount">{{"aip.admin.action.postactionItem.recurringPosting.recurEvery"|i18n_aip}}</label>
-
-                    </div>
-                    <div class="actionItemElement col-xs-6 col-md-1 col-sm-1">
+                   </div>
+                    <div class="row">
+                    <div class="actionItemElement col-lg-1 col-md-1 col-sm-2 col-xs-3 ">
                         <input type="number" min="0" id="recurCount" ng-model="vm.recurCount" class="form-control "
                                name="recurCount"
                                aria-required="true" required autocomplete="off" aria-label="{{'aip.admin.action.postactionItem.recurringPosting.recur.every.aria.label'|i18n_aip}}"/>
 
                     </div>
-                    <div class="actionItemElement col-xs-6">
+                    <div class="actionItemElement col-lg-1 col-md-1 col-sm-2 col-xs-3 ">
                         <xe-ui-select id="recurFrequency" ng-model="vm.selectedRecurFrequency" theme="select2"
                                       ng-disabled="disabled" search-enabled="false" ng-change="vm.dataChanged()" aria-label="{{'aip.admin.action.postactionItem.recurringPosting.recurType.aria.label'|i18n_aip}}"
                         >
@@ -336,46 +344,49 @@ Copyright 2019 Ellucian Company L.P. and its affiliates.
                             </xe-ui-select-choices>
                         </xe-ui-select>
                     </div>
+                        </div>
                 </div>
                 <div class="row actionItemInfoRow">
                     <!--For START DATE-->
-                    <div class="col-sm-1  col-md-3 col-xs-12">
+                    <div class="col-lg-2 col-md-3 col-sm-4 col-xs-12 noPaddingLeft">
                         <div class="row actionItemElement  input-actionItem">
                             <label for="labelDisplayStartDate" class="titleValue required">{{"aip.admin.action.postactionItem.start.date"|i18n_aip}}
                             </label>
                         </div>
                         <div class=" row actionItemElement  ">
-                            <div class="col-sm-3 col-md-3 col-xs-4">
+                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 noPaddingLeft">
                                 <input type="number" min="0" class="form-control" name="displayStartDateOffset" aria-required="true" required autocomplete="off" ng-model="vm.displayStartDateOffset"
                                        aria-label="{{'aip.admin.action.postactionItem.recurringPosting.displayStartOffset.aria.label'|i18n_aip}}"/>
                             </div>
-                            <div class=" displayInstruction recuranceInstrcution">{{"aip.admin.action.postactionItem.recurringPosting.displayOffset.instructions"|i18n_aip}}</div>
+                            <div class=" displayInstruction recuranceInstrcution col-xs-6 noPaddingLeft">{{"aip.admin.action.postactionItem.recurringPosting.displayOffset.instructions"|i18n_aip}}</div>
                         </div>
                     </div>
                     <!--For END DATE-->
-                    <div class="col-sm-1  col-md-4 col-xs-12">
+                    <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12 noPaddingLeft">
                         <div class="row actionItemElement  input-actionItem">
                             <label  class="titleValue required">{{"aip.admin.action.postactionItem.end.date"|i18n_aip}}
                             </label>
                         </div>
 
                         <div class="row actionItemElement">
-                            <div class="col-sm-1 col-md-1 col-lg-1 col-xs-1">
+                            <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 noPaddingLeft">
                                 <input type="radio" id="chkendoffset" name="recEndType" ng-model="vm.recDisplayEndDateType" value="OFFSET"
                                        ng-change="vm.checkChanges();" aria-label="{{'aip.admin.action.postactionItem.recurringPosting.recurr.end.date.offset.type'|i18n_aip}}"/>
                             </div>
-                            <div class="col-sm-2 col-md-2 col-lg-2 col-xs-3 actionItemElement">
+                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 noPaddingLeft actionItemElement">
                                 <input type="number" min="0" class="form-control" name="displayEndDateOffset" aria-required="true" required autocomplete="off" ng-model ="vm.displayEndDateOffset" ng-disabled="vm.recDisplayEndDateType==='EXACT'" aria-label={{'aip.admin.action.postactionItem.recurringPosting.displayEndOffset.aria.label'|i18n_aip}}"/>
                             </div>
-                            <div class=" displayInstruction recuranceInstrcution">{{"aip.admin.action.postactionItem.recurringPosting.displayOffset.instructions"|i18n_aip}}</div>
+                            <div class=" col-lg-8 col-md-8 col-sm-8 col-xs-8 noPaddingLeft ">
+                                <div class="displayInstruction recuranceInstrcution"> {{"aip.admin.action.postactionItem.recurringPosting.displayOffset.instructions"|i18n_aip}}</div>
+                            </div>
                         </div>
                         <div class="  row actionItemElement   ">
-                            <div class="col-sm-1 col-md-1 col-lg-1 col-xs-1">
+                            <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 noPaddingLeft">
                                 <input type="radio" id="chkendExact" name="recEndType" ng-model="vm.recDisplayEndDateType" value="EXACT"
                                        ng-change="vm.checkChanges();" aria-label="{{'aip.admin.action.postactionItem.recurringPosting.recurr.end.date.offset.type'|i18n_aip}}"/>
                             </div>
 
-                            <div class="actionItemElement Datelement col-xs-1 col-sm-2 dateRow form-container"
+                            <div class="actionItemElement Datelement col-xs-1 col-sm-2 col-lg-2 col-md-4 dateRow form-container"
                                  role="textbox"
                                  id="RecurDisplayEndDate">
                                 <div class="row input-daterange form-group right-inner-addon dateRange-minwidth">
@@ -392,16 +403,17 @@ Copyright 2019 Ellucian Company L.P. and its affiliates.
                     </div>
                 </div>
                 <div class="row actionItemInfoRow actionItemStatus">
-                    <div class="col-sm-3 startdate">
+                    <div class="col-sm-12 col-md-12  col-xs-12 startdate">
+                    <div class="col-sm-3 col-md-2 col-xs-12 row noPaddingLeft startdate">
                         <div class="actionItemElement row input-actionItem">
                             <label for="recurrStartDate" class="titleValue required"
                                    id="labelrecurrStartDate">{{"aip.admin.action.postactionItem.recurringPosting.recurr.start.date"|i18n_aip}}
                             </label>
                         </div>
-                        <div class="actionItemElement Datelement col-xs-1 col-sm-2  dateRow form-container"
+                        <div class="actionItemElement Datelement row form-container"
                              role="textbox">
 
-                            <div class="row input-daterange form-group right-inner-addon dateRange-minwidth" aria-label="{{'aip.admin.action.postactionItem.recurringPosting.recurr.start.date.aria.label'|i18n_aip}}">
+                            <div class="col-xs-3 col-sm-3 noPaddingLeft noPaddingRight input-daterange form-group right-inner-addon dateRange-minwidth" aria-label="{{'aip.admin.action.postactionItem.recurringPosting.recurr.start.date.aria.label'|i18n_aip}}">
                                 <input type="text" id="recurrStartDate" date-picker
                                        ng-model="vm.recurranceStartDate"
                                        ng-change="vm.checkChanges();vm.getProcessedServerRecurranceStartDate()"
@@ -411,12 +423,12 @@ Copyright 2019 Ellucian Company L.P. and its affiliates.
                             </div>
                         </div>
                     </div>
-                    <div class="col-sm-3 ">
+                    <div class="col-sm-3 col-lg-2 col-xs-12 enddate">
                         <div class="actionItemElement row input-actionItem">
-                            <label for="recurrActionItemTime" id="recurrActionItemTimeLabel" class="titleValue required col-xs-12">{{"aip.admin.action.postactionItem.time"|i18n_aip}}
+                            <label for="recurrActionItemTime" id="recurrActionItemTimeLabel" class="titleValue required ">{{"aip.admin.action.postactionItem.time"|i18n_aip}}
                             </label>
                         </div>
-                        <div class="actionItemElement Datelement col-sm-4 dateRow form-container"
+                        <div class="actionItemElement Datelement col-sm-4 col-md-4    dateRow form-container"
                              role="textbox">
 
                             <div class="row input-daterange form-group right-inner-addon dateRange-minwidth" >
@@ -432,12 +444,12 @@ Copyright 2019 Ellucian Company L.P. and its affiliates.
                             </div>
                         </div>
                     </div>
-                    <div class="col-sm-3 enddate">
+                    <div class="col-sm-3 col-lg-2 col-xs-12 enddate">
                         <div class="actionItemElement row input-actionItem">
                             <label for="timezoneidrecur" class="titleValue required ">{{"aip.admin.action.postactionItem.timezone"|i18n_aip}}
                             </label>
                         </div>
-                        <div class="actionItemElement Datelement col-sm-4  dateRow form-container"
+                        <div class="actionItemElement Datelement col-sm-3  dateRow form-container"
                              role="textbox"
                              id="timezoneidrecur">
                             <div class="row input-daterange form-group right-inner-addon dateRange-minwidth">
@@ -448,7 +460,7 @@ Copyright 2019 Ellucian Company L.P. and its affiliates.
                                             ng-click="vm.showTimeZoneList()"></button>
                                 </div>
 
-                                <xe-ui-select class="col-xs-12 col-sm-12 timeZoneChange timezone-minwidth"
+                                <xe-ui-select class="col-xs-12 col-sm-12 timeZoneChange"
                                               ng-model="vm.timezone"
                                               ng-change="vm.setTimezone(vm.timezone);vm.checkChanges();vm.getProcessedServerRecurranceStartDate()"
                                               theme="select2" ng-show="!vm.showTimezoneIcon">
@@ -465,16 +477,16 @@ Copyright 2019 Ellucian Company L.P. and its affiliates.
                         </div>
                     </div>
 
-                    <div class="col-sm-3 startdate">
+                    <div class="col-sm-3 col-lg-2 col-xs-12 startdate">
                         <div class="actionItemElement row input-actionItem">
                             <label for="recurrEndDate" class="titleValue required"
                                    id="labelScheduledStalabelScheduledStartDatertDate">{{"aip.admin.action.postactionItem.recurringPosting.recurr.end.date"|i18n_aip}}
                             </label>
                         </div>
-                        <div class="actionItemElement Datelement col-xs-1 col-sm-2  dateRow form-container"
+                        <div class="actionItemElement Datelement row form-container"
                              role="textbox">
 
-                            <div class="row input-daterange form-group right-inner-addon dateRange-minwidth">
+                            <div class="col-xs-3 col-sm-3 noPaddingLeft noPaddingRight input-daterange form-group right-inner-addon dateRange-minwidth">
                                 <input type="text" id="recurrEndDate" date-picker
                                        ng-model="vm.recurranceEndDate"
                                        ng-change="vm.checkChanges();vm.getProcessedServerRecurranceEndDate()"
@@ -486,6 +498,7 @@ Copyright 2019 Ellucian Company L.P. and its affiliates.
                             </div>
                         </div>
                     </div>
+                        </div>
 
                 </div>
 
@@ -495,8 +508,8 @@ Copyright 2019 Ellucian Company L.P. and its affiliates.
                             {{"aip.admin.action.postactionItem.app.server"|i18n_aip}}
                         </label>
                     </div>
-
-                    <div class="col-sm-3 startdate">
+                    <div class="col-sm-12 col-md-12  col-xs-12 startdate">
+                        <div class="col-sm-3 col-md-2 col-xs-12 row noPaddingLeft startdate">
                         <div class="actionItemElement row input-actionItem">
                             <label for="appServerDateRecur" class="titleValue" id="labelappServerDateRecurr">{{"aip.admin.action.postactionItem.recurringPosting.recurr.start.date"|i18n_aip}}
                             </label>
@@ -511,8 +524,7 @@ Copyright 2019 Ellucian Company L.P. and its affiliates.
                             </div>
                         </div>
                     </div>
-
-                    <div class="col-sm-3 enddate">
+                        <div class="col-sm-3 col-lg-2 col-xs-12 enddate">
                         <div class="actionItemElement row input-actionItem">
                             <label for="appServerTimeRecurr" id="labelappServerTimeRecurr" class="titleValue">{{"aip.admin.action.postactionItem.time"|i18n_aip}}
                             </label>
@@ -529,22 +541,22 @@ Copyright 2019 Ellucian Company L.P. and its affiliates.
                             </div>
                         </div>
                     </div>
-                    <div class="col-sm-3 enddate">
+                        <div class="col-sm-3 col-lg-2 col-xs-12 enddate">
                         <div class="actionItemElement row input-actionItem">
                             <label for="appServerTimeZoneRecurr" class="titleValue " id="labelappServerTimeZoneRecurr">
                                 {{"aip.admin.action.postactionItem.timezone"|i18n_aip}}
                             </label>
                         </div>
-                        <div class="actionItemElement Datelement col-sm-4  dateRow form-container"
+                        <div class="actionItemElement dateRow form-container"
                              role="textbox">
-                            <div class="row input-daterange form-group right-inner-addon timeZone timezone-minwidth ">
+                            <div class="col-md-12 input-daterange form-group right-inner-addon noPaddingLeft  noPaddingRight">
                                 <input id="appServerTimeZoneRecurr" type="text" class="form-control"
                                        ng-model="vm.serverRecurTimeZone"
                                        aria-required="true" ng-disabled="true">
                             </div>
                         </div>
                     </div>
-                    <div class="col-sm-3 startdate">
+                        <div class="col-sm-3 col-lg-2 col-xs-12 enddate">
                         <div class="actionItemElement row input-actionItem">
                             <label for="appServerRecurEndDateRecurr" class="titleValue" id="labelappServerRecurEndDateRecurr">{{"aip.admin.action.postactionItem.recurringPosting.recurr.end.date"|i18n_aip}}
                             </label>
@@ -558,6 +570,7 @@ Copyright 2019 Ellucian Company L.P. and its affiliates.
                             </div>
                         </div>
                     </div>
+                    </div>
 
                 </div>
 
@@ -566,7 +579,7 @@ Copyright 2019 Ellucian Company L.P. and its affiliates.
 
             <div class="actionItemControl">
                 <div class="row">
-                    <div class="actionItemElement col-xs-12 col-sm-8">
+                    <div class="actionItemElement col-xs-12 col-sm-12 col-md-8">
                         <div class="actionItemButton">
                     <span>
                         <button name="Cancel" type="button" class="btn btn-default" ng-click="vm.cancel()">{{"aip.common.cancel"|i18n_aip}}</button>
