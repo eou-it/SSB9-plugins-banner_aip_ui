@@ -37,10 +37,11 @@ module AIP {
     }
 
     export class AdminPostItemAddPageCtrl implements IAdminPostItemAddPageCtrl {
-        $inject = ["$scope","$rootScope", "$q", "$state", "$filter", "$timeout", "SpinnerService", "AdminActionStatusService", "AdminActionService", "$uibModal", "APP_ROOT", "datePicker"];
+        $inject = ["$scope","$rootScope", "$q", "$state", "$filter", "$timeout", "SpinnerService", "AdminActionStatusService", "AdminActionService", "$uibModal", "APP_ROOT", "datePicker","$window"];
         $scope;
         $rootScope;
         $uibModal;
+        $window;
         status:[AIP.IStatus];
         folders:[AIP.IFolder];
         groupList:[AIP.IGroup];
@@ -114,9 +115,10 @@ module AIP {
         serverRecurrStartDate:any;
         serverRecurStartTime:any;
         serverRecurTimeZone:any;
+        recurTimeZone:any;
         END_OF_DAY:string="2359";
 
-        constructor($scope:IActionItemAddPageScope, $rootScope, $q:ng.IQService, $state, $uibModal, $filter, $timeout,
+        constructor($scope:IActionItemAddPageScope, $rootScope, $q:ng.IQService, $state, $uibModal,$window, $filter, $timeout,
                     SpinnerService:AIP.SpinnerService, APP_ROOT, AdminActionStatusService, AdminActionService:AIP.AdminActionService) {
             $scope.vm = this;
             this.$q = $q;
@@ -165,6 +167,13 @@ module AIP {
             this.currentBrowserDate = null;
             this.selectedTime = null;
             this.enteredDate = null;
+            $window.onbeforeunload = (event)=> {
+                if(this.dirtyFlag) {
+                    return this.$filter("i18n_aip")("aip.common.admin.unsaved");
+                }
+                $window.onbeforeunload = null;
+            };
+
             this.init();
         }
 
