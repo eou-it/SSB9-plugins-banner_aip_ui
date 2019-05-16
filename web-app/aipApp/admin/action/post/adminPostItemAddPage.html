@@ -233,7 +233,7 @@ Copyright 2019 Ellucian Company L.P. and its affiliates.
                                 <label for="postActionItemPopulation" class="titleValue required ">{{"aip.admin.action.postactionItem.timezone"|i18n_aip}}
                                 </label>
                             </div>
-                            <div class="actionItemElement Datelement col-sm-3  dateRow form-container" role="textbox"
+                            <div class="actionItemElement Datelement col-sm-12 col-md-12 col-lg-12 col-xs-12  dateRow form-container" role="textbox"
                                  id="timezoneid">
                                 <div class="row input-daterange form-group right-inner-addon dateRange-minwidth">
                                     <div class="timeZone timezone-minwidth" ng-show="vm.showTimezoneIcon">
@@ -268,7 +268,7 @@ Copyright 2019 Ellucian Company L.P. and its affiliates.
                         </label>
                     </div>
                     <div class="col-sm-12 col-md-12 startdate">
-                        <div class="col-sm-3 col-lg-2 col-xs-12  startdate">
+                        <div class="col-sm-3 col-lg-2 col-md-3 col-xs-12  startdate">
                             <div class="actionItemElement row input-actionItem">
                                 <label for="labelappServerDate" class="titleValue" id="labelappServerDate">{{"aip.admin.action.postactionItem.schdeule.start.date"|i18n_aip}}
                                 </label>
@@ -282,7 +282,7 @@ Copyright 2019 Ellucian Company L.P. and its affiliates.
                                 </div>
                             </div>
                         </div>
-                        <div class="col-sm-3 col-lg-2 col-xs-12 enddate">
+                        <div class="col-sm-3 col-lg-2 col-md-3 col-xs-12 enddate">
                             <div class="actionItemElement row input-actionItem">
                                 <label for="labelappServerTime" id="labelappServerTime" class="titleValue">{{"aip.admin.action.postactionItem.time"|i18n_aip}}
                                 </label>
@@ -298,7 +298,7 @@ Copyright 2019 Ellucian Company L.P. and its affiliates.
                                 </div>
                             </div>
                         </div>
-                        <div class="col-sm-3 col-lg-2 col-xs-12 enddate">
+                        <div class="col-sm-3 col-lg-2 col-md-3 col-xs-12 enddate">
                             <div class="actionItemElement row input-actionItem">
                                 <label for="labelappServerTimeZone" class="titleValue " id="labelappServerTimeZone">{{"aip.admin.action.postactionItem.timezone"|i18n_aip}}
                                 </label>
@@ -404,7 +404,7 @@ Copyright 2019 Ellucian Company L.P. and its affiliates.
                 </div>
                 <div class="row actionItemInfoRow actionItemStatus">
                     <div class="col-sm-12 col-md-12  col-xs-12 startdate">
-                    <div class="col-sm-3 col-md-2 col-xs-12 row noPaddingLeft startdate">
+                    <div class="col-sm-3 col-md-3 col-lg-2 col-xs-12 row noPaddingLeft startdate">
                         <div class="actionItemElement row input-actionItem">
                             <label for="recurrStartDate" class="titleValue required"
                                    id="labelrecurrStartDate">{{"aip.admin.action.postactionItem.recurringPosting.recurr.start.date"|i18n_aip}}
@@ -418,12 +418,13 @@ Copyright 2019 Ellucian Company L.P. and its affiliates.
                                        ng-model="vm.recurranceStartDate"
                                        ng-change="vm.checkChanges();vm.getProcessedServerRecurranceStartDate()"
                                        class="form-control  Datelement " name="recurranceStartDate"
+                                       aria-label="{{'aip.admin.action.postactionItem.recurringPosting.recurr.start.date.aria.label'|i18n_aip}}"
                                        aria-required="true" required autocomplete="off"
                                        placeholder='{{"default.date.format.watermark"|i18n_aip}}'/>
                             </div>
                         </div>
                     </div>
-                    <div class="col-sm-3 col-lg-2 col-xs-12 enddate">
+                    <div class="col-sm-3 col-md-3 col-lg-2 col-xs-12 enddate">
                         <div class="actionItemElement row input-actionItem">
                             <label for="recurrActionItemTime" id="recurrActionItemTimeLabel" class="titleValue required ">{{"aip.admin.action.postactionItem.time"|i18n_aip}}
                             </label>
@@ -433,6 +434,7 @@ Copyright 2019 Ellucian Company L.P. and its affiliates.
 
                             <div class="row input-daterange form-group right-inner-addon dateRange-minwidth" >
                                 <input type="text" class="form-control" name="recurrActionItemTime" aria-required="true"
+                                       aria-label="{{'aip.admin.action.postactionItem.recurringPosting.recurr.time.runtime'|i18n_aip}}"
                                        xe-time-picker-box input_24_hr_string="{{vm.localeTime ? 'N' : 'Y'}}"
                                        change='vm.checkChanges();vm.getProcessedServerRecurranceStartDate()'
                                        hour-format-12="{{vm.localeTime ? 'Y' : 'N'}}"
@@ -444,23 +446,23 @@ Copyright 2019 Ellucian Company L.P. and its affiliates.
                             </div>
                         </div>
                     </div>
-                    <div class="col-sm-3 col-lg-2 col-xs-12 enddate">
+                    <div class="col-sm-3 col-md-3 col-lg-2 col-xs-12 enddate">
                         <div class="actionItemElement row input-actionItem">
                             <label for="timezoneidrecur" class="titleValue required ">{{"aip.admin.action.postactionItem.timezone"|i18n_aip}}
                             </label>
                         </div>
-                        <div class="actionItemElement Datelement col-sm-3  dateRow form-container"
+                        <div class="actionItemElement Datelement col-sm-12 col-md-12 col-lg-12 col-xs-12  dateRow form-container" aria-label="{{'aip.admin.action.postactionItem.recurringPosting.recurr.time.zone.aria.label' | i18n_aip}}"
                              role="textbox"
                              id="timezoneidrecur">
                             <div class="row input-daterange form-group right-inner-addon dateRange-minwidth">
-                                <div class="timeZone timezone-minwidth" ng-show="vm.showTimezoneIcon">
+                                <div class="timeZone" ng-show="vm.showTimezoneIcon">
                                             <span class="col-xs-11 col-sm-10 defaultTimezone"
                                                   ng-bind-html="vm.defaultTimeZone"></span>
                                     <button type="button" class="col-xs-1 col-sm-2 timezone-btn"
                                             ng-click="vm.showTimeZoneList()"></button>
                                 </div>
 
-                                <xe-ui-select class="col-xs-12 col-sm-12 timeZoneChange"
+                                <xe-ui-select class="col-xs-12 col-sm-12 timeZoneChange recurTimeZone"
                                               ng-model="vm.timezone"
                                               ng-change="vm.setTimezone(vm.timezone);vm.checkChanges();vm.getProcessedServerRecurranceStartDate()"
                                               theme="select2" ng-show="!vm.showTimezoneIcon">
@@ -476,8 +478,7 @@ Copyright 2019 Ellucian Company L.P. and its affiliates.
                             </div>
                         </div>
                     </div>
-
-                    <div class="col-sm-3 col-lg-2 col-xs-12 startdate">
+                    <div class="col-sm-3 col-md-3 col-lg-2 col-xs-12 startdate">
                         <div class="actionItemElement row input-actionItem">
                             <label for="recurrEndDate" class="titleValue required"
                                    id="labelScheduledStalabelScheduledStartDatertDate">{{"aip.admin.action.postactionItem.recurringPosting.recurr.end.date"|i18n_aip}}
@@ -509,7 +510,7 @@ Copyright 2019 Ellucian Company L.P. and its affiliates.
                         </label>
                     </div>
                     <div class="col-sm-12 col-md-12  col-xs-12 startdate">
-                        <div class="col-sm-3 col-md-2 col-xs-12 row noPaddingLeft startdate">
+                        <div class="col-sm-3 col-md-3 col-lg-2 col-xs-12 row noPaddingLeft startdate">
                         <div class="actionItemElement row input-actionItem">
                             <label for="appServerDateRecur" class="titleValue" id="labelappServerDateRecurr">{{"aip.admin.action.postactionItem.recurringPosting.recurr.start.date"|i18n_aip}}
                             </label>
@@ -524,7 +525,7 @@ Copyright 2019 Ellucian Company L.P. and its affiliates.
                             </div>
                         </div>
                     </div>
-                        <div class="col-sm-3 col-lg-2 col-xs-12 enddate">
+                        <div class="col-sm-3 col-md-3 col-lg-2 col-xs-12 enddate">
                         <div class="actionItemElement row input-actionItem">
                             <label for="appServerTimeRecurr" id="labelappServerTimeRecurr" class="titleValue">{{"aip.admin.action.postactionItem.time"|i18n_aip}}
                             </label>
@@ -541,7 +542,7 @@ Copyright 2019 Ellucian Company L.P. and its affiliates.
                             </div>
                         </div>
                     </div>
-                        <div class="col-sm-3 col-lg-2 col-xs-12 enddate">
+                        <div class="col-sm-3 col-md-3 col-lg-2 col-xs-12 enddate">
                         <div class="actionItemElement row input-actionItem">
                             <label for="appServerTimeZoneRecurr" class="titleValue " id="labelappServerTimeZoneRecurr">
                                 {{"aip.admin.action.postactionItem.timezone"|i18n_aip}}
@@ -556,7 +557,7 @@ Copyright 2019 Ellucian Company L.P. and its affiliates.
                             </div>
                         </div>
                     </div>
-                        <div class="col-sm-3 col-lg-2 col-xs-12 enddate">
+                        <div class="col-sm-3 col-md-3 col-lg-2 col-xs-12 enddate">
                         <div class="actionItemElement row input-actionItem">
                             <label for="appServerRecurEndDateRecurr" class="titleValue" id="labelappServerRecurEndDateRecurr">{{"aip.admin.action.postactionItem.recurringPosting.recurr.end.date"|i18n_aip}}
                             </label>
