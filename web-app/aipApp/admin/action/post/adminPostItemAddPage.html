@@ -240,11 +240,12 @@ Copyright 2019 Ellucian Company L.P. and its affiliates.
                                             <span class="col-xs-11 col-sm-10 defaultTimezone"
                                                   ng-bind-html="vm.defaultTimeZone"></span>
                                         <button type="button" class="col-xs-1 col-sm-2 timezone-btn"
-                                                ng-click="vm.showTimeZoneList()"></button>
+                                                ng-click="vm.showTimeZoneList()" aria-label="{{'aip.admin.action.postactionItem.timezone.button.aria.label'|i18n_aip}}"></button>
                                     </div>
 
                                     <xe-ui-select class="col-xs-12 col-sm-12 timeZoneChange timezone-minwidth"
                                                   ng-model="vm.timezone"
+                                                  aria-lable="{{'aip.admin.action.postactionItem.timezone'|i18n_aip}}"
                                                   ng-change="vm.setTimezone(vm.timezone);vm.checkChanges();vm.getProcessedServerDateTimeAndTimezone()"
                                                   theme="select2" ng-show="!vm.showTimezoneIcon">
                                         <xe-ui-select-match
@@ -451,7 +452,7 @@ Copyright 2019 Ellucian Company L.P. and its affiliates.
                             <label for="timezoneidrecur" class="titleValue required ">{{"aip.admin.action.postactionItem.timezone"|i18n_aip}}
                             </label>
                         </div>
-                        <div class="actionItemElement Datelement col-sm-12 col-md-12 col-lg-12 col-xs-12  dateRow form-container" aria-label="{{'aip.admin.action.postactionItem.recurringPosting.recurr.time.zone.aria.label' | i18n_aip}}"
+                        <div class="actionItemElement Datelement col-sm-12 col-md-12 col-lg-12 col-xs-12  dateRow form-container"
                              role="textbox"
                              id="timezoneidrecur">
                             <div class="row input-daterange form-group right-inner-addon dateRange-minwidth">
@@ -459,11 +460,13 @@ Copyright 2019 Ellucian Company L.P. and its affiliates.
                                             <span class="col-xs-11 col-sm-10 defaultTimezone"
                                                   ng-bind-html="vm.defaultTimeZone"></span>
                                     <button type="button" class="col-xs-1 col-sm-2 timezone-btn"
-                                            ng-click="vm.showTimeZoneList()"></button>
+                                            ng-click="vm.showTimeZoneList()"
+                                            aria-label="{{'aip.admin.action.postactionItem.timezone.button.aria.label'|i18n_aip}}"></button>
                                 </div>
 
                                 <xe-ui-select class="col-xs-12 col-sm-12 timeZoneChange recurTimeZone"
                                               ng-model="vm.timezone"
+                                              aria-label="{{'aip.admin.action.postactionItem.recurringPosting.recurr.time.zone.aria.label' | i18n_aip}}"
                                               ng-change="vm.setTimezone(vm.timezone);vm.checkChanges();vm.getProcessedServerRecurranceStartDate()"
                                               theme="select2" ng-show="!vm.showTimezoneIcon">
                                     <xe-ui-select-match
