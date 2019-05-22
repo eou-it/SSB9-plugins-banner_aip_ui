@@ -178,7 +178,6 @@ var AIP;
                                 _this.actionPost1.recurringDetails.postingDispEndDays ? _this.displayEndDateOffset = _this.actionPost1.recurringDetails.postingDispEndDays : _this.recurDisplayEndDate = _this.actionPost1.recurringDetails.postingDisplayEndDate;
                                 _this.actionPost1.recurringDetails.postingDisplayEndDate ? _this.recDisplayEndDateType = "EXACT" : _this.recDisplayEndDateType = "OFFSET";
                                 _this.sendTime = _this.recurrTime;
-                                console.log("REND", _this.recDisplayEndDateType);
                                 for (var i = 0; i < _this.recurFreqeunecyList.length; i++) {
                                     if (_this.actionPost1.recurringDetails.recurFrequencyType === _this.recurFreqeunecyList[i].value) {
                                         _this.selectedRecurFrequency = _this.recurFreqeunecyList[i];

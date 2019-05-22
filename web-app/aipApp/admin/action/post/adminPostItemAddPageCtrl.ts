@@ -325,7 +325,6 @@ module AIP {
                                     this.actionPost1.recurringDetails.postingDispEndDays? this.displayEndDateOffset= this.actionPost1.recurringDetails.postingDispEndDays:this.recurDisplayEndDate=this.actionPost1.recurringDetails.postingDisplayEndDate
                                     this.actionPost1.recurringDetails.postingDisplayEndDate? this.recDisplayEndDateType="EXACT":this.recDisplayEndDateType="OFFSET"
                                     this.sendTime = this.recurrTime;
-                                    console.log("REND",this.recDisplayEndDateType)
 
                                     for (var i=0;i<this.recurFreqeunecyList.length;i++) {
                                         if (this.actionPost1.recurringDetails.recurFrequencyType === this.recurFreqeunecyList[i].value) {
