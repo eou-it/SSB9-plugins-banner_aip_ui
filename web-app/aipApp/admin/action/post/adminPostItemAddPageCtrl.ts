@@ -117,6 +117,8 @@ module AIP {
         serverRecurTimeZone:any;
         recurTimeZone:any;
         END_OF_DAY:string="2359";
+        recurEditFlag:boolean;
+        recurDisableTimeAndTimeZone:boolean;
 
         constructor($scope:IActionItemAddPageScope, $rootScope, $q:ng.IQService, $state, $uibModal,$window, $filter, $timeout,
                     SpinnerService:AIP.SpinnerService, APP_ROOT, AdminActionStatusService, AdminActionService:AIP.AdminActionService) {
@@ -167,6 +169,9 @@ module AIP {
             this.currentBrowserDate = null;
             this.selectedTime = null;
             this.enteredDate = null;
+            this.recurEditFlag=false;
+            this.recurDisableTimeAndTimeZone=false;
+
             $window.onbeforeunload = (event)=> {
                 if(this.dirtyFlag) {
                     return this.$filter("i18n_aip")("aip.common.admin.unsaved");
@@ -204,6 +209,7 @@ module AIP {
             this.postActionItemInfo = {};
             this.editMode = this.$state.params.isEdit === "true" ? true : false;
             this.postIDvalue = this.$state.params.postIdval;
+            angular.element("#actionItemAddOrEdit").css("pointer-events", "auto")
 
             allPromises.push(
                 this.adminActionService.getGrouplist()
@@ -288,14 +294,7 @@ module AIP {
                                 this.postActionItemInfo.displayStartDate = this.actionPost1.postingDisplayStartDate;
                                 this.postActionItemInfo.displayEndDate = this.actionPost1.postingDisplayEndDate;
                                 this.postActionItemInfo.scheduledStartDate = this.actionPost1.postingDisplayDateTime;
-
-                                if (this.actionPost1.postingCurrentState === 'Scheduled') {
-                                    this.scheduleType = 'SCHEDULE';
-                                } else {
-                                    this.scheduleType = 'RECUR';
-                                }
                                 this.regeneratePopulation = this.actionPost1.populationRegenerateIndicator;
-                                this.sendTime = this.actionPost1.postingDisplayTime;
                                 var postingTimeZone = this.actionPost1.postingTimeZone.split(" ");
                                 this.defaultTimeZone = this.$filter("i18n_aip")("timezone." + postingTimeZone[postingTimeZone.length - 1]);
 
@@ -305,9 +304,38 @@ module AIP {
                                         this.setTimezone(this.timezones[k]);
                                     }
                                 }
-                                this.appServerDate = this.actionPost1.postingScheduleDateTime;
-                                this.appServerTime = this.actionPost1.scheduledStartTime;
-                                this.appServerTimeZone = angular.element('<div></div>').html(this.actionPost1.timezoneStringOffset.displayNameWithoutOffset).text();
+
+                                if (this.actionPost1.postingCurrentState === 'Scheduled') {
+                                    this.scheduleType = 'SCHEDULE';
+                                    this.sendTime = this.actionPost1.postingDisplayTime;
+                                    this.appServerDate = this.actionPost1.postingScheduleDateTime;
+                                    this.appServerTime = this.actionPost1.scheduledStartTime;
+                                    this.appServerTimeZone = angular.element('<div></div>').html(this.actionPost1.timezoneStringOffset.displayNameWithoutOffset).text();
+
+                                } else {
+                                    this.scheduleType = 'RECUR'
+                                    this.recurEditFlag  = true
+                                    angular.element("#actionItemAddOrEdit").css("pointer-events", "none")
+                                    this.recurCount = this.actionPost1.recurringDetails.recurFrequency
+                                    this.displayStartDateOffset = this.actionPost1.recurringDetails.postingDispStartDays
+                                    this.displayEndDateOffset = this.actionPost1.recurringDetails.postingDispEndDays
+                                    this.recurranceStartDate= this.actionPost1.recurringDetails.recurStartDate
+                                    this.recurranceEndDate= this.actionPost1.recurringDetails.recurEndDate
+                                    this.recurrTime=this.actionPost1.postingDisplayTime
+                                    this.actionPost1.recurringDetails.postingDispEndDays? this.displayEndDateOffset= this.actionPost1.recurringDetails.postingDispEndDays:this.recurDisplayEndDate=this.actionPost1.recurringDetails.postingDisplayEndDate
+                                    this.actionPost1.recurringDetails.postingDisplayEndDate? this.recDisplayEndDateType="EXACT":this.recDisplayEndDateType="OFFSET"
+                                    this.sendTime = this.recurrTime;
+                                    console.log("REND",this.recDisplayEndDateType)
+
+                                    for (var i=0;i<this.recurFreqeunecyList.length;i++) {
+                                        if (this.actionPost1.recurringDetails.recurFrequencyType === this.recurFreqeunecyList[i].value) {
+                                            this.selectedRecurFrequency = this.recurFreqeunecyList[i]
+                                            this.selectedRecurFrequency.value==="HOURS"?this.recurDisableTimeAndTimeZone=true:this.recurDisableTimeAndTimeZone=false
+                                        }
+                                    }
+                                    this.getProcessedServerRecurranceStartDate()
+                                    this.getProcessedServerRecurranceEndDate()
+                                }
 
                                 this.changedValue();
 
@@ -433,6 +461,7 @@ module AIP {
 
         timeConversion()
         {
+
             if(this.scheduleType === "RECUR"){
                 this.postActionItemInfo.scheduledStartDate = this.recurranceStartDate
             }
@@ -502,13 +531,15 @@ module AIP {
         }
 
         getProcessedServerRecurranceStartDate() {
+
+            this.sendTime=this.recurrTime;
             this.timeConversion();
             var userSelectedVal =
-            {
-                "userEnterDate": this.recurranceStartDate,
-                "userEnterTime": this.$filter("date")(this.recurrTime, "HHmm"),
-                "userEnterTimeZone": this.timezone.timezoneId
-            };
+                {
+                    "userEnterDate": this.recurranceStartDate,
+                    "userEnterTime":this.selectedTime,
+                    "userEnterTimeZone": this.timezone.timezoneId
+                };
 
             this.adminActionStatusService.getProcessedServerDateTimeAndTimezone(userSelectedVal)
                 .then((response) => {
@@ -747,20 +778,30 @@ module AIP {
                     this.displayDatetimeZone.timeZoneVal=this.timezone.stringOffset+' '+this.timezone.timezoneId;
                 }
             }else{
-                if(this.recurrTime instanceof Date) {
-                    userSelectedTime = this.$filter("date")(this.recurrTime, "HHmm");
+                if (this.editMode) {
+                    this.sendTime=this.recurrTime
+                    this.timeConversion()
+                    userSelectedTime =  this.selectedTime;
+                    this.displayDatetimeZone.dateVal = this.postActionItemInfo.scheduledStartDate;
+                    this.displayDatetimeZone.timeVal = userSelectedTime;
+                    this.displayDatetimeZone.timeZoneVal = this.timezone.stringOffset + ' ' + this.timezone.timezoneId;
                 }
-                else{
-                    userSelectedTime= this.recurrTime;
+                else {
+                    if (this.recurrTime instanceof Date) {
+                        userSelectedTime = this.$filter("date")(this.recurrTime, "HHmm");
+                    }
+                    else {
+                        userSelectedTime = this.recurrTime;
+                    }
+                    this.displayDatetimeZone.dateVal = this.postActionItemInfo.scheduledStartDate;
+                    this.displayDatetimeZone.timeVal = userSelectedTime;
+                    this.displayDatetimeZone.timeZoneVal = this.timezone.stringOffset + ' ' + this.timezone.timezoneId;
                 }
-                this.displayDatetimeZone.dateVal=this.postActionItemInfo.scheduledStartDate;
-                this.displayDatetimeZone.timeVal = userSelectedTime;
-                this.displayDatetimeZone.timeZoneVal=this.timezone.stringOffset+' '+this.timezone.timezoneId;
-
             }
             if (this.scheduleType === 'RECUR') {
                 this.postActionItemInfo.scheduledStartDate = this.recurranceStartDate
                 this.enteredDate=this.recurranceStartDate
+
                 this.adminActionService.saveRecurringActionItem(this.postActionItemInfo, this.selected, this.modalResults, this.selectedPopulation, this.regeneratePopulation, this.recurCount, this.selectedRecurFrequency, this.displayStartDateOffset, this.recDisplayEndDateType, this.displayEndDateOffset, this.recurDisplayEndDate, this.recurranceStartDate, this.recurranceEndDate, userSelectedTime, this.timezone.timezoneId, this.displayDatetimeZone)
                     .then((response:AIP.IPostActionItemSaveResponse) => {
                         this.saving = false;

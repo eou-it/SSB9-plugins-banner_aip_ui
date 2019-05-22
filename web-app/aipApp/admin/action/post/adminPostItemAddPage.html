@@ -20,7 +20,7 @@ Copyright 2019 Ellucian Company L.P. and its affiliates.
             <div class="actionItemElement col-xs-12 col-md-8">
                 <div class="row">
                     <input id="actionItemName" type="text" class="form-control"
-                           ng-model="vm.postActionItemInfo.name" ng-change="vm.checkChanges()"
+                           ng-model="vm.postActionItemInfo.name" ng-change="vm.checkChanges()" ng-disabled="vm.recurEditFlag"
                            placeholder='{{"aip.admin.action.actionItem.post.jobName.label"|i18n_aip}}'
                            aria-label='{{"aip.admin.action.actionItem.post.jobName.label"|i18n_aip}}'
                            aria-required="true">
@@ -35,7 +35,7 @@ Copyright 2019 Ellucian Company L.P. and its affiliates.
             </div>
             <div class="actionItemElement col-xs-8 col-sm-8">
                 <div class="row">
-                    <xe-ui-select id="postActionItemGroup" ng-change="vm.changedValue();vm.checkChanges()"
+                    <xe-ui-select id="postActionItemGroup" ng-change="vm.changedValue();vm.checkChanges()"  ng-disabled="vm.recurEditFlag"
                                   ng-model="vm.selected"
                                   theme="select2" ng-disabled="disabled">
 
@@ -68,7 +68,7 @@ Copyright 2019 Ellucian Company L.P. and its affiliates.
             </div>
 
             <div class="actionItemElement actionItemInfoRow row">
-                <span class="actionItemEdit" ng-click="vm.editPage()">{{"aip.admin.action.actionItems.add.edit"|i18n_aip}}</span>
+                <span class="actionItemEdit" id="actionItemAddOrEdit" ng-click="vm.editPage()">{{"aip.admin.action.actionItems.add.edit"|i18n_aip}}</span>
                 <span id="ActionItemGroup" class="actionItemLength">
                     <span ng-model="vm.itemLength" ng-if="vm.itemLength > 0">{{vm.itemLength}} {{"aip.admin.action.actionItems.itemsSelected"|i18n_aip}}</span>
                     <span ng-model="vm.itemLength" ng-if="vm.itemLength <= 0">{{vm.itemLength}} {{"aip.admin.action.actionItems.itemsSelected"|i18n_aip}}</span>
@@ -87,7 +87,7 @@ Copyright 2019 Ellucian Company L.P. and its affiliates.
                 <div class="row">
                     <xe-ui-select id="postActionItemPopulation" ng-model="vm.selectedPopulation"
                                   ng-change="vm.checkChanges()" theme="select2"
-                                  ng-disabled="disabled">
+                                  ng-disabled="vm.recurEditFlag">
 
                         <xe-ui-select-match placeholder={{"aip.admin.action.selected.groupName.name"|i18n_aip}}>
                             <div class="row actionItemName" ng-bind-html="vm.selectedPopulation.name"></div>
@@ -107,16 +107,16 @@ Copyright 2019 Ellucian Company L.P. and its affiliates.
             </div>
         </div>
         <div class="row actionItemInfoRow actionItemStatus actionItemScheduleType" >
-            <input id="regeneratePopulation" name="content" type="checkbox" ng-model="vm.regeneratePopulation" ng-change="vm.checkChanges()" />
+            <input id="regeneratePopulation" name="content" type="checkbox" ng-model="vm.regeneratePopulation" ng-change="vm.checkChanges()" ng-disabled="vm.recurEditFlag" />
             <label  class="titleValue  required" for="regeneratePopulation">{{'aip.admin.action.postactionItem.regeneratePopulation'|i18n_aip}}</label>
         </div>
         <div class="row actionItemInfoRow actionItemScheduleType"   >
-            <input type="radio" id="chkPost" name="content" ng-model="vm.scheduleType" value="POSTNOW"
+            <input type="radio" id="chkPost" name="content" ng-model="vm.scheduleType" value="POSTNOW" ng-disabled="vm.recurEditFlag"
                    ng-change="vm.checkChanges();vm.scheduleType=='POSTNOW'?vm.postNow='true':vm.postNow='false'"/>
             <label class="titleValue  required" for="chkPost">{{"aip.admin.action.postactionItem.post.now"|i18n_aip}}</label>
 
             <br/>
-            <input type="radio" id="chkDate" name="content" ng-model="vm.scheduleType" value="SCHEDULE"
+            <input type="radio" id="chkDate" name="content" ng-model="vm.scheduleType" value="SCHEDULE" ng-disabled="vm.recurEditFlag"
                    ng-change="vm.checkChanges();vm.scheduleType=='POSTNOW'?vm.postNow='true':vm.postNow='false'"/>
             <label class="titleValue  required" for="chkDate">{{"aip.admin.action.postactionItem.scheduleDate"|i18n_aip}}</label>
             <br/>
@@ -325,14 +325,14 @@ Copyright 2019 Ellucian Company L.P. and its affiliates.
                    </div>
                     <div class="row">
                     <div class="actionItemElement col-lg-1 col-md-1 col-sm-2 col-xs-3 ">
-                        <input type="number" min="0" id="recurCount" ng-model="vm.recurCount" class="form-control "
+                        <input type="number" min="0" id="recurCount" ng-model="vm.recurCount" class="form-control " ng-disabled="vm.recurEditFlag"
                                name="recurCount"
                                aria-required="true" required autocomplete="off" aria-label="{{'aip.admin.action.postactionItem.recurringPosting.recur.every.aria.label'|i18n_aip}}"/>
 
                     </div>
                     <div class="actionItemElement col-lg-1 col-md-1 col-sm-2 col-xs-3 ">
                         <xe-ui-select id="recurFrequency" ng-model="vm.selectedRecurFrequency" theme="select2"
-                                      ng-disabled="disabled" search-enabled="false" ng-change="vm.dataChanged()" aria-label="{{'aip.admin.action.postactionItem.recurringPosting.recurType.aria.label'|i18n_aip}}"
+                                      ng-disabled="vm.recurEditFlag"  search-enabled="false" ng-change="vm.dataChanged()" aria-label="{{'aip.admin.action.postactionItem.recurringPosting.recurType.aria.label'|i18n_aip}}"
                         >
                             <xe-ui-select-match>
                                 <div class=" row actionItemName"
@@ -356,7 +356,7 @@ Copyright 2019 Ellucian Company L.P. and its affiliates.
                         <div class=" row actionItemElement  ">
                             <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 noPaddingLeft">
                                 <input type="number" min="0" class="form-control" name="displayStartDateOffset" aria-required="true" required autocomplete="off" ng-model="vm.displayStartDateOffset"
-                                       aria-label="{{'aip.admin.action.postactionItem.recurringPosting.displayStartOffset.aria.label'|i18n_aip}}"/>
+                                       ng-change="vm.checkChanges()"    aria-label="{{'aip.admin.action.postactionItem.recurringPosting.displayStartOffset.aria.label'|i18n_aip}}"/>
                             </div>
                             <div class=" displayInstruction recuranceInstrcution col-xs-6 noPaddingLeft">{{"aip.admin.action.postactionItem.recurringPosting.displayOffset.instructions"|i18n_aip}}</div>
                         </div>
@@ -374,7 +374,7 @@ Copyright 2019 Ellucian Company L.P. and its affiliates.
                                        ng-change="vm.checkChanges();" aria-label="{{'aip.admin.action.postactionItem.recurringPosting.recurr.end.date.offset.type'|i18n_aip}}"/>
                             </div>
                             <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 noPaddingLeft actionItemElement">
-                                <input type="number" min="0" class="form-control" name="displayEndDateOffset" aria-required="true" required autocomplete="off" ng-model ="vm.displayEndDateOffset" ng-disabled="vm.recDisplayEndDateType==='EXACT'" aria-label={{'aip.admin.action.postactionItem.recurringPosting.displayEndOffset.aria.label'|i18n_aip}}"/>
+                                <input type="number" min="0" class="form-control" name="displayEndDateOffset" ng-change="vm.checkChanges()" aria-required="true" required autocomplete="off" ng-model ="vm.displayEndDateOffset" ng-disabled="vm.recDisplayEndDateType==='EXACT'" aria-label={{'aip.admin.action.postactionItem.recurringPosting.displayEndOffset.aria.label'|i18n_aip}}"/>
                             </div>
                             <div class=" col-lg-8 col-md-8 col-sm-8 col-xs-8 noPaddingLeft ">
                                 <div class="displayInstruction recuranceInstrcution"> {{"aip.admin.action.postactionItem.recurringPosting.displayOffset.instructions"|i18n_aip}}</div>
@@ -415,10 +415,17 @@ Copyright 2019 Ellucian Company L.P. and its affiliates.
 
                             <div class="col-xs-3 col-sm-3 noPaddingLeft noPaddingRight input-daterange form-group right-inner-addon dateRange-minwidth" aria-label="{{'aip.admin.action.postactionItem.recurringPosting.recurr.start.date.aria.label'|i18n_aip}}">
                                 <input type="text" id="recurrStartDate" date-picker
-                                       ng-model="vm.recurranceStartDate"
+                                       ng-model="vm.recurranceStartDate"  ng-if="vm.recurEditFlag==false"
                                        ng-change="vm.checkChanges();vm.getProcessedServerRecurranceStartDate()"
                                        class="form-control  Datelement " name="recurranceStartDate"
                                        aria-label="{{'aip.admin.action.postactionItem.recurringPosting.recurr.start.date.aria.label'|i18n_aip}}"
+                                       aria-required="true" required autocomplete="off"
+                                       placeholder='{{"default.date.format.watermark"|i18n_aip}}'/>
+
+                                <input type="text" id="recurrEditStartDate" ng-if="vm.recurEditFlag==true"
+                                       ng-model="vm.recurranceStartDate" ng-disabled="vm.recurEditFlag"
+                                       ng-change="vm.checkChanges();vm.getProcessedServerRecurranceStartDate()"
+                                       class="form-control  Datelement " name="recurranceStartDate"
                                        aria-required="true" required autocomplete="off"
                                        placeholder='{{"default.date.format.watermark"|i18n_aip}}'/>
                             </div>
@@ -433,7 +440,7 @@ Copyright 2019 Ellucian Company L.P. and its affiliates.
                              role="textbox">
 
                             <div class="row input-daterange form-group right-inner-addon dateRange-minwidth" >
-                                <input type="text" class="form-control" name="recurrActionItemTime" aria-required="true"
+                                <input type="text" class="form-control" name="recurrActionItemTime" aria-required="true" ng-disabled="vm.recurDisableTimeAndTimeZone"
                                        aria-label="{{'aip.admin.action.postactionItem.recurringPosting.recurr.time.runtime'|i18n_aip}}"
                                        xe-time-picker-box input_24_hr_string="{{vm.localeTime ? 'N' : 'Y'}}"
                                        change='vm.checkChanges();vm.getProcessedServerRecurranceStartDate()'
@@ -462,7 +469,7 @@ Copyright 2019 Ellucian Company L.P. and its affiliates.
                                             ng-click="vm.showTimeZoneList()"></button>
                                 </div>
 
-                                <xe-ui-select class="col-xs-12 col-sm-12 timeZoneChange recurTimeZone"
+                                <xe-ui-select class="col-xs-12 col-sm-12 timeZoneChange recurTimeZone" ng-disabled="vm.recurDisableTimeAndTimeZone"
                                               ng-model="vm.timezone"
                                               ng-change="vm.setTimezone(vm.timezone);vm.checkChanges();vm.getProcessedServerRecurranceStartDate()"
                                               theme="select2" ng-show="!vm.showTimezoneIcon">
