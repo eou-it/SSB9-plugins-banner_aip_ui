@@ -276,6 +276,7 @@ var bannerAIPApp = angular.module("bannerAIP", [
             updateActionItemPosting: aipAppAbsPath + "aipActionItemPosting/updateActionItemPosting",
             getMaxAttachmentsVal: aipAppAbsPath + "aipAdmin/getMaxAttachmentsVal",
             addRecurringActionItemPosting:aipAppAbsPath+"aipActionItemPosting/addRecurringActionItemPosting",
+            updateRecurringActionItemPosting:aipAppAbsPath+"aipActionItemPosting/updateRecurringActionItemPosting",
             actionItemRecurringPostJobList: aipAppAbsPath + "aipActionItemPosting/recurringActionItemPostJobList",
             recurringActionItemPostMetaData: aipAppAbsPath + "aipActionItemPosting/recurringActionItemPostMetaData",
 

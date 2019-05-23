@@ -1386,6 +1386,10 @@ ol.selected-group > li > button {
     transform: rotate(-0deg);
   }*/
   /* Webkit browsers like Safari and Chrome */ }
+  .actionItemAddContainer .noPaddingLeft {
+    padding-left: 0px; }
+  .actionItemAddContainer .noPaddingRight {
+    padding-right: 0px; }
   .actionItemAddContainer .actionItemScheduleType {
     padding-left: 8px; }
   .actionItemAddContainer input.hasMultiCalendarPicker {
@@ -1596,7 +1600,6 @@ ol.selected-group > li > button {
     background: #ffffff;
     webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
     box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
-    width: 23em;
     line-height: 1.5em; }
   .actionItemAddContainer .defaultTimezone {
     font-size: 13px;
@@ -1613,7 +1616,13 @@ ol.selected-group > li > button {
     width: 10em; }
   .actionItemAddContainer .recuranceInstrcution {
     font-size: 16px;
-    padding-top: 3px; }
+    padding-top: 3px;
+    width: auto !important; }
+  .actionItemAddContainer .recurTimeZone {
+    width: 100%; }
+
+#recurFrequency.ui-select-container .select2-choice {
+  min-height: 3.5em !important; }
 
 .aip-modal .modal-dialog .modal-header .row.blockProcess {
   padding: 16px; }

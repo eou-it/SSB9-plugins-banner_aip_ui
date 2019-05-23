@@ -218,7 +218,7 @@ var AIP;
             var request = this.$http({
                 method: "POST",
                 data: params,
-                url: postActionItem.postId ? this.ENDPOINT.admin.updateActionItemPosting : this.ENDPOINT.admin.addRecurringActionItemPosting
+                url: postActionItem.postId ? this.ENDPOINT.admin.updateRecurringActionItemPosting : this.ENDPOINT.admin.addRecurringActionItemPosting
             });
             return request;
         };
