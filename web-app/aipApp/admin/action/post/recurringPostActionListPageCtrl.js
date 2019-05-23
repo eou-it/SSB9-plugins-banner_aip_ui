@@ -1,12 +1,12 @@
 /*******************************************************************************
- Copyright 2018-2019 Ellucian Company L.P. and its affiliates.
+ Copyright 2019 Ellucian Company L.P. and its affiliates.
  ********************************************************************************/
 ///<reference path="../../../../typings/tsd.d.ts"/>
 ///<reference path="../../../common/services/admin/adminActionService.ts"/>
 var AIP;
 (function (AIP) {
-    var PostActionListPageCtrl = (function () {
-        function PostActionListPageCtrl($scope, $state, $window, $filter, $q, ENDPOINT, PAGINATIONCONFIG, AdminActionService) {
+    var RecurringPostActionListPageCtrl = (function () {
+        function RecurringPostActionListPageCtrl($scope, $state, $window, $filter, $q, ENDPOINT, PAGINATIONCONFIG, AdminActionService) {
             this.$inject = ["$scope", "$state", "$window", "$filter", "$q", "ENDPOINT", "PAGINATIONCONFIG",
                 "AdminActionService"];
             $scope.vm = this;
@@ -18,13 +18,15 @@ var AIP;
             this.actionListService = AdminActionService;
             this.localeTime = {};
             this.timezones = {};
+            this.recurringPostJobsMetaData = {};
             this.init();
             angular.element($window).bind('resize', function () {
                 $scope.$apply();
             });
         }
-        PostActionListPageCtrl.prototype.init = function () {
+        RecurringPostActionListPageCtrl.prototype.init = function () {
             var _this = this;
+            this.fetchRecurringMetaData();
             this.gridHeight = $(document).height() -
                 $("#breadcrumb-panel").height() -
                 $("#title-panel").height() -
@@ -45,9 +47,6 @@ var AIP;
                 postingCreatorId: 3,
                 action: 3
             };
-            if (this.$state.params.noti) {
-                this.handleNotification(this.$state.params.noti);
-            }
             this.mobileSize = angular.element("body").width() > 768 ? false : true;
             this.searchConfig = {
                 id: "dataTableSearch",
@@ -174,17 +173,6 @@ var AIP;
                         visible: true,
                         columnShowHide: false
                     }
-                },
-                {
-                    name: "postingActionStatus",
-                    title: this.$filter("i18n_aip")("aip.admin.actionItem.post.grid.job.actionstatus"),
-                    ariaLabel: this.$filter("i18n_aip")("aip.admin.actionItem.post.grid.job.actionstatus"),
-                    width: "100px",
-                    options: {
-                        sortable: false,
-                        visible: true,
-                        columnShowHide: false
-                    }
                 }
             ];
             allPromises.push(this.actionListService.getCurrentTimeLocale()
@@ -197,7 +185,7 @@ var AIP;
                 _this.timezones = response.data.timezones;
             }));
         };
-        PostActionListPageCtrl.prototype.getHeight = function () {
+        RecurringPostActionListPageCtrl.prototype.getHeight = function () {
             var containerHeight = $(document).height() -
                 $("#breadcrumb-panel").height() -
                 $("#title-panel").height() -
@@ -207,25 +195,11 @@ var AIP;
                 30;
             return { height: containerHeight };
         };
-        PostActionListPageCtrl.prototype.handleNotification = function (noti) {
-            var _this = this;
-            if (noti.notiType === "saveSuccess") {
-                var n = new Notification({
-                    message: this.$filter("i18n_aip")("aip.common.save.successful"),
-                    type: "success",
-                    flash: true
-                });
-                setTimeout(function () {
-                    notifications.addNotification(n);
-                    _this.$state.params.noti = undefined;
-                    $(".actionItemAddContainer").focus();
-                }, 500);
-            }
-        };
-        PostActionListPageCtrl.prototype.fetchTableData = function (query) {
+        RecurringPostActionListPageCtrl.prototype.fetchTableData = function (query) {
             var deferred = this.$q.defer();
             var am = this.$filter("i18n_aip")("aip.admin.communication.timepicker.time.am.label");
             var pm = this.$filter("i18n_aip")("aip.admin.communication.timepicker.time.pm.label");
+            query.recurringPostId = this.$state.params.postIdval;
             this.actionListService.fetchTableData(query)
                 .then(function (response) {
                 for (var k = 0; k < response.result.length; k++) {
@@ -245,52 +219,18 @@ var AIP;
             });
             return deferred.promise;
         };
-        PostActionListPageCtrl.prototype.selectRecord = function (data) {
-            this.selectedRecord = data;
-        };
-        PostActionListPageCtrl.prototype.refreshGrid = function () {
-        };
-        PostActionListPageCtrl.prototype.goAddPage = function () {
-            this.$state.go("admin-post-add");
-        };
-        PostActionListPageCtrl.prototype.openActionItem = function () {
-            this.$state.go("admin-action-open", { data: this.selectedRecord.id });
-        };
-        PostActionListPageCtrl.prototype.editActionItem = function (postId) {
+        RecurringPostActionListPageCtrl.prototype.fetchRecurringMetaData = function () {
             var _this = this;
-            this.actionListService.getPostStatus(postId)
+            this.actionListService.fetchRecurringJobPostMetaData(this.$state.params.postIdval)
                 .then(function (response) {
-                if (notifications.length !== 0) {
-                    notifications.remove(notifications.first());
-                }
-                if (response === "Y") {
-                    _this.$state.go("admin-post-edit", { postIdval: postId, isEdit: true });
-                }
-                else {
-                    if (notifications.length !== 0) {
-                        notifications.remove(notifications.first());
-                    }
-                    var n = new Notification({
-                        message: _this.$filter("i18n_aip")("aip.common.post.edit.noaccess"),
-                        type: "error",
-                        flash: true
-                    });
-                    setTimeout(function () {
-                        notifications.addNotification(n);
-                        _this.$state.params.noti = undefined;
-                        $(".actionItemAddContainer").focus();
-                    }, 100);
-                }
-            }, function (err) {
-                throw new Error(err);
+                _this.recurringPostJobsMetaData = response;
+            }, function (error) {
+                console.log(error);
             });
         };
-        PostActionListPageCtrl.prototype.recurringPostDetails = function (postId) {
-            this.$state.go("admin-recurring-post-list", { postIdval: postId });
-        };
-        return PostActionListPageCtrl;
+        return RecurringPostActionListPageCtrl;
     })();
-    AIP.PostActionListPageCtrl = PostActionListPageCtrl;
+    AIP.RecurringPostActionListPageCtrl = RecurringPostActionListPageCtrl;
 })(AIP || (AIP = {}));
-register("bannerAIP").controller("PostActionListPageCtrl", AIP.PostActionListPageCtrl);
-//# sourceMappingURL=postActionListPageCtrl.js.map
+register("bannerAIP").controller("RecurringPostActionListPageCtrl", AIP.RecurringPostActionListPageCtrl);
+//# sourceMappingURL=recurringPostActionListPageCtrl.js.map

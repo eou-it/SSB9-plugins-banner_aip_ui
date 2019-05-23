@@ -45,12 +45,14 @@ var AIP;
                 '&ascending=' + (query.ascending.toString() || "") +
                 '&offset=' + (query.offset || 0) +
                 '&max=' + realMax;
+            url = url + (query.recurringPostId ? '&recurringPostId=' + query.recurringPostId : '');
             var params = {
                 filterName: query.searchParam || "%",
                 sortColumn: query.sortColumnName || "postingName",
                 sortAscending: query.ascending || false,
                 max: realMax || "",
-                offset: query.offset || 0
+                offset: query.offset || 0,
+                recurringPostId: query.recurringPostId
             };
             this.$http({
                 method: "GET",
@@ -323,6 +325,24 @@ var AIP;
                 }
             });
             return request;
+        };
+        AdminActionService.prototype.fetchRecurringJobPostMetaData = function (recurringPostId) {
+            var deferred = this.$q.defer();
+            var url = this.ENDPOINT.admin.recurringActionItemPostMetaData +
+                '?recurringPostId=' + recurringPostId;
+            var params = {
+                recurringPostId: recurringPostId
+            };
+            this.$http({
+                method: "GET",
+                url: url,
+                data: params
+            }).then(function (response) {
+                deferred.resolve(response.data);
+            }, function (data) {
+                deferred.reject(data);
+            });
+            return deferred.promise;
         };
         AdminActionService.$inject = ["$http", "$q", "$filter", "ENDPOINT"];
         return AdminActionService;

@@ -122,13 +122,25 @@ class AipActionItemPostingController {
      */
     def actionItemPostJobList() {
 
-        def paramObj = [searchParam  : params.searchParam ?:"%",
+        def paramObj = [recurringPostId: params.recurringPostId ?:"",
+                        searchParam  : params.searchParam ?:"%",
                         sortColumn   : params.sortColumnName ?: "id",
                         sortAscending: params.ascending ? params.ascending.toBoolean() : false,
                         max          : params.max.toInteger(),
                         offset       : params.offset ? params.offset.toInteger() : 0]
 
         def results = actionItemPostReadOnlyService.listActionItemPostJobList(paramObj )
+        render results as JSON
+
+    }
+
+    /**
+     *  Recurring action item post jobs meta data
+     * @return
+     */
+    def recurringActionItemPostMetaData() {
+
+        def results = actionItemPostReadOnlyService.recurringJobMetaData(params.recurringPostId )
         render results as JSON
 
     }
