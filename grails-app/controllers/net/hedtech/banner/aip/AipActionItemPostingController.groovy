@@ -44,6 +44,25 @@ class AipActionItemPostingController {
         render model as JSON;
     }
 
+    /**
+     * Update recurring action Item Post
+     * @return
+     */
+    def updateRecurringActionItemPosting(){
+        def map = [:]
+        map = request.JSON
+        LOGGER.trace "Recurring post update - {$request.JSON.toString()}";
+        def model
+        try{
+            model = actionItemPostCompositeService.updateRecurringActionItemPosting(map)
+        }catch(ApplicationException e){
+            model = [fail: true]
+            LOGGER.error( e.getMessage() )
+            model.message = e.returnMap( { mapToLocalize -> new ValidationTagLib().message( mapToLocalize ) } ).message
+        }
+        render model as JSON;
+    }
+
 
     /**
      * Add Action Item Post

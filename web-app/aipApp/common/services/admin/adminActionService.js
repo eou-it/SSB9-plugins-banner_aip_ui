@@ -10,7 +10,7 @@ var AIP;
         Status[Status["Active"] = 2] = "Active";
         Status[Status["Inactive"] = 3] = "Inactive";
     })(Status || (Status = {}));
-    var AdminActionService = (function () {
+    var AdminActionService = /** @class */ (function () {
         function AdminActionService($http, $q, $filter, ENDPOINT) {
             this.$http = $http;
             this.$q = $q;
@@ -216,7 +216,7 @@ var AIP;
             var request = this.$http({
                 method: "POST",
                 data: params,
-                url: postActionItem.postId ? this.ENDPOINT.admin.updateActionItemPosting : this.ENDPOINT.admin.addRecurringActionItemPosting
+                url: postActionItem.postId ? this.ENDPOINT.admin.updateRecurringActionItemPosting : this.ENDPOINT.admin.addRecurringActionItemPosting
             });
             return request;
         };
@@ -326,9 +326,8 @@ var AIP;
         };
         AdminActionService.$inject = ["$http", "$q", "$filter", "ENDPOINT"];
         return AdminActionService;
-    })();
+    }());
     AIP.AdminActionService = AdminActionService;
 })(AIP || (AIP = {}));
 register("bannerAIP").service("AdminActionService", AIP.AdminActionService);
 register("bannerAIP").service("dateFormatService", AIP.AdminActionService);
-//# sourceMappingURL=adminActionService.js.map

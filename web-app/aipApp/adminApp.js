@@ -262,7 +262,8 @@ var bannerAIPApp = angular.module("bannerAIP", [
             processedDateTime:aipAppAbsPath + "aipActionItemPosting/getProcessedServerDateTimeAndTimezone",
             updateActionItemPosting: aipAppAbsPath + "aipActionItemPosting/updateActionItemPosting",
             getMaxAttachmentsVal: aipAppAbsPath + "aipAdmin/getMaxAttachmentsVal",
-            addRecurringActionItemPosting:aipAppAbsPath+"aipActionItemPosting/addRecurringActionItemPosting"
+            addRecurringActionItemPosting:aipAppAbsPath+"aipActionItemPosting/addRecurringActionItemPosting",
+            updateRecurringActionItemPosting:aipAppAbsPath+"aipActionItemPosting/updateRecurringActionItemPosting"
 
 
         }
