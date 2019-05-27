@@ -42,15 +42,19 @@ Copyright 2018-2019 Ellucian Company L.P. and its affiliates.
             </xe-cell-markup>
 
             <xe-cell-markup column-name="postingActionStatus" >
+
                 <button class="icon icon-edit-CO" ng-click="vm.editActionItem(row.id)"
                      title="{{'aip.common.edit.action.item.jaws'|i18n_aip}}" aria-label="{{'aip.common.edit.action.item.jaws'|i18n_aip}}">
                 </button>
             </xe-cell-markup>
             <xe-cell-markup column-name="recurrenceAction">
-                <button class="icon icon-more-A-CO" ng-click="vm.recurringPostDetails(row.id)" ng-if='row.recurringPostIndicator'
-                              title="{{'aip.common.view.action.item.recurring.jaws'|i18n_aip}}" aria-label="{{'aip.common.view.action.item.recurring.jaws'|i18n_aip}}">
-                </button>
-                <span class="warnicon" ng-if='row.recurringPostJobError'></span>
+                <div class="col-lg-2 col-md-2">
+                    <button class="icon icon-more-A-CO" ng-click="vm.recurringPostDetails(row.id)" ng-if='row.recurringPostIndicator'
+                                  title="{{'aip.common.view.action.item.recurring.jaws'|i18n_aip}}" aria-label="{{'aip.common.view.action.item.recurring.jaws'|i18n_aip}}">
+                    </button>
+                </div>
+                <div class="warnicon col-lg-1 col-md-1"  ng-if='row.recurringPostJobError' style="float: right;" title="{{'aip.common.view.action.item.recurring.error.job.jaws'|i18n_aip}}" aria-label="{{'aip.common.view.action.item.recurring.error.job.jaws'|i18n_aip}}">&nbsp</div>
+
             </xe-cell-markup>
 
         </xe-table-grid>
