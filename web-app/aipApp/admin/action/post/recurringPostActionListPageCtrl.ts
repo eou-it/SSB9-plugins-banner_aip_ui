@@ -166,47 +166,25 @@ module AIP {
                     }
                 },
                 {
-                    name: "groupFolderName",
-                    title: this.$filter("i18n_aip")("aip.admin.actionItem.post.grid.job.group.folder"),
-                    ariaLabel: this.$filter("i18n_aip")("aip.admin.actionItem.post.grid.job.group.folder"),
+                    name: "displayStartDate",
+                    title: this.$filter("i18n_aip")("js.aip.review.monitor.action.item.grid.header.displayStartDate"),
+                    ariaLabel: this.$filter("i18n_aip")("js.aip.review.monitor.action.item.grid.header.displayStartDate"),
                     width: "100px",
                     options: {
-                        sortable: true,
+                        sortable: false,
                         visible: true,
                         columnShowHide: true
                     }
                 },
                 {
-                    name: "postingPopulation",
-                    title: this.$filter("i18n_aip")("aip.admin.actionItem.post.grid.job.population"),
-                    ariaLabel: this.$filter("i18n_aip")("aip.admin.actionItem.post.grid.job.population"),
+                    name: "displayEndDate",
+                    title: this.$filter("i18n_aip")("js.aip.review.monitor.action.item.grid.header.displayEndDate"),
+                    ariaLabel: this.$filter("i18n_aip")("js.aip.review.monitor.action.item.grid.header.displayEndDate"),
                     width: "100px",
                     options: {
-                        sortable: true,
+                        sortable: false,
                         visible: true,
                         columnShowHide: true
-                    }
-                },
-                {
-                    name: "groupName",
-                    title: this.$filter("i18n_aip")("aip.admin.actionItem.post.grid.job.group.name"),
-                    ariaLabel: this.$filter("i18n_aip")("aip.admin.actionItem.post.grid.job.group.name"),
-                    width: "100px",
-                    options: {
-                        sortable: true,
-                        visible: true,
-                        columnShowHide: true
-                    }
-                },
-                {
-                    name: "postingCreatorId",
-                    title: this.$filter("i18n_aip")("aip.admin.actionItem.post.grid.job.submittedBy"),
-                    ariaLabel: this.$filter("i18n_aip")("aip.admin.actionItem.post.grid.job.submittedBy"),
-                    width: "100px",
-                    options: {
-                        sortable: true,
-                        visible: true,
-                        columnShowHide: false
                     }
                 }
             ];
