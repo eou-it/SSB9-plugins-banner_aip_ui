@@ -12,7 +12,32 @@ Copyright 2019 Ellucian Company L.P. and its affiliates.
             </div>
         </div>
         <div class="row">
+            <div class="col-xs-12 col-sm-2 col-md-3 col-lg-2 nopadding ">
+                <label>{{"aip.admin.action.postactionItem.recurringPosting.recurEvery"|i18n_aip}}</label>
+            </div>
+            <div class="col-xs-12 col-sm-4 col-md-3 col-lg-2">
+                <span>{{vm.recurringPostJobsMetaData.recurFrequency}}  {{vm.recurringPostJobsMetaData.recurFrequencyType}}</span>
+            </div>
+        </div>
+        <div class="row">
             <div class="col-xs-12 col-sm-4 col-md-3 col-lg-2 nopadding">
+                <label>{{"aip.admin.action.postactionItem.start.date"|i18n_aip}}</label>
+            </div>
+            <div class="col-xs-12 col-sm-4 col-md-3 col-lg-2">
+                <span>{{vm.recurringPostJobsMetaData.postingDispStartDays}}  {{"aip.admin.action.postactionItem.recurringPosting.displayOffset.instructions"|i18n_aip}}</span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-4 col-md-3 col-lg-2">
+                <label>{{"aip.admin.action.postactionItem.end.date"|i18n_aip}}</label>
+            </div>
+            <div class="col-xs-12 col-sm-4 col-md-3 col-lg-2">
+                <span ng-if="vm.recurringPostJobsMetaData.postingDisplayEndDate">{{vm.recurringPostJobsMetaData.postingDisplayEndDate}}</span>
+                <span ng-if="!vm.recurringPostJobsMetaData.postingDisplayEndDate">{{vm.recurringPostJobsMetaData.postingDispEndDays}}  {{"aip.admin.action.postactionItem.recurringPosting.displayOffset.instructions"|i18n_aip}}</span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-2 col-md-3 col-lg-2 nopadding ">
                 <label>{{"aip.admin.action.postactionItem.recurringPosting.recurr.start.date"|i18n_aip}}</label>
             </div>
             <div class="col-xs-12 col-sm-4 col-md-3 col-lg-2">
@@ -20,7 +45,23 @@ Copyright 2019 Ellucian Company L.P. and its affiliates.
             </div>
         </div>
         <div class="row">
+            <div class="col-xs-12 col-sm-2 col-md-3 col-lg-2 nopadding ">
+                <label>{{"aip.admin.action.postactionItem.recurringPosting.recurr.start.time"|i18n_aip}}</label>
+            </div>
             <div class="col-xs-12 col-sm-4 col-md-3 col-lg-2">
+                <span>{{vm.recurringPostJobsMetaData.postingDisplayTime}}</span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-2 col-md-3 col-lg-2 nopadding ">
+                <label>{{"aip.admin.action.postactionItem.recurringPosting.recurr.start.timezone"|i18n_aip}}</label>
+            </div>
+            <div class="col-xs-12 col-sm-4 col-md-3 col-lg-2">
+                <span>{{vm.recurringPostJobsMetaData.recurPostTimezone}}</span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-2 col-md-3 col-lg-2 nopadding ">
                 <label>{{"aip.admin.action.postactionItem.recurringPosting.recurr.end.date"|i18n_aip}}</label>
             </div>
             <div class="col-xs-12 col-sm-4 col-md-3 col-lg-2">

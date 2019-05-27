@@ -223,6 +223,17 @@ module AIP {
                         visible: true,
                         columnShowHide: false
                     }
+                },
+                {
+                    name: "recurrenceAction",
+                    title: this.$filter("i18n_aip")("aip.admin.actionItem.post.grid.job.recurrenceAction"),
+                    ariaLabel: this.$filter("i18n_aip")("aip.admin.actionItem.post.grid.job.recurrenceAction"),
+                    width: "100px",
+                    options: {
+                        sortable: false,
+                        visible: true,
+                        columnShowHide: false
+                    }
                 }
             ];
             allPromises.push(

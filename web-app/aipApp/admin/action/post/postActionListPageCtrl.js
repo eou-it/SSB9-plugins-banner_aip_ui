@@ -5,7 +5,7 @@
 ///<reference path="../../../common/services/admin/adminActionService.ts"/>
 var AIP;
 (function (AIP) {
-    var PostActionListPageCtrl = (function () {
+    var PostActionListPageCtrl = /** @class */ (function () {
         function PostActionListPageCtrl($scope, $state, $window, $filter, $q, ENDPOINT, PAGINATIONCONFIG, AdminActionService) {
             this.$inject = ["$scope", "$state", "$window", "$filter", "$q", "ENDPOINT", "PAGINATIONCONFIG",
                 "AdminActionService"];
@@ -185,6 +185,17 @@ var AIP;
                         visible: true,
                         columnShowHide: false
                     }
+                },
+                {
+                    name: "recurrenceAction",
+                    title: this.$filter("i18n_aip")("aip.admin.actionItem.post.grid.job.recurrenceAction"),
+                    ariaLabel: this.$filter("i18n_aip")("aip.admin.actionItem.post.grid.job.recurrenceAction"),
+                    width: "100px",
+                    options: {
+                        sortable: false,
+                        visible: true,
+                        columnShowHide: false
+                    }
                 }
             ];
             allPromises.push(this.actionListService.getCurrentTimeLocale()
@@ -289,7 +300,7 @@ var AIP;
             this.$state.go("admin-recurring-post-list", { postIdval: postId });
         };
         return PostActionListPageCtrl;
-    })();
+    }());
     AIP.PostActionListPageCtrl = PostActionListPageCtrl;
 })(AIP || (AIP = {}));
 register("bannerAIP").controller("PostActionListPageCtrl", AIP.PostActionListPageCtrl);
