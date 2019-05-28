@@ -105,6 +105,7 @@ var AIP;
                     options: {
                         sortable: true,
                         visible: true,
+                        ascending: true,
                         columnShowHide: true
                     }
                 },
