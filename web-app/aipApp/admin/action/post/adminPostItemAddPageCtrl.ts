@@ -329,7 +329,7 @@ module AIP {
                                     for (var i=0;i<this.recurFreqeunecyList.length;i++) {
                                         if (this.actionPost1.recurringDetails.recurFrequencyType === this.recurFreqeunecyList[i].value) {
                                             this.selectedRecurFrequency = this.recurFreqeunecyList[i]
-                                            this.selectedRecurFrequency.value==="HOURS"?this.recurDisableTimeAndTimeZone=true:this.recurDisableTimeAndTimeZone=false
+                                            this.recurDisableTimeAndTimeZone=true
                                         }
                                     }
                                     this.getProcessedServerRecurranceStartDate()

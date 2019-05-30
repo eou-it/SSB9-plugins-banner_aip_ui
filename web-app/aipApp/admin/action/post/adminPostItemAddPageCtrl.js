@@ -6,7 +6,7 @@
 ///<reference path="../../../common/services/admin/adminActionService.ts"/>
 var AIP;
 (function (AIP) {
-    var AdminPostItemAddPageCtrl = (function () {
+    var AdminPostItemAddPageCtrl = /** @class */ (function () {
         function AdminPostItemAddPageCtrl($scope, $rootScope, $q, $state, $uibModal, $window, $filter, $timeout, SpinnerService, APP_ROOT, AdminActionStatusService, AdminActionService) {
             var _this = this;
             this.$inject = ["$scope", "$rootScope", "$q", "$state", "$filter", "$timeout", "SpinnerService", "AdminActionStatusService", "AdminActionService", "$uibModal", "APP_ROOT", "datePicker", "$window"];
@@ -181,7 +181,7 @@ var AIP;
                                 for (var i = 0; i < _this.recurFreqeunecyList.length; i++) {
                                     if (_this.actionPost1.recurringDetails.recurFrequencyType === _this.recurFreqeunecyList[i].value) {
                                         _this.selectedRecurFrequency = _this.recurFreqeunecyList[i];
-                                        _this.selectedRecurFrequency.value === "HOURS" ? _this.recurDisableTimeAndTimeZone = true : _this.recurDisableTimeAndTimeZone = false;
+                                        _this.recurDisableTimeAndTimeZone = true;
                                     }
                                 }
                                 _this.getProcessedServerRecurranceStartDate();
@@ -649,8 +649,7 @@ var AIP;
             notifications.addNotification(n);
         };
         return AdminPostItemAddPageCtrl;
-    })();
+    }());
     AIP.AdminPostItemAddPageCtrl = AdminPostItemAddPageCtrl;
 })(AIP || (AIP = {}));
 register("bannerAIP").controller("AdminPostItemAddPageCtrl", AIP.AdminPostItemAddPageCtrl);
-//# sourceMappingURL=adminPostItemAddPageCtrl.js.map
