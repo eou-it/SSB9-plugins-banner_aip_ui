@@ -1,0 +1,18 @@
+<!--*******************************************************************************
+Copyright 2018-2019 Ellucian Company L.P. and its affiliates.
+*******************************************************************************-->
+<div class="panel" ng-class="panelClass || 'panel-default'">
+    <div aria-selected="{{isOpen}}" class="panel-heading" ng-keypress="toggleOpen($event)">
+        <div class="panel-title">
+            <div class="row">
+                <a name="group" role="button" aria-expanded="{{isOpen}}" data-toggle="collapse" href
+                   tabindex="0" ng-focus="$parent.focusing($event)" class="accordion-toggle" ng-click="toggleOpen()" uib-accordion-transclude="heading">
+                    <span uib-accordion-header ng-class="{'text-muted': isDisabled}">{{heading}}</span>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div aria-hidden="{{!isOpen}}" class="panel-collapse collapse" uib-collapse="!isOpen">
+        <div class="panel-body" ng-transclude></div>
+    </div>
+</div>

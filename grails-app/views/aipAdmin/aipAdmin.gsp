@@ -4,21 +4,23 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <html>
 <head>
+<g:applyLayout name="bannerSelfServicePage">
     <base href="${createLink(uri: '/ssb')}/">
     <meta name="headerAttributes" content=""/>
     <title></title>
-    <meta name="layout" content="bannerSelfServicePage"/>
+
     <meta name="menuEndPoint" content="${g.createLink(controller: 'selfServiceMenu', action: 'data')}"/>
     <meta name="menuBaseURL" content="${createLink(uri: '/ssb')}"/>
     <g:set var="applicationContextRoot" value="${application.contextPath}"/>
     <meta name="applicationContextRoot" content="${applicationContextRoot}">
-    <g:if test="${message(code: 'default.language.direction') == 'rtl'}">
-        <r:require modules="bannerAdminAIPUIRTL"/>
+    <g:if test="${message(code: 'default.language.direction')  == 'rtl'}">
+        <asset:stylesheet href="modules/aipAppRTL-mf.css"/>
     </g:if>
     <g:else>
-        <r:require modules="bannerAdminAIPUI"/>
+        <asset:stylesheet href="modules/aipApp-mf.css"/>
     </g:else>
-    <ckeditor:resources/>
+    <asset:javascript src="modules/aipAdminApp-mf.js"/>
+</g:applyLayout>
     <script type="text/javascript">
         // Track calling page for breadcrumbs
 

@@ -1,0 +1,60 @@
+<!--*******************************************************************************
+Copyright 2018 Ellucian Company L.P. and its affiliates.
+*******************************************************************************-->
+<div class="aip-item-detail-container">
+    <div class="detail-content">
+        <div class="detail-title" ng-if="!data.info.templateId">
+            <h4>{{data.info.title||"Action item detail title placeholder"}}</h4>
+        </div>
+        <div class="detail" tabindex="-1">
+            <!--TODO:: text goes here-->
+            <!--<ng-transclude></ng-transclude>-->
+            <div class="content-area" ng-if="data.type === 'group'" ng-bind-html="data.info.content"></div>
+            <div ng-if="data.type === 'actionItem' && !data.info.templateId">
+                {{"aip.user.detail.noTemplate"|i18n_aip}}
+            </div>
+            <div ng-if="data.type === 'actionItem' && data.info.templateId">
+                <pagebuilder-page  content="{{data.info.templateId}}"
+                              aid="{{data.info.id}}" gid="{{data.groupId}}" page="{{data.info.page}}"></pagebuilder-page>
+            </div>
+        </div>
+        <hr/>
+        <div class="detail-nav hidden-sm hidden-md hidden-lg visible-xs-12">
+            <!--group-->
+            <div class="btn btn-primary col-xs-12" ng-click="returnlist()" aria-label="{{'aip.user.detail.button.return'|i18n_aip}}">
+                <i class="fa fa-list"></i>
+                <span>{{"aip.user.detail.button.return"|i18n_aip}}</span>
+            </div>
+            <div class="btn btn-primary col-xs-6 hidden-xs" ng-if="data.type==='group'" ng-click="proceed()" aria-label="{{'aip.user.detail.button.proceed'|i18n_aip}}">
+                <span> {{"aip.user.detail.button.proceed"|i18n_aip}}</span>
+                <i class="fa fa-caret-right"></i>
+            </div>
+            <div class="btn btn-primary col-xs-12 hidden-xs" ng-if="data.type!=='group'" ng-click="nextitem(groupId, itemId)" aria-label="{{'aip.common.next'|i18n_aip}}">
+                <span>{{"aip.common.next"|i18n_aip}}</span>
+                <i class="fa fa-caret-right"></i>
+            </div>
+            <!--
+            <div class="btn btn-primary col-xs-6" ng-if="data.type==='group'">
+                <button type="button" class="btn btn-primary" ng-click="proceed()">
+
+                </button>
+            </div>
+            -->
+            <!--action item-->
+        </div>
+        <!--
+        <div class="detail-nav hidden-sm hidden-md hidden-lg visible-xs-12" ng-if="data.type!=='group'">
+            <div class="row btn-group">
+                <label class="btn btn-primary col-xs-6" ng-click="returnlist()">
+                    <i class="fa fa-list"></i>
+                    <span>{{"aip.user.detail.button.return"|i18n_aip}}</span>
+                </label>
+                <label class="btn btn-primary col-xs-6" ng-click="nextitem(groupId, itemId)">
+                    <span>{{"aip.common.next"|i18n_aip}}</span>
+                    <i class="fa fa-caret-right"></i>
+                </label>
+            </div>
+        </div>
+            -->
+    </div>
+</div>

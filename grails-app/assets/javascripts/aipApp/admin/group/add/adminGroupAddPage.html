@@ -1,0 +1,118 @@
+<!--*******************************************************************************
+Copyright 2019 Ellucian Company L.P. and its affiliates.
+*******************************************************************************-->
+<div class="groupAddContainer" >
+    <div class="groupInfo">
+        <div class="row groupInfoRow groupFolder">
+            <div class="groupElement row input-group">
+                <div class="groupTitle col-xs-12 col-sm-5">
+                    <label for="groupName" class="titleValue" id="groupAdd-Name">{{"aip.common.group.name"|i18n_aip}}
+                        {{"aip.character.astrick"|i18n_aip}}</label>
+                    <span class="titleValue supplement">{{"aip.admin.group.add.maxLength"|i18n_aip:60}}</span>
+                </div>
+            </div>
+            <div class="groupElement col-xs-12 col-sm-5">
+                <div class="row" ng-class="{'has-error':vm.groupInfo.name.length>60}">
+                    <input id="groupName" maxlength="60" aria-valuemax="60" type="text" class="form-control" ng-model="vm.groupInfo.name"
+                           ng-change="vm.dataChanged()" ng-disabled="vm.editMode" placeholder={{"aip.common.group.place.holder.name"|i18n_aip}} aria-describedby="groupAdd-Name" required="required" aria-required="true" >
+                </div>
+                <div class="alert alert-danger" role="alert" ng-if="vm.groupInfo.title.length>60">
+                    <i class="fa fa-exclamation-circle" aria-hidden="true"></i>
+                    <span class="sr-only">Error:</span>
+                    {{"aip.admin.group.error.exceedMax"|i18n_aip:60}}"}}
+                </div>
+            </div>
+        </div>
+        <div class="row groupInfoRow groupFolder">
+            <div class="groupElement row input-group">
+                <label for="groupFolder" class="titleValue" id="groupAdd-folder">{{"aip.common.folder"|i18n_aip}}
+                    {{"aip.character.astrick"|i18n_aip}}</label>
+            </div>
+            <div class="groupElement col-xs-12 col-sm-5">
+                <div class="row">
+                    <xe-ui-select class="folder-minwidth folderStatus-margin"  id="folderid" ng-model="vm.groupInfo.folder" theme="select2" ng-disabled="vm.groupInfo.postedInd" ng-change="vm.dataChanged()">
+                        <xe-ui-select-match placeholder="{{'aip.common.select.folder.default'|i18n_aip}}" >
+                            {{vm.groupInfo.folder.name}}
+                        </xe-ui-select-match>
+                        <xe-ui-select-choices repeat="item in vm.folders | propsFilter: {name: $select.search}">
+                            <div ng-bind-html="item.name"></div>
+                        </xe-ui-select-choices>
+                    </xe-ui-select>
+                </div>
+            </div>
+        </div>
+        <div class="row groupInfoRow groupStatus">
+            <div class="groupElement row input-group">
+                <label for="groupStatus" class="titleValue" id="groupAdd-status">{{"aip.common.status"|i18n_aip}}
+                    {{"aip.character.astrick"|i18n_aip}}</label>
+            </div>
+            <div class="groupElement col-xs-12 col-sm-5">
+                <div class="row">
+                    <xe-ui-select class="folderStatus-margin" id="groupStatus" ng-model="vm.groupInfo.status" theme="select2" ng-disabled="disabled" ng-change="vm.dataChanged()" search-enabled="false"
+                                  on-select="vm.selectStatus($item, $index)">
+
+                        <xe-ui-select-match>
+                            {{vm.groupInfo.status}}
+                        </xe-ui-select-match>
+                        <xe-ui-select-choices repeat="item in vm.status |orderBy:'id'">
+                            <div ng-bind-html="item.value"></div>
+                        </xe-ui-select-choices>
+                    </xe-ui-select>
+                </div>
+            </div>
+        </div>
+        <div class="row groupInfoRow groupTitle">
+            <div class="groupElement row input-group">
+                <div class="groupTitle col-xs-12 col-sm-5">
+                    <label for="groupTitle" class="titleValue" id="groupAdd-Title">{{"aip.common.group.title"|i18n_aip}}
+                        {{"aip.character.astrick"|i18n_aip}}</label>
+                    <span class="titleValue supplement">{{"aip.admin.group.add.maxLength"|i18n_aip:60}}</span>
+                </div>
+            </div>
+            <div class="groupElement col-xs-12 col-sm-5">
+                <div class="row" ng-class="{'has-error':vm.groupInfo.title.length>60}">
+                    <input id="groupTitle" maxlength="60" aria-valuemax="60" type="text" class="form-control" ng-model="vm.groupInfo.title"
+                           ng-change="vm.dataChanged()"  placeholder={{"aip.common.group.title"|i18n_aip}} aria-describedby="groupAdd-Title" required="required" aria-required="true" >
+                </div>
+                <div class="alert alert-danger" role="alert" ng-if="vm.groupInfo.title.length>60">
+                    <i class="fa fa-exclamation-circle" aria-hidden="true"></i>
+                    <span class="sr-only">Error:</span>
+                    {{"aip.admin.group.error.exceedMax"|i18n_aip:60}}"}}
+                </div>
+            </div>
+        </div>
+
+
+
+        <div class="row groupInfoRow">
+            <div class="groupElement row input-group">
+                <label for="groupDesc" class="titleValue" id="groupAdd-description">{{"aip.common.group.description"|i18n_aip}}
+                    {{"aip.character.astrick"|i18n_aip}}</label>
+            </div>
+            <div class="groupElement col-xs-12 col-sm-12">
+                <div class="row">
+
+                   <textarea id="groupDesc" ng-required="true" aria-required="true" name="groupDesc" ckeditor="ckEditorConfig"
+                             ng-model="vm.groupInfo.description"  ng-change="vm.dataChanged()" ></textarea>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="groupControl">
+        <div class="row">
+            <div class="col-xs-1 col-sm-8">
+            </div>
+            <div class="col-xs-11 col-sm-4">
+                <div class="col-xs-6 col-sm-6 groupButton">
+                    <button name="Cancel" type="button" class="btn btn-default" ng-click="vm.cancel()">{{"aip.common.cancel"|i18n_aip}}</button>
+                </div>
+                <div class="col-xs-6 col-sm-6 groupButton">
+                    <button name="Save" type="button" class="btn btn-primary" ng-disabled="!vm.validateInput()" ng-click="vm.checkGroupPost()">
+                        {{"aip.common.save.and.return"|i18n_aip}}
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
