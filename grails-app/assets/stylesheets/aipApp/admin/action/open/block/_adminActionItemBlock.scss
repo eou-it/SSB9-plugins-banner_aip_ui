@@ -1,0 +1,139 @@
+$button-color: #206E9F;
+
+
+#actionItemBlockProcess {
+  padding: 16px 0px 16px 15px;
+  button.iconButton {
+    border: none;
+    background-color: transparent;
+    color: $button-color;
+
+    .icon {
+      float: left;
+      font-size:0.5em;
+      line-height:2.5em;
+    }
+    .iconText {
+      float: right;
+    }
+  }
+
+  .row.blockedItem {
+    padding: 16px 0;
+  }
+  .row.blockedUrl {
+    padding: 8px 0;
+  }
+
+  .actionItemBlockReadOnly {
+    .blockedProcessTitle {
+      font-weight: bold;
+    }
+
+    .control {
+      button {
+        color: $button-color;
+        float: right;
+        border: none;
+      }
+    }
+  }
+  input[type="checkbox"]{
+    -webkit-appearance: initial;
+    appearance: initial;
+    background: white;
+    width: 20px;
+    height: 20px;
+    border: 1px solid #a4a4ca;
+    background: white;
+    position: relative;
+    border-radius: 4px;
+    margin-bottom: 4px;
+    vertical-align: -40%;
+    box-shadow: inset 0 2px 5px rgba(0,0,0,0.25);
+  }
+  input[type="checkbox"]:checked {
+    background: #1c8445;
+  }
+  input[type="checkbox"]:checked:after {
+    /* Heres your symbol replacement - this is a tick in Unicode. */
+    content: '';
+    color: #fff;
+    position: absolute;
+    border: 3px solid #fff;
+    border-top: none;
+    border-right: none;
+    -webkit-transform: rotate(-45deg);
+    -moz-transform: rotate(-45deg);
+    -o-transform: rotate(-45deg);
+    -ms-transform: rotate(-45deg);
+    transform: rotate(-45deg);
+    width: 12px;
+    height: 6px;
+
+    top: 5px;
+    left: 4px;
+
+  }
+  .overall{
+    font-size: 1em;
+    font-weight: bold;
+    margin-left: 12px;
+  }
+  .overallAccess{
+    padding-top: 25px;
+  }
+  .actionItemBlock{border-bottom: 1px solid #B9B9B9;
+    border-top: 1px solid #B9B9B9;
+    padding: 20px;  min-height: 7em;  margin-bottom: 10px;}
+  .personadata{list-style-type: none;    padding: 2px 0px;}
+  .urllabel{float: left;  }
+  .urldata{float: left;}
+  .titleValue{margin-right:10px;}
+  table {
+    width: 100%;
+    border: 1px solid $borderColor;
+    caption {
+      text-align: left;
+      font-size: 1.4em;
+      line-height: 1.5em;
+      border: 1px solid $borderColor;
+      border-bottom: none;
+      padding: 8px;
+    }
+    tr {
+      border: 1px solid $borderColor;
+      .actionItemDescroption {
+        font-size: 0.8em;
+        line-height: 0.8em;
+        padding: 0;
+      }
+
+    }
+    td {
+      padding: 8px;
+    }
+    th {
+      padding: 8px;
+      line-height: 1.3em;
+    }
+  }
+  input[type="checkbox"][readonly] {
+    pointer-events: none;
+  }
+  .urlsplit{padding-top: 8px;
+    display:block;}
+  @media (max-width:1200px) {
+    .smalldevicefix{padding: 0px;}
+    .smalldeviceglobal{margin-bottom: 20px;}
+  }
+}
+
+@media screen and (max-width:768px) {
+  #actionItemBlockProcess {
+    padding: 16px 0px 16px 0px;
+  }
+  .deleteButton {
+    padding: 3px 6px 3px 6px;
+  }
+}

@@ -1,0 +1,44 @@
+<!--*******************************************************************************
+Copyright 2019 Ellucian Company L.P. and its affiliates.
+*******************************************************************************-->
+<div id="openGroupDetail">
+    <div class="groupElement groupDetail col-xs-12 col-sm-8">
+        <div class="row content-area">
+            <div class="col-xs-12 col-sm-10">
+                <label class="titleValue">{{"aip.common.group.name"|i18n_aip}}</label>
+                <p ng-bind-html="vm.groupFolder.groupName"/>
+                <label class="titleValue">{{"aip.common.folder"|i18n_aip}}</label>
+                <p ng-bind-html="vm.groupFolder.folderName"/>
+                <label class="titleValue">{{"aip.common.status"|i18n_aip}}</label>
+                <p ng-bind-html="vm.groupFolder.groupStatus"/>
+                <label class="titleValue">{{"aip.common.group.title"|i18n_aip}}</label>
+                <p ng-bind-html="vm.groupFolder.groupTitle"/>
+                <label class="titleValue">{{"aip.common.group.description"|i18n_aip}}</label>
+                <div class="openGroupDesc" ng-bind-html = "vm.trustHTML(vm.groupFolder.groupDesc)"></div>
+            </div>
+            <div class="col-xs-12 col-sm-2 overviewEdit">
+                <button name="Edit" type="button" class="btn btn-default edit" ng-click="vm.validateEdit('overview')"
+                        aria-label="{{'aip.common.edit.action.item.jaws'|i18n_aip}}">
+                    <span class="icon icon-edit-CO"></span>
+                    <span class="button-text hidden-sm-down">{{'aip.common.text.edit'|i18n_aip}}</span>
+                </button>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="groupElement col-xs-12 col-sm-4">
+        <label class="titleValue">{{"aip.common.activity"|i18n_aip}}</label>
+        <hr />
+        <div class="groupElement">
+            <label class="titleValue">{{"aip.common.last.updated.by"|i18n_aip}}</label>
+            <p>{{vm.groupFolder.groupUserId}}</p>
+        </div>
+
+        <hr />
+        <div class="groupElement">
+            <label class="titleValue">{{"aip.common.activity.date"|i18n_aip}}</label>
+            <p>{{vm.groupFolder.groupActivityDate}}</p>
+        </div>
+    </div>
+</div>

@@ -13,12 +13,12 @@
     <g:set var="applicationContextRoot" value="${application.contextPath}"/>
     <meta name="applicationContextRoot" content="${applicationContextRoot}">
     <g:if test="${message(code: 'default.language.direction')  == 'rtl'}">
-        <r:require modules="bannerAIPReviewUIRTL"/>
+        <asset:stylesheet href="modules/aipAppRTL-mf.css"/>
     </g:if>
     <g:else>
-        <r:require modules="bannerAIPReviewUI"/>
+        <asset:stylesheet href="modules/aipApp-mf.css"/>
     </g:else>
-    <ckeditor:resources/>
+    <asset:javascript src="modules/aipReviewApp-mf.js"/>
     <script type="text/javascript">
 
         // Track calling page for breadcrumbs
