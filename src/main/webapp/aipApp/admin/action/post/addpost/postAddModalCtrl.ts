@@ -129,4 +129,4 @@ module AIP {
     }
 }
 
-register("bannerAIP").controller("PostAddModalCtrl", AIP.PostAddModalCtrl);
+angular.module("bannerAIP").controller("PostAddModalCtrl", AIP.PostAddModalCtrl);

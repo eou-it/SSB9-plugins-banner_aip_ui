@@ -348,4 +348,4 @@ module AIP {
     }
 }
 
-register("bannerAIP").controller("PostActionListPageCtrl", AIP.PostActionListPageCtrl);
+angular.module("bannerAIP").controller("PostActionListPageCtrl", AIP.PostActionListPageCtrl);

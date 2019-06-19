@@ -2,9 +2,10 @@
  Copyright 2018-2019 Ellucian Company L.P. and its affiliates.
  *******************************************************************************-->
 <%@ page contentType="text/html;charset=UTF-8" %>
+
 <html>
 <head>
-<g:applyLayout name="bannerSelfServicePage">
+    <g:applyLayout name="bannerWebPage">
     <base href="${createLink(uri: '/ssb')}/">
     <meta name="headerAttributes" content=""/>
     <title></title>
@@ -47,9 +48,9 @@
             }
         })();
     </script>
+
     <script type="text/javascript">
         var pageControllers = {};
-        <g:i18n_setup/>
         <g:aipVersion/>
         <g:if env="development">
         window.aip?window.aip.dev="development":window.aip={dev:"development"};
@@ -59,6 +60,10 @@
             window.location.href = "${fragment}";
         }
         </g:javascript>
+    </script>
+
+    <script type="text/javascript">
+               <g:i18n_setup/>
     </script>
 
 </head>

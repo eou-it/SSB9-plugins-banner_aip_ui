@@ -253,4 +253,4 @@ module AIP {
     }
 }
 
-register("bannerAIP").controller("AdminActionListPageCtrl", AIP.AdminActionListPageCtrl);
+angular.module("bannerAIP").controller("AdminActionListPageCtrl", AIP.AdminActionListPageCtrl);

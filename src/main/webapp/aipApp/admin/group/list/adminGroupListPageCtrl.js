@@ -5,7 +5,7 @@
 ///<reference path="../../../common/services/admin/adminGroupService.ts"/>
 var AIP;
 (function (AIP) {
-    var AdminGroupListPageCtrl = (function () {
+    var AdminGroupListPageCtrl = /** @class */ (function () {
         function AdminGroupListPageCtrl($scope, $state, $window, $filter, $q, ENDPOINT, PAGINATIONCONFIG, AdminGroupService) {
             this.$inject = ["$scope", "$state", "$window", "$filter", "$q", "ENDPOINT", "PAGINATIONCONFIG",
                 "AdminGroupService"];
@@ -215,8 +215,7 @@ var AIP;
         AdminGroupListPageCtrl.prototype.refreshGrid = function () {
         };
         return AdminGroupListPageCtrl;
-    })();
+    }());
     AIP.AdminGroupListPageCtrl = AdminGroupListPageCtrl;
 })(AIP || (AIP = {}));
-register("bannerAIP").controller("AdminGroupListPageCtrl", AIP.AdminGroupListPageCtrl);
-//# sourceMappingURL=adminGroupListPageCtrl.js.map
+angular.module("bannerAIP").controller("AdminGroupListPageCtrl", AIP.AdminGroupListPageCtrl);

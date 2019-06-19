@@ -295,13 +295,13 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
 	content: "\e658";
 }
 .icon-check{
-	background-image: url(images/ActionItems.svg);
+	background-image: url(../assets/ActionItems.svg);
 	background-repeat:no-repeat;
 	display: block;
 	width: 90px;
 	height: 80px;
 }
-.icon-postactionitem{background-image: url(images/PostActionItems.svg);
+.icon-postactionitem{background-image: url(../assets/PostActionItems.svg);
 	background-repeat:no-repeat;
 	display: block;
 	width: 90px;
@@ -418,7 +418,7 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
 	content: "\e67f";
 }
 .icon-folder{
-	background-image: url(images/ManageFolder.svg);
+	background-image: url(../assets/ManageFolder.svg);
 	background-repeat:no-repeat;
 	display: block;
 	width: 90px;
@@ -573,7 +573,7 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
 }
 
 .icon-newDocument{
-	background-image: url(images/ActionItemsStatus.svg);
+	background-image: url(../assets/ActionItemsStatus.svg);
 	background-repeat:no-repeat;
 	display: block;
 	width: 90px;

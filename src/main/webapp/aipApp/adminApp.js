@@ -437,6 +437,7 @@ var bannerAIPApp = angular.module("bannerAIP", [
 
     //supply directives' template url so that we don't have any hardcoded url in other code
     .config(['$provide', 'APP_ROOT', function ($provide, APP_ROOT) {
+
             //override angular-ui's default accordion-group directive template; h4 -> h2 for title
             $provide.decorator('uibAccordionGroupDirective', function ($delegate) {
                 var directive = $delegate[0];

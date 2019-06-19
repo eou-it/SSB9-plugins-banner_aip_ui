@@ -270,4 +270,4 @@ module AIP {
     }
 }
 
-register("bannerAIP").service("AdminGroupService", AIP.AdminGroupService);
+angular.module("bannerAIP").service("AdminGroupService", AIP.AdminGroupService);

@@ -11,11 +11,13 @@ var AIP;
         Status[Status["Inactive"] = 3] = "Inactive";
     })(Status || (Status = {}));
     var AdminActionService = /** @class */ (function () {
-        function AdminActionService($http, $q, $filter, ENDPOINT) {
+        function AdminActionService($http, $q, $resource, GRAILSCONTROLLERS, $filter, ENDPOINT) {
             this.$http = $http;
             this.$q = $q;
             this.$filter = $filter;
             this.ENDPOINT = ENDPOINT;
+            this.$resource = $resource;
+            this.GRAILSCONTROLLERS = GRAILSCONTROLLERS;
         }
         AdminActionService.prototype.fetchData = function (query) {
             var deferred = this.$q.defer();
@@ -297,10 +299,10 @@ var AIP;
             });
             return request;
         };
-        AdminActionService.$inject = ["$http", "$q", "$filter", "ENDPOINT"];
+        AdminActionService.$inject = ["$http", "$q", "$resource", "GRAILSCONTROLLERS", "$filter", "ENDPOINT"];
         return AdminActionService;
     }());
     AIP.AdminActionService = AdminActionService;
 })(AIP || (AIP = {}));
-register("bannerAIP").service("AdminActionService", AIP.AdminActionService);
-register("bannerAIP").service("dateFormatService", AIP.AdminActionService);
+angular.module("bannerAIP").service("AdminActionService", AIP.AdminActionService);
+angular.module("bannerAIP").service("dateFormatService", AIP.AdminActionService);

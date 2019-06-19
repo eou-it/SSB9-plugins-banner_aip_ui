@@ -162,7 +162,7 @@ module AIP {
 
         goAddPage() {
             this.modalInstance = this.$uibModal.open({
-                templateUrl: this.APP_ROOT + "admin/status/list/add/statusAddTemplate.html",
+                templateUrl: "../assets/aipApp/admin/status/list/add/statusAddTemplate.html",
                 controller: "StatusAddModalCtrl",
                 controllerAs: "$ctrl",
                 size: "sm",
@@ -268,4 +268,4 @@ module AIP {
     }
 }
 
-register("bannerAIP").controller("AdminStatusListPageCtrl", AIP.AdminStatusListPageCtrl);
+angular.module("bannerAIP").controller("AdminStatusListPageCtrl", AIP.AdminStatusListPageCtrl);

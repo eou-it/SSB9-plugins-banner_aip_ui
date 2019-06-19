@@ -7,7 +7,7 @@
     <base href="${createLink(uri: '/ssb')}/">
     <meta name="headerAttributes" content=""/>
     <title></title>
-    <meta name="layout" content="bannerSelfServicePage"/>
+    <meta name="layout" content="bannerWebPage"/>
     <meta name="menuEndPoint" content="${g.createLink(controller: 'selfServiceMenu', action: 'data')}"/>
     <meta name="menuBaseURL" content="${createLink(uri: '/ssb')}" />
     <g:set var="applicationContextRoot" value="${application.contextPath}"/>
@@ -47,7 +47,6 @@
     </script>
     <script type="text/javascript">
         var pageControllers = {};
-        <g:i18n_setup/>
         <g:aipVersion/>
         <g:if env="development">
         window.aip?window.aip.dev="development":window.aip={dev:"development"};
@@ -58,6 +57,9 @@
             window.location.href = "${fragment}";
         }
         </g:javascript>
+    </script>
+    <script type="text/javascript">
+        <g:i18n_setup/>
     </script>
 
 </head>

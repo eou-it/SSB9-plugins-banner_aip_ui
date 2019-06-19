@@ -1,0 +1,26 @@
+<!--*******************************************************************************
+Copyright 2018 Ellucian Company L.P. and its affiliates.
+*******************************************************************************-->
+<div class="actionItemOpenContainer" ng-style="vm.getHeight()">
+    <div class="actionItemInfo">
+        <div class="row actionItemInfoRow">
+            <div class="actionItemElement col-xs-12 col-sm-12">
+                <div class="row">
+                    <xe-tab-nav>
+                        <xe-tab-panel
+                                heading="{{'aip.common.overview'|i18n_aip}}"
+                                load-data-on-click="vm.openOverviewPanel()">
+                        </xe-tab-panel>
+                        <xe-tab-panel heading="{{'aip.common.block.processes'|i18n_aip}}"
+                                      load-data-on-click="vm.openBlockPanel()">
+                        </xe-tab-panel>
+                         <xe-tab-panel
+                                heading="{{'aip.admin.action.open.tab.content'|i18n_aip}}"
+                                load-data-on-click="vm.openContentPanel()">
+                        </xe-tab-panel>
+                    </xe-tab-nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

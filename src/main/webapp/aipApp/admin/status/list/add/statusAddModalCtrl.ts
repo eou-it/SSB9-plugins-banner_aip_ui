@@ -66,4 +66,4 @@ module AIP {
     }
 }
 
-register("bannerAIP").controller("StatusAddModalCtrl", AIP.StatusAddModalCtrl);
+angular.module("bannerAIP").controller("StatusAddModalCtrl", AIP.StatusAddModalCtrl);

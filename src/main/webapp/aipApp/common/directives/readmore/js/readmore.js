@@ -4,7 +4,7 @@
 ///<reference path="../../../../../typings/tsd.d.ts"/>
 var AIPUI;
 (function (AIPUI) {
-    var AIPReadmoreDirective = (function () {
+    var AIPReadmoreDirective = /** @class */ (function () {
         function AIPReadmoreDirective() {
             this.restrict = "A";
             this.replace = true;
@@ -36,8 +36,7 @@ var AIPUI;
             return "";
         };
         return AIPReadmoreDirective;
-    })();
+    }());
     AIPUI.AIPReadmoreDirective = AIPReadmoreDirective;
 })(AIPUI || (AIPUI = {}));
 register("bannerAIPUI").directive("aipReadmore", AIPUI.AIPReadmoreDirective);
-//# sourceMappingURL=readmore.js.map

@@ -211,16 +211,21 @@ module AIP {
     }
 
     export class AdminActionService implements IAdminActionService{
-        static $inject=["$http", "$q", "$filter", "ENDPOINT"];
+        static $inject=["$http", "$q","$resource","GRAILSCONTROLLERS", "$filter", "ENDPOINT"];
         $http: ng.IHttpService;
         $q: ng.IQService;
+        $resource;
+        GRAILSCONTROLLERS;
         $filter;
         ENDPOINT;
-        constructor($http:ng.IHttpService, $q, $filter, ENDPOINT) {
+        constructor($http:ng.IHttpService, $q, $resource,GRAILSCONTROLLERS, $filter, ENDPOINT) {
             this.$http = $http;
             this.$q = $q;
             this.$filter = $filter;
             this.ENDPOINT = ENDPOINT;
+            this.$resource=$resource;
+            this.GRAILSCONTROLLERS=GRAILSCONTROLLERS;
+
         }
 
         fetchData (query:IActionItemListQuery) {
@@ -248,13 +253,13 @@ module AIP {
         fetchTableData (query:IPostActionItemListQuery) {
             var deferred = this.$q.defer();
             var realMax = parseInt(query.max) - parseInt(query.offset);
-            var url = this.ENDPOINT.admin.actionItemPostJobList +
+
+             var url = this.ENDPOINT.admin.actionItemPostJobList +
                 '?searchParam=' + (query.searchString || '') +
                 '&sortColumnName=' + (query.sortColumnName || 'postingName') +
                 '&ascending=' + (query.ascending.toString() || "")+
                 '&offset=' + (query.offset || 0 )+
                 '&max=' + realMax;
-
 
             var params = {
                 filterName: query.searchParam||"%",
@@ -529,5 +534,5 @@ module AIP {
     }
 }
 
-register("bannerAIP").service("AdminActionService", AIP.AdminActionService);
-register("bannerAIP").service("dateFormatService", AIP.AdminActionService);
+angular.module("bannerAIP").service("AdminActionService", AIP.AdminActionService);
+angular.module("bannerAIP").service("dateFormatService", AIP.AdminActionService);

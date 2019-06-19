@@ -23,6 +23,47 @@ class AipActionItemPostingController {
     def actionItemPostReadOnlyService
 
     def actionItemPostDetailService
+
+    /**
+     * Add recurring action Item Post
+     * @return
+     */
+
+    def addRecurringActionItemPosting(){
+        def map = [:]
+        map = request.JSON
+        LOGGER.trace "Recurring post add - {$request.JSON.toString()}";
+        def model
+        try{
+        model = actionItemPostCompositeService.addRecurringActionItemPosting(map)
+        }catch(ApplicationException e){
+            model = [fail: true]
+            LOGGER.error( e.getMessage() )
+            model.message = e.returnMap( { mapToLocalize -> new ValidationTagLib().message( mapToLocalize ) } ).message
+        }
+        render model as JSON;
+    }
+
+    /**
+     * Update recurring action Item Post
+     * @return
+     */
+    def updateRecurringActionItemPosting(){
+        def map = [:]
+        map = request.JSON
+        LOGGER.trace "Recurring post update - {$request.JSON.toString()}";
+        def model
+        try{
+            model = actionItemPostCompositeService.updateRecurringActionItemPosting(map)
+        }catch(ApplicationException e){
+            model = [fail: true]
+            LOGGER.error( e.getMessage() )
+            model.message = e.returnMap( { mapToLocalize -> new ValidationTagLib().message( mapToLocalize ) } ).message
+        }
+        render model as JSON;
+    }
+
+
     /**
      * Add Action Item Post
      * @return
@@ -42,6 +83,8 @@ class AipActionItemPostingController {
         }
         render model as JSON
     }
+
+    
 
     /**
      * update Action Item Post
@@ -98,13 +141,25 @@ class AipActionItemPostingController {
      */
     def actionItemPostJobList() {
 
-        def paramObj = [searchParam  : params.searchParam ?:"%",
+        def paramObj = [recurringPostId: params.recurringPostId ?:"",
+                        searchParam  : params.searchParam ?:"%",
                         sortColumn   : params.sortColumnName ?: "id",
                         sortAscending: params.ascending ? params.ascending.toBoolean() : false,
                         max          : params.max.toInteger(),
                         offset       : params.offset ? params.offset.toInteger() : 0]
 
         def results = actionItemPostReadOnlyService.listActionItemPostJobList(paramObj )
+        render results as JSON
+
+    }
+
+    /**
+     *  Recurring action item post jobs meta data
+     * @return
+     */
+    def recurringActionItemPostMetaData() {
+
+        def results = actionItemPostReadOnlyService.recurringJobMetaData(params.recurringPostId )
         render results as JSON
 
     }

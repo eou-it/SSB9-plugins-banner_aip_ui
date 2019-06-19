@@ -55,4 +55,4 @@ module AIP {
     }
 }
 
-register("bannerAIP").controller("AdminLandingPageCtrl", AIP.AdminLandingPageCtrl);
+angular.module("bannerAIP").controller("AdminLandingPageCtrl", AIP.AdminLandingPageCtrl);

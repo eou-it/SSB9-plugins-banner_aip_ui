@@ -48,8 +48,6 @@
     <script type="text/javascript">
         var pageControllers = {};
         window.reUrl = "${reUrl}";
-
-        <g:i18n_setup/>
         <g:aipVersion/>
         <g:if env="development">
         window.aip?window.aip.dev="development":window.aip={dev:"development"};
@@ -60,6 +58,9 @@
             window.location.href = "${fragment}";
         }
         </g:javascript>
+    </script>
+    <script  type="text/javascript">
+        <g:i18n_setup/>
     </script>
 
 </head>

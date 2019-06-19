@@ -4,7 +4,7 @@
 ///<reference path="../../../common/services/admin/adminActionStatusService.ts"/>
 var AIP;
 (function (AIP) {
-    var AdminStatusListPageCtrl = (function () {
+    var AdminStatusListPageCtrl = /** @class */ (function () {
         function AdminStatusListPageCtrl($scope, $state, $window, $filter, $q, $http, $uibModal, ENDPOINT, PAGINATIONCONFIG, AdminActionStatusService, APP_ROOT) {
             this.$inject = ["$scope", "$state", "$window", "$filter", "$http", "$q", "$uibModal",
                 "ENDPOINT", "PAGINATIONCONFIG", "AdminActionStatusService", "APP_ROOT"];
@@ -131,7 +131,7 @@ var AIP;
         AdminStatusListPageCtrl.prototype.goAddPage = function () {
             var _this = this;
             this.modalInstance = this.$uibModal.open({
-                templateUrl: this.APP_ROOT + "admin/status/list/add/statusAddTemplate.html",
+                templateUrl: "../assets/aipApp/admin/status/list/add/statusAddTemplate.html",
                 controller: "StatusAddModalCtrl",
                 controllerAs: "$ctrl",
                 size: "sm",
@@ -150,6 +150,7 @@ var AIP;
                     _this.$scope.refreshGrid(true); //use scope to call grid directive's function
                 }
                 else {
+                    //TODO:: send error notification
                 }
             }, function (error) {
                 console.log(error);
@@ -226,8 +227,7 @@ var AIP;
             this.selectedRecord = data;
         };
         return AdminStatusListPageCtrl;
-    })();
+    }());
     AIP.AdminStatusListPageCtrl = AdminStatusListPageCtrl;
 })(AIP || (AIP = {}));
-register("bannerAIP").controller("AdminStatusListPageCtrl", AIP.AdminStatusListPageCtrl);
-//# sourceMappingURL=adminStatusListPageCtrl.js.map
+angular.module("bannerAIP").controller("AdminStatusListPageCtrl", AIP.AdminStatusListPageCtrl);
