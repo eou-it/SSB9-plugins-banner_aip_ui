@@ -7,20 +7,29 @@ import net.hedtech.banner.testing.BaseIntegrationTestCase
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
+import grails.gorm.transactions.Rollback
+import grails.testing.mixin.integration.Integration
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
+import org.springframework.security.core.context.SecurityContextHolder
 
 /**
  * ActionItemProcessingConfigService.
  */
+@Integration
+@Rollback
 class ActionItemProcessingConfigServiceIntegrationTests extends BaseIntegrationTestCase {
     def actionItemProcessingConfigService
+    def selfServiceBannerAuthenticationProvider
 
 
     @Before
     void setUp() {
-        formContext = ['GUAGMNU']
-        controller = new AipController()
+        formContext = ['SELFSERVICE']
+       // controller = new AipController()
         super.setUp()
-        loginSSB( 'CSRSTU001', '111111' )
+       /* def auth = selfServiceBannerAuthenticationProvider.authenticate(new UsernamePasswordAuthenticationToken('CSRSTU001', '111111'))
+        SecurityContextHolder.getContext().setAuthentication(auth)
+        assertNotNull auth*/
     }
 
 

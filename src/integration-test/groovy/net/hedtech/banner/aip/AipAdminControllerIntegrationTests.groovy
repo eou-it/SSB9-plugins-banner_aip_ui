@@ -12,16 +12,24 @@ import net.hedtech.banner.testing.BaseIntegrationTestCase
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.context.SecurityContextHolder
 import net.hedtech.banner.general.configuration.ConfigProperties
-
+import grails.testing.mixin.integration.Integration
+import grails.gorm.transactions.Rollback
 
 /**
  * AipAdminControllerIntegrationTests.
  *
  */
+@Integration
+@Rollback
 class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
+
+    @Autowired
+    AipAdminController controller
+
     def selfServiceBannerAuthenticationProvider
 
     def actionItemStatusCompositeService
@@ -49,9 +57,9 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
 
     @Before
     void setUp() {
-        formContext = ['GUAGMNU']
+        formContext = ['SELFSERVICE']
         super.setUp()
-        controller = new AipAdminController()
+       // controller = new AipAdminController()
         Holders.config.BANNER_AIP_BLOCK_PROCESS_PERSONA = ['EVERYONE', 'STUDENT', 'REGISTRAR', 'FACULTYINSTRUCTOR', 'FACULTYADVISOR', 'FACULTYBOTH']
     }
 

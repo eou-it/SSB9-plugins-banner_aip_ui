@@ -8,17 +8,30 @@ import net.hedtech.banner.testing.BaseIntegrationTestCase
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
+import org.springframework.security.core.context.SecurityContextHolder
+import grails.testing.mixin.integration.Integration
+import grails.gorm.transactions.Rollback
 
 /**
  * AipPageBuilderControllerIntegrationTests.
  */
+@Integration
+@Rollback
 class AipPageBuilderControllerIntegrationTests extends BaseIntegrationTestCase {
+
+    @Autowired
+    AipPageBuilderController controller
 
 
     @Before
     void setUp() {
-        formContext = ['GUAGMNU']
-        controller = new AipPageBuilderController()
+        formContext = ['SELFSERVICE']
+        //controller = new AipPageBuilderController()
+       /* def auth = selfServiceBannerAuthenticationProvider.authenticate(new UsernamePasswordAuthenticationToken('CSRSTU004', '111111'))
+        SecurityContextHolder.getContext().setAuthentication(auth)
+        assertNotNull auth*/
         super.setUp()
     }
 
@@ -32,6 +45,8 @@ class AipPageBuilderControllerIntegrationTests extends BaseIntegrationTestCase {
 
     @Test
     void pageScript() {
+        def auth = selfServiceBannerAuthenticationProvider.authenticate(new UsernamePasswordAuthenticationToken('CSRSTU004', '111111'))
+        SecurityContextHolder.getContext().setAuthentication(auth)
         String query = """ INSERT INTO PAGE ( CONSTANT_NAME, VERSION, ID, MODEL_VIEW ) VALUES ('TestAIPMasterTemplateSystemRequired', 0, -9999, '{"name": "TestAIPMasterTemplateSystemRequired", "type" : "page"}') """
         println query
         sessionFactory.currentSession.createSQLQuery( query ).executeUpdate()
@@ -44,6 +59,8 @@ class AipPageBuilderControllerIntegrationTests extends BaseIntegrationTestCase {
 
     @Test
     void page() {
+        def auth = selfServiceBannerAuthenticationProvider.authenticate(new UsernamePasswordAuthenticationToken('CSRSTU004', '111111'))
+        SecurityContextHolder.getContext().setAuthentication(auth)
         String query = """ INSERT INTO PAGE ( CONSTANT_NAME, VERSION, ID, MODEL_VIEW ) VALUES ('TestAIPMasterTemplateSystemRequired', 0, -9999, :clob) """
         println query
         sessionFactory.currentSession.createSQLQuery( query ).setString( 'clob', '{ "name":"TestAIPMasterTemplateSystemRequired","type":"page" }' ).executeUpdate()
