@@ -8,15 +8,25 @@ import net.hedtech.banner.testing.BaseIntegrationTestCase
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
+import org.springframework.security.core.context.SecurityContextHolder
 
 /**
  * BCMControllerIntegrationTests.
  */
 class BCMControllerIntegrationTests extends BaseIntegrationTestCase {
+
+    @Autowired
+    BCMController controller
+
     @Before
     void setUp() {
-        formContext = ['GUAGMNU']
-        controller = new BCMController()
+        formContext = ['SELFSERVICE']
+        //controller = new BCMController()
+       /* def auth = selfServiceBannerAuthenticationProvider.authenticate(new UsernamePasswordAuthenticationToken('AIPADM001', '111111'))
+        SecurityContextHolder.getContext().setAuthentication(auth)
+        assertNotNull auth*/
         super.setUp()
     }
 

@@ -9,13 +9,20 @@ import net.hedtech.banner.testing.BaseIntegrationTestCase
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.context.SecurityContextHolder
+import grails.testing.mixin.integration.Integration
+import grails.gorm.transactions.Rollback
 
 /**
  * CsrControllerIntegrationTests.
  */
+@Integration
+@Rollback
 class AipControllerIntegrationTests extends BaseIntegrationTestCase {
+    @Autowired
+    AipController controller
     def selfServiceBannerAuthenticationProvider
 
     def actionItemService
@@ -23,8 +30,15 @@ class AipControllerIntegrationTests extends BaseIntegrationTestCase {
 
     @Before
     public void setUp() {
-        formContext = ['GUAGMNU']
-        controller = new AipController()
+        formContext = ['SELFSERVICE']
+       // controller = new AipController()
+
+        //controller.actionItemService = actionItemService
+       // loginSSB('CSRSTU002', '111111')
+
+      /* def auth = selfServiceBannerAuthenticationProvider.authenticate(new UsernamePasswordAuthenticationToken('CSRSTU002', '111111'))
+        SecurityContextHolder.getContext().setAuthentication(auth)
+        assertNotNull auth*/
         super.setUp()
     }
 
@@ -40,7 +54,7 @@ class AipControllerIntegrationTests extends BaseIntegrationTestCase {
     void testListEntryPoint() {
         def person = PersonUtility.getPerson( "CSRSTU002" )
         assertNotNull person
-        def auth = selfServiceBannerAuthenticationProvider.authenticate(
+       def auth = selfServiceBannerAuthenticationProvider.authenticate(
                 new UsernamePasswordAuthenticationToken( person.bannerId, '111111' ) )
         SecurityContextHolder.getContext().setAuthentication( auth )
         def result = controller.list()
@@ -88,18 +102,6 @@ class AipControllerIntegrationTests extends BaseIntegrationTestCase {
     }
 
 
-    @Test
-    void testFetchActionItemsUserHasNone() {
-        def person = PersonUtility.getPerson( "STUAFR301" ) // user from student tests
-        assertNotNull person
-        def auth = selfServiceBannerAuthenticationProvider.authenticate(
-                new UsernamePasswordAuthenticationToken( person.bannerId, '111111' ) )
-        SecurityContextHolder.getContext().setAuthentication( auth )
-        controller.actionItems()
-        assertEquals 200, controller.response.status
-        def answer = JSON.parse( controller.response.contentAsString )
-        assertEquals( 0, answer.groups.size() )
-    }
 
 
     @Test
@@ -127,18 +129,6 @@ class AipControllerIntegrationTests extends BaseIntegrationTestCase {
 
 
     @Test
-    void testLogout() {
-        def person = PersonUtility.getPerson( "CSRSTU002" )
-        assertNotNull person
-        def auth = selfServiceBannerAuthenticationProvider.authenticate(
-                new UsernamePasswordAuthenticationToken( person.bannerId, '111111' ) )
-        SecurityContextHolder.getContext().setAuthentication( auth )
-        controller.logout()
-        assertEquals 200, controller.response.status
-    }
-
-
-    @Test
     void testDetailInfo() {
         def person = PersonUtility.getPerson( "CSRSTU002" )
         assertNotNull person
@@ -152,6 +142,21 @@ class AipControllerIntegrationTests extends BaseIntegrationTestCase {
         controller.detailInfo()
         assertEquals 200, controller.response.status
     }
+
+    @Test
+    void testFetchActionItemsUserHasNone() {
+        def person = PersonUtility.getPerson( "STUAFR301" ) // user from student tests
+        assertNotNull person
+        //loginSSB('STUAFR301', '111111')
+       def auth = selfServiceBannerAuthenticationProvider.authenticate(
+                new UsernamePasswordAuthenticationToken( person.bannerId, '111111' ) )
+        SecurityContextHolder.getContext().setAuthentication( auth )
+        controller.actionItems()
+        assertEquals 200, controller.response.status
+        def answer = JSON.parse( controller.response.contentAsString )
+        assertEquals( 0, answer.groups.size() )
+    }
+
 
 
 }

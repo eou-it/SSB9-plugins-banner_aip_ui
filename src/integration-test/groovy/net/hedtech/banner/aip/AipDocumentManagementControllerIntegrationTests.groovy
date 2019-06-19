@@ -14,6 +14,7 @@ import org.apache.commons.io.IOUtils
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.mock.web.MockMultipartFile
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.context.SecurityContextHolder
@@ -21,11 +22,18 @@ import org.springframework.util.LinkedMultiValueMap
 import org.springframework.web.multipart.MultipartFile
 import org.springframework.web.multipart.commons.CommonsMultipartFile
 import org.springframework.web.multipart.support.DefaultMultipartHttpServletRequest
+import grails.testing.mixin.integration.Integration
+import grails.gorm.transactions.Rollback
 
 /**
  * UploadControllerIntegrationTests.
  */
+@Integration
+@Rollback
 class AipDocumentManagementControllerIntegrationTests extends BaseIntegrationTestCase {
+
+    @Autowired
+    AipDocumentManagementController controller
 
     def selfServiceBannerAuthenticationProvider
     def userActionItemReadOnlyCompositeService
@@ -39,8 +47,11 @@ class AipDocumentManagementControllerIntegrationTests extends BaseIntegrationTes
 
     @Before
     public void setUp() {
-        formContext = ['GUAGMNU']
-        controller = new AipDocumentManagementController();
+        formContext = ['SELFSERVICE']
+        /*controller = new AipDocumentManagementController();
+        def auth = selfServiceBannerAuthenticationProvider.authenticate(new UsernamePasswordAuthenticationToken('CSRSTU004', '111111'))
+        SecurityContextHolder.getContext().setAuthentication(auth)
+        assertNotNull auth*/
         super.setUp()
     }
 

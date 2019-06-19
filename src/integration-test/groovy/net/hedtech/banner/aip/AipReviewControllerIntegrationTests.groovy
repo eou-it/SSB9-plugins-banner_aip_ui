@@ -12,13 +12,23 @@ import org.apache.commons.io.IOUtils
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.mock.web.MockMultipartFile
 import org.springframework.web.multipart.MultipartFile
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
+import org.springframework.security.core.context.SecurityContextHolder
+import grails.testing.mixin.integration.Integration
+import grails.gorm.transactions.Rollback
 
 /**
  * AipReviewControllerIntegrationTests.
  */
+@Integration
+@Rollback
 class AipReviewControllerIntegrationTests extends BaseIntegrationTestCase {
+
+    @Autowired
+    AipReviewController controller
 
     def monitorActionItemCompositeService
     def uploadDocumentCompositeService
@@ -29,10 +39,13 @@ class AipReviewControllerIntegrationTests extends BaseIntegrationTestCase {
 
     @Before
     public void setUp() {
-        formContext = ['GUAGMNU']
+        formContext = ['SELFSERVICE']
         controller = new AipReviewController()
         super.setUp()
-        loginSSB('AIPADM001', '111111')
+       /* def auth = selfServiceBannerAuthenticationProvider.authenticate(new UsernamePasswordAuthenticationToken('AIPADM001', '111111'))
+        SecurityContextHolder.getContext().setAuthentication(auth)
+        assertNotNull auth*/
+       // loginSSB('AIPADM001', '111111')
         drugAndAlcoholPolicyActionItem = ActionItem.findByName("Drug and Alcohol Policy")
         assertNotNull drugAndAlcoholPolicyActionItem
     }

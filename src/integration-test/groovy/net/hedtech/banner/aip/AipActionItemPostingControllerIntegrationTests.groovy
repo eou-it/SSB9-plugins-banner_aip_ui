@@ -10,6 +10,11 @@ import org.json.JSONObject
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
+import grails.gorm.transactions.Rollback
+import grails.testing.mixin.integration.Integration
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
+import org.springframework.security.core.context.SecurityContextHolder
 
 import java.text.SimpleDateFormat
 
@@ -17,16 +22,24 @@ import java.text.SimpleDateFormat
  * AipActionItemPostingControllerIntegrationTests.
  *
  */
+@Integration
+@Rollback
 class AipActionItemPostingControllerIntegrationTests extends BaseIntegrationTestCase {
+
+    @Autowired
+    AipActionItemPostingController controller
     def actionItemPostCompositeService
+    def selfServiceBannerAuthenticationProvider
 
 
     @Before
     void setUp() {
-        formContext = ['GUAGMNU']
+        formContext = ['SELFSERVICE']
         super.setUp()
-        controller = new AipActionItemPostingController()
-        loginSSB( 'AIPADM001', '111111' )
+        //controller = new AipActionItemPostingController()
+        /*def auth = selfServiceBannerAuthenticationProvider.authenticate(new UsernamePasswordAuthenticationToken('AIPADM001', '111111'))
+        SecurityContextHolder.getContext().setAuthentication(auth)
+        assertNotNull auth*/
     }
 
 
