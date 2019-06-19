@@ -51,12 +51,9 @@
         <g:if env="development">
         window.aip?window.aip.dev="development":window.aip={dev:"development"};
         </g:if>
-        <g:javascript>
-
         if ("${fragment}") {
             window.location.href = "${fragment}";
         }
-        </g:javascript>
     </script>
     <script type="text/javascript">
         <g:i18n_setup/>
