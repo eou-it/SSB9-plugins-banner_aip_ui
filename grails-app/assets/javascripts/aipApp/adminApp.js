@@ -329,7 +329,7 @@ var bannerAIPApp  = angular.module("bannerAIP", [
                         inform: item.inform,
                         saved: undefined
                     },
-                    onEnter: function ($stateParams, $filter) {
+                    onEnter: ['$stateParams','$filter', function ($stateParams, $filter) {
                         this.data.breadcrumbs.url = item.breadcrumb.url;
                         if ($stateParams.groupId || $stateParams.actionItemId) {
                             var params = item.url.split("/").filter(function (_item) {
@@ -344,7 +344,7 @@ var bannerAIPApp  = angular.module("bannerAIP", [
                             });
                         }
                         this.data.breadcrumbs.title = item.breadcrumb.label;
-                    },
+                    }],
                     data: {
                         breadcrumbs: {}
                     }

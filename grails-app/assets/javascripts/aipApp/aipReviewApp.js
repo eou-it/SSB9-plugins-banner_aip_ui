@@ -121,7 +121,7 @@ var bannerAIPReviewApp = angular.module("bannerAIPReview", [
                         inform: item.inform,
                         saved: undefined
                     },
-                    onEnter: function ($stateParams, $filter) {
+                    onEnter:['$stateParams','$filter', function ($stateParams, $filter) {
                         this.data.breadcrumbs.url = item.breadcrumb.url;
                         if ($stateParams.groupId || $stateParams.actionItemId) {
                             var params = item.url.split("/").filter(function (_item) {
@@ -136,7 +136,7 @@ var bannerAIPReviewApp = angular.module("bannerAIPReview", [
                             });
                         }
                         this.data.breadcrumbs.title = item.breadcrumb.label;
-                    },
+                    }],
                     data: {
                         breadcrumbs: {}
                     }
