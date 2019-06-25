@@ -6,7 +6,7 @@ package net.hedtech.banner.aip
 import grails.converters.JSON
 import net.hedtech.banner.exceptions.ApplicationException
 import org.apache.log4j.Logger
-import org.codehaus.groovy.grails.plugins.web.taglib.ValidationTagLib
+import org.grails.plugins.web.taglib.ValidationTagLib
 
 /**
  * Controller class for AIP Action Item Posting

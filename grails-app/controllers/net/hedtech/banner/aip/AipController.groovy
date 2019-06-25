@@ -62,6 +62,4 @@ class AipController {
         def itemDetailInfo = userActionItemReadOnlyCompositeService.actionItemOrGroupInfo( params )
         render itemDetailInfo as JSON
     }
-
-
 }

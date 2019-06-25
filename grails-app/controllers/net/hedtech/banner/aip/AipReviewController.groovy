@@ -7,7 +7,7 @@ import grails.converters.JSON
 import net.hedtech.banner.exceptions.ApplicationException
 import net.hedtech.banner.i18n.MessageHelper
 import net.hedtech.banner.general.ConfigurationData
-import org.codehaus.groovy.grails.plugins.web.taglib.ValidationTagLib
+import org.grails.plugins.web.taglib.ValidationTagLib
 
 /** Controller for Review Action Items **/
 

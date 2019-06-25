@@ -8,7 +8,7 @@ import net.hedtech.banner.aip.common.AipTimezone
 import net.hedtech.banner.exceptions.ApplicationException
 import net.hedtech.banner.i18n.MessageHelper
 import org.apache.log4j.Logger
-import org.codehaus.groovy.grails.plugins.web.taglib.ValidationTagLib
+import org.grails.plugins.web.taglib.ValidationTagLib
 
 /**
  * Controller class for AIP Admin
@@ -106,19 +106,17 @@ class AipAdminController {
      * Provides group information for specified id
      * @return
      */
-    def openGroup() {
+  def openGroup() {
         def success = false
 
         if (!params.groupId) {
             response.sendError(403)
             return
         }
-
-        GroupFolderReadOnly gfro = groupFolderReadOnlyService.getActionItemGroupById(Long.parseLong(params.groupId))
+        def gfro = groupFolderReadOnlyService.getActionItemGroupById(Long.parseLong(params.groupId))
         if (gfro) {
             success = true
         }
-
         def model = [
                 success: success,
                 errors : [],
