@@ -10,7 +10,7 @@ declare var CustomPageController;
 declare var params;
 module PB {
     export function PageBuilderPage($compile,ItemListViewService) {
-        return {
+           return {
             restrict: "AE",
             replace: false,
             transclude: true,

@@ -4,7 +4,7 @@
 // angular module init and configuration
 "use strict";
 
-var bannerOnAngular = angular.module("BannerOnAngular",[])
+
 
 var aipAppRoot = $('meta[name=applicationContextRoot]').attr("content") + "/ssb/";
 var aipAppAbsPath = window.location.protocol + "//" + window.location.host +"/BannerGeneralSsb/ssb/" ;
@@ -213,7 +213,7 @@ angular.module("templates/dropdown.html", []).run(["$templateCache", function ($
 }]);
 
 
-bannerOnAngular
+angular.module("BannerOnAngular")
     //set application root url
     .constant('APP_ROOT', aipAppRoot)
     .constant('BCM_ROOT', bcmRoot)

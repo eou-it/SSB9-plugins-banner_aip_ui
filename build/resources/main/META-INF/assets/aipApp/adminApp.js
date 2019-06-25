@@ -4,7 +4,6 @@
 // angular module init and configuration
 "use strict";
 
-var bannerOnAngular = angular.module("BannerOnAngular",[])
 
 //var aipAppRoot = $('meta[name=applicationContextRoot]').attr("content") + "/plugins/" +
  //   window.aipApp.fileSystemName + "/aipApp/";
@@ -12,7 +11,6 @@ var aipAppRoot = $('meta[name=applicationContextRoot]').attr("content") + "/ssb/
 //var aipAppRoot ="/BannerGeneralSsb/ssb";
 var aipAppAbsPath = window.location.protocol + "//" + window.location.host + Application.getApplicationPath() + "/";
 var bcmRoot = window.location.protocol + Application.getApplicationPath();
-
 
 sessionStorage.setItem('genAIPAppCallingPage', "");
 // required global variables for PageBuilder render
@@ -329,7 +327,7 @@ var bannerAIPApp  = angular.module("bannerAIP", [
                         inform: item.inform,
                         saved: undefined
                     },
-                    onEnter: function ($stateParams, $filter) {
+                    onEnter: ['$stateParams','$filter', function ($stateParams, $filter) {
                         this.data.breadcrumbs.url = item.breadcrumb.url;
                         if ($stateParams.groupId || $stateParams.actionItemId) {
                             var params = item.url.split("/").filter(function (_item) {
@@ -344,7 +342,7 @@ var bannerAIPApp  = angular.module("bannerAIP", [
                             });
                         }
                         this.data.breadcrumbs.title = item.breadcrumb.label;
-                    },
+                    }],
                     data: {
                         breadcrumbs: {}
                     }
@@ -516,7 +514,7 @@ angular.module("templates/dropdown.html", []).run(["$templateCache", function ($
 }]);
 
 
-bannerOnAngular
+angular.module("BannerOnAngular")
 //set application root url
     .constant('APP_ROOT', aipAppRoot)
     .constant('BCM_ROOT', bcmRoot)
