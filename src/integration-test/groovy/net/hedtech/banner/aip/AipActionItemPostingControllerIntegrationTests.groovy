@@ -267,6 +267,7 @@ class AipActionItemPostingControllerIntegrationTests extends BaseIntegrationTest
         requestMap.scheduledStartDate = new Date() + 1
         requestMap.actionItemIds = actionItemIds
         requestMap.displayDatetimeZone=correspondingServerDetails
+        requestMap.populationRegenerateIndicator=true
         actionItemPostCompositeService.sendAsynchronousPostItem( requestMap )
         requestMap.postingName = 'INTEGRATION_TEST'
         requestMap.populationId = populationListView.id
@@ -279,6 +280,7 @@ class AipActionItemPostingControllerIntegrationTests extends BaseIntegrationTest
         requestMap.scheduledStartDate = new Date() + 1
         requestMap.actionItemIds = actionItemIds
         requestMap.displayDatetimeZone=correspondingServerDetails
+        requestMap.populationRegenerateIndicator=false
         actionItemPostCompositeService.sendAsynchronousPostItem( requestMap )
         controller.request.contentType = "text/json"
         controller.params.searchParam = null
@@ -321,6 +323,7 @@ class AipActionItemPostingControllerIntegrationTests extends BaseIntegrationTest
         requestMap.scheduledStartDate = new Date() + 1
         requestMap.actionItemIds = actionItemIds
         requestMap.displayDatetimeZone=correspondingServerDetails
+        requestMap.populationRegenerateIndicator=false
         def postingId = actionItemPostCompositeService.sendAsynchronousPostItem( requestMap ).savedJob.id
         controller.request.contentType = "text/json"
         controller.params.postID = postingId
@@ -330,7 +333,6 @@ class AipActionItemPostingControllerIntegrationTests extends BaseIntegrationTest
         assertTrue ret == 'N'
 
     }
-
 
     @Test
     void getJobDetailsByPostId() {
@@ -358,6 +360,7 @@ class AipActionItemPostingControllerIntegrationTests extends BaseIntegrationTest
         requestMap.scheduledStartDate = new Date() + 1
         requestMap.actionItemIds = actionItemIds
         requestMap.displayDatetimeZone=correspondingServerDetails
+        requestMap.populationRegenerateIndicator=false
         def postingId = actionItemPostCompositeService.sendAsynchronousPostItem( requestMap ).savedJob.id
         controller.request.contentType = "text/json"
         controller.params.postID = postingId
@@ -396,6 +399,7 @@ class AipActionItemPostingControllerIntegrationTests extends BaseIntegrationTest
         requestMap.scheduledStartDate = new Date() + 1
         requestMap.actionItemIds = actionItemIds
         requestMap.displayDatetimeZone=correspondingServerDetails
+        requestMap.populationRegenerateIndicator=false
         def postingId = actionItemPostCompositeService.sendAsynchronousPostItem( requestMap ).savedJob.id
         controller.request.contentType = "text/json"
         controller.params.postID = postingId

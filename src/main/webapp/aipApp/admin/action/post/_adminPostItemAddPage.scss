@@ -1,4 +1,13 @@
 .actionItemAddContainer {
+  .noPaddingLeft{
+    padding-left : 0px;
+  }
+  .noPaddingRight{
+    padding-right: 0px;
+  }
+  .actionItemScheduleType{
+    padding-left:8px;
+  }
   input.hasMultiCalendarPicker
   {
     width:170px;
@@ -26,7 +35,9 @@
 {
   width: 280px;
 }
-
+  #recurFrequency{
+    width:10em;
+  }
   #timezoneid .ui-select-dropdown .select2-search input {
     width:270px !important;
   }
@@ -89,7 +100,7 @@
     box-shadow: inset 0 2px 5px rgba(0,0,0,0.25);
   }
   input[type="checkbox"]:checked {
-    background: #1c8445;
+    background: #0074DB;
   }
   input[type="checkbox"]:checked:after {
     /* Heres your symbol replacement - this is a tick in Unicode. */
@@ -118,15 +129,16 @@
     background: white;
     width: 19px;
     height: 19px;
-    border: 1px solid #a4a4ca;
+    border: 1px solid  #0074DB;
     background: white;
     position: relative;
     border-radius: 15px;
     vertical-align: -40%;
     box-shadow: inset 0 2px 5px rgba(0,0,0,0.25);
+    margin-right: 5px;
   }
   input[type="radio"]:checked {
-    background: #1c8445;
+    background: #0074DB;
   }
   input[type="radio"]:checked:after {
     /* Heres your symbol replacement - this is a tick in Unicode. */
@@ -193,6 +205,17 @@
     -ms-transform: rotate(-0deg);
     transform: rotate(-0deg);
   }*/
+
+  input[type="number"] {
+    -moz-appearance:textfield;
+  }
+  /* Webkit browsers like Safari and Chrome */
+  input[type="number"]::-webkit-inner-spin-button,
+
+  input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
 .postChk{
   font-size: 1.5em;
   font-weight: bold;
@@ -291,7 +314,6 @@
     background: #ffffff;
     webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
     box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
-    width: 23em;
     line-height: 1.5em;
   }
   .defaultTimezone{
@@ -301,8 +323,32 @@
     font-family: "OpenSans-semibold";
     color: darkSlateGray;
   }
+
   .timeZoneChange{
     padding-left:0px;
     padding-right:0px;
   }
+
+  .actionItemScheduleType{
+     padding-left : 8px;
+
+   }
+
+  #recurFrequency{
+    width: 10em;
+  }
+  .recuranceInstrcution{
+    font-size: 16px;
+    padding-top:3px;
+    width:auto !important;
+  }
+
+  .recurTimeZone{
+    width : 100%;
+  }
+
 }
+#recurFrequency.ui-select-container .select2-choice  {
+  min-height: 3.5em !important;
+}
+

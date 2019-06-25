@@ -6,7 +6,7 @@
 ///<reference path="../../../common/services/admin/adminActionService.ts"/>
 var AIP;
 (function (AIP) {
-    var AdminActionItemAddPageCtrl = /** @class */ (function () {
+    var AdminActionItemAddPageCtrl = (function () {
         function AdminActionItemAddPageCtrl($scope, $rootScope, $q, $state, $filter, $sce, $timeout, $window, SpinnerService, AdminActionService, $location) {
             var _this = this;
             this.$inject = ["$scope", "$rootScope", "$q", "$state", "$filter", "$location", "$sce", "$timeout", "$window", "SpinnerService", "AdminActionService"];
@@ -367,7 +367,8 @@ var AIP;
             notifications.addNotification(n);
         };
         return AdminActionItemAddPageCtrl;
-    }());
+    })();
     AIP.AdminActionItemAddPageCtrl = AdminActionItemAddPageCtrl;
 })(AIP || (AIP = {}));
 register("bannerAIP").controller("AdminActionItemAddPageCtrl", AIP.AdminActionItemAddPageCtrl);
+//# sourceMappingURL=adminActionItemAddPageCtrl.js.map

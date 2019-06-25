@@ -25,7 +25,7 @@ invokeTag('captureTitle','sitemesh',9,[:],-1)
 })
 invokeTag('wrapTitleTag','sitemesh',9,[:],2)
 printHtmlPart(4)
-invokeTag('captureMeta','sitemesh',10,['gsp_sm_xmlClosingForEmptyTag':("/"),'name':("layout"),'content':("bannerSelfServicePage")],-1)
+invokeTag('captureMeta','sitemesh',10,['gsp_sm_xmlClosingForEmptyTag':("/"),'name':("layout"),'content':("bannerWebPage")],-1)
 printHtmlPart(4)
 invokeTag('captureMeta','sitemesh',11,['gsp_sm_xmlClosingForEmptyTag':("/"),'name':("menuEndPoint"),'content':(g.createLink(controller: 'selfServiceMenu', action: 'data'))],-1)
 printHtmlPart(4)
@@ -54,28 +54,23 @@ expressionOut.print(applicationContextRoot)
 printHtmlPart(8)
 expressionOut.print(reUrl)
 printHtmlPart(9)
-invokeTag('i18n_setup','g',52,[:],-1)
-printHtmlPart(5)
-invokeTag('aipVersion','g',53,[:],-1)
+invokeTag('aipVersion','g',51,[:],-1)
 printHtmlPart(5)
 if((grails.util.Environment.current.name == 'development') && true) {
 printHtmlPart(10)
 }
-printHtmlPart(5)
-createTagBody(2, {->
 printHtmlPart(11)
 expressionOut.print(fragment)
 printHtmlPart(12)
 expressionOut.print(fragment)
 printHtmlPart(13)
-})
-invokeTag('javascript','g',62,[:],2)
+invokeTag('i18n_setup','g',60,[:],-1)
 printHtmlPart(14)
 })
-invokeTag('captureHead','sitemesh',65,[:],1)
+invokeTag('captureHead','sitemesh',63,[:],1)
 printHtmlPart(15)
 createClosureForHtmlPart(16, 1)
-invokeTag('captureBody','sitemesh',79,[:],1)
+invokeTag('captureBody','sitemesh',77,[:],1)
 printHtmlPart(17)
 }
 public static final Map JSP_TAGS = new HashMap()
@@ -83,7 +78,7 @@ protected void init() {
 	this.jspTags = JSP_TAGS
 }
 public static final String CONTENT_TYPE = 'text/html;charset=UTF-8'
-public static final long LAST_MODIFIED = 1560917014135L
+public static final long LAST_MODIFIED = 1561455111662L
 public static final String EXPRESSION_CODEC = 'html'
 public static final String STATIC_CODEC = 'none'
 public static final String OUT_CODEC = 'none'

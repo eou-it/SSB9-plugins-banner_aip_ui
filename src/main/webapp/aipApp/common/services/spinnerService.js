@@ -4,7 +4,7 @@
 ///<reference path="../../../typings/tsd.d.ts"/>
 var AIP;
 (function (AIP) {
-    var SpinnerService = /** @class */ (function () {
+    var SpinnerService = (function () {
         function SpinnerService() {
             this.showing = false;
         }
@@ -16,7 +16,8 @@ var AIP;
         };
         SpinnerService.$inject = [];
         return SpinnerService;
-    }());
+    })();
     AIP.SpinnerService = SpinnerService;
 })(AIP || (AIP = {}));
 register("bannerCommonAIP").service("SpinnerService", AIP.SpinnerService);
+//# sourceMappingURL=spinnerService.js.map

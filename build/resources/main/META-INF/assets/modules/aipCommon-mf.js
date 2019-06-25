@@ -1,5 +1,10 @@
 //= require modules/cm-angular-mf.js
 //= require modules/extensibilityAngular-mf.js
+//= require modules/aipPB-mf.js
+
+//= require  ng-ckeditor/libs/ckeditor/ckeditor.js
+//= require  ng-ckeditor/ng-ckeditor.js
+
 //= require  aipApp/aipCommon.js
 //= require  aipApp/common/services/itemListViewService.js
 //= require  aipApp/common/services/aipReviewService.js
@@ -12,6 +17,7 @@
 //= require  aipApp/common/directives/readmore/js/readmore.js
 //= require  aipApp/common/directives/calendar-directive.js
 //= require  aipApp/common/directives/item-detail/js/itemDetail.js
+//= require  aipApp/common/directives/pagebuilder/js/aip-pagebuilder.js
 //= require  aipApp/common/utils/spinnerCtrl.js
 
 //= require  aipApp/common/filters/i18n-filter.js
@@ -22,7 +28,5 @@
 //= require  aipApp/common/directives/aip-attachment/js/aipAttachment.js
 //= require  aipApp/common/directives/file-upload.js
 
-//= require  ng-ckeditor/libs/ckeditor/ckeditor.js
-//= require  ng-ckeditor/ng-ckeditor.js
+//= require modelPoppup.js
 
-//= require  modules/aipPB-mf.js

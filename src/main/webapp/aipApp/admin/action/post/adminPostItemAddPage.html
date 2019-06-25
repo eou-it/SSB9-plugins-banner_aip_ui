@@ -3,7 +3,6 @@ Copyright 2019 Ellucian Company L.P. and its affiliates.
 *******************************************************************************-->
 
 <div>
-
     <div class="col-md-8 col-xs-12"></div>
     <div class="col-md-4 col-xs-hidden"></div>
 </div>
@@ -21,7 +20,7 @@ Copyright 2019 Ellucian Company L.P. and its affiliates.
             <div class="actionItemElement col-xs-12 col-md-8">
                 <div class="row">
                     <input id="actionItemName" type="text" class="form-control"
-                           ng-model="vm.postActionItemInfo.name" ng-change="vm.checkChanges()"
+                           ng-model="vm.postActionItemInfo.name" ng-change="vm.checkChanges()" ng-disabled="vm.recurEditFlag"
                            placeholder='{{"aip.admin.action.actionItem.post.jobName.label"|i18n_aip}}'
                            aria-label='{{"aip.admin.action.actionItem.post.jobName.label"|i18n_aip}}'
                            aria-required="true">
@@ -36,7 +35,7 @@ Copyright 2019 Ellucian Company L.P. and its affiliates.
             </div>
             <div class="actionItemElement col-xs-8 col-sm-8">
                 <div class="row">
-                    <xe-ui-select id="postActionItemGroup" ng-change="vm.changedValue();vm.checkChanges()"
+                    <xe-ui-select id="postActionItemGroup" ng-change="vm.changedValue();vm.checkChanges()"  ng-disabled="vm.recurEditFlag"
                                   ng-model="vm.selected"
                                   theme="select2" ng-disabled="disabled">
 
@@ -69,7 +68,7 @@ Copyright 2019 Ellucian Company L.P. and its affiliates.
             </div>
 
             <div class="actionItemElement actionItemInfoRow row">
-                <span class="actionItemEdit" ng-click="vm.editPage()">{{"aip.admin.action.actionItems.add.edit"|i18n_aip}}</span>
+                <span class="actionItemEdit" id="actionItemAddOrEdit" ng-click="vm.editPage()">{{"aip.admin.action.actionItems.add.edit"|i18n_aip}}</span>
                 <span id="ActionItemGroup" class="actionItemLength">
                     <span ng-model="vm.itemLength" ng-if="vm.itemLength > 0">{{vm.itemLength}} {{"aip.admin.action.actionItems.itemsSelected"|i18n_aip}}</span>
                     <span ng-model="vm.itemLength" ng-if="vm.itemLength <= 0">{{vm.itemLength}} {{"aip.admin.action.actionItems.itemsSelected"|i18n_aip}}</span>
@@ -88,7 +87,7 @@ Copyright 2019 Ellucian Company L.P. and its affiliates.
                 <div class="row">
                     <xe-ui-select id="postActionItemPopulation" ng-model="vm.selectedPopulation"
                                   ng-change="vm.checkChanges()" theme="select2"
-                                  ng-disabled="disabled">
+                                  ng-disabled="vm.recurEditFlag">
 
                         <xe-ui-select-match placeholder={{"aip.admin.action.selected.groupName.name"|i18n_aip}}>
                             <div class="row actionItemName" ng-bind-html="vm.selectedPopulation.name"></div>
@@ -107,33 +106,51 @@ Copyright 2019 Ellucian Company L.P. and its affiliates.
                 </div>
             </div>
         </div>
-
-
-        <div class="row actionItemInfoRow actionItemName">
-            <div class="actionItemElement row input-actionItem">
-
-                <label for="displayDates" class="titleValue" id="displayDates">
-                    {{"aip.admin.action.actionItem.displayDates"|i18n_aip}}
-                </label>
-
-            </div>
-            <div class="actionItemElement col-xs-12 col-md-3 displayInstruction">
-                <div class="row">{{"aip.admin.action.actionItem.displayDates.instructions"|i18n_aip}}</div>
-
-            </div>
+        <div class="row actionItemInfoRow actionItemStatus actionItemScheduleType" >
+            <input id="regeneratePopulation" name="content" type="checkbox" ng-model="vm.regeneratePopulation" ng-change="vm.checkChanges()" ng-disabled="vm.recurEditFlag" />
+            <label  class="titleValue  required" for="regeneratePopulation">{{'aip.admin.action.postactionItem.regeneratePopulation'|i18n_aip}}</label>
         </div>
+        <div class="row actionItemInfoRow actionItemScheduleType"   >
+            <input type="radio" id="chkPost" name="content" ng-model="vm.scheduleType" value="POSTNOW" ng-disabled="vm.recurEditFlag"
+                   ng-change="vm.checkChanges();vm.scheduleType=='POSTNOW'?vm.postNow='true':vm.postNow='false'"/>
+            <label class="titleValue  required" for="chkPost">{{"aip.admin.action.postactionItem.post.now"|i18n_aip}}</label>
+
+            <br/>
+            <input type="radio" id="chkDate" name="content" ng-model="vm.scheduleType" value="SCHEDULE" ng-disabled="vm.recurEditFlag"
+                   ng-change="vm.checkChanges();vm.scheduleType=='POSTNOW'?vm.postNow='true':vm.postNow='false'"/>
+            <label class="titleValue  required" for="chkDate">{{"aip.admin.action.postactionItem.scheduleDate"|i18n_aip}}</label>
+            <br/>
+            <input type="radio" id="chkrecur" name="content" ng-model="vm.scheduleType" value="RECUR"
+                   ng-change="vm.checkChanges();vm.scheduleType=='POSTNOW'?vm.postNow='true':vm.postNow='false'"/>
+            <label class="titleValue  required" for="chkrecur" aria-label="{{'aip.admin.action.postactionItem.recurringPosting.aria.label'|i18n_aip}}">{{"aip.admin.action.postactionItem.recurringPosting"|i18n_aip}}</label>
 
 
-        <div class="row actionItemInfoRow actionItemStatus">
-            <div class="col-sm-12 col-md-6 startdate">
-                <div class="col-sm-6 startdate">
-                    <div class="actionItemElement row input-actionItem">
-                        <label for="labelDisplayStartDate" id="labelDisplayStartDate" class="titleValue required" >{{"aip.admin.action.postactionItem.start.date"|i18n_aip}}
+        </div>
+        <!--Display dates for onetime schedule and post now -->
+        <div id="displayDatesParent" ng-if="vm.scheduleType!='RECUR'">
+            <div class="row actionItemInfoRow actionItemName">
+                <div class="actionItemElement row input-actionItem ">
+                    <label for="displayDates" class="titleValue" id="displayDates">
+                        {{"aip.admin.action.actionItem.displayDates"|i18n_aip}}
+                    </label>
+                </div>
+                <div class="actionItemElement col-xs-12 col-md-3 displayInstruction">
+                    <div class="row">{{"aip.admin.action.actionItem.displayDates.instructions"|i18n_aip}}</div>
+                </div>
+            </div>
+            <!--DATES DIV-->
+            <div class="row actionItemInfoRow  " >
+                <div class=" noPaddingLeft col-md-3 col-sm-3 col-lg-2 col-xs-12 ">
+                    <!--LABEL DIV-->
+                    <div class="actionItemElement row input-actionItem ">
+                        <label for="labelDisplayStartDate" id="labelDisplayStartDate" class="titleValue required">{{"aip.admin.action.postactionItem.start.date"|i18n_aip}}
                         </label>
                     </div>
-                    <div class="actionItemElement Datelement col-xs-1 col-sm-2  dateRow form-container" role="textbox">
+                    <!--END LABEL DIV-->
+                    <div class="actionItemElement Datelement dateRow row form-container"
+                         role="textbox">
 
-                        <div class="row input-daterange form-group right-inner-addon dateRange-minwidth">
+                        <div class=" col-xs-3 col-sm-2 input-daterange form-group right-inner-addon dateRange-minwidth noPaddingLeft noPaddingRight">
                             <input type="text" id="date" date-picker ng-model="vm.postActionItemInfo.displayStartDate"
                                    today="{{today}}" ng-change="vm.checkChanges()"
                                    class="form-control  Datelement" name="displaystartDate"
@@ -144,14 +161,16 @@ Copyright 2019 Ellucian Company L.P. and its affiliates.
                         </div>
                     </div>
                 </div>
-                <div class="col-sm-6 enddate">
-                    <div class="actionItemElement row input-actionItem">
-                        <label for="labelDisplayEndDate" id="labelDisplayEndDate" class="titleValue required">{{"aip.admin.action.postactionItem.end.date"|i18n_aip}}
+                <div class="noPaddingLeft col-md-3 col-sm-3 col-lg-2 col-xs-12">
+                    <!--LABEL DIV-->
+                    <div class="actionItemElement row input-actionItem ">
+                        <label for="labelDisplayEndDate" id="labelDisplayEndDate" class="titleValue required ">{{"aip.admin.action.postactionItem.end.date"|i18n_aip}}
                         </label>
                     </div>
-                    <div class="actionItemElement Datelement col-xs-1 col-sm-2  dateRow form-container" role="textbox"
+                    <!--END LABEL DIV-->
+                    <div class="actionItemElement Datelement dateRow row  form-container" role="textbox"
                          id="DisplayEndDate">
-                        <div class="row input-daterange form-group right-inner-addon dateRange-minwidth">
+                        <div class="col-xs-3 col-sm-3 input-daterange form-group right-inner-addon dateRange-minwidth noPaddingLeft noPaddingRight">
                             <input type="text" date-picker id="datepickerdisplayEndDate"
                                    class="form-control  Datelement" name="displayEndDate"
                                    ng-model="vm.postActionItemInfo.displayEndDate" ng-change="vm.checkChanges()"
@@ -162,148 +181,416 @@ Copyright 2019 Ellucian Company L.P. and its affiliates.
                     </div>
                 </div>
             </div>
+            <!--END DATES DIV-->
         </div>
+        <!--END:Display dates for onetime schedule and post now -->
 
+        <!--One Time posting-->
         <div class="row actionItemInfoRow actionItemStatus">
-            <div class="">
-                <input type="radio" id="chkPost" name="content" ng-model="vm.postNow" data-ng-value="true"
-                       ng-change="vm.checkChanges()">
-                <label class="titleValue  required" for="chkPost">{{"aip.admin.action.postactionItem.post.now"|i18n_aip}}</label>
 
-                <br/>
-                <input type="radio" id="chkDate" name="content" ng-model="vm.postNow" data-ng-value="false"
-                       ng-change="vm.checkChanges()">
-                <label class="titleValue  required" for="chkDate">{{"aip.admin.action.postactionItem.scheduleDate"|i18n_aip}}</label>
+            <div ng-if="vm.scheduleType=='SCHEDULE'">
+                <div class="row actionItemInfoRow actionItemStatus">
+                    <!--date section-->
+                    <div class="col-sm-12 col-md-12  col-xs-12 startdate">
+                        <div class="col-sm-3 col-lg-2 col-xs-12 startdate">
+                            <!--Start date label-->
+                            <div class="actionItemElement row input-actionItem">
+                                <label for="labelScheduledStartDate" class="titleValue required" id="labelScheduledStartDate">{{"aip.admin.action.postactionItem.schdeule.start.date"|i18n_aip}}
+                                </label>
+                            </div>
+                            <!--End : Start date label-->
+                            <div class="actionItemElement Datelement row form-container" role="textbox">
 
-                <div ng-hide="vm.postNow" class="col-sm-12">
-                    <div class="row actionItemInfoRow actionItemStatus">
-                        <div class="col-sm-12 col-md-12 startdate">
-                            <div class="col-sm-4 startdate">
-                                <div class="actionItemElement row input-actionItem">
-                                    <label for="labelScheduledStartDate" class="titleValue required" id="labelScheduledStartDate">{{"aip.admin.action.postactionItem.schdeule.start.date"|i18n_aip}}
-                                    </label>
-                                </div>
-                                <div class="actionItemElement Datelement col-xs-1 col-sm-2  dateRow form-container" role="textbox">
-
-                                    <div class="row input-daterange form-group right-inner-addon dateRange-minwidth">
-                                        <input type="text" id="scheduledStartDate" date-picker
-                                               ng-model="vm.postActionItemInfo.scheduledStartDate" ng-change="vm.checkChanges();vm.getProcessedServerDateTimeAndTimezone()"
-                                               class="form-control  Datelement " name="scheduledStartDate"
-                                               aria-required="true" required autocomplete="off"
-                                               placeholder='{{"default.date.format.watermark"|i18n_aip}}'/>
-                                    </div>
+                                <div class="col-xs-3 col-sm-3 input-daterange form-group right-inner-addon dateRange-minwidth noPaddingLeft noPaddingRight">
+                                    <input type="text" id="scheduledStartDate" date-picker
+                                           ng-model="vm.postActionItemInfo.scheduledStartDate" ng-change="vm.checkChanges();vm.getProcessedServerDateTimeAndTimezone()"
+                                           class="form-control  Datelement " name="scheduledStartDate"
+                                           aria-required="true" required autocomplete="off"
+                                           placeholder='{{"default.date.format.watermark"|i18n_aip}}'/>
                                 </div>
                             </div>
-                            <div class="col-sm-4 enddate">
-                                <div class="actionItemElement row input-actionItem">
-                                    <label for="postActionItemTime" id="postActionItemTime" class="titleValue required" >{{"aip.admin.action.postactionItem.time"|i18n_aip}}
-                                    </label>
-                                </div>
-                                <div class="actionItemElement Datelement col-sm-4 dateRow form-container" role="textbox">
+                        </div>
+                        <div class="col-sm-3 col-lg-2 col-xs-12 enddate">
+                            <div class="actionItemElement row input-actionItem ">
+                                <label for="postActionItemTime" id="postActionItemTime" class="titleValue required ">{{"aip.admin.action.postactionItem.time"|i18n_aip}}
+                                </label>
+                            </div>
+                            <div class="actionItemElement Datelement col-sm-4 col-md-4 dateRow form-container" role="textbox">
 
-                                    <div class="row input-daterange form-group right-inner-addon dateRange-minwidth">
-                                        <input type="text" class="form-control   " name="" aria-required="true"
-                                               xe-time-picker-box input_24_hr_string="{{vm.localeTime ? 'N' : 'Y'}}" change='vm.checkChanges();vm.getProcessedServerDateTimeAndTimezone()'
-                                               hour-format-12="{{vm.localeTime ? 'Y' : 'N'}}"
-                                               am-label='{{"aip.admin.communication.timepicker.time.am.label"|i18n_aip}}'
-                                               pm-label='{{"aip.admin.communication.timepicker.time.pm.label"|i18n_aip}}'
-                                               ng-model="vm.sendTime"
-                                        />
-                                    </div>
+                                <div class="row input-daterange form-group right-inner-addon dateRange-minwidth">
+                                    <input type="text" class="form-control   " name="" aria-required="true"
+                                           xe-time-picker-box input_24_hr_string="{{vm.localeTime ? 'N' : 'Y'}}" change='vm.checkChanges();vm.getProcessedServerDateTimeAndTimezone()'
+                                           hour-format-12="{{vm.localeTime ? 'Y' : 'N'}}"
+                                           am-label='{{"aip.admin.communication.timepicker.time.am.label"|i18n_aip}}'
+                                           pm-label='{{"aip.admin.communication.timepicker.time.pm.label"|i18n_aip}}'
+                                           ng-model="vm.sendTime"
+                                    />
                                 </div>
                             </div>
-                            <div class="col-sm-4 enddate">
-                                <div class="actionItemElement row input-actionItem">
-                                    <label for="postActionItemPopulation" class="titleValue required ">{{"aip.admin.action.postactionItem.timezone"|i18n_aip}}
-                                    </label>
-                                </div>
-                                <div class="actionItemElement Datelement col-sm-4  dateRow form-container" role="textbox"
-                                     id="timezoneid">
-                                    <div class="row input-daterange form-group right-inner-addon dateRange-minwidth">
-                                        <div class="timeZone timezone-minwidth" ng-show="vm.showTimezoneIcon">
+                        </div>
+                        <div class="col-sm-3 col-lg-2 col-xs-12 enddate">
+                            <div class="actionItemElement row input-actionItem">
+                                <label for="postActionItemPopulation" class="titleValue required ">{{"aip.admin.action.postactionItem.timezone"|i18n_aip}}
+                                </label>
+                            </div>
+                            <div class="actionItemElement Datelement col-sm-12 col-md-12 col-lg-12 col-xs-12  dateRow form-container" role="textbox"
+                                 id="timezoneid">
+                                <div class="row input-daterange form-group right-inner-addon dateRange-minwidth">
+                                    <div class="timeZone timezone-minwidth" ng-show="vm.showTimezoneIcon">
                                             <span class="col-xs-11 col-sm-10 defaultTimezone"
                                                   ng-bind-html="vm.defaultTimeZone"></span>
-                                            <button type="button" class="col-xs-1 col-sm-2 timezone-btn"
-                                                    ng-click="vm.showTimeZoneList()"></button>
-                                        </div>
-
-                                        <xe-ui-select class="col-xs-12 col-sm-12 timeZoneChange timezone-minwidth"
-                                                      ng-model="vm.timezone"
-                                                      ng-change="vm.setTimezone(vm.timezone);vm.checkChanges();vm.getProcessedServerDateTimeAndTimezone()"
-                                                      theme="select2" ng-show="!vm.showTimezoneIcon">
-                                            <xe-ui-select-match
-                                                    placeholder="{{'aip.admin.communication.sendMessage.timezonePlaceHolder' | i18n_aip}}">
-                                                <div ng-bind-html="vm.timezone.displayNameWithoutOffset"></div>
-                                            </xe-ui-select-match>
-                                            <xe-ui-select-choices
-                                                    repeat="timezone in vm.timezones | filter: $select.search">
-                                                <div ng-bind-html="timezone.displayNameWithoutOffset | highlight: $select.search"></div>
-                                            </xe-ui-select-choices>
-                                        </xe-ui-select>
+                                        <button type="button" class="col-xs-1 col-sm-2 timezone-btn"
+                                                ng-click="vm.showTimeZoneList()" aria-label="{{'aip.admin.action.postactionItem.timezone.button.aria.label'|i18n_aip}}"></button>
                                     </div>
+
+                                    <xe-ui-select class="col-xs-12 col-sm-12 timeZoneChange timezone-minwidth"
+                                                  ng-model="vm.timezone"
+                                                  aria-lable="{{'aip.admin.action.postactionItem.timezone'|i18n_aip}}"
+                                                  ng-change="vm.setTimezone(vm.timezone);vm.checkChanges();vm.getProcessedServerDateTimeAndTimezone()"
+                                                  theme="select2" ng-show="!vm.showTimezoneIcon">
+                                        <xe-ui-select-match
+                                                placeholder="{{'aip.admin.communication.sendMessage.timezonePlaceHolder' | i18n_aip}}">
+                                            <div ng-bind-html="vm.timezone.displayNameWithoutOffset"></div>
+                                        </xe-ui-select-match>
+                                        <xe-ui-select-choices
+                                                repeat="timezone in vm.timezones | filter: $select.search">
+                                            <div ng-bind-html="timezone.displayNameWithoutOffset | highlight: $select.search"></div>
+                                        </xe-ui-select-choices>
+                                    </xe-ui-select>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="row actionItemInfoRow actionItemStatus">
-                        <div class="actionItemElement row input-actionItem">
-                            <label for="labelappServerDetail" class="titleValue" id="labelappServerDetail">{{"aip.admin.action.postactionItem.app.server"|i18n_aip}}
+                    <!--End Start date section-->
+                </div>
+                <div class="row actionItemInfoRow actionItemStatus">
+                    <div class="actionItemElement row input-actionItem">
+                        <label for="labelappServerDetail" class="titleValue" id="labelappServerDetail">{{"aip.admin.action.postactionItem.app.server"|i18n_aip}}
+                        </label>
+                    </div>
+                    <div class="col-sm-12 col-md-12 startdate">
+                        <div class="col-sm-3 col-lg-2 col-md-3 col-xs-12  startdate">
+                            <div class="actionItemElement row input-actionItem">
+                                <label for="labelappServerDate" class="titleValue" id="labelappServerDate">{{"aip.admin.action.postactionItem.schdeule.start.date"|i18n_aip}}
+                                </label>
+                            </div>
+                            <div class="actionItemElement Datelement col-sm-4  dateRow form-container" role="textbox">
+
+                                <div class="row input-daterange form-group right-inner-addon dateRange-minwidth">
+                                    <input id="appServerDate" type="text" class="form-control"
+                                           ng-model="vm.appServerDate"
+                                           aria-required="true" ng-disabled="true">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-3 col-lg-2 col-md-3 col-xs-12 enddate">
+                            <div class="actionItemElement row input-actionItem">
+                                <label for="labelappServerTime" id="labelappServerTime" class="titleValue">{{"aip.admin.action.postactionItem.time"|i18n_aip}}
+                                </label>
+                            </div>
+                            <div class="actionItemElement Datelement col-sm-4 dateRow form-container" role="textbox">
+                                <div class="row input-daterange form-group right-inner-addon dateRange-minwidth">
+                                    <input id="appServerTime" type="text" class="form-control"
+                                           xe-time-picker-box
+                                           am-label='{{"aip.admin.communication.timepicker.time.am.label"|i18n_aip}}'
+                                           pm-label='{{"aip.admin.communication.timepicker.time.pm.label"|i18n_aip}}'
+                                           ng-model="vm.appServerTime"
+                                           aria-required="true" ng-disabled="true">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-3 col-lg-2 col-md-3 col-xs-12 enddate">
+                            <div class="actionItemElement row input-actionItem">
+                                <label for="labelappServerTimeZone" class="titleValue " id="labelappServerTimeZone">{{"aip.admin.action.postactionItem.timezone"|i18n_aip}}
+                                </label>
+                            </div>
+                            <div class="actionItemElement Datelement col-sm-4  dateRow form-container" role="textbox">
+                                <div class="row input-daterange form-group right-inner-addon timezone-minwidth ">
+                                    <input id="appServerTimeZone" type="text" class="form-control"
+                                           ng-model="vm.appServerTimeZone"
+                                           aria-required="true" ng-disabled="true">
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div ng-if="vm.scheduleType=='RECUR'">
+                <!--Recurcount and recurr frequency-->
+                <div class="row actionItemInfoRow recurFrequency">
+                    <div class="actionItemElement row input-actionItem">
+                       <label class="titleValue required" id="labelrecurCount"
+                               for="recurCount">{{"aip.admin.action.postactionItem.recurringPosting.recurEvery"|i18n_aip}}</label>
+                   </div>
+                    <div class="row">
+                    <div class="actionItemElement col-lg-1 col-md-1 col-sm-2 col-xs-3 ">
+                        <input type="number" min="0" id="recurCount" ng-model="vm.recurCount" class="form-control " ng-disabled="vm.recurEditFlag"
+                               name="recurCount"
+                               aria-required="true" required autocomplete="off" aria-label="{{'aip.admin.action.postactionItem.recurringPosting.recur.every.aria.label'|i18n_aip}}"/>
+
+                    </div>
+                    <div class="actionItemElement col-lg-1 col-md-1 col-sm-2 col-xs-3 ">
+                        <xe-ui-select id="recurFrequency" ng-model="vm.selectedRecurFrequency" theme="select2"
+                                      ng-disabled="vm.recurEditFlag"  search-enabled="false" ng-change="vm.dataChanged()" aria-label="{{'aip.admin.action.postactionItem.recurringPosting.recurType.aria.label'|i18n_aip}}"
+                        >
+                            <xe-ui-select-match>
+                                <div class=" row actionItemName"
+                                     ng-bind-html="vm.selectedRecurFrequency.frequency">
+                                </div>
+                            </xe-ui-select-match>
+                            <xe-ui-select-choices repeat="item in vm.recurFreqeunecyList">
+                                <div ng-bind-html="item.frequency"></div>
+                            </xe-ui-select-choices>
+                        </xe-ui-select>
+                    </div>
+                        </div>
+                </div>
+                <div class="row actionItemInfoRow">
+                    <!--For START DATE-->
+                    <div class="col-lg-2 col-md-3 col-sm-4 col-xs-12 noPaddingLeft">
+                        <div class="row actionItemElement  input-actionItem">
+                            <label for="labelDisplayStartDate" class="titleValue required">{{"aip.admin.action.postactionItem.start.date"|i18n_aip}}
                             </label>
                         </div>
-                        <div class="col-sm-12 col-md-12 startdate">
-                            <div class="col-sm-4 startdate">
-                                <div class="actionItemElement row input-actionItem">
-                                    <label for="labelappServerDate" class="titleValue" id="labelappServerDate">{{"aip.admin.action.postactionItem.schdeule.start.date"|i18n_aip}}
-                                    </label>
-                                </div>
-                                <div class="actionItemElement Datelement col-sm-4  dateRow form-container" role="textbox">
-
-                                    <div class="row input-daterange form-group right-inner-addon dateRange-minwidth">
-                                        <input id="appServerDate" type="text" class="form-control"
-                                               ng-model="vm.appServerDate"
-                                               aria-required="true"  ng-disabled="true">
-                                    </div>
-                                </div>
+                        <div class=" row actionItemElement  ">
+                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 noPaddingLeft">
+                                <input type="number" min="0" class="form-control" name="displayStartDateOffset" aria-required="true" required autocomplete="off" ng-model="vm.displayStartDateOffset"
+                                       ng-change="vm.checkChanges()"    aria-label="{{'aip.admin.action.postactionItem.recurringPosting.displayStartOffset.aria.label'|i18n_aip}}"/>
                             </div>
-                            <div class="col-sm-4 enddate">
-                                <div class="actionItemElement row input-actionItem">
-                                    <label for="labelappServerTime" id="labelappServerTime" class="titleValue">{{"aip.admin.action.postactionItem.time"|i18n_aip}}
-                                    </label>
-                                </div>
-                                <div class="actionItemElement Datelement col-sm-4 dateRow form-container" role="textbox">
-                                    <div class="row input-daterange form-group right-inner-addon dateRange-minwidth" >
-                                        <input id="appServerTime" type="text" class="form-control"
-                                               xe-time-picker-box
-                                               am-label='{{"aip.admin.communication.timepicker.time.am.label"|i18n_aip}}'
-                                               pm-label='{{"aip.admin.communication.timepicker.time.pm.label"|i18n_aip}}'
-                                               ng-model="vm.appServerTime"
-                                               aria-required="true" ng-disabled="true">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-4 enddate">
-                                <div class="actionItemElement row input-actionItem">
-                                    <label for="labelappServerTimeZone" class="titleValue " id="labelappServerTimeZone">{{"aip.admin.action.postactionItem.timezone"|i18n_aip}}
-                                    </label>
-                                </div>
-                                <div class="actionItemElement Datelement col-sm-4  dateRow form-container" role="textbox">
-                                    <div class="row input-daterange form-group right-inner-addon timezone-minwidth ">
-                                        <input id="appServerTimeZone" type="text" class="form-control"
-                                               ng-model="vm.appServerTimeZone"
-                                               aria-required="true"  ng-disabled="true">
+                            <div class=" displayInstruction recuranceInstrcution col-xs-6 noPaddingLeft">{{"aip.admin.action.postactionItem.recurringPosting.displayOffset.instructions"|i18n_aip}}</div>
+                        </div>
+                    </div>
+                    <!--For END DATE-->
+                    <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12 noPaddingLeft">
+                        <div class="row actionItemElement  input-actionItem">
+                            <label  class="titleValue required">{{"aip.admin.action.postactionItem.end.date"|i18n_aip}}
+                            </label>
+                        </div>
 
-                                    </div>
+                        <div class="row actionItemElement">
+                            <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 noPaddingLeft">
+                                <input type="radio" id="chkendoffset" name="recEndType" ng-model="vm.recDisplayEndDateType" value="OFFSET"
+                                       ng-change="vm.checkChanges();" aria-label="{{'aip.admin.action.postactionItem.recurringPosting.recurr.end.date.offset.type'|i18n_aip}}"/>
+                            </div>
+                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 noPaddingLeft actionItemElement">
+                                <input type="number" min="0" class="form-control" name="displayEndDateOffset" ng-change="vm.checkChanges()" aria-required="true" required autocomplete="off" ng-model ="vm.displayEndDateOffset" ng-disabled="vm.recDisplayEndDateType==='EXACT'" aria-label={{'aip.admin.action.postactionItem.recurringPosting.displayEndOffset.aria.label'|i18n_aip}}"/>
+                            </div>
+                            <div class=" col-lg-8 col-md-8 col-sm-8 col-xs-8 noPaddingLeft ">
+                                <div class="displayInstruction recuranceInstrcution"> {{"aip.admin.action.postactionItem.recurringPosting.displayOffset.instructions"|i18n_aip}}</div>
+                            </div>
+                        </div>
+                        <div class="  row actionItemElement   ">
+                            <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 noPaddingLeft">
+                                <input type="radio" id="chkendExact" name="recEndType" ng-model="vm.recDisplayEndDateType" value="EXACT"
+                                       ng-change="vm.checkChanges();" aria-label="{{'aip.admin.action.postactionItem.recurringPosting.recurr.end.date.offset.type'|i18n_aip}}"/>
+                            </div>
+
+                            <div class="actionItemElement Datelement col-xs-1 col-sm-2 col-lg-2 col-md-4 dateRow form-container"
+                                 role="textbox"
+                                 id="RecurDisplayEndDate">
+                                <div class="row input-daterange form-group right-inner-addon dateRange-minwidth">
+                                    <input type="text" date-picker id="datepickerRecurdisplayEndDate"
+                                           class="form-control  Datelement" name="RecurDisplayEndDate"
+                                           ng-model="vm.recurDisplayEndDate" ng-change="vm.checkChanges()"
+                                           aria-required="true" required autocomplete="off"
+                                           aria-label="{{'aip.admin.action.postactionItem.recurringPosting.displayEndDate.aria.label'|i18n_aip}}"
+                                           placeholder='{{"default.date.format.watermark"|i18n_aip}}'
+                                           ng-disabled="vm.recDisplayEndDateType==='OFFSET'"/>
                                 </div>
                             </div>
                         </div>
+                    </div>
+                </div>
+                <div class="row actionItemInfoRow actionItemStatus">
+                    <div class="col-sm-12 col-md-12  col-xs-12 startdate">
+                    <div class="col-sm-3 col-md-3 col-lg-2 col-xs-12 row noPaddingLeft startdate">
+                        <div class="actionItemElement row input-actionItem">
+                            <label for="recurrStartDate" class="titleValue required"
+                                   id="labelrecurrStartDate">{{"aip.admin.action.postactionItem.recurringPosting.recurr.start.date"|i18n_aip}}
+                            </label>
+                        </div>
+                        <div class="actionItemElement Datelement row form-container"
+                             role="textbox">
+
+                            <div class="col-xs-3 col-sm-3 noPaddingLeft noPaddingRight input-daterange form-group right-inner-addon dateRange-minwidth" aria-label="{{'aip.admin.action.postactionItem.recurringPosting.recurr.start.date.aria.label'|i18n_aip}}">
+                                <input type="text" id="recurrStartDate" date-picker
+                                       ng-model="vm.recurranceStartDate"  ng-if="vm.recurEditFlag==false"
+                                       ng-change="vm.checkChanges();vm.getProcessedServerRecurranceStartDate()"
+                                       class="form-control  Datelement " name="recurranceStartDate"
+                                       aria-label="{{'aip.admin.action.postactionItem.recurringPosting.recurr.start.date.aria.label'|i18n_aip}}"
+                                       aria-required="true" required autocomplete="off"
+                                       placeholder='{{"default.date.format.watermark"|i18n_aip}}'/>
+
+                                <input type="text" id="recurrEditStartDate" ng-if="vm.recurEditFlag==true"
+                                       ng-model="vm.recurranceStartDate" ng-disabled="vm.recurEditFlag"
+                                       ng-change="vm.checkChanges();vm.getProcessedServerRecurranceStartDate()"
+                                       class="form-control  Datelement " name="recurranceStartDate"
+                                       aria-required="true" required autocomplete="off"
+                                       placeholder='{{"default.date.format.watermark"|i18n_aip}}'/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-3 col-md-3 col-lg-2 col-xs-12 enddate">
+                        <div class="actionItemElement row input-actionItem">
+                            <label for="recurrActionItemTime" id="recurrActionItemTimeLabel" class="titleValue required ">{{"aip.admin.action.postactionItem.time"|i18n_aip}}
+                            </label>
+                        </div>
+                        <div class="actionItemElement Datelement col-sm-4 col-md-4    dateRow form-container"
+                             role="textbox">
+
+                            <div class="row input-daterange form-group right-inner-addon dateRange-minwidth" >
+                                <input type="text" class="form-control" name="recurrActionItemTime" aria-required="true" ng-disabled="vm.recurDisableTimeAndTimeZone"
+                                       aria-label="{{'aip.admin.action.postactionItem.recurringPosting.recurr.time.runtime'|i18n_aip}}"
+                                       xe-time-picker-box input_24_hr_string="{{vm.localeTime ? 'N' : 'Y'}}"
+                                       change='vm.checkChanges();vm.getProcessedServerRecurranceStartDate()'
+                                       hour-format-12="{{vm.localeTime ? 'Y' : 'N'}}"
+                                       am-label='{{"aip.admin.communication.timepicker.time.am.label"|i18n_aip}}'
+                                       pm-label='{{"aip.admin.communication.timepicker.time.pm.label"|i18n_aip}}'
+                                       ng-model="vm.recurrTime"
+                                       id="recurrActionItemTime"
+                                />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-3 col-md-3 col-lg-2 col-xs-12 enddate">
+                        <div class="actionItemElement row input-actionItem">
+                            <label for="timezoneidrecur" class="titleValue required ">{{"aip.admin.action.postactionItem.timezone"|i18n_aip}}
+                            </label>
+                        </div>
+                        <div class="actionItemElement Datelement col-sm-12 col-md-12 col-lg-12 col-xs-12  dateRow form-container"
+                             role="textbox"
+                             id="timezoneidrecur">
+                            <div class="row input-daterange form-group right-inner-addon dateRange-minwidth">
+                                <div class="timeZone" ng-show="vm.showTimezoneIcon">
+                                            <span class="col-xs-11 col-sm-10 defaultTimezone"
+                                                  ng-bind-html="vm.defaultTimeZone"></span>
+                                    <button type="button" class="col-xs-1 col-sm-2 timezone-btn"
+                                            ng-click="vm.showTimeZoneList()"
+                                            aria-label="{{'aip.admin.action.postactionItem.timezone.button.aria.label'|i18n_aip}}"></button>
+                                </div>
+
+                                <xe-ui-select class="col-xs-12 col-sm-12 timeZoneChange recurTimeZone" ng-disabled="vm.recurDisableTimeAndTimeZone"
+                                              ng-model="vm.timezone"
+                                              aria-label="{{'aip.admin.action.postactionItem.recurringPosting.recurr.time.zone.aria.label' | i18n_aip}}"
+                                              ng-change="vm.setTimezone(vm.timezone);vm.checkChanges();vm.getProcessedServerRecurranceStartDate()"
+                                              theme="select2" ng-show="!vm.showTimezoneIcon">
+                                    <xe-ui-select-match
+                                            placeholder="{{'aip.admin.communication.sendMessage.timezonePlaceHolder' | i18n_aip}}">
+                                        <div ng-bind-html="vm.timezone.displayNameWithoutOffset"></div>
+                                    </xe-ui-select-match>
+                                    <xe-ui-select-choices
+                                            repeat="timezone in vm.timezones | filter: $select.search">
+                                        <div ng-bind-html="timezone.displayNameWithoutOffset | highlight: $select.search"></div>
+                                    </xe-ui-select-choices>
+                                </xe-ui-select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-3 col-md-3 col-lg-2 col-xs-12 startdate">
+                        <div class="actionItemElement row input-actionItem">
+                            <label for="recurrEndDate" class="titleValue required"
+                                   id="labelScheduledStalabelScheduledStartDatertDate">{{"aip.admin.action.postactionItem.recurringPosting.recurr.end.date"|i18n_aip}}
+                            </label>
+                        </div>
+                        <div class="actionItemElement Datelement row form-container"
+                             role="textbox">
+
+                            <div class="col-xs-3 col-sm-3 noPaddingLeft noPaddingRight input-daterange form-group right-inner-addon dateRange-minwidth">
+                                <input type="text" id="recurrEndDate" date-picker
+                                       ng-model="vm.recurranceEndDate"
+                                       ng-change="vm.checkChanges();vm.getProcessedServerRecurranceEndDate()"
+                                       class="form-control  Datelement " name="recurrEndDate"
+                                       aria-required="true"
+                                       aria-label="{{'aip.admin.action.postactionItem.recurringPosting.recurr.end.date.aria.label'|i18n_aip}}"
+                                       required autocomplete="off"
+                                       placeholder='{{"default.date.format.watermark"|i18n_aip}}'/>
+                            </div>
+                        </div>
+                    </div>
+                        </div>
+
+                </div>
+
+                <div class="row actionItemInfoRow actionItemStatus">
+                    <div class="actionItemElement row input-actionItem">
+                        <label for="labelappServerDetail" class="titleValue" id="labelRecurAppServerDetail">
+                            {{"aip.admin.action.postactionItem.app.server"|i18n_aip}}
+                        </label>
+                    </div>
+                    <div class="col-sm-12 col-md-12  col-xs-12 startdate">
+                        <div class="col-sm-3 col-md-3 col-lg-2 col-xs-12 row noPaddingLeft startdate">
+                        <div class="actionItemElement row input-actionItem">
+                            <label for="appServerDateRecur" class="titleValue" id="labelappServerDateRecurr">{{"aip.admin.action.postactionItem.recurringPosting.recurr.start.date"|i18n_aip}}
+                            </label>
+                        </div>
+                        <div class="actionItemElement Datelement col-sm-4  dateRow form-container"
+                             role="textbox">
+
+                            <div class="row input-daterange form-group right-inner-addon dateRange-minwidth">
+                                <input id="appServerDateRecur" type="text" class="form-control"
+                                       ng-model="vm.serverRecurrStartDate"
+                                       aria-required="true" ng-disabled="true">
+                            </div>
+                        </div>
+                    </div>
+                        <div class="col-sm-3 col-md-3 col-lg-2 col-xs-12 enddate">
+                        <div class="actionItemElement row input-actionItem">
+                            <label for="appServerTimeRecurr" id="labelappServerTimeRecurr" class="titleValue">{{"aip.admin.action.postactionItem.time"|i18n_aip}}
+                            </label>
+                        </div>
+                        <div class="actionItemElement Datelement col-sm-4 dateRow form-container"
+                             role="textbox">
+                            <div class="row input-daterange form-group right-inner-addon dateRange-minwidth">
+                                <input id="appServerTimeRecurr" type="text" class="form-control"
+                                       xe-time-picker-box
+                                       am-label='{{"aip.admin.communication.timepicker.time.am.label"|i18n_aip}}'
+                                       pm-label='{{"aip.admin.communication.timepicker.time.pm.label"|i18n_aip}}'
+                                       ng-model="vm.serverRecurStartTime"
+                                       aria-required="true" ng-disabled="true">
+                            </div>
+                        </div>
+                    </div>
+                        <div class="col-sm-3 col-md-3 col-lg-2 col-xs-12 enddate">
+                        <div class="actionItemElement row input-actionItem">
+                            <label for="appServerTimeZoneRecurr" class="titleValue " id="labelappServerTimeZoneRecurr">
+                                {{"aip.admin.action.postactionItem.timezone"|i18n_aip}}
+                            </label>
+                        </div>
+                        <div class="actionItemElement dateRow form-container"
+                             role="textbox">
+                            <div class="col-md-12 input-daterange form-group right-inner-addon noPaddingLeft  noPaddingRight">
+                                <input id="appServerTimeZoneRecurr" type="text" class="form-control"
+                                       ng-model="vm.serverRecurTimeZone"
+                                       aria-required="true" ng-disabled="true">
+                            </div>
+                        </div>
+                    </div>
+                        <div class="col-sm-3 col-md-3 col-lg-2 col-xs-12 enddate">
+                        <div class="actionItemElement row input-actionItem">
+                            <label for="appServerRecurEndDateRecurr" class="titleValue" id="labelappServerRecurEndDateRecurr">{{"aip.admin.action.postactionItem.recurringPosting.recurr.end.date"|i18n_aip}}
+                            </label>
+                        </div>
+                        <div class="actionItemElement Datelement col-sm-4  dateRow form-container"
+                             role="textbox">
+                            <div class="row input-daterange form-group right-inner-addon dateRange-minwidth">
+                                <input id="appServerRecurEndDateRecurr" type="text" class="form-control"
+                                       ng-model="vm.serverRecurEndDate"
+                                       aria-required="true" ng-disabled="true">
+                            </div>
+                        </div>
+                    </div>
                     </div>
 
                 </div>
+
             </div>
+        </div>
 
             <div class="actionItemControl">
                 <div class="row">
-                    <div class="actionItemElement col-xs-12 col-sm-8">
+                    <div class="actionItemElement col-xs-12 col-sm-12 col-md-8">
                         <div class="actionItemButton">
                     <span>
                         <button name="Cancel" type="button" class="btn btn-default" ng-click="vm.cancel()">{{"aip.common.cancel"|i18n_aip}}</button>
@@ -325,6 +612,6 @@ Copyright 2019 Ellucian Company L.P. and its affiliates.
                 </div>
             </div>
 
-        </div>
     </div>
+</div>
 </div>

@@ -138,7 +138,7 @@ aipApp/admin/status/list/adminStatusListPageCtrl.js.map
 aipApp/admin/status/list/adminStatusListPageCtrl.ts
 aipApp/admin/status/list/_adminStatusListPage.scss
 aipApp/adminApp.js
-aipApp/aipcommon.js
+aipApp/aipCommon.js
 aipApp/aipReview/monitorActionItem/monitorActionItem.html
 aipApp/aipReview/monitorActionItem/monitorActionItemCtrl.js
 aipApp/aipReview/monitorActionItem/monitorActionItemCtrl.ts

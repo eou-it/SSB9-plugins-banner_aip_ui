@@ -7,11 +7,14 @@
 var AIP;
 (function (AIP) {
     var AdminPostItemAddPageCtrl = /** @class */ (function () {
-        function AdminPostItemAddPageCtrl($scope, $q, $state, $uibModal, $filter, $timeout, SpinnerService, APP_ROOT, AdminActionStatusService, AdminActionService) {
-            this.$inject = ["$scope", "$q", "$state", "$filter", "$timeout", "SpinnerService", "AdminActionStatusService", "AdminActionService", "$uibModal", "APP_ROOT", "datePicker"];
+        function AdminPostItemAddPageCtrl($scope, $rootScope, $q, $state, $uibModal, $window, $filter, $timeout, SpinnerService, APP_ROOT, AdminActionStatusService, AdminActionService) {
+            var _this = this;
+            this.$inject = ["$scope", "$rootScope", "$q", "$state", "$filter", "$timeout", "SpinnerService", "AdminActionStatusService", "AdminActionService", "$uibModal", "APP_ROOT", "datePicker", "$window"];
+            this.END_OF_DAY = "2359";
             $scope.vm = this;
             this.$q = $q;
             this.$scope = $scope;
+            this.$rootScope = $rootScope;
             this.$state = $state;
             this.$filter = $filter;
             this.$uibModal = $uibModal;
@@ -32,7 +35,9 @@ var AIP;
             this.itemLength = 0;
             this.sendTime = {};
             this.scheduleDate = null;
-            this.postNow = true;
+            this.scheduleType = "POSTNOW";
+            this.showRecurrance = false;
+            this.showSchedule = false;
             this.showTimezoneIcon = true;
             this.selectedPopulation = {};
             this.APP_ROOT = APP_ROOT;
@@ -53,10 +58,20 @@ var AIP;
             this.currentBrowserDate = null;
             this.selectedTime = null;
             this.enteredDate = null;
+            this.recurEditFlag = false;
+            this.recurDisableTimeAndTimeZone = false;
+            $window.onbeforeunload = function (event) {
+                if (_this.dirtyFlag) {
+                    return _this.$filter("i18n_aip")("aip.common.admin.unsaved");
+                }
+                $window.onbeforeunload = null;
+            };
             this.init();
         }
         AdminPostItemAddPageCtrl.prototype.today = function () {
             this.sendTime = new Date();
+            this.recurrTime = new Date();
+            this.recurrTime.setMinutes(Math.ceil(this.recurrTime.getMinutes() / 30) * 30);
             this.sendTime.setMinutes(Math.ceil(this.sendTime.getMinutes() / 30) * 30);
             this.currentBrowserDate = this.$filter('date')(new Date(), this.$filter("i18n_aip")("default.date.format"));
             this.currentBrowserDate = this.monthCapitalize(this.currentBrowserDate);
@@ -65,10 +80,21 @@ var AIP;
         AdminPostItemAddPageCtrl.prototype.init = function () {
             var _this = this;
             this.spinnerService.showSpinner(true);
+            this.recDisplayEndDateType = "OFFSET";
+            this.recurFreqeunecyList =
+                [{
+                        frequency: this.$filter("i18n_aip")("aip.admin.action.postactionItem.recurringPosting.recurr.constant.days"),
+                        value: 'DAYS'
+                    },
+                    {
+                        frequency: this.$filter("i18n_aip")("aip.admin.action.postactionItem.recurringPosting.recurr.constant.hours"),
+                        value: 'HOURS'
+                    }];
             var allPromises = [];
             this.postActionItemInfo = {};
             this.editMode = this.$state.params.isEdit === "true" ? true : false;
             this.postIDvalue = this.$state.params.postIdval;
+            angular.element("#actionItemAddOrEdit").css("pointer-events", "auto");
             allPromises.push(this.adminActionService.getGrouplist()
                 .then(function (response) {
                 _this.groupList = response.data;
@@ -124,9 +150,7 @@ var AIP;
                             _this.postActionItemInfo.displayStartDate = _this.actionPost1.postingDisplayStartDate;
                             _this.postActionItemInfo.displayEndDate = _this.actionPost1.postingDisplayEndDate;
                             _this.postActionItemInfo.scheduledStartDate = _this.actionPost1.postingDisplayDateTime;
-                            _this.postNow = false;
                             _this.regeneratePopulation = _this.actionPost1.populationRegenerateIndicator;
-                            _this.sendTime = _this.actionPost1.postingDisplayTime;
                             var postingTimeZone = _this.actionPost1.postingTimeZone.split(" ");
                             _this.defaultTimeZone = _this.$filter("i18n_aip")("timezone." + postingTimeZone[postingTimeZone.length - 1]);
                             for (var k = 0; k < _this.timezones.length; k++) {
@@ -134,9 +158,35 @@ var AIP;
                                     _this.setTimezone(_this.timezones[k]);
                                 }
                             }
-                            _this.appServerDate = _this.actionPost1.postingScheduleDateTime;
-                            _this.appServerTime = _this.actionPost1.scheduledStartTime;
-                            _this.appServerTimeZone = angular.element('<div></div>').html(_this.actionPost1.timezoneStringOffset.displayNameWithoutOffset).text();
+                            if (_this.actionPost1.postingCurrentState === 'Scheduled') {
+                                _this.scheduleType = 'SCHEDULE';
+                                _this.sendTime = _this.actionPost1.postingDisplayTime;
+                                _this.appServerDate = _this.actionPost1.postingScheduleDateTime;
+                                _this.appServerTime = _this.actionPost1.scheduledStartTime;
+                                _this.appServerTimeZone = angular.element('<div></div>').html(_this.actionPost1.timezoneStringOffset.displayNameWithoutOffset).text();
+                            }
+                            else {
+                                _this.scheduleType = 'RECUR';
+                                _this.recurEditFlag = true;
+                                angular.element("#actionItemAddOrEdit").css("pointer-events", "none");
+                                _this.recurCount = _this.actionPost1.recurringDetails.recurFrequency;
+                                _this.displayStartDateOffset = _this.actionPost1.recurringDetails.postingDispStartDays;
+                                _this.displayEndDateOffset = _this.actionPost1.recurringDetails.postingDispEndDays;
+                                _this.recurranceStartDate = _this.actionPost1.recurringDetails.recurStartDate;
+                                _this.recurranceEndDate = _this.actionPost1.recurringDetails.recurEndDate;
+                                _this.recurrTime = _this.actionPost1.postingDisplayTime;
+                                _this.actionPost1.recurringDetails.postingDispEndDays ? _this.displayEndDateOffset = _this.actionPost1.recurringDetails.postingDispEndDays : _this.recurDisplayEndDate = _this.actionPost1.recurringDetails.postingDisplayEndDate;
+                                _this.actionPost1.recurringDetails.postingDisplayEndDate ? _this.recDisplayEndDateType = "EXACT" : _this.recDisplayEndDateType = "OFFSET";
+                                _this.sendTime = _this.recurrTime;
+                                for (var i = 0; i < _this.recurFreqeunecyList.length; i++) {
+                                    if (_this.actionPost1.recurringDetails.recurFrequencyType === _this.recurFreqeunecyList[i].value) {
+                                        _this.selectedRecurFrequency = _this.recurFreqeunecyList[i];
+                                        _this.recurDisableTimeAndTimeZone = true;
+                                    }
+                                }
+                                _this.getProcessedServerRecurranceStartDate();
+                                _this.getProcessedServerRecurranceEndDate();
+                            }
                             _this.changedValue();
                             _this.adminActionStatusService.getActionItemsById(_this.$state.params.postIdval)
                                 .then(function (response) {
@@ -162,6 +212,13 @@ var AIP;
                     _this.getProcessedServerDateTimeAndTimezone();
                 }
                 _this.spinnerService.showSpinner(false);
+            });
+            var that = this;
+            this.$scope.$on("DetectChanges", function (event, args) {
+                if (that.dirtyFlag) {
+                    that.redirectval = args.state;
+                    that.checkChangeDone();
+                }
             });
         };
         AdminPostItemAddPageCtrl.prototype.specialCharacterTranslation = function () {
@@ -229,6 +286,9 @@ var AIP;
             this.defaultTimeZone = finalValue;
         };
         AdminPostItemAddPageCtrl.prototype.timeConversion = function () {
+            if (this.scheduleType === "RECUR") {
+                this.postActionItemInfo.scheduledStartDate = this.recurranceStartDate;
+            }
             this.enteredDate = (this.postActionItemInfo.scheduledStartDate === undefined) ? this.currentBrowserDate : this.postActionItemInfo.scheduledStartDate;
             if (this.sendTime instanceof Date) {
                 this.selectedTime = this.$filter("date")(this.sendTime, "HHmm");
@@ -267,6 +327,37 @@ var AIP;
                 _this.appServerTime = _this.processedServerDetails.serverTime;
                 var serverTimeZone = _this.processedServerDetails.serverTimeZone.split(" ");
                 _this.appServerTimeZone = angular.element('<div></div>').html(serverTimeZone[serverTimeZone.length - 1]).text();
+            });
+        };
+        AdminPostItemAddPageCtrl.prototype.getProcessedServerRecurranceEndDate = function () {
+            var _this = this;
+            var userSelectedVal = {
+                "userEnterDate": this.recurranceEndDate,
+                "userEnterTime": this.END_OF_DAY,
+                "userEnterTimeZone": this.timezone.timezoneId
+            };
+            this.adminActionStatusService.getProcessedServerDateTimeAndTimezone(userSelectedVal)
+                .then(function (response) {
+                _this.processedServerDetails = response.data;
+                _this.serverRecurEndDate = _this.processedServerDetails.serverDate;
+            });
+        };
+        AdminPostItemAddPageCtrl.prototype.getProcessedServerRecurranceStartDate = function () {
+            var _this = this;
+            this.sendTime = this.recurrTime;
+            this.timeConversion();
+            var userSelectedVal = {
+                "userEnterDate": this.recurranceStartDate,
+                "userEnterTime": this.selectedTime,
+                "userEnterTimeZone": this.timezone.timezoneId
+            };
+            this.adminActionStatusService.getProcessedServerDateTimeAndTimezone(userSelectedVal)
+                .then(function (response) {
+                _this.processedServerDetails = response.data;
+                _this.serverRecurrStartDate = _this.processedServerDetails.serverDate;
+                _this.serverRecurStartTime = _this.processedServerDetails.serverTime;
+                var recurserverTimeZone = _this.processedServerDetails.serverTimeZone.split(" ");
+                _this.serverRecurTimeZone = angular.element('<div></div>').html(recurserverTimeZone[recurserverTimeZone.length - 1]).text();
             });
         };
         AdminPostItemAddPageCtrl.prototype.editPage = function () {
@@ -328,13 +419,13 @@ var AIP;
             else {
                 delete this.errorMessage.name;
             }
-            if (!this.postActionItemInfo.displayStartDate || this.postActionItemInfo.displayStartDate === null || this.postActionItemInfo.displayStartDate === "") {
+            if ((this.scheduleType === 'POSTNOW' || this.scheduleType === 'SCHEDULE') && !this.postActionItemInfo.displayStartDate || this.postActionItemInfo.displayStartDate === null || this.postActionItemInfo.displayStartDate === "") {
                 this.errorMessage.startDate = "invalid StartDate";
             }
             else {
                 delete this.errorMessage.startDate;
             }
-            if (!this.postActionItemInfo.displayEndDate || this.postActionItemInfo.displayEndDate === null || this.postActionItemInfo.displayEndDate === "") {
+            if ((this.scheduleType === 'POSTNOW' || this.scheduleType === 'SCHEDULE') && !this.postActionItemInfo.displayEndDate || this.postActionItemInfo.displayEndDate === null || this.postActionItemInfo.displayEndDate === "") {
                 this.errorMessage.endDate = "invalid EndDate";
             }
             else {
@@ -358,6 +449,39 @@ var AIP;
             else {
                 delete this.errorMessage.success;
             }
+            if (this.scheduleType === "RECUR" && this.recurCount || this.recurCount < 0) {
+                this.errorMessage.success = "Recurance count cannot be zero ";
+            }
+            if (this.scheduleType === "RECUR" && !this.recurCount) {
+                this.errorMessage.success = "Recurance count cannot be zero ";
+            }
+            else {
+                delete this.errorMessage.success;
+            }
+            if (this.scheduleType === "RECUR" && this.displayStartDateOffset == null) {
+                this.errorMessage.success = "Display Start offset date cannot be empty";
+            }
+            if (this.scheduleType === "RECUR" && this.displayStartDateOffset < 0) {
+                this.errorMessage.success = "Display Start offset date cannot be less than 0";
+            }
+            if (this.scheduleType === "RECUR" && this.recDisplayEndDateType === "OFFSET" && this.displayEndDateOffset == null) {
+                this.errorMessage.success = "Display End date offset cannot be blank";
+            }
+            if (this.scheduleType === "RECUR" && this.recDisplayEndDateType === "OFFSET" && this.displayEndDateOffset < 0) {
+                this.errorMessage.success = "Invalid End date offset";
+            }
+            if (this.scheduleType === "RECUR" && this.recDisplayEndDateType === "EXACT" && (!this.recurDisplayEndDate || this.recurDisplayEndDate === null || this.recurDisplayEndDate === "")) {
+                this.errorMessage.success = "Invalid End dates";
+            }
+            if (this.scheduleType === "RECUR" && (!this.recurrTime || this.recurrTime === null || this.recurrTime === "")) {
+                this.errorMessage.success = "Invalid  time";
+            }
+            if (this.scheduleType === "RECUR" && (!this.recurranceEndDate || this.recurranceEndDate === null || this.recurranceEndDate === "")) {
+                this.errorMessage.success = "Invalid recurr end date";
+            }
+            if (this.scheduleType === "RECUR" && !this.selectedRecurFrequency) {
+                this.errorMessage.success = "Recurrance frequency cannot be more null";
+            }
             if (Object.keys(this.errorMessage).length > 0) {
                 return false;
             }
@@ -366,25 +490,29 @@ var AIP;
             }
         };
         AdminPostItemAddPageCtrl.prototype.checkChanges = function () {
-            var that = this;
-            if (that.editMode) {
-                that.dirtyFlag = true;
-            }
+            this.dirtyFlag = true;
+            this.$rootScope.DataChanged = this.dirtyFlag;
         };
-        AdminPostItemAddPageCtrl.prototype.cancel = function () {
+        AdminPostItemAddPageCtrl.prototype.checkChangeDone = function () {
             var that = this;
-            if (that.editMode === true && that.dirtyFlag === true) {
+            if (that.dirtyFlag === true) {
                 var n = new Notification({
-                    message: this.$filter("i18n_aip")("aip.common.action.post.status.edit.warning"),
+                    message: this.$filter("i18n_aip")("aip.admin.actionItem.saveChanges"),
                     type: "warning"
                 });
                 n.addPromptAction(this.$filter("i18n_aip")("aip.common.text.no"), function () {
-                    that.$state.go("admin-post-list");
                     notifications.remove(n);
                 });
                 n.addPromptAction(this.$filter("i18n_aip")("aip.common.text.yes"), function () {
-                    that.save();
                     notifications.remove(n);
+                    that.dirtyFlag = false;
+                    that.$rootScope.DataChanged = false;
+                    if (that.redirectval === "NoData") {
+                        that.$state.go("admin-post-list");
+                    }
+                    else {
+                        location.href = that.redirectval;
+                    }
                 });
                 notifications.addNotification(n);
             }
@@ -392,26 +520,32 @@ var AIP;
                 that.$state.go("admin-post-list");
             }
         };
+        AdminPostItemAddPageCtrl.prototype.cancel = function () {
+            this.redirectval = "NoData";
+            this.checkChangeDone();
+        };
         AdminPostItemAddPageCtrl.prototype.monthCapitalize = function (date) {
             var date = date.replace('.', '');
             return date.replace(/\b\w/g, function (month) { return month.toUpperCase(); });
         };
         AdminPostItemAddPageCtrl.prototype.save = function () {
             var _this = this;
-            this.saving = true;
-            var userSelectedTime = null;
+            var userSelectedTime;
+            this.postNow = this.scheduleType === 'POSTNOW' ? true : false;
             if (this.postNow === true) {
-                this.sendTime = null;
-                this.timezone = null;
+                this.saving = true;
+                var userSelectedTime = null;
                 var CurrentDateTimeDetails = new Date();
                 var currentTime = this.$filter('date')(CurrentDateTimeDetails, 'HHmm');
+                this.sendTime = null;
+                this.timezone = null;
                 this.today();
                 this.getDefaultTimeZone();
                 this.displayDatetimeZone.dateVal = this.currentBrowserDate;
                 this.displayDatetimeZone.timeVal = currentTime.toString();
                 this.displayDatetimeZone.timeZoneVal = this.timezone.stringOffset + ' ' + this.timezone.timezoneId;
             }
-            else {
+            else if (this.scheduleType === 'SCHEDULE') {
                 if (this.editMode && !(this.sendTime instanceof Date)) {
                     if (this.selectedTime) {
                         userSelectedTime = this.selectedTime;
@@ -436,25 +570,75 @@ var AIP;
                     this.displayDatetimeZone.timeZoneVal = this.timezone.stringOffset + ' ' + this.timezone.timezoneId;
                 }
             }
-            this.adminActionService.savePostActionItem(this.postActionItemInfo, this.selected, this.modalResults, this.selectedPopulation, this.postNow, userSelectedTime, this.timezone.timezoneId, this.regeneratePopulation, this.displayDatetimeZone)
-                .then(function (response) {
-                _this.saving = false;
-                var notiParams = {};
-                if (response.data.success) {
-                    notiParams = {
-                        notiType: "saveSuccess",
-                        data: response.data
-                    };
-                    _this.$state.go("admin-post-list", { noti: notiParams, data: response.data.savedJob.id });
+            else {
+                if (this.editMode) {
+                    this.sendTime = this.recurrTime;
+                    this.timeConversion();
+                    userSelectedTime = this.selectedTime;
+                    this.displayDatetimeZone.dateVal = this.postActionItemInfo.scheduledStartDate;
+                    this.displayDatetimeZone.timeVal = userSelectedTime;
+                    this.displayDatetimeZone.timeZoneVal = this.timezone.stringOffset + ' ' + this.timezone.timezoneId;
                 }
                 else {
-                    _this.saveErrorCallback(response.data.message);
+                    if (this.recurrTime instanceof Date) {
+                        userSelectedTime = this.$filter("date")(this.recurrTime, "HHmm");
+                    }
+                    else {
+                        userSelectedTime = this.recurrTime;
+                    }
+                    this.displayDatetimeZone.dateVal = this.postActionItemInfo.scheduledStartDate;
+                    this.displayDatetimeZone.timeVal = userSelectedTime;
+                    this.displayDatetimeZone.timeZoneVal = this.timezone.stringOffset + ' ' + this.timezone.timezoneId;
                 }
-            }, function (err) {
-                _this.saving = false;
-                //TODO:: handle error call
-                console.log(err);
-            });
+            }
+            if (this.scheduleType === 'RECUR') {
+                this.postActionItemInfo.scheduledStartDate = this.recurranceStartDate;
+                this.enteredDate = this.recurranceStartDate;
+                this.adminActionService.saveRecurringActionItem(this.postActionItemInfo, this.selected, this.modalResults, this.selectedPopulation, this.regeneratePopulation, this.recurCount, this.selectedRecurFrequency, this.displayStartDateOffset, this.recDisplayEndDateType, this.displayEndDateOffset, this.recurDisplayEndDate, this.recurranceStartDate, this.recurranceEndDate, userSelectedTime, this.timezone.timezoneId, this.displayDatetimeZone)
+                    .then(function (response) {
+                    _this.saving = false;
+                    var notiParams = {};
+                    if (response.data.success) {
+                        notiParams = {
+                            notiType: "saveSuccess",
+                            data: response.data
+                        };
+                        _this.dirtyFlag = false;
+                        _this.$rootScope.DataChanged = false;
+                        _this.$state.go("admin-post-list", { noti: notiParams, data: response.data.savedJob.id });
+                    }
+                    else {
+                        _this.saveErrorCallback(response.data.message);
+                    }
+                }, function (err) {
+                    _this.saving = false;
+                    //TODO:: handle error call
+                    console.log(err);
+                });
+            }
+            else {
+                this.adminActionService.savePostActionItem(this.postActionItemInfo, this.selected, this.modalResults, this.selectedPopulation, this.postNow, userSelectedTime, this.timezone.timezoneId, this.regeneratePopulation, this.displayDatetimeZone)
+                    .then(function (response) {
+                    _this.saving = false;
+                    var notiParams = {};
+                    if (response.data.success) {
+                        notiParams = {
+                            notiType: "saveSuccess",
+                            data: response.data
+                        };
+                        _this.dirtyFlag = false;
+                        _this.$rootScope.DataChanged = false;
+                        _this.$state.go("admin-post-list", { noti: notiParams, data: response.data.savedJob.id });
+                    }
+                    else {
+                        _this.saveErrorCallback(response.data.message);
+                    }
+                }, function (err) {
+                    _this.saving = false;
+                    //TODO:: handle error call
+                    console.log(err);
+                });
+            }
         };
         AdminPostItemAddPageCtrl.prototype.saveErrorCallback = function (message) {
             var n = new Notification({

@@ -1,5 +1,5 @@
 /*******************************************************************************
- Copyright 2018-2019 Ellucian Company L.P. and its affiliates.
+ Copyright 2019 Ellucian Company L.P. and its affiliates.
  ********************************************************************************/
 
 ///<reference path="../../../../typings/tsd.d.ts"/>
@@ -7,23 +7,18 @@
 declare var register: any;
 
 module AIP {
-    interface IActionListPageCtrlScope {
-        vm: PostActionListPageCtrl;
-
+    interface IRecurringPostActionListPageCtrlScope {
+        vm: RecurringPostActionListPageCtrl;
         $apply(): any;
     }
 
-    interface IPostActionListPageCtrl {
+    interface IRecurringPostActionListPageCtrl {
         getHeight(): { height: number };
-
         fetchTableData(query: IPostActionItemListQuery): ng.IPromise<IPostActionItemFetchResponse>;
-
-        selectRecord(data: any): void;
-
-        goAddPage(): void;
+        fetchRecurringMetaData();
     }
 
-    export class PostActionListPageCtrl implements IPostActionListPageCtrl {
+    export class RecurringPostActionListPageCtrl implements IRecurringPostActionListPageCtrl {
         $inject = ["$scope", "$state", "$window", "$filter", "$q", "ENDPOINT", "PAGINATIONCONFIG",
             "AdminActionService"];
         $state;
@@ -42,9 +37,10 @@ module AIP {
         localeTime;
         timezones;
         gridHeight: number ;
+        recurringPostJobsMetaData;
 
 
-        constructor($scope: IActionListPageCtrlScope, $state, $window, $filter, $q, ENDPOINT, PAGINATIONCONFIG,
+        constructor($scope: IRecurringPostActionListPageCtrlScope, $state, $window, $filter, $q, ENDPOINT, PAGINATIONCONFIG,
                     AdminActionService: AIP.AdminActionService) {
             $scope.vm = this;
             this.$state = $state;
@@ -55,6 +51,7 @@ module AIP {
             this.actionListService = AdminActionService;
             this.localeTime={};
             this.timezones={};
+            this.recurringPostJobsMetaData = {};
             this.init();
             angular.element($window).bind('resize', function () {
                 $scope.$apply();
@@ -62,6 +59,7 @@ module AIP {
         }
 
         init() {
+            this.fetchRecurringMetaData();
             this.gridHeight = $(document).height() -
                 $("#breadcrumb-panel").height() -
                 $("#title-panel").height() -
@@ -83,9 +81,7 @@ module AIP {
                 action: 3
             };
 
-            if (this.$state.params.noti) {
-                this.handleNotification(this.$state.params.noti);
-            }
+
             this.mobileSize = angular.element("body").width() > 768 ? false : true;
             this.searchConfig = {
                 id: "dataTableSearch",
@@ -144,6 +140,7 @@ module AIP {
                     options: {
                         sortable: true,
                         visible: true,
+                        ascending:true,
                         columnShowHide: true
                     }
                 },
@@ -170,69 +167,25 @@ module AIP {
                     }
                 },
                 {
-                    name: "groupFolderName",
-                    title: this.$filter("i18n_aip")("aip.admin.actionItem.post.grid.job.group.folder"),
-                    ariaLabel: this.$filter("i18n_aip")("aip.admin.actionItem.post.grid.job.group.folder"),
-                    width: "100px",
-                    options: {
-                        sortable: true,
-                        visible: true,
-                        columnShowHide: true
-                    }
-                },
-                {
-                    name: "postingPopulation",
-                    title: this.$filter("i18n_aip")("aip.admin.actionItem.post.grid.job.population"),
-                    ariaLabel: this.$filter("i18n_aip")("aip.admin.actionItem.post.grid.job.population"),
-                    width: "100px",
-                    options: {
-                        sortable: true,
-                        visible: true,
-                        columnShowHide: true
-                    }
-                },
-                {
-                    name: "groupName",
-                    title: this.$filter("i18n_aip")("aip.admin.actionItem.post.grid.job.group.name"),
-                    ariaLabel: this.$filter("i18n_aip")("aip.admin.actionItem.post.grid.job.group.name"),
-                    width: "100px",
-                    options: {
-                        sortable: true,
-                        visible: true,
-                        columnShowHide: true
-                    }
-                },
-                {
-                    name: "postingCreatorId",
-                    title: this.$filter("i18n_aip")("aip.admin.actionItem.post.grid.job.submittedBy"),
-                    ariaLabel: this.$filter("i18n_aip")("aip.admin.actionItem.post.grid.job.submittedBy"),
-                    width: "100px",
-                    options: {
-                        sortable: true,
-                        visible: true,
-                        columnShowHide: false
-                    }
-                },
-                {
-                    name: "postingActionStatus",
-                    title: this.$filter("i18n_aip")("aip.admin.actionItem.post.grid.job.actionstatus"),
-                    ariaLabel: this.$filter("i18n_aip")("aip.admin.actionItem.post.grid.job.actionstatus"),
+                    name: "displayStartDate",
+                    title: this.$filter("i18n_aip")("js.aip.review.monitor.action.item.grid.header.displayStartDate"),
+                    ariaLabel: this.$filter("i18n_aip")("js.aip.review.monitor.action.item.grid.header.displayStartDate"),
                     width: "100px",
                     options: {
                         sortable: false,
                         visible: true,
-                        columnShowHide: false
+                        columnShowHide: true
                     }
                 },
                 {
-                    name: "recurrenceAction",
-                    title: this.$filter("i18n_aip")("aip.admin.actionItem.post.grid.job.recurrenceAction"),
-                    ariaLabel: this.$filter("i18n_aip")("aip.admin.actionItem.post.grid.job.recurrenceAction"),
+                    name: "displayEndDate",
+                    title: this.$filter("i18n_aip")("js.aip.review.monitor.action.item.grid.header.displayEndDate"),
+                    ariaLabel: this.$filter("i18n_aip")("js.aip.review.monitor.action.item.grid.header.displayEndDate"),
                     width: "100px",
                     options: {
                         sortable: false,
                         visible: true,
-                        columnShowHide: false
+                        columnShowHide: true
                     }
                 }
             ];
@@ -264,26 +217,12 @@ module AIP {
             return {height: containerHeight};
         }
 
-        handleNotification(noti) {
-            if(noti.notiType === "saveSuccess") {
-                var n = new Notification({
-                    message: this.$filter("i18n_aip")("aip.common.save.successful"), //+
-                    type: "success",
-                    flash: true
-                });
-                setTimeout(() => {
-                    notifications.addNotification(n);
-                    this.$state.params.noti = undefined;
-                    $(".actionItemAddContainer").focus();
-                }, 500);
-            }
-        }
-
         fetchTableData(query: AIP.IPostActionItemListQuery) {
 
             var deferred = this.$q.defer();
             var am = this.$filter("i18n_aip")("aip.admin.communication.timepicker.time.am.label");
             var pm = this.$filter("i18n_aip")("aip.admin.communication.timepicker.time.pm.label");
+            query.recurringPostId =  this.$state.params.postIdval;
             this.actionListService.fetchTableData(query)
                 .then((response: AIP.IPostActionItemFetchResponse) => {
                     for(var k = 0 ; k < response.result.length ; k++) {
@@ -304,63 +243,17 @@ module AIP {
             return deferred.promise;
         }
 
-        selectRecord(data) {
-            this.selectedRecord = data;
-        }
-
-        refreshGrid() {
-
-        }
-
-        goAddPage() {
-            this.$state.go("admin-post-add");
-        }
-
-        openActionItem() {
-            this.$state.go("admin-action-open", {data: this.selectedRecord.id});
-        }
-
-        editActionItem(postId) {
-                this.actionListService.getPostStatus(postId)
+        fetchRecurringMetaData(){
+            this.actionListService.fetchRecurringJobPostMetaData(this.$state.params.postIdval)
                 .then((response) => {
-
-                    if (notifications.length !== 0) {
-                        notifications.remove(notifications.first())
-                    }
-                    if (response === "Y")
-                    {
-                        this.$state.go("admin-post-edit", {postIdval: postId, isEdit: true});
-                    }
-                    else
-                    {
-                        if (notifications.length !== 0) {
-                            notifications.remove(notifications.first())
-                        }
-
-                        var n = new Notification({
-                            message: this.$filter("i18n_aip")("aip.common.post.edit.noaccess"), //+
-                            type: "error",
-                            flash: true
-                        });
-
-                        setTimeout(() => {
-                            notifications.addNotification(n);
-                            this.$state.params.noti = undefined;
-                            $(".actionItemAddContainer").focus();
-                        }, 100);
-
-                    }
-
-                }, (err) => {
-                    throw new Error(err);
+                    this.recurringPostJobsMetaData = response;
+                }, (error) => {
+                    console.log(error);
                 });
         }
 
-        recurringPostDetails(postId){
-            this.$state.go("admin-recurring-post-list", {postIdval: postId});
-        }
 
     }
 }
 
-angular.module("bannerAIP").controller("PostActionListPageCtrl", AIP.PostActionListPageCtrl);
+register("bannerAIP").controller("RecurringPostActionListPageCtrl", AIP.RecurringPostActionListPageCtrl);
