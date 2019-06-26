@@ -18,6 +18,7 @@
 //= require  aipApp/common/directives/calendar-directive.js
 //= require  aipApp/common/directives/item-detail/js/itemDetail.js
 //= require  aipApp/common/directives/pagebuilder/js/aip-pagebuilder.js
+
 //= require  aipApp/common/utils/spinnerCtrl.js
 
 //= require  aipApp/common/filters/i18n-filter.js
@@ -29,4 +30,5 @@
 //= require  aipApp/common/directives/file-upload.js
 
 //= require modelPoppup.js
+
 

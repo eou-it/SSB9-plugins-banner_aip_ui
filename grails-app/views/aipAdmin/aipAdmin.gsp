@@ -5,13 +5,13 @@
 
 <html>
 <head>
-    <g:applyLayout name="bannerWebPage">
+    <g:applyLayout name="bannerSelfServicePage">
     <base href="${createLink(uri: '/ssb')}/">
     <meta name="headerAttributes" content=""/>
     <title></title>
 
     <meta name="menuEndPoint" content="${g.createLink(controller: 'selfServiceMenu', action: 'data')}"/>
-    <meta name="menuBaseURL" content="${createLink(uri: '/ssb')}"/>
+    <meta name="menuBaseURL"  content="${createLink(uri: '/ssb')}"/>
     <g:set var="applicationContextRoot" value="${application.contextPath}"/>
     <meta name="applicationContextRoot" content="${applicationContextRoot}">
     <g:if test="${message(code: 'default.language.direction')  == 'rtl'}">
