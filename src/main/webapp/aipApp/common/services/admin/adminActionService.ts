@@ -14,6 +14,7 @@ module AIP {
         max: string;
     }
     export interface IPostActionItemListQuery {
+        recurringPostId: string;
         searchString: string;
         searchParam: string;
         sortColumnName: string;
@@ -260,13 +261,15 @@ module AIP {
                 '&ascending=' + (query.ascending.toString() || "")+
                 '&offset=' + (query.offset || 0 )+
                 '&max=' + realMax;
+            url = url + (query.recurringPostId? '&recurringPostId=' + query.recurringPostId :'');
 
             var params = {
                 filterName: query.searchParam||"%",
                 sortColumn: query.sortColumnName||"postingName",
                 sortAscending: query.ascending||false,
                 max: realMax||"",
-                offset: query.offset || 0
+                offset: query.offset || 0,
+                recurringPostId : query.recurringPostId
             };
             this.$http({
                 method: "GET",
@@ -420,6 +423,35 @@ module AIP {
             return request;
         }
 
+        saveRecurringActionItem(postActionItem,selected,modalResult,selectedPopulation,regeneratePopulation,recurCount,recurFreqeunecy,displayStartDateOffset,recDisplayEndDateType,displayEndDateOffset,recurDisplayEndDate,recurranceStartDate,recurranceEndDate,recurrTime,recurrTimeZone,displayDatetimeZone){
+
+            var params = {postId:postActionItem.postId,
+                postingName: postActionItem.name,
+                postingActionItemGroupId: selected.groupId,
+                actionItemIds: modalResult,
+                populationId: selectedPopulation.id,
+                displayStartDate:postActionItem.displayStartDate,
+                displayEndDate:postActionItem.displayEndDate,
+                populationRegenerateIndicator:regeneratePopulation,
+                recurFrequency:recurCount,
+                recurFrequencyType:recurFreqeunecy.value,
+                postingDispStartDays:displayStartDateOffset,
+                postingDispEndDays:recDisplayEndDateType==='OFFSET'?displayEndDateOffset:null,
+                postingDisplayEndDate:recDisplayEndDateType==='EXACT'?recurDisplayEndDate:null,
+                recurStartDate:recurranceStartDate,
+                recurEndDate:recurranceEndDate,
+                recurStartTime:recurrTime,
+                displayDatetimeZone:displayDatetimeZone,
+                recurPostTimezone:recurrTimeZone
+            }
+            var request = this.$http({
+                method: "POST",
+                data: params,
+                url:  postActionItem.postId? this.ENDPOINT.admin.updateRecurringActionItemPosting : this.ENDPOINT.admin.addRecurringActionItemPosting
+            });
+            return request;
+        }
+
         saveActionItem(actionItem) {
             var params = {
                 title: actionItem.title,
@@ -531,6 +563,29 @@ module AIP {
             });
             return request;
         }
+
+        fetchRecurringJobPostMetaData (recurringPostId) {
+            var deferred = this.$q.defer();
+            var url = this.ENDPOINT.admin.recurringActionItemPostMetaData +
+                '?recurringPostId=' + recurringPostId ;
+            var params = {
+                recurringPostId : recurringPostId
+            };
+            this.$http({
+                method: "GET",
+                url: url,
+                data: params
+            }).then((response:any)=> {
+                deferred.resolve(response.data);
+            }, (data) => {
+                deferred.reject(data);
+            })
+
+            return deferred.promise;
+        }
+
+
+
     }
 }
 

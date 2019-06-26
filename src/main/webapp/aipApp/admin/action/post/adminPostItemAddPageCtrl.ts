@@ -6,8 +6,8 @@
 ///<reference path="../../../common/services/spinnerService.ts"/>
 ///<reference path="../../../common/services/admin/adminActionService.ts"/>
 declare var register;
-declare var Notification: any;
-declare var notifications: any;
+declare var Notification:any;
+declare var notifications:any;
 
 
 module AIP {
@@ -18,7 +18,7 @@ module AIP {
 
         save(): void;
 
-        saveErrorCallback(message: string): void;
+        saveErrorCallback(message:string): void;
 
         setTimezone(timezone:any): void;
 
@@ -37,22 +37,25 @@ module AIP {
     }
 
     export class AdminPostItemAddPageCtrl implements IAdminPostItemAddPageCtrl {
-        $inject = ["$scope", "$q", "$state", "$filter", "$timeout", "SpinnerService","AdminActionStatusService", "AdminActionService", "$uibModal", "APP_ROOT", "datePicker"];
+        $inject = ["$scope","$rootScope", "$q", "$state", "$filter", "$timeout", "SpinnerService", "AdminActionStatusService", "AdminActionService", "$uibModal", "APP_ROOT", "datePicker","$window"];
         $scope;
+        $rootScope;
         $uibModal;
-        status: [AIP.IStatus];
-        folders: [AIP.IFolder];
-        groupList: [AIP.IGroup];
-        actionItemList: [AIP.IGroupActionItem];
+        $window;
+        status:[AIP.IStatus];
+        folders:[AIP.IFolder];
+        groupList:[AIP.IGroup];
+        actionItemList:[AIP.IGroupActionItem];
 
-        populationList: [AIP.IPopulation];
-        postActionItemInfo: AIP.IPostActionItemParam | any;
-        errorMessage: any;
-        adminActionService: AIP.AdminActionService;
+
+        populationList:[AIP.IPopulation];
+        postActionItemInfo:AIP.IPostActionItemParam | any;
+        errorMessage:any;
+        adminActionService:AIP.AdminActionService;
         adminActionStatusService:AIP.AdminActionStatusService;
-        spinnerService: AIP.SpinnerService;
-        saving: boolean;
-        $q: ng.IQService;
+        spinnerService:AIP.SpinnerService;
+        saving:boolean;
+        $q:ng.IQService;
         $state;
         $filter;
         selected;
@@ -65,7 +68,7 @@ module AIP {
         modalResults;
         itemLength;
         scheduleDate;
-        regeneratePopulation: boolean;
+        regeneratePopulation:boolean;
         APP_ROOT;
         sendTime;
         modalInstance;
@@ -77,7 +80,7 @@ module AIP {
         defaultTimeZoneNameWithOffset;
         showTimezoneIcon;
         actionPost1;
-        editMode: boolean;
+        editMode:boolean;
         postIDvalue;
         selectedActionListVal;
         changeFlag:boolean;
@@ -91,74 +94,126 @@ module AIP {
         currentBrowserDate;
         selectedTime;
         enteredDate;
+        recurCount:number;
+        recurFreqeunecyList:any;
+        displayStartDateOffset:number;
+        displayEndDateOffset:number;
+        recurDisplayEndDate:any;
+        recurranceStartDate:any;
+        recurranceEndDate:any;
+        recurrTime:any;
+        recurrEndDate:any;
+        showSchedule:boolean;
+        showRecurrance:boolean;
+        scheduleType:string;
+        recDisplayEndDateType:string;
+        isDataModified:boolean;
+        selectedRecurFrequency:any;
+        redirectval:any;
+        serverRecurEndDate:any;
+        serverRecurStartDate:any;
+        serverRecurrStartDate:any;
+        serverRecurStartTime:any;
+        serverRecurTimeZone:any;
+        recurTimeZone:any;
+        END_OF_DAY:string="2359";
+        recurEditFlag:boolean;
+        recurDisableTimeAndTimeZone:boolean;
 
-
-        constructor($scope: IActionItemAddPageScope, $q: ng.IQService, $state, $uibModal, $filter, $timeout,
-                    SpinnerService: AIP.SpinnerService, APP_ROOT,AdminActionStatusService, AdminActionService: AIP.AdminActionService) {
+        constructor($scope:IActionItemAddPageScope, $rootScope, $q:ng.IQService, $state, $uibModal,$window, $filter, $timeout,
+                    SpinnerService:AIP.SpinnerService, APP_ROOT, AdminActionStatusService, AdminActionService:AIP.AdminActionService) {
             $scope.vm = this;
             this.$q = $q;
             this.$scope = $scope;
+            this.$rootScope=$rootScope;
             this.$state = $state;
             this.$filter = $filter;
             this.$uibModal = $uibModal;
-            this.modalInstance=null;
+            this.modalInstance = null;
             this.$timeout = $timeout;
             this.spinnerService = SpinnerService;
             this.adminActionService = AdminActionService;
-            this.adminActionStatusService=AdminActionStatusService;
+            this.adminActionStatusService = AdminActionStatusService;
             this.saving = false;
-            this.IsVisible=false;
-            this.localeDate={};
-            this.localeTimezone={};
+            this.IsVisible = false;
+            this.localeDate = {};
+            this.localeTimezone = {};
             this.selected = {};
-            this.localeTime={};
+            this.localeTime = {};
             this.modalResult = {};
             this.modalResults = [];
             this.regeneratePopulation = false;
-            this.itemLength=0;
-            this.sendTime={};
-            this.scheduleDate=null;
-            this.postNow=true;
+            this.itemLength = 0;
+            this.sendTime = {};
+            this.scheduleDate = null;
+            this.scheduleType = "POSTNOW";
+            this.showRecurrance = false;
+            this.showSchedule = false;
             this.showTimezoneIcon = true;
             this.selectedPopulation = {};
             this.APP_ROOT = APP_ROOT;
             this.errorMessage = {};
             this.editMode = false;
-            this.changeFlag=false;
-            this.actionPost1 ={};
-            this.postIDvalue=0;
-            this.dirtyFlag=false;
-            this.selectedActionListVal=[];
-            this.displayDatetimeZone={};
-            this.defaultTimeZoneNameWithOffset=null;
-            this.serverinfo={};
-            this.appServerDate=null;
-            this.appServerTime=null;
-            this.appServerTimeZone=null;
-            this.processedServerDetails={};
-            this.currentBrowserDate=null;
-            this.selectedTime=null;
-            this.enteredDate=null;
+            this.changeFlag = false;
+            this.actionPost1 = {};
+            this.postIDvalue = 0;
+            this.dirtyFlag = false;
+            this.selectedActionListVal = [];
+            this.displayDatetimeZone = {};
+            this.defaultTimeZoneNameWithOffset = null;
+            this.serverinfo = {};
+            this.appServerDate = null;
+            this.appServerTime = null;
+            this.appServerTimeZone = null;
+            this.processedServerDetails = {};
+            this.currentBrowserDate = null;
+            this.selectedTime = null;
+            this.enteredDate = null;
+            this.recurEditFlag=false;
+            this.recurDisableTimeAndTimeZone=false;
+
+            $window.onbeforeunload = (event)=> {
+                if(this.dirtyFlag) {
+                    return this.$filter("i18n_aip")("aip.common.admin.unsaved");
+                }
+                $window.onbeforeunload = null;
+            };
+
             this.init();
         }
 
-        today(){
+        today() {
             this.sendTime = new Date();
+            this.recurrTime = new Date();
+            this.recurrTime.setMinutes(Math.ceil(this.recurrTime.getMinutes() / 30) * 30);
             this.sendTime.setMinutes(Math.ceil(this.sendTime.getMinutes() / 30) * 30);
             this.currentBrowserDate = this.$filter('date')(new Date(), this.$filter("i18n_aip")("default.date.format"));
-            this.currentBrowserDate=this.monthCapitalize(this.currentBrowserDate)
+            this.currentBrowserDate = this.monthCapitalize(this.currentBrowserDate)
         };
 
         init() {
+
             this.spinnerService.showSpinner(true);
+            this.recDisplayEndDateType="OFFSET";
+            this.recurFreqeunecyList =
+                [{
+                    frequency: this.$filter("i18n_aip")("aip.admin.action.postactionItem.recurringPosting.recurr.constant.days"),
+                    value: 'DAYS'
+                },
+                    {
+                        frequency: this.$filter("i18n_aip")("aip.admin.action.postactionItem.recurringPosting.recurr.constant.hours"),
+                        value: 'HOURS'
+                    }]
+            ;
             var allPromises = [];
             this.postActionItemInfo = {};
-            this.editMode = this.$state.params.isEdit==="true" ? true : false;
-            this.postIDvalue=this.$state.params.postIdval;
+            this.editMode = this.$state.params.isEdit === "true" ? true : false;
+            this.postIDvalue = this.$state.params.postIdval;
+            angular.element("#actionItemAddOrEdit").css("pointer-events", "auto")
 
             allPromises.push(
                 this.adminActionService.getGrouplist()
-                    .then((response: AIP.IPostActionItemGroupResponse) => {
+                    .then((response:AIP.IPostActionItemGroupResponse) => {
                         this.groupList = response.data;
                         this.postActionItemInfo.group = this.groupList;
 
@@ -167,7 +222,7 @@ module AIP {
 
             allPromises.push(
                 this.adminActionService.getPopulationlist()
-                    .then((response: AIP.IPostActionItemPopulationResponse) => {
+                    .then((response:AIP.IPostActionItemPopulationResponse) => {
                         this.populationList = response.data;
                         this.postActionItemInfo.population = this.populationList;
 
@@ -193,9 +248,9 @@ module AIP {
 
                 this.adminActionService.getCurrentTimeZoneLocale()
                     .then((response:any) => {
-                        var that=this;
+                        var that = this;
                         this.timezones = response.data.timezones;
-                        if(!this.editMode) {
+                        if (!this.editMode) {
                             this.getDefaultTimeZone();
                         }
 
@@ -208,11 +263,11 @@ module AIP {
                 if (this.editMode) {
                     this.adminActionService.getJobDetails(this.$state.params.postIdval)
                         .then((response) => {
-                            if(response) {
+                            if (response) {
 
-                                this.$scope.group={};
-                                this.$scope.population={};
-                                this.actionPost1=response;
+                                this.$scope.group = {};
+                                this.$scope.population = {};
+                                this.actionPost1 = response;
                                 this.postActionItemInfo.postId = this.actionPost1.postingId
                                 this.postActionItemInfo.name = this.actionPost1.postingName
                                 this.specialCharacterTranslation();
@@ -233,18 +288,15 @@ module AIP {
                                     }
                                 }
 
-                                this.selected= this.$scope.group;
-                                this.selectedPopulation =   this.$scope.population;
+                                this.selected = this.$scope.group;
+                                this.selectedPopulation = this.$scope.population;
                                 this.postActionItemInfo.groupName = this.actionPost1.groupName;
                                 this.postActionItemInfo.displayStartDate = this.actionPost1.postingDisplayStartDate;
-                                this.postActionItemInfo.displayEndDate =  this.actionPost1.postingDisplayEndDate;
+                                this.postActionItemInfo.displayEndDate = this.actionPost1.postingDisplayEndDate;
                                 this.postActionItemInfo.scheduledStartDate = this.actionPost1.postingDisplayDateTime;
-
-                                this.postNow = false;
-                                this.regeneratePopulation=this.actionPost1.populationRegenerateIndicator;
-                                this.sendTime=this.actionPost1.postingDisplayTime;
+                                this.regeneratePopulation = this.actionPost1.populationRegenerateIndicator;
                                 var postingTimeZone = this.actionPost1.postingTimeZone.split(" ");
-                                this.defaultTimeZone = this.$filter("i18n_aip")("timezone." + postingTimeZone[postingTimeZone.length-1]);
+                                this.defaultTimeZone = this.$filter("i18n_aip")("timezone." + postingTimeZone[postingTimeZone.length - 1]);
 
                                 for(var k=0;k<this.timezones.length;k++) {
                                     if(this.defaultTimeZone === this.timezones[k].displayNameWithoutOffset)
@@ -253,15 +305,42 @@ module AIP {
                                     }
                                 }
 
-                                this.appServerDate=this.actionPost1.postingScheduleDateTime;
-                                this.appServerTime=this.actionPost1.scheduledStartTime;
-                                this.appServerTimeZone=angular.element('<div></div>').html(this.actionPost1.timezoneStringOffset.displayNameWithoutOffset).text();
+                                if (this.actionPost1.postingCurrentState === 'Scheduled') {
+                                    this.scheduleType = 'SCHEDULE';
+                                    this.sendTime = this.actionPost1.postingDisplayTime;
+                                    this.appServerDate = this.actionPost1.postingScheduleDateTime;
+                                    this.appServerTime = this.actionPost1.scheduledStartTime;
+                                    this.appServerTimeZone = angular.element('<div></div>').html(this.actionPost1.timezoneStringOffset.displayNameWithoutOffset).text();
+
+                                } else {
+                                    this.scheduleType = 'RECUR'
+                                    this.recurEditFlag  = true
+                                    angular.element("#actionItemAddOrEdit").css("pointer-events", "none")
+                                    this.recurCount = this.actionPost1.recurringDetails.recurFrequency
+                                    this.displayStartDateOffset = this.actionPost1.recurringDetails.postingDispStartDays
+                                    this.displayEndDateOffset = this.actionPost1.recurringDetails.postingDispEndDays
+                                    this.recurranceStartDate= this.actionPost1.recurringDetails.recurStartDate
+                                    this.recurranceEndDate= this.actionPost1.recurringDetails.recurEndDate
+                                    this.recurrTime=this.actionPost1.postingDisplayTime
+                                    this.actionPost1.recurringDetails.postingDispEndDays? this.displayEndDateOffset= this.actionPost1.recurringDetails.postingDispEndDays:this.recurDisplayEndDate=this.actionPost1.recurringDetails.postingDisplayEndDate
+                                    this.actionPost1.recurringDetails.postingDisplayEndDate? this.recDisplayEndDateType="EXACT":this.recDisplayEndDateType="OFFSET"
+                                    this.sendTime = this.recurrTime;
+
+                                    for (var i=0;i<this.recurFreqeunecyList.length;i++) {
+                                        if (this.actionPost1.recurringDetails.recurFrequencyType === this.recurFreqeunecyList[i].value) {
+                                            this.selectedRecurFrequency = this.recurFreqeunecyList[i]
+                                            this.recurDisableTimeAndTimeZone=true
+                                        }
+                                    }
+                                    this.getProcessedServerRecurranceStartDate()
+                                    this.getProcessedServerRecurranceEndDate()
+                                }
 
                                 this.changedValue();
 
                                 this.adminActionStatusService.getActionItemsById(this.$state.params.postIdval)
                                     .then((response) => {
-                                        this.selectedActionListVal=response.data;
+                                        this.selectedActionListVal = response.data;
                                         this.itemLength = this.selectedActionListVal.length;
                                         this.selectedActionListVal.forEach((item, index) => {
                                             this.modalResult = item;
@@ -284,6 +363,16 @@ module AIP {
                     this.getProcessedServerDateTimeAndTimezone()
                 }
                 this.spinnerService.showSpinner(false);
+            });
+
+            var that=this;
+            this.$scope.$on("DetectChanges",function(event, args)
+            {
+                if (that.dirtyFlag) {
+                    that.redirectval = args.state;
+                    that.checkChangeDone();
+                }
+
             });
         }
 
@@ -318,15 +407,15 @@ module AIP {
             }
 
         }
-
+       
         changedValue() {
 
-            this.changeFlag=true;
+            this.changeFlag = true;
             this.itemLength = 0;
             this.modalResult = [];
             this.adminActionService.getGroupActionItem(this.selected.groupId)
 
-                .then((response: AIP.IPostActionItemResponse) => {
+                .then((response:AIP.IPostActionItemResponse) => {
                     this.actionItemList = response.data;
                     this.postActionItemInfo["groupAction"] = [];
                     this.postActionItemInfo.groupAction = this.actionItemList;
@@ -337,10 +426,10 @@ module AIP {
             this.showTimezoneIcon = false;
         };
 
-        pad(number, length){
+        pad(number, length) {
             var str = "" + number;
             while (str.length < length) {
-                str = '0'+str
+                str = '0' + str
             }
             return str
         }
@@ -355,14 +444,14 @@ module AIP {
             var that=this;
             var timeZoneOffset = new Date().getTimezoneOffset();
             var offset = "(GMT"+((timeZoneOffset<=0? '+':'-')+ this.pad(parseInt(Math.abs(timeZoneOffset/60)), 2)+ ":" + this.pad(Math.abs(timeZoneOffset%60), 2)) + ")";
-            var finalValue=''
-            var timeZone=''
+            var finalValue = ''
+            var timeZone = ''
             angular.forEach(this.timezones, function (key, value) {
                 var GMTString = key.stringOffset;
                 if (offset === GMTString) {
                     that.setTimezone(key);
                     finalValue = '( ' + key.displayNameWithoutOffset + ' )';
-                    timeZone=key.displayName;
+                    timeZone = key.displayName;
                 }
             });
             this.defaultTimeZoneNameWithOffset = timeZone;
@@ -372,7 +461,12 @@ module AIP {
         timeConversion()
         {
 
+            if(this.scheduleType === "RECUR"){
+                this.postActionItemInfo.scheduledStartDate = this.recurranceStartDate
+            }
+
             this.enteredDate= (this.postActionItemInfo.scheduledStartDate === undefined) ? this.currentBrowserDate : this.postActionItemInfo.scheduledStartDate;
+
 
             if (this.sendTime instanceof Date){
                 this.selectedTime =  this.$filter("date")(this.sendTime, "HHmm")
@@ -403,20 +497,56 @@ module AIP {
         {
             this.timeConversion()
             var userSelectedVal=
+            {
+                "userEnterDate": this.enteredDate  ,
+                "userEnterTime": this.selectedTime,
+                "userEnterTimeZone": this.timezone.timezoneId
+            };
+
+            this.adminActionStatusService.getProcessedServerDateTimeAndTimezone(userSelectedVal)
+                .then((response) => {
+                    this.processedServerDetails = response.data;
+                    this.appServerDate = (this.postActionItemInfo.scheduledStartDate !== undefined) ? this.processedServerDetails.serverDate : null;
+                    this.appServerTime = this.processedServerDetails.serverTime;
+                    var serverTimeZone = this.processedServerDetails.serverTimeZone.split(" ")
+                    this.appServerTimeZone = angular.element('<div></div>').html(serverTimeZone[serverTimeZone.length - 1]).text();
+
+                });
+        }
+        getProcessedServerRecurranceEndDate() {
+
+            var userSelectedVal =
+            {
+                "userEnterDate": this.recurranceEndDate,
+                "userEnterTime": this.END_OF_DAY,
+                "userEnterTimeZone": this.timezone.timezoneId
+            };
+
+            this.adminActionStatusService.getProcessedServerDateTimeAndTimezone(userSelectedVal)
+                .then((response) => {
+                    this.processedServerDetails = response.data;
+                    this.serverRecurEndDate = this.processedServerDetails.serverDate
+                });
+        }
+
+        getProcessedServerRecurranceStartDate() {
+
+            this.sendTime=this.recurrTime;
+            this.timeConversion();
+            var userSelectedVal =
                 {
-                    "userEnterDate": this.enteredDate,
-                    "userEnterTime": this.selectedTime,
-                    "userEnterTimeZone":this.timezone.timezoneId
+                    "userEnterDate": this.recurranceStartDate,
+                    "userEnterTime":this.selectedTime,
+                    "userEnterTimeZone": this.timezone.timezoneId
                 };
 
             this.adminActionStatusService.getProcessedServerDateTimeAndTimezone(userSelectedVal)
                 .then((response) => {
-                    this.processedServerDetails =response.data;
-                    this.appServerDate= (this.postActionItemInfo.scheduledStartDate !== undefined) ?  this.processedServerDetails.serverDate:null;
-                    this.appServerTime= this.processedServerDetails.serverTime;
-                    var serverTimeZone= this.processedServerDetails.serverTimeZone.split(" ")
-                    this.appServerTimeZone=angular.element('<div></div>').html(serverTimeZone[serverTimeZone.length-1]).text();
-
+                    this.processedServerDetails = response.data;
+                    this.serverRecurrStartDate = this.processedServerDetails.serverDate;
+                    this.serverRecurStartTime = this.processedServerDetails.serverTime;
+                    var recurserverTimeZone = this.processedServerDetails.serverTimeZone.split(" ");
+                    this.serverRecurTimeZone = angular.element('<div></div>').html(recurserverTimeZone[recurserverTimeZone.length - 1]).text();
                 });
         }
 
@@ -445,10 +575,10 @@ module AIP {
                     PostId: () => {
                         return this.postIDvalue
                     },
-                    selectedActionItemList: () =>{
+                    selectedActionItemList: () => {
                         return this.selectedActionListVal
                     },
-                    ChangeFlag: () =>{
+                    ChangeFlag: () => {
                         return this.changeFlag
                     }
 
@@ -480,18 +610,16 @@ module AIP {
                 return false;
             }
             if (!this.postActionItemInfo.name || this.postActionItemInfo.name === null || this.postActionItemInfo.name === "") {
-
                 this.errorMessage.name = "invalid title";
             } else {
                 delete this.errorMessage.name;
             }
-
-            if (!this.postActionItemInfo.displayStartDate || this.postActionItemInfo.displayStartDate === null || this.postActionItemInfo.displayStartDate === "") {
+            if ((this.scheduleType === 'POSTNOW' || this.scheduleType === 'SCHEDULE') && !this.postActionItemInfo.displayStartDate || this.postActionItemInfo.displayStartDate === null || this.postActionItemInfo.displayStartDate === "") {
                 this.errorMessage.startDate = "invalid StartDate";
             } else {
                 delete this.errorMessage.startDate;
             }
-            if (!this.postActionItemInfo.displayEndDate || this.postActionItemInfo.displayEndDate === null || this.postActionItemInfo.displayEndDate === "") {
+            if ((this.scheduleType === 'POSTNOW' || this.scheduleType === 'SCHEDULE') && !this.postActionItemInfo.displayEndDate || this.postActionItemInfo.displayEndDate === null || this.postActionItemInfo.displayEndDate === "") {
                 this.errorMessage.endDate = "invalid EndDate";
             } else {
                 delete this.errorMessage.endDate;
@@ -513,6 +641,49 @@ module AIP {
             } else {
                 delete this.errorMessage.success;
             }
+
+            if (this.scheduleType === "RECUR" && this.recurCount || this.recurCount < 0) {
+                this.errorMessage.success = "Recurance count cannot be zero ";
+            }
+
+            if (this.scheduleType === "RECUR" &&!this.recurCount) {
+                this.errorMessage.success = "Recurance count cannot be zero ";
+            }
+            else {
+                delete this.errorMessage.success;
+            }
+
+            if (this.scheduleType === "RECUR" &&  this.displayStartDateOffset ==null ) {
+                this.errorMessage.success = "Display Start offset date cannot be empty";
+            }
+
+            if (this.scheduleType === "RECUR" &&  this.displayStartDateOffset < 0 ) {
+                this.errorMessage.success = "Display Start offset date cannot be less than 0";
+            }
+
+            if (this.scheduleType === "RECUR" && this.recDisplayEndDateType==="OFFSET" &&  this.displayEndDateOffset ==null ) {
+                this.errorMessage.success = "Display End date offset cannot be blank";
+            }
+
+            if (this.scheduleType === "RECUR" && this.recDisplayEndDateType==="OFFSET" &&  this.displayEndDateOffset<0 ) {
+                this.errorMessage.success = "Invalid End date offset";
+            }
+
+            if (this.scheduleType === "RECUR" && this.recDisplayEndDateType==="EXACT"&&(!this.recurDisplayEndDate || this.recurDisplayEndDate === null || this.recurDisplayEndDate === "")) {
+                this.errorMessage.success = "Invalid End dates";
+            }
+            if (this.scheduleType === "RECUR" && (!this.recurrTime || this.recurrTime === null || this.recurrTime === "")) {
+                this.errorMessage.success = "Invalid  time";
+            }
+
+            if (this.scheduleType === "RECUR" && (!this.recurranceEndDate || this.recurranceEndDate === null || this.recurranceEndDate === "")) {
+                this.errorMessage.success = "Invalid recurr end date";
+            }
+
+            if(this.scheduleType==="RECUR" && !this.selectedRecurFrequency){
+                this.errorMessage.success = "Recurrance frequency cannot be more null";
+            }
+
             if (Object.keys(this.errorMessage).length > 0) {
                 return false;
             } else {
@@ -521,31 +692,30 @@ module AIP {
         }
 
         checkChanges() {
+            this.dirtyFlag=true;
+            this.$rootScope.DataChanged=this.dirtyFlag;
 
-            var that = this;
-            if (that.editMode) {
-                that.dirtyFlag = true
-            }
         }
 
-        cancel() {
-
+        checkChangeDone(){
             var that=this;
-
-            if (that.editMode === true && that.dirtyFlag === true) {
-
+            if (that.dirtyFlag === true) {
                 var n = new Notification({
-                    message: this.$filter("i18n_aip")("aip.common.action.post.status.edit.warning"),
+                    message: this.$filter("i18n_aip")("aip.admin.actionItem.saveChanges"),
                     type: "warning"
                 });
                 n.addPromptAction(this.$filter("i18n_aip")("aip.common.text.no"), function () {
-                    that.$state.go("admin-post-list");
-                    notifications.remove(n);
+                      notifications.remove(n);
                 });
-
                 n.addPromptAction(this.$filter("i18n_aip")("aip.common.text.yes"), function () {
-                    that.save();
                     notifications.remove(n);
+                    that.dirtyFlag=false;
+                    that.$rootScope.DataChanged=false;
+                    if(that.redirectval==="NoData"){
+                        that.$state.go("admin-post-list");
+                    }else{
+                        location.href = that.redirectval;
+                    }
                 });
                 notifications.addNotification(n);
             }
@@ -555,27 +725,34 @@ module AIP {
             }
         }
 
+
+        cancel() {
+
+            this.redirectval="NoData";
+            this.checkChangeDone();
+        }
+
         monthCapitalize(date) {
             var date=date.replace('.','');
             return date.replace(/\b\w/g , function(month){ return month.toUpperCase();} );
         }
 
         save() {
-            this.saving = true;
-            var userSelectedTime=null;
+            var userSelectedTime;
+            this.postNow = this.scheduleType === 'POSTNOW'?true:false
             if(this.postNow===true){
-
-                this.sendTime=null;
-                this.timezone=null;
+                this.saving = true;
+                var userSelectedTime=null;
                 var CurrentDateTimeDetails = new Date();
                 var currentTime = this.$filter('date')(CurrentDateTimeDetails, 'HHmm');
+                this.sendTime=null;
+                this.timezone=null;
                 this.today();
                 this.getDefaultTimeZone();
                 this.displayDatetimeZone.dateVal=this.currentBrowserDate;
                 this.displayDatetimeZone.timeVal=currentTime.toString();
                 this.displayDatetimeZone.timeZoneVal=this.timezone.stringOffset+' '+this.timezone.timezoneId;
-
-            } else {
+            } else if(this.scheduleType === 'SCHEDULE'){
                 if (this.editMode && !(this.sendTime instanceof Date)) {
                     if(this.selectedTime) {
                         userSelectedTime = this.selectedTime;
@@ -599,10 +776,54 @@ module AIP {
                     this.displayDatetimeZone.timeVal=this.selectedTime;
                     this.displayDatetimeZone.timeZoneVal=this.timezone.stringOffset+' '+this.timezone.timezoneId;
                 }
+            }else{
+                if (this.editMode) {
+                    this.sendTime=this.recurrTime
+                    this.timeConversion()
+                    userSelectedTime =  this.selectedTime;
+                    this.displayDatetimeZone.dateVal = this.postActionItemInfo.scheduledStartDate;
+                    this.displayDatetimeZone.timeVal = userSelectedTime;
+                    this.displayDatetimeZone.timeZoneVal = this.timezone.stringOffset + ' ' + this.timezone.timezoneId;
+                }
+                else {
+                    if (this.recurrTime instanceof Date) {
+                        userSelectedTime = this.$filter("date")(this.recurrTime, "HHmm");
+                    }
+                    else {
+                        userSelectedTime = this.recurrTime;
+                    }
+                    this.displayDatetimeZone.dateVal = this.postActionItemInfo.scheduledStartDate;
+                    this.displayDatetimeZone.timeVal = userSelectedTime;
+                    this.displayDatetimeZone.timeZoneVal = this.timezone.stringOffset + ' ' + this.timezone.timezoneId;
+                }
             }
+            if (this.scheduleType === 'RECUR') {
+                this.postActionItemInfo.scheduledStartDate = this.recurranceStartDate
+                this.enteredDate=this.recurranceStartDate
 
-            this.adminActionService.savePostActionItem(this.postActionItemInfo, this.selected, this.modalResults, this.selectedPopulation, this.postNow,userSelectedTime,this.timezone.timezoneId, this.regeneratePopulation,this.displayDatetimeZone)
-                .then((response: AIP.IPostActionItemSaveResponse) => {
+                this.adminActionService.saveRecurringActionItem(this.postActionItemInfo, this.selected, this.modalResults, this.selectedPopulation, this.regeneratePopulation, this.recurCount, this.selectedRecurFrequency, this.displayStartDateOffset, this.recDisplayEndDateType, this.displayEndDateOffset, this.recurDisplayEndDate, this.recurranceStartDate, this.recurranceEndDate, userSelectedTime, this.timezone.timezoneId, this.displayDatetimeZone)
+                    .then((response:AIP.IPostActionItemSaveResponse) => {
+                        this.saving = false;
+                        var notiParams = {};
+                        if (response.data.success) {
+                            notiParams = {
+                                notiType: "saveSuccess",
+                                data: response.data
+                            };
+                            this.dirtyFlag = false;
+                            this.$rootScope.DataChanged=false;
+                            this.$state.go("admin-post-list", {noti: notiParams, data: response.data.savedJob.id});
+                        } else {
+                            this.saveErrorCallback(response.data.message);
+                        }
+                    }, (err) => {
+                        this.saving = false;
+                        //TODO:: handle error call
+                        console.log(err);
+                    });
+            }else{
+            this.adminActionService.savePostActionItem(this.postActionItemInfo, this.selected, this.modalResults, this.selectedPopulation, this.postNow, userSelectedTime, this.timezone.timezoneId, this.regeneratePopulation, this.displayDatetimeZone)
+                .then((response:AIP.IPostActionItemSaveResponse) => {
                     this.saving = false;
                     var notiParams = {};
                     if (response.data.success) {
@@ -610,6 +831,8 @@ module AIP {
                             notiType: "saveSuccess",
                             data: response.data
                         };
+                        this.dirtyFlag = false;
+                        this.$rootScope.DataChanged=false;
                         this.$state.go("admin-post-list", {noti: notiParams, data: response.data.savedJob.id});
                     } else {
                         this.saveErrorCallback(response.data.message);
@@ -619,7 +842,8 @@ module AIP {
                     //TODO:: handle error call
                     console.log(err);
                 });
-        }
+        	}
+		}
 
         saveErrorCallback(message) {
             var n = new Notification({

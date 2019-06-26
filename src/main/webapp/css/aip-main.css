@@ -1384,7 +1384,14 @@ ol.selected-group > li > button {
     -o-transform: rotate(-0deg);
     -ms-transform: rotate(-0deg);
     transform: rotate(-0deg);
-  }*/ }
+  }*/
+  /* Webkit browsers like Safari and Chrome */ }
+  .actionItemAddContainer .noPaddingLeft {
+    padding-left: 0px; }
+  .actionItemAddContainer .noPaddingRight {
+    padding-right: 0px; }
+  .actionItemAddContainer .actionItemScheduleType {
+    padding-left: 8px; }
   .actionItemAddContainer input.hasMultiCalendarPicker {
     width: 170px;
     height: 35px;
@@ -1406,6 +1413,8 @@ ol.selected-group > li > button {
     min-width: 160px; }
   .actionItemAddContainer .timezone-minwidth {
     width: 280px; }
+  .actionItemAddContainer #recurFrequency {
+    width: 10em; }
   .actionItemAddContainer #timezoneid .ui-select-dropdown .select2-search input {
     width: 270px !important; }
   .actionItemAddContainer #timezoneid .ui-select-dropdown {
@@ -1457,7 +1466,7 @@ ol.selected-group > li > button {
     vertical-align: -40%;
     box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.25); }
   .actionItemAddContainer input[type="checkbox"]:checked {
-    background: #1c8445; }
+    background: #0074DB; }
   .actionItemAddContainer input[type="checkbox"]:checked:after {
     /* Heres your symbol replacement - this is a tick in Unicode. */
     content: '';
@@ -1481,14 +1490,15 @@ ol.selected-group > li > button {
     background: white;
     width: 19px;
     height: 19px;
-    border: 1px solid #a4a4ca;
+    border: 1px solid  #0074DB;
     background: white;
     position: relative;
     border-radius: 15px;
     vertical-align: -40%;
-    box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.25); }
+    box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.25);
+    margin-right: 5px; }
   .actionItemAddContainer input[type="radio"]:checked {
-    background: #1c8445; }
+    background: #0074DB; }
   .actionItemAddContainer input[type="radio"]:checked:after {
     /* Heres your symbol replacement - this is a tick in Unicode. */
     content: '';
@@ -1508,6 +1518,12 @@ ol.selected-group > li > button {
     left: 5px;
     border-radius: 16px;
     background: #fff; }
+  .actionItemAddContainer input[type="number"] {
+    -moz-appearance: textfield; }
+  .actionItemAddContainer input[type="number"]::-webkit-inner-spin-button,
+  .actionItemAddContainer input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0; }
   .actionItemAddContainer .postChk {
     font-size: 1.5em;
     font-weight: bold;
@@ -1584,7 +1600,6 @@ ol.selected-group > li > button {
     background: #ffffff;
     webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
     box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
-    width: 23em;
     line-height: 1.5em; }
   .actionItemAddContainer .defaultTimezone {
     font-size: 13px;
@@ -1595,6 +1610,19 @@ ol.selected-group > li > button {
   .actionItemAddContainer .timeZoneChange {
     padding-left: 0px;
     padding-right: 0px; }
+  .actionItemAddContainer .actionItemScheduleType {
+    padding-left: 8px; }
+  .actionItemAddContainer #recurFrequency {
+    width: 10em; }
+  .actionItemAddContainer .recuranceInstrcution {
+    font-size: 16px;
+    padding-top: 3px;
+    width: auto !important; }
+  .actionItemAddContainer .recurTimeZone {
+    width: 100%; }
+
+#recurFrequency.ui-select-container .select2-choice {
+  min-height: 3.5em !important; }
 
 .aip-modal .modal-dialog .modal-header .row.blockProcess {
   padding: 16px; }

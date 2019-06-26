@@ -4,7 +4,7 @@
 // angular module init and configuration
 "use strict";
 
-var bannerOnAngular = angular.module("BannerOnAngular",[])
+
 
 var aipAppRoot = $('meta[name=applicationContextRoot]').attr("content") + "/ssb/";
 var aipAppAbsPath = window.location.protocol + "//" + window.location.host +"/BannerGeneralSsb/ssb/" ;
@@ -106,7 +106,7 @@ var bannerNonAdminAIPApp = angular.module("bannerNonAdminAIP", [
                         inform: item.inform,
                         saved: undefined
                     },
-                    onEnter: function ($stateParams, $filter) {
+                    onEnter:['$stateParams','$filter', function ($stateParams, $filter) {
                         this.data.breadcrumbs.url = item.breadcrumb.url;
                         if ($stateParams.groupId || $stateParams.actionItemId) {
                             var params = item.url.split("/").filter(function (_item) {
@@ -121,7 +121,7 @@ var bannerNonAdminAIPApp = angular.module("bannerNonAdminAIP", [
                             });
                         }
                         this.data.breadcrumbs.title = item.breadcrumb.label;
-                    },
+                    }],
                     data: {
                         breadcrumbs: {}
                     }
@@ -213,7 +213,7 @@ angular.module("templates/dropdown.html", []).run(["$templateCache", function ($
 }]);
 
 
-bannerOnAngular
+angular.module("BannerOnAngular")
     //set application root url
     .constant('APP_ROOT', aipAppRoot)
     .constant('BCM_ROOT', bcmRoot)

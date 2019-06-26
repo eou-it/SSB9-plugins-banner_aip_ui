@@ -10,7 +10,7 @@ var AIP;
         Status[Status["Active"] = 2] = "Active";
         Status[Status["Inactive"] = 3] = "Inactive";
     })(Status || (Status = {}));
-    var AdminActionService = /** @class */ (function () {
+    var AdminActionService = (function () {
         function AdminActionService($http, $q, $resource, GRAILSCONTROLLERS, $filter, ENDPOINT) {
             this.$http = $http;
             this.$q = $q;
@@ -47,12 +47,14 @@ var AIP;
                 '&ascending=' + (query.ascending.toString() || "") +
                 '&offset=' + (query.offset || 0) +
                 '&max=' + realMax;
+            url = url + (query.recurringPostId ? '&recurringPostId=' + query.recurringPostId : '');
             var params = {
                 filterName: query.searchParam || "%",
                 sortColumn: query.sortColumnName || "postingName",
                 sortAscending: query.ascending || false,
                 max: realMax || "",
-                offset: query.offset || 0
+                offset: query.offset || 0,
+                recurringPostId: query.recurringPostId
             };
             this.$http({
                 method: "GET",
@@ -195,6 +197,33 @@ var AIP;
             });
             return request;
         };
+        AdminActionService.prototype.saveRecurringActionItem = function (postActionItem, selected, modalResult, selectedPopulation, regeneratePopulation, recurCount, recurFreqeunecy, displayStartDateOffset, recDisplayEndDateType, displayEndDateOffset, recurDisplayEndDate, recurranceStartDate, recurranceEndDate, recurrTime, recurrTimeZone, displayDatetimeZone) {
+            var params = { postId: postActionItem.postId,
+                postingName: postActionItem.name,
+                postingActionItemGroupId: selected.groupId,
+                actionItemIds: modalResult,
+                populationId: selectedPopulation.id,
+                displayStartDate: postActionItem.displayStartDate,
+                displayEndDate: postActionItem.displayEndDate,
+                populationRegenerateIndicator: regeneratePopulation,
+                recurFrequency: recurCount,
+                recurFrequencyType: recurFreqeunecy.value,
+                postingDispStartDays: displayStartDateOffset,
+                postingDispEndDays: recDisplayEndDateType === 'OFFSET' ? displayEndDateOffset : null,
+                postingDisplayEndDate: recDisplayEndDateType === 'EXACT' ? recurDisplayEndDate : null,
+                recurStartDate: recurranceStartDate,
+                recurEndDate: recurranceEndDate,
+                recurStartTime: recurrTime,
+                displayDatetimeZone: displayDatetimeZone,
+                recurPostTimezone: recurrTimeZone
+            };
+            var request = this.$http({
+                method: "POST",
+                data: params,
+                url: postActionItem.postId ? this.ENDPOINT.admin.updateRecurringActionItemPosting : this.ENDPOINT.admin.addRecurringActionItemPosting
+            });
+            return request;
+        };
         AdminActionService.prototype.saveActionItem = function (actionItem) {
             var params = {
                 title: actionItem.title,
@@ -299,10 +328,29 @@ var AIP;
             });
             return request;
         };
-        AdminActionService.$inject = ["$http", "$q", "$resource", "GRAILSCONTROLLERS", "$filter", "ENDPOINT"];
+        AdminActionService.prototype.fetchRecurringJobPostMetaData = function (recurringPostId) {
+            var deferred = this.$q.defer();
+            var url = this.ENDPOINT.admin.recurringActionItemPostMetaData +
+                '?recurringPostId=' + recurringPostId;
+            var params = {
+                recurringPostId: recurringPostId
+            };
+            this.$http({
+                method: "GET",
+                url: url,
+                data: params
+            }).then(function (response) {
+                deferred.resolve(response.data);
+            }, function (data) {
+                deferred.reject(data);
+            });
+            return deferred.promise;
+        };
+        AdminActionService.$inject = ["$http", "$q", "$filter", "ENDPOINT"];
         return AdminActionService;
-    }());
+    })();
     AIP.AdminActionService = AdminActionService;
 })(AIP || (AIP = {}));
-angular.module("bannerAIP").service("AdminActionService", AIP.AdminActionService);
-angular.module("bannerAIP").service("dateFormatService", AIP.AdminActionService);
+register("bannerAIP").service("AdminActionService", AIP.AdminActionService);
+register("bannerAIP").service("dateFormatService", AIP.AdminActionService);
+//# sourceMappingURL=adminActionService.js.map

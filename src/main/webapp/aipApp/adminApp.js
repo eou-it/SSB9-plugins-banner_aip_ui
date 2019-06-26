@@ -91,6 +91,19 @@ var bannerAIPApp = angular.module("bannerAIP", [
 
             }
         },
+        "admin-recurring-post-list": {
+            url: "/action/recurring/:postIdval",
+            templateUrl: "admin/action/post/recurringPostActionListPage.html",
+            controller: "RecurringPostActionListPageCtrl",
+            params: {
+                postIdval: null
+            },
+            breadcrumb: {
+                label: "aip.admin.action.item.post.item.recurring.breadcrumbs",
+                url: "/aipAdmin/#/action/recurring"
+
+            }
+        },
         "admin-post-add": {
             url: "/action/addjob",
             templateUrl: "admin/action/post/adminPostItemAddPage.html",
@@ -261,7 +274,11 @@ var bannerAIPApp = angular.module("bannerAIP", [
             actionItemById: aipAppAbsPath + "aipActionItemPosting/getActionItemByPostId",
             processedDateTime:aipAppAbsPath + "aipActionItemPosting/getProcessedServerDateTimeAndTimezone",
             updateActionItemPosting: aipAppAbsPath + "aipActionItemPosting/updateActionItemPosting",
-            getMaxAttachmentsVal: aipAppAbsPath + "aipAdmin/getMaxAttachmentsVal"
+            getMaxAttachmentsVal: aipAppAbsPath + "aipAdmin/getMaxAttachmentsVal",
+            addRecurringActionItemPosting:aipAppAbsPath+"aipActionItemPosting/addRecurringActionItemPosting",
+            updateRecurringActionItemPosting:aipAppAbsPath+"aipActionItemPosting/updateRecurringActionItemPosting",
+            actionItemRecurringPostJobList: aipAppAbsPath + "aipActionItemPosting/recurringActionItemPostJobList",
+            recurringActionItemPostMetaData: aipAppAbsPath + "aipActionItemPosting/recurringActionItemPostMetaData",
 
 
         }
@@ -527,7 +544,7 @@ var retainBreadcrumbsOnBrowserRefresh = function (toState,BreadcrumbService) {
     if(toState.data.breadcrumbs.title === "aip.admin.action.edit.actionItem" || toState.data.breadcrumbs.title === "aip.admin.action.open" || toState.data.breadcrumbs.title === "aip.admin.action.add.actionItem"){
         BreadcrumbService.updateBreadcrumb({title: "aip.admin.action",url: "/aipAdmin/#/action"});
     }
-    if(toState.data.breadcrumbs.title === "aip.admin.action.actionItem.editJob" || toState.data.breadcrumbs.title === "aip.admin.action.actionItem.addJob"){
+    if(toState.data.breadcrumbs.title === "aip.admin.action.actionItem.editJob" || toState.data.breadcrumbs.title === "aip.admin.action.actionItem.addJob" || toState.data.breadcrumbs.title === "aip.admin.action.item.post.item.recurring.breadcrumbs"){
         BreadcrumbService.updateBreadcrumb({title: "aip.admin.action.item.post.item",url: "/aipAdmin/#/post"});
     }
 }
