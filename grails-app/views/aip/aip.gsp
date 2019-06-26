@@ -7,11 +7,14 @@
     <base href="${createLink(uri: '/ssb')}/">
     <meta name="headerAttributes" content=""/>
     <title></title>
-    <meta name="layout" content="bannerWebPage"/>
+    <meta name="layout" content="bannerSelfServicePage"/>
     <meta name="menuEndPoint" content="${g.createLink(controller: 'selfServiceMenu', action: 'data')}"/>
     <meta name="menuBaseURL" content="${createLink(uri: '/ssb')}" />
     <g:set var="applicationContextRoot" value="${application.contextPath}"/>
     <meta name="applicationContextRoot" content="${applicationContextRoot}">
+    <script type="text/javascript">
+        var pageControllers = {};
+    </script>
     <g:if test="${message(code: 'default.language.direction')  == 'rtl'}">
         <asset:stylesheet href="modules/aipAppRTL-mf.css"/>
     </g:if>
@@ -46,7 +49,7 @@
         })();
     </script>
     <script type="text/javascript">
-        var pageControllers = {};
+
         window.reUrl = "${reUrl}";
         <g:aipVersion/>
         <g:if env="development">
