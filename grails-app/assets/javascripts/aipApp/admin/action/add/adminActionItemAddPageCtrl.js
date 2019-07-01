@@ -318,7 +318,7 @@ var AIP;
                         _this.$rootScope.DataChanged = false;
                         _this.$state.go("admin-action-open", {
                             noti: notiParams,
-                            data: response.data.updatedActionItem.id
+                            actionItemId: response.data.updatedActionItem.id
                         });
                     }
                     else {

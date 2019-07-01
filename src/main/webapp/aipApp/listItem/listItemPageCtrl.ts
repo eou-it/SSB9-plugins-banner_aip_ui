@@ -383,7 +383,7 @@ module AIP {
                         //make sure paper clip is enabled
                         window.params.responseId = $(currentId)[0].value;
                         window.params.maxAttachments = $("#maxAttachment" + paperClipId + $(currentId)[0].value).val();
-                        $("#" + selectedPaperClip)[0].setAttribute("src", "../images/attach_icon_default.svg");
+                        $("#" + selectedPaperClip)[0].setAttribute("src", "../assets/attach_icon_default.svg");
                         // Create the event.
                         var event = document.createEvent('Event');
                         // Define that the event name is 'responseChanged'.

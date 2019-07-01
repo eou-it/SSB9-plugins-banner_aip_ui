@@ -122,13 +122,13 @@ module AIP {
             var url = "";
             switch (panelName) {
                 case "overview":
-                    url = this.APP_ROOT + "admin/group/open/overview/overview.html";
+                    url = "../assets/aipApp/admin/group/open/overview/overview.html";
                     break;
                 case "content":
-                    url = this.APP_ROOT + "admin/group/open/content/content.html";
+                    url = "../assets/aipApp/admin/group/open/content/content.html";
                     break;
                 case "edit":
-                    url = this.APP_ROOT + "admin/group/open/edit/edit.html";
+                    url = "../assets/aipApp/admin/group/open/edit/edit.html";
                     break;
                 default:
                     break;

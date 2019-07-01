@@ -3,149 +3,136 @@
  ********************************************************************************/
 ///<reference path="../../../../../../typings/tsd.d.ts"/>
 
-declare var register;
 
 module AIPUI {
-
-    export class AIPStatusRuleDirective {
-        templateUrl: string;
-        restrict: string;
-        scope:any;
-        transclude: boolean;
-        replace: boolean;
-        constructor() {
-            this.restrict = "AE";
-            this.transclude = true;
-            this.replace = false;
-            this.scope = {
+    export function AIPStatusRuleDirective() {
+        return {
+            restrict: "AE",
+            transclude: true,
+            replace: false,
+            scope: {
                 rules: "=",
                 status: "=",
-                attachments:"=",
-                inputs:"&",
+                attachments: "=",
+                inputs: "&",
                 ngModel: '=',
                 ngChange: '&',
                 contentChanged: "=changes"
-            }
-        }
-        compile() {
+            },
+            compile:function(){},
+            link: function (scope, elem, attr, ctrl, transclude) {
+                transclude(scope, (clone) => {
+                    scope.init();
+                });
+            },
+            controller: function ($scope) {
 
-        }
-        link(scope, elem, attr, ctrl, transclude) {
-            transclude(scope, (clone) => {
+                $scope.init = function () {
+                };
 
-                scope.init();
+                $scope.addRule = function ($event) {
 
-            });
+                    $scope.rules.push(
+                        {
+                            statusName: "",
+                            status: $scope.status[0],
+                            allowedAttachments: $scope.attachments[0]
+                        }
+                    );
 
-        }
-        controller($scope) {
+                    setTimeout(() => {
+                        var btnTarget = $("input#response-" + $scope.rules.length) /*+ $scope.rules.length*/;
+                        $(btnTarget).focus();
+                    }, 500);
 
-            $scope.init = function(){
-            };
+                };
+                $scope.getState = function (id) {
+                };
 
+                $scope.detectRuleChange = function () {
+                    $scope.contentChanged = true;
+                };
 
-            $scope.addRule=function($event){
+                $scope.moveUp = function (item, $event) {
+                    var idx = $scope.rules.indexOf(item);
 
-                $scope.rules.push(
-                    {
-                        statusName: "",
-                        status: $scope.status[0],
-                        allowedAttachments:$scope.attachments[0]
+                    if (!$scope.isFirst(item)) {
+                        var temp = $scope.rules[idx - 1];
+                        $scope.rules[idx - 1] = item;
+                        $scope.rules[idx] = temp;
                     }
-                );
 
-                setTimeout(() => {
-                    var btnTarget = $("input#response-"+$scope.rules.length) /*+ $scope.rules.length*/;
-                    $(btnTarget).focus();
-                }, 500);
+                    var btnTarget = "#order-down-1";
 
-            };
-            $scope.getState = function(id) {
-            };
+                    if (idx == 1) {
+                        setTimeout(() => {
+                            $(btnTarget).focus();
+                        }, 500);
+                    } else {
+                        btnTarget = "#order-up-" + idx;
+                        setTimeout(() => {
+                            $(btnTarget).focus();
+                        }, 500);
+                    }
+                    this.detectRuleChange();
+                };
+                $scope.moveDown = function (item, $event) {
+                    var idx = $scope.rules.indexOf(item);
+                    var pos = idx + 1;
 
-            $scope.detectRuleChange = function() {
-                $scope.contentChanged = true;
-            };
+                    if (pos == $scope.rules.length - 1) {
+                        var btnTarget = "#order-up-" + $scope.rules.length;
 
-            $scope.moveUp = function(item, $event) {
-                var idx = $scope.rules.indexOf(item);
+                        setTimeout(() => {
+                            $(btnTarget).focus();
+                        }, 500);
+                    }
 
-                if (!$scope.isFirst(item) ) {
-                    var temp = $scope.rules[idx - 1];
-                    $scope.rules[idx - 1] = item;
-                    $scope.rules[idx] = temp;
-                }
+                    if (!$scope.isLast(item)) {
+                        var temp = $scope.rules[idx + 1];
+                        $scope.rules[idx + 1] = item;
+                        $scope.rules[idx] = temp;
+                    }
+                    this.detectRuleChange();
 
-                var btnTarget = "#order-down-1";
+                };
+                $scope.isLast = function (item) {
+                    if ($scope.rules.indexOf(item) === $scope.rules.length - 1) {
+                        return true;
+                    }
+                    return false;
+                };
+                $scope.isFirst = function (item) {
+                    if ($scope.rules.indexOf(item) === 0) {
+                        return true;
+                    }
+                    return false;
+                };
+                $scope.removeRule = function (item, $event) {
+                    var idx = $scope.rules.indexOf(item);
 
-                if (idx == 1) {
-                    setTimeout(() => {
-                        $(btnTarget).focus();
-                    }, 500);
-                } else {
-                    btnTarget = "#order-up-" + idx;
-                    setTimeout(() => {
-                        $(btnTarget).focus();
-                    }, 500);
-                }
-                this.detectRuleChange();
-            };
-            $scope.moveDown = function(item, $event) {
-                var idx = $scope.rules.indexOf(item);
-                var pos = idx + 1;
+                    var btnTarget;
 
-                if (pos == $scope.rules.length -1) {
-                    var btnTarget = "#order-up-" + $scope.rules.length;
+                    if (idx == 0) {
+                        btnTarget = "#delete-" + 1;
+                    } else {
+                        var futureLen = $scope.rules.length - 1;
+                        btnTarget = "#delete-" + futureLen;
+                    }
 
-                    setTimeout(() => {
-                        $(btnTarget).focus();
-                    }, 500);
-                }
+                    if (idx > -1) {
+                        $scope.rules.splice(idx, 1);
 
-                if(!$scope.isLast(item)) {
-                    var temp = $scope.rules[idx + 1];
-                    $scope.rules[idx + 1] = item;
-                    $scope.rules[idx] = temp;
-                }
-                this.detectRuleChange();
+                        setTimeout(() => {
+                            $(btnTarget).focus();
+                        }, 500);
 
-            };
-            $scope.isLast = function(item) {
-                if ($scope.rules.indexOf(item) === $scope.rules.length -1 ) {
-                    return true;
-                }
-                return false;
-            };
-            $scope.isFirst = function(item) {
-                if ($scope.rules.indexOf(item) === 0 ) {
-                    return true;
-                }
-                return false;
-            };
-            $scope.removeRule = function(item, $event) {
-                var idx = $scope.rules.indexOf(item);
-
-                var btnTarget;
-
-                if (idx == 0) {
-                    btnTarget = "#delete-" + 1;
-                } else {
-                    var futureLen = $scope.rules.length -1;
-                    btnTarget = "#delete-" +  futureLen;
-                }
-
-                if (idx > -1) {
-                    $scope.rules.splice(idx, 1);
-
-                    setTimeout(() => {
-                        $(btnTarget).focus();
-                    }, 500);
-
+                    }
                 }
             }
         }
-
     }
+    angular.module('bannerAIPUI').directive('aipStatusRule', [AIPStatusRuleDirective]);
 }
 
-angular.module("bannerAIPUI").directive("aipStatusRule", AIPUI.AIPStatusRuleDirective);
+
