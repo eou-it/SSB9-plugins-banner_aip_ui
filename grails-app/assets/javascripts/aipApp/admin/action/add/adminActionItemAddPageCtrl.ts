@@ -391,7 +391,7 @@ module AIP {
                             this.$rootScope.DataChanged=false;
                             this.$state.go("admin-action-open", {
                                 noti: notiParams,
-                                data: response.data.updatedActionItem.id
+                                actionItemId: response.data.updatedActionItem.id
                             });
 
                         } else {

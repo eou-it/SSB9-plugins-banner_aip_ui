@@ -369,7 +369,7 @@ module AIP {
             var isElementPresent = document.getElementById(paperClipId);
             if (isElementPresent === null && responseElement.length > 0) {
                 var paperClipElement = angular.element("<input id=" + paperClipId + " type='image' " +
-                    "src='../images/attach_icon_disabled.svg' title = 'Click to add documents' " +
+                    "src='../assets/attach_icon_disabled.svg' title = 'Click to add documents' " +
                     "class=' pb-detail pb-item pb-paperclip'/>");
                 this.setMaxAttachmentParam(allowedAttachments, paperClipId, responseId);
                 responseElement.after(paperClipElement);

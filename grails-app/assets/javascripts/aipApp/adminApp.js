@@ -368,10 +368,11 @@ var bannerAIPApp  = angular.module("bannerAIP", [
             $rootScope.$state = $state;
             $rootScope.$stateParams = $stateParams;
 
-            $rootScope.$on('$stateChangeStart', function (e, to) {
-                if ($rootScope.DataChanged) {
-                    e.preventDefault();
+            $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
+                if ($rootScope.DataChanged || toState === fromState) {
+                    event.preventDefault();
                 }
+
             });
 
 
@@ -381,6 +382,7 @@ var bannerAIPApp  = angular.module("bannerAIP", [
                 $state.previousParams = fromParams;
                 retainBreadcrumbsOnBrowserRefresh(toState,BreadcrumbService);
                 BreadcrumbService.updateBreadcrumb(toState.data.breadcrumbs);
+
             });
 
             //On everychange of location of Browser
