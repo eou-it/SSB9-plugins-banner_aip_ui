@@ -4,10 +4,10 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <html>
 <head>
+ <g:applyLayout name="bannerSelfServicePage">
     <base href="${createLink(uri: '/ssb')}/">
     <meta name="headerAttributes" content=""/>
     <title></title>
-    <meta name="layout" content="bannerWebPage"/>
     <meta name="menuEndPoint" content="${g.createLink(controller: 'selfServiceMenu', action: 'data')}"/>
     <meta name="menuBaseURL" content="${createLink(uri: '/ssb')}" />
     <g:set var="applicationContextRoot" value="${application.contextPath}"/>
@@ -19,6 +19,7 @@
         <asset:stylesheet href="modules/aipApp-mf.css"/>
     </g:else>
     <asset:javascript src="modules/aipReviewApp-mf.js"/>
+ </g:applyLayout>
     <script type="text/javascript">
 
         // Track calling page for breadcrumbs

@@ -5,7 +5,7 @@
 
 <html>
 <head>
-    <meta name="layout" content="bannerWebPage"/>
+<g:applyLayout name="bannerSelfServicePage">
     <base href="${createLink(uri: '/ssb')}/">
     <meta name="headerAttributes" content=""/>
     <title></title>
@@ -14,6 +14,9 @@
     <meta name="menuBaseURL"  content="${createLink(uri: '/ssb')}"/>
     <g:set var="applicationContextRoot" value="${application.contextPath}"/>
     <meta name="applicationContextRoot" content="${applicationContextRoot}">
+    <script type="text/javascript">
+        var pageControllers = {};
+    </script>
     <g:if test="${message(code: 'default.language.direction')  == 'rtl'}">
         <asset:stylesheet href="modules/aipAppRTL-mf.css"/>
     </g:if>
@@ -21,6 +24,7 @@
         <asset:stylesheet href="modules/aipApp-mf.css"/>
     </g:else>
     <asset:javascript src="modules/aipAdminApp-mf.js"/>
+</g:applyLayout>
     <script type="text/javascript">
         // Track calling page for breadcrumbs
 
@@ -49,7 +53,6 @@
     </script>
 
     <script type="text/javascript">
-        var pageControllers = {};
         <g:aipVersion/>
         <g:if env="development">
         window.aip?window.aip.dev="development":window.aip={dev:"development"};

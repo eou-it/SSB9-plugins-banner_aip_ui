@@ -7,7 +7,7 @@
     <base href="${createLink(uri: '/ssb')}/">
     <meta name="headerAttributes" content=""/>
     <title></title>
-    <meta name="layout" content="bannerWebPage"/>
+    <meta name="layout" content="bannerSelfServicePage"/>
     <meta name="menuEndPoint" content="${g.createLink(controller: 'selfServiceMenu', action: 'data')}"/>
     <meta name="menuBaseURL" content="${createLink(uri: '/ssb')}" />
     <g:set var="applicationContextRoot" value="${application.contextPath}"/>
