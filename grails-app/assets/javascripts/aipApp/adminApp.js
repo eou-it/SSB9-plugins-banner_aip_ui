@@ -32,7 +32,7 @@ var xhrHttpInterceptor= function (){
     }
 }
 
-var bannerAIPApp  = angular.module("bannerAIP", [
+angular.module("bannerAIP", [
     "ngResource",
     "ngSanitize",
     "ui.router",

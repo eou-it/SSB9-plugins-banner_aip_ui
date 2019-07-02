@@ -4,6 +4,7 @@
 // angular module init and configuration
 "use strict";
 
+var bannerAIP =angular.module("bannerAIP", [])
 var bannerAIPUI =angular.module("bannerAIPUI", [])
 var bannerCommonAIPApp=angular.module("bannerCommonAIP",[])
 
