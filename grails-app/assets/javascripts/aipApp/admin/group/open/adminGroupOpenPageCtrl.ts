@@ -17,7 +17,7 @@ module AIP {
         groupFolder: IGroupFolder;
     }
     export class AdminGroupOpenPageCtrl implements IAdminGroupOpenPageCtrl{
-        $inject = ["$scope","$rootScope", "$window", "AdminGroupService", "$q", "SpinnerService", "$state", "$filter", "$sce", "$templateRequest", "$templateCache",
+        $inject = ["$scope","$rootScope","$location", "$window", "AdminGroupService", "$q", "SpinnerService", "$state", "$filter", "$sce", "$templateRequest", "$templateCache",
             "$compile", "$timeout", "APP_ROOT"];
         groupInfo:IGroupInfo;
         groupFolder: IGroupFolder;
@@ -46,13 +46,15 @@ module AIP {
         $window;
         actionItemDataChanged:boolean;
         redirectval;
+        $location;
 
 
-        constructor($scope,$rootScope, $window, AdminGroupService:AIP.AdminGroupService, $q:ng.IQService, SpinnerService, $state, $filter, $sce, $templateRequest, $templateCache,
+        constructor($scope,$rootScope,$location, $window, AdminGroupService:AIP.AdminGroupService, $q:ng.IQService, SpinnerService, $state, $filter, $sce, $templateRequest, $templateCache,
                     $compile, $timeout, APP_ROOT) {
             $scope.vm = this;
             this.$scope = $scope;
             this.$rootScope=$rootScope;
+            this.$location=$location;
             this.$window = $window;
             this.$q = $q;
             this.$state = $state;
@@ -151,6 +153,12 @@ module AIP {
                 }, (error) => {
                     console.log(error);
                 });
+            //ToDO
+            var urlVal = this.$location.absUrl().split('?')[0];
+            if ( angular.element( document.querySelector( '#xe-tab1' ) ).href != urlVal) {
+                angular.element(document.querySelector('#xe-tab1')).attr('href', urlVal);
+                angular.element(document.querySelector('#xe-tab2')).attr('href', urlVal);
+            }
             return deferred.promise;
         }
         getGroupDetailDefer(id) {

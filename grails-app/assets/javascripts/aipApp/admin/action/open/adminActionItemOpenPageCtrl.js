@@ -8,8 +8,8 @@
 var AIP;
 (function (AIP) {
     var AdminActionItemOpenPageCtrl = /** @class */ (function () {
-        function AdminActionItemOpenPageCtrl($scope, $rootScope, $q, $state, $filter, $sce, $window, $templateRequest, $templateCache, $compile, $timeout, $interpolate, SpinnerService, AdminActionService, AdminActionStatusService, APP_ROOT, CKEDITORCONFIG) {
-            this.$inject = ["$scope", "$rootScope", "$q", "$state", "$filter", "$sce", "$window", "$templateRequest", "$templateCache", "$compile", "$timeout", "$interpolate", "SpinnerService", "AdminActionService", "AdminActionStatusService", "APP_ROOT", "CKEDITORCONFIG"];
+        function AdminActionItemOpenPageCtrl($scope, $rootScope, $q, $location, $state, $filter, $sce, $window, $templateRequest, $templateCache, $compile, $timeout, $interpolate, SpinnerService, AdminActionService, AdminActionStatusService, APP_ROOT, CKEDITORCONFIG) {
+            this.$inject = ["$scope", "$rootScope", "$q", "$location", "$state", "$filter", "$sce", "$window", "$templateRequest", "$templateCache", "$compile", "$timeout", "$interpolate", "SpinnerService", "AdminActionService", "AdminActionStatusService", "APP_ROOT", "CKEDITORCONFIG"];
             this.trustAsHtml = function (string) {
                 return this.$sce.trustAsHtml(string);
             };
@@ -25,6 +25,7 @@ var AIP;
             this.$scope = $scope;
             this.$rootScope = $rootScope;
             this.$q = $q;
+            this.$location = $location;
             this.$state = $state;
             this.$filter = $filter;
             this.$sce = $sce;
@@ -60,6 +61,7 @@ var AIP;
             this.actionItemDataChanged = false;
             this.maxAttachmentsList = [];
             this.redirectval = "NoData";
+            //  this.APP_ROOT=this.$location.absUrl().split('?')[0];
             this.init();
             angular.element($window).bind('resize', function () {
                 if (!$scope.$root.$phase) {
@@ -228,6 +230,13 @@ var AIP;
             }, function (error) {
                 console.log(error);
             });
+            //ToDO
+            var urlVal = this.$location.absUrl().split('?')[0];
+            if (angular.element(document.querySelector('#xe-tab1')).href != urlVal) {
+                angular.element(document.querySelector('#xe-tab1')).attr('href', urlVal);
+                angular.element(document.querySelector('#xe-tab2')).attr('href', urlVal);
+                angular.element(document.querySelector('#xe-tab3')).attr('href', urlVal);
+            }
             return deferred.promise;
         };
         AdminActionItemOpenPageCtrl.prototype.isNoTemplate = function () {
@@ -481,6 +490,7 @@ var AIP;
                     _this.templateSelect = false;
                     _this.actionItem = newData[0].data;
                     _this.trustActionItemContent();
+                    _this.openOverviewPanel();
                     _this.openContentPanel();
                 }
                 else {

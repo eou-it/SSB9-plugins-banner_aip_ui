@@ -21,6 +21,7 @@
 
 //= require  aipApp/common/utils/spinnerCtrl.js
 
+//= require  aipApp/common/filters/html-filter.js
 //= require  aipApp/common/filters/i18n-filter.js
 //= require  aipApp/common/filters/blockProcessItem-filter.js
 //= require  aipApp/common/filters/select2-groupAssign-filter.js

@@ -7,8 +7,8 @@
 var AIP;
 (function (AIP) {
     var AdminGroupOpenPageCtrl = /** @class */ (function () {
-        function AdminGroupOpenPageCtrl($scope, $rootScope, $window, AdminGroupService, $q, SpinnerService, $state, $filter, $sce, $templateRequest, $templateCache, $compile, $timeout, APP_ROOT) {
-            this.$inject = ["$scope", "$rootScope", "$window", "AdminGroupService", "$q", "SpinnerService", "$state", "$filter", "$sce", "$templateRequest", "$templateCache",
+        function AdminGroupOpenPageCtrl($scope, $rootScope, $location, $window, AdminGroupService, $q, SpinnerService, $state, $filter, $sce, $templateRequest, $templateCache, $compile, $timeout, APP_ROOT) {
+            this.$inject = ["$scope", "$rootScope", "$location", "$window", "AdminGroupService", "$q", "SpinnerService", "$state", "$filter", "$sce", "$templateRequest", "$templateCache",
                 "$compile", "$timeout", "APP_ROOT"];
             this.trustHTML = function (txtString) {
                 var sanitized = txtString ? this.$sce.trustAsHtml(this.$filter("html")(txtString)) : "";
@@ -17,6 +17,7 @@ var AIP;
             $scope.vm = this;
             this.$scope = $scope;
             this.$rootScope = $rootScope;
+            this.$location = $location;
             this.$window = $window;
             this.$q = $q;
             this.$state = $state;
@@ -110,6 +111,12 @@ var AIP;
             }, function (error) {
                 console.log(error);
             });
+            //ToDO
+            var urlVal = this.$location.absUrl().split('?')[0];
+            if (angular.element(document.querySelector('#xe-tab1')).href != urlVal) {
+                angular.element(document.querySelector('#xe-tab1')).attr('href', urlVal);
+                angular.element(document.querySelector('#xe-tab2')).attr('href', urlVal);
+            }
             return deferred.promise;
         };
         AdminGroupOpenPageCtrl.prototype.getGroupDetailDefer = function (id) {

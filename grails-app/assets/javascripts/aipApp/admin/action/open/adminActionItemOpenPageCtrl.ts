@@ -18,11 +18,12 @@ module AIP {
     }
 
     export class AdminActionItemOpenPageCtrl {
-        $inject = ["$scope", "$rootScope", "$q", "$state", "$filter", "$sce", "$window", "$templateRequest", "$templateCache", "$compile", "$timeout", "$interpolate", "SpinnerService", "AdminActionService", "AdminActionStatusService", "APP_ROOT", "CKEDITORCONFIG"];
+        $inject = ["$scope", "$rootScope", "$q","$location", "$state", "$filter", "$sce", "$window", "$templateRequest", "$templateCache", "$compile", "$timeout", "$interpolate", "SpinnerService", "AdminActionService", "AdminActionStatusService", "APP_ROOT", "CKEDITORCONFIG"];
         adminActionService: AIP.AdminActionService;
         adminActionStatusService: AIP.AdminActionStatusService;
         spinnerService: AIP.SpinnerService;
         $q: ng.IQService;
+        $location;
         $state;
         $filter;
         $sce;
@@ -58,12 +59,13 @@ module AIP {
         redirectval;
         maxAttachmentsList;
 
-        constructor($scope, $rootScope, $q: ng.IQService, $state, $filter, $sce, $window, $templateRequest, $templateCache, $compile,
+        constructor($scope, $rootScope, $q: ng.IQService,$location, $state, $filter, $sce, $window, $templateRequest, $templateCache, $compile,
                     $timeout, $interpolate, SpinnerService, AdminActionService, AdminActionStatusService, APP_ROOT, CKEDITORCONFIG) {
             $scope.vm = this;
             this.$scope = $scope;
             this.$rootScope = $rootScope;
             this.$q = $q;
+            this.$location=$location;
             this.$state = $state;
             this.$filter = $filter;
             this.$sce = $sce;
@@ -99,6 +101,7 @@ module AIP {
             this.actionItemDataChanged = false;
             this.maxAttachmentsList = [];
             this.redirectval = "NoData";
+          //  this.APP_ROOT=this.$location.absUrl().split('?')[0];
 
             this.init();
             angular.element($window).bind('resize', function () {
@@ -106,6 +109,7 @@ module AIP {
                     $scope.$apply();
                 }
             });
+
         };
 
         init() {
@@ -131,6 +135,7 @@ module AIP {
                 }
             });
             this.getMaxAttachments();
+
         }
 
         detectContentChange(content) {
@@ -271,6 +276,14 @@ module AIP {
                 }, (error) => {
                     console.log(error);
                 });
+
+            //ToDO
+            var urlVal = this.$location.absUrl().split('?')[0];
+            if ( angular.element( document.querySelector( '#xe-tab1' ) ).href != urlVal) {
+                angular.element(document.querySelector('#xe-tab1')).attr('href', urlVal);
+                angular.element(document.querySelector('#xe-tab2')).attr('href', urlVal);
+                angular.element(document.querySelector('#xe-tab3')).attr('href', urlVal);
+            }
             return deferred.promise;
         }
 
@@ -556,6 +569,7 @@ module AIP {
                         this.templateSelect = false;
                         this.actionItem = newData[0].data;
                         this.trustActionItemContent();
+                        this.openOverviewPanel();
                         this.openContentPanel();
                     } else {
                         this.saveErrorCallback(response[0].error);
@@ -569,6 +583,7 @@ module AIP {
 
             this.actionItemDataChanged = false;
             this.$rootScope.DataChanged = false;
+
         }
 
         getRules() {
