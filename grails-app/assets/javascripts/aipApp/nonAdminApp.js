@@ -29,7 +29,7 @@ var xhrHttpInterceptor = function () {
     }
 }
 
-var bannerNonAdminAIPApp = angular.module("bannerNonAdminAIP", [
+ angular.module("bannerNonAdminAIP", [
         "ngResource",
         "ngSanitize",
         "ui.router",

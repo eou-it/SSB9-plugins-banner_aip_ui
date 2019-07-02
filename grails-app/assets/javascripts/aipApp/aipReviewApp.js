@@ -28,7 +28,7 @@ var xhrHttpInterceptor = function () {
     }
 }
 
-var bannerAIPReviewApp = angular.module("bannerAIPReview", [
+angular.module("bannerAIPReview", [
         "ngResource",
         "ngSanitize",
         "ui.router",

@@ -7,4 +7,5 @@
 var bannerAIP =angular.module("bannerAIP", [])
 var bannerAIPUI =angular.module("bannerAIPUI", [])
 var bannerCommonAIPApp=angular.module("bannerCommonAIP",[])
-
+var bannerAIPReviewApp = angular.module("bannerAIPReview", [])
+var bannerNonAdminAIPApp = angular.module("bannerNonAdminAIP", [])
