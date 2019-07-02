@@ -5,7 +5,7 @@
 
 <html>
 <head>
-    <g:applyLayout name="bannerSelfServicePage">
+    <meta name="layout" content="bannerWebPage"/>
     <base href="${createLink(uri: '/ssb')}/">
     <meta name="headerAttributes" content=""/>
     <title></title>
@@ -21,7 +21,6 @@
         <asset:stylesheet href="modules/aipApp-mf.css"/>
     </g:else>
     <asset:javascript src="modules/aipAdminApp-mf.js"/>
-</g:applyLayout>
     <script type="text/javascript">
         // Track calling page for breadcrumbs
 
