@@ -17,6 +17,7 @@
     <script type="text/javascript">
         var pageControllers = {};
     </script>
+    <ckeditor:resources/>
     <g:if test="${message(code: 'default.language.direction')  == 'rtl'}">
         <asset:stylesheet href="modules/aipAppRTL-mf.css"/>
     </g:if>
@@ -24,7 +25,9 @@
         <asset:stylesheet href="modules/aipApp-mf.css"/>
     </g:else>
     <asset:javascript src="modules/aipAdminApp-mf.js"/>
+
 </g:applyLayout>
+
     <script type="text/javascript">
         // Track calling page for breadcrumbs
 
