@@ -4,6 +4,9 @@
 
 //= require  ng-ckeditor/libs/ckeditor/ckeditor.js
 //= require  ng-ckeditor/ng-ckeditor.js
+//= require  ng-ckeditor/libs/ckeditor/config.js
+//= require  ng-ckeditor/libs/ckeditor/lang/en.js
+//= require  ng-ckeditor/libs/ckeditor/lang/ru.js
 
 //= require  aipApp/aipCommon.js
 //= require  aipApp/common/services/itemListViewService.js

@@ -12,6 +12,9 @@
     <meta name="menuBaseURL" content="${createLink(uri: '/ssb')}" />
     <g:set var="applicationContextRoot" value="${application.contextPath}"/>
     <meta name="applicationContextRoot" content="${applicationContextRoot}">
+     <script type="text/javascript">
+        var pageControllers = {};
+     </script>
     <g:if test="${message(code: 'default.language.direction')  == 'rtl'}">
         <asset:stylesheet href="modules/aipAppRTL-mf.css"/>
     </g:if>
@@ -47,7 +50,6 @@
         })();
     </script>
     <script type="text/javascript">
-        var pageControllers = {};
         <g:aipVersion/>
         <g:if env="development">
         window.aip?window.aip.dev="development":window.aip={dev:"development"};
