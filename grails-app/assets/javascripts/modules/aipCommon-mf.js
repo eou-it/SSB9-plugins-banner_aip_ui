@@ -29,11 +29,6 @@
 
 //= require modelPoppup.js
 
-//= require  ng-ckeditor/libs/ckeditor/ckeditor.js
 //= require  ng-ckeditor/ng-ckeditor.js
-//= require  ng-ckeditor/libs/ckeditor/jquery.js
-//= require  ng-ckeditor/libs/ckeditor/config.js
-//= require  ng-ckeditor/libs/ckeditor/lang/en.js
-//= require  ng-ckeditor/libs/ckeditor/lang/ru.js
-//= require  ng-ckeditor/libs/ckeditor/styles.js
+
 

@@ -5,7 +5,7 @@
 
 <html>
 <head>
-<g:applyLayout name="bannerWebPage">
+<g:applyLayout name="bannerSelfServicePage">
     <base href="${createLink(uri: '/ssb')}/">
     <meta name="headerAttributes" content=""/>
     <title></title>
@@ -17,7 +17,7 @@
     <script type="text/javascript">
         var pageControllers = {};
     </script>
-    <ckeditor:resources/>
+
     <g:if test="${message(code: 'default.language.direction')  == 'rtl'}">
         <asset:stylesheet href="modules/aipAppRTL-mf.css"/>
     </g:if>
@@ -27,7 +27,7 @@
     <asset:javascript src="modules/aipAdminApp-mf.js"/>
 
 </g:applyLayout>
-
+    <ckeditor:resources/>
     <script type="text/javascript">
         // Track calling page for breadcrumbs
 

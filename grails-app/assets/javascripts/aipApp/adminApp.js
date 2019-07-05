@@ -43,9 +43,9 @@ angular.module("bannerAIP", [
     "xe-ui-components",
     "bannerAIPUI",
     "bannerCommonAIP",
+    "ngCkeditor",
     "ngRoute",
     "SCEAIP",
-    "ngCkeditor",
     "BannerOnAngular",
     "I18nAIP",
     "pbrun.directives",
@@ -293,7 +293,6 @@ angular.module("bannerAIP", [
             ofLabel: "of"
         })
 
-
     .constant("CKEDITORCONFIG",
         {
             disableNativeSpellChecker: false,
@@ -306,6 +305,8 @@ angular.module("bannerAIP", [
             toolbarCanCollapse: true,
             toolbarStartupExpanded: true
         })
+
+
 
 
     //provider-injector
@@ -400,7 +401,6 @@ angular.module("bannerAIP", [
             // FIXME: refactor code to namespace to aip.*
 
             $.i18n.prop("actionItem.title.unique.error");
-
             CKEDITOR.on('instanceCreated', function (event) {
                 var editor = event.editor,
                     element = editor.element;
@@ -447,6 +447,7 @@ angular.module("bannerAIP", [
                     editor.config.format_tags = 'p;h1;h2;h3;h5;h6;pre;address;div';
                 });
             });
+
         }]
     );
 
