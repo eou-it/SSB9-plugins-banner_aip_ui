@@ -5,7 +5,7 @@
 
 <html>
 <head>
-<g:applyLayout name="bannerSelfServicePage">
+<g:applyLayout name="bannerWebPage">
     <base href="${createLink(uri: '/ssb')}/">
     <meta name="headerAttributes" content=""/>
     <title></title>
