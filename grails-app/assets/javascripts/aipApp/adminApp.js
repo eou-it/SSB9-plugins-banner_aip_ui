@@ -453,9 +453,10 @@ angular.module("bannerAIP", [
 
  bannerAIPUI
     .constant('APP_ROOT', aipAppRoot)//set application root url
+    .constant('APP_PATH', rootWebApp)//set application folder path url
 
     //supply directives' template url so that we don't have any hardcoded url in other code
-    .config(['$provide', 'APP_ROOT', function ($provide, APP_ROOT) {
+    .config(['$provide', 'APP_ROOT','APP_PATH', function ($provide, APP_ROOT,APP_PATH) {
             //override angular-ui's default accordion-group directive template; h4 -> h2 for title
             $provide.decorator('uibAccordionGroupDirective', function ($delegate) {
                 var directive = $delegate[0];
@@ -475,28 +476,28 @@ angular.module("bannerAIP", [
             });
             $provide.decorator("aipLandingItemDirective", function ($delegate) {
                 var directive = $delegate[0];
-                directive.templateUrl = "../assets/aipApp/common/directives/admin/landing-item/template/landingItem.html";
+                directive.templateUrl = APP_PATH+ "assets/aipApp/common/directives/admin/landing-item/template/landingItem.html";
                 return $delegate;
             });
             $provide.decorator("aipItemDetailDirective", function ($delegate) {
                 var directive = $delegate[0];
-                directive.templateUrl =  "../assets/aipApp/common/directives/item-detail/template/itemDetail.html";
+                directive.templateUrl = APP_PATH+ "assets/aipApp/common/directives/item-detail/template/itemDetail.html";
                 return $delegate;
             });
 
             $provide.decorator("aipGroupDetailDirective", function ($delegate) {
                 var directive = $delegate[0];
-                directive.templateUrl = "../assets/aipApp/common/directives/admin/group-detail/template/groupDetail.html";
+                directive.templateUrl = APP_PATH+ "assets/aipApp/common/directives/admin/group-detail/template/groupDetail.html";
                 return $delegate;
             });
             $provide.decorator("aipStatusRuleDirective", function ($delegate) {
                 var directive = $delegate[0];
-                directive.templateUrl =  "../assets/aipApp/common/directives/admin/status-rule/template/statusRule.html";
+                directive.templateUrl =  APP_PATH+ "assets/aipApp/common/directives/admin/status-rule/template/statusRule.html";
                 return $delegate;
             });
             $provide.decorator("aipBlockedProcessDirective", function ($delegate) {
                 var directive = $delegate[0];
-                directive.templateUrl = "../assets/aipApp/common/directives/admin/blockedProcess/template/blockedProcess.html";
+                directive.templateUrl = APP_PATH+ "assets/aipApp/common/directives/admin/blockedProcess/template/blockedProcess.html";
                 return $delegate;
             });
         }]

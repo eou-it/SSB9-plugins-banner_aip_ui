@@ -165,33 +165,34 @@ var xhrHttpInterceptor = function () {
 
 bannerAIPUI
     .constant('APP_ROOT', aipAppRoot)//set application root url
+    .constant('APP_PATH', rootWebApp)//set application folder path url
     //supply directives' template url so that we don't have any hardcoded url in other code
-    .config(['$provide', 'APP_ROOT', function ($provide, APP_ROOT) {
+    .config(['$provide', 'APP_ROOT','APP_PATH', function ($provide, APP_ROOT,APP_PATH) {
             //override angular-ui's default accordion-group directive template; h4 -> h2 for title
             $provide.decorator('uibAccordionGroupDirective', function ($delegate) {
                 var directive = $delegate[0];
-                directive.templateUrl = "../assets/aipApp/common/directives/list/template/listAccordionHeader.html";
+                directive.templateUrl = APP_PATH+"assets/aipApp/common/directives/list/template/listAccordionHeader.html";
                 directive.replace = false;
                 return $delegate;
             });
             $provide.decorator("aipListDirective", function ($delegate) {
                 var directive = $delegate[0];
-                directive.templateUrl = "../assets/aipApp/common/directives/list/template/list.html";
+                directive.templateUrl = APP_PATH+"assets/aipApp/common/directives/list/template/list.html";
                 return $delegate;
             });
             $provide.decorator("aipReadmoreDirective", function ($delegate) {
                 var directive = $delegate[0];
-                directive.templateUrl = "../assets/aipApp/common/directives/readmore/template/readmore.html";
+                directive.templateUrl = APP_PATH+"assets/aipApp/common/directives/readmore/template/readmore.html";
                 return $delegate;
             });
             $provide.decorator("aipItemDetailDirective", function ($delegate) {
                 var directive = $delegate[0];
-                directive.templateUrl = "../assets/aipApp/common/directives/item-detail/template/itemDetail.html";
+                directive.templateUrl = APP_PATH+"assets/aipApp/common/directives/item-detail/template/itemDetail.html";
                 return $delegate;
             });
             $provide.decorator("aipAttachmentDirective", function ($delegate) {
                 var directive = $delegate[0];
-                directive.templateUrl = "../assets/aipApp/common/directives/aip-attachment/template/aipAttachment.html";
+                directive.templateUrl = APP_PATH+"assets/aipApp/common/directives/aip-attachment/template/aipAttachment.html";
                 return $delegate;
             });
         }]
