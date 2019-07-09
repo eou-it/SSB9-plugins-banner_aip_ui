@@ -42,7 +42,6 @@ var xhrHttpInterceptor = function () {
         "bannerCommonAIP",
         "ngRoute",
         "SCEAIP",
-        "ngCkeditor",
         "BannerOnAngular",
         "I18nAIP",
         "pbrun.directives",
