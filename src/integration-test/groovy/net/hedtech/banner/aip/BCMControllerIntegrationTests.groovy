@@ -4,6 +4,7 @@
 package net.hedtech.banner.aip
 
 import grails.converters.JSON
+import net.hedtech.banner.general.person.PersonUtility
 import net.hedtech.banner.testing.BaseIntegrationTestCase
 import org.junit.After
 import org.junit.Before
@@ -19,6 +20,7 @@ class BCMControllerIntegrationTests extends BaseIntegrationTestCase {
 
     @Autowired
     BCMController controller
+    def selfServiceBannerAuthenticationProvider
 
     @Before
     void setUp() {
@@ -40,6 +42,11 @@ class BCMControllerIntegrationTests extends BaseIntegrationTestCase {
 
     @Test
     void testBCMLocation() {
+        def person = PersonUtility.getPerson( "CSRSTU002" )
+        assertNotNull person
+        def auth = selfServiceBannerAuthenticationProvider.authenticate(
+                new UsernamePasswordAuthenticationToken( person.bannerId, '111111' ) )
+        SecurityContextHolder.getContext().setAuthentication( auth )
         controller.request.contentType = "text/json"
         controller.BCMLocation
         assertEquals 200, controller.response.status
@@ -51,6 +58,11 @@ class BCMControllerIntegrationTests extends BaseIntegrationTestCase {
 
     @Test
     void testBCMLocationNoSessionValue() {
+        def person = PersonUtility.getPerson( "CSRSTU002" )
+        assertNotNull person
+        def auth = selfServiceBannerAuthenticationProvider.authenticate(
+                new UsernamePasswordAuthenticationToken( person.bannerId, '111111' ) )
+        SecurityContextHolder.getContext().setAuthentication( auth )
         controller.request.contentType = "text/json"
         controller.session['BCM_LOCATION'] = 'http:/test'
         controller.BCMLocation

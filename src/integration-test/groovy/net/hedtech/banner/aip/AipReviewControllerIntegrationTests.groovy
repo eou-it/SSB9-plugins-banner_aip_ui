@@ -40,7 +40,7 @@ class AipReviewControllerIntegrationTests extends BaseIntegrationTestCase {
     @Before
     public void setUp() {
         formContext = ['SELFSERVICE']
-        controller = new AipReviewController()
+        //controller = new AipReviewController()
         super.setUp()
        /* def auth = selfServiceBannerAuthenticationProvider.authenticate(new UsernamePasswordAuthenticationToken('AIPADM001', '111111'))
         SecurityContextHolder.getContext().setAuthentication(auth)
@@ -58,6 +58,11 @@ class AipReviewControllerIntegrationTests extends BaseIntegrationTestCase {
 
     @Test
     void listActionItemNames() {
+        def person = PersonUtility.getPerson( "AIPADM001" )
+        assertNotNull person
+        def auth = selfServiceBannerAuthenticationProvider.authenticate(
+                new UsernamePasswordAuthenticationToken( person.bannerId, '111111' ) )
+        SecurityContextHolder.getContext().setAuthentication( auth )
         controller.fetchActionItemNames()
         def ActionItemList = JSON.parse( controller.response.contentAsString )
         assertNotNull( ActionItemList )

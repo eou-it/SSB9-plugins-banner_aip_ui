@@ -27,9 +27,6 @@ class ActionItemProcessingConfigServiceIntegrationTests extends BaseIntegrationT
         formContext = ['SELFSERVICE']
        // controller = new AipController()
         super.setUp()
-       /* def auth = selfServiceBannerAuthenticationProvider.authenticate(new UsernamePasswordAuthenticationToken('CSRSTU001', '111111'))
-        SecurityContextHolder.getContext().setAuthentication(auth)
-        assertNotNull auth*/
     }
 
 
