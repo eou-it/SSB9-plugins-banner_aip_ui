@@ -58,7 +58,6 @@ grails {
         compile project(':banner-ui-ss')
         compile project(':banner-aip')
         compile project(':web-app-extensibility')
-        compile project(':i18n-core')
         compile project(':sghe-aurora')
     }
 }
