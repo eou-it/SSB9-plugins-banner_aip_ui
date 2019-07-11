@@ -7,9 +7,9 @@
 var AIP;
 (function (AIP) {
     var AdminGroupOpenPageCtrl = /** @class */ (function () {
-        function AdminGroupOpenPageCtrl($scope, $rootScope, $location, $window, AdminGroupService, $q, SpinnerService, $state, $filter, $sce, $templateRequest, $templateCache, $compile, $timeout, APP_ROOT) {
+        function AdminGroupOpenPageCtrl($scope, $rootScope, $location, $window, AdminGroupService, $q, SpinnerService, $state, $filter, $sce, $templateRequest, $templateCache, $compile, $timeout, APP_FOLDER_PATH) {
             this.$inject = ["$scope", "$rootScope", "$location", "$window", "AdminGroupService", "$q", "SpinnerService", "$state", "$filter", "$sce", "$templateRequest", "$templateCache",
-                "$compile", "$timeout", "APP_ROOT"];
+                "$compile", "$timeout", "APP_FOLDER_PATH"];
             this.trustHTML = function (txtString) {
                 var sanitized = txtString ? this.$sce.trustAsHtml(this.$filter("html")(txtString)) : "";
                 return sanitized;
@@ -29,7 +29,7 @@ var AIP;
             this.$templateCache = $templateCache;
             this.$compile = $compile;
             this.$timeout = $timeout;
-            this.APP_ROOT = APP_ROOT;
+            this.APP_FOLDER_PATH = APP_FOLDER_PATH;
             this.assignedActionItems = [];
             this.initialAssigned = [];
             this.editMode = false;
@@ -82,13 +82,13 @@ var AIP;
             var url = "";
             switch (panelName) {
                 case "overview":
-                    url = "../assets/aipApp/admin/group/open/overview/overview.html";
+                    url = this.APP_FOLDER_PATH + "assets/aipApp/admin/group/open/overview/overview.html";
                     break;
                 case "content":
-                    url = "../assets/aipApp/admin/group/open/content/content.html";
+                    url = this.APP_FOLDER_PATH + "assets/aipApp/admin/group/open/content/content.html";
                     break;
                 case "edit":
-                    url = "../assets/aipApp/admin/group/open/edit/edit.html";
+                    url = this.APP_FOLDER_PATH + "assets/aipApp/admin/group/open/edit/edit.html";
                     break;
                 default:
                     break;

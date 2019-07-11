@@ -7,9 +7,9 @@
 var AIP;
 (function (AIP) {
     var AdminPostItemAddPageCtrl = /** @class */ (function () {
-        function AdminPostItemAddPageCtrl($scope, $rootScope, $q, $state, $uibModal, $window, $filter, $timeout, SpinnerService, APP_ROOT, AdminActionStatusService, AdminActionService) {
+        function AdminPostItemAddPageCtrl($scope, $rootScope, $q, $state, $uibModal, $window, $filter, $timeout, SpinnerService, APP_FOLDER_PATH, AdminActionStatusService, AdminActionService) {
             var _this = this;
-            this.$inject = ["$scope", "$rootScope", "$q", "$state", "$filter", "$timeout", "SpinnerService", "AdminActionStatusService", "AdminActionService", "$uibModal", "APP_ROOT", "datePicker", "$window"];
+            this.$inject = ["$scope", "$rootScope", "$q", "$state", "$filter", "$timeout", "SpinnerService", "AdminActionStatusService", "AdminActionService", "$uibModal", "APP_FOLDER_PATH", "datePicker", "$window"];
             this.END_OF_DAY = "2359";
             $scope.vm = this;
             this.$q = $q;
@@ -40,7 +40,7 @@ var AIP;
             this.showSchedule = false;
             this.showTimezoneIcon = true;
             this.selectedPopulation = {};
-            this.APP_ROOT = APP_ROOT;
+            this.APP_FOLDER_PATH = APP_FOLDER_PATH;
             this.errorMessage = {};
             this.editMode = false;
             this.changeFlag = false;
@@ -363,7 +363,7 @@ var AIP;
         AdminPostItemAddPageCtrl.prototype.editPage = function () {
             var _this = this;
             this.modalInstance = this.$uibModal.open({
-                templateUrl: "../assets/aipApp/admin/action/post/addpost/postAddTemplate.html",
+                templateUrl: this.APP_FOLDER_PATH + "assets/aipApp/admin/action/post/addpost/postAddTemplate.html",
                 controller: "PostAddModalCtrl",
                 controllerAs: "$ctrl",
                 size: "md",

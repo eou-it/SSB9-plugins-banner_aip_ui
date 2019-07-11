@@ -18,7 +18,7 @@ module AIP {
     }
     export class AdminGroupOpenPageCtrl implements IAdminGroupOpenPageCtrl{
         $inject = ["$scope","$rootScope","$location", "$window", "AdminGroupService", "$q", "SpinnerService", "$state", "$filter", "$sce", "$templateRequest", "$templateCache",
-            "$compile", "$timeout", "APP_ROOT"];
+            "$compile", "$timeout","APP_FOLDER_PATH"];
         groupInfo:IGroupInfo;
         groupFolder: IGroupFolder;
         groupStatus: IStatus;
@@ -34,7 +34,7 @@ module AIP {
         $compile;
         $timeout;
         $scope;
-        APP_ROOT;
+        APP_FOLDER_PATH;
         assignedActionItems;
         initialAssigned;
         editMode;
@@ -50,7 +50,7 @@ module AIP {
 
 
         constructor($scope,$rootScope,$location, $window, AdminGroupService:AIP.AdminGroupService, $q:ng.IQService, SpinnerService, $state, $filter, $sce, $templateRequest, $templateCache,
-                    $compile, $timeout, APP_ROOT) {
+                    $compile, $timeout,APP_FOLDER_PATH) {
             $scope.vm = this;
             this.$scope = $scope;
             this.$rootScope=$rootScope;
@@ -66,7 +66,7 @@ module AIP {
             this.$templateCache = $templateCache;
             this.$compile = $compile;
             this.$timeout = $timeout;
-            this.APP_ROOT = APP_ROOT;
+            this.APP_FOLDER_PATH = APP_FOLDER_PATH;
             this.assignedActionItems = [];
             this.initialAssigned = [];
             this.editMode = false;
@@ -111,7 +111,7 @@ module AIP {
             });
         }
 
-        dataChanged(this)
+        dataChanged()
         {
             this.actionItemDataChanged=true;
             this.$rootScope.DataChanged=this.actionItemDataChanged;
@@ -124,13 +124,13 @@ module AIP {
             var url = "";
             switch (panelName) {
                 case "overview":
-                    url = "../assets/aipApp/admin/group/open/overview/overview.html";
+                    url = this.APP_FOLDER_PATH+"assets/aipApp/admin/group/open/overview/overview.html";
                     break;
                 case "content":
-                    url = "../assets/aipApp/admin/group/open/content/content.html";
+                    url = this.APP_FOLDER_PATH+"assets/aipApp/admin/group/open/content/content.html";
                     break;
                 case "edit":
-                    url = "../assets/aipApp/admin/group/open/edit/edit.html";
+                    url = this.APP_FOLDER_PATH+"assets/aipApp/admin/group/open/edit/edit.html";
                     break;
                 default:
                     break;
