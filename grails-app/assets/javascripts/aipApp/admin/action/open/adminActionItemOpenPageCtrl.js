@@ -8,8 +8,8 @@
 var AIP;
 (function (AIP) {
     var AdminActionItemOpenPageCtrl = /** @class */ (function () {
-        function AdminActionItemOpenPageCtrl($scope, $rootScope, $q, $location, $state, $filter, $sce, $window, $templateRequest, $templateCache, $compile, $timeout, $interpolate, SpinnerService, AdminActionService, AdminActionStatusService, APP_ROOT, CKEDITORCONFIG) {
-            this.$inject = ["$scope", "$rootScope", "$q", "$location", "$state", "$filter", "$sce", "$window", "$templateRequest", "$templateCache", "$compile", "$timeout", "$interpolate", "SpinnerService", "AdminActionService", "AdminActionStatusService", "APP_ROOT", "CKEDITORCONFIG"];
+        function AdminActionItemOpenPageCtrl($scope, $rootScope, $q, $location, $state, $filter, $sce, $window, $templateRequest, $templateCache, $compile, $timeout, $interpolate, SpinnerService, AdminActionService, AdminActionStatusService, APP_FOLDER_PATH, CKEDITORCONFIG) {
+            this.$inject = ["$scope", "$rootScope", "$q", "$location", "$state", "$filter", "$sce", "$window", "$templateRequest", "$templateCache", "$compile", "$timeout", "$interpolate", "SpinnerService", "AdminActionService", "AdminActionStatusService", "APP_FOLDER_PATH", "CKEDITORCONFIG"];
             this.trustAsHtml = function (string) {
                 return this.$sce.trustAsHtml(string);
             };
@@ -38,7 +38,7 @@ var AIP;
             this.adminActionService = AdminActionService;
             this.adminActionStatusService = AdminActionStatusService;
             this.spinnerService = SpinnerService;
-            this.APP_ROOT = APP_ROOT;
+            this.APP_FOLDER_PATH = APP_FOLDER_PATH;
             this.ckEditorConfig = CKEDITORCONFIG;
             this.actionItem = {};
             this.actionItemPostedStatus = {};
@@ -61,7 +61,6 @@ var AIP;
             this.actionItemDataChanged = false;
             this.maxAttachmentsList = [];
             this.redirectval = "NoData";
-            //  this.APP_ROOT=this.$location.absUrl().split('?')[0];
             this.init();
             angular.element($window).bind('resize', function () {
                 if (!$scope.$root.$phase) {
@@ -201,13 +200,13 @@ var AIP;
             var url = "";
             switch (panelName) {
                 case "overview":
-                    url = "../assets/aipApp/admin/action/open/overview/adminActionItemOpenOverview.html";
+                    url = this.APP_FOLDER_PATH + "assets/aipApp/admin/action/open/overview/adminActionItemOpenOverview.html";
                     break;
                 case "content":
-                    url = "../assets/aipApp/admin/action/open/content/adminActionItemOpenContent.html";
+                    url = this.APP_FOLDER_PATH + "assets/aipApp/admin/action/open/content/adminActionItemOpenContent.html";
                     break;
                 case "block":
-                    url = "../assets/aipApp/admin/action/open/block/adminActionItemBlock.html";
+                    url = this.APP_FOLDER_PATH + "assets/aipApp/admin/action/open/block/adminActionItemBlock.html";
                     break;
                 default:
                     break;

@@ -37,7 +37,7 @@ module AIP {
     }
 
     export class AdminPostItemAddPageCtrl implements IAdminPostItemAddPageCtrl {
-        $inject = ["$scope","$rootScope", "$q", "$state", "$filter", "$timeout", "SpinnerService", "AdminActionStatusService", "AdminActionService", "$uibModal", "APP_ROOT", "datePicker","$window"];
+        $inject = ["$scope","$rootScope", "$q", "$state", "$filter", "$timeout", "SpinnerService", "AdminActionStatusService", "AdminActionService", "$uibModal","APP_FOLDER_PATH", "datePicker","$window"];
         $scope;
         $rootScope;
         $uibModal;
@@ -68,7 +68,7 @@ module AIP {
         itemLength;
         scheduleDate;
         regeneratePopulation:boolean;
-        APP_ROOT;
+        APP_FOLDER_PATH;
         sendTime;
         modalInstance;
         $timeout;
@@ -120,7 +120,7 @@ module AIP {
         recurDisableTimeAndTimeZone:boolean;
 
         constructor($scope:IActionItemAddPageScope, $rootScope, $q:ng.IQService, $state, $uibModal,$window, $filter, $timeout,
-                    SpinnerService:AIP.SpinnerService, APP_ROOT, AdminActionStatusService, AdminActionService:AIP.AdminActionService) {
+                    SpinnerService:AIP.SpinnerService,APP_FOLDER_PATH, AdminActionStatusService, AdminActionService:AIP.AdminActionService) {
             $scope.vm = this;
             this.$q = $q;
             this.$scope = $scope;
@@ -150,7 +150,7 @@ module AIP {
             this.showSchedule = false;
             this.showTimezoneIcon = true;
             this.selectedPopulation = {};
-            this.APP_ROOT = APP_ROOT;
+            this.APP_FOLDER_PATH = APP_FOLDER_PATH;
             this.errorMessage = {};
             this.editMode = false;
             this.changeFlag = false;
@@ -552,7 +552,7 @@ module AIP {
         editPage() {
 
             this.modalInstance = this.$uibModal.open({
-                templateUrl: "../assets/aipApp/admin/action/post/addpost/postAddTemplate.html",
+                templateUrl: this.APP_FOLDER_PATH+"assets/aipApp/admin/action/post/addpost/postAddTemplate.html",
                 controller: "PostAddModalCtrl",
                 controllerAs: "$ctrl",
                 size: "md",

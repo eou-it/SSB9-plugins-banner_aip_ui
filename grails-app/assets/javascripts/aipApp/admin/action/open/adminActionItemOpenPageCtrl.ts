@@ -18,7 +18,7 @@ module AIP {
     }
 
     export class AdminActionItemOpenPageCtrl {
-        $inject = ["$scope", "$rootScope", "$q","$location", "$state", "$filter", "$sce", "$window", "$templateRequest", "$templateCache", "$compile", "$timeout", "$interpolate", "SpinnerService", "AdminActionService", "AdminActionStatusService", "APP_ROOT", "CKEDITORCONFIG"];
+        $inject = ["$scope", "$rootScope", "$q","$location", "$state", "$filter", "$sce", "$window", "$templateRequest", "$templateCache", "$compile", "$timeout", "$interpolate", "SpinnerService", "AdminActionService", "AdminActionStatusService","APP_FOLDER_PATH", "CKEDITORCONFIG"];
         adminActionService: AIP.AdminActionService;
         adminActionStatusService: AIP.AdminActionStatusService;
         spinnerService: AIP.SpinnerService;
@@ -37,7 +37,7 @@ module AIP {
         actionItemPostedStatus;
         $scope;
         $rootScope;
-        APP_ROOT;
+        APP_FOLDER_PATH;
         ckEditorConfig;
         templates;
         blocks;
@@ -60,7 +60,7 @@ module AIP {
         maxAttachmentsList;
 
         constructor($scope, $rootScope, $q: ng.IQService,$location, $state, $filter, $sce, $window, $templateRequest, $templateCache, $compile,
-                    $timeout, $interpolate, SpinnerService, AdminActionService, AdminActionStatusService, APP_ROOT, CKEDITORCONFIG) {
+                    $timeout, $interpolate, SpinnerService, AdminActionService, AdminActionStatusService,APP_FOLDER_PATH, CKEDITORCONFIG) {
             $scope.vm = this;
             this.$scope = $scope;
             this.$rootScope = $rootScope;
@@ -78,7 +78,7 @@ module AIP {
             this.adminActionService = AdminActionService;
             this.adminActionStatusService = AdminActionStatusService;
             this.spinnerService = SpinnerService;
-            this.APP_ROOT = APP_ROOT;
+            this.APP_FOLDER_PATH = APP_FOLDER_PATH;
             this.ckEditorConfig = CKEDITORCONFIG;
             this.actionItem = {};
             this.actionItemPostedStatus = {};
@@ -101,8 +101,6 @@ module AIP {
             this.actionItemDataChanged = false;
             this.maxAttachmentsList = [];
             this.redirectval = "NoData";
-          //  this.APP_ROOT=this.$location.absUrl().split('?')[0];
-
             this.init();
             angular.element($window).bind('resize', function () {
                 if (!$scope.$root.$phase) {
@@ -247,13 +245,13 @@ module AIP {
             var url = "";
             switch (panelName) {
                 case "overview":
-                    url = "../assets/aipApp/admin/action/open/overview/adminActionItemOpenOverview.html";
+                    url = this.APP_FOLDER_PATH +"assets/aipApp/admin/action/open/overview/adminActionItemOpenOverview.html";
                     break;
                 case "content":
-                    url = "../assets/aipApp/admin/action/open/content/adminActionItemOpenContent.html";
+                    url = this.APP_FOLDER_PATH +"assets/aipApp/admin/action/open/content/adminActionItemOpenContent.html";
                     break;
                 case "block":
-                    url = "../assets/aipApp/admin/action/open/block/adminActionItemBlock.html";
+                    url = this.APP_FOLDER_PATH +"assets/aipApp/admin/action/open/block/adminActionItemBlock.html";
                     break;
                 default:
                     break;

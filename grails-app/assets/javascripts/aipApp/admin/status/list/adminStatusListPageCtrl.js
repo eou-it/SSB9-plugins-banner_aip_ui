@@ -5,9 +5,9 @@
 var AIP;
 (function (AIP) {
     var AdminStatusListPageCtrl = /** @class */ (function () {
-        function AdminStatusListPageCtrl($scope, $state, $window, $filter, $q, $http, $uibModal, ENDPOINT, PAGINATIONCONFIG, AdminActionStatusService, APP_ROOT) {
+        function AdminStatusListPageCtrl($scope, $state, $window, $filter, $q, $http, $uibModal, ENDPOINT, PAGINATIONCONFIG, AdminActionStatusService, APP_FOLDER_PATH) {
             this.$inject = ["$scope", "$state", "$window", "$filter", "$http", "$q", "$uibModal",
-                "ENDPOINT", "PAGINATIONCONFIG", "AdminActionStatusService", "APP_ROOT"];
+                "ENDPOINT", "PAGINATIONCONFIG", "AdminActionStatusService", "APP_FOLDER_PATH"];
             $scope.vm = this;
             $scope.disableSystemRecord = function (data) {
             };
@@ -19,7 +19,7 @@ var AIP;
             this.endPoint = ENDPOINT; //ENDPOINT.admin.actionList
             this.paginationConfig = PAGINATIONCONFIG;
             this.adminActionStatusService = AdminActionStatusService;
-            this.APP_ROOT = APP_ROOT;
+            this.APP_FOLDER_PATH = APP_FOLDER_PATH;
             this.modalInstance;
             this.init();
             angular.element($window).bind('resize', function () {
@@ -131,7 +131,7 @@ var AIP;
         AdminStatusListPageCtrl.prototype.goAddPage = function () {
             var _this = this;
             this.modalInstance = this.$uibModal.open({
-                templateUrl: "../assets/aipApp/admin/status/list/add/statusAddTemplate.html",
+                templateUrl: this.APP_FOLDER_PATH + "assets/aipApp/admin/status/list/add/statusAddTemplate.html",
                 controller: "StatusAddModalCtrl",
                 controllerAs: "$ctrl",
                 size: "sm",
