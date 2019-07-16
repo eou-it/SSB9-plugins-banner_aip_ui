@@ -217,14 +217,15 @@ angular.module("BannerOnAngular")
     //set application root url
     .constant('APP_ROOT', aipAppRoot)
     .constant('BCM_ROOT', bcmRoot)
-    .constant('APP_PATH', "/BannerGeneralSsb/ssb/")
+    .constant('APP_PATH', aipAppAbsPath)
+    .constant('APP_FOLDER_PATH', rootWebApp)//set application folder path url
     .constant("APP_ABS_PATH", aipAppAbsPath)
     .constant("params", params)
 
-    .config(['$provide', 'APP_ROOT', 'params', function ($provide, APP_ROOT, params) {
+    .config(['$provide', 'APP_ROOT', 'params','APP_FOLDER_PATH', function ($provide, APP_ROOT, params,APP_FOLDER_PATH) {
         $provide.decorator("pagebuilderPageDirective", function ($delegate) {
             var directive = $delegate[0];
-            directive.templateUrl =  "../assets/aipApp/common/directives/pagebuilder/template/aip-pagebuilder.html";
+            directive.templateUrl =  APP_FOLDER_PATH+"assets/aipApp/common/directives/pagebuilder/template/aip-pagebuilder.html";
             return $delegate;
         });
         params.saved = false;
