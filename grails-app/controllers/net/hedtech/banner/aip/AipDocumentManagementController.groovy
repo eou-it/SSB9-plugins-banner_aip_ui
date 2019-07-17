@@ -5,17 +5,16 @@
 package net.hedtech.banner.aip
 
 import grails.converters.JSON
-import org.apache.log4j.Logger
+import groovy.util.logging.Slf4j
 import org.springframework.web.multipart.MultipartFile
 import org.springframework.web.multipart.MultipartHttpServletRequest
-import org.springframework.web.multipart.commons.CommonsMultipartFile
 import net.hedtech.banner.i18n.MessageHelper
 
 /**
  * Upload Controller
  */
+@Slf4j
 class AipDocumentManagementController {
-    private static final def LOGGER = Logger.getLogger(this.class)
     def uploadDocumentCompositeService
     def springSecurityService
 
@@ -128,7 +127,7 @@ class AipDocumentManagementController {
             requestParams.put('responseId',Long.parseLong(params.responseId))
             requestParams.put('documentName',params.documentName)
         } catch (ClassCastException e) {
-            LOGGER.error(e.getMessage())
+            log.error(e.getMessage())
         }
         return  requestParams
     }
