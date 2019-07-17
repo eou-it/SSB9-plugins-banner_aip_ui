@@ -4,15 +4,15 @@
 package net.hedtech.banner.aip
 
 import grails.converters.JSON
+import groovy.util.logging.Slf4j
 import net.hedtech.banner.exceptions.ApplicationException
-import org.apache.log4j.Logger
 import org.grails.plugins.web.taglib.ValidationTagLib
 
 /**
  * Controller class for AIP Action Item Posting
  */
+@Slf4j
 class AipActionItemPostingController {
-    private static final def LOGGER = Logger.getLogger( this.class )
 
     def actionItemPostCompositeService
 
@@ -32,13 +32,13 @@ class AipActionItemPostingController {
     def addRecurringActionItemPosting(){
         def map = [:]
         map = request.JSON
-        LOGGER.trace "Recurring post add - {$request.JSON.toString()}";
+        log.trace "Recurring post add - {$request.JSON.toString()}";
         def model
         try{
         model = actionItemPostCompositeService.addRecurringActionItemPosting(map)
         }catch(ApplicationException e){
             model = [fail: true]
-            LOGGER.error( e.getMessage() )
+            log.error( e.getMessage() )
             model.message = e.returnMap( { mapToLocalize -> new ValidationTagLib().message( mapToLocalize ) } ).message
         }
         render model as JSON;
@@ -51,13 +51,13 @@ class AipActionItemPostingController {
     def updateRecurringActionItemPosting(){
         def map = [:]
         map = request.JSON
-        LOGGER.trace "Recurring post update - {$request.JSON.toString()}";
+        log.trace "Recurring post update - {$request.JSON.toString()}";
         def model
         try{
             model = actionItemPostCompositeService.updateRecurringActionItemPosting(map)
         }catch(ApplicationException e){
             model = [fail: true]
-            LOGGER.error( e.getMessage() )
+            log.error( e.getMessage() )
             model.message = e.returnMap( { mapToLocalize -> new ValidationTagLib().message( mapToLocalize ) } ).message
         }
         render model as JSON;
@@ -78,7 +78,7 @@ class AipActionItemPostingController {
             model = actionItemPostCompositeService.sendAsynchronousPostItem( map )
         } catch (ApplicationException e) {
             model = [fail: true]
-            LOGGER.error( e.getMessage() )
+            log.error( e.getMessage() )
             model.message = e.returnMap( { mapToLocalize -> new ValidationTagLib().message( mapToLocalize ) } ).message
         }
         render model as JSON
@@ -100,7 +100,7 @@ class AipActionItemPostingController {
             model = actionItemPostCompositeService.updateAsynchronousPostItem( map )
         } catch (ApplicationException e) {
             model = [fail: true]
-            LOGGER.error( e.getMessage() )
+            log.error( e.getMessage() )
             model.message = e.returnMap( { mapToLocalize -> new ValidationTagLib().message( mapToLocalize ) } ).message
         }
         render model as JSON
