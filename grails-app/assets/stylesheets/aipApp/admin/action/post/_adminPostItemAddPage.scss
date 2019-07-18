@@ -280,7 +280,7 @@
     border: 1px solid #cccccc;
     border-radius: 4px;
     height: 34px !important;
-    background: #ffffff url("./images/clock.svg") right 4px center no-repeat !important; }
+    background: #ffffff url("../assets/clock.svg") right 4px center no-repeat !important; }
 
   .xe-timepicker-input-field::-ms-clear {
     display: none; }
@@ -302,7 +302,7 @@
     height: 34px !important; }
   .timezone-btn {
     height: 20px;
-    background: url(./images/showTimezoneIcon.png) center center no-repeat;
+    background: url(../assets/showTimezoneIcon.png) center center no-repeat;
     border: 0;
     padding: 5px;
     margin-top: 6px;
@@ -346,7 +346,9 @@
   .recurTimeZone{
     width : 100%;
   }
-
+  .ui-select-dropdown .select2-search input{
+      width:12.5em !important;
+  }
 }
 #recurFrequency.ui-select-container .select2-choice  {
   min-height: 3.5em !important;

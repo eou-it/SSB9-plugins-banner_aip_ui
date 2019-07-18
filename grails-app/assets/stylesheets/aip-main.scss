@@ -1,25 +1,25 @@
 /*******************************************************************************
 Copyright 2018-2019 Ellucian Company L.P. and its affiliates.
 ********************************************************************************/
-@import '../aipApp/common/directives/list/css/list';
-@import '../aipApp/common/directives/admin/landing-item/css/landingItem';
-@import '../aipApp/common/directives/aip-attachment/css/aipAttachment';
-@import '../aipApp/common/directives/item-detail/css/itemDetail';
-@import '../aipApp/admin/group/add/adminGroupAddPage';
-@import '../aipApp/admin/group/list/adminGroupListPage';
-@import '../aipApp/admin/group/order/adminGroupOrderPage';
-@import '../aipApp/admin/group/open/adminGroupOpenPage';
-@import '../aipApp/admin/action/list/adminActionListPage';
-@import '../aipApp/admin/action/add/adminActionItemAddPage';
-@import '../aipApp/admin/action/open/adminActionItemOpenPage';
-@import '../aipApp/admin/action/open/block/adminActionItemBlock';
-@import '../aipApp/admin/status/list/adminStatusListPage';
-@import '../aipApp/admin/status/list/add/statusAddModal';
-@import '../aipApp/listItem/itemInform/itemInformModal';
-@import '../aipApp/admin/action/post/adminPostItemAddPage';
-@import '../aipApp/admin/action/post/addpost/postAddModal';
-@import '../aipApp/aipReview/monitorActionItem/monitorActionItem';
-@import '../aipApp/aipReview/reviewActionItem/reviewActionItem';
+@import 'aipApp/common/directives/list/list';
+@import 'aipApp/common/directives/admin/landing-item/landingItem';
+@import 'aipApp/common/directives/aip-attachment/aipAttachment';
+@import 'aipApp/common/directives/item-detail/itemDetail';
+@import 'aipApp/admin/group/add/adminGroupAddPage';
+@import 'aipApp/admin/group/list/adminGroupListPage';
+@import 'aipApp/admin/group/order/adminGroupOrderPage';
+@import 'aipApp/admin/group/open/adminGroupOpenPage';
+@import 'aipApp/admin/action/list/adminActionListPage';
+@import 'aipApp/admin/action/add/adminActionItemAddPage';
+@import 'aipApp/admin/action/open/adminActionItemOpenPage';
+@import 'aipApp/admin/action/open/block/adminActionItemBlock';
+@import 'aipApp/admin/status/list/adminStatusListPage';
+@import 'aipApp/admin/status/list/add/statusAddModal';
+@import 'aipApp/listItem/itemInform/itemInformModal';
+@import 'aipApp/admin/action/post/adminPostItemAddPage';
+@import 'aipApp/admin/action/post/addpost/postAddModal';
+@import 'aipApp/aipReview/monitorActionItem/monitorActionItem';
+@import 'aipApp/aipReview/reviewActionItem/reviewActionItem';
 
 #gridCaption {
   color: gray;
@@ -534,3 +534,4 @@ ol.selected-group > li > button {
     margin-right: 2em;
   }
 }
+

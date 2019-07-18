@@ -380,8 +380,7 @@ aip-list .enddate {
   .landingItem-container .landing-context {
     padding: 8px 24px;
     border-left: 2px solid #EDF2F7;
-    border-right: none;
-  }
+    border-right: none; }
     .landingItem-container .landing-context .landing-title {
       font-weight: bold;
       padding-bottom: 16px; }
@@ -516,7 +515,8 @@ input[type="radio"]:checked:after {
   background: #fff; }
 
 .groupAddContainer {
-  padding: 8px 0; }
+  padding: 8px 0;
+  margin-bottom: 1em; }
   .groupAddContainer .row {
     margin-left: 0;
     margin-right: 0; }
@@ -1570,7 +1570,7 @@ ol.selected-group > li > button {
     border: 1px solid #cccccc;
     border-radius: 4px;
     height: 34px !important;
-    background: #ffffff url("./images/clock.svg") right 4px center no-repeat !important; }
+    background: #ffffff url("../assets/clock.svg") right 4px center no-repeat !important; }
   .actionItemAddContainer .xe-timepicker-input-field::-ms-clear {
     display: none; }
   .actionItemAddContainer .xe-timepicker-input-field:disabled {
@@ -1589,7 +1589,7 @@ ol.selected-group > li > button {
     height: 34px !important; }
   .actionItemAddContainer .timezone-btn {
     height: 20px;
-    background: url(./images/showTimezoneIcon.png) center center no-repeat;
+    background: url(../assets/showTimezoneIcon.png) center center no-repeat;
     border: 0;
     padding: 5px;
     margin-top: 6px; }
@@ -1620,6 +1620,8 @@ ol.selected-group > li > button {
     width: auto !important; }
   .actionItemAddContainer .recurTimeZone {
     width: 100%; }
+  .actionItemAddContainer .ui-select-dropdown .select2-search input {
+    width: 12.5em !important; }
 
 #recurFrequency.ui-select-container .select2-choice {
   min-height: 3.5em !important; }
@@ -1669,7 +1671,7 @@ ol.selected-group > li > button {
   border-bottom: 1px solid #a7a4a4;
   line-height: 2.25em;
   padding: 10px; }
-.aip-modal .actionFolder {
+.aip-modal span.actionFolder {
   float: right; }
 .aip-modal .actionlistitems {
   margin-top: 0px !important;
