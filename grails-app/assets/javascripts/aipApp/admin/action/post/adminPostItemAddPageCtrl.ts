@@ -310,7 +310,7 @@ module AIP {
                                     this.appServerDate = this.actionPost1.postingScheduleDateTime;
                                     this.appServerTime = this.actionPost1.scheduledStartTime;
                                     this.appServerTimeZone = angular.element('<div></div>').html(this.actionPost1.timezoneStringOffset.displayNameWithoutOffset).text();
-
+                                    angular.element("#chkrecur").attr("disabled", true)
                                 } else {
                                     this.scheduleType = 'RECUR'
                                     this.recurEditFlag  = true

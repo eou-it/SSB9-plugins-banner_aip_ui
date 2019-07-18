@@ -67,8 +67,8 @@ class AipReviewController {
      */
     def listDocuments() {
         def paramsObj = [
-                userActionItemId : params.userActionItemId,
-                responseId   : params.responseId,
+                userActionItemId : Long.parseLong(params.userActionItemId),
+                responseId   : Long.parseLong(params.responseId),
                 sortColumn   : params.sortColumnName ?: "id",
                 sortAscending: params.ascending ? params.ascending.toBoolean() : false
         ]
