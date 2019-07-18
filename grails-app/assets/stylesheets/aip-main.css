@@ -525,6 +525,7 @@ input[type="radio"]:checked:after {
     .groupAddContainer .groupInfo .groupInfoRow .groupElement {
       padding-right: 8px;
       padding-left: 8px;
+      margin-bottom: 8px;
       margin-bottom: 8px; }
       .groupAddContainer .groupInfo .groupInfoRow .groupElement input {
         font-size: 14px;
@@ -1622,6 +1623,9 @@ ol.selected-group > li > button {
     width: 100%; }
   .actionItemAddContainer .ui-select-dropdown .select2-search input {
     width: 12.5em !important; }
+
+#recurFrequency.ui-select-container .ui-select-dropdown {
+  width: 10.5em !important; }
 
 #recurFrequency.ui-select-container .select2-choice {
   min-height: 3.5em !important; }
