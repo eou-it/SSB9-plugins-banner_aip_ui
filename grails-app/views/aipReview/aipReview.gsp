@@ -1,8 +1,12 @@
 <!--*******************************************************************************
  Copyright 2018-2019 Ellucian Company L.P. and its affiliates.
  *******************************************************************************-->
-<%@ page contentType="text/html;charset=UTF-8" %>
-<html>
+<!DOCTYPE html>
+<html xmlns:ng="http://angularjs.org" id="ng-app">
+<head>
+    <script type="text/javascript">
+        var pageControllers = {};
+    </script>
 <head>
  <g:applyLayout name="bannerWebPage">
     <base href="${createLink(uri: '/ssb')}/">
@@ -12,9 +16,7 @@
     <meta name="menuBaseURL" content="${createLink(uri: '/ssb')}" />
     <g:set var="applicationContextRoot" value="${application.contextPath}"/>
     <meta name="applicationContextRoot" content="${applicationContextRoot}">
-     <script type="text/javascript">
-        var pageControllers = {};
-     </script>
+
     <g:if test="${message(code: 'default.language.direction')  == 'rtl'}">
         <asset:stylesheet href="modules/aipAppRTL-mf.css"/>
     </g:if>
