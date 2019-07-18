@@ -1622,10 +1622,10 @@ ol.selected-group > li > button {
   .actionItemAddContainer .recurTimeZone {
     width: 100%; }
   .actionItemAddContainer .ui-select-dropdown .select2-search input {
-    width: 12.5em !important; }
+    width: 12em !important; }
 
 #recurFrequency.ui-select-container .ui-select-dropdown {
-  width: 10.5em !important; }
+  width: 10em !important; }
 
 #recurFrequency.ui-select-container .select2-choice {
   min-height: 3.5em !important; }
