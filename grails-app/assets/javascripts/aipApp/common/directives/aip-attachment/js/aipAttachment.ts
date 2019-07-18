@@ -142,6 +142,7 @@ module AIPUI {
 
                 $scope.uploadDocument = function (selectedFiles) {
 
+                    angular.element("#uploadBtn").attr("disabled", true)
                     if ($("#fileupload_label").val() === "") {
                         selectedFiles = null;
                     }
@@ -191,8 +192,10 @@ module AIPUI {
                                                 $scope.refreshData();
                                                 resetSeletedFileValue();
                                                 triggerChangeInResponse();
+                                                angular.element("#uploadBtn").attr("disabled", false)
                                             } else {
                                                 errorNotification(response.message);
+                                                angular.element("#uploadBtn").attr("disabled", false)
                                             }
                                         })
                                 }

@@ -14,11 +14,11 @@
                     <form name="UploadFile" role="form">
                         <div class="row">
                             <input class="btn btn-primary btn-right" type="button" name="uploadButton" tabindex="2"
-                                   ng-click="uploadDocument(selectedFile);"
+                                   ng-click="uploadDocument(selectedFile);" id="uploadBtn"
                                    value={{"js.aip.common.upload.button.label"|i18n_aip}}
                                    aria-label="{{'js.aip.common.upload.button.label'|i18n_aip}}">
                             <input class="btn btn-default btn-right" type="button" name="resetButton" tabindex="3"
-                                   ng-click="reset();selectedFile=null"
+                                   ng-click="reset();selectedFile=null"  id="resetBtn"
                                    value={{"js.aip.common.reset.button.label"|i18n_aip}}
                                    aria-label="{{'js.aip.common.reset.button.label'|i18n_aip}}">
                         </div>
