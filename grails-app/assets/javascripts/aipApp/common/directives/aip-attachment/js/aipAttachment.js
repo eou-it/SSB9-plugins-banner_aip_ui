@@ -139,24 +139,29 @@ var AIPUI;
                     }
                     if (!selectedFiles) {
                         errorNotification($filter("i18n_aip")("js.aip.common.file.not.selected"));
+                        angular.element("#uploadBtn").attr("disabled", false);
                         return false;
                     }
                     var selectedFile = selectedFiles[0];
                     if (!selectedFile) {
                         errorNotification($filter("i18n_aip")("js.aip.common.file.not.selected"));
+                        angular.element("#uploadBtn").attr("disabled", false);
                         return false;
                     }
                     if (selectedFile && selectedFile.name.length > 60) {
                         errorNotification($filter("i18n_aip")("aip.uploadDocument.file.name.length.error"));
+                        angular.element("#uploadBtn").attr("disabled", false);
                         return false;
                     }
                     if (!($scope.gridData.row.length < $scope.maxAttachments)) {
                         errorNotification($filter("i18n_aip")("aip.uploadDocument.maximum.attachment.error"));
                         resetSeletedFileValue();
+                        angular.element("#uploadBtn").attr("disabled", false);
                         return false;
                     }
                     if (isDuplicateFileName($scope.gridData.row, selectedFile.name)) {
                         errorNotification($filter("i18n_aip")("js.aip.uploadDocument.file.duplicate.error"));
+                        angular.element("#uploadBtn").attr("disabled", false);
                         return false;
                     }
                     maxFileSizeValidate(selectedFile.size).then(function (response) {
