@@ -41,6 +41,7 @@ angular.module("bannerAIPReview", [
         "bannerCommonAIP",
         "ngRoute",
         "SCEAIP",
+        "I18n",
         "I18nAIP",
         'dateParser',
         'cm.timepicker'

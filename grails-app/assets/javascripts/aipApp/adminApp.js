@@ -47,6 +47,7 @@ angular.module("bannerAIP", [
     "ngRoute",
     "SCEAIP",
     "BannerOnAngular",
+    "I18n",
     "I18nAIP",
     "pbrun.directives",
     'dateParser',
