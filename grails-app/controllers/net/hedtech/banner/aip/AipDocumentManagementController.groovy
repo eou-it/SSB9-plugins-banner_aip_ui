@@ -41,7 +41,6 @@ class AipDocumentManagementController {
 
         if(!model){
             model = uploadDocumentCompositeService.addDocument(requestParamsMap)
-            println "successmodel $model"
         }
         render model as JSON
     }
