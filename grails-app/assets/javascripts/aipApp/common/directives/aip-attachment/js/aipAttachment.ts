@@ -197,16 +197,17 @@ module AIPUI {
                                                 $scope.refreshData();
                                                 resetSeletedFileValue();
                                                 triggerChangeInResponse();
-                                                angular.element("#uploadBtn").attr("disabled", false)
+
                                             } else {
                                                 errorNotification(response.message);
-                                                angular.element("#uploadBtn").attr("disabled", false)
+
                                             }
                                         })
                                 }
                             })
                         }
                     })
+                    angular.element("#uploadBtn").attr("disabled", false)
                 };
 
                 //Trigger change in response on file upload or delete.
