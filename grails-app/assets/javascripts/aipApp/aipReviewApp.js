@@ -36,13 +36,13 @@ angular.module("bannerAIPReview", [
         "ui.bootstrap",
         "ngAria",
         "ngAnimate",
+        "I18n",
+        "I18nAIP",
         "xe-ui-components",
         "bannerAIPUI",
         "bannerCommonAIP",
         "ngRoute",
         "SCEAIP",
-        "I18n",
-        "I18nAIP",
         'dateParser',
         'cm.timepicker'
     ])
