@@ -40,6 +40,8 @@ angular.module("bannerAIP", [
     "ui.bootstrap",
     "ngAria",
     "ngAnimate",
+    "I18n",
+    "I18nAIP",
     "xe-ui-components",
     "bannerAIPUI",
     "bannerCommonAIP",
@@ -47,8 +49,6 @@ angular.module("bannerAIP", [
     "ngRoute",
     "SCEAIP",
     "BannerOnAngular",
-    "I18n",
-    "I18nAIP",
     "pbrun.directives",
     'dateParser',
     'cm.timepicker'
