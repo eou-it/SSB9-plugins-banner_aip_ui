@@ -153,7 +153,7 @@ module AIP {
                                     return item.id === parseInt(response.group.folderId);
                                 })[0];
 
-                                this.groupInfo.description = this.trustHTML(response.group.groupDesc);
+                                this.groupInfo.description = response.group.groupDesc;
                                 this.groupInfoInitial = angular.copy(this.groupInfo);
                             } else {
                                 //todo: output error in notification center?
