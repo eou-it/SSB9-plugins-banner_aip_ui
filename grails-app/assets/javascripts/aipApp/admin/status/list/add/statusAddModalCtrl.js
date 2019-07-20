@@ -6,13 +6,13 @@
 var AIP;
 (function (AIP) {
     var StatusAddModalCtrl = /** @class */ (function () {
-        function StatusAddModalCtrl($scope, $uibModalInstance, ENDPOINT, AdminActionStatusService, APP_ROOT) {
-            this.$inject = ["$scope", "$uibModalInstance", "AdminActionStatusService", "ENDPOINT", "APP_ROOT"];
+        function StatusAddModalCtrl($scope, $uibModalInstance, ENDPOINT, AdminActionStatusService, APP_FOLDER_PATH) {
+            this.$inject = ["$scope", "$uibModalInstance", "AdminActionStatusService", "ENDPOINT", "APP_FOLDER_PATH"];
             $scope.vm = this;
             this.$uibModalInstance = $uibModalInstance;
             this.ENDPOINT = ENDPOINT; //ENDPOINT.admin.actionList
             this.adminActionStatusService = AdminActionStatusService;
-            this.APP_ROOT = APP_ROOT;
+            this.APP_FOLDER_PATH = APP_FOLDER_PATH;
             this.statusModel = {
                 title: "",
                 block: false

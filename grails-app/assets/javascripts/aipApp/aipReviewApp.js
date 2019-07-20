@@ -36,7 +36,6 @@ angular.module("bannerAIPReview", [
         "ui.bootstrap",
         "ngAria",
         "ngAnimate",
-        "I18n",
         "I18nAIP",
         "xe-ui-components",
         "bannerAIPUI",
@@ -162,7 +161,7 @@ angular.module("bannerAIPReview", [
         function ($rootScope, $window, $location, $state, $stateParams, $filter, $sce, $templateCache, BreadcrumbService) {
             $rootScope.$state = $state;
             $rootScope.$stateParams = $stateParams;
-
+            _.extend($.i18n.map, window.i18n); //merge i18ns b/c xe-components use different i18n message object
             $rootScope.$on('$stateChangeStart', function (e, to) {
                 if ($rootScope.DataChanged) {
                     $rootScope.$broadcast('DetectChanges', {state: next});
