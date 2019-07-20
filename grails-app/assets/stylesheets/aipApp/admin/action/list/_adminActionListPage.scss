@@ -33,10 +33,12 @@
         }
         div:last-child {
           margin-right: 0;
-
         }
       }
     }
+  }
+   .xe-container input:disabled ~ .xe-checkmark{
+    background-color: rgb(2, 107, 200) !important;
   }
 }
 

@@ -628,6 +628,8 @@ input[type="radio"]:checked:after {
           margin-right: 10px; }
         .groupListContainer .groupListTable .table-container .row.groupActions div:last-child {
           margin-right: 0; }
+  .groupListContainer .xe-container input:disabled ~ .xe-checkmark {
+    background-color: #026bc8 !important; }
 
 .groupOpenContainer {
   padding: 0;
@@ -821,6 +823,8 @@ ol.selected-group > li > button {
           margin-right: 10px; }
         .actionListContainer .actionListTable .table-container .row.actionItemActions div:last-child {
           margin-right: 0; }
+  .actionListContainer .xe-container input:disabled ~ .xe-checkmark {
+    background-color: #026bc8 !important; }
 
 .actionListTable actionItemDataTableSearch {
   display: none; }

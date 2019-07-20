@@ -38,6 +38,9 @@
       }
     }
   }
+   .xe-container input:disabled ~ .xe-checkmark{
+    background-color: rgb(2, 107, 200) !important;
+  }
 }
 .groupOpenContainer {
   padding: 0;
