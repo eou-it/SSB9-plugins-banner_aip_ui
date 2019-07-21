@@ -12,7 +12,6 @@ module AIP {
         $apply():any;
     }
     interface IAdminActionListPageCtrl {
-        getHeight(): {height:number};
         fetchData(query:IActionItemListQuery):ng.IPromise<IActionItemFetchResponse>;
         selectRecord(data:any):void;
         goAddPage():void;
@@ -35,7 +34,7 @@ module AIP {
         mobileConfig;
         mobileSize: boolean;
         selectedRecord;
-        gridHeight:number;
+
 
         constructor($scope: IActionListPageCtrlScope, $state, $window, $filter, $q, ENDPOINT, PAGINATIONCONFIG,
             AdminActionService: AIP.AdminActionService) {
@@ -53,13 +52,7 @@ module AIP {
             });
         }
         init() {
-            this.gridHeight = $(document).height() -
-                $("#breadcrumb-panel").height() -
-                $("#title-panel").height() -
-                $("#header-main-section").height() -
-                $("#outerFooter").height() -
-                $(".actionListContainer .control").height() -
-                30;
+
             this.gridData = {};
             this.draggableColumnNames=[];
             this.mobileConfig = {
@@ -164,18 +157,6 @@ module AIP {
 
 
         }
-
-        getHeight() {
-            var containerHeight = $(document).height() -
-                $("#breadcrumb-panel").height() -
-                $("#title-panel").height() -
-                $("#header-main-section").height() -
-                $("#outerFooter").height() -
-                $(".actionListContainer .control").height() -
-                30;
-            return {height: containerHeight};
-        }
-
 
         fetchData(query:AIP.IActionItemListQuery) {
 

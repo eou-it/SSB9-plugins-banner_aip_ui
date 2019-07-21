@@ -238,18 +238,6 @@ module AIP {
 
         }
 
-
-        getHeight() {
-            var containerHeight = $(document).height() -
-                $("#breadcrumb-panel").height() -
-                $("#title-panel").height() -
-                $("#header-main-section").height() -
-                $("#outerFooter").height() -
-                $(".groupListContainer .control").height() -
-                30;
-            return {height: containerHeight};
-        }
-
         fetchData(query) {
             var deferred = this.$q.defer();
             this.adminActionStatusService.fetchData(query)
