@@ -6,4 +6,5 @@
 *= require angular-ui-bootstrap/dist/ui-bootstrap-csp-rtl.css
 *= require bootstrap-rtl.css
 *= require modules/commonComponentsRTL-mf.css
+*= require fontawesome/css/font-awesome-rtl.css
 */

@@ -14,7 +14,7 @@ Copyright 2019 Ellucian Company L.P. and its affiliates.
                 <label class="titleValue">{{"aip.common.group.title"|i18n_aip}}</label>
                 <p ng-bind-html="vm.groupFolder.groupTitle"/>
                 <label class="titleValue">{{"aip.common.group.description"|i18n_aip}}</label>
-                <div class="openGroupDesc" ng-bind-html = "vm.trustHTML(vm.groupFolder.groupDesc)"></div>
+                <div class="openGroupDesc" ng-bind-html = "vm.groupFolder.groupDesc"></div>
             </div>
             <div class="col-xs-12 col-sm-2 overviewEdit">
                 <button name="Edit" type="button" class="btn btn-default edit" ng-click="vm.validateEdit('overview')"

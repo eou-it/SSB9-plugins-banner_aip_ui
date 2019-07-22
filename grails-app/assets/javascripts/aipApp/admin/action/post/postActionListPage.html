@@ -10,7 +10,7 @@ Copyright 2018-2019 Ellucian Company L.P. and its affiliates.
             </button>
         </div>
     </div>
-    <div class="actionListTable" ng-style="vm.getHeight()">
+    <div class="actionListTable">
         <xe-table-grid
                 caption="{{'aip.admin.action.selectable.post.items'|i18n_aip}}"
                 table-id="dataTableAdminActionList"
@@ -30,7 +30,7 @@ Copyright 2018-2019 Ellucian Company L.P. and its affiliates.
                 refresh-grid="refreshGrid"
                 draggable-column-names="vm.draggableColumnNames"
                 continuous-scrolling="false"
-                height="{{vm.gridHeight}}">
+                >
             <xe-cell-markup column-name="jobState" >
                 <div class="row jobState">
                     <div    ng-if="!isExtendedField(row, heading.name)">

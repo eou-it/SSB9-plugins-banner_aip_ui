@@ -197,17 +197,17 @@ module AIPUI {
                                                 $scope.refreshData();
                                                 resetSeletedFileValue();
                                                 triggerChangeInResponse();
-
+                                                angular.element("#uploadBtn").attr("disabled", false)
                                             } else {
                                                 errorNotification(response.message);
-
+                                                angular.element("#uploadBtn").attr("disabled", false)
                                             }
                                         })
                                 }
                             })
                         }
                     })
-                    angular.element("#uploadBtn").attr("disabled", false)
+
                 };
 
                 //Trigger change in response on file upload or delete.
@@ -391,6 +391,7 @@ module AIPUI {
                                 if ((((response.data.restrictedFileTypes).toUpperCase()).indexOf(selectedFileType.toUpperCase())) !== -1) {
                                     SpinnerService.showSpinner(false);
                                     errorNotification($filter("i18n_aip")("aip.uploadDocument.file.type.restricted.error"));
+                                    angular.element("#uploadBtn").attr("disabled", false)
                                     deferred.resolve('false');
                                 } else {
                                     deferred.resolve('true');
@@ -398,6 +399,7 @@ module AIPUI {
                             } else {
                                 deferred.resolve('true');
                             }
+
                         })
                     return deferred.promise
                 }
@@ -409,6 +411,7 @@ module AIPUI {
                             if (response.data.maxFileSize) {
                                 if (selectedFileSize > parseInt(response.data.maxFileSize)) {
                                     errorNotification($filter("i18n_aip")("aip.uploadDocument.file.maxsize.error"));
+                                    angular.element("#uploadBtn").attr("disabled", false)
                                     SpinnerService.showSpinner(false);
                                     deferred.resolve('false');
                                 } else {
@@ -417,6 +420,7 @@ module AIPUI {
                             } else {
                                 deferred.resolve('true');
                             }
+
                         });
                     return deferred.promise;
                 };

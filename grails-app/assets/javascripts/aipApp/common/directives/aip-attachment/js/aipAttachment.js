@@ -183,16 +183,17 @@ var AIPUI;
                                             $scope.refreshData();
                                             resetSeletedFileValue();
                                             triggerChangeInResponse();
+                                            angular.element("#uploadBtn").attr("disabled", false);
                                         }
                                         else {
                                             errorNotification(response.message);
+                                            angular.element("#uploadBtn").attr("disabled", false);
                                         }
                                     });
                                 }
                             });
                         }
                     });
-                    angular.element("#uploadBtn").attr("disabled", false);
                 };
                 //Trigger change in response on file upload or delete.
                 var triggerChangeInResponse = function () {
@@ -363,6 +364,7 @@ var AIPUI;
                             if ((((response.data.restrictedFileTypes).toUpperCase()).indexOf(selectedFileType.toUpperCase())) !== -1) {
                                 SpinnerService.showSpinner(false);
                                 errorNotification($filter("i18n_aip")("aip.uploadDocument.file.type.restricted.error"));
+                                angular.element("#uploadBtn").attr("disabled", false);
                                 deferred.resolve('false');
                             }
                             else {
@@ -382,6 +384,7 @@ var AIPUI;
                         if (response.data.maxFileSize) {
                             if (selectedFileSize > parseInt(response.data.maxFileSize)) {
                                 errorNotification($filter("i18n_aip")("aip.uploadDocument.file.maxsize.error"));
+                                angular.element("#uploadBtn").attr("disabled", false);
                                 SpinnerService.showSpinner(false);
                                 deferred.resolve('false');
                             }

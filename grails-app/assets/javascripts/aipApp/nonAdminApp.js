@@ -37,7 +37,6 @@ var xhrHttpInterceptor = function () {
         "ui.bootstrap",
         "ngAria",
         "ngAnimate",
-        "I18n",
         "I18nAIP",
         "xe-ui-components",
         "bannerAIPUI",
@@ -144,7 +143,7 @@ var xhrHttpInterceptor = function () {
         function ($rootScope, $window, $location, $state, $stateParams, $filter, $sce, $templateCache, BreadcrumbService) {
             $rootScope.$state = $state;
             $rootScope.$stateParams = $stateParams;
-
+            _.extend($.i18n.map, window.i18n); //merge i18ns b/c xe-components use different i18n message object
 
             //when state successfully changed, update breadcrumbs
             $rootScope.$on("$stateChangeSuccess", function (event, toState, toParams, fromState, fromParams) {

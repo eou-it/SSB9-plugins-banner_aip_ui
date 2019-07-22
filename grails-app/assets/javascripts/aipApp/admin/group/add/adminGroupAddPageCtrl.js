@@ -99,7 +99,7 @@ var AIP;
                             _this.existFolder = _this.folders.filter(function (item) {
                                 return item.id === parseInt(response.group.folderId);
                             })[0];
-                            _this.groupInfo.description = _this.trustHTML(response.group.groupDesc);
+                            _this.groupInfo.description =response.group.groupDesc;
                             _this.groupInfoInitial = angular.copy(_this.groupInfo);
                         }
                         else {

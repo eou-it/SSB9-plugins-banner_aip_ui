@@ -10,14 +10,14 @@ declare var notifications: any;
 
 module AIP {
     export class PostAddModalCtrl {
-        $inject = ["$scope", "$uibModalInstance", "ENDPOINT", "AdminActionStatusService","EditMode","PostId","ChangeFlag","selectedActionItemList","actionItemModal", "actionGroupModal","actionFolderGroupModal","APP_ROOT"];
+        $inject = ["$scope", "$uibModalInstance", "ENDPOINT", "AdminActionStatusService","EditMode","PostId","ChangeFlag","selectedActionItemList","actionItemModal", "actionGroupModal","actionFolderGroupModal","APP_FOLDER_PATH"];
         $uibModalInstance;
         $scope;
         adminActionStatusService;
         actionItemModal;
         actionGroupModal;
         actionFolderGroupModal
-        APP_ROOT;
+        APP_FOLDER_PATH;
         statusModel;
         ENDPOINT;
         checkAll:boolean;
@@ -28,12 +28,12 @@ module AIP {
         selectedActionItemList;
         ChangeFlag;
 
-        constructor($scope, $uibModalInstance, ENDPOINT, AdminActionStatusService,EditMode,PostId,ChangeFlag,selectedActionItemList,actionItemModal, actionGroupModal,actionFolderGroupModal,APP_ROOT) {
+        constructor($scope, $uibModalInstance, ENDPOINT, AdminActionStatusService,EditMode,PostId,ChangeFlag,selectedActionItemList,actionItemModal, actionGroupModal,actionFolderGroupModal,APP_FOLDER_PATH) {
             $scope.vm = this;
             this.$uibModalInstance = $uibModalInstance;
             this.ENDPOINT = ENDPOINT;   //ENDPOINT.admin.actionList
             this.adminActionStatusService = AdminActionStatusService;
-            this.APP_ROOT = APP_ROOT;
+            this.APP_FOLDER_PATH = APP_FOLDER_PATH;
             this.$scope = $scope;
             this.checkAll=true;
             this.EditMode=EditMode;
