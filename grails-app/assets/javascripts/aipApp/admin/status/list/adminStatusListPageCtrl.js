@@ -202,16 +202,6 @@ var AIP;
             });
             notifications.addNotification(n);
         };
-        AdminStatusListPageCtrl.prototype.getHeight = function () {
-            var containerHeight = $(document).height() -
-                $("#breadcrumb-panel").height() -
-                $("#title-panel").height() -
-                $("#header-main-section").height() -
-                $("#outerFooter").height() -
-                $(".groupListContainer .control").height() -
-                30;
-            return { height: containerHeight };
-        };
         AdminStatusListPageCtrl.prototype.fetchData = function (query) {
             var deferred = this.$q.defer();
             this.adminActionStatusService.fetchData(query)

@@ -25,13 +25,6 @@ var AIP;
         }
         PostActionListPageCtrl.prototype.init = function () {
             var _this = this;
-            this.gridHeight = $(document).height() -
-                $("#breadcrumb-panel").height() -
-                $("#title-panel").height() -
-                $("#header-main-section").height() -
-                $("#outerFooter").height() -
-                $(".actionListContainer .control").height() -
-                30;
             this.gridData = {};
             var allPromises = [];
             this.draggableColumnNames = [];
@@ -207,16 +200,6 @@ var AIP;
                 var that = _this;
                 _this.timezones = response.data.timezones;
             }));
-        };
-        PostActionListPageCtrl.prototype.getHeight = function () {
-            var containerHeight = $(document).height() -
-                $("#breadcrumb-panel").height() -
-                $("#title-panel").height() -
-                $("#header-main-section").height() -
-                $("#outerFooter").height() -
-                $(".actionListContainer .control").height() -
-                30;
-            return { height: containerHeight };
         };
         PostActionListPageCtrl.prototype.handleNotification = function (noti) {
             var _this = this;
