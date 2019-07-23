@@ -541,3 +541,7 @@ ol.selected-group > li > button {
   }
 }
 
+.xe-container input:checked ~ .xe-checkmark {
+  background-color: #026BC8 !important;
+  border: 1px solid #B2B3B7;
+}
