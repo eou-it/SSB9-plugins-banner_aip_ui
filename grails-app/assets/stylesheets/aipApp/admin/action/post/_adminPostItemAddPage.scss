@@ -41,10 +41,13 @@
   #timezoneid .ui-select-dropdown .select2-search input {
     width:270px !important;
   }
-
-  #timezoneid .ui-select-dropdown{
-    width:280px !important;
+  #timezoneid .ui-select-dropdown {
+    width:282px !important;
   }
+  #timezoneidrecur .ui-select-dropdown {
+    width: 17.60em !important;
+  }
+
   .calendar-img {
     background: url(../assets/datepicker_icon.png) no-repeat scroll !important;
   }
@@ -253,9 +256,10 @@
   .xe-timepicker-popup.dropdown-menu {
     width: auto;
     right: 0;
-    margin-right: 1em;
     height: 110px;
     overflow-y: scroll;
+    min-width: 162px;
+    margin: 2px 0 0;
   }
 
   .xe-timepicker-popup.dropdown-menu li {

@@ -327,7 +327,7 @@ var AIP;
         ListItemPageCtrl.prototype.informModal = function (show) {
             if (show) {
                 this.modalInstance = this.$uibModal.open({
-                    templateUrl: this.APP_ROOT + "listItem/itemInform/itemInformTemplate.html",
+                    templateUrl: "../assets/aipApp/listItem/itemInform/itemInformTemplate.html",
                     controller: "ItemInformCtrl",
                     controllerAs: "$ctrl",
                     size: "lg",
