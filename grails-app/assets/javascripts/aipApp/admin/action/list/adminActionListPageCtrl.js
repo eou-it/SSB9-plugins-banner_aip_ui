@@ -119,9 +119,9 @@ var AIP;
                     ariaLabel: this.$filter("i18n_aip")("aip.list.grid.actionStatus"),
                     width: "100px",
                     options: {
-                        sortable: true,
+                        sortable: false,
                         visible: true,
-                        columnShowHide: true
+                        columnShowHide: false
                     }
                 }];
         };

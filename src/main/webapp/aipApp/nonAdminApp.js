@@ -220,10 +220,10 @@ angular.module("BannerOnAngular")
     .constant("APP_ABS_PATH", aipAppAbsPath)
     .constant("params", params)
 
-    .config(['$provide', 'APP_ROOT', 'params', function ($provide, APP_ROOT, params) {
+    .config(['$provide', 'APP_ROOT', 'params', function ($provide, APP_ROOT, params ) {
         $provide.decorator("pagebuilderPageDirective", function ($delegate) {
             var directive = $delegate[0];
-            directive.templateUrl = APP_ROOT + "common/directives/pagebuilder/template/aip-pagebuilder.html";
+            directive.templateUrl = APP_ROOT+"assets/aipApp/common/directives/pagebuilder/template/aip-pagebuilder.html";
             return $delegate;
         });
         params.saved = false;
