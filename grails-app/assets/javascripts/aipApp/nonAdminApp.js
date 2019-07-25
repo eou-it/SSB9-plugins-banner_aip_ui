@@ -57,7 +57,7 @@ var xhrHttpInterceptor = function () {
 
     .constant('APP_PATH',"/BannerGeneralSsb/ssb/")
 
-    .constant("APP_ABS_PATH", aipAppAbsPath)
+    .constant("APP_ABS_PATH", rootWebApp)
 
     //constants for page information
     .constant("PAGES", {
