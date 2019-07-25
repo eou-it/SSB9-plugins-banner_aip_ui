@@ -74,3 +74,18 @@ Copyright 2019 Ellucian Company L.P. and its affiliates.
     border-right: none !important;
 }
 
+.actionItemAddContainer .ui-select-dropdown .select2-search input {
+    width: 11em !important;
+    float: right;
+}
+.actionItemAddContainer .xe-timepicker-popup.dropdown-menu {
+    right:5px !important;
+}
+
+.actionItemAddContainer #timezoneidrecur .ui-select-dropdown {
+    width: 17.55em !important;
+}
+
+#recurFrequency.ui-select-container .ui-select-dropdown {
+    width: 10.33em !important;
+}
