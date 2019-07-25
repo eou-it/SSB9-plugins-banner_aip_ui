@@ -7,9 +7,9 @@
 var AIP;
 (function (AIP) {
     var ListItemPageCtrl = /** @class */ (function () {
-        function ListItemPageCtrl($scope, $state, ItemListViewService, AIPUserService, SpinnerService, $timeout, $q, $uibModal, APP_ROOT, $sce, $compile, $filter) {
+        function ListItemPageCtrl($scope, $state, ItemListViewService, AIPUserService, SpinnerService, $timeout, $q, $uibModal, APP_PATH, $sce, $compile, $filter) {
             var _this = this;
-            this.$inject = ["$scope", "$state", "ItemListViewService", "AIPUserService", "SpinnerService", "$timeout", "$q", "$uibModal", "APP_ROOT", "$sce", "$compile", "$filter"];
+            this.$inject = ["$scope", "$state", "ItemListViewService", "AIPUserService", "SpinnerService", "$timeout", "$q", "$uibModal", "APP_PATH", "$sce", "$compile", "$filter"];
             this.trustHTML = function (txtString) {
                 var sanitized = txtString ? this.$sce.trustAsHtml(txtString) : "";
                 return sanitized;
@@ -22,7 +22,7 @@ var AIP;
             this.$timeout = $timeout;
             this.$q = $q;
             this.$uibModal = $uibModal;
-            this.APP_ROOT = APP_ROOT;
+            this.APP_PATH = APP_PATH;
             this.$sce = $sce;
             this.modalInstance;
             this.isFromGateKeeper = false;
@@ -286,7 +286,7 @@ var AIP;
             var isElementPresent = document.getElementById(paperClipId);
             if (isElementPresent === null && responseElement.length > 0) {
                 var paperClipElement = angular.element("<input id=" + paperClipId + " type='image' " +
-                    "src='../assets/attach_icon_disabled.svg' title = 'Click to add documents' " +
+                    "src=" + this.APP_PATH + "'assets/attach_icon_disabled.svg' title = 'Click to add documents' " +
                     "class=' pb-detail pb-item pb-paperclip'/>");
                 this.setMaxAttachmentParam(allowedAttachments, paperClipId, responseId);
                 responseElement.after(paperClipElement);
@@ -300,7 +300,7 @@ var AIP;
                         //make sure paper clip is enabled
                         window.params.responseId = $(currentId)[0].value;
                         window.params.maxAttachments = $("#maxAttachment" + paperClipId + $(currentId)[0].value).val();
-                        $("#" + selectedPaperClip)[0].setAttribute("src", "../assets/attach_icon_default.svg");
+                        $("#" + selectedPaperClip)[0].setAttribute("src", this.APP_PATH + "assets/attach_icon_default.svg");
                         // Create the event.
                         var event = document.createEvent('Event');
                         // Define that the event name is 'responseChanged'.

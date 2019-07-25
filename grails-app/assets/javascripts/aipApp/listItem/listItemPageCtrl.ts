@@ -45,7 +45,7 @@ module AIP {
 
     export class ListItemPageCtrl implements IListItemPageCtrl {
 
-        $inject = ["$scope", "$state", "ItemListViewService", "AIPUserService", "SpinnerService", "$timeout", "$q", "$uibModal", "APP_ROOT", "$sce", "$compile", "$filter"];
+        $inject = ["$scope", "$state", "ItemListViewService", "AIPUserService", "SpinnerService", "$timeout", "$q", "$uibModal", "APP_PATH", "$sce", "$compile", "$filter"];
         itemListViewService: AIP.ItemListViewService;
         userService: AIP.UserService;
         actionItems: IUserItem;
@@ -58,14 +58,14 @@ module AIP {
         $timeout;
         $state;
         $q;
-        APP_ROOT;
+        APP_PATH;
         modalInstance;
         isFromGateKeeper;
         $compile;
         $filter;
         showModal;
 
-        constructor($scope, $state, ItemListViewService, AIPUserService, SpinnerService, $timeout, $q, $uibModal, APP_ROOT, $sce, $compile, $filter) {
+        constructor($scope, $state, ItemListViewService, AIPUserService, SpinnerService, $timeout, $q, $uibModal, APP_PATH, $sce, $compile, $filter) {
             $scope.vm = this;
             this.$state = $state;
             this.itemListViewService = ItemListViewService;
@@ -74,7 +74,7 @@ module AIP {
             this.$timeout = $timeout;
             this.$q = $q;
             this.$uibModal = $uibModal;
-            this.APP_ROOT = APP_ROOT;
+            this.APP_PATH = APP_PATH;
             this.$sce = $sce;
             this.modalInstance;
             this.isFromGateKeeper = false;
@@ -369,7 +369,7 @@ module AIP {
             var isElementPresent = document.getElementById(paperClipId);
             if (isElementPresent === null && responseElement.length > 0) {
                 var paperClipElement = angular.element("<input id=" + paperClipId + " type='image' " +
-                    "src='../assets/attach_icon_disabled.svg' title = 'Click to add documents' " +
+                    "src="+this.APP_PATH+"'assets/attach_icon_disabled.svg' title = 'Click to add documents' " +
                     "class=' pb-detail pb-item pb-paperclip'/>");
                 this.setMaxAttachmentParam(allowedAttachments, paperClipId, responseId);
                 responseElement.after(paperClipElement);
@@ -383,7 +383,7 @@ module AIP {
                         //make sure paper clip is enabled
                         window.params.responseId = $(currentId)[0].value;
                         window.params.maxAttachments = $("#maxAttachment" + paperClipId + $(currentId)[0].value).val();
-                        $("#" + selectedPaperClip)[0].setAttribute("src", "../assets/attach_icon_default.svg");
+                        $("#" + selectedPaperClip)[0].setAttribute("src", this.APP_PATH+"assets/attach_icon_default.svg");
                         // Create the event.
                         var event = document.createEvent('Event');
                         // Define that the event name is 'responseChanged'.
