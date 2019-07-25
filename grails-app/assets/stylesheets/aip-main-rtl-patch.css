@@ -39,8 +39,8 @@ Copyright 2019 Ellucian Company L.P. and its affiliates.
 .pagination-container .pagination-controls button.first, .pagination-container .pagination-controls button.previous,
 .pagination-container .pagination-controls button.next, .pagination-container .pagination-controls button.last,
 #menu .menu-icon, #menu .menu-back-icon {
-    -moz-transform: scaleX(-1) !important;
-    -o-transform: scaleX(-1) !important;
+  /*  -moz-transform: scaleX(-1) !important;*/
+   /* -o-transform: scaleX(-1) !important; */
    /* -webkit-transform: scaleX(-1) !important; */
    /* transform: scaleX(-1) !important; */
     filter: FlipH !important;
