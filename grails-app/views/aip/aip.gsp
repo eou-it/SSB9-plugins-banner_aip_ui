@@ -35,7 +35,8 @@
                 excludedRegex = [
                     /\${applicationContextRoot}\/login\/auth?/,
                     /\${applicationContextRoot}\//,
-                    /\/seamless/
+                    /\/seamless/,
+                    /\/registration/
                 ],
                 isExcluded;
 
