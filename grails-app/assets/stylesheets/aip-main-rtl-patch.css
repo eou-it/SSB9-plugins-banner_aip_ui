@@ -89,3 +89,11 @@ Copyright 2019 Ellucian Company L.P. and its affiliates.
 #recurFrequency.ui-select-container .ui-select-dropdown {
     width: 10.33em !important;
 }
+
+.actionItemAddContainer #timezoneidrecur .ui-select-dropdown {
+    width: 18.5em !important;
+}
+
+.actionItemAddContainer #timezoneidrecur .ui-select-dropdown .select2-search input {
+    width: 12em !important;
+}
