@@ -84,6 +84,14 @@ var AIP;
                     _this.actionItems = actionItems;
                     angular.forEach(_this.actionItems.groups, function (item) {
                         item.dscParams = _this.getParams(item.title, userInfo);
+                        if (item.items[0].currentComment != null) {
+                            var sanitizedComment = angular.element('<div></div>').html(item.items[0].currentComment).text();
+                            item.items[0].currentComment = sanitizedComment;
+                        }
+                        if (item.items[0].currentContact != null) {
+                            var sanitizedContact = angular.element('<div></div>').html(item.items[0].currentContact).text();
+                            item.items[0].currentContact = sanitizedContact;
+                        }
                     });
                 }).finally(function () {
                     _this.spinnerService.showSpinner(false);
@@ -93,6 +101,7 @@ var AIP;
                             .then(function (response) {
                             _this.selectedData = response;
                             _this.selectedData.info.content = _this.trustHTML(response.info.content);
+                            console.log(_this.selectedData);
                         });
                     }
                 });

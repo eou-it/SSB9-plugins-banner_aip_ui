@@ -242,9 +242,11 @@ var AIP;
                 _this.responseId = _this.actionItemDetails.responseId;
                 _this.selectedReviewState = _this.actionItemDetails.reviewStateObject;
                 if (_this.actionItemDetails.reviewAuditObject) {
-                    _this.selectedContact.name = (_this.actionItemDetails.reviewAuditObject.contactInfo === "undefined") ? _this.selectNone : _this.actionItemDetails.reviewAuditObject.contactInfo;
+                    var selectedContactName = (_this.actionItemDetails.reviewAuditObject.contactInfo === "undefined") ? _this.selectNone : _this.actionItemDetails.reviewAuditObject.contactInfo;
+                    _this.selectedContact.name = angular.element('<div></div>').html(selectedContactName).text();
                     _this.externalCommentInd = _this.actionItemDetails.reviewAuditObject.externalCommentInd;
-                    _this.reviewComments = (_this.actionItemDetails.reviewAuditObject.reviewComments) ? _this.actionItemDetails.reviewAuditObject.reviewComments : "";
+                    var reviewComments = (_this.actionItemDetails.reviewAuditObject.reviewComments) ? _this.actionItemDetails.reviewAuditObject.reviewComments : "";
+                    _this.reviewComments = angular.element('<div></div>').html(reviewComments).text();
                 }
             }), this.aipReviewService.getContactInformation()
                 .then(function (response) {

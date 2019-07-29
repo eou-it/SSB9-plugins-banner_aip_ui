@@ -140,8 +140,21 @@ module AIP {
                 this.userName = userData.fullName;
                 this.itemListViewService.getActionItems(userInfo).then((actionItems: IUserItem) => {
                     this.actionItems = actionItems;
+                    
                     angular.forEach(this.actionItems.groups, (item) => {
                         item.dscParams = this.getParams(item.title, userInfo);
+
+                        if (item.items[0].currentComment!=null)
+                        {
+                            var sanitizedComment=angular.element('<div></div>').html(item.items[0].currentComment).text();
+                            item.items[0].currentComment=sanitizedComment
+                        }
+                        if (item.items[0].currentContact !=null)
+                        {
+                            var sanitizedContact=angular.element('<div></div>').html(item.items[0].currentContact).text();
+                            item.items[0].currentContact=sanitizedContact
+                        }
+
                     });
                 }).finally(() => {
                     this.spinnerService.showSpinner(false);
@@ -153,6 +166,7 @@ module AIP {
                             .then((response: ISelectedData) => {
                                 this.selectedData = response;
                                 this.selectedData.info.content = this.trustHTML(response.info.content);
+                                console.log( this.selectedData)
                             });
                     }
                 });
