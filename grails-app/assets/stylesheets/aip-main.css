@@ -1424,6 +1424,10 @@ ol.selected-group > li > button {
     width: 18.3em !important; }
   .actionItemAddContainer #timezoneidrecur .ui-select-dropdown .select2-search input {
     width: 12.2em !important; }
+  .actionItemAddContainer #postActionItemGroup .ui-select-dropdown .select2-search input {
+    width: 12.2em !important; }
+  .actionItemAddContainer #postActionItemPopulation .ui-select-dropdown .select2-search input {
+    width: 12.2em !important; }
   .actionItemAddContainer .calendar-img {
     background: url(../assets/datepicker_icon.png) no-repeat scroll !important; }
   .actionItemAddContainer input.hasMultiCalendarPicker + span {
