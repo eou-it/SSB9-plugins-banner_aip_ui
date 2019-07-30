@@ -101,7 +101,6 @@ var AIP;
                             .then(function (response) {
                             _this.selectedData = response;
                             _this.selectedData.info.content = _this.trustHTML(response.info.content);
-                            console.log(_this.selectedData);
                         });
                     }
                 });
@@ -294,9 +293,18 @@ var AIP;
         ListItemPageCtrl.prototype.documentUploader = function (userActionItemId, paperClipId, responseElement, allowedAttachments, responseId, isResponseLocked) {
             var isElementPresent = document.getElementById(paperClipId);
             if (isElementPresent === null && responseElement.length > 0) {
-                var paperClipElement = angular.element("<input id=" + paperClipId + " type='image' " +
-                    "src=" + this.APP_ABS_PATH + "'assets/attach_icon_disabled.svg' title = 'Click to add documents' " +
-                    "class=' pb-detail pb-item pb-paperclip'/>");
+                var browserType = window.navigator.userAgent;
+                //IE 10 or IE11
+                if ((browserType.indexOf('MSIE') > 0) || browserType.indexOf('Trident') > 0 || browserType.indexOf('Edge') > 0) {
+                    var paperClipElement = angular.element("<input id=" + paperClipId + " type='image' " +
+                        "src='../../assets/attach_icon_disabled.svg' title = 'Click to add documents' " +
+                        "class=' pb-detail pb-item pb-paperclip'/>");
+                }
+                else {
+                    var paperClipElement = angular.element("<input id=" + paperClipId + " type='image' " +
+                        "src='../assets/attach_icon_disabled.svg' title = 'Click to add documents' " +
+                        "class=' pb-detail pb-item pb-paperclip'/>");
+                }
                 this.setMaxAttachmentParam(allowedAttachments, paperClipId, responseId);
                 responseElement.after(paperClipElement);
                 window.params.userActionItemId = userActionItemId;
@@ -309,7 +317,14 @@ var AIP;
                         //make sure paper clip is enabled
                         window.params.responseId = $(currentId)[0].value;
                         window.params.maxAttachments = $("#maxAttachment" + paperClipId + $(currentId)[0].value).val();
-                        $("#" + selectedPaperClip)[0].setAttribute("src", this.APP_ABS_PATH + "assets/attach_icon_default.svg");
+                        var browserType = window.navigator.userAgent;
+                        //IE 10 or IE 11
+                        if ((browserType.indexOf('MSIE') > 0) || browserType.indexOf('Trident') > 0 || browserType.indexOf('Edge') > 0) {
+                            $("#" + selectedPaperClip)[0].setAttribute("src", "../../assets/attach_icon_default.svg");
+                        }
+                        else {
+                            $("#" + selectedPaperClip)[0].setAttribute("src", "../assets/attach_icon_default.svg");
+                        }
                         // Create the event.
                         var event = document.createEvent('Event');
                         // Define that the event name is 'responseChanged'.
