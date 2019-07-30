@@ -183,9 +183,12 @@ module AIP {
                         this.responseId = this.actionItemDetails.responseId;
                         this.selectedReviewState = this.actionItemDetails.reviewStateObject;
                         if(this.actionItemDetails.reviewAuditObject){
-                            this.selectedContact.name = (this.actionItemDetails.reviewAuditObject.contactInfo === "undefined") ? this.selectNone : this.actionItemDetails.reviewAuditObject.contactInfo;
+                            var selectedContactName = (this.actionItemDetails.reviewAuditObject.contactInfo === "undefined") ? this.selectNone : this.actionItemDetails.reviewAuditObject.contactInfo;
+                            this.selectedContact.name=angular.element('<div></div>').html(selectedContactName).text();
                             this.externalCommentInd = this.actionItemDetails.reviewAuditObject.externalCommentInd;
-                            this.reviewComments = (this.actionItemDetails.reviewAuditObject.reviewComments) ? this.actionItemDetails.reviewAuditObject.reviewComments : "";
+                            var reviewComments = (this.actionItemDetails.reviewAuditObject.reviewComments) ? this.actionItemDetails.reviewAuditObject.reviewComments : "";
+                            this.reviewComments=angular.element('<div></div>').html(reviewComments).text();
+
                         }
                     }),
                 this.aipReviewService.getContactInformation()

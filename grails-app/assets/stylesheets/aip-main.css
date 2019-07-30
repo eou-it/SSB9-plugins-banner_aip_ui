@@ -1421,7 +1421,13 @@ ol.selected-group > li > button {
   .actionItemAddContainer #timezoneid .ui-select-dropdown {
     width: 282px !important; }
   .actionItemAddContainer #timezoneidrecur .ui-select-dropdown {
-    width: 17.60em !important; }
+    width: 18.3em !important; }
+  .actionItemAddContainer #timezoneidrecur .ui-select-dropdown .select2-search input {
+    width: 12.2em !important; }
+  .actionItemAddContainer #postActionItemGroup .ui-select-dropdown .select2-search input {
+    width: 12.2em !important; }
+  .actionItemAddContainer #postActionItemPopulation .ui-select-dropdown .select2-search input {
+    width: 12.2em !important; }
   .actionItemAddContainer .calendar-img {
     background: url(../assets/datepicker_icon.png) no-repeat scroll !important; }
   .actionItemAddContainer input.hasMultiCalendarPicker + span {
@@ -1622,10 +1628,8 @@ ol.selected-group > li > button {
     font-size: 16px;
     padding-top: 3px;
     width: auto !important; }
-  .actionItemAddContainer .recurTimeZone {
-    width: 100%; }
-  .actionItemAddContainer .ui-select-dropdown .select2-search input {
-    width: 12em !important; }
+  .actionItemAddContainer .recurTimeZone.ui-select-container .ui-select-dropdown {
+    width: 12.6em !important; }
 
 #recurFrequency.ui-select-container .ui-select-dropdown {
   width: 10em !important; }

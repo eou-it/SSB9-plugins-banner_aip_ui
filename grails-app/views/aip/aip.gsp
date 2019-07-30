@@ -36,7 +36,8 @@
                     /\${applicationContextRoot}\/login\/auth?/,
                     /\${applicationContextRoot}\//,
                     /\/seamless/,
-                    /\/registration/
+                    /\/registration/,
+                    /\/login\/auth?/
                 ],
                 isExcluded;
 
