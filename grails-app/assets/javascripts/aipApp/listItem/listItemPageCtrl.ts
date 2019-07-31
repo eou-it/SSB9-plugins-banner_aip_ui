@@ -384,7 +384,7 @@ module AIP {
             if (isElementPresent === null && responseElement.length > 0) {
                 var browserType = window.navigator.userAgent;
                 //IE 10 or IE11
-                if ((browserType.indexOf('MSIE') > 0) || browserType.indexOf('Trident') > 0 || browserType.indexOf('Edge') > 0 ) {
+                if ((browserType.indexOf('MSIE') > 0) || browserType.indexOf('Trident') > 0 ) {
                     var paperClipElement = angular.element("<input id=" + paperClipId + " type='image' " +
                         "src='../../assets/attach_icon_disabled.svg' title = 'Click to add documents' " +
                         "class=' pb-detail pb-item pb-paperclip'/>");
@@ -409,7 +409,7 @@ module AIP {
                         window.params.maxAttachments = $("#maxAttachment" + paperClipId + $(currentId)[0].value).val();
                         var browserType = window.navigator.userAgent;
                         //IE 10 or IE 11
-                        if ((browserType.indexOf('MSIE') > 0) || browserType.indexOf('Trident') > 0 || browserType.indexOf('Edge') > 0 ) {
+                        if ((browserType.indexOf('MSIE') > 0) || browserType.indexOf('Trident') > 0 ) {
                             $("#" + selectedPaperClip)[0].setAttribute("src", "../../assets/attach_icon_default.svg");
                         }
                         else{
