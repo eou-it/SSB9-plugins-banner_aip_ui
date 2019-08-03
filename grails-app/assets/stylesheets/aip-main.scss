@@ -61,6 +61,7 @@ Copyright 2018-2019 Ellucian Company L.P. and its affiliates.
     .viewContainer {
       padding: 0 8px;
       overflow: auto;
+      height: 100%;
     }
     .jobstateDefault {
       min-width: 10%;
@@ -78,6 +79,7 @@ Copyright 2018-2019 Ellucian Company L.P. and its affiliates.
     .viewContainer {
       padding: 0 8px;
       overflow: hidden;
+      height: auto;
     }
     .actionItemAddContainer .enddate {
       padding-left: 0px
