@@ -51,6 +51,7 @@ module AIP {
         commonPaginationConfig;
         gridEnabled: boolean;
         searchEnabled: boolean;
+        gridHeight:number;
 
         constructor($scope, $state, AIPReviewService, AIPUserService, SpinnerService, $timeout, $q, $uibModal, APP_ROOT, $sce, $filter, PAGINATIONCONFIG) {
             $scope.vm = this;
@@ -74,6 +75,17 @@ module AIP {
         }
 
         init() {
+            this.gridHeight =$("#header-main-section").height()-
+                $("#breadcrumbHeader").height()-
+                $("#title-panel").height()-
+                $(".panel-heading").height()-
+                $("#panel-body").height()-
+                $("table.data-table.datatable_spacing > caption").height()-
+                $("table.data-table").height()
+
+
+
+
             this.searchEnabled = true;
             this.gridEnabled = false;
             this.spinnerService.showSpinner(true);
@@ -324,6 +336,19 @@ module AIP {
         review(userActionItemID: string) {
             console.log("parameter passed", userActionItemID)
             this.$state.go("review-action-item", {userActionItemID: userActionItemID});
+        }
+
+        getHeight() {
+            var containerHeight = $(document).height()-
+                $("#header-main-section").height()-
+                $("#breadcrumbHeader").height()-
+                $("#title-panel").height()-
+                $(".panel-heading").height()-
+                $("#panel-body").height()-
+                $("table.data-table.datatable_spacing > caption").height()-
+                $("table.data-table").height();
+
+            return {height: containerHeight};
         }
 
     }

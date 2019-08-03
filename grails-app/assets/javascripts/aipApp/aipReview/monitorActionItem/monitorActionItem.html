@@ -2,7 +2,7 @@
 Copyright 2019 Ellucian Company L.P. and its affiliates.
 *******************************************************************************-->
 <div class="monitor-action-item-container" id="monitorActionItemPage">
-    <div>
+    <div id="searchPanel">
         <uib-accordion close-others="oneAtATime">
             <uib-accordion-group class="monitor-action-item-accordion-container" role="tablist" is-open="true">
                 <uib-accordion-heading id="heading" role="tab"
@@ -115,7 +115,7 @@ Copyright 2019 Ellucian Company L.P. and its affiliates.
         </uib-accordion>
     </div>
     <div id="monitorActionItemGrid" class="actionListContainer" ng-if="vm.gridEnabled">
-        <div class="actionListTable">
+        <div class="actionListTable" ng-style="{height:auto}">
             <xe-table-grid
                     caption="{{'js.aip.review.monitor.action.item.grid.caption'|i18n_aip}}"
                     table-id="dataTableAdminActionList"
@@ -132,10 +132,11 @@ Copyright 2019 Ellucian Company L.P. and its affiliates.
                     search-config="vm.searchConfig"
                     pagination-config="vm.paginationConfig"
                     mobile-layout="vm.mobileConfig"
-                    refresh-grid="refreshGrid"
+                    height="{{vm.gridHeight}}"
                     draggable-column-names="vm.draggableColumnNames"
-                    continuous-scrolling="vm.mobileSize"
-                    continuous-scroll-parent="monitorActionItemGrid">
+                    continuous-scrolling="false"
+
+            >
 
                 <xe-cell-markup column-name="reviewIndicator"
                                 aria-label="{{'aip.review.monitor.action.item.press.enter.to.select.link'|i18n_aip}}">
