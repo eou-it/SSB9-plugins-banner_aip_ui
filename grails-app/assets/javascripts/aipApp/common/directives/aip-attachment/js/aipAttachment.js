@@ -201,6 +201,7 @@ var AIPUI;
                     selectedResponse.click();
                     //To keep the checkbox checked even after click
                     selectedResponse.prop("checked", true);
+                    $("#pbid-ActionItemContentDetail-save-button").removeAttr("disabled");
                 };
                 $scope.previewDocument = function () {
                     SpinnerService.showSpinner(true);
