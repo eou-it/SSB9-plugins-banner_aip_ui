@@ -14,6 +14,7 @@ module AIP {
     }
 
     interface IPostActionListPageCtrl {
+        getHeight(): { height: number };
 
         fetchTableData(query: IPostActionItemListQuery): ng.IPromise<IPostActionItemFetchResponse>;
 
@@ -40,7 +41,7 @@ module AIP {
         selectedRecord;
         localeTime;
         timezones;
-
+        gridHeight: number ;
 
 
         constructor($scope: IActionListPageCtrlScope, $state, $window, $filter, $q, ENDPOINT, PAGINATIONCONFIG,
@@ -61,7 +62,13 @@ module AIP {
         }
 
         init() {
-
+            this.gridHeight = $(document).height() -
+                $("#breadcrumb-panel").height() -
+                $("#title-panel").height() -
+                $("#header-main-section").height() -
+                $("#outerFooter").height() -
+                $(".actionListContainer .control").height() -
+                30;
             this.gridData = {};
             var allPromises = [];
             this.draggableColumnNames = [];
@@ -246,7 +253,16 @@ module AIP {
             );
         }
 
-
+        getHeight() {
+            var containerHeight = $(document).height() -
+                $("#breadcrumb-panel").height() -
+                $("#title-panel").height() -
+                $("#header-main-section").height() -
+                $("#outerFooter").height() -
+                $(".actionListContainer .control").height() -
+                30;
+            return {height: containerHeight};
+        }
 
         handleNotification(noti) {
             if(noti.notiType === "saveSuccess") {

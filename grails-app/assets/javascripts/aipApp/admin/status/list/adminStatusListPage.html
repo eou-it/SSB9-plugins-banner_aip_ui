@@ -18,7 +18,7 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
             -->
         </div>
     </div>
-    <div class="statusListTable">
+    <div class="statusListTable" ng-style="vm.getHeight()">
 
         <xe-table-grid
                 caption="{{'aip.admin.status.rules'|i18n_aip}}"
@@ -37,6 +37,7 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
                 pagination-config="vm.paginationConfig"
                 mobile-layout="vm.mobileConfig"
                 refresh-grid="refreshGrid"
+
                 draggable-column-names="vm.draggableColumnNames"
                 continuous-scrolling="false">
                 <xe-cell-markup column-name="actionItemStatusBlockedProcess" aria-label="{{'aip.common.text.yes'|i18n_aip}}">

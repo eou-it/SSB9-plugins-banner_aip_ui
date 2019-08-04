@@ -51,6 +51,13 @@ var AIP;
         }
         MonitorActionItemCtrl.prototype.init = function () {
             var _this = this;
+            this.gridHeight = $("#header-main-section").height() -
+                $("#breadcrumbHeader").height() -
+                $("#title-panel").height() -
+                $(".panel-heading").height() -
+                $("#panel-body").height() -
+                $("table.data-table.datatable_spacing > caption").height() -
+                $("table.data-table").height();
             this.searchEnabled = true;
             this.gridEnabled = false;
             this.spinnerService.showSpinner(true);
@@ -252,6 +259,18 @@ var AIP;
         MonitorActionItemCtrl.prototype.review = function (userActionItemID) {
             console.log("parameter passed", userActionItemID);
             this.$state.go("review-action-item", { userActionItemID: userActionItemID });
+        };
+        MonitorActionItemCtrl.prototype.getHeight = function () {
+            var containerHeight = $(document).height() -
+                $("#header-main-section").height() -
+                $("#breadcrumbHeader").height() -
+                $("#title-panel").height() -
+                $(".panel-heading").height() -
+                $("#panel-body").height() -
+                $("table.data-table.datatable_spacing > caption").height() -
+                $("table.data-table").height();
+
+            return { height: containerHeight };
         };
         return MonitorActionItemCtrl;
     }());

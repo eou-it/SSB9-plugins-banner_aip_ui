@@ -26,7 +26,7 @@ module AIP {
         adminGroupService;
         selectedRecord;
         $scope;
-
+        gridHeight:number;
 
         constructor($scope, $state, $window, $filter, $q, ENDPOINT, PAGINATIONCONFIG,
             AdminGroupService) {
@@ -38,7 +38,13 @@ module AIP {
             this.endPoint = ENDPOINT;   //ENDPOINT.admin.actionList
             this.paginationConfig = PAGINATIONCONFIG;
             this.adminGroupService = AdminGroupService;
-
+            this.gridHeight = $(document).height() -
+                $("#breadcrumb-panel").height() -
+                $("#title-panel").height() -
+                $("#header-main-section").height() -
+                $("#outerFooter").height() -
+                $(".groupListContainer .control").height() -
+                30;
             this.init();
             angular.element($window).bind('resize', function() {
                 $scope.$apply();
@@ -161,6 +167,17 @@ module AIP {
 
         open(id:number) {
             this.$state.go("admin-group-open", { groupId:id});
+        }
+
+        getHeight() {
+            var containerHeight = $(document).height() -
+                $("#breadcrumb-panel").height() -
+                $("#title-panel").height() -
+                $("#header-main-section").height() -
+                $("#outerFooter").height() -
+                $(".groupListContainer .control").height() -
+                30;
+            return {height: containerHeight};
         }
 
         fetchData(query) {
