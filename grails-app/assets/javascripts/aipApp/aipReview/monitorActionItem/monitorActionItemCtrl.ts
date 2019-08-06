@@ -75,13 +75,14 @@ module AIP {
         }
 
         init() {
-            this.gridHeight =$("#header-main-section").height()-
-                $("#breadcrumbHeader").height()-
-                $("#title-panel").height()-
+            this.gridHeight = $(document).height() -
+                $("#breadcrumbHeader").height() -
+                $("#title-panel").height() -
                 $(".panel-heading").height()-
                 $("#panel-body").height()-
-                $("table.data-table.datatable_spacing > caption").height()-
-                $("table.data-table").height()
+                $("#header-main-section").height() -
+                $("#outerFooter").height() -
+                30;
 
 
 
@@ -339,15 +340,14 @@ module AIP {
         }
 
         getHeight() {
-            var containerHeight = $(document).height()-
-                $("#header-main-section").height()-
-                $("#breadcrumbHeader").height()-
-                $("#title-panel").height()-
-                $(".panel-heading").height()-
-                $("#panel-body").height()-
-                $("table.data-table.datatable_spacing > caption").height()-
-                $("table.data-table").height();
-
+             var containerHeight = $(document).height() -
+                 $("#breadcrumbHeader").height() -
+                 $("#title-panel").height() -
+                 $(".panel-heading").height()-
+                 $("#panel-body").height()-
+                 $("#header-main-section").height() -
+                 $("#outerFooter").height() -
+                 30;
             return {height: containerHeight};
         }
 
