@@ -115,7 +115,7 @@ Copyright 2019 Ellucian Company L.P. and its affiliates.
         </uib-accordion>
     </div>
     <div id="monitorActionItemGrid" class="actionListContainer" ng-if="vm.gridEnabled">
-        <div class="actionListTable" ng-style="{height:auto}">
+        <div class="actionListTable" ng-style="vm.getHeight()">
             <xe-table-grid
                     caption="{{'js.aip.review.monitor.action.item.grid.caption'|i18n_aip}}"
                     table-id="dataTableAdminActionList"
