@@ -328,8 +328,6 @@ aip-list .enddate {
   line-height: normal;
   padding: 0.75em 0.75em;
   margin-left: 9px; }
-#pbid-PersonalInformationAndEmergencyContacts input:read-only, #pbid-CurrentProgrammeofStudyinformation input:read-only, #pbid-ConfirmEnrollment input:read-only {
-  background-color: #ebebe4; }
 #pbid-PersonalInformationAndEmergencyContacts #pbid-Name-0, #pbid-CurrentProgrammeofStudyinformation #pbid-Name-0, #pbid-ConfirmEnrollment #pbid-Name-0 {
   width: 600px; }
 
