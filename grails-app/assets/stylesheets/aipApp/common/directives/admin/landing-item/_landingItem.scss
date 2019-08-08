@@ -2,6 +2,53 @@
   padding: 16px;
 }
 
+@media (max-width: 574.98px) {
+  .fix-margin {
+    margin-left: -20px;
+    margin-right: 0px;
+  }
+}
+
+// Extra small devices (portrait phones, less than 576px)
+@media (min-width: 375px) and (max-width: 575.98px) {
+  .fix-margin {
+    margin-left: -10px;
+    margin-right: 0px;
+  }
+}
+
+// Small devices (landscape phones, 576px and up)
+@media (min-width: 576px) and (max-width: 767.98px) {
+  .fix-margin {
+    margin-left: -10px;
+    margin-right: 0px;
+  }
+}
+
+// Medium devices (tablets, 768px and up)
+@media (min-width: 768px) and (max-width: 991.98px) {
+  .fix-margin {
+    margin-left: -15px;
+    margin-right: 0px;
+  }
+}
+
+// Large devices (desktops, 992px and up)
+@media (min-width: 992px) and (max-width: 1199.98px) {
+  .fix-margin {
+    margin-left: -10px;
+    margin-right: 0px;
+  }
+}
+
+// Extra large devices (large desktops, 1200px and up)
+@media (min-width: 1200px) {
+  .fix-margin {
+    margin-left: 0px;
+    margin-right: 0px;
+  }
+}
+
 .landingItem-container {
   background-color: #ffffff;
   font-size: 1.5em;
