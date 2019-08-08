@@ -31,6 +31,8 @@ module AIP {
         APP_FOLDER_PATH;
         modalInstance;
         statusModel;
+        gridHeight:number;
+
 
         constructor($scope, $state, $window, $filter, $q, $http, $uibModal, ENDPOINT, PAGINATIONCONFIG,
                     AdminActionStatusService,APP_FOLDER_PATH) {
@@ -59,6 +61,13 @@ module AIP {
         }
 
         init() {
+            this.gridHeight = $(document).height() -
+                $("#breadcrumb-panel").height() -
+                $("#title-panel").height() -
+                $("#header-main-section").height() -
+                $("#outerFooter").height() -
+                $(".groupListContainer .control").height() -
+                30;
             this.gridData = {};
             this.draggableColumnNames = [];
             this.mobileConfig = {
@@ -236,6 +245,18 @@ module AIP {
             });
             notifications.addNotification(n);
 
+        }
+
+
+        getHeight() {
+            var containerHeight = $(document).height() -
+                $("#breadcrumb-panel").height() -
+                $("#title-panel").height() -
+                $("#header-main-section").height() -
+                $("#outerFooter").height() -
+                $(".groupListContainer .control").height() -
+                30;
+            return {height: containerHeight};
         }
 
         fetchData(query) {

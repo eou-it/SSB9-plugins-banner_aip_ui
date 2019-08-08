@@ -213,9 +213,8 @@ module AIPUI {
                 //Trigger change in response on file upload or delete.
                 var triggerChangeInResponse = function () {
                     let selectedResponse = $("input[id^='pbid-ActionItemStatusAgree-radio']:checked");
-                    selectedResponse.click();
-                    //To keep the checkbox checked even after click
-                    selectedResponse.prop("checked", true);
+                    $("input[id^='pbid-ActionItemStatusAgree-radio']").click()
+                    selectedResponse.click()
                 }
 
                 $scope.previewDocument = function () {

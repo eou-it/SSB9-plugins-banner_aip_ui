@@ -61,6 +61,7 @@ Copyright 2018-2019 Ellucian Company L.P. and its affiliates.
     .viewContainer {
       padding: 0 8px;
       overflow: auto;
+      height: 100%;
     }
     .jobstateDefault {
       min-width: 10%;
@@ -77,7 +78,8 @@ Copyright 2018-2019 Ellucian Company L.P. and its affiliates.
     top: 105px !important;
     .viewContainer {
       padding: 0 8px;
-      overflow: hidden;
+      overflow: auto;
+      height: auto;
     }
     .actionItemAddContainer .enddate {
       padding-left: 0px
@@ -468,7 +470,6 @@ ol.selected-group > li > button {
 .ui-select-choices .select2-result-label{
   font-size: inherit;
   font-family: OpenSans-semibold !important;
-  color: darkSlateGray !important;
   word-wrap: break-word !important;
 }
 .ui-select-container {

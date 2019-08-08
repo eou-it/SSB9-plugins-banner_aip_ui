@@ -1907,7 +1907,8 @@ ol.selected-group > li > button {
     top: 105px !important; }
     #content .viewContainer {
       padding: 0 8px;
-      overflow: auto; }
+      overflow: auto;
+      height: 100%; }
     #content .jobstateDefault {
       min-width: 10%; }
     #content .hidden-sm-down {
@@ -1917,7 +1918,8 @@ ol.selected-group > li > button {
     top: 105px !important; }
     #content .viewContainer {
       padding: 0 8px;
-      overflow: hidden; }
+      overflow: auto;
+      height: auto; }
     #content .actionItemAddContainer .enddate {
       padding-left: 0px; } }
 #breadcrumbHeader a.breadcrumbButton.leaf-breadcrumb {
@@ -2207,7 +2209,6 @@ ol.selected-group > li > button {
 .ui-select-choices .select2-result-label {
   font-size: inherit;
   font-family: OpenSans-semibold !important;
-  color: darkSlateGray !important;
   word-wrap: break-word !important; }
 
 .ui-select-container {
