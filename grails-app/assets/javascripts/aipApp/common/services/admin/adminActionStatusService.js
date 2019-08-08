@@ -15,7 +15,7 @@ var AIP;
             var deferred = this.$q.defer();
             var realMax = parseInt(query.max) - parseInt(query.offset);
             var url = this.ENDPOINT.admin.actionItemStatusGrid +
-                '?searchString=' + (query.searchString || '') +
+                '?searchString=' + (encodeURIComponent(query.searchString) || '') +
                 '&sortColumnName=' + (query.sortColumnName || 'actionItemStatus') +
                 '&ascending=' + (query.ascending.toString() || "") +
                 '&offset=' + (query.offset || 0) +
