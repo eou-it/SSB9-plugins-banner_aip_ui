@@ -24,9 +24,9 @@ var AIP;
             var realMax = parseInt(query.max) - parseInt(query.offset);
             var url = this.ENDPOINT.review.search +
                 '?actionItemId=' + (query.actionItemId || '') +
-                '&personName=' + (query.personName || '') +
-                '&personId=' + (query.personId || '') +
-                '&searchString=' + (query.searchString || '') +
+                '&personName=' + (encodeURIComponent(query.personName) || '') +
+                '&personId=' + (encodeURIComponent(query.personId) || '') +
+                '&searchString=' + (encodeURIComponent(query.searchString) || '') +
                 '&sortColumnName=' + (query.sortColumnName || '') +
                 '&ascending=' + (query.ascending.toString() || "") +
                 '&offset=' + (query.offset || 0) +
