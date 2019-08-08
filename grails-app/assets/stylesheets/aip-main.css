@@ -2266,8 +2266,7 @@ ol.selected-group > li > button {
   .table-container .tbody .icon {
     font-size: 1.5em;
     border: none;
-    background-color: transparent;
-    margin-right: 2em; }
+    background-color: transparent; }
 
 @media screen and (min-width: 1024px) {
   .datatable_spacing {
