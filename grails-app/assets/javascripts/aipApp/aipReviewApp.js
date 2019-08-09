@@ -35,7 +35,6 @@ angular.module("bannerAIPReview", [
         "extensibility",
         "ui.bootstrap",
         "ngAria",
-        "ngAnimate",
         "I18nAIP",
         "xe-ui-components",
         "bannerAIPUI",

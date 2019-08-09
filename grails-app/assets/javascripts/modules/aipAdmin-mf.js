@@ -20,4 +20,4 @@
 //= require aipApp/common/services/admin/adminActionStatusService.js 
 //= require aipApp/common/services/admin/adminActionService.js 
 //= require aipApp/common/services/admin/adminGroupService.js
-//= require  aipApp/common/directives/pagebuilder/js/aip-pagebuilder.js
+
