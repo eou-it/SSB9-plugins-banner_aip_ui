@@ -2,3 +2,4 @@
 //= require  aipApp/listItem/listItemPageCtrl.js
 //= require  aipApp/listItem/itemConfirm/itemConfirmCtrl.js
 //= require  aipApp/listItem/itemInform/itemInformCtrl.js
+//= require  aipApp/common/directives/pagebuilder/js/aip-pagebuilder.js
