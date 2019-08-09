@@ -89,6 +89,9 @@ $link-color: #275c8a;
                 .ui-select-container {
                   width: 40em !important;
                 }
+                .horizontalScrolling{
+                  overflow-x: auto;
+                }
                 .contentContainer {
                   margin: 10px 0 10px 0;
                   .actionItemSelectTemplate {
