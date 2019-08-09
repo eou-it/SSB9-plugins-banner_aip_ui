@@ -64,9 +64,9 @@ module AIP {
             var realMax = parseInt(query.max) - parseInt(query.offset);
             var url = this.ENDPOINT.review.search +
                 '?actionItemId=' + (query.actionItemId || '') +
-                '&personName=' + (encodeURIComponent(query.personName) || '') +
-                '&personId=' + (encodeURIComponent(query.personId) || '') +
-                '&searchString=' + (encodeURIComponent(query.searchString) || '') +
+                '&personName=' + (encodeURIComponent(query.personName?query.personName:'') || '') +
+                '&personId=' + (encodeURIComponent(query.personId?query.personId:'') || '') +
+                '&searchString=' + (encodeURIComponent(query.searchString?query.searchString:'') || '') +
                 '&sortColumnName=' + (query.sortColumnName || '') +
                 '&ascending=' + (query.ascending.toString() || "") +
                 '&offset=' + (query.offset || 0) +
