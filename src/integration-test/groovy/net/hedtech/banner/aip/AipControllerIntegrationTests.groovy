@@ -57,8 +57,10 @@ class AipControllerIntegrationTests extends BaseIntegrationTestCase {
        def auth = selfServiceBannerAuthenticationProvider.authenticate(
                 new UsernamePasswordAuthenticationToken( person.bannerId, '111111' ) )
         SecurityContextHolder.getContext().setAuthentication( auth )
-        def result = controller.list()
+        controller.list()
         assertEquals 200, controller.response.status
+        def responseString = controller.response.contentAsString
+        def result = JSON.parse(responseString)
         assertEquals( "aip", result.view )
     }
 
@@ -122,8 +124,10 @@ class AipControllerIntegrationTests extends BaseIntegrationTestCase {
         def auth = selfServiceBannerAuthenticationProvider.authenticate(
                 new UsernamePasswordAuthenticationToken( person.bannerId, '111111' ) )
         SecurityContextHolder.getContext().setAuthentication( auth )
-        def result = controller.informedList()
+        controller.informedList()
         assertEquals 200, controller.response.status
+        def responseString = controller.response.contentAsString
+        def result = JSON.parse(responseString)
         assertEquals( "aip", result.view )
     }
 
@@ -135,10 +139,10 @@ class AipControllerIntegrationTests extends BaseIntegrationTestCase {
         def auth = selfServiceBannerAuthenticationProvider.authenticate(
                 new UsernamePasswordAuthenticationToken( person.bannerId, '111111' ) )
         SecurityContextHolder.getContext().setAuthentication( auth )
-        def jsonObj = [:]
-        jsonObj.type = "group"
-        controller.request.method = "POST"
-        controller.request.json = jsonObj
+        List<ActionItemGroup> actionItemGroups = ActionItemGroup.fetchActionItemGroups()
+        def actionItemGroupId = actionItemGroups[0].id
+        controller.params.groupId = actionItemGroupId.toString()
+        controller.params.searchType = 'group'
         controller.detailInfo()
         assertEquals 200, controller.response.status
     }

@@ -3,22 +3,29 @@
  **********************************************************************************/
 package net.hedtech.banner.aip
 
+import grails.gorm.transactions.Rollback
+import grails.testing.mixin.integration.Integration
 import net.hedtech.banner.testing.BaseIntegrationTestCase
 import org.junit.After
 import org.junit.Before
 import org.junit.Ignore
 import org.junit.Test
+import org.springframework.beans.factory.annotation.Autowired
 
 /**
  * AipTagLibIntegrationTests.
  */
+@Integration
+@Rollback
 class AipTagLibIntegrationTests extends BaseIntegrationTestCase {
+
+    @Autowired
+    def selfServiceBannerAuthenticationProvider
 
     @Before
     public void setUp() {
         formContext = ['SELFSERVICE']
         super.setUp()
-        controller = new AipAdminController()
     }
 
 

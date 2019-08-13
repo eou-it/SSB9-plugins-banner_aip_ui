@@ -4,6 +4,8 @@
 package net.hedtech.banner.aip
 
 import grails.converters.JSON
+import grails.gorm.transactions.Rollback
+import grails.testing.mixin.integration.Integration
 import net.hedtech.banner.general.person.PersonUtility
 import net.hedtech.banner.testing.BaseIntegrationTestCase
 import org.junit.After
@@ -16,6 +18,8 @@ import org.springframework.security.core.context.SecurityContextHolder
 /**
  * BCMControllerIntegrationTests.
  */
+@Integration
+@Rollback
 class BCMControllerIntegrationTests extends BaseIntegrationTestCase {
 
     @Autowired
@@ -48,7 +52,7 @@ class BCMControllerIntegrationTests extends BaseIntegrationTestCase {
                 new UsernamePasswordAuthenticationToken( person.bannerId, '111111' ) )
         SecurityContextHolder.getContext().setAuthentication( auth )
         controller.request.contentType = "text/json"
-        controller.BCMLocation
+        controller.BCMLocation()
         assertEquals 200, controller.response.status
         String actualJSON = controller.response.contentAsString
         def data = JSON.parse( actualJSON )
@@ -65,7 +69,7 @@ class BCMControllerIntegrationTests extends BaseIntegrationTestCase {
         SecurityContextHolder.getContext().setAuthentication( auth )
         controller.request.contentType = "text/json"
         controller.session['BCM_LOCATION'] = 'http:/test'
-        controller.BCMLocation
+        controller.BCMLocation()
         assertEquals 200, controller.response.status
         String actualJSON = controller.response.contentAsString
         def data = JSON.parse( actualJSON )

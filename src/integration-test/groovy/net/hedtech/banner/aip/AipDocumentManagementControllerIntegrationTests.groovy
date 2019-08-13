@@ -192,6 +192,7 @@ class AipDocumentManagementControllerIntegrationTests extends BaseIntegrationTes
 
     @Test
     void testMaxFileSize() {
+        setConfigProperties('aip.allowed.attachment.max.size', '26214400', 'string')
         def person = PersonUtility.getPerson("CSRSTU002")
         assertNotNull person
         def auth = selfServiceBannerAuthenticationProvider.authenticate(
@@ -450,6 +451,8 @@ class AipDocumentManagementControllerIntegrationTests extends BaseIntegrationTes
                 testFile.getName(), "text/plain", IOUtils.toByteArray(input))
         multipartFile
     }
+
+
 
 
 }
