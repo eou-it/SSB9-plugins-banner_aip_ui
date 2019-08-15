@@ -535,6 +535,14 @@ angular.module("BannerOnAngular")
         params.saved = false;
     }]);
 
+//Added for IE11 browser issue.
+if (!String.prototype.startsWith) {
+    String.prototype.startsWith = function(searchString, position) {
+        position = position || 0;
+        return this.indexOf(searchString, position) === position;
+    };
+}
+
 var retainBreadcrumbsOnBrowserRefresh = function (toState,BreadcrumbService) {
     var rootBreadcrumbs = {title: "aip.admin.landing",url: "/aipAdmin/#/landing"};
     if(toState.data.breadcrumbs.title !== rootBreadcrumbs.title){
