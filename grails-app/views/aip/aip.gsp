@@ -37,7 +37,8 @@
                     /\${applicationContextRoot}\//,
                     /\/seamless/,
                     /\/registration/,
-                    /\/login\/auth?/
+                    /\/login\/auth?/,
+                    /^((?!\${applicationContextRoot}).)*/
                 ],
                 isExcluded;
 
@@ -45,6 +46,8 @@
                 isExcluded = _.find(excludedRegex, function (regex) {
                     return regex.test(referrerUrl);
                 });
+
+
 
                 if (!isExcluded) {
                     // Track this page
