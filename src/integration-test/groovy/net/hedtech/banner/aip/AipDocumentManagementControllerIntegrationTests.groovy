@@ -434,7 +434,7 @@ class AipDocumentManagementControllerIntegrationTests extends BaseIntegrationTes
         File testFile
         try {
             String data = " Test data for integration testing"
-            String tempPath = System.getProperty("base.dir") + File.separator+"test"+File.separator+"data"
+            String tempPath = System.getProperty("base.dir") + File.separator+"build"+File.separator+"tmp"
             testFile = new File(tempPath, filename)
             if (!testFile.exists()) {
                 testFile.createNewFile()
