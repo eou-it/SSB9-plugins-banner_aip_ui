@@ -1,5 +1,5 @@
 /*******************************************************************************
- Copyright 2018 Ellucian Company L.P. and its affiliates.
+ Copyright 2019 Ellucian Company L.P. and its affiliates.
  ********************************************************************************/
 package net.hedtech.banner.aip
 
@@ -7,7 +7,7 @@ import grails.converters.JSON
 import net.hedtech.banner.exceptions.ApplicationException
 import net.hedtech.banner.i18n.MessageHelper
 import net.hedtech.banner.general.ConfigurationData
-import org.codehaus.groovy.grails.plugins.web.taglib.ValidationTagLib
+import org.grails.plugins.web.taglib.ValidationTagLib
 
 /** Controller for Review Action Items **/
 
@@ -46,7 +46,7 @@ class AipReviewController {
         def criteriaMap = [:]
         def filterData = [params: paramsMap, criteria: criteriaMap]
 
-        def result = monitorActionItemCompositeService.searchMonitorActionItems(actionItemid, params?.personName?.trim(), params?.personId?.trim(), filterData, pagingAndSortParams)
+        def result = monitorActionItemCompositeService.searchMonitorActionItems(actionItemid, params?.personName, params?.personId?.trim(), filterData, pagingAndSortParams)
         render result as JSON
     }
 
@@ -67,8 +67,8 @@ class AipReviewController {
      */
     def listDocuments() {
         def paramsObj = [
-                userActionItemId : params.userActionItemId,
-                responseId   : params.responseId,
+                userActionItemId : Long.parseLong(params.userActionItemId),
+                responseId   : Long.parseLong(params.responseId),
                 sortColumn   : params.sortColumnName ?: "id",
                 sortAscending: params.ascending ? params.ascending.toBoolean() : false
         ]

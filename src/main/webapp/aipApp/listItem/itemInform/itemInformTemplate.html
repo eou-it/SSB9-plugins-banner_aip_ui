@@ -1,0 +1,36 @@
+<!--*******************************************************************************
+Copyright 2018 Ellucian Company L.P. and its affiliates.
+*******************************************************************************-->
+<div class="modal-header">
+    <h3 class="modal-title" id="modal-list-inform-title">{{"aip.inform.list.title"|i18n_aip}}</h3>
+</div>
+<div class="modal-body" id="modal-list-inform-body">
+    <div class="modal-body-content">
+        <div class="row">
+            <label>
+                {{"aip.inform.list.notice"|i18n_aip}}
+            </label>
+        </div>
+    </div>
+    <div class="modal-body-info">
+        <div class="row">
+            <label>
+                <span class="modal-info-bold">{{"aip.inform.list.continue.message.1"|i18n_aip}} </span>{{"aip.inform.list.continue.message.2"|i18n_aip}}
+            </label>
+        </div>
+        <div class="row">
+            <label>
+                <span class="modal-info-bold">{{"aip.inform.list.cancel.message.1"|i18n_aip}} </span>{{"aip.inform.list.cancel.message.2"|i18n_aip}}
+            </label>
+        </div>
+    </div>
+    <div class="modal-control">
+        <button type="button" class="btn btn-default btn-back" ng-click="vm.goBack()">
+            {{"aip.common.cancel.modal"|i18n_aip}}
+        </button>
+        <div class="btn-divide"></div>
+        <button type="button" class="btn btn-default btn-forward" ng-click="vm.goAhead()">
+            {{"aip.common.continue.modal"|i18n_aip}}
+        </button>
+    </div>
+</div>

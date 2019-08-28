@@ -1,0 +1,356 @@
+$border-color: #C0C0C0;
+$text-color: #4F585F;
+$button-color: #206E9F;
+$background-color: #ffffff;
+$link-color: #275c8a;
+
+.actionItemOpenContainer {
+  border: 1px solid $border-color;
+  background-color: $background-color;
+  height: 100%;
+  label {
+    font-family: "OpenSans-semibold";
+  }
+  /* moved to message properties
+  label.required:after {
+    content: " *";
+  }
+  */
+  a {
+    color: $link-color;
+  }
+  .row {
+    margin-right: 0;
+    margin-left: 0;
+  }
+  .actionItemInfo {
+    height: inherit;
+    .actionItemInfoRow {
+      height: inherit;
+      .actionItemElement {
+        height: 100%;
+        color: $text-color;
+        padding-top: 16px;
+        padding-bottom: 20px;
+        .h2-container {
+          margin-top: 0px;
+          margin-bottom: 10px;
+        }
+        .overviewEdit {
+          text-align: right;
+          padding: 8px;
+        }
+        .activity {
+          margin-top: 30px;
+          border-left: 2px solid $border-color;
+          height: 100%;
+        }
+        @media (max-width: 768px) {
+          .activity {
+            margin-top: 0px;
+            border-left: none;
+          }
+        }
+        .dividerContainer {
+          padding: 16px;
+          .divider {
+            border-right: 2px solid $border-color;
+            height: 100%;
+          }
+
+        }
+        hr {
+          border-top: solid 1px $border-color;
+        }
+        xe-tab-panel {
+          .xe-tab-container {
+            padding: 0;
+
+            #openActionItemContent {
+              .actionItemContentNoInfo {
+                padding: 16px 16px 0px 15px;
+              }
+              .control {
+                .h2-container {
+                  button.edit {
+                    float: right;
+                    color: $button-color;
+                    border: none;
+                  }
+                  .no-edit {
+                    float: right;
+                    color: $button-color;
+                    border: none;
+                  }
+                }
+              }
+              .actionItemContent {
+                padding: 16px;
+                .ui-select-container {
+                  width: 40em !important;
+                }
+                .contentContainer {
+                  margin: 10px 0 10px 0;
+                  .actionItemSelectTemplate {
+                    padding-left: 5px;
+                  }
+                  .template-description {
+                    max-height: 15.4em;
+                    overflow-y: auto;
+                    word-break: normal;
+                    font: inherit;
+                  }
+                  .description-overview {
+                    max-height: 15em;
+                    background-color: white;
+                    border: 0;
+                  }
+                  .noResponses {
+                    font-size: 1.2em;
+                    font-weight: bold;
+                    padding: 8px;
+                  }
+                  .templateText {
+                    margin-top: 10px;
+                    margin-bottom: 20px;
+                  }
+                  table.ruleListReadOnly {
+                    width: 100%;
+                    caption {
+                      border: 0 none;
+                      border-bottom: none;
+                      text-align: left;
+                      font-weight: bolder;
+                      line-height: 3em;
+                      font-size: 1.2em;
+                      padding: 0 8px;
+                    }
+                    tr {
+                      height: 3em;
+                      border: solid 1px;
+                      border-color: $border-color;;
+                    }
+                    th, td {
+                      padding: 8px;
+                    }
+                    thead {
+                      th {
+                        font-weight: bold;
+                        + .ruleStatus {
+                          border-left: solid 1px;
+                          border-color: inherit;
+                        }
+                        + .ruleLabelText {
+                          width: 60%;
+                        }
+                      }
+                    }
+                  }
+                }
+                .contentPreview {
+                  margin: 15px 0 20px 0;
+                  padding: 10px 10px 15px 10px;
+                  border-bottom: 1px solid $border-color;
+                }
+
+                .status-rules {
+                  margin-top: 10px;
+                  .row {
+                    .headings {
+                      font-size: 1em;
+                      .heading-label {
+                        font-family: "OpenSans-semibold";
+                      }
+                      .heading-instructions {
+                        margin: 0 0 20px 15px;
+                      }
+                    }
+                  }
+                  .status-label {
+                    font-size: 1em;
+                  }
+                  .status-response {
+                    padding: 10px 0px;
+                    border-bottom: 1px solid $border-color;
+
+                    .reviewRequired {
+                      width: 1.5em;
+                      height: 25px;
+                      margin-left: 3px;
+                    }
+
+                    @media screen and (max-width: 768px) {
+                      .response-field {
+                        margin-bottom: 10px;
+                        padding: 0;
+                      }
+                      .reviewRequired {
+                        margin-left: 10px;
+                      }
+                    }
+                    @media screen and (min-width: 768px) {
+                      .response-field {
+                        margin-bottom: 10px;
+                        padding: 0;
+                        white-space: nowrap;
+                      }
+                      .reviewRequired {
+                        margin-left: 10px;
+                      }
+                    }
+                  }
+
+                  button.delete, button.sort {
+                    color: $button-color;
+                    border: none;
+                  }
+
+                  @media screen and (max-width: 768px) {
+                    .record-controls {
+                      padding: 0;
+                    }
+                  }
+                  @media screen and (min-width: 768px) {
+                    .record-controls {
+                      margin-top: 20px;
+                    }
+                    .delete {
+                      padding: 15px;
+                    }
+                  }
+                  .add-link {
+                    font-family: "OpenSans-semibold";
+                    margin: 20px 0 20px 15px;
+                  }
+                }
+                .actionControl {
+                  /*position: relative;*/
+                  width: 100%;
+                  bottom: 10px;
+                  margin-bottom: 15px;
+                  height: 5em;
+                  .actionButton {
+                    text-align: center;
+
+                    button {
+                      width: 100%;
+                      max-width: 200px;
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .actionItemOpenContainer {
+    .actionItemInfo {
+      .actionItemInfoRow {
+        .row {
+          margin-right: 5px;
+          margin-left: 5px;
+        }
+        .actionItemElement {
+          padding-right: 0;
+          padding-left: 0;
+          .h2-container {
+            button {
+              border: none;
+            }
+          }
+          xe-tab-nav {
+            .xe-tab-content {
+              padding: 4px 0;
+              margin-bottom: 30px;
+            }
+          }
+          xe-tab-panel {
+            .xe-tab-container {
+              #openActionItemContent {
+                .actionItemContentNoInfo {
+                  padding: 0px;
+                  margin: 16px 0px 16px 0px;
+                }
+                .actionItemContent {
+                  padding: 0;
+                  margin: 16px 0px 16px 0px;
+                  height: auto !important;
+                  .ui-select-container {
+                    width: 20em !important;
+                  }
+                  .ui-select-choices ul li {
+                    line-height: 2em !important;
+                  }
+                  .contentContainer {
+                    margin-top: 0;
+                    margin-bottom: 0px;
+                    .actionItemSelectTemplate {
+                      margin-bottom: 1em;
+                    }
+                    .template-description {
+                      max-height: 8.2em;
+                      overflow-y: auto;
+                      word-break: normal;
+                      font: inherit;
+                    }
+                    .description-overview {
+                      background-color: white;
+                      border: 0;
+                    }
+                    .contentPreview {
+                      padding: 8px;
+                      border-bottom: 1px solid $border-color;
+                    }
+                    table.ruleListReadOnly {
+                      border: 0;
+                      caption {
+                        border: 0;
+                        padding: 0;
+                        line-height: 2em;
+                      }
+                      thead {
+                      }
+                      tr {
+                        margin-bottom: 10px;
+                        height: auto;
+                        border: solid 1px;
+                      }
+                      td {
+                        border: 0;
+                        text-indent: 8px;
+                        border-color: $border-color;
+                        .labels {
+                          text-indent: 0;
+                        }
+                      }
+                      td:first-child {
+                        border-top: 1px solid;
+                      }
+                      /*td:last-child {
+                        border-bottom: 0;
+                        display: none;
+                      }*/
+                      td:before {
+                        display: table-row;
+                        width: 100%;
+                        font-size: 1.1em;
+                        font-weight: bold;
+                        padding-right: 8px;
+                        text-indent: 0;
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

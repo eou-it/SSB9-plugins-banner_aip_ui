@@ -1,0 +1,68 @@
+<!--*******************************************************************************
+Copyright 2018 Ellucian Company L.P. and its affiliates.
+*******************************************************************************-->
+<div class="statusListContainer" id="adminStatusListPage" ng-controller="AdminStatusListPageCtrl">
+    <div class="row controls">
+        <div class="control">
+            <button type="button" class="btn btn-default" ng-click="vm.goAddPage()" aria-label="{{'aip.admin.action.add.jaws'|i18n_aip}}">
+                <span class="icon icon-add-CO"></span>
+                <span class="button-text hidden-sm-down">{{'aip.common.add.new'|i18n_aip}}</span>
+            </button>
+
+            <!--
+            <button id="openActionBtn" type="button" class="btn btn-default" ng-click="vm.openActionItem()"
+                    aria-label="{{'aip.admin.acation.open.jaws'|i18n_aip}}" ng-disabled="!vm.selectedRecord">
+                <span class="icon icon-view-CO"></span>
+                <span class="button-text hidden-sm-down">{{'aip.common.open'|i18n_aip}}</span>
+            </button>
+            -->
+        </div>
+    </div>
+    <div class="statusListTable" ng-style="vm.getHeight()">
+
+        <xe-table-grid
+                caption="{{'aip.admin.status.rules'|i18n_aip}}"
+                table-id="dataTableAdminStatusList"
+                header="vm.header"
+                fetch="vm.fetchData(query)"
+                end-point="vm.adminStatusEnd"
+                content="vm.gridData.row"
+                results-found="vm.records"
+                toolbar="true"
+                paginate="true"
+                on-row-click="vm.selectRecord(data)"
+                no-data-msg="{{'aip.common.no.results.found'|i18n_aip}}"
+                empty-table-msg="emptyTableMsg"
+                search-config="vm.searchConfig"
+                pagination-config="vm.paginationConfig"
+                mobile-layout="vm.mobileConfig"
+                refresh-grid="refreshGrid"
+
+                draggable-column-names="vm.draggableColumnNames"
+                continuous-scrolling="false">
+                <xe-cell-markup column-name="actionItemStatusBlockedProcess" aria-label="{{'aip.common.text.yes'|i18n_aip}}">
+                    <div ng-if="row.actionItemStatusBlockedProcess === 'Y'" class="icon icon-success-CF icon-green">
+                        <span class="offscreen">{{'aip.common.block.process.indicator.is'|i18n_aip}} {{'aip.common.text.yes'|i18n_aip}}</span>
+                    </div>
+                    <div ng-if="row.actionItemStatusBlockedProcess === 'N'" class="icon icon-info">
+                        <span class="offscreen">{{'aip.common.block.process.indicator.is'|i18n_aip}} {{'aip.common.text.no'|i18n_aip}}</span>
+                    </div>
+                </xe-cell-markup>
+                <xe-cell-markup column-name="actionItemStatusSystemRequired">
+                    <div ng-if="row.actionItemStatusSystemRequired === 'Y'" class="icon icon-success-CF icon-green">
+                        <span class="offscreen">{{'aip.common.system.required.indicator.is'|i18n_aip}} {{'aip.common.text.yes'|i18n_aip}}</span>
+                    </div>
+                    <div ng-if="row.actionItemStatusSystemRequired === 'N'" class="icon icon-info">
+                        <span class="offscreen">{{'aip.common.system.required.indicator.is'|i18n_aip}} {{'aip.common.text.no'|i18n_aip}}</span>
+                    </div>
+                </xe-cell-markup>
+                <xe-cell-markup column-name="actionTobeTaken" >
+                    <button ng-if="row.deletable === 'N'" class="icon icon-delete-CO" ng-click="vm.disableSystemRecord(row.deleteRestrictionReason)" title="{{'aip.common.delete.status.jaws'|i18n_aip}}" aria-label="{{'aip.common.system.required.indicator.is'|i18n_aip}} {{'aip.common.text.yes'|i18n_aip}}">
+                    </button>
+                    <button  ng-if="row.deletable === 'Y'" class="icon icon-delete-CO" ng-click="vm.deleteSystemRecord(row.id)" title="{{'aip.common.delete.status.jaws'|i18n_aip}}" aria-label="{{'aip.common.system.required.indicator.is'|i18n_aip}} {{'aip.common.text.no'|i18n_aip}}">
+                    </button>
+                </xe-cell-markup>
+
+        </xe-table-grid>
+    </div>
+</div>

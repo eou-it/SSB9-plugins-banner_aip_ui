@@ -1,0 +1,79 @@
+.AIP-landing-container {
+  padding: 16px;
+}
+
+.landingItem-container {
+  background-color: #ffffff;
+  font-size: 1.5em;
+  border-radius: 4px;
+  padding: 10px;
+  margin: 10px;
+  cursor: pointer;
+  .landingItem {
+    float: left;
+  }
+  &:hover {
+    background-color: #ffffff;
+  }
+  .landing-icon {
+    padding: 15px 0px;
+    max-width: 100px;
+    margin: 0;
+    height:auto;
+    float:left;
+    .well {
+      background-color: transparent;
+      border: none;
+      box-shadow: none;
+    }
+    .icon {
+      font-size: 3em;
+      color: #206E9F;
+    }
+  }
+  .landing-context {
+    padding: 8px 24px;
+    border-left: 2px solid #EDF2F7;
+    border-right: none;
+    height:100px;
+    .landing-title {
+      font-weight: bold;
+      padding-bottom: 16px;
+    }
+    .landing-description {
+      min-height: 70px;
+    }
+  }
+}
+
+@media screen and (max-width:768px) {
+  .landingItem-container {
+    padding: 0;
+    margin-left: 8px;
+    margin-right: 8px;
+    .landing-icon {
+      padding: 16px;
+    }
+  }
+}
+
+
+@media screen and (max-width:480px) {
+  .landingItem-container {
+    padding: 0;
+    margin-left: 8px;
+    margin-right: 8px;
+    .landing-icon {
+      padding: 16px 8px;
+    }
+    .landing-context {
+      .landing-title {
+        padding: 8px;
+      }
+      .landing-description {
+        padding: 8px;
+      }
+    }
+  }
+}
+

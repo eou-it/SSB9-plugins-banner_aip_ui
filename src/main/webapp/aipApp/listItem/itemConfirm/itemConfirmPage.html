@@ -1,0 +1,33 @@
+<!--*******************************************************************************
+Copyright 2018 Ellucian Company L.P. and its affiliates.
+*******************************************************************************-->
+<div class="aip-list-confirm-container">
+    <div class="summmary-container">
+        <div class="row">
+            <div class="col-xs-12 col-sm-12">
+                <div ng-repeat="group in vm.actionItems.group">
+                    <span>{{group|i18n_aip}}</span>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-4 col-sm-4">
+                <span>{{vm.actionItems.item.title}}</span>
+            </div>
+            <div class="col-xs-8 col-sm-8">
+                <span>{{vm.actionItems.item.description}}</span>
+            </div>
+        </div>
+    </div>
+    <!--
+    <div class="control-container">
+        <div class="row">
+            <div class="col-xs-12 col-sm-12">
+                <button type="button" class="btn btn-default" ng-click="vm.confirmItem(vm.actionItems.item.id)">
+                    Confirm
+                </button>
+            </div>
+        </div>
+    </div>
+    -->
+</div>

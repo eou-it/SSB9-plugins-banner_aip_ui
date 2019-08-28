@@ -1,0 +1,202 @@
+<!--*******************************************************************************
+Copyright 2019 Ellucian Company L.P. and its affiliates.
+*******************************************************************************-->
+<div id="openActionItemContent">
+
+    <!--content view with no template-->
+
+    <div class="actionItemContentNoInfo row" ng-if="vm.isNoTemplate()">
+        <div class="contentText">
+            <div class="row">
+                <div class="col-xs-10 col-sm-8">
+                    <label class="titleValue">{{'aip.common.text.template'|i18n_aip}}</label><br/>
+                    {{'aip.admin.action.open.tab.content.noItem1'|i18n_aip}} <br/>
+                    {{'aip.admin.action.open.tab.content.noItem2'|i18n_aip}}
+                </div>
+
+                <div class="control col-xs-2 col-sm-4">
+                    <div class="h2-container">
+                        <button name="Edit" type="button" class="btn btn-default edit" ng-click="vm.selectTemplate()"
+                                aria-label="{{'aip.common.edit.action.item.jaws'|i18n_aip}}">
+                            <span class="icon icon-edit-CO"></span>
+                            <span class="button-text hidden-sm-down">{{'aip.common.text.edit'|i18n_aip}}</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--content view without select template-->
+    <div class="actionItemContent row" ng-if="!vm.isNoTemplate() && vm.templateSelect">
+        <div class="contentContainer">
+            <div class="row input-actionItem">
+                <label for="actionItemTemplate" class="titleValue required" id="actionItemTemplateSelector">{{'aip.admin.action.open.tab.content.templateSelect'|i18n_aip}}
+                    {{'aip.character.astrick'|i18n_aip}}</label>
+            </div>
+            <div class="row">
+                <div class="col-sm-8 actionItemSelectTemplate">
+                    <xe-ui-select id="actionItemTemplate" ng-model="vm.selectedTemplateObj" theme="select2" ng-change="vm.setTemplateDetails(); vm.getRules(); vm.dataChanged()">
+                        <xe-ui-select-match  placeholder="{{'aip.admin.action.open.tab.content.templatePlaceholder'|i18n_aip}}">
+                            {{vm.selectedTemplateObj.title}} ({{vm.getTemplateSource(vm.selectedTemplateObj.sourceInd)}})
+                        </xe-ui-select-match>
+                        <xe-ui-select-choices  repeat="item in vm.templates | propsFilter: {title: $select.search}">
+                            <div>{{item.title}} ({{vm.getTemplateSource(item.sourceInd)}})</div>
+                        </xe-ui-select-choices>
+                    </xe-ui-select>
+                </div>
+            </div>
+        </div>
+
+        <!-- edit view -->
+        <div class="contentContainer" ng-if="!vm.isNoTemplateSelected()">
+            <div class="row">
+                <label class="titleValue" for="actionItemTemplateDesc" id="actionItemTemplateDescSelector">
+                    {{'aip.admin.action.open.tab.content.templateDescription'|i18n_aip}}
+                </label>
+            </div>
+            <div class="row">
+                <pre id="actionItemTemplateDesc" class="template-description" ng-bind-html="vm.selectedTempDescription"></pre>
+            </div>
+            <div class="row">
+                <label class="titleValue" for="templateContent" id="template-content">{{'aip.common.text.content'|i18n_aip}}</label>
+            </div>
+            <div class="row">
+                <textarea id="templateContent" ng-required="true" aria-required="true" name="templateContent"
+                 ckeditor="ckEditorConfig" ng-model="vm.actionItem.actionItemContent" ng-change="vm.detectContentChange(vm.actionItem.actionItemContent); vm.dataChanged()"></textarea>
+            </div>
+            <div class="contentContainer">
+                <div class="row">
+                    <aip-status-rule rules="vm.rules" status="vm.statuses" attachments="vm.maxAttachmentsList" changes="vm.contentChanged"></aip-status-rule>
+                </div>
+            </div>
+        </div>
+        <div class="actionControl">
+            <div class="row">
+                <div class="col-xs-1 col-sm-8">
+                    &nbsp;
+                </div>
+                <div class="col-xs-11 col-sm-4">
+                    <div class="col-xs-6 col-sm-6 actionButton">
+                        <button name="Cancel" type="button" class="btn btn-default" ng-click="vm.cancel('content')">
+                            {{"aip.common.cancel"|i18n_aip}}
+                        </button>
+                    </div>
+                    <div class="col-xs-6 col-sm-6 actionButton">
+                        <button type="button" name="Save" class="btn btn-primary"
+                                ng-disabled="!vm.validateActionItemRule()" ng-click="vm.saveTemplate()">
+                            {{"aip.common.save.and.return"|i18n_aip}}
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!--read only content-->
+    <div class="actionItemContent row"
+         ng-if="!vm.isNoTemplate() && vm.actionItem.actionItemTemplateId && !vm.templateSelect">
+        <div class="contentContainer">
+            <div class="row">
+                <div class="col-xs-10 col-sm-8">
+                    <label class="titleValue">{{'aip.common.text.template'|i18n_aip}}</label>&nbsp;
+                </div>
+                <div class="control col-xs-2 col-sm-4">
+                    <div class="h2-container"  ng-if="vm.actionItemPostedStatus == 'N'">
+                        <button name="Edit" type="button" class="btn btn-default edit" ng-click="vm.selectTemplate()"
+                                aria-label="{{'aip.common.edit.action.item.jaws'|i18n_aip}}">
+                            <span class="icon icon-edit-CO"></span>
+                            <span class="button-text hidden-sm-down">{{'aip.common.text.edit'|i18n_aip}}</span>
+                        </button>
+                    </div>
+
+                    <div class="h2-container" ng-if="vm.actionItemPostedStatus == 'Y'">
+                        <span class="button-text no-edit hidden-sm-down">{{'aip.admin.action.open.tab.content.posted'|i18n_aip}}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-sm-8">
+                    <div class="templateText">
+                        {{vm.selectedTemplateObj.title}} ({{vm.getTemplateSource(vm.selectedTemplateObj.sourceInd)}})
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-sm-12">
+                    <label class="titleValue">{{'aip.admin.action.open.tab.content.templateDescription'|i18n_aip}}</label>
+                    <div>
+                        <pre class="template-description description-overview" ng-bind-html="vm.selectedTempDescription"></pre>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-sm-12">
+                    <label class="titleValue">{{'aip.common.text.content'|i18n_aip}}</label>
+                    <div ng-if="!vm.isNoContent()">
+                        <!--
+                        <div class="contentPreview">
+                             {{vm.actionItem.actionItemContent}}</div>
+-->
+                        <div class="contentPreview"
+                             data-ng-bind-html="vm.actionItem.actionItemContent"></div>
+
+                    </div>
+                    <div ng-if="vm.isNoContent()">
+                        <span>{{'aip.admin.action.open.tab.content.noContent'|i18n_aip}}</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-xs-12 col-sm-12">
+                    <label class="titleValue">{{'aip.admin.status.rules.table.heading'|i18n_aip}}</label>
+
+                    <div  class="contentContainer horizontalScrolling" ng-if="vm.rules.length>0">
+                        <table class="ruleListReadOnly">
+                            <caption aria-label="{{'aip.admin.status.rules.table.caption'|i18n_aip}}">
+                                {{'aip.admin.status.rules.table.caption'|i18n_aip}}
+                            </caption>
+                            <thead>
+                            <th class="ruleLabelText">
+                                {{'aip.admin.status.rules.table.header.responseOptionText'|i18n_aip}}
+                            </th>
+                            <th class="ruleStatus">{{'aip.admin.status.rules.table.header.status'|i18n_aip}}</th>
+                            <th class="ruleStatus">{{'aip.admin.status.rules.table.header.haltStatus'|i18n_aip}}</th>
+                            <th class="ruleStatus">{{'aip.admin.status.rules.table.header.reviewReqInd'|i18n_aip}}</th>
+                            <th class="ruleStatus">{{'aip.admin.status.rules.table.header.allowedAttachment'|i18n_aip}}</th>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="rule in vm.rules">
+                                <td data-label="{{'aip.admin.status.rules.table.header.responseOptionText'|i18n_aip}}"
+                                    data-ng-bind-html="vm.trustAsHtml(rule.statusRuleLabelText)"></td>
+                                <td data-label="{{'aip.admin.status.rules.table.header.status'|i18n_aip}}">
+                                        <span class="labels"
+                                              ng-class="{'rejected':rule.statusBlockProcessInd==='Y', 'approved':rule.statusBlockProcessInd==='N'}">
+                                            {{rule.statusName}}
+                                        </span>
+                                </td>
+                                <td data-label="{{'aip.admin.status.rules.table.header.haltStatus'|i18n_aip}}">
+                                    {{(rule.statusBlockProcessInd=="Y"?"aip.admin.status.rules.table.blockText.block":"aip.admin.status.rules.table.blockText.unblock")|i18n_aip}}
+                                </td>
+                                <td data-label="{{'aip.admin.status.rules.table.header.reviewReqInd'|i18n_aip}}">
+                                    {{(rule.reviewReqInd?"aip.admin.status.rules.table.data.reviewRequired":"aip.admin.status.rules.table.data.reviewNotRequired")|i18n_aip}}
+                                </td>
+                                <td data-label="{{'aip.admin.status.rules.table.header.allowedAttachment'|i18n_aip}}"
+                                 data-ng-bind-html="rule.statusAllowedAttachment">
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="contentContainer" ng-if="vm.rules.length===0">
+                        <div class="noResponses">
+                            {{"aip.admin.status.rules.noResponses"|i18n_aip}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

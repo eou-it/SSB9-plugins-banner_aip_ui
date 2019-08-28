@@ -1,0 +1,32 @@
+<!--*******************************************************************************
+Copyright 2018 Ellucian Company L.P. and its affiliates.
+*******************************************************************************-->
+<div class="modal-header">
+    <h3 class="modal-title" id="modal-status-add-title">{{"aip.admin.action.group.action.items"|i18n_aip}}</h3>
+    <button class="modal-close" type="button" ng-click="vm.closeDialog()">
+        <img src="{{vm.APP_FOLDER_PATH}}assets/close-icon.svg" height="14px;" width="14px;">
+    </button>
+</div>
+<div class="modal-header"><p class="groupInstruction">{{"aip.admin.action.group.action.items.instructions"|i18n_aip}}</p></div>
+<div class="modal-body" id="modal-status-add-body">
+    <div class="modal-body-content">
+        <div class="row actionInstruction">
+            <label class="">
+                {{"aip.admin.action.group.action.items.active.items"|i18n_aip}}
+            </label>
+        </div>
+        <div class="row">
+        <div class="checkbox checkbox-success">
+            <li class="actiongroupModal" ng-if="vm.actionGroupModal">
+                <input type="checkbox"  ng-model="vm.checkAll" ng-checked="vm.isCheckAll()" ng-change="vm.changedAllValue(item)" ><label class="selectAllActionItem">{{vm.actionGroupModal}}</label><span class="actionFolderName">Folder({{vm.actionFolderGroupModal}})</span></li>
+            <li class="groupFolder" ng-repeat="item in vm.actionItemModal track by item.actionItemId">
+                <input type="checkbox"  ng-change="vm.changedValue(item)" id="checkAction_{{$index}}" ng-model="vm.actionItemModal[$index].check"><label class="actionfolder" for="checkAction_{{$index}}">{{item.actionItemName}}</label><span class="actionFolder">Folder({{item.actionItemFolderName}})</span></li>
+        </div>
+    </div>
+    <div class="modal-control actionlistitems" >
+        <button type="button" class="btn btn-default" ng-click="vm.statusSave()" ng-if="vm.actionItemModal">
+            {{"aip.common.save.modal"|i18n_aip}}
+        </button>
+    </div>
+</div>
+</div>

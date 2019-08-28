@@ -5,16 +5,16 @@
 package net.hedtech.banner.aip
 
 import grails.converters.JSON
-import org.apache.log4j.Logger
+import groovy.util.logging.Slf4j
+import org.springframework.web.multipart.MultipartFile
 import org.springframework.web.multipart.MultipartHttpServletRequest
-import org.springframework.web.multipart.commons.CommonsMultipartFile
 import net.hedtech.banner.i18n.MessageHelper
 
 /**
  * Upload Controller
  */
+@Slf4j
 class AipDocumentManagementController {
-    private static final def LOGGER = Logger.getLogger(this.class)
     def uploadDocumentCompositeService
     def springSecurityService
 
@@ -24,8 +24,8 @@ class AipDocumentManagementController {
      */
     def uploadDocument() {
         Map model = [:]
-        Map requestParamsMap = requestParamsProcess(request)
-        CommonsMultipartFile selectedfile = requestParamsMap.file
+        Map requestParamsMap = requestParamsProcess(request,params)
+        def selectedfile = requestParamsMap.file
 
         if(!maxFileSizeValidation(selectedfile.getSize())){
             model =[success:false,message:MessageHelper.message('aip.uploadDocument.file.maxsize.error')]
@@ -35,7 +35,7 @@ class AipDocumentManagementController {
             model =[success:false,message:MessageHelper.message('aip.uploadDocument.file.type.restricted.error')]
         }
 
-        if(!model && !maximumAttachmentsValidation(requestParamsMap.userActionItemId,requestParamsMap.responseId)){
+       if(!model && !maximumAttachmentsValidation(requestParamsMap.userActionItemId,requestParamsMap.responseId)){
             model =[success:false,message:MessageHelper.message('aip.uploadDocument.maximum.attachment.error')]
         }
 
@@ -61,8 +61,8 @@ class AipDocumentManagementController {
      */
     def listDocuments() {
         def paramsObj = [
-                userActionItemId : params.userActionItemId,
-                responseId   : params.responseId,
+                userActionItemId :Long.parseLong(params.userActionItemId),
+                responseId   :Long.parseLong(params.responseId),
                 sortColumn   : params.sortColumnName ?: "id",
                 sortAscending: params.ascending ? params.ascending.toBoolean() : false
         ]
@@ -116,16 +116,17 @@ class AipDocumentManagementController {
      * This method is responsible for process the request params.
      * @return request params map
      */
-    private Map requestParamsProcess(request){
+    private Map requestParamsProcess(request,params){
         Map requestParams =[:]
         try {
-            MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request
-            requestParams.put('file',(CommonsMultipartFile) multipartRequest.getFile('file'))
-            requestParams.put('userActionItemId',multipartRequest.multipartParameters.userActionItemId[0])
-            requestParams.put('responseId',multipartRequest.multipartParameters.responseId[0])
-            requestParams.put('documentName',multipartRequest.multipartParameters.documentName[0])
+            MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest)request
+            MultipartFile multipartFile = multipartRequest.getFile("file");
+            requestParams.put('file',multipartFile )
+            requestParams.put('userActionItemId',Long.parseLong(params.userActionItemId))
+            requestParams.put('responseId',Long.parseLong(params.responseId))
+            requestParams.put('documentName',params.documentName)
         } catch (ClassCastException e) {
-            LOGGER.error(e.getMessage())
+            log.error(e.getMessage())
         }
         return  requestParams
     }

@@ -1,0 +1,111 @@
+<!--*******************************************************************************
+Copyright 2018 Ellucian Company L.P. and its affiliates.
+*******************************************************************************-->
+<div class="status-rules">
+
+    <div class="row">
+        <div class="headings">
+            <label class="titleValue">{{'aip.admin.status.rules.table.heading'|i18n_aip}}</label>
+            <p>{{'aip.admin.status.rules.table.instructions.template'|i18n_aip}}</p>
+        </div>
+    </div>
+
+    <div class="status-response row" ng-repeat="item in rules">
+        <div class="response-field col-sm-4">
+            <div class="row">
+                <div class="col-sm-12">
+                    <label class="titleValue status-label" for="response-{{$index+1}}">{{'aip.admin.status.rules.table.header.responseOptionText'|i18n_aip}} {{'aip.character.astrick'|i18n_aip}}</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <input name="ResponseOptionText-{{$index+1}}" id="response-{{$index+1}}" type="text" class="form-control" ng-model="item.statusRuleLabelText" required aria-required="true" maxlength="150" ng-change="detectRuleChange()">
+                </div>
+            </div>
+        </div>
+
+        <div class="response-field col-sm-2">
+            <div class="row">
+                <div class="col-sm-12">
+                    <label class="titleValue status-label" for="status-{{$index+1}}">{{'aip.admin.status.rules.table.header.status'|i18n_aip}} {{'aip.character.astrick'|i18n_aip}}</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <select name="status-{{$index+1}}" id="status-{{$index+1}}" class="actionItemSelect form-control" xe-data="" aria-label="{{'aip.admin.status.rules.table.header.status'|i18n_aip}}" required aria-required="true"
+                            ng-model="item.status"
+                            ng-options="statusItem as statusItem.actionItemStatus for statusItem in status track by statusItem.actionItemStatus"
+                            ng-change="detectRuleChange()">
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="response-field col-sm-2">
+            <div class="row">
+                <div class="col-sm-12">
+                    <label class="titleValue status-label" for="reviewReqInd-{{$index+1}}">{{'aip.admin.status.rules.table.header.reviewReqInd'|i18n_aip}}</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-3">
+                    <input id="reviewReqInd-{{$index+1}}" class="reviewRequired" type="checkbox"
+                           ng-model="item.reviewReqInd" ng-change="detectRuleChange()"/>
+                </div>
+            </div>
+        </div>
+        <div class="response-field col-sm-2">
+            <div class="row">
+                <div class="col-sm-12">
+                    <label class="titleValue status-label" for="attachments-{{$index}}">{{'aip.admin.status.rules.table.header.allowedAttachment'|i18n_aip}}</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-7">
+                    <select name="attachments-{{$index}}" id="attachments-{{$index}}" class="actionItemSelect form-control"
+                            ng-model="item.allowedAttachments"
+                            ng-options="item for item in attachments"
+                            ng-change="detectRuleChange()">
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="record-controls col-sm-1">
+            <div class="row">
+                <div class="col-sm-12">
+                    <button name="OrderUp" type="button" class="btn btn-default sort" ng-click="moveUp(item, $event)" aria-label="{{'aip.admin.status.rules.table.move.up'|i18n_aip}}" ng-disabled="isFirst(item)" id="order-up-{{$index+1}}">
+                        <span class="icon icon-arrowTop-C"></span>
+                    </button>
+                </div>
+            </div>
+            <div class="row clear">
+                <div class="col-sm-12">
+                    <button name="OrderDown" type="button" class="btn btn-default sort" ng-click="moveDown(item, $event)" aria-label="{{'aip.admin.status.rules.table.move.down'|i18n_aip}}" ng-disabled="isLast(item)" id="order-down-{{$index+1}}">
+                        <span class="icon icon-arrowBottom-C"></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="record-controls col-sm-1">
+            <div class="row">
+                <div class="col-sm-12">
+                    <button name="Delete" type="button" class="btn btn-default delete" ng-click="removeRule(item, $event); detectRuleChange();" aria-label="{{'aip.admin.status.rules.table.delete.response.option'|i18n_aip}}" id="delete-{{$index+1}}">
+                        <span class="icon icon-delete-CO" role="presentation"
+                              aria-label="{{'aip.admin.status.rules.table.form.delete'|i18n_aip}}"></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="row clear">
+        <div class="add-link col-sm-12">
+            <a href="javascript:void(0);" ng-click="addRule($event)">
+                <span class="icon icon-add-CO" role="presentation"></span>
+                <span>{{'aip.admin.status.rules.table.form.add'|i18n_aip}}</span>
+            </a>
+        </div>
+    </div>
+</div>

@@ -4,17 +4,17 @@
 package net.hedtech.banner.aip
 
 import grails.converters.JSON
+import groovy.util.logging.Slf4j
 import net.hedtech.banner.aip.common.AipTimezone
 import net.hedtech.banner.exceptions.ApplicationException
 import net.hedtech.banner.i18n.MessageHelper
-import org.apache.log4j.Logger
-import org.codehaus.groovy.grails.plugins.web.taglib.ValidationTagLib
+import org.grails.plugins.web.taglib.ValidationTagLib
 
 /**
  * Controller class for AIP Admin
  */
+@Slf4j
 class AipAdminController {
-    private static final def LOGGER = Logger.getLogger(this.class)
     static defaultAction = "landing"
 
     def groupFolderReadOnlyService
@@ -106,19 +106,17 @@ class AipAdminController {
      * Provides group information for specified id
      * @return
      */
-    def openGroup() {
+  def openGroup() {
         def success = false
 
         if (!params.groupId) {
             response.sendError(403)
             return
         }
-
-        GroupFolderReadOnly gfro = groupFolderReadOnlyService.getActionItemGroupById(Long.parseLong(params.groupId))
+        def gfro = groupFolderReadOnlyService.getActionItemGroupById(Long.parseLong(params.groupId))
         if (gfro) {
             success = true
         }
-
         def model = [
                 success: success,
                 errors : [],
@@ -258,7 +256,7 @@ class AipAdminController {
             model = actionItemStatusCompositeService.statusSave(map);
         } catch (ApplicationException e) {
             model = [fail: true]
-            LOGGER.error(e.getMessage())
+            log.error(e.getMessage())
             model.success = false
             model.message = e.returnMap({ mapToLocalize -> new ValidationTagLib().message(mapToLocalize) }).message
         }
@@ -275,7 +273,7 @@ class AipAdminController {
             model = actionItemStatusCompositeService.removeStatus(request.JSON.id);
         } catch (ApplicationException e) {
             model = [fail: true]
-            LOGGER.error(e.getMessage())
+            log.error(e.getMessage())
             model.message = e.returnMap({ mapToLocalize -> new ValidationTagLib().message(mapToLocalize) }).message
         }
         render model as JSON

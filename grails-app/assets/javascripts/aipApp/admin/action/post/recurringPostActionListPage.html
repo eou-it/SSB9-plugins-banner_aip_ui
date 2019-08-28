@@ -1,0 +1,130 @@
+<!--*******************************************************************************
+Copyright 2019 Ellucian Company L.P. and its affiliates.
+*******************************************************************************-->
+<div class="actionListContainer">
+    <div>
+        <div class="row">
+           <div class="col-xs-12 col-sm-3 col-md-3 col-lg-2 nopadding ">
+               <label>{{"aip.admin.actionItem.post.grid.job.name"|i18n_aip}}</label>
+           </div>
+            <div class="col-xs-12 col-sm-4 col-md-3 col-lg-2">
+                <span>{{vm.recurringPostJobsMetaData.postingName}}</span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-3 col-md-3 col-lg-2 nopadding ">
+                <label>{{"aip.admin.action.postactionItem.recurringPosting.recurEvery"|i18n_aip}}</label>
+            </div>
+            <div class="col-xs-12 col-sm-4 col-md-3 col-lg-2" ng-if="vm.recurringPostJobsMetaData.recurFrequencyType==='DAYS'">
+                <span>{{vm.recurringPostJobsMetaData.recurFrequency}}  {{"aip.admin.action.postactionItem.recurringPosting.recurr.constant.days" | i18n_aip}}</span>
+            </div>
+            <div class="col-xs-12 col-sm-4 col-md-3 col-lg-2" ng-if="vm.recurringPostJobsMetaData.recurFrequencyType==='HOURS'">
+                <span>{{vm.recurringPostJobsMetaData.recurFrequency}}  {{"aip.admin.action.postactionItem.recurringPosting.recurr.constant.hours" | i18n_aip}}</span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-3 col-md-3 col-lg-2 nopadding">
+                <label>{{"aip.admin.action.postactionItem.start.date"|i18n_aip}}</label>
+            </div>
+            <div class="col-xs-12 col-sm-4 col-md-3 col-lg-2">
+                <span>{{vm.recurringPostJobsMetaData.postingDispStartDays}}  {{"aip.admin.action.postactionItem.recurringPosting.displayOffset.instructions"|i18n_aip}}</span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-3 col-md-3 col-lg-2">
+                <label>{{"aip.admin.action.postactionItem.end.date"|i18n_aip}}</label>
+            </div>
+            <div class="col-xs-12 col-sm-4 col-md-3 col-lg-2">
+                <span ng-if="vm.recurringPostJobsMetaData.postingDisplayEndDate">{{vm.recurringPostJobsMetaData.postingDisplayEndDate}}</span>
+                <span ng-if="!vm.recurringPostJobsMetaData.postingDisplayEndDate">{{vm.recurringPostJobsMetaData.postingDispEndDays}}  {{"aip.admin.action.postactionItem.recurringPosting.displayOffset.instructions"|i18n_aip}}</span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-3 col-md-3 col-lg-2 nopadding ">
+                <label>{{"aip.admin.action.postactionItem.recurringPosting.recurr.start.date"|i18n_aip}}</label>
+            </div>
+            <div class="col-xs-12 col-sm-4 col-md-3 col-lg-2">
+                <span>{{vm.recurringPostJobsMetaData.recurringStartDate}}</span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-3 col-md-3 col-lg-2 nopadding ">
+                <label>{{"aip.admin.action.postactionItem.recurringPosting.recurr.start.time"|i18n_aip}}</label>
+            </div>
+            <div class="col-xs-12 col-sm-4 col-md-3 col-lg-2">
+                <span>{{vm.recurringPostJobsMetaData.postingDisplayTime}}</span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-3 col-md-3 col-lg-2 nopadding ">
+                <label>{{"aip.admin.action.postactionItem.recurringPosting.recurr.start.timezone"|i18n_aip}}</label>
+            </div>
+            <div class="col-xs-12 col-sm-4 col-md-3 col-lg-2">
+                <span>{{vm.recurringPostJobsMetaData.recurPostTimezone}}</span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-3 col-md-3 col-lg-2 nopadding ">
+                <label>{{"aip.admin.action.postactionItem.recurringPosting.recurr.end.date"|i18n_aip}}</label>
+            </div>
+            <div class="col-xs-12 col-sm-4 col-md-3 col-lg-2">
+                <span>{{vm.recurringPostJobsMetaData.recurringEndDate}}</span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-3 col-md-3 col-lg-2">
+                <label>{{"aip.admin.action.postactionItem.recurringPosting.jobs.completed.label"|i18n_aip}}</label>
+            </div>
+            <div class="col-xs-12 col-sm-4 col-md-3 col-lg-2">
+                <span>{{vm.recurringPostJobsMetaData.completedJobsCount}}</span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-3 col-md-3 col-lg-2">
+                <label>{{"aip.admin.action.postactionItem.recurringPosting.jobs.error.label"|i18n_aip}}</label>
+            </div>
+            <div class="col-xs-12 col-sm-4 col-md-3 col-lg-2">
+                <span>{{vm.recurringPostJobsMetaData.errorJobsCount}}</span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-3 col-md-3 col-lg-2">
+                <label>{{"aip.admin.action.postactionItem.recurringPosting.jobs.remaining.label"|i18n_aip}}</label>
+            </div>
+            <div class="col-xs-12 col-sm-4 col-md-3 col-lg-2">
+                <span>{{vm.recurringPostJobsMetaData.remainingJobCount}}</span>
+            </div>
+        </div>
+    </div>
+    <div class="actionListTable" ng-style="vm.getHeight()">
+        <xe-table-grid
+                caption="{{'aip.admin.action.item.post.item.recurring'|i18n_aip}}"
+                table-id="dataTableAdminRecurringActionList"
+                header="vm.header"
+                fetch="vm.fetchTableData(query)"
+                end-point="vm.adminActionListEnd"
+                content="vm.gridData.row"
+                results-found="vm.records"
+                toolbar="true"
+                paginate="true"
+                no-data-msg="{{'aip.common.no.results.found'|i18n_aip}}"
+                empty-table-msg="emptyTableMsg"
+                search-config="vm.searchConfig"
+                pagination-config="vm.paginationConfig"
+                mobile-layout="vm.mobileConfig"
+                refresh-grid="refreshGrid"
+                draggable-column-names="vm.draggableColumnNames"
+                continuous-scrolling="false"
+                height="{{vm.gridHeight}}">
+            <xe-cell-markup column-name="jobState" >
+                <div class="row jobState">
+                    <div    ng-if="!isExtendedField(row, heading.name)">
+                        <span  ng-class='{"jobStateQueued jobstateDefault" : row.postingCurrentState == "Queued" || row.postingCurrentState == "Calculating"|| row.postingCurrentState == "New" || row.postingCurrentState == "Processing","statusCompleted jobstateDefault" : row.postingCurrentState == "Complete","statusStopped jobstateDefault" : row.postingCurrentState == "Stopped","statusError  jobstateDefault" : row.postingCurrentState == "Error","statusScheduled  jobstateDefault" : row.postingCurrentState == "Scheduled"||row.postingCurrentState =="RecurrenceScheduled"}' ng-bind="getObjectValue(row, heading.name)" >
+
+                       </span></div>
+                </div>
+
+            </xe-cell-markup>
+        </xe-table-grid>
+	</div>
+</div>
