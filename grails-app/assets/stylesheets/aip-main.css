@@ -328,8 +328,6 @@ aip-list .enddate {
   line-height: normal;
   padding: 0.75em 0.75em;
   margin-left: 9px; }
-#pbid-PersonalInformationAndEmergencyContacts input:read-only, #pbid-CurrentProgrammeofStudyinformation input:read-only, #pbid-ConfirmEnrollment input:read-only {
-  background-color: #ebebe4; }
 #pbid-PersonalInformationAndEmergencyContacts #pbid-Name-0, #pbid-CurrentProgrammeofStudyinformation #pbid-Name-0, #pbid-ConfirmEnrollment #pbid-Name-0 {
   width: 600px; }
 
@@ -353,6 +351,30 @@ aip-list .enddate {
 .AIP-landing-container {
   padding: 16px; }
 
+@media (max-width: 574.98px) {
+  .fix-margin {
+    margin-left: -20px;
+    margin-right: 0px; } }
+@media (min-width: 375px) and (max-width: 575.98px) {
+  .fix-margin {
+    margin-left: -10px;
+    margin-right: 0px; } }
+@media (min-width: 576px) and (max-width: 767.98px) {
+  .fix-margin {
+    margin-left: -10px;
+    margin-right: 0px; } }
+@media (min-width: 768px) and (max-width: 991.98px) {
+  .fix-margin {
+    margin-left: -15px;
+    margin-right: 0px; } }
+@media (min-width: 992px) and (max-width: 1199.98px) {
+  .fix-margin {
+    margin-left: -10px;
+    margin-right: 0px; } }
+@media (min-width: 1200px) {
+  .fix-margin {
+    margin-left: 0px;
+    margin-right: 0px; } }
 .landingItem-container {
   background-color: #ffffff;
   font-size: 1.5em;
@@ -996,6 +1018,8 @@ ol.selected-group > li > button {
             padding: 16px; }
             .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .ui-select-container {
               width: 40em !important; }
+            .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .horizontalScrolling {
+              overflow-x: auto; }
             .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .contentContainer {
               margin: 10px 0 10px 0; }
               .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .contentContainer .actionItemSelectTemplate {
@@ -2201,7 +2225,7 @@ ol.selected-group > li > button {
 .ui-select-container .select2-choice > .select2-chosen {
   color: darkSlateGray !important;
   font-size: 13px !important;
-  line-height: 1.75em !important; }
+  line-height: 2.2em !important; }
 
 .select2-choice .ui-select-match {
   width: inherit; }
@@ -2266,8 +2290,7 @@ ol.selected-group > li > button {
   .table-container .tbody .icon {
     font-size: 1.5em;
     border: none;
-    background-color: transparent;
-    margin-right: 2em; }
+    background-color: transparent; }
 
 @media screen and (min-width: 1024px) {
   .datatable_spacing {

@@ -505,7 +505,7 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
 
         def requestObj = [:]
         requestObj.status = 'Active'
-        requestObj.folderId = ''
+        requestObj.folderId = null
         requestObj.title = 'title 4238j'
         requestObj.name = "myName"
         requestObj.description = null
@@ -651,7 +651,7 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
         assertEquals 200, controller.response.status
         def answer = JSON.parse( controller.response.contentAsString )
         assertEquals( false, answer.success )
-        assertTrue( answer.group.equals( null ) )
+        assertEquals( 0, answer.group.size() )
     }
 
 

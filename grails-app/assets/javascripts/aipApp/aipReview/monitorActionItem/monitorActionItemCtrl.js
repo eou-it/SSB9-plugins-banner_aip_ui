@@ -51,13 +51,14 @@ var AIP;
         }
         MonitorActionItemCtrl.prototype.init = function () {
             var _this = this;
-            this.gridHeight = $("#header-main-section").height() -
+            this.gridHeight = $(document).height() -
                 $("#breadcrumbHeader").height() -
                 $("#title-panel").height() -
                 $(".panel-heading").height() -
                 $("#panel-body").height() -
-                $("table.data-table.datatable_spacing > caption").height() -
-                $("table.data-table").height();
+                $("#header-main-section").height() -
+                $("#outerFooter").height() -
+                30;
             this.searchEnabled = true;
             this.gridEnabled = false;
             this.spinnerService.showSpinner(true);
@@ -262,14 +263,13 @@ var AIP;
         };
         MonitorActionItemCtrl.prototype.getHeight = function () {
             var containerHeight = $(document).height() -
-                $("#header-main-section").height() -
                 $("#breadcrumbHeader").height() -
                 $("#title-panel").height() -
                 $(".panel-heading").height() -
                 $("#panel-body").height() -
-                $("table.data-table.datatable_spacing > caption").height() -
-                $("table.data-table").height();
-
+                $("#header-main-section").height() -
+                $("#outerFooter").height() -
+                30;
             return { height: containerHeight };
         };
         return MonitorActionItemCtrl;

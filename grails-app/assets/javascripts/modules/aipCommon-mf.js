@@ -1,7 +1,3 @@
-//= require modules/cm-angular-mf.js
-//= require modules/extensibilityAngular-mf.js
-//= require modules/aipPB-mf.js
-
 //= require  aipApp/aipCommon.js
 //= require  aipApp/common/services/itemListViewService.js
 //= require  aipApp/common/services/aipReviewService.js

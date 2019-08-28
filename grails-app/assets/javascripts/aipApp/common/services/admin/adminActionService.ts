@@ -228,7 +228,7 @@ module AIP {
             var deferred = this.$q.defer();
             var realMax = parseInt(query.max) - parseInt(query.offset);
             var url = this.ENDPOINT.admin.actionItemList +
-                '?searchString=' + (query.searchString || '') +
+                '?searchString=' + (encodeURIComponent(query.searchString) || '') +
                 '&sortColumnName=' + (query.sortColumnName || 'actionItemName') +
                 '&ascending=' + (query.ascending.toString() || "")+
                 '&offset=' + (query.offset || 0 )+
@@ -250,7 +250,7 @@ module AIP {
             var deferred = this.$q.defer();
             var realMax = parseInt(query.max) - parseInt(query.offset);
             var url = this.ENDPOINT.admin.actionItemPostJobList +
-                '?searchParam=' + (query.searchString || '') +
+                '?searchParam=' + (encodeURIComponent(query.searchString) || '') +
                 '&sortColumnName=' + (query.sortColumnName || 'postingName') +
                 '&ascending=' + (query.ascending.toString() || "")+
                 '&offset=' + (query.offset || 0 )+

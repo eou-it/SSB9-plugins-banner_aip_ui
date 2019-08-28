@@ -7,8 +7,8 @@
 
 
 var aipAppRoot = $('meta[name=applicationContextRoot]').attr("content") + "/ssb/";
-var aipAppAbsPath = window.location.protocol + "//" + window.location.host +"/BannerGeneralSsb/ssb/" ;
-var bcmRoot = window.location.protocol +"/BannerGeneralSsb/ssb/";
+var aipAppAbsPath = window.location.protocol + "//" + window.location.host + Application.getApplicationPath() + "/" ;
+var bcmRoot = window.location.protocol + Application.getApplicationPath() + "/";
 sessionStorage.setItem('genAIPAppCallingPage', "");
 
 // required global variables for PageBuilder render
@@ -212,6 +212,13 @@ angular.module("templates/dropdown.html", []).run(["$templateCache", function ($
         "<div class=\"btn-group\"><button type=\"button\" ng-disabled=\"{{disabled}}\" ng-class=\"{disabledDD:disabled}\" data-toggle=\"dropdown\" class=\"btn btn-default dropdown dropdown-toggle\" role=\"listbox\" aria-expanded=\"false\" aria-haspopup=\"true\"><span class=\"placeholder\" ng-show=\"!ngModel\">{{::xeLabel}}</span> <span class=\"placeholder\">{{ dropDownLabel }}</span> <span class=\"glyphicon glyphicon-chevron-down\"></span></button><ul class=\"dropdown-menu\" role=\"listbox\" aria-expanded=\"false\" role=\"listbox\"><li ng-hide=\"!ngModel\" ng-click=\"updateModel(xeLabel)\">{{::xeLabel}}</li><li ng-if=\"!isObject\" role=\"option\" ng-repeat=\"option in xeOptions track by $index\" ng-click=\"updateModel(option)\" ng-class=\"{'selected':option===ngModel}\">{{::option}}</li><li ng-if=\"isObject\" ng-repeat=\"option in xeOptions track by $index\" ng-click=\"updateModel(option)\">{{::option.label}}</li></ul></div>");
 }]);
 
+//Added for IE11 browser issue.
+if (!String.prototype.startsWith) {
+    String.prototype.startsWith = function(searchString, position) {
+        position = position || 0;
+        return this.indexOf(searchString, position) === position;
+    };
+}
 
 angular.module("BannerOnAngular")
     //set application root url

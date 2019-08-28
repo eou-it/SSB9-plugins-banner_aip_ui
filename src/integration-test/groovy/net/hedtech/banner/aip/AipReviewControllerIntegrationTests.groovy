@@ -225,8 +225,7 @@ class AipReviewControllerIntegrationTests extends BaseIntegrationTestCase {
         assertEquals 200, controller.response.status
         def jsonResp = JSON.parse(response)
         assertNotNull jsonResp
-        assertEquals 13, jsonResp.length
-
+        assertTrue(jsonResp.length > 0)
         def row1 = jsonResp.result[0]
         def row2 = jsonResp.result[1]
         assertNotEquals row1, row2
@@ -378,7 +377,12 @@ class AipReviewControllerIntegrationTests extends BaseIntegrationTestCase {
 
     @Test
     void getActionItem() {
-        loginSSB( 'CSRSTU004', '111111' )
+
+        def authPerson = PersonUtility.getPerson( "CSRSTU004" )
+        assertNotNull authPerson
+        def auth = selfServiceBannerAuthenticationProvider.authenticate(
+                new UsernamePasswordAuthenticationToken( authPerson.bannerId, '111111' ) )
+        SecurityContextHolder.getContext().setAuthentication( auth )
         def actionItemResult = userActionItemReadOnlyCompositeService.listActionItemByPidmWithinDate()
         assert actionItemResult.groups.size() > 0
         assert actionItemResult.groups.items.size() > 0
@@ -404,7 +408,11 @@ class AipReviewControllerIntegrationTests extends BaseIntegrationTestCase {
     @Test
     void listDocuments() {
         setConfigProperties('aip.attachment.file.storage.location', 'AIP', 'string')
-        loginSSB( 'CSRSTU004', '111111' )
+        def authPerson = PersonUtility.getPerson( "CSRSTU004" )
+        assertNotNull authPerson
+        def auth = selfServiceBannerAuthenticationProvider.authenticate(
+                new UsernamePasswordAuthenticationToken( authPerson.bannerId, '111111' ) )
+        SecurityContextHolder.getContext().setAuthentication( auth )
         def actionItemResult = userActionItemReadOnlyCompositeService.listActionItemByPidmWithinDate()
         assert actionItemResult.groups.size() > 0
         assert actionItemResult.groups.items.size() > 0

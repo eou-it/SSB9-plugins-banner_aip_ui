@@ -39,7 +39,6 @@ angular.module("bannerAIP", [
     "extensibility",
     "ui.bootstrap",
     "ngAria",
-    "ngAnimate",
     "I18nAIP",
     "xe-ui-components",
     "bannerAIPUI",
@@ -48,7 +47,6 @@ angular.module("bannerAIP", [
     "ngRoute",
     "SCEAIP",
     "BannerOnAngular",
-    "pbrun.directives",
     'dateParser',
     'cm.timepicker'
 ])
@@ -536,6 +534,14 @@ angular.module("BannerOnAngular")
         });
         params.saved = false;
     }]);
+
+//Added for IE11 browser issue.
+if (!String.prototype.startsWith) {
+    String.prototype.startsWith = function(searchString, position) {
+        position = position || 0;
+        return this.indexOf(searchString, position) === position;
+    };
+}
 
 var retainBreadcrumbsOnBrowserRefresh = function (toState,BreadcrumbService) {
     var rootBreadcrumbs = {title: "aip.admin.landing",url: "/aipAdmin/#/landing"};
