@@ -52,7 +52,7 @@ class BCMControllerIntegrationTests extends BaseIntegrationTestCase {
                 new UsernamePasswordAuthenticationToken( person.bannerId, '111111' ) )
         SecurityContextHolder.getContext().setAuthentication( auth )
         controller.request.contentType = "text/json"
-        controller.BCMLocation()
+        controller.getBCMLocation()
         assertEquals 200, controller.response.status
         String actualJSON = controller.response.contentAsString
         def data = JSON.parse( actualJSON )
@@ -69,7 +69,7 @@ class BCMControllerIntegrationTests extends BaseIntegrationTestCase {
         SecurityContextHolder.getContext().setAuthentication( auth )
         controller.request.contentType = "text/json"
         controller.session['BCM_LOCATION'] = 'http:/test'
-        controller.BCMLocation()
+        controller.getBCMLocation()
         assertEquals 200, controller.response.status
         String actualJSON = controller.response.contentAsString
         def data = JSON.parse( actualJSON )
