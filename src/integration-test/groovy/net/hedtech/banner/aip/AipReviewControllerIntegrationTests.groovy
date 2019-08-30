@@ -462,6 +462,7 @@ class AipReviewControllerIntegrationTests extends BaseIntegrationTestCase {
         try {
             String data = " Test data for integration testing"
             String tempPath = "test/data"
+            tempPath = System.getProperty("user.dir") + File.separator+"build"+File.separator+"tmp"
             testFile = new File(tempPath, filename)
             if (!testFile.exists()) {
                 testFile.createNewFile()

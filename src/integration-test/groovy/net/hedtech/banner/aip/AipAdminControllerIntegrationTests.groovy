@@ -1145,18 +1145,6 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
         assert data.use12HourClock == true
     }
 
-
-    @Test
-    void listAvailableTimezones() {
-        controller.request.contentType = "text/json"
-        controller.listAvailableTimezones()
-        assertEquals 200, controller.response.status
-        def ret = controller.response.contentAsString
-        def data = JSON.parse( ret )
-        assert data.timezones.length() > 0
-    }
-
-
     @Test
     void loadBlockingProcessLov() {
         controller.request.contentType = "text/json"

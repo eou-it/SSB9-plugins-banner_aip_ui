@@ -20,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired
 class AipTagLibIntegrationTests extends BaseIntegrationTestCase {
 
     @Autowired
+    AipController controller
     def selfServiceBannerAuthenticationProvider
 
     @Before
@@ -36,18 +37,6 @@ class AipTagLibIntegrationTests extends BaseIntegrationTestCase {
     }
 
     def lib = new AipTagLib()
-
-
-    @Ignore
-    @Test
-    void testi18nEntry() {
-        def answer = lib.i18n_aip_setup().toString()
-        println answer
-        assertTrue answer.contains( 'window.i18n_aip' )
-        assertTrue answer.contains( 'aip.user.detail.button.deny' ) // a string name
-        assertTrue answer.contains( 'I do not agree with the university policy' ) // a value
-    }
-
 
     @Test
     void testAipVersion() {
