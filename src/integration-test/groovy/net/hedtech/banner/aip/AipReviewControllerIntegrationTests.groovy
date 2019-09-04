@@ -432,8 +432,8 @@ class AipReviewControllerIntegrationTests extends BaseIntegrationTestCase {
         def saveResult = saveUploadDocumentService(userActionItemId, responseId, 'AIPTestFileTXT.txt')
         assert saveResult.success == true
         def paramsObj = [
-                userActionItemId: userActionItemId.toString(),
-                responseId      : responseId.toString(),
+                userActionItemId: userActionItemId,
+                responseId      : responseId,
                 sortColumn      : "id",
                 sortAscending   : false
         ]
