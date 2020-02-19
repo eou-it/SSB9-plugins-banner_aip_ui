@@ -5,4 +5,5 @@
 *= require angular-ui-bootstrap/dist/ui-bootstrap-csp.css
 *= require modules/commonComponentsLTR-mf.css
 *= require fontawesome/css/font-awesome.css
+*= require aip_custom.css
 */
