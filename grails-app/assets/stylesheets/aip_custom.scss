@@ -62,6 +62,18 @@
   .btn {
     padding: 0.75em !important;
   }
+
+  .ui-corner-all.ui-button.ui-widget {
+    height: auto;
+    background-image: none;
+    background-color: #275c8a;
+    color: #fff;
+    border-color: #357ebd;
+    font-family: Open Sans !important;
+    font-weight: 400;
+    font-size: 14px;
+    padding: 0.75em;
+  }
 }
 input.pb-item.pb-text,
 input.pb-item.pb-number,
@@ -470,18 +482,6 @@ select.pb-select:focus {
   background-color: #275c8a;
   color: #fff;
   border-color: #357ebd;
-}
-
-.ui-corner-all.ui-button.ui-widget {
-  height: auto;
-  background-image: none;
-  background-color: #275c8a;
-  color: #fff;
-  border-color: #357ebd;
-  font-family: Open Sans !important;
-  font-weight: 400;
-  font-size: 14px;
-  padding: 0.75em;
 }
 
 .aip-item-detail-container .detail-content {

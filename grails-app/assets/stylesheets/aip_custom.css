@@ -48,6 +48,17 @@
 #pbid-PersonalInformation .btn, #pbid-AddresslDetails .btn, #pbid-ContactInformation .btn, #pbid-EmergencyContacTitle .btn, #pbid-AdditionalInformation .btn,
 #pbid-ProgrammeDetailsTitle .btn, #pbid-ConfirmEnrolment .btn, #pbid-PaymentConfirmationBlock .btn {
     padding: 0.75em !important; }
+#pbid-PersonalInformation .ui-corner-all.ui-button.ui-widget, #pbid-AddresslDetails .ui-corner-all.ui-button.ui-widget, #pbid-ContactInformation .ui-corner-all.ui-button.ui-widget, #pbid-EmergencyContacTitle .ui-corner-all.ui-button.ui-widget, #pbid-AdditionalInformation .ui-corner-all.ui-button.ui-widget,
+#pbid-ProgrammeDetailsTitle .ui-corner-all.ui-button.ui-widget, #pbid-ConfirmEnrolment .ui-corner-all.ui-button.ui-widget, #pbid-PaymentConfirmationBlock .ui-corner-all.ui-button.ui-widget {
+    height: auto;
+    background-image: none;
+    background-color: #275c8a;
+    color: #fff;
+    border-color: #357ebd;
+    font-family: Open Sans !important;
+    font-weight: 400;
+    font-size: 14px;
+    padding: 0.75em; }
 
 input.pb-item.pb-text,
 input.pb-item.pb-number,
@@ -394,17 +405,6 @@ select.pb-select:focus {
     background-color: #275c8a;
     color: #fff;
     border-color: #357ebd; }
-
-.ui-corner-all.ui-button.ui-widget {
-    height: auto;
-    background-image: none;
-    background-color: #275c8a;
-    color: #fff;
-    border-color: #357ebd;
-    font-family: Open Sans !important;
-    font-weight: 400;
-    font-size: 14px;
-    padding: 0.75em; }
 
 .aip-item-detail-container .detail-content {
     padding: 0px 5px 5px 5px !important; }
