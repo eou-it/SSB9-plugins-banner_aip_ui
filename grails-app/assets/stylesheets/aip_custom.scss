@@ -1,5 +1,6 @@
 #pbid-PersonalInformation,#pbid-AddresslDetails,#pbid-ContactInformation,#pbid-EmergencyContacTitle,#pbid-AdditionalInformation,
 #pbid-ProgrammeDetailsTitle,#pbid-ConfirmEnrolment,#pbid-PaymentConfirmationBlock {
+
   a:link {
     color: black
   }
@@ -74,6 +75,7 @@
     font-size: 14px;
     padding: 0.75em;
   }
+
 }
 input.pb-item.pb-text,
 input.pb-item.pb-number,
