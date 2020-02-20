@@ -1,55 +1,55 @@
 #pbid-PersonalInformation a:link, #pbid-AddresslDetails a:link, #pbid-ContactInformation a:link, #pbid-EmergencyContacTitle a:link, #pbid-AdditionalInformation a:link,
-#pbid-ProgrammeDetailsTitle a:link, #pbid-ConfirmEnrolment a:link, #pbid-PaymentConfirmationBlock a:link {
+#pbid-ProgrammeDetailsTitle a:link, #pbid-ConfirmEnrolment a:link, #pbid-PaymentConfirmationBlock a:link, #pbid-ModuleRegistrationConfirmation a:link {
     color: black; }
 #pbid-PersonalInformation h4, #pbid-AddresslDetails h4, #pbid-ContactInformation h4, #pbid-EmergencyContacTitle h4, #pbid-AdditionalInformation h4,
-#pbid-ProgrammeDetailsTitle h4, #pbid-ConfirmEnrolment h4, #pbid-PaymentConfirmationBlock h4 {
+#pbid-ProgrammeDetailsTitle h4, #pbid-ConfirmEnrolment h4, #pbid-PaymentConfirmationBlock h4, #pbid-ModuleRegistrationConfirmation h4 {
     padding: 10px 0px; }
 #pbid-PersonalInformation h2, #pbid-AddresslDetails h2, #pbid-ContactInformation h2, #pbid-EmergencyContacTitle h2, #pbid-AdditionalInformation h2,
-#pbid-ProgrammeDetailsTitle h2, #pbid-ConfirmEnrolment h2, #pbid-PaymentConfirmationBlock h2 {
+#pbid-ProgrammeDetailsTitle h2, #pbid-ConfirmEnrolment h2, #pbid-PaymentConfirmationBlock h2, #pbid-ModuleRegistrationConfirmation h2 {
     padding-top: .5em; }
 #pbid-PersonalInformation table, #pbid-AddresslDetails table, #pbid-ContactInformation table, #pbid-EmergencyContacTitle table, #pbid-AdditionalInformation table,
-#pbid-ProgrammeDetailsTitle table, #pbid-ConfirmEnrolment table, #pbid-PaymentConfirmationBlock table {
+#pbid-ProgrammeDetailsTitle table, #pbid-ConfirmEnrolment table, #pbid-PaymentConfirmationBlock table, #pbid-ModuleRegistrationConfirmation table {
     margin-left: 10px;
     margin-bottom: 10px; }
 #pbid-PersonalInformation .table, #pbid-AddresslDetails .table, #pbid-ContactInformation .table, #pbid-EmergencyContacTitle .table, #pbid-AdditionalInformation .table,
-#pbid-ProgrammeDetailsTitle .table, #pbid-ConfirmEnrolment .table, #pbid-PaymentConfirmationBlock .table {
+#pbid-ProgrammeDetailsTitle .table, #pbid-ConfirmEnrolment .table, #pbid-PaymentConfirmationBlock .table, #pbid-ModuleRegistrationConfirmation .table {
     width: 95% !important; }
 #pbid-PersonalInformation textarea, #pbid-PersonalInformation textarea:focus, #pbid-AddresslDetails textarea, #pbid-AddresslDetails textarea:focus, #pbid-ContactInformation textarea, #pbid-ContactInformation textarea:focus, #pbid-EmergencyContacTitle textarea, #pbid-EmergencyContacTitle textarea:focus, #pbid-AdditionalInformation textarea, #pbid-AdditionalInformation textarea:focus,
 #pbid-ProgrammeDetailsTitle textarea,
-#pbid-ProgrammeDetailsTitle textarea:focus, #pbid-ConfirmEnrolment textarea, #pbid-ConfirmEnrolment textarea:focus, #pbid-PaymentConfirmationBlock textarea, #pbid-PaymentConfirmationBlock textarea:focus {
+#pbid-ProgrammeDetailsTitle textarea:focus, #pbid-ConfirmEnrolment textarea, #pbid-ConfirmEnrolment textarea:focus, #pbid-PaymentConfirmationBlock textarea, #pbid-PaymentConfirmationBlock textarea:focus, #pbid-ModuleRegistrationConfirmation textarea, #pbid-ModuleRegistrationConfirmation textarea:focus {
     margin-left: 12px !important;
     width: 18.75em;
     color: darkSlateGray; }
 #pbid-PersonalInformation input[type="checkbox"], #pbid-AddresslDetails input[type="checkbox"], #pbid-ContactInformation input[type="checkbox"], #pbid-EmergencyContacTitle input[type="checkbox"], #pbid-AdditionalInformation input[type="checkbox"],
-#pbid-ProgrammeDetailsTitle input[type="checkbox"], #pbid-ConfirmEnrolment input[type="checkbox"], #pbid-PaymentConfirmationBlock input[type="checkbox"] {
+#pbid-ProgrammeDetailsTitle input[type="checkbox"], #pbid-ConfirmEnrolment input[type="checkbox"], #pbid-PaymentConfirmationBlock input[type="checkbox"], #pbid-ModuleRegistrationConfirmation input[type="checkbox"] {
     width: 20px;
     height: 18px;
     line-height: normal;
     padding: .75em .75em;
     margin-left: 9px; }
 #pbid-PersonalInformation input:read-only, #pbid-AddresslDetails input:read-only, #pbid-ContactInformation input:read-only, #pbid-EmergencyContacTitle input:read-only, #pbid-AdditionalInformation input:read-only,
-#pbid-ProgrammeDetailsTitle input:read-only, #pbid-ConfirmEnrolment input:read-only, #pbid-PaymentConfirmationBlock input:read-only {
+#pbid-ProgrammeDetailsTitle input:read-only, #pbid-ConfirmEnrolment input:read-only, #pbid-PaymentConfirmationBlock input:read-only, #pbid-ModuleRegistrationConfirmation input:read-only {
     background-color: #ebebe4; }
 #pbid-PersonalInformation option:empty, #pbid-AddresslDetails option:empty, #pbid-ContactInformation option:empty, #pbid-EmergencyContacTitle option:empty, #pbid-AdditionalInformation option:empty,
-#pbid-ProgrammeDetailsTitle option:empty, #pbid-ConfirmEnrolment option:empty, #pbid-PaymentConfirmationBlock option:empty {
+#pbid-ProgrammeDetailsTitle option:empty, #pbid-ConfirmEnrolment option:empty, #pbid-PaymentConfirmationBlock option:empty, #pbid-ModuleRegistrationConfirmation option:empty {
     display: none; }
 #pbid-PersonalInformation .pagination-container, #pbid-AddresslDetails .pagination-container, #pbid-ContactInformation .pagination-container, #pbid-EmergencyContacTitle .pagination-container, #pbid-AdditionalInformation .pagination-container,
-#pbid-ProgrammeDetailsTitle .pagination-container, #pbid-ConfirmEnrolment .pagination-container, #pbid-PaymentConfirmationBlock .pagination-container {
+#pbid-ProgrammeDetailsTitle .pagination-container, #pbid-ConfirmEnrolment .pagination-container, #pbid-PaymentConfirmationBlock .pagination-container, #pbid-ModuleRegistrationConfirmation .pagination-container {
     display: none; }
 #pbid-PersonalInformation #title-panel, #pbid-AddresslDetails #title-panel, #pbid-ContactInformation #title-panel, #pbid-EmergencyContacTitle #title-panel, #pbid-AdditionalInformation #title-panel,
-#pbid-ProgrammeDetailsTitle #title-panel, #pbid-ConfirmEnrolment #title-panel, #pbid-PaymentConfirmationBlock #title-panel {
+#pbid-ProgrammeDetailsTitle #title-panel, #pbid-ConfirmEnrolment #title-panel, #pbid-PaymentConfirmationBlock #title-panel, #pbid-ModuleRegistrationConfirmation #title-panel {
     display: none; }
 #pbid-PersonalInformation .pagination-container, #pbid-AddresslDetails .pagination-container, #pbid-ContactInformation .pagination-container, #pbid-EmergencyContacTitle .pagination-container, #pbid-AdditionalInformation .pagination-container,
-#pbid-ProgrammeDetailsTitle .pagination-container, #pbid-ConfirmEnrolment .pagination-container, #pbid-PaymentConfirmationBlock .pagination-container {
+#pbid-ProgrammeDetailsTitle .pagination-container, #pbid-ConfirmEnrolment .pagination-container, #pbid-PaymentConfirmationBlock .pagination-container, #pbid-ModuleRegistrationConfirmation .pagination-container {
     padding: 0.1em !important; }
 #pbid-PersonalInformation .ui-button-text-only .ui-button-text, #pbid-AddresslDetails .ui-button-text-only .ui-button-text, #pbid-ContactInformation .ui-button-text-only .ui-button-text, #pbid-EmergencyContacTitle .ui-button-text-only .ui-button-text, #pbid-AdditionalInformation .ui-button-text-only .ui-button-text,
-#pbid-ProgrammeDetailsTitle .ui-button-text-only .ui-button-text, #pbid-ConfirmEnrolment .ui-button-text-only .ui-button-text, #pbid-PaymentConfirmationBlock .ui-button-text-only .ui-button-text {
+#pbid-ProgrammeDetailsTitle .ui-button-text-only .ui-button-text, #pbid-ConfirmEnrolment .ui-button-text-only .ui-button-text, #pbid-PaymentConfirmationBlock .ui-button-text-only .ui-button-text, #pbid-ModuleRegistrationConfirmation .ui-button-text-only .ui-button-text {
     padding: 0em; }
 #pbid-PersonalInformation .btn, #pbid-AddresslDetails .btn, #pbid-ContactInformation .btn, #pbid-EmergencyContacTitle .btn, #pbid-AdditionalInformation .btn,
-#pbid-ProgrammeDetailsTitle .btn, #pbid-ConfirmEnrolment .btn, #pbid-PaymentConfirmationBlock .btn {
+#pbid-ProgrammeDetailsTitle .btn, #pbid-ConfirmEnrolment .btn, #pbid-PaymentConfirmationBlock .btn, #pbid-ModuleRegistrationConfirmation .btn {
     padding: 0.75em !important; }
 #pbid-PersonalInformation .ui-corner-all.ui-button.ui-widget, #pbid-AddresslDetails .ui-corner-all.ui-button.ui-widget, #pbid-ContactInformation .ui-corner-all.ui-button.ui-widget, #pbid-EmergencyContacTitle .ui-corner-all.ui-button.ui-widget, #pbid-AdditionalInformation .ui-corner-all.ui-button.ui-widget,
-#pbid-ProgrammeDetailsTitle .ui-corner-all.ui-button.ui-widget, #pbid-ConfirmEnrolment .ui-corner-all.ui-button.ui-widget, #pbid-PaymentConfirmationBlock .ui-corner-all.ui-button.ui-widget {
+#pbid-ProgrammeDetailsTitle .ui-corner-all.ui-button.ui-widget, #pbid-ConfirmEnrolment .ui-corner-all.ui-button.ui-widget, #pbid-PaymentConfirmationBlock .ui-corner-all.ui-button.ui-widget, #pbid-ModuleRegistrationConfirmation .ui-corner-all.ui-button.ui-widget {
     height: auto;
     background-image: none;
     background-color: #275c8a;
