@@ -1,5 +1,4 @@
 //= require aipApp/adminApp.js
-//= require aipApp/common/services/breadcrumb-service.js
 //= require aipApp/common/directives/admin/landing-item/js/landingItem.js 
 //= require aipApp/common/directives/admin/group-detail/js/groupDetail.js 
 //= require aipApp/common/directives/admin/status-rule/js/statusRule.js 
