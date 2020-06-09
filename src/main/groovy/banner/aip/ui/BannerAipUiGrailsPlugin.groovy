@@ -1,4 +1,8 @@
-package banner.aip.ui
+/*********************************************************************************
+ Copyright 2019-2020 Ellucian Company L.P. and its affiliates.
+ **********************************************************************************/
+ 
+ package banner.aip.ui
 
 import grails.plugins.*
 
