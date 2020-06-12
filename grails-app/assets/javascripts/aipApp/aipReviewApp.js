@@ -2,7 +2,6 @@
  Copyright 2018-2019 Ellucian Company L.P. and its affiliates.
  ********************************************************************************/
 // angular module init and configuration
-"use strict";
 
 //var aipAppRoot = $('meta[name=applicationContextRoot]').attr("content") + "/plugins/" +
 //    window.aipApp.fileSystemName + "/aipApp/";
