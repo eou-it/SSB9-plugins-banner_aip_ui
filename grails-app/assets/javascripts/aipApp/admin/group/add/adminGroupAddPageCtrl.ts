@@ -35,7 +35,7 @@ module AIP {
         description: string;
     }
     export class AdminGroupAddPageCtrl implements IAdminGroupAddPageCtrl{
-        $inject = ["$scope","$rootScope", "$window", "AdminGroupService", "$q", "SpinnerService", "$state", "$filter", "$sce", "$timeout", "CKEDITORCONFIG"];
+      static  $inject = ["$scope","$rootScope", "$window", "AdminGroupService", "$q", "SpinnerService", "$state", "$filter", "$sce", "$timeout", "CKEDITORCONFIG"];
         status: AIP.IStatus[];
         folders: AIP.IFolder[];
         groupInfo: IGroupSelect;

@@ -11,7 +11,7 @@ declare var notifications: any;
 
 module AIP {
     export class AdminStatusListPageCtrl {
-        $inject = ["$scope", "$state", "$window", "$filter", "$http", "$q", "$uibModal",
+       static $inject = ["$scope", "$state", "$window", "$filter", "$http", "$q", "$uibModal",
             "ENDPOINT", "PAGINATIONCONFIG", "AdminActionStatusService","APP_FOLDER_PATH"];
         $scope;
         $state;

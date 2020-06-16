@@ -6,7 +6,7 @@ declare var register: any;
 
 module AIP {
     export class ItemInformCtrl {
-        $inject = ["$scope", "$uibModalInstance", "$window", "APP_ROOT"];
+       static $inject = ["$scope", "$uibModalInstance", "$window", "APP_ROOT"];
         $uibModalInstance;
         $window;
         APP_ROOT;

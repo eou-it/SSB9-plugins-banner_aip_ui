@@ -19,7 +19,7 @@ module AIP {
 
     export class MonitorActionItemCtrl implements IMonitorActionItemCtrl {
 
-        $inject = ["$scope", "$state", "AIPReviewService", "AIPUserService", "SpinnerService", "$timeout", "$q", "$uibModal", "APP_ROOT", "$sce", "$filter", "PAGINATIONCONFIG"];
+       static $inject = ["$scope", "$state", "AIPReviewService", "AIPUserService", "SpinnerService", "$timeout", "$q", "$uibModal", "APP_ROOT", "$sce", "$filter", "PAGINATIONCONFIG"];
         aipReviewService: AIP.AIPReviewService;
         userService: AIP.UserService;
         $uibModal;

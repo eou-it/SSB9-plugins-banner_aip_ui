@@ -7,8 +7,6 @@ var AIP;
 (function (AIP) {
     var RecurringPostActionListPageCtrl = /** @class */ (function () {
         function RecurringPostActionListPageCtrl($scope, $state, $window, $filter, $q, ENDPOINT, PAGINATIONCONFIG, AdminActionService) {
-            this.$inject = ["$scope", "$state", "$window", "$filter", "$q", "ENDPOINT", "PAGINATIONCONFIG",
-                "AdminActionService"];
             $scope.vm = this;
             this.$state = $state;
             this.$filter = $filter;
@@ -207,6 +205,8 @@ var AIP;
                 console.log(error);
             });
         };
+        RecurringPostActionListPageCtrl.$inject = ["$scope", "$state", "$window", "$filter", "$q", "ENDPOINT", "PAGINATIONCONFIG",
+            "AdminActionService"];
         return RecurringPostActionListPageCtrl;
     }());
     AIP.RecurringPostActionListPageCtrl = RecurringPostActionListPageCtrl;

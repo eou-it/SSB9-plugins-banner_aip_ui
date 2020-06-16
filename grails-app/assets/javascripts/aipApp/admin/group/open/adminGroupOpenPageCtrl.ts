@@ -17,7 +17,7 @@ module AIP {
         groupFolder: IGroupFolder;
     }
     export class AdminGroupOpenPageCtrl implements IAdminGroupOpenPageCtrl{
-        $inject = ["$scope","$rootScope","$location", "$window", "AdminGroupService", "$q", "SpinnerService", "$state", "$filter", "$sce", "$templateRequest", "$templateCache",
+     static   $inject = ["$scope","$rootScope","$location", "$window", "AdminGroupService", "$q", "SpinnerService", "$state", "$filter", "$sce", "$templateRequest", "$templateCache",
             "$compile", "$timeout","APP_FOLDER_PATH"];
         groupInfo:IGroupInfo;
         groupFolder: IGroupFolder;

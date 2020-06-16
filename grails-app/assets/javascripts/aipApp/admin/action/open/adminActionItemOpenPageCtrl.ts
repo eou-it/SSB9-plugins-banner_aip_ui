@@ -18,7 +18,7 @@ module AIP {
     }
 
     export class AdminActionItemOpenPageCtrl {
-        $inject = ["$scope", "$rootScope", "$q","$location", "$state", "$filter", "$sce", "$window", "$templateRequest", "$templateCache", "$compile", "$timeout", "$interpolate", "SpinnerService", "AdminActionService", "AdminActionStatusService","APP_FOLDER_PATH", "CKEDITORCONFIG"];
+       static $inject = ["$scope", "$rootScope", "$q","$location", "$state", "$filter", "$sce", "$window", "$templateRequest", "$templateCache", "$compile", "$timeout", "$interpolate", "SpinnerService", "AdminActionService", "AdminActionStatusService","APP_FOLDER_PATH", "CKEDITORCONFIG"];
         adminActionService: AIP.AdminActionService;
         adminActionStatusService: AIP.AdminActionStatusService;
         spinnerService: AIP.SpinnerService;

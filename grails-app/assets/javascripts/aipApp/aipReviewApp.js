@@ -2,10 +2,10 @@
  Copyright 2018-2019 Ellucian Company L.P. and its affiliates.
  ********************************************************************************/
 // angular module init and configuration
-
+"use strict";
 //var aipAppRoot = $('meta[name=applicationContextRoot]').attr("content") + "/plugins/" +
 //    window.aipApp.fileSystemName + "/aipApp/";
-
+'use strict';
 var aipAppRoot = $('meta[name=applicationContextRoot]').attr("content") + "/ssb/";
 var aipAppAbsPath = window.location.protocol + "//" + window.location.host + Application.getApplicationPath() +"/" ;
 sessionStorage.setItem('genAIPAppCallingPage', "");
@@ -155,8 +155,8 @@ angular.module("bannerAIPReview", [
     ])
 
     //instance-injector
-    .run(["$rootScope", "$window", "$location", "$state", "$stateParams", "$filter", "$sce", "$templateCache", "BreadcrumbService",
-        function ($rootScope, $window, $location, $state, $stateParams, $filter, $sce, $templateCache, BreadcrumbService) {
+    .run(["$rootScope", "$window", "$location", "$state", "$stateParams", "$filter", "$sce", "$templateCache","BreadcrumbService",
+        function ($rootScope, $window, $location, $state, $stateParams, $filter, $sce, $templateCache,BreadcrumbService) {
             $rootScope.$state = $state;
             $rootScope.$stateParams = $stateParams;
             _.extend($.i18n.map, window.i18n); //merge i18ns b/c xe-components use different i18n message object

@@ -1,7 +1,7 @@
 /*******************************************************************************
  Copyright 2018 Ellucian Company L.P. and its affiliates.
  ********************************************************************************/
-///<reference path = "../../../typings/tsd.d.ts"/>
+///<reference path="../../../typings/tsd.d.ts"/>
 
 declare var BreadCrumbAndPageTitle;
 
@@ -19,7 +19,7 @@ module AIP {
     }
 
     export class AIPBreadcrumbService implements IAIPBreadcrumbService {
-        $inject = ["$location", "$filter"];
+       static $inject = ["$location", "$filter"];
         breadcrumbs: {};
         $location;
         $filter;

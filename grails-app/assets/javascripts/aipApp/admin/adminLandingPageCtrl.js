@@ -5,7 +5,6 @@ var AIP;
 (function (AIP) {
     var AdminLandingPageCtrl = /** @class */ (function () {
         function AdminLandingPageCtrl($scope, $state) {
-            this.$inject = ["$scope", "$state"];
             $scope.vm = this;
             this.$state = $state;
             this.init();
@@ -44,6 +43,7 @@ var AIP;
                 }
             ];
         };
+        AdminLandingPageCtrl.$inject = ["$scope", "$state"];
         return AdminLandingPageCtrl;
     }());
     AIP.AdminLandingPageCtrl = AdminLandingPageCtrl;

@@ -19,7 +19,7 @@ module AIP {
     }
 
     export class RecurringPostActionListPageCtrl implements IRecurringPostActionListPageCtrl {
-        $inject = ["$scope", "$state", "$window", "$filter", "$q", "ENDPOINT", "PAGINATIONCONFIG",
+      static  $inject = ["$scope", "$state", "$window", "$filter", "$q", "ENDPOINT", "PAGINATIONCONFIG",
             "AdminActionService"];
         $state;
         $filter;

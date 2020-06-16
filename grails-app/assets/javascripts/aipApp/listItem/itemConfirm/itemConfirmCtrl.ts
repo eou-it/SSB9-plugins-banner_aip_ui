@@ -15,7 +15,7 @@ module AIP {
     }
 
     export class ItemConfirmCtrl implements IItemConfirmCtrl{
-        $inject = ["$scope", "$stateParams", "$state", "ItemListViewService"];
+        static $inject = ["$scope", "$stateParams", "$state", "ItemListViewService"];
         itemListViewService;
         actionItems;
         $state;

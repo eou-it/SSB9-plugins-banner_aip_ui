@@ -3,5 +3,4 @@
  ********************************************************************************/
 // angular module init and configuration
 "use strict";
-
 var BannerOnAngular = angular.module("BannerOnAngular", [])

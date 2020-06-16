@@ -45,7 +45,7 @@ module AIP {
 
     export class ListItemPageCtrl implements IListItemPageCtrl {
 
-        $inject = ["$scope", "$state", "ItemListViewService", "AIPUserService", "SpinnerService", "$timeout", "$q", "$uibModal", "APP_ABS_PATH", "$sce", "$compile", "$filter"];
+       static $inject = ["$scope", "$state", "ItemListViewService", "AIPUserService", "SpinnerService", "$timeout", "$q", "$uibModal", "APP_ABS_PATH", "$sce", "$compile", "$filter"];
         itemListViewService: AIP.ItemListViewService;
         userService: AIP.UserService;
         actionItems: IUserItem;

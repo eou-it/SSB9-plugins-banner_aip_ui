@@ -19,7 +19,7 @@ module AIP {
 
     export class ReviewActionItemCtrl implements IReviewActionItemCtrl {
 
-        $inject = ["$scope","$rootScope","$state", "AIPReviewService", "AIPUserService", "SpinnerService", "$timeout", "$q", "$uibModal", "APP_ROOT", "$sce", "$filter","$window", "datePicker"];
+       static $inject = ["$scope","$rootScope","$state", "AIPReviewService", "AIPUserService", "SpinnerService", "$timeout", "$q", "$uibModal", "APP_ROOT", "$sce", "$filter","$window", "datePicker"];
         aipReviewService: AIP.AIPReviewService;
         userService: AIP.UserService;
         $uibModal;

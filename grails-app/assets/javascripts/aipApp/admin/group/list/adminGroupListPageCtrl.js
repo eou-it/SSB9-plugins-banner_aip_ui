@@ -7,8 +7,6 @@ var AIP;
 (function (AIP) {
     var AdminGroupListPageCtrl = /** @class */ (function () {
         function AdminGroupListPageCtrl($scope, $state, $window, $filter, $q, ENDPOINT, PAGINATIONCONFIG, AdminGroupService) {
-            this.$inject = ["$scope", "$state", "$window", "$filter", "$q", "ENDPOINT", "PAGINATIONCONFIG",
-                "AdminGroupService"];
             $scope.vm = this;
             this.$state = $state;
             this.$scope = $scope;
@@ -214,6 +212,8 @@ var AIP;
         };
         AdminGroupListPageCtrl.prototype.refreshGrid = function () {
         };
+        AdminGroupListPageCtrl.$inject = ["$scope", "$state", "$window", "$filter", "$q", "ENDPOINT", "PAGINATIONCONFIG",
+            "AdminGroupService"];
         return AdminGroupListPageCtrl;
     }());
     AIP.AdminGroupListPageCtrl = AdminGroupListPageCtrl;

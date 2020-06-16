@@ -10,7 +10,7 @@ interface IAdminLandingPageCtrlScope extends ng.IScope {
 
 module AIP {
     export class AdminLandingPageCtrl {
-        $inject = ["$scope", "$state"];
+       static $inject = ["$scope", "$state"];
         $state;
         landingItem;
         constructor($scope:IAdminLandingPageCtrlScope, $state) {

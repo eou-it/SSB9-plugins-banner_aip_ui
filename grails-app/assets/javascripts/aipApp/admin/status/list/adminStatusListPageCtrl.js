@@ -6,8 +6,6 @@ var AIP;
 (function (AIP) {
     var AdminStatusListPageCtrl = /** @class */ (function () {
         function AdminStatusListPageCtrl($scope, $state, $window, $filter, $q, $http, $uibModal, ENDPOINT, PAGINATIONCONFIG, AdminActionStatusService, APP_FOLDER_PATH) {
-            this.$inject = ["$scope", "$state", "$window", "$filter", "$http", "$q", "$uibModal",
-                "ENDPOINT", "PAGINATIONCONFIG", "AdminActionStatusService", "APP_FOLDER_PATH"];
             $scope.vm = this;
             $scope.disableSystemRecord = function (data) {
             };
@@ -233,6 +231,8 @@ var AIP;
         AdminStatusListPageCtrl.prototype.selectRecord = function (data) {
             this.selectedRecord = data;
         };
+        AdminStatusListPageCtrl.$inject = ["$scope", "$state", "$window", "$filter", "$http", "$q", "$uibModal",
+            "ENDPOINT", "PAGINATIONCONFIG", "AdminActionStatusService", "APP_FOLDER_PATH"];
         return AdminStatusListPageCtrl;
     }());
     AIP.AdminStatusListPageCtrl = AdminStatusListPageCtrl;

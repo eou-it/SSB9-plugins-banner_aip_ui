@@ -9,7 +9,6 @@ var AIP;
 (function (AIP) {
     var AdminActionItemOpenPageCtrl = /** @class */ (function () {
         function AdminActionItemOpenPageCtrl($scope, $rootScope, $q, $location, $state, $filter, $sce, $window, $templateRequest, $templateCache, $compile, $timeout, $interpolate, SpinnerService, AdminActionService, AdminActionStatusService, APP_FOLDER_PATH, CKEDITORCONFIG) {
-            this.$inject = ["$scope", "$rootScope", "$q", "$location", "$state", "$filter", "$sce", "$window", "$templateRequest", "$templateCache", "$compile", "$timeout", "$interpolate", "SpinnerService", "AdminActionService", "AdminActionStatusService", "APP_FOLDER_PATH", "CKEDITORCONFIG"];
             this.trustAsHtml = function (string) {
                 return this.$sce.trustAsHtml(string);
             };
@@ -599,6 +598,7 @@ var AIP;
             });
             notifications.addNotification(n);
         };
+        AdminActionItemOpenPageCtrl.$inject = ["$scope", "$rootScope", "$q", "$location", "$state", "$filter", "$sce", "$window", "$templateRequest", "$templateCache", "$compile", "$timeout", "$interpolate", "SpinnerService", "AdminActionService", "AdminActionStatusService", "APP_FOLDER_PATH", "CKEDITORCONFIG"];
         return AdminActionItemOpenPageCtrl;
     }());
     AIP.AdminActionItemOpenPageCtrl = AdminActionItemOpenPageCtrl;

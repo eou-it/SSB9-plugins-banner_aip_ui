@@ -24,7 +24,7 @@ module AIP {
     }
 
     export class AdminActionItemAddPageCtrl implements IAdminActionItemAddPageCtrl{
-        $inject = ["$scope","$rootScope", "$q", "$state", "$filter","$location","$sce", "$timeout", "$window", "SpinnerService", "AdminActionService" ];
+       static $inject = ["$scope","$rootScope", "$q", "$state", "$filter","$location","$sce", "$timeout", "$window", "SpinnerService", "AdminActionService" ];
         status: [AIP.IStatus];
         folders: [AIP.IFolder];
         actionItemInfo: AIP.IActionItemParam|any;

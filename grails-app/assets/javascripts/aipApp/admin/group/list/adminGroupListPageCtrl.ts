@@ -10,7 +10,7 @@ declare var notifications: any;
 
 module AIP {
     export class AdminGroupListPageCtrl {
-        $inject = ["$scope", "$state", "$window", "$filter", "$q", "ENDPOINT", "PAGINATIONCONFIG",
+       static $inject = ["$scope", "$state", "$window", "$filter", "$q", "ENDPOINT", "PAGINATIONCONFIG",
             "AdminGroupService"];
         $state;
         $filter;
