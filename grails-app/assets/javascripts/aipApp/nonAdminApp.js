@@ -1,8 +1,10 @@
 /*******************************************************************************
- Copyright 2018-2020 Ellucian Company L.P. and its affiliates.
+ Copyright 2018-2019 Ellucian Company L.P. and its affiliates.
  ********************************************************************************/
 // angular module init and configuration
 "use strict";
+
+
 
 var aipAppRoot = $('meta[name=applicationContextRoot]').attr("content") + "/ssb/";
 var aipAppAbsPath = window.location.protocol + "//" + window.location.host + Application.getApplicationPath() + "/" ;
@@ -27,28 +29,28 @@ var xhrHttpInterceptor = function () {
     }
 }
 
- angular.module("bannerNonAdminAIP", [
-        "ngResource",
-        "ngSanitize",
-        "ui.router",
-        "extensibility",
-        "ui.bootstrap",
-        "ngAria",
-        "ngAnimate",
-        "I18nAIP",
-        "xe-ui-components",
-        "bannerAIPUI",
-        "bannerCommonAIP",
-        "ngRoute",
-        "SCEAIP",
-        "BannerOnAngular",
-        "pbrun.directives",
-        'dateParser',
-        'cm.timepicker',
-        "ngFileUpload"
-    ])
+angular.module("bannerNonAdminAIP", [
+    "ngResource",
+    "ngSanitize",
+    "ui.router",
+    "extensibility",
+    "ui.bootstrap",
+    "ngAria",
+    "ngAnimate",
+    "I18nAIP",
+    "xe-ui-components",
+    "bannerAIPUI",
+    "bannerCommonAIP",
+    "ngRoute",
+    "SCEAIP",
+    "BannerOnAngular",
+    "pbrun.directives",
+    'dateParser',
+    'cm.timepicker',
+    "ngFileUpload"
+])
 
-    //set application root url
+//set application root url
     .constant('APP_ROOT', aipAppRoot)
 
     .constant('BCM_ROOT', bcmRoot)
@@ -84,7 +86,7 @@ var xhrHttpInterceptor = function () {
     }).factory('xhrHttpInterceptor', xhrHttpInterceptor)
 
 
-    //provider-injector
+//provider-injector
     .config(["$stateProvider", "$urlRouterProvider", "$locationProvider", "$httpProvider", "$windowProvider", "PAGES", "APP_ROOT", "APP_ABS_PATH",
         function ($stateProvider, $urlRouteProvider, $locationProvider, $httpProvider, $windowProvider,
                   PAGES, APP_ROOT, APP_ABS_PATH) {
@@ -167,33 +169,32 @@ bannerAIPUI
     //supply directives' template url so that we don't have any hardcoded url in other code
     .config(['$provide', 'APP_ROOT','APP_PATH', function ($provide, APP_ROOT,APP_PATH) {
             //override angular-ui's default accordion-group directive template; h4 -> h2 for title
-            $provide.decorator('uibAccordionGroupDirective', ['$delegate',function ($delegate) {
+            $provide.decorator('uibAccordionGroupDirective', function ($delegate) {
                 var directive = $delegate[0];
                 directive.templateUrl = APP_PATH+"assets/aipApp/common/directives/list/template/listAccordionHeader.html";
                 directive.replace = false;
                 return $delegate;
-            }]);
-
-            $provide.decorator("aipListDirective", ['$delegate',function ($delegate) {
+            });
+            $provide.decorator("aipListDirective", function ($delegate) {
                 var directive = $delegate[0];
                 directive.templateUrl = APP_PATH+"assets/aipApp/common/directives/list/template/list.html";
                 return $delegate;
-            }]);
-            $provide.decorator("aipReadmoreDirective", ['$delegate',function ($delegate) {
+            });
+            $provide.decorator("aipReadmoreDirective", function ($delegate) {
                 var directive = $delegate[0];
                 directive.templateUrl = APP_PATH+"assets/aipApp/common/directives/readmore/template/readmore.html";
                 return $delegate;
-            }]);
-            $provide.decorator("aipItemDetailDirective",['$delegate',function ($delegate) {
+            });
+            $provide.decorator("aipItemDetailDirective", function ($delegate) {
                 var directive = $delegate[0];
                 directive.templateUrl = APP_PATH+"assets/aipApp/common/directives/item-detail/template/itemDetail.html";
                 return $delegate;
-            }]);
-            $provide.decorator("aipAttachmentDirective",['$delegate',function ($delegate) {
+            });
+            $provide.decorator("aipAttachmentDirective", function ($delegate) {
                 var directive = $delegate[0];
                 directive.templateUrl = APP_PATH+"assets/aipApp/common/directives/aip-attachment/template/aipAttachment.html";
                 return $delegate;
-            }]);
+            });
         }]
     );
 
@@ -220,7 +221,7 @@ if (!String.prototype.startsWith) {
 }
 
 angular.module("BannerOnAngular")
-    //set application root url
+//set application root url
     .constant('APP_ROOT', aipAppRoot)
     .constant('BCM_ROOT', bcmRoot)
     .constant('APP_PATH', aipAppAbsPath)
@@ -229,12 +230,11 @@ angular.module("BannerOnAngular")
     .constant("params", params)
 
     .config(['$provide', 'APP_ROOT', 'params','APP_FOLDER_PATH', function ($provide, APP_ROOT, params,APP_FOLDER_PATH) {
-        $provide.decorator("pagebuilderPageDirective", ['$delegate',function ($delegate) {
+        $provide.decorator("pagebuilderPageDirective", function ($delegate) {
             var directive = $delegate[0];
             directive.templateUrl =  APP_FOLDER_PATH+"assets/aipApp/common/directives/pagebuilder/template/aip-pagebuilder.html";
             return $delegate;
-        }]);
+        });
         params.saved = false;
     }]);
-
 

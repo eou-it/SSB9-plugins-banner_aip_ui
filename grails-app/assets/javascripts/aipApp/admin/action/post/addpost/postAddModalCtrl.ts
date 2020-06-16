@@ -10,7 +10,7 @@ declare var notifications: any;
 
 module AIP {
     export class PostAddModalCtrl {
-        $inject = ["$scope", "$uibModalInstance", "ENDPOINT", "AdminActionStatusService","EditMode","PostId","ChangeFlag","selectedActionItemList","actionItemModal", "actionGroupModal","actionFolderGroupModal","APP_FOLDER_PATH"];
+      static $inject = ["$scope", "$uibModalInstance", "ENDPOINT", "AdminActionStatusService","EditMode","PostId","ChangeFlag","selectedActionItemList","actionItemModal", "actionGroupModal","actionFolderGroupModal","APP_FOLDER_PATH"];
         $uibModalInstance;
         $scope;
         adminActionStatusService;

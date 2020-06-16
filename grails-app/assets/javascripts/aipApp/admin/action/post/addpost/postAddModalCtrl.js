@@ -8,7 +8,6 @@ var AIP;
     var PostAddModalCtrl = /** @class */ (function () {
         function PostAddModalCtrl($scope, $uibModalInstance, ENDPOINT, AdminActionStatusService, EditMode, PostId, ChangeFlag, selectedActionItemList, actionItemModal, actionGroupModal, actionFolderGroupModal, APP_FOLDER_PATH) {
             var _this = this;
-            this.$inject = ["$scope", "$uibModalInstance", "ENDPOINT", "AdminActionStatusService", "EditMode", "PostId", "ChangeFlag", "selectedActionItemList", "actionItemModal", "actionGroupModal", "actionFolderGroupModal", "APP_FOLDER_PATH"];
             $scope.vm = this;
             this.$uibModalInstance = $uibModalInstance;
             this.ENDPOINT = ENDPOINT; //ENDPOINT.admin.actionList
@@ -90,6 +89,7 @@ var AIP;
             });
             notifications.addNotification(n);
         };
+        PostAddModalCtrl.$inject = ["$scope", "$uibModalInstance", "ENDPOINT", "AdminActionStatusService", "EditMode", "PostId", "ChangeFlag", "selectedActionItemList", "actionItemModal", "actionGroupModal", "actionFolderGroupModal", "APP_FOLDER_PATH"];
         return PostAddModalCtrl;
     }());
     AIP.PostAddModalCtrl = PostAddModalCtrl;
