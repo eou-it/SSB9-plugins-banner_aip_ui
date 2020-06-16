@@ -297,8 +297,7 @@ var AIP;
         PostActionListPageCtrl.prototype.recurringPostDetails = function (postId) {
             this.$state.go("admin-recurring-post-list", { postIdval: postId });
         };
-        PostActionListPageCtrl.$inject = ["$scope", "$state", "$window", "$filter", "$q", "ENDPOINT", "PAGINATIONCONFIG",
-            "AdminActionService"];
+        PostActionListPageCtrl.$inject = ["$scope", "$state", "$window", "$filter", "$q", "ENDPOINT", "PAGINATIONCONFIG", "AdminActionService"];
         return PostActionListPageCtrl;
     }());
     AIP.PostActionListPageCtrl = PostActionListPageCtrl;
