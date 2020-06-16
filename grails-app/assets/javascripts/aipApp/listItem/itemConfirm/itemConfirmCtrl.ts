@@ -1,5 +1,5 @@
 /*******************************************************************************
- Copyright 2018 Ellucian Company L.P. and its affiliates.
+ Copyright 2018-2020 Ellucian Company L.P. and its affiliates.
  ********************************************************************************/
 ///<reference path="../../../typings/tsd.d.ts"/>
 
@@ -15,7 +15,7 @@ module AIP {
     }
 
     export class ItemConfirmCtrl implements IItemConfirmCtrl{
-        $inject = ["$scope", "$stateParams", "$state", "ItemListViewService"];
+        static $inject = ["$scope", "$stateParams", "$state", "ItemListViewService"];
         itemListViewService;
         actionItems;
         $state;

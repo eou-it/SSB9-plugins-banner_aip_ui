@@ -1,5 +1,5 @@
 /*********************************************************************************
- Copyright 2018 Ellucian Company L.P. and its affiliates.
+ Copyright 2018-2020 Ellucian Company L.P. and its affiliates.
  **********************************************************************************/
 ///<reference path="../../../typings/tsd.d.ts"/>
 ///<reference path="../../common/services/aipReviewService.ts"/>
@@ -8,7 +8,6 @@ var AIP;
 (function (AIP) {
     var MonitorActionItemCtrl = /** @class */ (function () {
         function MonitorActionItemCtrl($scope, $state, AIPReviewService, AIPUserService, SpinnerService, $timeout, $q, $uibModal, APP_ROOT, $sce, $filter, PAGINATIONCONFIG) {
-            this.$inject = ["$scope", "$state", "AIPReviewService", "AIPUserService", "SpinnerService", "$timeout", "$q", "$uibModal", "APP_ROOT", "$sce", "$filter", "PAGINATIONCONFIG"];
             this.fetchData = function (query) {
                 this.query = query;
                 if (angular.isDefined(this.selected)) {
@@ -272,6 +271,7 @@ var AIP;
                 30;
             return { height: containerHeight };
         };
+        MonitorActionItemCtrl.$inject = ["$scope", "$state", "AIPReviewService", "AIPUserService", "SpinnerService", "$timeout", "$q", "$uibModal", "APP_ROOT", "$sce", "$filter", "PAGINATIONCONFIG"];
         return MonitorActionItemCtrl;
     }());
     AIP.MonitorActionItemCtrl = MonitorActionItemCtrl;

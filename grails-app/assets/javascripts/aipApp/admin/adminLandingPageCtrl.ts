@@ -1,5 +1,5 @@
 /*******************************************************************************
- Copyright 2018 Ellucian Company L.P. and its affiliates.
+ Copyright 2018-2020 Ellucian Company L.P. and its affiliates.
  ********************************************************************************/
 
 declare var register;
@@ -10,7 +10,7 @@ interface IAdminLandingPageCtrlScope extends ng.IScope {
 
 module AIP {
     export class AdminLandingPageCtrl {
-        $inject = ["$scope", "$state"];
+       static $inject = ["$scope", "$state"];
         $state;
         landingItem;
         constructor($scope:IAdminLandingPageCtrlScope, $state) {

@@ -1,5 +1,5 @@
 /*********************************************************************************
- Copyright 2018-2019 Ellucian Company L.P. and its affiliates.
+ Copyright 2018-2020 Ellucian Company L.P. and its affiliates.
  **********************************************************************************/
 ///<reference path="../../../typings/tsd.d.ts"/>
 ///<reference path="../../common/services/aipReviewService.ts"/>
@@ -10,7 +10,6 @@ var AIP;
     var ReviewActionItemCtrl = /** @class */ (function () {
         function ReviewActionItemCtrl($scope, $rootScope, $state, AIPReviewService, AIPUserService, SpinnerService, $timeout, $q, $uibModal, APP_ROOT, $sce, $filter, $window) {
             var _this = this;
-            this.$inject = ["$scope", "$rootScope", "$state", "AIPReviewService", "AIPUserService", "SpinnerService", "$timeout", "$q", "$uibModal", "APP_ROOT", "$sce", "$filter", "$window", "datePicker"];
             /**
              * Gets list of attached document for a response.
              * @param query
@@ -391,6 +390,7 @@ var AIP;
                 notifications.addNotification(n);
             }
         };
+        ReviewActionItemCtrl.$inject = ["$scope", "$rootScope", "$state", "AIPReviewService", "AIPUserService", "SpinnerService", "$timeout", "$q", "$uibModal", "APP_ROOT", "$sce", "$filter", "$window", "datePicker"];
         return ReviewActionItemCtrl;
     }());
     AIP.ReviewActionItemCtrl = ReviewActionItemCtrl;

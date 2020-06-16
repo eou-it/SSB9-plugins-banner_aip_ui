@@ -1,11 +1,10 @@
 /*******************************************************************************
- Copyright 2018 Ellucian Company L.P. and its affiliates.
+ Copyright 2018-2020 Ellucian Company L.P. and its affiliates.
  ********************************************************************************/
 var AIP;
 (function (AIP) {
     var ItemInformCtrl = /** @class */ (function () {
         function ItemInformCtrl($scope, $uibModalInstance, $window, APP_ROOT) {
-            this.$inject = ["$scope", "$uibModalInstance", "$window", "APP_ROOT"];
             $scope.vm = this;
             this.$uibModalInstance = $uibModalInstance;
             this.$window = $window;
@@ -27,6 +26,7 @@ var AIP;
         ItemInformCtrl.prototype.closeDialog = function () {
             this.$uibModalInstance.dismiss('cancel');
         };
+        ItemInformCtrl.$inject = ["$scope", "$uibModalInstance", "$window", "APP_ROOT"];
         return ItemInformCtrl;
     }());
     AIP.ItemInformCtrl = ItemInformCtrl;

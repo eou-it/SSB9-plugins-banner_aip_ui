@@ -1,11 +1,10 @@
 /*******************************************************************************
- Copyright 2018 Ellucian Company L.P. and its affiliates.
+ Copyright 2018-2020 Ellucian Company L.P. and its affiliates.
  ********************************************************************************/
 var AIP;
 (function (AIP) {
     var AdminLandingPageCtrl = /** @class */ (function () {
         function AdminLandingPageCtrl($scope, $state) {
-            this.$inject = ["$scope", "$state"];
             $scope.vm = this;
             this.$state = $state;
             this.init();
@@ -44,6 +43,7 @@ var AIP;
                 }
             ];
         };
+        AdminLandingPageCtrl.$inject = ["$scope", "$state"];
         return AdminLandingPageCtrl;
     }());
     AIP.AdminLandingPageCtrl = AdminLandingPageCtrl;

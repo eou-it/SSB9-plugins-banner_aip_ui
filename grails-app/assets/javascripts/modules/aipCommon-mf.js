@@ -27,4 +27,3 @@
 
 //= require  ng-ckeditor/ng-ckeditor.js
 
-

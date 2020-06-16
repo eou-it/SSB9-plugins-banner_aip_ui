@@ -1,5 +1,5 @@
 /*******************************************************************************
- Copyright 2018 Ellucian Company L.P. and its affiliates.
+ Copyright 2018-2020 Ellucian Company L.P. and its affiliates.
  ********************************************************************************/
 ///<reference path="../../../../typings/tsd.d.ts"/>
 ///<reference path="../../../common/services/admin/adminGroupService.ts"/>
@@ -8,8 +8,6 @@ var AIP;
 (function (AIP) {
     var AdminGroupOpenPageCtrl = /** @class */ (function () {
         function AdminGroupOpenPageCtrl($scope, $rootScope, $location, $window, AdminGroupService, $q, SpinnerService, $state, $filter, $sce, $templateRequest, $templateCache, $compile, $timeout, APP_FOLDER_PATH) {
-            this.$inject = ["$scope", "$rootScope", "$location", "$window", "AdminGroupService", "$q", "SpinnerService", "$state", "$filter", "$sce", "$templateRequest", "$templateCache",
-                "$compile", "$timeout", "APP_FOLDER_PATH"];
             this.trustHTML = function (txtString) {
                 var sanitized = txtString ? this.$sce.trustAsHtml(this.$filter("html")(txtString)) : "";
                 return sanitized;
@@ -487,6 +485,8 @@ var AIP;
                 console.log(err);
             });
         };
+        AdminGroupOpenPageCtrl.$inject = ["$scope", "$rootScope", "$location", "$window", "AdminGroupService", "$q", "SpinnerService", "$state", "$filter", "$sce", "$templateRequest", "$templateCache",
+            "$compile", "$timeout", "APP_FOLDER_PATH"];
         return AdminGroupOpenPageCtrl;
     }());
     AIP.AdminGroupOpenPageCtrl = AdminGroupOpenPageCtrl;

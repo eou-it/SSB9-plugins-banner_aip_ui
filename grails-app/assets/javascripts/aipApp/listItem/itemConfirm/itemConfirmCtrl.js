@@ -1,12 +1,11 @@
 /*******************************************************************************
- Copyright 2018 Ellucian Company L.P. and its affiliates.
+ Copyright 2018-2020 Ellucian Company L.P. and its affiliates.
  ********************************************************************************/
 ///<reference path="../../../typings/tsd.d.ts"/>
 var AIP;
 (function (AIP) {
     var ItemConfirmCtrl = /** @class */ (function () {
         function ItemConfirmCtrl($scope, $stateParams, $state, ItemListViewService) {
-            this.$inject = ["$scope", "$stateParams", "$state", "ItemListViewService"];
             $scope.vm = this;
             this.itemListViewService = ItemListViewService;
             this.$state = $state;
@@ -39,6 +38,7 @@ var AIP;
             this.itemListViewService.confirmItem(id);
             this.$state.go("list");
         };
+        ItemConfirmCtrl.$inject = ["$scope", "$stateParams", "$state", "ItemListViewService"];
         return ItemConfirmCtrl;
     }());
     AIP.ItemConfirmCtrl = ItemConfirmCtrl;
