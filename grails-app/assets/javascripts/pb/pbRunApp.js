@@ -107,18 +107,18 @@ if (pageControllers) {
         }
     }
 }
-appModule.controller('homePageUrlCtr', function($scope, $window, $http) {
-   $window.onload = function() {
-       var url = $('#homeURL').val();
-       $('#branding').attr('href', url)
+appModule.controller('homePageUrlCtr', ['$scope', '$window', '$http', function($scope, $window, $http) {
+    $window.onload = function() {
+        var url = $('#homeURL').val();
+        $('#branding').attr('href', url)
     };
-});
+}]);
 // below filter is used for pagination
 appModule.filter('startFrom', function() {
-        return function(input, start) {
-            start = +start; //parse to int
-            return input.slice(start);
-        }
+    return function(input, start) {
+        start = +start; //parse to int
+        return input.slice(start);
+    }
 });
 
 appModule.filter('to_trusted', ['$sce', function($sce){
@@ -128,7 +128,7 @@ appModule.filter('to_trusted', ['$sce', function($sce){
 }]);
 
 
-appModule.run( function($templateCache )  {
+appModule.run(['$templateCache', function($templateCache )  {
     console.log("App module.run started" );
     $templateCache.put('gridFooter.html',
         "<div ng-show=\"showFooter\" class=\"ngFooterPanel\" ng-class=\"{'ui-widget-content': jqueryUITheme, 'ui-corner-bottom': jqueryUITheme}\" ng-style=\"footerStyle()\">" +
@@ -154,7 +154,7 @@ appModule.run( function($templateCache )  {
         "    <div style=\"position: absolute; bottom:2px;\" ng-style=\"{ {{i18n.styleRight}}:'2px'}\"> #gridControlPanel# </div>" +
         "</div>");
 
-});
+}]);
 
 //Add some functions to the scope
 appModule.factory('pbAddCommon', function() {
@@ -190,14 +190,14 @@ appModule.factory('pbAddCommon', function() {
 });
 
 //Factory for resources
-appModule.factory('pbResource', function($resource ) {
+appModule.factory('pbResource', ['$resource', function($resource ) {
     function PBResource(resourceName )  {
         //Expecting a resource name exposed at resourceBase+resourceName
         //For backwards compatibility, replace the location used in the alpha release with resourceBase
         this.resourceURL=resourceName.startsWith("$$contextRoot/")?
             resourceName.replace("$$contextRoot/",rootWebApp):
             resourceName.startsWith("/")?
-            resourceName.replace(rootWebApp+'internal/', resourceBase):resourceBase+resourceName;
+                resourceName.replace(rootWebApp+'internal/', resourceBase):resourceBase+resourceName;
         this.Resource=null;
 
         //get a new resource from the factory
@@ -235,15 +235,15 @@ appModule.factory('pbResource', function($resource ) {
     }
 
     return PBResourceFactory;
-});
+}]);
 
 
 //Factory for data sets
-appModule.factory('pbDataSet', function( $cacheFactory, $parse ) {
+appModule.factory('pbDataSet', ['$cacheFactory', '$parse', function( $cacheFactory, $parse ) {
     // Use function to create a post query function associated with
     // a DataSet instance
     console.log("========After Page load =========")
-    var $scope;
+    eval("var $scope"+";");
     function CreatePostEventHandlers(instanceIn, userPostQuery, userOnError) {
         console.log("Post Query Constructor for DataSet " + instanceIn.componentId);
         this.go = function(it, response) {
@@ -290,6 +290,14 @@ appModule.factory('pbDataSet', function( $cacheFactory, $parse ) {
 
         this.setResource(params.resource);
         this.queryParams=params.queryParams;
+        var onSaveSuccess;
+        if(params.onSaveSuccess) {
+            onSaveSuccess = params.onSaveSuccess
+        }
+        var onSave;
+        if(params.onSave) {
+            onSave = params.onSave
+        }
         this.selectValueKey=params.selectValueKey;
         this.selectInitialValue=params.selectInitialValue;
         this.currentRecord=null;
@@ -330,8 +338,9 @@ appModule.factory('pbDataSet', function( $cacheFactory, $parse ) {
 
         this.get = function() {
             this.init();
-            var params = "";
-            eval("params="+this.queryParams+";");
+            eval("var params="+this.queryParams+";");
+            /*fix for minification issue , params will be replaced with variable b after minification*/
+            eval("typeof b !=='undefined'") ? eval("b = params"):null;
             console.log("Query Parameters:", params) ;
             this.data=[];
             this.data[0] = this.Resource.get(params, post.go, post.error);
@@ -350,12 +359,14 @@ appModule.factory('pbDataSet', function( $cacheFactory, $parse ) {
             } else {
                 this.init();
             }
-            var params;
-            if (!(p && p.all))
-                eval("params="+this.queryParams+";");
-            else
-                params={};
-
+            eval("var params;");
+            /* Fixing issue for minification , assigning params to variable a*/
+            if (!(p && p.all)) {
+                params = eval("params="+this.queryParams+";");
+                eval("typeof b !=='undefined'") ? eval("b = params"):null;
+            } else {
+                params = {};
+            }
             if (this.pageSize>0) {
                 params.offset=(nvl(this.pagingOptions.currentPage,1)-1)*this.pagingOptions.pageSize;
                 params.max=this.pagingOptions.pageSize;
@@ -487,13 +498,13 @@ appModule.factory('pbDataSet', function( $cacheFactory, $parse ) {
                     a=this._keyStr.indexOf(e.charAt(f++));n=s<<2|o>>4;r=(o&15)<<4|u>>2;i=(u&3)<<6|a;t=t+String.fromCharCode(n);
                     if(u!=64){t=t+String.fromCharCode(r)}if(a!=64){t=t+String.fromCharCode(i)}}t=Base64._utf8_decode(t);
                 return t},_utf8_encode:function(e){e=e.toString().replace(/\r\n/g,"n");var t="";for(var n=0;n<e.length;n++)
-                {var r=e.charCodeAt(n);if(r<128){t+=String.fromCharCode(r)}else if(r>127&&r<2048)
-                {t+=String.fromCharCode(r>>6|192);t+=String.fromCharCode(r&63|128)}else
-                    {t+=String.fromCharCode(r>>12|224);t+=String.fromCharCode(r>>6&63|128);
-                        t+=String.fromCharCode(r&63|128)}}return t},_utf8_decode:function(e)
+            {var r=e.charCodeAt(n);if(r<128){t+=String.fromCharCode(r)}else if(r>127&&r<2048)
+            {t+=String.fromCharCode(r>>6|192);t+=String.fromCharCode(r&63|128)}else
+            {t+=String.fromCharCode(r>>12|224);t+=String.fromCharCode(r>>6&63|128);
+                t+=String.fromCharCode(r&63|128)}}return t},_utf8_decode:function(e)
             {var t="";var n=0;var r=c1=c2=0;while(n<e.length){r=e.charCodeAt(n);if(r<128){t+=String.fromCharCode(r);n++}
             else if(r>191&&r<224){c2=e.charCodeAt(n+1);t+=String.fromCharCode((r&31)<<6|c2&63);n+=2}else
-                {c2=e.charCodeAt(n+1);c3=e.charCodeAt(n+2);t+=String.fromCharCode((r&15)<<12|(c2&63)<<6|c3&63);n+=3}}
+            {c2=e.charCodeAt(n+1);c3=e.charCodeAt(n+2);t+=String.fromCharCode((r&15)<<12|(c2&63)<<6|c3&63);n+=3}}
                 return t}}
 
         function getRandomArbitrary(min, max) {
@@ -504,6 +515,7 @@ appModule.factory('pbDataSet', function( $cacheFactory, $parse ) {
 
             function successHandler(action) {
                 return function (response) {
+                    if(!params.onSaveSuccess && onSaveSuccess){params.onSaveSuccess=onSaveSuccess}
                     if (params.onSaveSuccess) {
                         params.onSaveSuccess(response, action);
                     }
@@ -511,6 +523,7 @@ appModule.factory('pbDataSet', function( $cacheFactory, $parse ) {
             }
 
             var replaces = false;
+            if(!params.onSave && onSave) {params.onSave=onSave}
             if (params.onSave) {
                 replaces = params.onSave();
                 if (replaces) {
@@ -527,7 +540,7 @@ appModule.factory('pbDataSet', function( $cacheFactory, $parse ) {
             });
             this.modified = [];
             this.deleted.forEach( function(item)  {
-                item.$delete({id:item.id}, successHandler('D'), post.error);
+                item.$delete({id: item.id, item:item}, successHandler('D'), post.error);
             });
             this.deleted = [];
             this.cache.removeAll();
@@ -553,18 +566,21 @@ appModule.factory('pbDataSet', function( $cacheFactory, $parse ) {
 
     function PBDataSetFactory(scopeIn, params) {
         $scope = scopeIn;
+        /* Fixing issue during minification setting the scope value in minfication, c will
+        * hold value of scope*/
+        eval("typeof c !=='undefined'") ? eval("$scope = c"):null;
         return new PBDataSet(params);
     }
 
     return PBDataSetFactory;
-});
+}]);
 
 function initlizePopUp(params){
     try {
         if (angular.module("modalPopup") && angular.module("xe-ui-components")) {
             var popupContainerDiv = document.getElementById('popupContainerDiv');
             if (null != popupContainerDiv && undefined != popupContainerDiv) {
-               dialogPopUp(params);
+                dialogPopUp(params);
             }
         }
     } catch (e) {
@@ -612,8 +628,8 @@ function dialogPopUp(params) {
             '<popup-content>' +
             '<div id="namePopupGrid" class="demo-container"> \n' +
             '    <xe-table-grid table-id="nameDataTable" \n'+
-             '                   header="'+columnRefName+'"  \n'+
-             '                   end-point="urlTest" \n' +
+            '                   header="'+columnRefName+'"  \n'+
+            '                   end-point="urlTest" \n' +
             '                   fetch="getData(query)" on-row-click="onRowClick(data,index)"\n' +
             '                   post-fetch="postFetch(response, oldResult)" \n' +
             '                   content="content"  results-found="resultsFound" toolbar="true"\n' +
@@ -640,17 +656,17 @@ function dialogPopUp(params) {
         angular.element(document.getElementsByClassName('column-filter-container ng-scope')).remove();
         scope = angular.element(document.getElementById('popupContainerDiv')).scope();
     }else{
-       $("th.constantName").removeClass("focus-ring ascending decending");
-       $("th.dateCreated").removeClass("focus-ring ascending decending");
-       $("th.lastUpdated").removeClass("focus-ring ascending decending");
-       $("th.serviceName").removeClass("focus-ring ascending decending");
+        $("th.constantName").removeClass("focus-ring ascending decending");
+        $("th.dateCreated").removeClass("focus-ring ascending decending");
+        $("th.lastUpdated").removeClass("focus-ring ascending decending");
+        $("th.serviceName").removeClass("focus-ring ascending decending");
         angular.element(document.getElementsByClassName('secondary first')).click();
         var perPageEle = angular.element(document.getElementsByClassName('per-page-select'));
         if($($(perPageEle)[0]).attr("value") != 'number:5'){
             $($(perPageEle)[0]).val("number:5");
             perPageEle.trigger('change');
         }
-            dataFetch = true;
+        dataFetch = true;
     }
     scope.$apply(function(){
         scope.excludePage = params.excludePage;
@@ -661,6 +677,10 @@ function dialogPopUp(params) {
 
 };
 
+function updateLocalStorage(name,id) {
+    window.localStorage['pageName'] = name;
+    window.localStorage['pageId'] = id;
+}
 
 appModule.directive('pbPopupDataGrid', ['$parse', function($parse)  {
     return {
@@ -714,23 +734,26 @@ appModule.directive('pbPopupDataGrid', ['$parse', function($parse)  {
 
             }
             function onLoadEventData(){
+                var pageName = window.localStorage['pageName'];
+                var pageId = window.localStorage['pageId'];
                 var pbDataOptions = $parse(attrs.pbPopupDataGrid)() || {};
-                var searchParams = window.location.search;
-                var reqParams = {};
-                if(searchParams && (pbDataOptions.id == 'vdServiceName' || pbDataOptions.isPbPage== 'true')){
-                    searchParams = searchParams.replace('?','')
-                    reqParams = JSON.parse('{"' + searchParams.replace(/"/g, '\\"').replace(/&/g, '","').replace(/=/g,'":"') + '"}')
-                }
-                if(Object.keys(reqParams).length != 0 && reqParams.name && pbDataOptions.isPbPage== 'true'){
-                    pbPagesChangeEvent(pbDataOptions.id,reqParams.name,reqParams.id)
+
+                if(pageName && pbDataOptions.isPbPage== 'true'){
+                    pbPagesChangeEvent(pbDataOptions.id,pageName,pageId)
                 }
 
-                if(Object.keys(reqParams).length != 0 && reqParams.name && pbDataOptions.isPbPage != 'true' && pbDataOptions.id == 'vdServiceName'){
+                if(pageName && pbDataOptions.isPbPage != 'true' && pbDataOptions.id == 'vdServiceName'){
                     $("#"+pbDataOptions.id+" option:selected").remove();
-                    $("#"+pbDataOptions.id).append("<option label='"+reqParams.name+"' selected='selected' value="+reqParams.name+">"+reqParams.name+"</option>");
+                    $("#"+pbDataOptions.id).append("<option label='"+pageName+"' selected='selected' value="+pageName+">"+pageName+"</option>");
                     $("#LoadVDForm").submit();
                 }
 
+                if(pageName && pbDataOptions.isPbPage != 'true' && pbDataOptions.id == 'constantName'){
+                    scope.pageName = pageName;
+                    scope.getPageSource();
+                }
+
+                updateLocalStorage("","");
             }
 
             element.on('enter',scope.onClickData);

@@ -6,8 +6,7 @@
 var AIP;
 (function (AIP) {
     var StatusAddModalCtrl = /** @class */ (function () {
-        function StatusAddModalCtrl($scope, $uibModalInstance, ENDPOINT, AdminActionStatusService, APP_FOLDER_PATH) {
-            this.$inject = ["$scope", "$uibModalInstance", "AdminActionStatusService", "ENDPOINT", "APP_FOLDER_PATH"];
+        function StatusAddModalCtrl($scope, $uibModalInstance, AdminActionStatusService, ENDPOINT, APP_FOLDER_PATH) {
             $scope.vm = this;
             this.$uibModalInstance = $uibModalInstance;
             this.ENDPOINT = ENDPOINT; //ENDPOINT.admin.actionList
@@ -54,6 +53,7 @@ var AIP;
             });
             notifications.addNotification(n);
         };
+        StatusAddModalCtrl.$inject = ["$scope", "$uibModalInstance", "AdminActionStatusService", "ENDPOINT", "APP_FOLDER_PATH"];
         return StatusAddModalCtrl;
     }());
     AIP.StatusAddModalCtrl = StatusAddModalCtrl;
