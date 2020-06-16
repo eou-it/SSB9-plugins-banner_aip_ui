@@ -14,7 +14,7 @@ declare var CKEDITOR;
 module AIP {
 
     export class AdminActionItemBlockCtrl{
-      static  $inject = ["$scope","$window","$rootScope", "$q", "$state", "$filter", "$sce", "$templateRequest", "$templateCache", "$compile",
+      static $inject = ["$scope","$window","$rootScope", "$q", "$state", "$filter", "$sce", "$templateRequest", "$templateCache", "$compile",
             "$timeout", "$interpolate", "SpinnerService", "AdminActionService", "AdminActionStatusService", "APP_ROOT", "CKEDITORCONFIG"];
         adminActionService: AIP.AdminActionService;
         adminActionStatusService: AIP.AdminActionStatusService;

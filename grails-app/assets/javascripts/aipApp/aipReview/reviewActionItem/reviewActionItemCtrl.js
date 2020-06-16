@@ -8,7 +8,7 @@
 var AIP;
 (function (AIP) {
     var ReviewActionItemCtrl = /** @class */ (function () {
-        function ReviewActionItemCtrl($scope, $rootScope, $state, AIPReviewService, AIPUserService, SpinnerService, $timeout, $q, $uibModal, APP_ROOT, $sce, $filter, $window) {
+        function ReviewActionItemCtrl($scope, $rootScope, $state, AIPReviewService, AIPUserService, SpinnerService, $timeout, $q, $uibModal, APP_ROOT, $sce,$filter, $window, datePicker) {
             var _this = this;
             /**
              * Gets list of attached document for a response.

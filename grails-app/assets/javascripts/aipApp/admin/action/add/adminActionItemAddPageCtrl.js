@@ -7,7 +7,7 @@
 var AIP;
 (function (AIP) {
     var AdminActionItemAddPageCtrl = /** @class */ (function () {
-        function AdminActionItemAddPageCtrl($scope, $rootScope, $q, $state, $filter, $location, $sce, $timeout, $window, SpinnerService, AdminActionService) {
+        function AdminActionItemAddPageCtrl($scope, $rootScope, $q, $state, $filter, $sce, $timeout, $window, SpinnerService, AdminActionService, $location) {
             var _this = this;
             this.trustAsHtml = function (string) {
                 return this.$sce.trustAsHtml(string);

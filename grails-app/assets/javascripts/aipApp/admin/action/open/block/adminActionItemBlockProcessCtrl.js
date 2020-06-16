@@ -8,7 +8,8 @@
 var AIP;
 (function (AIP) {
     var AdminActionItemBlockCtrl = /** @class */ (function () {
-        function AdminActionItemBlockCtrl($scope, $rootScope, $q, $state, $filter, $sce, $window, $templateRequest, $templateCache, $compile, $timeout, $interpolate, SpinnerService, AdminActionService, AdminActionStatusService, APP_ROOT, CKEDITORCONFIG) {
+        function AdminActionItemBlockCtrl($scope, $window, $rootScope, $q, $state, $filter, $sce, $templateRequest, $templateCache, $compile,
+            $timeout, $interpolate, SpinnerService, AdminActionService, AdminActionStatusService, APP_ROOT, CKEDITORCONFIG) {
             this.trustAsHtml = function (string) {
                 return this.$sce.trustAsHtml(string);
             };
