@@ -1,7 +1,7 @@
 /*******************************************************************************
  Copyright 2018 Ellucian Company L.P. and its affiliates.
  *******************************************************************************/
-angular.module('bannerAIPUI').directive('datePicker', ['dateFormatService', 'notificationCenterService' ,'$filter', datePicker]);
+angular.module('bannerAIPUI').directive('datePicker', ['dateFormatService','$filter', datePicker]);
 
 /**
  * datePicker used for calender option on form
