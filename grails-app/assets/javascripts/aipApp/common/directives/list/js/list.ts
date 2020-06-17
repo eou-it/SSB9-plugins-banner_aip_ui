@@ -16,8 +16,8 @@ module AIPUI {
                 togglegroup: "&",
                 selectedFocus: "&"
             },
-
-            controller:function($scope, $filter, ItemListViewService) {
+            controller: ['$scope', '$filter', 'ItemListViewService',
+                function($scope, $filter, ItemListViewService) {
                 if ($scope.idx === $scope.opengroup) {
                     $scope.isOpen = true;
                 } else {
@@ -120,7 +120,7 @@ module AIPUI {
                         $scope.selectedFocus = "description";
                     }
                 }
-            }
+            }]
         }
     }
     angular.module('bannerAIPUI').directive('aipList', [ '$filter',AIPListDirective]);

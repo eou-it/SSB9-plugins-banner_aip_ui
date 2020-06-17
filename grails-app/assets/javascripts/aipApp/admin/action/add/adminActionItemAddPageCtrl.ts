@@ -51,9 +51,8 @@ module AIP {
         selectedstatusval;
         adminActionItemVal;
 
-
-        constructor($scope,  $rootScope, $q:ng.IQService, $state, $filter,$sce, $timeout, $window,
-                    SpinnerService:AIP.SpinnerService, AdminActionService:AIP.AdminActionService,$location) {
+        constructor($scope,  $rootScope, $q:ng.IQService, $state, $filter,$location,$sce, $timeout, $window,
+                    SpinnerService:AIP.SpinnerService, AdminActionService:AIP.AdminActionService) {
             $scope.vm = this;
             this.$scope = $scope;
             this.$q = $q;

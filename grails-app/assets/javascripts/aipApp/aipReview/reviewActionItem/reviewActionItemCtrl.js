@@ -8,7 +8,7 @@
 var AIP;
 (function (AIP) {
     var ReviewActionItemCtrl = /** @class */ (function () {
-        function ReviewActionItemCtrl($scope, $rootScope, $state, AIPReviewService, AIPUserService, SpinnerService, $timeout, $q, $uibModal, APP_ROOT, $sce,$filter, $window, datePicker) {
+        function ReviewActionItemCtrl($scope, $rootScope, $state, AIPReviewService, AIPUserService, SpinnerService, $timeout, $q, $uibModal, APP_ROOT, $sce, $filter, $window) {
             var _this = this;
             /**
              * Gets list of attached document for a response.
@@ -390,7 +390,7 @@ var AIP;
                 notifications.addNotification(n);
             }
         };
-        ReviewActionItemCtrl.$inject = ["$scope", "$rootScope", "$state", "AIPReviewService", "AIPUserService", "SpinnerService", "$timeout", "$q", "$uibModal", "APP_ROOT", "$sce", "$filter", "$window", "datePicker"];
+        ReviewActionItemCtrl.$inject = ["$scope", "$rootScope", "$state", "AIPReviewService", "AIPUserService", "SpinnerService", "$timeout", "$q", "$uibModal", "APP_ROOT", "$sce", "$filter", "$window"];
         return ReviewActionItemCtrl;
     }());
     AIP.ReviewActionItemCtrl = ReviewActionItemCtrl;

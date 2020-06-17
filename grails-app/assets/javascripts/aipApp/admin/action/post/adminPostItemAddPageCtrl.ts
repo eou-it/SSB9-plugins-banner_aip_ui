@@ -37,7 +37,7 @@ module AIP {
     }
 
     export class AdminPostItemAddPageCtrl implements IAdminPostItemAddPageCtrl {
-       static $inject = ["$scope","$rootScope", "$q", "$state", "$filter", "$timeout", "SpinnerService", "AdminActionStatusService", "AdminActionService", "$uibModal","APP_FOLDER_PATH", "datePicker","$window"];
+       static $inject = ["$scope","$rootScope", "$q", "$state", "$filter", "$timeout", "SpinnerService", "AdminActionStatusService", "AdminActionService", "$uibModal","APP_FOLDER_PATH","$window"];
         $scope;
         $rootScope;
         $uibModal;

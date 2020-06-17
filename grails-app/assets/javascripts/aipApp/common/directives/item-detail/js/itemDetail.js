@@ -14,20 +14,21 @@ var AIPUI;
                 tolist: "&",
                 custompage: "&"
             },
-            controller: function ($scope) {
-                $scope.proceed = function () {
-                    $scope.next({ groupId: this.data.info.detailId, itemId: this.data.info.id });
-                };
-                $scope.getState = function (id) {
-                    $scope.itemstate(id);
-                };
-                $scope.returnlist = function () {
-                    $scope.tolist();
-                };
-                $scope.nextitem = function () {
-                    $scope.next({ groupId: this.data.groupId, itemId: this.data.info.id });
-                };
-            }
+            controller: ['$scope',
+                function ($scope) {
+                    $scope.proceed = function () {
+                        $scope.next({ groupId: this.data.info.detailId, itemId: this.data.info.id });
+                    };
+                    $scope.getState = function (id) {
+                        $scope.itemstate(id);
+                    };
+                    $scope.returnlist = function () {
+                        $scope.tolist();
+                    };
+                    $scope.nextitem = function () {
+                        $scope.next({ groupId: this.data.groupId, itemId: this.data.info.id });
+                    };
+                }]
         };
     }
     AIPUI.AIPItemDetailDirective = AIPItemDetailDirective;

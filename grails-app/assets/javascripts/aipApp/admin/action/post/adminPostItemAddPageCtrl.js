@@ -7,7 +7,7 @@
 var AIP;
 (function (AIP) {
     var AdminPostItemAddPageCtrl = /** @class */ (function () {
-        function AdminPostItemAddPageCtrl($scope, $rootScope, $q, $state, $filter, $timeout, SpinnerService, AdminActionStatusService, AdminActionService, $uibModal, APP_FOLDER_PATH, datePicker, $window) {
+        function AdminPostItemAddPageCtrl($scope, $rootScope, $q, $state, $uibModal, $window, $filter, $timeout, SpinnerService, APP_FOLDER_PATH, AdminActionStatusService, AdminActionService) {
             var _this = this;
             this.END_OF_DAY = "2359";
             $scope.vm = this;
@@ -648,7 +648,7 @@ var AIP;
             });
             notifications.addNotification(n);
         };
-        AdminPostItemAddPageCtrl.$inject = ["$scope", "$rootScope", "$q", "$state", "$filter", "$timeout", "SpinnerService", "AdminActionStatusService", "AdminActionService", "$uibModal", "APP_FOLDER_PATH", "datePicker", "$window"];
+        AdminPostItemAddPageCtrl.$inject = ["$scope", "$rootScope", "$q", "$state", "$filter", "$timeout", "SpinnerService", "AdminActionStatusService", "AdminActionService", "$uibModal", "APP_FOLDER_PATH", "$window"];
         return AdminPostItemAddPageCtrl;
     }());
     AIP.AdminPostItemAddPageCtrl = AdminPostItemAddPageCtrl;

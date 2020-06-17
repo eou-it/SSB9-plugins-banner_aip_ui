@@ -13,7 +13,8 @@ module AIPUI {
                 tolist: "&",
                 custompage: "&"
             },
-            controller: function ($scope ) {
+            controller: ['$scope',
+                function($scope) {
                 $scope.proceed = function () {
                     $scope.next({groupId: this.data.info.detailId, itemId: this.data.info.id});
                 };
@@ -26,7 +27,7 @@ module AIPUI {
                 $scope.nextitem = function () {
                     $scope.next({groupId: this.data.groupId, itemId: this.data.info.id});
                 }
-            }
+            }]
         }
     }
     angular.module('bannerAIPUI').directive('aipItemDetail', [ '$filter',AIPItemDetailDirective]);
