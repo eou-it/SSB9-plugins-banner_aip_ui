@@ -118,9 +118,8 @@ module AIP {
         END_OF_DAY:string="2359";
         recurEditFlag:boolean;
         recurDisableTimeAndTimeZone:boolean;
-
-        constructor($scope:IActionItemAddPageScope, $rootScope, $q:ng.IQService, $state, $uibModal,$window, $filter, $timeout,
-                    SpinnerService:AIP.SpinnerService,APP_FOLDER_PATH, AdminActionStatusService, AdminActionService:AIP.AdminActionService) {
+        constructor($scope:IActionItemAddPageScope, $rootScope, $q:ng.IQService, $state,$filter,$timeout, SpinnerService:AIP.SpinnerService, AdminActionStatusService, AdminActionService:AIP.AdminActionService,$uibModal,APP_FOLDER_PATH,$window
+                   ) {
             $scope.vm = this;
             this.$q = $q;
             this.$scope = $scope;
