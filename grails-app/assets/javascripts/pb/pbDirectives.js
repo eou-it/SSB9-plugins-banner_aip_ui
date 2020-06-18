@@ -169,11 +169,11 @@ pagebuilderModule.directive('pbTextarea', function() {
         controller: ['$scope', '$element', '$attrs', '$transclude',
             function($scope, $element, $attrs, $transclude) {
                 // assign an empty map to the attribute if the map is undefined
-                /*
-                 if ($scope.value == undefined) {
-                     $scope.value = '';
-                     $scope.pbParent[$scope.pbAttrname]=$scope.value;
-                 }*/
+               /*
+                if ($scope.value == undefined) {
+                    $scope.value = '';
+                    $scope.pbParent[$scope.pbAttrname]=$scope.value;
+                }*/
                 //console.log("Init scope, pbParent = " + $scope.pbParent[$scope.pbAttrname]);
 
                 $scope.processInput = function() {
@@ -221,12 +221,12 @@ pagebuilderModule.directive('pbCombo', function() {
         //transclude: true,
         scope:{loadSourceLabel:'@', editValueLabel:'@', selectLabel:'@', value:'=', sourceList:"=", pbParent:'=', pbAttrname:'=', pbChange:'&', pbLoadsourcelist:'&' },
         template: "<span>" +
-        "<select ng-show='showSelect' ng-model='value'  ng-options='val for val in sourceList' ng-change='processInput()'></select>" +
-        "<button ng-show='showSelect' class='btn btn-xs' ng-click='loadSourceList()'>{{loadSourceLabel}}</button>" +
-        "<button ng-show='showSelect' class='btn btn-xs' ng-click='showSelect=false'>{{editValueLabel}}</button>" +
-        "<input ng-show='!showSelect' type='text' ng-model='value' ng-change='processInput()'/>" +
-        "<button ng-show='!showSelect' class='btn btn-xs' ng-click='showSelect=true'>{{selectLabel}}</button>" +
-        "</span>",
+            "<select ng-show='showSelect' ng-model='value'  ng-options='val for val in sourceList' ng-change='processInput()'></select>" +
+            "<button ng-show='showSelect' class='btn btn-xs' ng-click='loadSourceList()'>{{loadSourceLabel}}</button>" +
+            "<button ng-show='showSelect' class='btn btn-xs' ng-click='showSelect=false'>{{editValueLabel}}</button>" +
+            "<input ng-show='!showSelect' type='text' ng-model='value' ng-change='processInput()'/>" +
+            "<button ng-show='!showSelect' class='btn btn-xs' ng-click='showSelect=true'>{{selectLabel}}</button>" +
+            "</span>",
         controller: ['$scope', '$element', '$attrs', '$transclude',
             function($scope, $element, $attrs, $transclude) {
                 $scope.showSelect = false;

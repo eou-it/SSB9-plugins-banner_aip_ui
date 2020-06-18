@@ -26,8 +26,8 @@ pbRunModule.directive('pbNumber', ['$filter', '$locale', function($filter, $loca
                     0,
                     // Number of digits right of decimal point.
                     (match[1] ? match[1].length : 0)
-                    // Adjust for scientific notation.
-                    - (match[2] ? +match[2] : 0));
+                        // Adjust for scientific notation.
+                        - (match[2] ? +match[2] : 0));
             }
 
             function fromUser(text) {
