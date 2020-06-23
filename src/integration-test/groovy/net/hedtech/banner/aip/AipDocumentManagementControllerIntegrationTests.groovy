@@ -103,6 +103,7 @@ class AipDocumentManagementControllerIntegrationTests extends BaseIntegrationTes
     @Test
     void testUploadExeDocument() {
         setConfigProperties('aip.restricted.attachment.type', '[EXE]', 'list')
+        setConfigProperties('aip.attachment.file.storage.location', 'AIP', 'string')
         println uploadDocumentCompositeService.getRestrictedFileTypes()
 
         def person = PersonUtility.getPerson("CSRSTU004")
@@ -123,6 +124,10 @@ class AipDocumentManagementControllerIntegrationTests extends BaseIntegrationTes
                                    responseId      : ["${userActionItem.responseId}"],
                                    documentName    : ["TestFile.exe"]
         ]
+        controller.params.userActionItemId = userActionItem.actionItemId.toString()
+        controller.params.responseId=userActionItem.responseId.toString()
+        controller.params.documentName="TestFile.exe"
+
         def mpfile = new LinkedMultiValueMap<String, MultipartFile>();
         mpfile.add("file", formFileObject("TestFile.exe"));
 
@@ -278,7 +283,7 @@ class AipDocumentManagementControllerIntegrationTests extends BaseIntegrationTes
         File testFile
         try {
             String data = content
-            String tempPath = System.getProperty("base.dir") + File.separator+"test"+File.separator+"data"
+            String tempPath = System.getProperty("user.dir") + File.separator+"build"+File.separator+"tmp"
             testFile = new File(tempPath, filename)
             if (!testFile.exists()) {
                 testFile.createNewFile()
@@ -384,8 +389,8 @@ class AipDocumentManagementControllerIntegrationTests extends BaseIntegrationTes
         assertNotNull saveResult
 
         def paramsObj = [
-                userActionItemId: actionItemdata.actionItemId.toString(),
-                responseId      : actionItemdata.responseId.toString(),
+                userActionItemId: actionItemdata.actionItemId,
+                responseId      : actionItemdata.responseId,
                 sortColumn      : "id",
                 sortAscending   : false
         ]
@@ -412,8 +417,8 @@ class AipDocumentManagementControllerIntegrationTests extends BaseIntegrationTes
         assertNotNull saveResult
 
         def paramsObj = [
-                userActionItemId: actionItemdata.actionItemId.toString(),
-                responseId      : actionItemdata.responseId.toString(),
+                userActionItemId: actionItemdata.actionItemId,
+                responseId      : actionItemdata.responseId,
                 sortColumn      : "id",
                 sortAscending   : false
         ]
@@ -434,7 +439,7 @@ class AipDocumentManagementControllerIntegrationTests extends BaseIntegrationTes
         File testFile
         try {
             String data = " Test data for integration testing"
-            String tempPath = System.getProperty("base.dir") + File.separator+"build"+File.separator+"tmp"
+            String tempPath = System.getProperty("user.dir") + File.separator+"build"+File.separator+"tmp"
             testFile = new File(tempPath, filename)
             if (!testFile.exists()) {
                 testFile.createNewFile()

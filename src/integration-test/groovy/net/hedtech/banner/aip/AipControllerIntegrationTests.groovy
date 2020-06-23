@@ -59,9 +59,6 @@ class AipControllerIntegrationTests extends BaseIntegrationTestCase {
         SecurityContextHolder.getContext().setAuthentication( auth )
         controller.list()
         assertEquals 200, controller.response.status
-        def responseString = controller.response.contentAsString
-        def result = JSON.parse(responseString)
-        assertEquals( "aip", result.view )
     }
 
 
@@ -126,9 +123,6 @@ class AipControllerIntegrationTests extends BaseIntegrationTestCase {
         SecurityContextHolder.getContext().setAuthentication( auth )
         controller.informedList()
         assertEquals 200, controller.response.status
-        def responseString = controller.response.contentAsString
-        def result = JSON.parse(responseString)
-        assertEquals( "aip", result.view )
     }
 
 

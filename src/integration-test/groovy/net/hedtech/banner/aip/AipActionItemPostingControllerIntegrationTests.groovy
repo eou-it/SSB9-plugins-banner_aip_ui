@@ -32,6 +32,7 @@ class AipActionItemPostingControllerIntegrationTests extends BaseIntegrationTest
     def selfServiceBannerAuthenticationProvider
 
 
+
     @Before
     void setUp() {
         formContext = ['SELFSERVICE']
@@ -111,28 +112,11 @@ class AipActionItemPostingControllerIntegrationTests extends BaseIntegrationTest
 
     @Test
     void addActionItemPosting() {
+        def auth = selfServiceBannerAuthenticationProvider.authenticate(new UsernamePasswordAuthenticationToken('AIPADM001', '111111'))
+        SecurityContextHolder.getContext().setAuthentication(auth)
+        assertNotNull auth
         controller.request.contentType = "text/json"
         String inputString = getCreatActionItemJSON()
-        controller.request.json = inputString
-        controller.addActionItemPosting()
-        assertEquals 200, controller.response.status
-        def ret = controller.response.contentAsString
-        def data = JSON.parse( ret )
-        assertTrue data.success
-        assertNotNull data.savedJob.id
-        assertNotNull data.savedJob.id
-        assert data.savedJob.lastModifiedBy == 'AIPADM001'
-        assert data.savedJob.postingCreatorId == 'AIPADM001'
-        assert data.savedJob.postingName == 'TEST_INTEGRATION_TEST'
-        assert data.savedJob.populationListId == dynamicData.populationId
-        assert data.savedJob.postingActionItemGroupId == dynamicData.postingActionItemGroupId
-    }
-
-
-    @Test
-    void addActionItemPostingWithScheduleDate() {
-        controller.request.contentType = "text/json"
-        String inputString = getCreateActionItemForScheduleJSON()
         controller.request.json = inputString
         controller.addActionItemPosting()
         assertEquals 200, controller.response.status
@@ -161,23 +145,6 @@ class AipActionItemPostingControllerIntegrationTests extends BaseIntegrationTest
         assertTrue data.fail
     }
 
-
-    @Test
-    void testGetProcessedServerDateTimeAndTimezone() {
-        controller.request.contentType = "text/json"
-        String inputString = """{"userEnterDate":"06/21/2018",
-                                "userEnterTime":"1330",
-                                "userEnterTimeZone":"US/Alaska"}"""
-        controller.request.json = inputString
-        controller.getProcessedServerDateTimeAndTimezone()
-        assertEquals 200, controller.response.status
-        def ret = controller.response.contentAsString
-        def data = JSON.parse( ret )
-        assert data.serverDate !=null
-        assert data.serverTime !=null
-        assert data.serverTimeZone !=null
-    }
-
     @Test
     void addActionItemPostingFailedCase() {
         controller.request.contentType = "text/json"
@@ -194,7 +161,12 @@ class AipActionItemPostingControllerIntegrationTests extends BaseIntegrationTest
 
     @Test
     void populationListForSendLov() {
+        def auth = selfServiceBannerAuthenticationProvider.authenticate(new UsernamePasswordAuthenticationToken('AIPADM001', '111111'))
+        SecurityContextHolder.getContext().setAuthentication(auth)
+        assertNotNull auth
         controller.request.contentType = "text/json"
+        controller.params.max = 1000
+        controller.params.offset = 0
         controller.populationListForSendLov()
         assertEquals 200, controller.response.status
         def ret = controller.response.contentAsString

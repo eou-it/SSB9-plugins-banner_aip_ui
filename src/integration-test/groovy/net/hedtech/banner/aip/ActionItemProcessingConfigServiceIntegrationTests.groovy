@@ -20,9 +20,12 @@ import org.springframework.security.core.context.SecurityContextHolder
 @Integration
 @Rollback
 class ActionItemProcessingConfigServiceIntegrationTests extends BaseIntegrationTestCase {
+
     @Autowired
+    AipController controller
     def actionItemProcessingConfigService
     def selfServiceBannerAuthenticationProvider
+    def userActionItemReadOnlyService
 
 
     @Before
