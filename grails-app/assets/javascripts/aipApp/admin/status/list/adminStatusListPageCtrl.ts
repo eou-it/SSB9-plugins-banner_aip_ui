@@ -1,5 +1,5 @@
 /*******************************************************************************
- Copyright 2018 Ellucian Company L.P. and its affiliates.
+ Copyright 2018-2020 Ellucian Company L.P. and its affiliates.
  ********************************************************************************/
 
 //<reference path="../../../../typings/tsd.d.ts"/>
@@ -11,7 +11,7 @@ declare var notifications: any;
 
 module AIP {
     export class AdminStatusListPageCtrl {
-        $inject = ["$scope", "$state", "$window", "$filter", "$http", "$q", "$uibModal",
+       static $inject = ["$scope", "$state", "$window", "$filter", "$http", "$q", "$uibModal",
             "ENDPOINT", "PAGINATIONCONFIG", "AdminActionStatusService","APP_FOLDER_PATH"];
         $scope;
         $state;

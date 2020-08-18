@@ -1,12 +1,11 @@
 /*******************************************************************************
- Copyright 2018 Ellucian Company L.P. and its affiliates.
+ Copyright 2018-2020 Ellucian Company L.P. and its affiliates.
  ********************************************************************************/
-///<reference path = "../../../typings/tsd.d.ts"/>
+///<reference path="../../../typings/tsd.d.ts"/>
 var AIP;
 (function (AIP) {
     var AIPBreadcrumbService = /** @class */ (function () {
         function AIPBreadcrumbService($location, $filter) {
-            this.$inject = ["$location", "$filter"];
             this.$location = $location;
             this.$filter = $filter;
             this.breadcrumbs = {};
@@ -76,6 +75,7 @@ var AIP;
                 _this.draw(key);
             });
         };
+        AIPBreadcrumbService.$inject = ["$location", "$filter"];
         return AIPBreadcrumbService;
     }());
     AIP.AIPBreadcrumbService = AIPBreadcrumbService;

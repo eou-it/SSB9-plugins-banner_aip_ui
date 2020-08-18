@@ -1,5 +1,5 @@
 /*******************************************************************************
- Copyright 2018-2019 Ellucian Company L.P. and its affiliates.
+ Copyright 2018-2020 Ellucian Company L.P. and its affiliates.
  ********************************************************************************/
 ///<reference path="../../../../typings/tsd.d.ts"/>
 ///<reference path="../../../common/services/admin/adminActionService.ts"/>
@@ -7,8 +7,6 @@ var AIP;
 (function (AIP) {
     var PostActionListPageCtrl = /** @class */ (function () {
         function PostActionListPageCtrl($scope, $state, $window, $filter, $q, ENDPOINT, PAGINATIONCONFIG, AdminActionService) {
-            this.$inject = ["$scope", "$state", "$window", "$filter", "$q", "ENDPOINT", "PAGINATIONCONFIG",
-                "AdminActionService"];
             $scope.vm = this;
             this.$state = $state;
             this.$filter = $filter;
@@ -299,6 +297,7 @@ var AIP;
         PostActionListPageCtrl.prototype.recurringPostDetails = function (postId) {
             this.$state.go("admin-recurring-post-list", { postIdval: postId });
         };
+        PostActionListPageCtrl.$inject = ["$scope", "$state", "$window", "$filter", "$q", "ENDPOINT", "PAGINATIONCONFIG", "AdminActionService"];
         return PostActionListPageCtrl;
     }());
     AIP.PostActionListPageCtrl = PostActionListPageCtrl;

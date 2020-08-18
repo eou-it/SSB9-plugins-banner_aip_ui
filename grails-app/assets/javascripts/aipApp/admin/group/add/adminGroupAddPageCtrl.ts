@@ -1,5 +1,5 @@
 /*******************************************************************************
- Copyright 2018 Ellucian Company L.P. and its affiliates.
+ Copyright 2018-2020 Ellucian Company L.P. and its affiliates.
  ********************************************************************************/
 ///<reference path="../../../../typings/tsd.d.ts"/>
 ///<reference path="../../../common/services/admin/adminGroupService.ts"/>
@@ -35,7 +35,7 @@ module AIP {
         description: string;
     }
     export class AdminGroupAddPageCtrl implements IAdminGroupAddPageCtrl{
-        $inject = ["$scope","$rootScope", "$window", "AdminGroupService", "$q", "SpinnerService", "$state", "$filter", "$sce", "$timeout", "CKEDITORCONFIG"];
+      static  $inject = ["$scope","$rootScope", "$window", "AdminGroupService", "$q", "SpinnerService", "$state", "$filter", "$sce", "$timeout", "CKEDITORCONFIG"];
         status: AIP.IStatus[];
         folders: AIP.IFolder[];
         groupInfo: IGroupSelect;

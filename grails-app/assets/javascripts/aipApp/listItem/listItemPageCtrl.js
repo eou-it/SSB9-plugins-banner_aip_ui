@@ -1,5 +1,5 @@
 /*********************************************************************************
- Copyright 2018-2019 Ellucian Company L.P. and its affiliates.
+ Copyright 2018-2020 Ellucian Company L.P. and its affiliates.
  **********************************************************************************/
 ///<reference path="../../typings/tsd.d.ts"/>
 ///<reference path="../common/services/itemListViewService.ts"/>
@@ -9,7 +9,6 @@ var AIP;
     var ListItemPageCtrl = /** @class */ (function () {
         function ListItemPageCtrl($scope, $state, ItemListViewService, AIPUserService, SpinnerService, $timeout, $q, $uibModal, APP_ABS_PATH, $sce, $compile, $filter) {
             var _this = this;
-            this.$inject = ["$scope", "$state", "ItemListViewService", "AIPUserService", "SpinnerService", "$timeout", "$q", "$uibModal", "APP_ABS_PATH", "$sce", "$compile", "$filter"];
             this.trustHTML = function (txtString) {
                 var sanitized = txtString ? this.$sce.trustAsHtml(txtString) : "";
                 return sanitized;
@@ -367,6 +366,7 @@ var AIP;
             });
             notifications.addNotification(n);
         };
+        ListItemPageCtrl.$inject = ["$scope", "$state", "ItemListViewService", "AIPUserService", "SpinnerService", "$timeout", "$q", "$uibModal", "APP_ABS_PATH", "$sce", "$compile", "$filter"];
         return ListItemPageCtrl;
     }());
     AIP.ListItemPageCtrl = ListItemPageCtrl;

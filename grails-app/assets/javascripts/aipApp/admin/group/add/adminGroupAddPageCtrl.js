@@ -1,5 +1,5 @@
 /*******************************************************************************
- Copyright 2018 Ellucian Company L.P. and its affiliates.
+ Copyright 2018-2020 Ellucian Company L.P. and its affiliates.
  ********************************************************************************/
 ///<reference path="../../../../typings/tsd.d.ts"/>
 ///<reference path="../../../common/services/admin/adminGroupService.ts"/>
@@ -9,7 +9,6 @@ var AIP;
     var AdminGroupAddPageCtrl = /** @class */ (function () {
         function AdminGroupAddPageCtrl($scope, $rootScope, $window, AdminGroupService, $q, SpinnerService, $state, $filter, $sce, $timeout, CKEDITORCONFIG) {
             var _this = this;
-            this.$inject = ["$scope", "$rootScope", "$window", "AdminGroupService", "$q", "SpinnerService", "$state", "$filter", "$sce", "$timeout", "CKEDITORCONFIG"];
             this.trustHTML = function (txtString) {
                 var sanitized = txtString ? this.$filter("html")(this.$sce.trustAsHtml(txtString)) : "";
                 return sanitized;
@@ -99,7 +98,7 @@ var AIP;
                             _this.existFolder = _this.folders.filter(function (item) {
                                 return item.id === parseInt(response.group.folderId);
                             })[0];
-                            _this.groupInfo.description =response.group.groupDesc;
+                            _this.groupInfo.description = response.group.groupDesc;
                             _this.groupInfoInitial = angular.copy(_this.groupInfo);
                         }
                         else {
@@ -388,6 +387,7 @@ var AIP;
             });
             notifications.addNotification(n);
         };
+        AdminGroupAddPageCtrl.$inject = ["$scope", "$rootScope", "$window", "AdminGroupService", "$q", "SpinnerService", "$state", "$filter", "$sce", "$timeout", "CKEDITORCONFIG"];
         return AdminGroupAddPageCtrl;
     }());
     AIP.AdminGroupAddPageCtrl = AdminGroupAddPageCtrl;

@@ -1,5 +1,5 @@
 /*********************************************************************************
- Copyright 2018 Ellucian Company L.P. and its affiliates.
+ Copyright 2018-2020 Ellucian Company L.P. and its affiliates.
  **********************************************************************************/
 
 ///<reference path="../../../typings/tsd.d.ts"/>
@@ -19,7 +19,7 @@ module AIP {
 
     export class MonitorActionItemCtrl implements IMonitorActionItemCtrl {
 
-        $inject = ["$scope", "$state", "AIPReviewService", "AIPUserService", "SpinnerService", "$timeout", "$q", "$uibModal", "APP_ROOT", "$sce", "$filter", "PAGINATIONCONFIG"];
+       static $inject = ["$scope", "$state", "AIPReviewService", "AIPUserService", "SpinnerService", "$timeout", "$q", "$uibModal", "APP_ROOT", "$sce", "$filter", "PAGINATIONCONFIG"];
         aipReviewService: AIP.AIPReviewService;
         userService: AIP.UserService;
         $uibModal;

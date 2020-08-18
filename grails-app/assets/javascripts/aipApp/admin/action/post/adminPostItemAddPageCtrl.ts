@@ -1,5 +1,5 @@
 /*******************************************************************************
- Copyright 2018-2019 Ellucian Company L.P. and its affiliates.
+ Copyright 2018-2020 Ellucian Company L.P. and its affiliates.
  ********************************************************************************/
 
 ///<reference path="../../../../typings/tsd.d.ts"/>
@@ -37,7 +37,7 @@ module AIP {
     }
 
     export class AdminPostItemAddPageCtrl implements IAdminPostItemAddPageCtrl {
-        $inject = ["$scope","$rootScope", "$q", "$state", "$filter", "$timeout", "SpinnerService", "AdminActionStatusService", "AdminActionService", "$uibModal","APP_FOLDER_PATH", "datePicker","$window"];
+       static $inject = ["$scope","$rootScope", "$q", "$state", "$filter", "$timeout", "SpinnerService", "AdminActionStatusService", "AdminActionService", "$uibModal","APP_FOLDER_PATH","$window"];
         $scope;
         $rootScope;
         $uibModal;
@@ -118,9 +118,8 @@ module AIP {
         END_OF_DAY:string="2359";
         recurEditFlag:boolean;
         recurDisableTimeAndTimeZone:boolean;
-
-        constructor($scope:IActionItemAddPageScope, $rootScope, $q:ng.IQService, $state, $uibModal,$window, $filter, $timeout,
-                    SpinnerService:AIP.SpinnerService,APP_FOLDER_PATH, AdminActionStatusService, AdminActionService:AIP.AdminActionService) {
+        constructor($scope:IActionItemAddPageScope, $rootScope, $q:ng.IQService, $state,$filter,$timeout, SpinnerService:AIP.SpinnerService, AdminActionStatusService, AdminActionService:AIP.AdminActionService,$uibModal,APP_FOLDER_PATH,$window
+                   ) {
             $scope.vm = this;
             this.$q = $q;
             this.$scope = $scope;

@@ -1,5 +1,5 @@
 /*******************************************************************************
- Copyright 2018 Ellucian Company L.P. and its affiliates.
+ Copyright 2018-2020 Ellucian Company L.P. and its affiliates.
  ********************************************************************************/
 ///<reference path="../../../../typings/tsd.d.ts"/>
 ///<reference path="../../../common/services/spinnerService.ts"/>
@@ -24,7 +24,7 @@ module AIP {
     }
 
     export class AdminActionItemAddPageCtrl implements IAdminActionItemAddPageCtrl{
-        $inject = ["$scope","$rootScope", "$q", "$state", "$filter","$location","$sce", "$timeout", "$window", "SpinnerService", "AdminActionService" ];
+       static $inject = ["$scope","$rootScope", "$q", "$state", "$filter","$location","$sce", "$timeout", "$window", "SpinnerService", "AdminActionService" ];
         status: [AIP.IStatus];
         folders: [AIP.IFolder];
         actionItemInfo: AIP.IActionItemParam|any;
@@ -51,9 +51,8 @@ module AIP {
         selectedstatusval;
         adminActionItemVal;
 
-
-        constructor($scope,  $rootScope, $q:ng.IQService, $state, $filter,$sce, $timeout, $window,
-                    SpinnerService:AIP.SpinnerService, AdminActionService:AIP.AdminActionService,$location) {
+        constructor($scope,  $rootScope, $q:ng.IQService, $state, $filter,$location,$sce, $timeout, $window,
+                    SpinnerService:AIP.SpinnerService, AdminActionService:AIP.AdminActionService) {
             $scope.vm = this;
             this.$scope = $scope;
             this.$q = $q;

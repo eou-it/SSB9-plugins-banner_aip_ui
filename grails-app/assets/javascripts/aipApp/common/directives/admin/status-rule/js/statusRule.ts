@@ -25,7 +25,8 @@ module AIPUI {
                     scope.init();
                 });
             },
-            controller: function ($scope) {
+            controller: ['$scope',
+                function($scope) {
 
                 $scope.init = function () {
                 };
@@ -129,7 +130,7 @@ module AIPUI {
 
                     }
                 }
-            }
+            }]
         }
     }
     angular.module('bannerAIPUI').directive('aipStatusRule', [AIPStatusRuleDirective]);

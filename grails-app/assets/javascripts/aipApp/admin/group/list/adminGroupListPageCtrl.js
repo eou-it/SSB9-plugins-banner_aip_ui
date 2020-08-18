@@ -1,5 +1,5 @@
 /*******************************************************************************
- Copyright 2018-2019 Ellucian Company L.P. and its affiliates.
+ Copyright 2018-2020 Ellucian Company L.P. and its affiliates.
  ********************************************************************************/
 ///<reference path="../../../../typings/tsd.d.ts"/>
 ///<reference path="../../../common/services/admin/adminGroupService.ts"/>
@@ -7,8 +7,6 @@ var AIP;
 (function (AIP) {
     var AdminGroupListPageCtrl = /** @class */ (function () {
         function AdminGroupListPageCtrl($scope, $state, $window, $filter, $q, ENDPOINT, PAGINATIONCONFIG, AdminGroupService) {
-            this.$inject = ["$scope", "$state", "$window", "$filter", "$q", "ENDPOINT", "PAGINATIONCONFIG",
-                "AdminGroupService"];
             $scope.vm = this;
             this.$state = $state;
             this.$scope = $scope;
@@ -214,6 +212,8 @@ var AIP;
         };
         AdminGroupListPageCtrl.prototype.refreshGrid = function () {
         };
+        AdminGroupListPageCtrl.$inject = ["$scope", "$state", "$window", "$filter", "$q", "ENDPOINT", "PAGINATIONCONFIG",
+            "AdminGroupService"];
         return AdminGroupListPageCtrl;
     }());
     AIP.AdminGroupListPageCtrl = AdminGroupListPageCtrl;

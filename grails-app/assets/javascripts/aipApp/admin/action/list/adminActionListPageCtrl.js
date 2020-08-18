@@ -1,5 +1,5 @@
 /*******************************************************************************
- Copyright 2018-2019 Ellucian Company L.P. and its affiliates.
+ Copyright 2018-2020 Ellucian Company L.P. and its affiliates.
  ********************************************************************************/
 ///<reference path="../../../../typings/tsd.d.ts"/>
 ///<reference path="../../../common/services/admin/adminActionService.ts"/>
@@ -7,8 +7,6 @@ var AIP;
 (function (AIP) {
     var AdminActionListPageCtrl = /** @class */ (function () {
         function AdminActionListPageCtrl($scope, $state, $window, $filter, $q, ENDPOINT, PAGINATIONCONFIG, AdminActionService) {
-            this.$inject = ["$scope", "$state", "$window", "$filter", "$q", "ENDPOINT", "PAGINATIONCONFIG",
-                "AdminActionService"];
             $scope.vm = this;
             this.$scope = $scope;
             this.$state = $state;
@@ -208,6 +206,8 @@ var AIP;
         AdminActionListPageCtrl.prototype.openActionItem = function (id) {
             this.$state.go("admin-action-open", { actionItemId: id });
         };
+        AdminActionListPageCtrl.$inject = ["$scope", "$state", "$window", "$filter", "$q", "ENDPOINT", "PAGINATIONCONFIG",
+            "AdminActionService"];
         return AdminActionListPageCtrl;
     }());
     AIP.AdminActionListPageCtrl = AdminActionListPageCtrl;

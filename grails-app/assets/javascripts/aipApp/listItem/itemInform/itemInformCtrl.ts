@@ -1,12 +1,12 @@
 /*******************************************************************************
- Copyright 2018 Ellucian Company L.P. and its affiliates.
+ Copyright 2018-2020 Ellucian Company L.P. and its affiliates.
  ********************************************************************************/
 
 declare var register: any;
 
 module AIP {
     export class ItemInformCtrl {
-        $inject = ["$scope", "$uibModalInstance", "$window", "APP_ROOT"];
+       static $inject = ["$scope", "$uibModalInstance", "$window", "APP_ROOT"];
         $uibModalInstance;
         $window;
         APP_ROOT;

@@ -1,5 +1,5 @@
 /*******************************************************************************
- Copyright 2018 Ellucian Company L.P. and its affiliates.
+ Copyright 2018-2020 Ellucian Company L.P. and its affiliates.
  ********************************************************************************/
 ///<reference path="../../../../../typings/tsd.d.ts"/>
 ///<reference path="../../../../common/services/admin/adminActionService.ts"/>
@@ -8,9 +8,8 @@
 var AIP;
 (function (AIP) {
     var AdminActionItemBlockCtrl = /** @class */ (function () {
-        function AdminActionItemBlockCtrl($scope, $rootScope, $q, $state, $filter, $sce, $window, $templateRequest, $templateCache, $compile, $timeout, $interpolate, SpinnerService, AdminActionService, AdminActionStatusService, APP_ROOT, CKEDITORCONFIG) {
-            this.$inject = ["$scope", "$window", "$rootScope", "$q", "$state", "$filter", "$sce", "$templateRequest", "$templateCache", "$compile",
-                "$timeout", "$interpolate", "SpinnerService", "AdminActionService", "AdminActionStatusService", "APP_ROOT", "CKEDITORCONFIG"];
+        function AdminActionItemBlockCtrl($scope, $window, $rootScope, $q, $state, $filter, $sce, $templateRequest, $templateCache, $compile,
+            $timeout, $interpolate, SpinnerService, AdminActionService, AdminActionStatusService, APP_ROOT, CKEDITORCONFIG) {
             this.trustAsHtml = function (string) {
                 return this.$sce.trustAsHtml(string);
             };
@@ -413,6 +412,8 @@ var AIP;
                 }
             });
         };
+        AdminActionItemBlockCtrl.$inject = ["$scope", "$window", "$rootScope", "$q", "$state", "$filter", "$sce", "$templateRequest", "$templateCache", "$compile",
+            "$timeout", "$interpolate", "SpinnerService", "AdminActionService", "AdminActionStatusService", "APP_ROOT", "CKEDITORCONFIG"];
         return AdminActionItemBlockCtrl;
     }());
     AIP.AdminActionItemBlockCtrl = AdminActionItemBlockCtrl;

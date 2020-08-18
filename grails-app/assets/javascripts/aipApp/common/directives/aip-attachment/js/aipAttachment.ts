@@ -29,7 +29,8 @@ module AIPUI {
             },
             link: function (scope, elem, attr) {
             },
-            controller: function ($scope, $q, $filter, AIPUploadService, SpinnerService) {
+            controller: ['$scope', '$q', '$filter','AIPUploadService', 'SpinnerService',
+                function($scope, $q, $filter, AIPUploadService, SpinnerService) {
                 $scope.query;
                 $scope.gridData = {};
                 $scope.records;
@@ -423,7 +424,7 @@ module AIPUI {
                         });
                     return deferred.promise;
                 };
-            }
+            }]
         }
     }
         angular.module('bannerAIPUI').directive('aipAttachment', ['$filter', '$q', 'AIPUploadService', 'SpinnerService', AIPAttachment]);
