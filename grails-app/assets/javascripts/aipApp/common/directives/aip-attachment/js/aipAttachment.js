@@ -361,7 +361,7 @@ var AIPUI;
                         AIPUploadService.restrictedFileTypes()
                             .then(function (response) {
                             if (response.data.restrictedFileTypes) {
-                                if ((((response.data.restrictedFileTypes).toUpperCase()).indexOf(selectedFileType.toUpperCase())) !== -1) {
+                                if ((((response.data.restrictedFileTypes)).indexOf(selectedFileType.toUpperCase())) !== -1) {
                                     SpinnerService.showSpinner(false);
                                     errorNotification($filter("i18n_aip")("aip.uploadDocument.file.type.restricted.error"));
                                     angular.element("#uploadBtn").attr("disabled", false);
