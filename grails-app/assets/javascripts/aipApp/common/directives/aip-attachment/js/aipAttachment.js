@@ -217,7 +217,7 @@ var AIPUI;
                                     var base64Encoded = response.data.documentContent;
                                     var fileNameSplit = data.documentName.split('.');
                                     var fileExtension = fileNameSplit[fileNameSplit.length - 1].toLowerCase();
-                                    if (window.navigator && window.navigator.msSaveOrOpenBlob) {
+                                    if (window.navigator && window.navigator.msSaveOrOpenBlob) { // IE
                                         var byteCharacters = atob(base64Encoded);
                                         var byteNumbers = new Array(byteCharacters.length);
                                         for (var i = 0; i < byteCharacters.length; i++) {
