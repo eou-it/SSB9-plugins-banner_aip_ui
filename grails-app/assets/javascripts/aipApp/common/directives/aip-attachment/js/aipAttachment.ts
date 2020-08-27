@@ -1,5 +1,5 @@
 /*******************************************************************************
- Copyright 2019 Ellucian Company L.P. and its affiliates.
+ Copyright 2019-2020 Ellucian Company L.P. and its affiliates.
  ********************************************************************************/
 ///<reference path="../../../../../typings/tsd.d.ts"/>
 ///<reference path="../../../services/aipAttachmentService.ts"/>
@@ -388,7 +388,7 @@ module AIPUI {
                     AIPUploadService.restrictedFileTypes()
                         .then((response: any) => {
                             if (response.data.restrictedFileTypes) {
-                                if ((((response.data.restrictedFileTypes).toUpperCase()).indexOf(selectedFileType.toUpperCase())) !== -1) {
+                                if ((((response.data.restrictedFileTypes)).indexOf(selectedFileType.toUpperCase())) !== -1) {
                                     SpinnerService.showSpinner(false);
                                     errorNotification($filter("i18n_aip")("aip.uploadDocument.file.type.restricted.error"));
                                     angular.element("#uploadBtn").attr("disabled", false)

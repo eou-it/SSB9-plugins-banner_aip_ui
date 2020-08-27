@@ -1,5 +1,5 @@
 /*******************************************************************************
- Copyright 2019 Ellucian Company L.P. and its affiliates.
+ Copyright 2019-2020 Ellucian Company L.P. and its affiliates.
  ********************************************************************************/
 ///<reference path="../../../../../typings/tsd.d.ts"/>
 ///<reference path="../../../services/aipAttachmentService.ts"/>
@@ -217,7 +217,7 @@ var AIPUI;
                                     var base64Encoded = response.data.documentContent;
                                     var fileNameSplit = data.documentName.split('.');
                                     var fileExtension = fileNameSplit[fileNameSplit.length - 1].toLowerCase();
-                                    if (window.navigator && window.navigator.msSaveOrOpenBlob) {
+                                    if (window.navigator && window.navigator.msSaveOrOpenBlob) { // IE
                                         var byteCharacters = atob(base64Encoded);
                                         var byteNumbers = new Array(byteCharacters.length);
                                         for (var i = 0; i < byteCharacters.length; i++) {
@@ -361,7 +361,7 @@ var AIPUI;
                         AIPUploadService.restrictedFileTypes()
                             .then(function (response) {
                             if (response.data.restrictedFileTypes) {
-                                if ((((response.data.restrictedFileTypes).toUpperCase()).indexOf(selectedFileType.toUpperCase())) !== -1) {
+                                if ((((response.data.restrictedFileTypes)).indexOf(selectedFileType.toUpperCase())) !== -1) {
                                     SpinnerService.showSpinner(false);
                                     errorNotification($filter("i18n_aip")("aip.uploadDocument.file.type.restricted.error"));
                                     angular.element("#uploadBtn").attr("disabled", false);

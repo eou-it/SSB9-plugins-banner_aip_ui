@@ -59,7 +59,7 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
     void setUp() {
         formContext = ['SELFSERVICE']
         super.setUp()
-       // controller = new AipAdminController()
+        // controller = new AipAdminController()
         Holders.config.BANNER_AIP_BLOCK_PROCESS_PERSONA = ['EVERYONE', 'STUDENT', 'REGISTRAR', 'FACULTYINSTRUCTOR', 'FACULTYADVISOR', 'FACULTYBOTH']
     }
 
@@ -1222,7 +1222,7 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
 
     @Test
     void testCharMaxAttachmentVal() {
-        setConfigProperties('aip.institution.maximum.attachment.number', 'S')
+        Holders.config.aip.institution.maximum.attachment.number ='S'
         controller.request.contentType = "text/json"
         controller.getMaxAttachmentsVal()
         assertEquals 200, controller.response.status
@@ -1232,7 +1232,7 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
 
     @Test
     void testZeroMaxAttachmentVal() {
-        setConfigProperties('aip.institution.maximum.attachment.number', 0)
+        Holders.config.aip.institution.maximum.attachment.number = 0
         controller.request.contentType = "text/json"
         controller.getMaxAttachmentsVal()
         assertEquals 200, controller.response.status
@@ -1242,7 +1242,7 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
 
     @Test
     void testnullMaxAttachmentVal() {
-        setConfigProperties('aip.institution.maximum.attachment.number', '')
+        Holders.config.aip.institution.maximum.attachment.number =''
         controller.request.contentType = "text/json"
         controller.getMaxAttachmentsVal()
         assertEquals 200, controller.response.status
@@ -1252,7 +1252,7 @@ class AipAdminControllerIntegrationTests extends BaseIntegrationTestCase {
 
     @Test
     void testnegativeMaxAttachmentVal() {
-        setConfigProperties('aip.institution.maximum.attachment.number', -1)
+        Holders.config.aip.institution.maximum.attachment.number =-1
         controller.request.contentType = "text/json"
         controller.getMaxAttachmentsVal()
         assertEquals 200, controller.response.status
