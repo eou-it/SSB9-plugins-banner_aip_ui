@@ -1,5 +1,5 @@
 /*******************************************************************************
- Copyright 2019-2020 Ellucian Company L.P. and its affiliates.
+ Copyright 2019 Ellucian Company L.P. and its affiliates.
  ********************************************************************************/
 package net.hedtech.banner.aip
 
@@ -110,10 +110,15 @@ class AipReviewController {
      * @return contact information list as JSON
      */
     def getContactInformation() {
+        def configName = "BANNER_AIP_REVIEWER_CONTACT_INFORMATION"
+        def configType = "arraylist"
+        def configApplicationId = "GENERAL_SS"
 
-        def configData = Holders.config.BANNER_AIP_REVIEWER_CONTACT_INFORMATION
-        configData = configData.substring(1, configData.length()-1)
-        List<String> contactInformationList = new ArrayList<String>(Arrays.asList(configData.split(",")));
+        def configData = ConfigurationData.fetchByNameAndType(configName, configType, configApplicationId)
+
+        def results = configData.value
+        results = results.substring(1, results.length()-1)
+        List<String> contactInformationList = new ArrayList<String>(Arrays.asList(results.split(",")));
         List<ConfigurationData> configDataList = new ArrayList<ConfigurationData>();
         contactInformationList.each {
             configDataList.add(new ConfigurationData(
@@ -126,6 +131,7 @@ class AipReviewController {
                     dataOrigin: "Banner"
             ))
         }
+
         render configDataList as JSON
 
     }
