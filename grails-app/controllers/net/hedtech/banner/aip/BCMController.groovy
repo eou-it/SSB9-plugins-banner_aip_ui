@@ -5,6 +5,7 @@
 package net.hedtech.banner.aip
 
 import grails.converters.JSON
+import grails.util.Holders
 
 /**
  * Controller class to access BCM configuration
@@ -22,7 +23,7 @@ class BCMController {
         if (session[BCM_LOCATION]) {
             bcmLocationURL = session[BCM_LOCATION]
         } else {
-            bcmLocationURL = bannerCommManagementResourceAccessService.getBCMLocation()
+            bcmLocationURL = Holders.config.BCMLOCATION
             session[BCM_LOCATION] = bcmLocationURL
         }
         def map = [bcmURL: bcmLocationURL,mepCode:session.getAttribute('mep')]
