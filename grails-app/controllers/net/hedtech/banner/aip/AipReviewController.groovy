@@ -4,6 +4,7 @@
 package net.hedtech.banner.aip
 
 import grails.converters.JSON
+import grails.util.Holders
 import net.hedtech.banner.exceptions.ApplicationException
 import net.hedtech.banner.i18n.MessageHelper
 import net.hedtech.banner.general.ConfigurationData

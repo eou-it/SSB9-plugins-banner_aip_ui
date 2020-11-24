@@ -1,5 +1,5 @@
 /*********************************************************************************
- Copyright 2018 Ellucian Company L.P. and its affiliates.
+ Copyright 2018-2020 Ellucian Company L.P. and its affiliates.
  **********************************************************************************/
 
 package net.hedtech.banner.aip
@@ -154,7 +154,7 @@ class AipDocumentManagementController {
     private boolean restrictedFileTypesValidation(selectedFileName){
         def restrictedFileTypesSession = getRestrictedFileTypes()
         if(restrictedFileTypesSession.restrictedFileTypes) {
-            if((restrictedFileTypesSession.restrictedFileTypes.toUpperCase().indexOf(getFileExtension(selectedFileName.toUpperCase()))) != -1) {
+            if(((restrictedFileTypesSession.restrictedFileTypes).indexOf(getFileExtension(selectedFileName.toUpperCase()))) != -1) {
                 return false
             }
         }

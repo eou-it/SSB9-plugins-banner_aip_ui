@@ -47,7 +47,7 @@ angular.module("bannerAIPReview", [
     //set application root url
     .constant('APP_ROOT', aipAppRoot)
 
-    .constant('APP_PATH', "/BannerGeneralSsb/ssb")
+    .constant('APP_PATH', Application.getApplicationPath())
 
     .constant("APP_ABS_PATH", aipAppAbsPath)
 

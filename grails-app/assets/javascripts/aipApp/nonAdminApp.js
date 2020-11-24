@@ -53,7 +53,7 @@ angular.module("bannerNonAdminAIP", [
 
     .constant('BCM_ROOT', bcmRoot)
 
-    .constant('APP_PATH',"/BannerGeneralSsb/ssb/")
+    .constant('APP_PATH',Application.getApplicationPath())
 
     .constant("APP_ABS_PATH", rootWebApp)
 
