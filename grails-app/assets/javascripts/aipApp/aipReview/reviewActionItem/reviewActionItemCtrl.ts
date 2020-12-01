@@ -169,6 +169,15 @@ module AIP {
                 }
                 $window.onbeforeunload = null;
             };
+
+            //To Focus on close button on click of TAB from tables
+            document.addEventListener('keyup', (event) => {
+                if (event.key == 'Tab') {
+                    if (document.activeElement.tagName === 'TD'){
+                        $('#xePopupClose').focus();
+                    }
+                }
+            });
         }
 
         init() {
@@ -220,10 +229,6 @@ module AIP {
                     that.checkchangesDone();
                 }
             });
-
-
-
-
         }
 
         /**
@@ -242,7 +247,8 @@ module AIP {
             });
             return deferred.promise;
         };
-        /**
+
+          /**
          * Preview of document.
          * @param row
          */
@@ -320,7 +326,7 @@ module AIP {
                 });
         };
 
-        /*Convert base64 to blob*/
+/*Convert base64 to blob*/
         b64toBlob=function(b64Data, contentType, sliceSize) {
             contentType = contentType || '';
             sliceSize = sliceSize || 512;
@@ -446,6 +452,7 @@ module AIP {
             }
             return  isAnyFieldModified ;
         }
+
 
         checkchangesDone() {
             if (this.dirtyFlag) {
