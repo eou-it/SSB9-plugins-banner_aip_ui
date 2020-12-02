@@ -1,21 +1,21 @@
 <!--*******************************************************************************
-Copyright 2018 Ellucian Company L.P. and its affiliates.
+Copyright 2018-2020 Ellucian Company L.P. and its affiliates.
 *******************************************************************************-->
 <div class="modal-header">
     <h3 class="modal-title" id="modal-status-add-title">{{"aip.admin.status.add"|i18n_aip}}</h3>
-    <button class="modal-close" type="button" ng-click="vm.closeDialog()">
-        <img src="{{vm.APP_FOLDER_PATH}}assets/close-icon.svg" height="14px;" width="14px;">
+    <button class="modal-close" type="button" ng-click="vm.closeDialog()" aria-label="{{'aip.admin.action.status.close.button.aria.label'|i18n_aip}}">
+        <img src="{{vm.APP_FOLDER_PATH}}assets/close-icon.svg" height="14px;" width="14px;" title="image">
     </button>
 </div>
 <div class="modal-body" id="modal-status-add-body">
     <div class="modal-body-content">
         <div class="row">
-            <label>
+            <label for="actionItemStatus">
                 {{"aip.admin.status.actionItemStatus"|i18n_aip}}
             </label>
         </div>
         <div class="row">
-            <input maxlength="30" aria-valuemax="30" class="form-control" type="text" ng-model="vm.statusModel.title">
+            <input maxlength="30" class="form-control" type="text" ng-model="vm.statusModel.title" id="actionItemStatus">
         </div>
         <div class="row blockProcess">
             <label>
@@ -25,7 +25,7 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
         </div>
     </div>
     <div class="modal-control">
-        <button type="button" class="btn btn-default" ng-click="vm.statusSave()" ng-disabled="!vm.validate()">
+        <button type="button" class="btn btn-default" ng-click="vm.statusSave()" ng-disabled="!vm.validate()" >
             {{"aip.common.save.modal"|i18n_aip}}
         </button>
     </div>

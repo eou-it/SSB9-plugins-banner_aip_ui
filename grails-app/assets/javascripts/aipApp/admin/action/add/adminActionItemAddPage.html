@@ -1,5 +1,5 @@
 <!--*******************************************************************************
-Copyright 2018 Ellucian Company L.P. and its affiliates.
+Copyright 2018-2020 Ellucian Company L.P. and its affiliates.
 *******************************************************************************-->
 <div class="actionItemAddContainer">
     <div class="actionItemInfo">
@@ -14,7 +14,7 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
             </div>
             <div class="actionItemElement col-xs-12 col-md-8">
                 <div class="row" ng-class="{'has-error':vm.actionItemInfo.name.length>60}">
-                    <input id="actionItemName" maxlength="60" aria-valuemax="60" type="text" class="form-control"
+                    <input id="actionItemName" maxlength="60"  type="text" class="form-control"
                            ng-model="vm.actionItemInfo.name" ng-disabled="vm.editMode"
                            placeholder="{{'aip.admin.action.actionItem.name'|i18n_aip}}" aria-label="{{'aip.admin.action.actionItem.name'|i18n_aip}}"
                            aria-required="true" ng-change="vm.dataChanged()">

@@ -1,5 +1,5 @@
 <!--*******************************************************************************
-Copyright 2019 Ellucian Company L.P. and its affiliates.
+Copyright 2019-2020 Ellucian Company L.P. and its affiliates.
 *******************************************************************************-->
 
 <div>
@@ -12,7 +12,7 @@ Copyright 2019 Ellucian Company L.P. and its affiliates.
         <div class="row actionItemInfoRow actionItemName">
             <div class="actionItemElement row input-actionItem">
 
-                <label for="" class="titleValue required" id="actionItemAdd-Name">
+                <label for="actionItemName" class="titleValue required" id="actionItemAdd-Name">
                     {{"aip.admin.action.actionItem.post.jobName.label"|i18n_aip}}
                 </label>
 
@@ -143,7 +143,7 @@ Copyright 2019 Ellucian Company L.P. and its affiliates.
                 <div class=" noPaddingLeft col-md-3 col-sm-3 col-lg-2 col-xs-12 ">
                     <!--LABEL DIV-->
                     <div class="actionItemElement row input-actionItem ">
-                        <label for="labelDisplayStartDate" id="labelDisplayStartDate" class="titleValue required">{{"aip.admin.action.postactionItem.start.date"|i18n_aip}}
+                        <label for="labelDisplayStartDate"  class="titleValue required">{{"aip.admin.action.postactionItem.start.date"|i18n_aip}}
                         </label>
                     </div>
                     <!--END LABEL DIV-->
@@ -151,7 +151,7 @@ Copyright 2019 Ellucian Company L.P. and its affiliates.
                          role="textbox">
 
                         <div class=" col-xs-3 col-sm-2 input-daterange form-group right-inner-addon dateRange-minwidth noPaddingLeft noPaddingRight">
-                            <input type="text" id="date" date-picker ng-model="vm.postActionItemInfo.displayStartDate"
+                            <input type="text" id="date" date-picker ng-model="vm.postActionItemInfo.displayStartDate" id="labelDisplayStartDate"
                                    today="{{today}}" ng-change="vm.checkChanges()"
                                    class="form-control  Datelement" name="displaystartDate"
                                    aria-required="true" required autocomplete="off"
@@ -164,7 +164,7 @@ Copyright 2019 Ellucian Company L.P. and its affiliates.
                 <div class="noPaddingLeft col-md-3 col-sm-3 col-lg-2 col-xs-12">
                     <!--LABEL DIV-->
                     <div class="actionItemElement row input-actionItem ">
-                        <label for="labelDisplayEndDate" id="labelDisplayEndDate" class="titleValue required ">{{"aip.admin.action.postactionItem.end.date"|i18n_aip}}
+                        <label for="datepickerdisplayEndDate"  class="titleValue required ">{{"aip.admin.action.postactionItem.end.date"|i18n_aip}}
                         </label>
                     </div>
                     <!--END LABEL DIV-->
@@ -195,7 +195,7 @@ Copyright 2019 Ellucian Company L.P. and its affiliates.
                         <div class="col-sm-3 col-lg-2 col-xs-12 startdate">
                             <!--Start date label-->
                             <div class="actionItemElement row input-actionItem">
-                                <label for="labelScheduledStartDate" class="titleValue required" id="labelScheduledStartDate">{{"aip.admin.action.postactionItem.schdeule.start.date"|i18n_aip}}
+                                <label for="scheduledStartDate" class="titleValue required" >{{"aip.admin.action.postactionItem.schdeule.start.date"|i18n_aip}}
                                 </label>
                             </div>
                             <!--End : Start date label-->
@@ -212,13 +212,13 @@ Copyright 2019 Ellucian Company L.P. and its affiliates.
                         </div>
                         <div class="col-sm-3 col-lg-2 col-xs-12 enddate">
                             <div class="actionItemElement row input-actionItem ">
-                                <label for="postActionItemTime" id="postActionItemTime" class="titleValue required ">{{"aip.admin.action.postactionItem.time"|i18n_aip}}
+                                <label for="postActionItemTime"  class="titleValue required ">{{"aip.admin.action.postactionItem.time"|i18n_aip}}
                                 </label>
                             </div>
                             <div class="actionItemElement Datelement col-sm-4 col-md-4 dateRow form-container" role="textbox">
 
                                 <div class="row input-daterange form-group right-inner-addon dateRange-minwidth">
-                                    <input type="text" class="form-control   " name="" aria-required="true"
+                                    <input type="text" class="form-control   " name="" aria-required="true" id="postActionItemTime"
                                            xe-time-picker-box input_24_hr_string="{{vm.localeTime ? 'N' : 'Y'}}" change='vm.checkChanges();vm.getProcessedServerDateTimeAndTimezone()'
                                            hour-format-12="{{vm.localeTime ? 'Y' : 'N'}}"
                                            am-label='{{"aip.admin.communication.timepicker.time.am.label"|i18n_aip}}'
