@@ -1,5 +1,5 @@
 <!--*******************************************************************************
- Copyright 2018-2019 Ellucian Company L.P. and its affiliates.
+ Copyright 2018-2020 Ellucian Company L.P. and its affiliates.
  *******************************************************************************-->
 <!DOCTYPE html>
 <html xmlns:ng="http://angularjs.org" id="ng-app">
@@ -76,8 +76,8 @@
 <body>
 <div id="content" role="main" ng-app="bannerNonAdminAIP">
     <div class="progressbar-container ng-cloak" ng-controller="SpinnerCtrl" ng-show="vm.showing">
-        <uib-progressbar aria-labelledby="progressbar" class="progress-striped active" value="100" type="info">
-            <span id="progressbar">{{'aip.common.text.loading'|i18n_aip}}</span>
+        <uib-progressbar aria-labelledby="progress" class="progress-striped active" value="100" type="info">
+            <span id="progress">{{'aip.common.text.loading'|i18n_aip}}</span>
         </uib-progressbar>
     </div>
     <div id="title-panel" class="aurora-theme"></div>
