@@ -218,6 +218,15 @@ module AIPUI {
                     selectedResponse.click()
                 }
 
+                //To Focus on close button on click of TAB from table
+                document.addEventListener('keyup', function (event) {
+                        if (event.key == 'Tab') {
+                            if (document.activeElement.tagName === 'TD') {
+                                $('#xePopupClose').focus();
+                            }
+                        }
+                });
+
                 $scope.previewDocument = function () {
                     SpinnerService.showSpinner(true);
                     var data = this.row;

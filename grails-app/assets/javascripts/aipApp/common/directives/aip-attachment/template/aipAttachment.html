@@ -1,5 +1,5 @@
 <!--*******************************************************************************
-   Copyright 2019 Ellucian Company L.P. and its affiliates.
+   Copyright 2019-2020 Ellucian Company L.P. and its affiliates.
    *******************************************************************************-->
 <div id="attachmentsDiv" class="aip-attachments-container">
     <xe-popup-modal show="showModal" focusbackelement="tools"
@@ -12,23 +12,23 @@
                             id="maxAttachments">{{maxAttachments}}</span>
                     </label>
                     <form name="UploadFile" role="form">
+					  <div class="row">
+                            <input id="fileupload_label" type="file" ngf-select ng-model="selectedFile"
+                                   name="file"/>
+                        </div>
                         <div class="row">
-                            <input class="btn btn-primary btn-right" type="button" name="uploadButton" tabindex="2"
+                            <input class="btn btn-primary btn-right" type="button" name="uploadButton" tab-index="0"
                                    ng-click="uploadDocument(selectedFile);" id="uploadBtn"
                                    value={{"js.aip.common.upload.button.label"|i18n_aip}}
                                    aria-label="{{'js.aip.common.upload.button.label'|i18n_aip}}">
-                            <input class="btn btn-default btn-right" type="button" name="resetButton" tabindex="3"
+                            <input class="btn btn-default btn-right" type="button" name="resetButton" tab-index="0"
                                    ng-click="reset();selectedFile=null"  id="resetBtn"
                                    value={{"js.aip.common.reset.button.label"|i18n_aip}}
                                    aria-label="{{'js.aip.common.reset.button.label'|i18n_aip}}">
                         </div>
-                        <div class="row">
-                            <input id="fileupload_label" type="file" ngf-select ng-model="selectedFile"
-                                   name="file"/>
-                        </div>
+
                     </form>
                 </div>
-
 
                 <div class="attachmentsTable">
                     <xe-table-grid

@@ -27,9 +27,9 @@ var AIP;
                 return deferred.promise;
             };
             /**
-             * Preview of document.
-             * @param row
-             */
+           * Preview of document.
+           * @param row
+           */
             this.previewDocument = function (row) {
                 var _this = this;
                 this.spinnerService.showSpinner(true);
@@ -45,7 +45,7 @@ var AIP;
                             var base64Encoded = response.data.documentContent;
                             var fileNameSplit = row.documentName.split('.');
                             var fileExtension = fileNameSplit[fileNameSplit.length - 1].toLowerCase();
-                            if (window.navigator && window.navigator.msSaveOrOpenBlob) {
+                            if (window.navigator && window.navigator.msSaveOrOpenBlob) { // IE
                                 var byteCharacters = atob(base64Encoded);
                                 var byteNumbers = new Array(byteCharacters.length);
                                 for (var i = 0; i < byteCharacters.length; i++) {
@@ -228,6 +228,14 @@ var AIP;
                 }
                 $window.onbeforeunload = null;
             };
+            //To Focus on close button on click of TAB from tables
+            document.addEventListener('keyup', function (event) {
+                if (event.key == 'Tab') {
+                    if (document.activeElement.tagName === 'TD') {
+                        $('#xePopupClose').focus();
+                    }
+                }
+            });
         }
         ReviewActionItemCtrl.prototype.init = function () {
             var _this = this;
