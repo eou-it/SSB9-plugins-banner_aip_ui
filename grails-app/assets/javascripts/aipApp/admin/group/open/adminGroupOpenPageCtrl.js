@@ -115,6 +115,7 @@ var AIP;
                 angular.element(document.querySelector('#xe-tab1')).attr('href', urlVal);
                 angular.element(document.querySelector('#xe-tab2')).attr('href', urlVal);
             }
+            $(".xe-tab-nav").find('li').removeAttr("tabIndex");
             return deferred.promise;
         };
         AdminGroupOpenPageCtrl.prototype.getGroupDetailDefer = function (id) {
