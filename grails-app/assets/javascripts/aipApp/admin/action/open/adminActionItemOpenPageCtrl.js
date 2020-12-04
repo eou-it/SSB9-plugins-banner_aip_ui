@@ -235,6 +235,7 @@ var AIP;
                 angular.element(document.querySelector('#xe-tab2')).attr('href', urlVal);
                 angular.element(document.querySelector('#xe-tab3')).attr('href', urlVal);
             }
+            $(".xe-tab-nav").find('li').removeAttr("tabIndex");
             return deferred.promise;
         };
         AdminActionItemOpenPageCtrl.prototype.isNoTemplate = function () {
