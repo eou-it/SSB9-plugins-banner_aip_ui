@@ -1,5 +1,5 @@
 /*******************************************************************************
- Copyright 2018 Ellucian Company L.P. and its affiliates.
+ Copyright 2018-2020 Ellucian Company L.P. and its affiliates.
  ********************************************************************************/
 
 module AIPUI {
@@ -18,10 +18,9 @@ module AIPUI {
             },
             controller: ['$scope', '$filter', 'ItemListViewService',
                 function($scope, $filter, ItemListViewService) {
+                $scope.isOpen = false;
                 if ($scope.idx === $scope.opengroup) {
                     $scope.isOpen = true;
-                } else {
-                    $scope.isOpen = false;
                 }
                 var waitForAccordionElements = function () {
                     setTimeout(function () {
