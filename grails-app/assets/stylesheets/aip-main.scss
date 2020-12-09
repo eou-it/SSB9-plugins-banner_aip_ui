@@ -22,7 +22,7 @@ Copyright 2018-2019 Ellucian Company L.P. and its affiliates.
 @import 'aipApp/aipReview/reviewActionItem/reviewActionItem';
 
 #gridCaption {
-  color: gray;
+  color: black !important;
   font-size: 18px;
 }
 
@@ -88,12 +88,18 @@ Copyright 2018-2019 Ellucian Company L.P. and its affiliates.
 }
 
 #breadcrumbHeader {
-  .breadcrumbButton {
+  .breadcrumbButton {    
     //font-size: 0.8em;
   }
   a.breadcrumbButton.leaf-breadcrumb {
     text-decoration: none;
     cursor: default;
+  }
+  .breadcrumbButton{
+    color: black !important;
+  }
+  .leaf-breadcrumb {
+    color: black;
   }
 }
 
@@ -528,6 +534,7 @@ ol.selected-group > li > button {
   .caption caption .caption-container {
     font-size: 16px !important;
   }
+
   .tbody .icon {
     font-size: 1.5em;
     border: none;
