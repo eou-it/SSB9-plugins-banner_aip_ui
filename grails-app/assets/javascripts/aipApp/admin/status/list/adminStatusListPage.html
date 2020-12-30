@@ -1,7 +1,7 @@
 <!--*******************************************************************************
-Copyright 2018 Ellucian Company L.P. and its affiliates.
+Copyright 2018-2020 Ellucian Company L.P. and its affiliates.
 *******************************************************************************-->
-<div class="statusListContainer" id="adminStatusListPage" ng-controller="AdminStatusListPageCtrl">
+<div class="statusListContainer" id="adminStatusListPage" ng-controller="AdminStatusListPageCtrl" aria-live="assertive">
     <div class="row controls">
         <div class="control">
             <button type="button" class="btn btn-default" ng-click="vm.goAddPage()" aria-label="{{'aip.admin.action.add.jaws'|i18n_aip}}">
@@ -40,8 +40,11 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
 
                 draggable-column-names="vm.draggableColumnNames"
                 continuous-scrolling="false">
-                <xe-cell-markup column-name="actionItemStatusBlockedProcess" aria-label="{{'aip.common.text.yes'|i18n_aip}}">
-                    <div ng-if="row.actionItemStatusBlockedProcess === 'Y'" class="icon icon-success-CF icon-green">
+                <xe-cell-markup column-name="actionItemStatus">
+                    <span>{{row.actionItemStatus}} &nbsp;</span>
+                </xe-cell-markup>
+                <xe-cell-markup column-name="actionItemStatusBlockedProcess" " aria-label="{{'aip.common.text.yes'|i18n_aip}}">
+                    <div ng-if="row.actionItemStatusBlockedProcess === 'Y'" class="icon icon-success-CF icon-green" >
                         <span class="offscreen">{{'aip.common.block.process.indicator.is'|i18n_aip}} {{'aip.common.text.yes'|i18n_aip}}</span>
                     </div>
                     <div ng-if="row.actionItemStatusBlockedProcess === 'N'" class="icon icon-info">
@@ -49,12 +52,18 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
                     </div>
                 </xe-cell-markup>
                 <xe-cell-markup column-name="actionItemStatusSystemRequired">
-                    <div ng-if="row.actionItemStatusSystemRequired === 'Y'" class="icon icon-success-CF icon-green">
+                    <div ng-if="row.actionItemStatusSystemRequired === 'Y'" class="icon icon-success-CF icon-green" >
                         <span class="offscreen">{{'aip.common.system.required.indicator.is'|i18n_aip}} {{'aip.common.text.yes'|i18n_aip}}</span>
                     </div>
                     <div ng-if="row.actionItemStatusSystemRequired === 'N'" class="icon icon-info">
                         <span class="offscreen">{{'aip.common.system.required.indicator.is'|i18n_aip}} {{'aip.common.text.no'|i18n_aip}}</span>
                     </div>
+                </xe-cell-markup>
+                <xe-cell-markup column-name="actionItemStatusUserId">
+                    <span>{{row.actionItemStatusUserId}} &nbsp; </span>
+                </xe-cell-markup>
+                <xe-cell-markup column-name="actionItemStatusActivityDate">
+                    <span>{{row.actionItemStatusActivityDate}} &nbsp; </span>
                 </xe-cell-markup>
                 <xe-cell-markup column-name="actionTobeTaken" >
                     <button ng-if="row.deletable === 'N'" class="icon icon-delete-CO" ng-click="vm.disableSystemRecord(row.deleteRestrictionReason)" title="{{'aip.common.delete.status.jaws'|i18n_aip}}" aria-label="{{'aip.common.system.required.indicator.is'|i18n_aip}} {{'aip.common.text.yes'|i18n_aip}}">
