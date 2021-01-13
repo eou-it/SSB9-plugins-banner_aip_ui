@@ -1,12 +1,11 @@
 /*******************************************************************************
- Copyright 2018-2020 Ellucian Company L.P. and its affiliates.
+ Copyright 2018-2021 Ellucian Company L.P. and its affiliates.
  ********************************************************************************/
 ///<reference path="../../../common/services/admin/adminActionStatusService.ts"/>
 var AIP;
 (function (AIP) {
     var AdminStatusListPageCtrl = /** @class */ (function () {
-        function AdminStatusListPageCtrl($scope, $state, $window, $filter, $http, $q, $uibModal,
-            ENDPOINT, PAGINATIONCONFIG, AdminActionStatusService, APP_FOLDER_PATH) {
+        function AdminStatusListPageCtrl($scope, $state, $window, $filter, $http, $q, $uibModal, ENDPOINT, PAGINATIONCONFIG, AdminActionStatusService, APP_FOLDER_PATH) {
             $scope.vm = this;
             $scope.disableSystemRecord = function (data) {
             };
@@ -146,6 +145,7 @@ var AIP;
             this.modalInstance.result.then(function (result) {
                 console.log(result);
                 if (result.success) {
+					 
                     //TODO:: send notification and refresh grid
                     var n = new Notification({
                         message: _this.$filter("i18n_aip")("aip.common.save.successful"),
@@ -161,6 +161,9 @@ var AIP;
             }, function (error) {
                 console.log(error);
             });
+			setTimeout( function(){angular.element('#modal-status-add-title').attr('tabindex', -1).focus()},100);
+			
+			
         };
         AdminStatusListPageCtrl.prototype.disableSystemRecord = function (deleteRestrictionReason) {
             var n = new Notification({

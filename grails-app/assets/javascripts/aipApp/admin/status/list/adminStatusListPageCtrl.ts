@@ -1,5 +1,5 @@
 /*******************************************************************************
- Copyright 2018-2020 Ellucian Company L.P. and its affiliates.
+ Copyright 2018-2021 Ellucian Company L.P. and its affiliates.
  ********************************************************************************/
 
 //<reference path="../../../../typings/tsd.d.ts"/>
@@ -34,7 +34,7 @@ module AIP {
         gridHeight:number;
 
 
-        constructor($scope, $state, $window, $filter, $q, $http, $uibModal, ENDPOINT, PAGINATIONCONFIG,
+        constructor($scope, $state, $window, $filter,  $http,$q, $uibModal, ENDPOINT, PAGINATIONCONFIG,
                     AdminActionStatusService,APP_FOLDER_PATH) {
             $scope.vm = this;
             $scope.disableSystemRecord = function (data) {
@@ -194,6 +194,7 @@ module AIP {
             }, (error) => {
                 console.log(error);
             });
+			setTimeout( function(){angular.element('#modal-status-add-title').attr('tabindex', -1).focus()},100);
         }
 
         disableSystemRecord(deleteRestrictionReason) {
