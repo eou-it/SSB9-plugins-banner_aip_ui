@@ -194,7 +194,7 @@ module AIP {
             }, (error) => {
                 console.log(error);
             });
-			setTimeout( function(){angular.element('#modal-status-add-title').attr('tabindex', -1).focus()},100);
+            setTimeout( function(){angular.element('#modal-status-add-title').attr('tabindex', -1).focus()},100);
         }
 
         disableSystemRecord(deleteRestrictionReason) {

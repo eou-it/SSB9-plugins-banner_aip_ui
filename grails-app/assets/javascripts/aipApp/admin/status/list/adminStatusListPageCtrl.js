@@ -145,7 +145,6 @@ var AIP;
             this.modalInstance.result.then(function (result) {
                 console.log(result);
                 if (result.success) {
-					 
                     //TODO:: send notification and refresh grid
                     var n = new Notification({
                         message: _this.$filter("i18n_aip")("aip.common.save.successful"),
@@ -161,9 +160,7 @@ var AIP;
             }, function (error) {
                 console.log(error);
             });
-			setTimeout( function(){angular.element('#modal-status-add-title').attr('tabindex', -1).focus()},100);
-			
-			
+            setTimeout( function(){angular.element('#modal-status-add-title').attr('tabindex',-1).focus()},100);
         };
         AdminStatusListPageCtrl.prototype.disableSystemRecord = function (deleteRestrictionReason) {
             var n = new Notification({
