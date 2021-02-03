@@ -1,5 +1,6 @@
 //= require lib/ng-upload/ng-upload.js
-//= require lib/ng-grid/ng-grid.js
+//= require lib/angular-ui-grid/ui-grid.js
+//= require lib/angular-ui/angular-ui-date.js
 //= require lib/angular-ui/angular-ui.js
 //= require pbRunApp.js
 //= require pbRunDirectives.js

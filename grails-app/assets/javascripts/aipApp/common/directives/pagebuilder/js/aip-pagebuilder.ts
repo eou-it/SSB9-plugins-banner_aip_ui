@@ -1,5 +1,5 @@
 /*******************************************************************************
- Copyright 2018 Ellucian Company L.P. and its affiliates.
+ Copyright 2018-2021 Ellucian Company L.P. and its affiliates.
  ********************************************************************************/
 ///<reference path="../../../../../typings/tsd.d.ts"/>
 
@@ -38,7 +38,7 @@ module PB {
                             var pbController = "CustomPageController_" + attrs.page;
                             var appModule = appModule || angular.module('BannerOnAngular');
 
-                            appModule.requires.push('ngResource', 'ngGrid', 'ui', 'pbrun.directives', 'ngSanitize', 'xe-ui-components');
+                            appModule.requires.push('ngResource', 'ui', 'pbrun.directives', 'ngSanitize', 'xe-ui-components');
 
                             /* disable debug: */
                             appModule.config(['$compileProvider', function ($compileProvider) {
