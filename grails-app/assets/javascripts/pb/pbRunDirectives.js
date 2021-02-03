@@ -1,5 +1,5 @@
 /******************************************************************************
- *  Copyright 2013-2019 Ellucian Company L.P. and its affiliates.             *
+ *  Copyright 2013-2020 Ellucian Company L.P. and its affiliates.             *
  ******************************************************************************/
 'use strict';
 
@@ -13,7 +13,7 @@ var pbRunModule = angular.module('pbrun.directives', []);
 //http://www.anicehumble.com/2013/07/seamless-numeric-localization-with-angularjs.html
 pbRunModule.directive('pbNumber', ['$filter', '$locale', function($filter, $locale) {
     return {
-        require: 'ngModel',
+        require: '^?ngModel',
         //scope: { ngModel: '=' },
         link: function(scope, element, attr, ngModel) {
             var decN = scope.$eval(attr.fractionDigits); // this is the fraction-digits attribute
@@ -61,8 +61,11 @@ pbRunModule.directive('pbNumber', ['$filter', '$locale', function($filter, $loca
                 return $filter('number')(n, decN); // locale-aware formatting
             }
 
-            ngModel.$parsers.unshift(fromUser);
-            ngModel.$formatters.unshift(toUser);
+            if(ngModel){
+                ngModel.$parsers.unshift(fromUser);
+                ngModel.$formatters.unshift(toUser);
+            }
+
 
             element.bind('blur', function() {
                 var v=ngModel.$modelValue;
@@ -80,3 +83,18 @@ pbRunModule.directive('pbNumber', ['$filter', '$locale', function($filter, $loca
         } // link
     }; // return
 }]); // module
+
+
+pbRunModule.directive('numberToString', function () {
+    return {
+        require: 'ngModel',
+        link: function (scope, element, attrs, ngModel) {
+            ngModel.$parsers.push(function (value) {
+                return value === undefined || value === null ? value : value + '';
+            });
+            ngModel.$formatters.push(function (value) {
+                return value === undefined || value === null ? value : value + '';
+            });
+        }
+    }
+});
