@@ -83,7 +83,11 @@ pagebuilderModule.directive('pbArrayofmap', function() {
                     backdropFade: true,
                     dialogFade:true
                 };
-
+                $scope.closePBArrayMap_Popup = function ($event){
+                    if($event.keyCode === 27 || $event.which === 27){
+                        $scope.arrayOfMapElement.focus();
+                    }
+                };
             }],
         replace:true
     }
@@ -143,7 +147,6 @@ pagebuilderModule.directive('pbMap', function() {
                     $scope.mapClickedElement = $event.target;
                     $scope.mapClickedElement.blur();
                     setTimeout(function(){$("#pbid-MapTable").focus(); },0);
-
                 };
 
                 $scope.closeMapEditModal = function () {
@@ -157,6 +160,12 @@ pagebuilderModule.directive('pbMap', function() {
                 $scope.cancelMapEditModal = function() {
                     $scope.mapEditShouldBeOpen = false;
                     $scope.mapClickedElement.focus();
+                };
+
+                $scope.closePBMap_Popup = function ($event){
+                     if($event.keyCode === 27 || $event.which === 27){
+                         $scope.mapClickedElement.focus();
+                     }
                 };
 
                 $scope.mapEditModalOpts = {
@@ -218,6 +227,12 @@ pagebuilderModule.directive('pbTextarea', function() {
                     $scope.clickedElement.focus();
                 };
 
+                $scope.closeTextArea_Popup = function ($event){
+                    if($event.keyCode === 27 || $event.which === 27){
+                        $scope.clickedElement.focus();
+                    }
+                };
+
                 $scope.textareaModalOpts = {
                     backdropFade: true,
                     dialogFade:true
@@ -239,7 +254,7 @@ pagebuilderModule.directive('pbCombo', function() {
             "<select ng-show='showSelect' ng-model='value'  ng-options='val for val in sourceList' ng-change='processInput()'></select>" +
             "<button ng-show='showSelect' class='btn btn-xs' ng-click='loadSourceList()'>{{loadSourceLabel}}</button>" +
             "<button ng-show='showSelect' class='btn btn-xs' ng-click='showSelect=false'>{{editValueLabel}}</button>" +
-            "<input ng-show='!showSelect' type='text' ng-model='value' ng-change='processInput()'/>" +
+            "<input ng-show='!showSelect' type='text' ng-model='value' ng-change='processInput()' aria-label='{{pbAttrname}}'/>" +
             "<button ng-show='!showSelect' class='btn btn-xs' ng-click='showSelect=true'>{{selectLabel}}</button>" +
             "</span>",
         controller: ['$scope', '$element', '$attrs', '$transclude',

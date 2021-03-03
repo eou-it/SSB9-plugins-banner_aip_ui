@@ -189,7 +189,7 @@ appModule.run(['$templateCache', function($templateCache )  {
         "        <span title=\"{{::'pagination.page.shortcut.label' | xei18n}}\" role=\"presentation\" >" +
         "        <input id=\"pbid-#gridName#-PageInput\" class=\"page-number\" ng-disabled=\"totalServerItems==0\" min=\"{{!grid.appScope.#gridName#DS.maxPages() ? 0 : 1}}\" max=\"{{grid.appScope.#gridName#DS.maxPages()}}\" " +
         "               type=\"number\" ng-model=\"grid.appScope.#gridName#DS.pagingOptions.currentPage\" " +
-        "               aria-valuenow=\"{{grid.appScope.#gridName#DS.pagingOptions.currentPage}}\" aria-valuemax=\"{{grid.appScope.#gridName#DS.maxPages()}}\" " +
+        "               aria-valuenow=\"{{grid.appScope.#gridName#DS.pagingOptions.currentPage?grid.appScope.#gridName#DS.pagingOptions.currentPage:0}}\" aria-valuemax=\"{{grid.appScope.#gridName#DS.maxPages()}}\" " +
         "               aria-valuemin=\"{{!grid.appScope.#gridName#DS.maxPages() ? 0 : 1}}\"  " +
         "               aria-label=\"{{::'pagination.page.aria.label' | xei18n}}.{{::'pagination.page.label' | xei18n}} {{grid.appScope.#gridName#DS.pagingOptions.currentPage}} {{::'pagination.page.of.label' | xei18n}} {{grid.appScope.#gridName#DS.maxPages()}}\" "+
         "               tabindex='0' style=\"width: 50px; display: inline; height: 3.5em;\" />" +
@@ -200,10 +200,10 @@ appModule.run(['$templateCache', function($templateCache )  {
         "        <xe-button xe-type=\"secondary\" xe-btn-class=\"next\" xe-aria-label=\"{{::'pagination.next.label' | xei18n}}\" xe-btn-click=\"grid.appScope.#gridName#DS.pageForward()\" title=\"{{grid.appScope.geti18n('next')}}\"  xe-disabled=\"grid.appScope.#gridName#DS.nextLast\"  ng-cloak></xe-button>\n" +
         "        <xe-button xe-type=\"secondary\" xe-btn-class=\"last\" xe-aria-label=\"{{::'pagination.last.label' | xei18n}}\" xe-btn-click=\"grid.appScope.#gridName#DS.pageToLast()\" title=\"{{grid.appScope.geti18n('last')}}\" xe-disabled=\"grid.appScope.#gridName#DS.nextLast\" ng-cloak></xe-button>\n"+
         "        <div class=\"divider dispInline\"></div>" +
-        "        <span class=\"paging-text page-per\" for=\"pbid-#gridName#-RecordsPerPage\"> {{grid.appScope.geti18n('ngPageSizeLabel')}} </span>" +
+        "        <span class=\"paging-text page-per\" id=\"pbid-#gridName#-RecordsPerPage\"> {{grid.appScope.geti18n('ngPageSizeLabel')}} </span>" +
         "        <div role=\"application\" class=\"page-size-select-wrapper dispInline\" alt='{{grid.appScope.geti18n('ngPageSizeLabel')}}'>" +
         "            <select page-size-select role=\"listbox\" aria-label=\"{{grid.appScope.geti18n('ngPageSizeLabel')}}\" class=\"per-page-select\" ng-model=\"grid.appScope.#gridName#DS.pagingOptions.pageSize\" ng-options=\"s as s for s in grid.appScope.#gridName#DS.pagingOptions.pageSizes\" tabindex='0' aria-labelledby=\"pbid-#gridName#-RecordsPerPage\"> "+
-        "            </select>" +
+        "             </select>" +
         "        </div>"+
         "       <span class=\"ngLabel\">{{grid.appScope.geti18n('ngTotalItemsLabel')}} {{grid.appScope.#gridName#DS.maxRows()}}</span>" +
         "       <span ng-show=\"filterText.length > 0\" class=\"ngLabel\">({{grid.appScope.geti18n('ngShowingItemsLabel')}} {{grid.appScope.#gridName#DS.totalFilteredItemsLength()}})</span>" +
@@ -661,6 +661,16 @@ appModule.factory('pbDataSet', ['$cacheFactory', '$parse', function( $cacheFacto
             }
         };
 
+        this.setDateCompFocus = function (colIndexId) {
+            setTimeout(function () {
+                if ($("[id$=" + colIndexId + "]  span").length > 0) {
+                    $("[id$=" + colIndexId + "]  span input").focus();
+                } else {
+                    $("#" + colIndexId + " input").focus();
+                }
+            });
+        };
+
         this.add = function(item) {
             var newItem = new this.Resource(item);
             this.added.push(newItem);
@@ -1087,7 +1097,7 @@ appModule.directive('pbPopupDataGrid', ['$parse', function($parse)  {
 
             }
             function onLoadEventData(){
-                var pageName = window.localStorage['pageName'];
+                var pageName = window.localStorage['pageName'].replace(/(\%20|javascript:|#|script).*$/g, "");
                 var pageId = window.localStorage['pageId'];
                 var pbDataOptions = $parse(attrs.pbPopupDataGrid)() || {};
 
@@ -1115,6 +1125,8 @@ appModule.directive('pbPopupDataGrid', ['$parse', function($parse)  {
             element.keypress(function (e) {
                 if (e.key === 'Enter' || e.keyCode === 13 ||  e.which === 13) {
                     scope.onClickData(e, attrs);
+                }else if ((e.keyCode === 32 ||  e.which === 32)){
+                    e.target.click();
                 }
             })
             element.on('change', scope.changeData);
@@ -1127,7 +1139,7 @@ appModule.directive('pbPopupDataGrid', ['$parse', function($parse)  {
 $(document).ready(function () {
     $('table').on('keydown',function (e) {
         e = e || window.event;
-        if (e && $(this).context.id === "visualComposer-table") {
+        if (e && ($(this).context.id === "visualComposer-table" || $(this).context.id === "virtualDomain-table1" || $(this).context.id === "virtualDomain-table2")) {
             return;
         }
         var firstCell = $(this).children('tbody').find('tr:first').find('td:first');
@@ -1170,7 +1182,7 @@ $(document).ready(function () {
                 sibling ? sibling.focus() : '';
                 break;
             case 13:
-                var editablElement = $(start).find('input, select, span, a').first();
+                var editablElement = $(start).find('input, select, span, a, textarea').first();
                 editablElement.attr('tabindex','0').click();
                 editablElement.focus();
                 editablElement.bind("keydown",function (e) {
@@ -1197,7 +1209,7 @@ function isNextSiblingPresent(sib){
     if($(sib).is(':visible')) {
         return sib;
     }else{
-        var nextSib = sib.nextElementSibling;
+        var nextSib = sib?sib.nextElementSibling:null;
         if(nextSib)
             sib= isNextSiblingPresent(nextSib)
     }
@@ -1208,7 +1220,7 @@ function isPreviousSiblingPresent(sib){
     if($(sib).is(':visible')) {
         return sib;
     }else{
-        var prevSib = sib.previousElementSibling;
+        var prevSib = sib?sib.previousElementSibling:null;
         if(prevSib)
             sib= isNextSiblingPresent(prevSib)
     }
