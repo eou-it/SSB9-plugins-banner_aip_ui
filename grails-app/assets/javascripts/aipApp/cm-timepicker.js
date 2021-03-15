@@ -1,5 +1,5 @@
 /*******************************************************************************
- Copyright 2018 Ellucian Company L.P. and its affiliates.
+ Copyright 2018-2021 Ellucian Company L.P. and its affiliates.
  ********************************************************************************/
 angular.module("cm.timepicker", ['xeTimePickerBox'
     ,'cm.tpls'
@@ -15,7 +15,7 @@ angular.module("timepicker.html", []).run(["$templateCache", function($templateC
 (function (angular) {
     'use strict';
     angular.module('xeTimePickerBox', ['ui.bootstrap.position', 'dateParser'])
-        .factory('xeTimepickerHelper', function (dateFilter, $dateParser) {
+        .factory('xeTimepickerHelper', ['dateFilter','$dateParser',function (dateFilter, $dateParser) {
         return {
             stringToMinutes: function (str) {
                 if (!str) {
@@ -80,7 +80,7 @@ angular.module("timepicker.html", []).run(["$templateCache", function($templateC
                 return index;
             }
         };
-    })
+    }])
         .directive('xeTimePickerBox', ['$compile', '$parse', '$timeout', '$document', 'dateFilter', '$log', '$uibPosition', '$dateParser', 'xeTimepickerHelper',
         function ($compile, $parse, $timeout, $document, dateFilter, $log, $position, $dateParser, xeTimepickerHelper) {
             return {
