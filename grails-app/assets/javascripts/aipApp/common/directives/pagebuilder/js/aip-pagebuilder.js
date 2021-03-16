@@ -28,12 +28,12 @@ var PB;
                         var aipController = {};
                         var pbController = "CustomPageController_" + attrs.page;
                         var appModule = appModule || angular.module('BannerOnAngular');
-                        appModule.requires.push('ngResource', 'ui', 'pbrun.directives', 'ngSanitize', 'xe-ui-components');
+                        appModule.requires.push('ngResource', 'ui.grid', 'ui', 'pbrun.directives', 'ngSanitize', 'xe-ui-components');
                         /* disable debug: */
                         appModule.config(['$compileProvider', function ($compileProvider) {
                                 $compileProvider.debugInfoEnabled(false);
                             }]);
-                        if (window[pbController]) {
+                        if (window[pbController]) { // backwards compatible with alpha release
                             aipController[pbController] = window[pbController];
                         }
                         for (var pc in aipController) {

@@ -38,7 +38,7 @@ module PB {
                             var pbController = "CustomPageController_" + attrs.page;
                             var appModule = appModule || angular.module('BannerOnAngular');
 
-                            appModule.requires.push('ngResource', 'ui', 'pbrun.directives', 'ngSanitize', 'xe-ui-components');
+                            appModule.requires.push('ngResource','ui.grid', 'ui', 'pbrun.directives', 'ngSanitize', 'xe-ui-components');
 
                             /* disable debug: */
                             appModule.config(['$compileProvider', function ($compileProvider) {

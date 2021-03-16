@@ -195,8 +195,8 @@ appModule.run(['$templateCache', function($templateCache )  {
         "               tabindex='0' style=\"width: 50px; display: inline; height: 3.5em;\" />" +
         "       </span> "+
         "        <span class=\"paging-text page-of\"> {{grid.appScope.geti18n('maxPageLabel')}} </span> <span class=\"paging-text total-pages\"> {{grid.appScope.#gridName#DS.maxPages()}}  </span>"+
-      /*  "        <div class=\"paging-control next {{!cantPageForward() && 'enabled'||''}}\" ng-click=\"pageForward()\"></div>" +
-        "        <div class=\"paging-control last {{!cantPageToLast()  && 'enabled'||''}}\" ng-click=\"pageToLast()\" ></div>"+*/
+        /*  "        <div class=\"paging-control next {{!cantPageForward() && 'enabled'||''}}\" ng-click=\"pageForward()\"></div>" +
+          "        <div class=\"paging-control last {{!cantPageToLast()  && 'enabled'||''}}\" ng-click=\"pageToLast()\" ></div>"+*/
         "        <xe-button xe-type=\"secondary\" xe-btn-class=\"next\" xe-aria-label=\"{{::'pagination.next.label' | xei18n}}\" xe-btn-click=\"grid.appScope.#gridName#DS.pageForward()\" title=\"{{grid.appScope.geti18n('next')}}\"  xe-disabled=\"grid.appScope.#gridName#DS.nextLast\"  ng-cloak></xe-button>\n" +
         "        <xe-button xe-type=\"secondary\" xe-btn-class=\"last\" xe-aria-label=\"{{::'pagination.last.label' | xei18n}}\" xe-btn-click=\"grid.appScope.#gridName#DS.pageToLast()\" title=\"{{grid.appScope.geti18n('last')}}\" xe-disabled=\"grid.appScope.#gridName#DS.nextLast\" ng-cloak></xe-button>\n"+
         "        <div class=\"divider dispInline\"></div>" +
@@ -642,7 +642,7 @@ appModule.factory('pbDataSet', ['$cacheFactory', '$parse', function( $cacheFacto
                     } else {
                         //assume item is of the right type
                         this.currentRecord=item;
-                        }
+                    }
                 }
                 if (this.selectValueKey) {  //we have a select -- Next assignment may not be needed as item is already the model
                     if (this.currentRecord && this.currentRecord.hasOwnProperty(this.selectValueKey))
@@ -779,7 +779,7 @@ appModule.factory('pbDataSet', ['$cacheFactory', '$parse', function( $cacheFacto
                     }
                 });
             });
-          //  this.added = [];
+            //  this.added = [];
             this.modified.forEach( function(item)  {
                 if(item.id) {
                     item.$update({}, successHandler('U'), post.error);
@@ -1097,7 +1097,10 @@ appModule.directive('pbPopupDataGrid', ['$parse', function($parse)  {
 
             }
             function onLoadEventData(){
-                var pageName = window.localStorage['pageName'].replace(/(\%20|javascript:|#|script).*$/g, "");
+                var pageName = window.localStorage['pageName'];
+                if(pageName){
+                    pageName=pageName.replace(/(\%20|javascript:|#|script).*$/g, "");
+                }
                 var pageId = window.localStorage['pageId'];
                 var pbDataOptions = $parse(attrs.pbPopupDataGrid)() || {};
 
@@ -1120,7 +1123,7 @@ appModule.directive('pbPopupDataGrid', ['$parse', function($parse)  {
             }
 
             element.on('enter',scope.onClickData);
-          //  element.on('keyup', scope.onClickData);
+            //  element.on('keyup', scope.onClickData);
             //element.on('keydown', scope.onClickData);
             element.keypress(function (e) {
                 if (e.key === 'Enter' || e.keyCode === 13 ||  e.which === 13) {
