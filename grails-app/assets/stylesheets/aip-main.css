@@ -1,5 +1,5 @@
 /*******************************************************************************
-Copyright 2018-2019 Ellucian Company L.P. and its affiliates.
+Copyright 2018-2020 Ellucian Company L.P. and its affiliates.
 ********************************************************************************/
 /*********************************************************************************
  Copyright 2017-2018 Ellucian Company L.P. and its affiliates.
@@ -86,6 +86,7 @@ aip-list .aip-list-container {
             background-color: #FFD079;
             box-shadow: none; }
             aip-list .aip-list-container .panel-heading .panel-title .item-group .group-progress .progress .progress-bar span {
+              background:white;
               color: #103750;
               text-align: right;
               position: absolute;
@@ -765,7 +766,8 @@ ol.selected-group > li > button {
             padding-left: 8px; }
           .groupOpenContainer .groupInfo .groupInfoRow .groupElement .xe-tab-container .contentInfo .contentText #select2actionItems .row.actionItemName {
             padding: 0;
-            line-height: 1.7em; }
+            line-height: 1.7em;
+            color: black; }
           .groupOpenContainer .groupInfo .groupInfoRow .groupElement .xe-tab-container .contentInfo .contentText #select2actionItems .row.additionalInfo {
             padding: 0;
             line-height: 1em;
@@ -1049,7 +1051,8 @@ ol.selected-group > li > button {
                   font-weight: bolder;
                   line-height: 3em;
                   font-size: 1.2em;
-                  padding: 0 8px; }
+                  padding: 0 8px;
+                  color: black;}
                 .actionItemOpenContainer .actionItemInfo .actionItemInfoRow .actionItemElement xe-tab-panel .xe-tab-container #openActionItemContent .actionItemContent .contentContainer table.ruleListReadOnly tr {
                   height: 3em;
                   border: solid 1px;
@@ -1911,7 +1914,7 @@ ol.selected-group > li > button {
   width: 0; }
 
 #gridCaption {
-  color: gray;
+  color: black !important;
   font-size: 18px; }
 
 #username {
@@ -1949,6 +1952,13 @@ ol.selected-group > li > button {
 #breadcrumbHeader a.breadcrumbButton.leaf-breadcrumb {
   text-decoration: none;
   cursor: default; }
+
+.breadcrumbButton{
+  color: black !important;
+}
+.leaf-breadcrumb {
+  color: black;
+}
 
 a:focus, div:focus, input:focus, span:focus, i:focus, button:focus, .breadcrumbButton:focus {
   outline: 0;

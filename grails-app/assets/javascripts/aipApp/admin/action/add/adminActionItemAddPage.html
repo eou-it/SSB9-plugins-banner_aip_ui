@@ -1,5 +1,5 @@
 <!--*******************************************************************************
-Copyright 2018 Ellucian Company L.P. and its affiliates.
+Copyright 2018-2021 Ellucian Company L.P. and its affiliates.
 *******************************************************************************-->
 <div class="actionItemAddContainer">
     <div class="actionItemInfo">
@@ -14,7 +14,7 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
             </div>
             <div class="actionItemElement col-xs-12 col-md-8">
                 <div class="row" ng-class="{'has-error':vm.actionItemInfo.name.length>60}">
-                    <input id="actionItemName" maxlength="60" aria-valuemax="60" type="text" class="form-control"
+                    <input id="actionItemName" maxlength="60"  type="text" class="form-control"
                            ng-model="vm.actionItemInfo.name" ng-disabled="vm.editMode"
                            placeholder="{{'aip.admin.action.actionItem.name'|i18n_aip}}" aria-label="{{'aip.admin.action.actionItem.name'|i18n_aip}}"
                            aria-required="true" ng-change="vm.dataChanged()">
@@ -36,10 +36,10 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
                     <xe-ui-select class="folder-minwidth" id="folderid" ng-model="vm.actionItemInfo.folder" theme="select2" ng-change="vm.dataChanged()"
                     >
                         <xe-ui-select-match  placeholder="{{'aip.common.select.folder.default'|i18n_aip}}">
-                            {{vm.actionItemInfo.folder.name}}
+                          <div ng-bind-html="vm.actionItemInfo.folder.name"></div>
                         </xe-ui-select-match>
                         <xe-ui-select-choices  repeat="item in vm.folders | propsFilter: {name: $select.search}">
-                            <div   ng-bind-html="item.name"></div>
+                            <div ng-bind-html="item.name"></div>
                         </xe-ui-select-choices>
                     </xe-ui-select>
                 </div>
@@ -78,7 +78,7 @@ Copyright 2018 Ellucian Company L.P. and its affiliates.
             </div>
             <div class="actionItemElement col-xs-12 col-md-8">
                 <div class="row" ng-class="{'has-error':vm.actionItemInfo.title.length>300}">
-                    <input id="actionItemTitle" maxlength="300" aria-valuemax="300" type="text" class="form-control"
+                    <input id="actionItemTitle" maxlength="300"  type="text" class="form-control"
                            ng-model="vm.actionItemInfo.title"
                            placeholder="{{'aip.admin.action.actionItem.title'|i18n_aip}}" aria-label="{{'aip.admin.action.actionItem.title'|i18n_aip}}"
                            aria-required="true"  ng-change="vm.dataChanged()">

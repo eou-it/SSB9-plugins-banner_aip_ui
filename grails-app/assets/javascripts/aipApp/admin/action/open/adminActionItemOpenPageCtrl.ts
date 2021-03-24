@@ -110,7 +110,7 @@ module AIP {
 
         };
 
-        init() {
+        init() {           
             this.spinnerService.showSpinner(true);
             var promises = [];
             this.actionFolder = this.$state.params.actionItemId || this.$state.previousParams.actionItemId;
@@ -282,6 +282,8 @@ module AIP {
                 angular.element(document.querySelector('#xe-tab2')).attr('href', urlVal);
                 angular.element(document.querySelector('#xe-tab3')).attr('href', urlVal);
             }
+            $(".xe-tab-nav").find('li').removeAttr("tabIndex");
+
             return deferred.promise;
         }
 
